@@ -4,6 +4,7 @@ Version: 0.0.0.9000
 Authors@R: person("Colin", "Smith", email = "colin.smith@wisc.edu", role = c("aut", "cre"))
 Description: A set of functions to help create metadata in the Ecological Metadata Language standard
 Depends: R (>= 3.3.2)
+Imports: EML, xlsx, rmarkdown
 License: Creative Commons license CC0 1.0 Universal
 Encoding: UTF-8
 LazyData: true
