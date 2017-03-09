@@ -135,6 +135,6 @@
   
   # Identify dataset name
   
-  template <- trimws(list.files(path, pattern = "*_template.docx"))
+  #template <- trimws(list.files(path, pattern = "*_template.docx"))
   
 
