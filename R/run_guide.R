@@ -17,7 +17,7 @@ run_guide <- function() {
 
   # Create working directory
 
-  readline(paste("Create a working directory for this dataset.",
+  readline(paste("Create a working directory for this data set.",
                  "\n",
                  "Press <enter> when done.",
                  sep = ""))
@@ -26,7 +26,7 @@ run_guide <- function() {
 
   # Write protect the data tables
 
-  readline(paste("Write protect the data tables to prevent Excel from changing the date time format.",
+  readline(paste("Write protect your data table(s).",
                  "\n", "Right click on the data table file.",
                  "\n", "Select 'properties'.",
                  "\n", "Select 'Read-only'.",
@@ -41,9 +41,9 @@ run_guide <- function() {
   # Move data tables
 
   readline(paste("Move the data table(s) to the working directory.",
-                 "\n", "Add a name for this dataset as a prefix.",
+                 "\n", "Add a name for this data set as a prefix.",
                  "\n", "E.g. gleon_lake_chloride.csv",
-                 "\n", "Where gleon_ is the dataset name, and lake_chloride.csv is the data table name.",
+                 "\n", "Where gleon_ is the data set name, and lake_chloride.csv is the data table name.",
                  "\n", "Do this for each data table.",
                  "\n",
                  "Press <enter> when done.",
@@ -84,8 +84,8 @@ run_guide <- function() {
 
   readline(paste("Create the file datasetName_personnel.xlsx in the working directory.",
                  "\n", "Copy over the investigators information from template.docx.",
-                 "\n", "Add principal investigator information (even if duplicating names).",
-                 "\n", "Add dataset contact information (even if duplicating names).",
+                 "\n", "Add principal investigator information (even if duplicating).",
+                 "\n", "Add dataset contact information (even if duplicating).",
                  "\n", "Remove any special formatting or unique characters.",
                  "\n",
                  "Press <enter> when done.",
@@ -135,7 +135,7 @@ run_guide <- function() {
   readline(paste("OK. Now you can use these functions:",
                  "\n", "write_attributes()",
                  "\n", "write_factors()",
-                 "\n", "build_eml()",
+                 "\n", "create_eml()",
                  "\n",
                  "Press <enter> when done.",
                  sep = ""))
