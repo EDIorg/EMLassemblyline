@@ -24,6 +24,11 @@ create_eml <- function(path) {
   library("EML")
   library("xlsx")
   library("rmarkdown")
+  #library("XML")
+  #library("xml2")
+  library("methods")
+  library("stringr")
+  library("tools")
 
   # Parameterize function -----------------------------------------------------
 
