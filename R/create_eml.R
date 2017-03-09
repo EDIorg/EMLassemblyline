@@ -730,14 +730,14 @@ create_eml <- function(path) {
   if (custom_units == "yes"){
     eml <- new("eml",
               packageId = data_package_id,
-              system = system,
+              system = root_system,
               access = access,
               dataset = dataset,
               additionalMetadata = as(unitsList, "additionalMetadata"))
   } else {
     eml <- new("eml",
                packageId = data_package_id,
-               system = system,
+               system = root_system,
                access = access,
                dataset = dataset)
   }

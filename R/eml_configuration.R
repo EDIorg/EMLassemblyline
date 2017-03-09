@@ -134,7 +134,7 @@ eml_configuration <- function(){
 
   data_package_id <- trimws("edi.8.1")
 
-  system <- "edi"
+  root_system <- "edi"
 
   # Set access
 
