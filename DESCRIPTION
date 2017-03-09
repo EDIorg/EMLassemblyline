@@ -1,12 +1,13 @@
 Package: EMLtools
-Title: What the Package Does (one line, title case)
+Title: A set of functions to help create metadata in the Ecological Metadata Language standard
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Authors@R: person("Colin", "Smith", email = "colin.smith@wisc.edu", role = c("aut", "cre"))
+Description: A set of functions to help create metadata in the Ecological Metadata Language standard
 Depends: R (>= 3.3.2)
-License: What license is it under?
+License: Creative Commons license CC0 1.0 Universal
 Encoding: UTF-8
 LazyData: true
 URL: http://github.com/EDIorg/EMLtools
 BugReports: http://github.com/EDIorg/EMLtools/issues
+
 
