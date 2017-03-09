@@ -20,6 +20,10 @@
 
 
 write_factors <- function(path) {
+  
+  library("EML")
+  library("xlsx")
+  library("rmarkdown")
 
   # Load the configuration file
 

@@ -20,6 +20,10 @@
 
 
 build_eml <- function(path) {
+  
+  library("EML")
+  library("xlsx")
+  library("rmarkdown")
 
   # Parameterize function -----------------------------------------------------
 
