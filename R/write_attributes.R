@@ -20,6 +20,10 @@
 
 write_attributes <- function(path){
 
+  library("EML")
+  library("xlsx")
+  library("rmarkdown")
+  
   # Load configuration file
 
   source(paste(path,
