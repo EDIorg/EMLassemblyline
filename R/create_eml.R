@@ -19,7 +19,7 @@
 #'
 
 
-build_eml <- function(path) {
+create_eml <- function(path) {
   
   library("EML")
   library("xlsx")
