@@ -64,7 +64,7 @@ write_attributes <- function(path){
                                description = character(1),
                                stringsAsFactors = FALSE)
 
-    write.xlsx(custom_units,
+    xlsx::write.xlsx(custom_units,
                paste(path,
                      substr(template, 1, nchar(template) - 14),
                      "_custom_units.xlsx", sep = ""),
@@ -77,7 +77,7 @@ write_attributes <- function(path){
                              power = character(1),
                              stringsAsFactors = FALSE)
 
-    write.xlsx(unit_types,
+    xlsx::write.xlsx(unit_types,
                paste(path,
                      substr(template, 1, nchar(template) - 14),
                      "_unit_types.xlsx", sep = ""),
@@ -210,7 +210,7 @@ write_attributes <- function(path){
 
       # Set definitions (attributeDefinition)
 
-      df_attributes <- read.xlsx2(
+      df_attributes <- xlsx::read.xlsx2(
         paste(
           path,
           substr(fname_table_attributes[i],
@@ -259,7 +259,7 @@ write_attributes <- function(path){
 
       # Write attributes table to file
 
-      write.xlsx(attributes,
+      xlsx::write.xlsx(attributes,
                  paste(path,
                        fname_table_attributes[i],
                        sep = ""),
@@ -334,7 +334,7 @@ write_attributes <- function(path){
                                missingValueCodeExplanation = character(rows),
                                stringsAsFactors = FALSE)
 
-      write.xlsx(attributes,
+      xlsx::write.xlsx(attributes,
                  paste(path,
                        substr(spatial_vector_names[i],
                               1,
