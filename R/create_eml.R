@@ -460,12 +460,15 @@ create_eml <- function(path) {
     if (!is.na(match(fname_expected_factors, list.files(path)))){
 
       if (dim(factors)[1] != 0){
-
         attributeList <- set_attributes(attributes,
                                         factors = factors,
                                         col_classes = col_classes)
+      } else {
+        attributeList <- set_attributes(attributes,
+                                        col_classes = col_classes)
       }
     } else {
+      
       attributeList <- set_attributes(attributes,
                                       col_classes = col_classes)
     }
