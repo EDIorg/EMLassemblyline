@@ -23,9 +23,20 @@ run_guide <- function() {
                  sep = ""))
   writeLines("\n")
 
-
+  # Move data tables
+  
+  readline(paste("Move the data table(s) to the working directory.",
+                 "\n", "Add the data set name as a prefix.",
+                 "\n", "E.g. gleon_lake_chloride.csv",
+                 "\n", "Where gleon_ is the data set name, and lake_chloride.csv is the data table name.",
+                 "\n", "Do this for each data table.",
+                 "\n",
+                 "Press <enter> when done.",
+                 sep = ""))
+  writeLines("\n")
+  
   # Write protect the data tables
-
+  
   readline(paste("Write protect your data table(s).",
                  "\n", "Right click on the data table file.",
                  "\n", "Select 'properties'.",
@@ -38,22 +49,10 @@ run_guide <- function() {
                  sep = ""))
   writeLines("\n")
 
-  # Move data tables
-
-  readline(paste("Move the data table(s) to the working directory.",
-                 "\n", "Add a name for this data set as a prefix.",
-                 "\n", "E.g. gleon_lake_chloride.csv",
-                 "\n", "Where gleon_ is the data set name, and lake_chloride.csv is the data table name.",
-                 "\n", "Do this for each data table.",
-                 "\n",
-                 "Press <enter> when done.",
-                 sep = ""))
-  writeLines("\n")
-
   # Create 'datasetName_template.docx'
 
-  readline(paste("Move the EDI metadata template of this dataset to the working directory.",
-                 "\n", "Rename the template with the same dataset name (as above) and append with _template.docx.",
+  readline(paste("Move the EDI metadata template of this data set to the working directory.",
+                 "\n", "Rename the template with the same data set name (as above) and append with _template.docx.",
                  "\n", "E.g. gleon_template.docx",
                  "\n",
                  "Press <enter> when done.",
@@ -92,16 +91,6 @@ run_guide <- function() {
                  sep = ""))
   writeLines("\n")
 
-  # Manually create 'datasetName_intellectual_rights.md'
-
-  readline(paste("Create the file datasetName_intellectual_rights.md in the working directory.",
-                 "\n", "Copy over the intellectual rights for this dataset.",
-                 "\n", "Remove any special formatting or unique characters.",
-                 "\n",
-                 "Press <enter> when done.",
-                 sep = ""))
-  writeLines("\n")
-
   # Manually create 'datasetName_datatableName_attributes_draft.xlsx'
 
   readline(paste("Create the file datasetName_datatableName_attributes_draft.xlsx in the working directory.",
@@ -113,6 +102,16 @@ run_guide <- function() {
                  sep = ""))
   writeLines("\n")
 
+  # Manually create 'datasetName_intellectual_rights.md'
+  
+  readline(paste("Create the file datasetName_intellectual_rights.md in the working directory.",
+                 "\n", "Copy over the intellectual rights for this dataset.",
+                 "\n", "Remove any special formatting or unique characters.",
+                 "\n",
+                 "Press <enter> when done.",
+                 sep = ""))
+  writeLines("\n")
+  
   # Manually create 'eml_configuration.R'
 
   readline(paste("Edit the file eml_configuration.R and save a copy in the working directory.",

@@ -21,10 +21,14 @@
 
 write_factors <- function(path) {
   
+  # Parameterize function
+  
   library("EML")
   library("xlsx")
   library("rmarkdown")
 
+  template <- trimws(list.files(path, pattern = "*_template.docx"))
+  
   # Load the configuration file
 
   source(paste(path, "eml_configuration.R", sep = ""))

@@ -21,12 +21,16 @@
 
 create_eml <- function(path) {
   
+  # Parameterize function
+  
   library("EML")
   library("xlsx")
   library("rmarkdown")
   library("methods")
   library("stringr")
   library("tools")
+  
+  template <- trimws(list.files(path, pattern = "*_template.docx"))
 
   # Parameterize function -----------------------------------------------------
 

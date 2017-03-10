@@ -20,9 +20,13 @@
 
 write_attributes <- function(path){
 
+  # Parameterize function
+  
   library("EML")
   library("xlsx")
   library("rmarkdown")
+  
+  template <- trimws(list.files(path, pattern = "*_template.docx"))
   
   # Load configuration file
 

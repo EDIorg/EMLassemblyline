@@ -98,7 +98,7 @@ eml_configuration <- function(){
   spatial_vector_geometry <- trimws(c("Polygon"))
 
 
-  # Set parameters for data set -------------------------------------------------
+  # Set additional parameters -------------------------------------------------
 
   # Dataset title
 
@@ -106,7 +106,7 @@ eml_configuration <- function(){
 
   # Dataset keywords
 
-  keywords = trimws(c("chloride", "lakes", "reservoirs", "roads", "limnology",
+  keywords <- trimws(c("chloride", "lakes", "reservoirs", "roads", "limnology",
                       "salt", "impervious surface", "freshwater", "land use",
                       "land cover", "time series", "GLEON",
                       "Global Lake Ecological Observatory Network", "NSF",
@@ -116,11 +116,11 @@ eml_configuration <- function(){
 
   geographic_location <- trimws("North America and Europe")
 
-  coordinate_north = 69.0
+  coordinate_north <- 69.0
 
-  coordinate_east = 28.53
+  coordinate_east <- 28.53
 
-  coordinate_south = 28.38
+  coordinate_south <- 28.38
 
   coordinate_west <- -119.95
 
@@ -130,7 +130,7 @@ eml_configuration <- function(){
 
   funding_grants = trimws("National Science Foundation 1137327 and 1137353")
 
-  # Set root level parameters
+  # Set root level info
 
   data_package_id <- trimws("edi.8.1")
 
@@ -150,11 +150,5 @@ eml_configuration <- function(){
 
   access_scope <- trimws("document")
 
-
-  # Do not edit these -----------------------------------------------------------
-
-  # Identify dataset name
-
-  template <- trimws(list.files(path, pattern = "*_template.docx"))
 
 }
