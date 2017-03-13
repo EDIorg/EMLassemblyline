@@ -333,12 +333,13 @@ create_eml <- function(path) {
       sep = ""))
 
     # Read attributes file (encoding necessitates read/write/read)
-
+    
     attributes <- read.xlsx2(paste(
       path,
       fname_table_attributes[i], sep = ""),
       sheetIndex = 1,
-      colClasses = c(rep("character",7), rep("numeric",2),rep("character",2)))
+      colClasses = c(rep("character",7), rep("numeric",2),rep("character",2)),
+      stringsAsFactors = F)
 
     write.table(
       attributes,
@@ -366,10 +367,20 @@ create_eml <- function(path) {
       sep = "\t",
       as.is = TRUE,
       na.strings = "NA")
+    for (i in 1:7){
+      attributes[ ,i] <- as.character(attributes[ ,i])
+    }
+    for (i in 8:9){
+      attributes[ ,i] <- as.numeric(attributes[ ,i])
+    }
+    for (i in 10:11){
+      attributes[ ,i] <- as.character(attributes[ ,i])
+    }
+    
 
     useI <- attributes$missingValueCodeExplanation == ""
 
-    attributes$missingValueCode[!useI] <- "NA"
+    #attributes$missingValueCode[!useI] <- "NA"
 
     codeExplanations <- attributes$missingValueCodeExplanation
 
