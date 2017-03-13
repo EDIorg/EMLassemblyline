@@ -365,22 +365,19 @@ create_eml <- function(path) {
         sep = ""),
       header = TRUE,
       sep = "\t",
-      as.is = TRUE,
-      na.strings = "NA")
-    for (i in 1:7){
-      attributes[ ,i] <- as.character(attributes[ ,i])
+      as.is = TRUE)
+    for (j in 1:7){
+      attributes[ ,j] <- as.character(attributes[ ,i])
     }
-    for (i in 8:9){
-      attributes[ ,i] <- as.numeric(attributes[ ,i])
+    for (j in 8:9){
+      attributes[ ,j] <- as.numeric(attributes[ ,i])
     }
-    for (i in 10:11){
-      attributes[ ,i] <- as.character(attributes[ ,i])
+    for (j in 10:11){
+      attributes[ ,j] <- as.character(attributes[ ,i])
     }
     
 
     useI <- attributes$missingValueCodeExplanation == ""
-
-    #attributes$missingValueCode[!useI] <- "NA"
 
     codeExplanations <- attributes$missingValueCodeExplanation
 
