@@ -126,7 +126,7 @@ eml_configuration <- function(){
 
   # Funding information
 
-  funding_title = trimws("Collaborative research: Building analytical, synthesis, and human network skills needed for macrosystem science: A next generation graduate student training model based on GLEON")
+  funding_title = trimws(c("Collaborative research: Building analytical, synthesis, and human network skills needed for macrosystem science: A next generation graduate student training model based on GLEON"))
 
   funding_grants = trimws("National Science Foundation 1137327 and 1137353")
 

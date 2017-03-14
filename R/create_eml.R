@@ -365,27 +365,32 @@ create_eml <- function(path) {
         sep = ""),
       header = TRUE,
       sep = "\t",
-      as.is = TRUE)
+      as.is = TRUE,
+    na.strings = "")
     for (j in 1:7){
-      attributes[ ,j] <- as.character(attributes[ ,i])
+    attributes[ ,j] <- as.character(attributes[ ,j])
     }
     for (j in 8:9){
-      attributes[ ,j] <- as.numeric(attributes[ ,i])
+    attributes[ ,j] <- as.numeric(attributes[ ,j])
     }
     for (j in 10:11){
-      attributes[ ,j] <- as.character(attributes[ ,i])
+    attributes[ ,j] <- as.character(attributes[ ,j])
     }
+# 
+#     
+#     
+#     useI <- attributes$missingValueCodeExplanation == ""
+#     
+#     attributes$missingValueCode[!useI] <- "NA"
+# 
+#     codeExplanations <- attributes$missingValueCodeExplanation
+# 
+#     attributes$missingValueCodeExplanation <- as.logical(
+#       attributes$missingValueCodeExplanation)
+# 
+#     attributes$missingValueCodeExplanation[!useI] <- codeExplanations[!useI]
+
     
-
-    useI <- attributes$missingValueCodeExplanation == ""
-
-    codeExplanations <- attributes$missingValueCodeExplanation
-
-    attributes$missingValueCodeExplanation <- as.logical(
-      attributes$missingValueCodeExplanation)
-
-    attributes$missingValueCodeExplanation[!useI] <- codeExplanations[!useI]
-
     # Read factors file (encoding necessitates read/write/read)
 
     fname_expected_factors <- paste(
@@ -406,6 +411,9 @@ create_eml <- function(path) {
         for (j in 1:dim(factors)[2]){
           factors[ ,j] <- as.character(factors[ ,j])
         }
+        
+        non_blank_rows <- nrow(factors) - sum(factors$attributeName == "")
+        factors <- factors[1:non_blank_rows, 1:3]
 
         write.table(
           factors,
@@ -737,8 +745,10 @@ create_eml <- function(path) {
 
   # Compile spatial vectors
 
-  dataset@spatialVector <- new("ListOfspatialVector",
-                               spatial_vectors_stored)
+  if (length(spatial_vector_names) != 0){
+    dataset@spatialVector <- new("ListOfspatialVector",
+                                 spatial_vectors_stored)
+  }
 
   # Build EML
 
