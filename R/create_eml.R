@@ -13,9 +13,9 @@
 #' then the file is not written.
 #'
 #' @seealso \code{\link{run_guide}} for guidance on setting up the working directory
-#' @seealso \code{\link{eml_configuration}} for configuring eml
 #' @seealso \code{\link{write_attributes}} for writing data attributes
 #' @seealso \code{\link{write_factors}} for writing data factors
+#' @seealso \code{\link{copy_templates}} for creating template files
 #'
 
 

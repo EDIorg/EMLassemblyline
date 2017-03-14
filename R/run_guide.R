@@ -7,10 +7,11 @@
 #' @return Prompts the user to complete a series of tasks before running other functions
 #' of the EMLtools package.
 #'
-#' @seealso \code{\link{eml_configuration}} for configuring eml
 #' @seealso \code{\link{write_attributes}} for writing data attributes
 #' @seealso \code{\link{write_factors}} for writing data factors
 #' @seealso \code{\link{create_eml}} for creating EML
+#' @seealso \code{\link{copy_templates}} for creating template files
+#'
 
 
 run_guide <- function() {
@@ -50,7 +51,7 @@ run_guide <- function() {
   writeLines("\n")
 
   # Create 'datasetName_template.docx'
-
+  
   readline(paste("Move the EDI metadata template of this data set to the working directory.",
                  "\n", "Rename the template with the same data set name (as above) and append with _template.docx.",
                  "\n", "E.g. gleon_template.docx",
@@ -61,8 +62,7 @@ run_guide <- function() {
 
   # Create 'datasetName_methods.docx'
 
-  readline(paste("Create the file datasetName_methods.docx in the working directory.",
-                 "\n", "Copy over the methods from template.docx",
+  readline(paste("Fill out the file datasetname_methods.docx in the working directory.",
                  "\n", "Remove any special formatting or unique characters.",
                  "\n",
                  "Press <enter> when done.",
@@ -71,7 +71,7 @@ run_guide <- function() {
 
   # Manually create 'datasetName_abstract.docx'
 
-  readline(paste("Create the file datasetName_abstract.docx in the working directory.",
+  readline(paste("Fill out the file datasetname_abstract.docx in the working directory.",
                  "\n", "Copy over the abstract from template.docx.",
                  "\n", "Remove any special formatting or unique characters.",
                  "\n",
@@ -81,9 +81,9 @@ run_guide <- function() {
 
   # Manually create 'datasetName_personnel.xlsx'
 
-  readline(paste("Create the file datasetName_personnel.xlsx in the working directory.",
-                 "\n", "Copy over the investigators information from template.docx.",
-                 "\n", "Add principal investigator information (even if duplicating).",
+  readline(paste("Fill out the file datasetname_personnel.xlsx in the working directory.",
+                 "\n", "Add information for the dataset creator(s).",
+                 "\n", "Add principal investigator(s) information (even if duplicating).",
                  "\n", "Add dataset contact information (even if duplicating).",
                  "\n", "Remove any special formatting or unique characters.",
                  "\n",
@@ -93,8 +93,7 @@ run_guide <- function() {
 
   # Manually create 'datasetName_datatableName_attributes_draft.xlsx'
 
-  readline(paste("Create the file datasetName_datatableName_attributes_draft.xlsx in the working directory.",
-                 "\n", "Copy over the data table information from template.docx.",
+  readline(paste("Fill out the file datasetname_datatablename_attributes_draft.xlsx in the working directory.",
                  "\n", "Be sure to include the column names.",
                  "\n", "Create a file for each data table of the dataset.",
                  "\n",
@@ -104,9 +103,9 @@ run_guide <- function() {
 
   # Manually create 'datasetName_intellectual_rights.md'
   
-  readline(paste("Create the file datasetName_intellectual_rights.md in the working directory.",
-                 "\n", "Copy over the intellectual rights for this dataset.",
-                 "\n", "Remove any special formatting or unique characters.",
+  readline(paste("Select an intellectual rights license and edit the file name",
+                 "\n", "to have the form datasetname_intellectual_rights.md.",
+                 "\n", "Remove any non-used intellectual rights files in the working directory.",
                  "\n",
                  "Press <enter> when done.",
                  sep = ""))
@@ -114,7 +113,7 @@ run_guide <- function() {
   
   # Manually create 'eml_configuration.R'
 
-  readline(paste("Edit the file eml_configuration.R and save a copy in the working directory.",
+  readline(paste("Fill out the file eml_configuration.R.",
                  "\n",
                  "Press <enter> when done.",
                  sep = ""))

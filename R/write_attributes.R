@@ -12,9 +12,9 @@
 #' of attributes for a specified data table. The user is prompted to refine this table.
 #'
 #' @seealso \code{\link{run_guide}} for guidance on setting up the working directory
-#' @seealso \code{\link{eml_configuration}} for configuring eml
 #' @seealso \code{\link{write_factors}} for writing data factors
 #' @seealso \code{\link{create_eml}} for creating EML
+#' @seealso \code{\link{copy_templates}} for creating template files
 #'
 
 
