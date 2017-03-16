@@ -40,7 +40,7 @@
 #'
 
 
-copy_templates <- function(){
+copy_templates <- function(path){
   
   file.copy(from = paste(path.package("EMLtools"),
                          "\\templates\\eml_configuration.R",
