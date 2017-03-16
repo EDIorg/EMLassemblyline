@@ -36,31 +36,36 @@ create_eml <- function(path) {
 
   # Load the datasets configuration file
 
-  source(paste(path, "eml_configuration.R", sep = ""))
+  source(paste(path, "/eml_configuration.R", sep = ""))
 
   # Set file names
 
   fname_abstract <- paste(path,
+                          "/",
                           substr(template, 1, nchar(template) - 14),
                           "_abstract.docx",
                           sep = "")
   
   fname_references <- paste(path,
+                            "/",
                             substr(template, 1, nchar(template) - 14),
                             "_references.docx",
                             sep = "")
 
   fname_personnel <- paste(path,
+                           "/",
                           substr(template, 1, nchar(template) - 14),
                           "_personnel.xlsx",
                           sep = "")
 
   fname_intellectual_rights <- paste(path,
+                                     "/",
                                      substr(template, 1,
                                             nchar(template) - 14),
                                      "_intellectual_rights.md", sep = "")
 
   fname_methods <- paste(path,
+                         "/",
                          substr(template, 1, nchar(template) - 14),
                          "_methods.docx",
                          sep = "")
@@ -356,6 +361,7 @@ create_eml <- function(path) {
     
     attributes <- read.xlsx2(paste(
       path,
+      "/",
       fname_table_attributes[i], sep = ""),
       sheetIndex = 1,
       colClasses = c(rep("character",7), rep("numeric",2),rep("character",2)),
@@ -365,6 +371,7 @@ create_eml <- function(path) {
       attributes,
       paste(
         path,
+        "/",
         substr(fname_table_attributes[i],
                1,
                nchar(fname_table_attributes[i]) - 5),
@@ -378,6 +385,7 @@ create_eml <- function(path) {
     attributes <- read.table(
       paste(
         path,
+        "/",
         substr(fname_table_attributes[i],
                1,
                nchar(fname_table_attributes[i]) - 5),
@@ -422,6 +430,7 @@ create_eml <- function(path) {
 
       factors <- read.xlsx2(paste(
         path,
+        "/",
         fname_table_factors[i], sep = ""),
         sheetIndex = 1,
         colClasses = c(rep("character",3)))
@@ -439,6 +448,7 @@ create_eml <- function(path) {
           factors,
           paste(
             path,
+            "/",
             substr(fname_table_factors[i],
                    1,
                    nchar(fname_table_factors[i]) - 5),
@@ -452,6 +462,7 @@ create_eml <- function(path) {
         factors <- read.table(
           paste(
             path,
+            "/",
             substr(fname_table_factors[i],
                    1,
                    nchar(fname_table_factors[i]) - 5),
@@ -522,6 +533,7 @@ create_eml <- function(path) {
                          as.character(
                            file.size(
                              paste(path,
+                                   "/",
                                    table_names[i],
                                    sep = ""))))
 
@@ -577,6 +589,7 @@ create_eml <- function(path) {
       attributes <- read.xlsx2(
         paste(
           path,
+          "/",
           fname_spatial_vector_attributes[i],
           sep = ""),
         sheetIndex = 1,
@@ -587,6 +600,7 @@ create_eml <- function(path) {
       write.table(
         attributes,
         paste(path,
+              "/",
               substr(fname_spatial_vector_attributes[i],
                      1,
                      nchar(fname_spatial_vector_attributes[i]) - 5),
@@ -599,6 +613,7 @@ create_eml <- function(path) {
 
       attributes <- read.table(
         paste(path,
+              "/",
               substr(fname_spatial_vector_attributes[i],
                      1,
                      nchar(fname_spatial_vector_attributes[i]) - 5),
@@ -673,6 +688,7 @@ create_eml <- function(path) {
 
   unitType_df <- read.xlsx2(
     paste(path,
+          "/",
           substr(template, 1, nchar(template) - 14),
           "_unit_types.xlsx",
           sep = ""),
@@ -681,6 +697,7 @@ create_eml <- function(path) {
 
   write.table(unitType_df,
               paste(path,
+                    "/",
                     substr(template, 1, nchar(template) - 14),
                     "_unit_types.txt",
                     sep = ""),
@@ -691,6 +708,7 @@ create_eml <- function(path) {
 
   unitType_df <- read.table(
     paste(path,
+          "/",
           substr(template, 1, nchar(template) - 14),
           "_unit_types.txt",
           sep = ""),
@@ -718,6 +736,7 @@ create_eml <- function(path) {
 
     custom_units_df <- read.xlsx2(
       paste(path,
+            "/",
             substr(template, 1, nchar(template) - 14),
             "_custom_units.xlsx", sep = ""),
       sheetIndex = 1,
@@ -729,6 +748,7 @@ create_eml <- function(path) {
 
     write.table(custom_units_df,
                 paste(path,
+                      "/",
                       substr(template, 1, nchar(template) - 14),
                       "_custom_units.txt",
                       sep = ""),
@@ -739,6 +759,7 @@ create_eml <- function(path) {
 
     custom_units_df <- read.table(
       paste(path,
+            "/",
             substr(template, 1, nchar(template) - 14),
             "_custom_units.txt",
             sep = ""),
@@ -797,7 +818,7 @@ create_eml <- function(path) {
 
   if (validation_result == "TRUE"){
     print("Writing EML ...")
-    write_eml(eml, paste(path, data_package_id, ".xml", sep = ""))
+    write_eml(eml, paste(path, "/", data_package_id, ".xml", sep = ""))
   } else {
     print("EML validaton failed. EML was not written to file.")
   }

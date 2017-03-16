@@ -31,7 +31,7 @@ write_factors <- function(path) {
   
   # Load the configuration file
 
-  source(paste(path, "eml_configuration.R", sep = ""))
+  source(paste(path, "/eml_configuration.R", sep = ""))
 
   # Get system information
 
@@ -99,6 +99,7 @@ write_factors <- function(path) {
         attributes <- read.xlsx2(
           paste(
             path,
+            "/",
             attribute_files[i],
             sep = ""),
           sheetIndex = 1,
@@ -119,6 +120,7 @@ write_factors <- function(path) {
         df_table <- read.csv(
           paste(
             path,
+            "/",
             substr(attribute_files[i], 1, nchar(attribute_files[i]) - 16),
             ".csv",
             sep = ""),
@@ -176,6 +178,7 @@ write_factors <- function(path) {
 
           write.xlsx(factors,
                      paste(path,
+                           "/",
                            substr(attribute_files[i], 1, nchar(attribute_files[i]) - 16),
                            "_factors.xlsx",
                            sep = ""),
@@ -193,35 +196,37 @@ write_factors <- function(path) {
             system(paste("open",
                          paste(
                            path,
+                           "/",
                            fname_table_factors[i],
                            sep = "")))
 
             system(paste("open ",
                          path,
+                         "/",
                          substr(template, 1, nchar(template) - 14),
                          "_custom_units.csv", sep = ""))
 
             system(paste("open ",
-                         path,
+                         path,"/",
                          substr(template, 1, nchar(template) - 14),
                          "_unit_types.csv", sep = ""))
 
           } else if (os == "win"){
 
-            shell.exec(paste(path,
+            shell.exec(paste(path,"/",
                              substr(attribute_files[i],
                                     1,
                                     nchar(attribute_files[i]) - 16),
                              "_factors.xlsx",
                              sep = ""))
 
-            shell.exec(paste(path,
+            shell.exec(paste(path,"/",
                              substr(template,
                                     1,
                                     nchar(template) - 14),
                              "_custom_units.xlsx", sep = ""))
 
-            shell.exec(paste(path,
+            shell.exec(paste(path,"/",
                              substr(template,
                                     1,
                                     nchar(template) - 14),

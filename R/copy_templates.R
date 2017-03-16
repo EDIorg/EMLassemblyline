@@ -43,42 +43,42 @@
 copy_templates <- function(path){
   
   file.copy(from = paste(path.package("EMLtools"),
-                         "\\templates\\eml_configuration.R",
+                         "/templates/eml_configuration.R",
                          sep = ""),
             to = path)
   
   file.copy(from = paste(path.package("EMLtools"),
-                         "\\templates\\datasetname_abstract.docx",
+                         "/templates/datasetname_abstract.docx",
                          sep = ""),
             to = path)
   
   file.copy(from = paste(path.package("EMLtools"),
-                         "\\templates\\datasetname_cc0_1_intellectual_rights.md",
+                         "/templates/datasetname_cc0_1_intellectual_rights.md",
                          sep = ""),
             to = path)
   
   file.copy(from = paste(path.package("EMLtools"),
-                         "\\templates\\datasetname_cc_by_4.0_intellectual_rights.md",
+                         "/templates/datasetname_cc_by_4.0_intellectual_rights.md",
                          sep = ""),
             to = path)
   
   file.copy(from = paste(path.package("EMLtools"),
-                         "\\templates\\datasetname_datatablename_attributes_draft.xlsx",
+                         "/templates/datasetname_datatablename_attributes_draft.xlsx",
                          sep = ""),
             to = path)
   
   file.copy(from = paste(path.package("EMLtools"),
-                         "\\templates\\datasetname_methods.docx",
+                         "/templates/datasetname_methods.docx",
                          sep = ""),
             to = path)
   
   file.copy(from = paste(path.package("EMLtools"),
-                         "\\templates\\datasetname_personnel.xlsx",
+                         "/templates/datasetname_personnel.xlsx",
                          sep = ""),
             to = path)
   
   file.copy(from = paste(path.package("EMLtools"),
-                         "\\templates\\datasetname_shapefilesetname_shape_files_attributes_draft.xlsx",
+                         "/templates/datasetname_shapefilesetname_shape_files_attributes_draft.xlsx",
                          sep = ""),
             to = path)
   
