@@ -19,7 +19,7 @@
 
 
 write_attributes <- function(path){
-
+  
   # Parameterize function
   
   library("EML")
@@ -31,7 +31,7 @@ write_attributes <- function(path){
   # Load configuration file
 
   source(paste(path,
-               "eml_configuration.R",
+               "/eml_configuration.R",
                sep = ""))
 
   # Get system information
@@ -74,6 +74,7 @@ write_attributes <- function(path){
 
     xlsx::write.xlsx(custom_units,
                paste(path,
+                     "/",
                      substr(template, 1, nchar(template) - 14),
                      "_custom_units.xlsx", sep = ""),
                col.names = T,
@@ -87,6 +88,7 @@ write_attributes <- function(path){
 
     xlsx::write.xlsx(unit_types,
                paste(path,
+                     "/",
                      substr(template, 1, nchar(template) - 14),
                      "_unit_types.xlsx", sep = ""),
                col.names = T,
@@ -104,7 +106,7 @@ write_attributes <- function(path){
       # Read data table
 
       df_table <- read.csv(
-        paste(path, table_names[i], sep = ""),
+        paste(path, "/", table_names[i], sep = ""),
         header=TRUE,
         sep=",",
         quote="\"",
@@ -221,6 +223,7 @@ write_attributes <- function(path){
       df_attributes <- xlsx::read.xlsx2(
         paste(
           path,
+          "/",
           substr(fname_table_attributes[i],
                  1,
                  nchar(fname_table_attributes[i]) - 5),
@@ -269,6 +272,7 @@ write_attributes <- function(path){
 
       xlsx::write.xlsx(attributes,
                  paste(path,
+                       "/",
                        fname_table_attributes[i],
                        sep = ""),
                  col.names = T,
@@ -283,17 +287,20 @@ write_attributes <- function(path){
       if (os == "mac"){
         system(paste("open",
                      paste(path,
+                           "/",
                            fname_table_attributes[i],
                            sep = "")))
 
         system(paste("open ",
                      path,
+                     "/",
                      substr(template, 1, nchar(template) - 14),
                      "_custom_units.xlsx",
                      sep = ""))
 
         system(paste("open ",
                      path,
+                     "/",
                      substr(template, 1, nchar(template) - 14),
                      "_unit_types.xlsx",
                      sep = ""))
@@ -301,14 +308,17 @@ write_attributes <- function(path){
       } else if (os == "win"){
 
         shell.exec(paste(path,
+                         "/",
                          fname_table_attributes[i],
                          sep = ""))
 
         shell.exec(paste(path,
+                         "/",
                          substr(template, 1, nchar(template) - 14),
                          "_custom_units.xlsx", sep = ""))
 
         shell.exec(paste(path,
+                         "/",
                          substr(template, 1, nchar(template) - 14),
                          "_unit_types.xlsx", sep = ""))
 
@@ -346,6 +356,7 @@ write_attributes <- function(path){
   
         xlsx::write.xlsx(attributes,
                    paste(path,
+                         "/",
                          substr(spatial_vector_names[i],
                                 1,
                                 nchar(spatial_vector_names[i]) - 4),
@@ -363,6 +374,7 @@ write_attributes <- function(path){
         if (os == "mac"){
           system(paste("open",
                        paste(path,
+                             "/",
                              substr(spatial_vector_names[i],
                                     1,
                                     nchar(spatial_vector_names[i]) - 4),
@@ -371,12 +383,14 @@ write_attributes <- function(path){
   
           system(paste("open ",
                        path,
+                       "/",
                        substr(template, 1, nchar(template) - 14),
                        "_custom_units.xlsx",
                        sep = ""))
   
           system(paste("open ",
                        path,
+                       "/",
                        substr(template, 1, nchar(template) - 14),
                        "_unit_types.xlsx",
                        sep = ""))
@@ -384,6 +398,7 @@ write_attributes <- function(path){
         } else if (os == "win"){
   
           shell.exec(paste(path,
+                           "/",
                            substr(spatial_vector_names[i],
                                   1,
                                   nchar(spatial_vector_names[i]) - 4),
@@ -391,10 +406,12 @@ write_attributes <- function(path){
                            sep = ""))
   
           shell.exec(paste(path,
+                           "/",
                            substr(template, 1, nchar(template) - 14),
                            "_custom_units.xlsx", sep = ""))
   
           shell.exec(paste(path,
+                           "/",
                            substr(template, 1, nchar(template) - 14),
                            "_unit_types.xlsx", sep = ""))
   
