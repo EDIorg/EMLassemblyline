@@ -44,6 +44,11 @@ create_eml <- function(path) {
                           substr(template, 1, nchar(template) - 14),
                           "_abstract.docx",
                           sep = "")
+  
+  fname_references <- paste(path,
+                            substr(template, 1, nchar(template) - 14),
+                            "_references.docx",
+                            sep = "")
 
   fname_personnel <- paste(path,
                           substr(template, 1, nchar(template) - 14),
@@ -320,7 +325,22 @@ create_eml <- function(path) {
                  funding = funding_grants)
 
   dataset@project <- project
+  
+  # Add publication list derived from this dataset
+  
+  if (file.exists(fname_references)){
+    
+    additional_info <- as(set_TextType(fname_references), "additionalInfo")
+    
+    other_entity <- new("otherEntity", 
+                        entityName = "publications",
+                        additionalInfo = additional_info,
+                        entityType = "publications")
+    
+    dataset@otherEntity <- as(list(other_entity), "ListOfotherEntity")
 
+  }
+  
 
   # Loop through tables -------------------------------------------------------
 
