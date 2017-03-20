@@ -383,12 +383,7 @@ create_eml <- function(path) {
     
     additional_info <- as(set_TextType(fname_references), "additionalInfo")
     
-    other_entity <- new("otherEntity",
-                        entityName = "abstract",
-                        additionalInfo = additional_info,
-                        entityType = "references")
-
-    dataset@otherEntity <- as(list(other_entity), "ListOfotherEntity")
+    dataset@additionalInfo <- as(list(additional_info), "ListOfadditionalInfo")
 
   }
   
