@@ -128,7 +128,9 @@ funding_grants = trimws("National Science Foundation DEB-0212411, DEB-0613611, D
 
 data_package_id <- trimws("edi.9.2")
 
-root_system <- "edi"
+root_system <- "https://pasta.lternet.edu"
+
+schema_location <- "eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd"
 
 # Set access
 
