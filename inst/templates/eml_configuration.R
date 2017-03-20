@@ -24,10 +24,12 @@ data_table_urls <- trimws(c("https://lter.limnology.wisc.edu/sites/default/files
                             "https://lter.limnology.wisc.edu/sites/default/files/data/ltreb_ginseng_coordinates.csv"))
 
 # Enter date range of dataset
+#
+# Format must be: "YYYY-MM-DD"
 
-begin_date <- "1998"
+begin_date <- trimws("1998-01-01")
 
-end_date <- "2016"
+end_date <- trimws("2016-01-01")
 
 # Define table formatting (order must follow the above listing of tables)
 
@@ -93,16 +95,26 @@ keywords <- trimws(c("Long Term Research in Environmental Biology", "LTREB", "Na
                      "matrix models", "census", "surveys"))
 
 # Geographic information
+#
+# Enter these as decimal degrees.
+#
+# If more than one set of bounding coordinates exists, enter these into the
+# spread sheet "datasetname_spatial_bounds.xlsx".
+#
+# If the there are many geographical points that describe sampling sites (e.g.
+# many lakes spread over a continent) repeat the lattidudinal value in both
+# the North and South fields, and likewise repeat the longitudinal value in
+# both the East and West fields.
 
-geographic_location <- trimws("Indiana, Kentucky, Maryland, New York, Pennsylvania, Virginia, West Virginia, United States.")
+geographic_location <- NULL # Set this to NULL if more than one set of spatial coordinates exists
 
-coordinate_north = 42.770
+coordinate_north <- NULL # Set this to NULL if more than one set of spatial coordinates exists
 
-coordinate_east = -73.923
+coordinate_east <- NULL # Set this to NULL if more than one set of spatial coordinates exists
 
-coordinate_south = 36.731
+coordinate_south <- NULL # Set this to NULL if more than one set of spatial coordinates exists
 
-coordinate_west <- -88.155
+coordinate_west <- NULL # Set this to NULL if more than one set of spatial coordinates exists
 
 # Funding information
 

@@ -69,6 +69,13 @@ create_eml <- function(path) {
                          substr(template, 1, nchar(template) - 14),
                          "_methods.docx",
                          sep = "")
+  
+  fname_spatial_bounds <- paste(path,
+                                "/",
+                                substr(template, 1, nchar(template) - 14),
+                                "_spatial_bounds.xlsx",
+                                sep = "")
+  
 
   fname_table_attributes <- c()
   for (i in 1:length(table_names)){
@@ -270,13 +277,52 @@ create_eml <- function(path) {
 
   # Add coverage
 
-  dataset@coverage <- set_coverage(begin = begin_date,
-                                   end = end_date,
-                                   geographicDescription = geographic_location,
-                                   west = coordinate_west,
-                                   east = coordinate_east,
-                                   north = coordinate_north,
-                                   south = coordinate_south)
+  if (is.null(geographic_location) | is.null(coordinate_north) |
+      is.null(coordinate_south) | is.null(coordinate_west) |
+      is.null(coordinate_east)){
+    
+    spatial_bounds <- read.xlsx2(
+      fname_spatial_bounds,
+      sheetIndex = 1,
+      colClasses = c("character",
+                     rep("numeric", 4)),
+      stringsAsFactors = F)
+    
+    spatial_coverage_list <- list()
+    for (j in 1:dim(spatial_bounds)[1]){
+      
+      geographic_coverage <- new("geographicCoverage")
+      geographic_coverage@geographicDescription <- spatial_bounds$description[j]
+      geographic_coverage@boundingCoordinates@westBoundingCoordinate <- new("westBoundingCoordinate", spatial_bounds$west_bounding_coordinate[j])
+      geographic_coverage@boundingCoordinates@eastBoundingCoordinate <- new("eastBoundingCoordinate", spatial_bounds$east_bounding_coordinate[j])
+      geographic_coverage@boundingCoordinates@northBoundingCoordinate <- new("northBoundingCoordinate", spatial_bounds$north_bounding_coordinate[j])
+      geographic_coverage@boundingCoordinates@southBoundingCoordinate <- new("southBoundingCoordinate", spatial_bounds$south_bounding_coordinate[j])
+      
+      spatial_coverage_list[[j]] <- geographic_coverage
+
+    }
+    
+    temporal_coverage <- new("temporalCoverage")
+    temporal_coverage@rangeOfDates@beginDate <- new("beginDate")
+    temporal_coverage@rangeOfDates@beginDate@calendarDate <- new("calendarDate", begin_date)
+    temporal_coverage@rangeOfDates@endDate@calendarDate <- new("calendarDate", end_date)
+    
+    coverage <- new("coverage")
+    coverage@temporalCoverage <- as(list(temporal_coverage), "ListOftemporalCoverage")
+    coverage@geographicCoverage <- as(spatial_coverage_list, "ListOfgeographicCoverage")
+    
+    dataset@coverage <- coverage
+
+  } else {
+    
+    dataset@coverage <- set_coverage(begin = begin_date,
+                                     end = end_date,
+                                     geographicDescription = geographic_location,
+                                     west = coordinate_west,
+                                     east = coordinate_east,
+                                     north = coordinate_north,
+                                     south = coordinate_south)
+  }
 
   # Add contacts
 
@@ -337,11 +383,11 @@ create_eml <- function(path) {
     
     additional_info <- as(set_TextType(fname_references), "additionalInfo")
     
-    other_entity <- new("otherEntity", 
-                        entityName = "publications",
+    other_entity <- new("otherEntity",
+                        entityName = "abstract",
                         additionalInfo = additional_info,
-                        entityType = "publications")
-    
+                        entityType = "references")
+
     dataset@otherEntity <- as(list(other_entity), "ListOfotherEntity")
 
   }
