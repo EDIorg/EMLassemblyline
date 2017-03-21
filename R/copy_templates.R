@@ -87,6 +87,11 @@ copy_templates <- function(path){
                          sep = ""),
             to = path)
   
+  file.copy(from = paste(path.package("EMLtools"),
+                         "/templates/datasetname_additional_info.docx",
+                         sep = ""),
+            to = path)
+  
   
 }
 

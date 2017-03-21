@@ -23,6 +23,14 @@ new_attribute_names <- list(trimws(c()),
 data_table_urls <- trimws(c("https://lter.limnology.wisc.edu/sites/default/files/data/ltreb_ginseng_populations.csv",
                             "https://lter.limnology.wisc.edu/sites/default/files/data/ltreb_ginseng_coordinates.csv"))
 
+# Dataset maintenance
+# 
+# A brief description of the maintenance of this data set. This includes 
+# information about the frequency of update and whether data collection 
+# is ongoing.
+
+maintenance_description <- "ongoing"
+
 # Enter date range of dataset
 #
 # Format must be: "YYYY-MM-DD"

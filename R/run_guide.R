@@ -27,9 +27,7 @@ run_guide <- function() {
   # Move data tables
   
   readline(paste("Move the data table(s) to the working directory.",
-                 "\n", "Add the data set name as a prefix.",
-                 "\n", "E.g. gleon_lake_chloride.csv",
-                 "\n", "Where gleon_ is the data set name, and lake_chloride.csv is the data table name.",
+                 "\n", "Use underscores to span spaces (e.g. lake_chloride.csv)",
                  "\n", "Do this for each data table.",
                  "\n",
                  "Press <enter> when done.",
@@ -53,8 +51,9 @@ run_guide <- function() {
   # Create 'datasetName_template.docx'
   
   readline(paste("Move the EDI metadata template of this data set to the working directory.",
-                 "\n", "Rename the template with the same data set name (as above) and append with _template.docx.",
+                 "\n", "Rename the template with the data set name and append with _template.docx.",
                  "\n", "E.g. gleon_template.docx",
+                 "\n", "'gleon' is the data set name." ,
                  "\n",
                  "Press <enter> when done.",
                  sep = ""))
@@ -82,19 +81,28 @@ run_guide <- function() {
   # Manually create 'datasetName_personnel.xlsx'
 
   readline(paste("Fill out the file datasetname_personnel.xlsx in the working directory.",
-                 "\n", "Add information for the dataset creator(s).",
-                 "\n", "Add principal investigator(s) information (even if duplicating).",
-                 "\n", "Add dataset contact information (even if duplicating).",
+                 "\n", "Add information for the dataset creator(s) (mandatory).",
+                 "\n", "Add principal investigator(s) information (mandatory, even if duplicating).",
+                 "\n", "Add dataset contact information (mandatory, even if duplicating).",
+                 "\n", "Add associated personnel information (optional, even if duplicating).",
+                 "\n",
+                 "\n", "Acceptable entries for the role field:",
+                 "\n", "\"pi\" (for principal investigator).",
+                 "\n", "\"creator\" (for dataset creator).",
+                 "\n", "\"contact\" (for dataset contact)",
+                 "\n", "Any other entries are accepted and will be catagorized as associated party.",
+                 "\n",
                  "\n", "Remove any special formatting or unique characters.",
                  "\n",
                  "Press <enter> when done.",
                  sep = ""))
   writeLines("\n")
 
-  # Manually create 'datasetName_datatableName_attributes_draft.xlsx'
+  # Manually create 'datatableName_attributes_draft.xlsx'
 
-  readline(paste("Fill out the file datasetname_datatablename_attributes_draft.xlsx in the working directory.",
+  readline(paste("Fill out the file datatablename_attributes_draft.xlsx in the working directory.",
                  "\n", "Be sure to include the column names.",
+                 "\n", "Remove all formatting.",
                  "\n", "Create a file for each data table of the dataset.",
                  "\n",
                  "Press <enter> when done.",
@@ -106,6 +114,17 @@ run_guide <- function() {
   readline(paste("Select an intellectual rights license and edit the file name",
                  "\n", "to have the form datasetname_intellectual_rights.md.",
                  "\n", "Remove any non-used intellectual rights files in the working directory.",
+                 "\n",
+                 "Press <enter> when done.",
+                 sep = ""))
+  writeLines("\n")
+  
+  # Manually create 'datasetName_additional_info.docx'
+  
+  readline(paste("If you would like to include additional information with this dataset, enter it into datasetname_additional_info.docx.",
+                 "\n", "This is a good place for references to publications and theses derived from this dataset.",
+                 "\n", "Including this this information is optional.",
+                 "\n", "Remove any special formatting or unique characters.",
                  "\n",
                  "Press <enter> when done.",
                  sep = ""))

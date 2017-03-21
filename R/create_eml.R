@@ -46,10 +46,10 @@ create_eml <- function(path) {
                           "_abstract.docx",
                           sep = "")
   
-  fname_references <- paste(path,
+  fname_additional_info <- paste(path,
                             "/",
                             substr(template, 1, nchar(template) - 14),
-                            "_references.docx",
+                            "_additional_info.docx",
                             sep = "")
 
   fname_personnel <- paste(path,
@@ -182,6 +182,31 @@ create_eml <- function(path) {
       rp_personnel@role <- new("ListOfrole", c(role))
 
       rp_personnel
+
+    } else {
+      
+      individualName <- new(
+        "individualName",
+        givenName = trimws(personinfo[info_row,"givenName"]),
+        surName = trimws(personinfo[info_row,"surName"]))
+      
+      associated_party <- new(
+        "associatedParty",
+        individualName = individualName,
+        organizationName = trimws(personinfo[info_row,"organizationName"]),
+        electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"]))
+      
+      if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
+        userId <- new("userId")
+        userId@directory <- new("xml_attribute", "http://orcid.org")
+        userId@.Data <- trimws(personinfo[info_row,"userId"])
+        associated_party@userId <- new("ListOfuserId", c(userId))
+      }
+      
+      role <- new("role", trimws(personinfo[info_row,"role"]))
+      associated_party@role <- new("role", c(role))
+      
+      associated_party
 
     }
 
@@ -324,6 +349,12 @@ create_eml <- function(path) {
                                      south = coordinate_south)
   }
 
+  # Add maintenance
+  
+  maintenance <- new("maintenance")
+  maintenance@description <- as(maintenance_description, "description")
+  dataset@maintenance <- maintenance
+  
   # Add contacts
 
   personinfo <- read.table(
@@ -377,11 +408,35 @@ create_eml <- function(path) {
 
   dataset@project <- project
   
-  # Add publication list derived from this dataset
+  # Add associated parties
   
-  if (file.exists(fname_references)){
+  personinfo <- read.table(
+    paste(substr(fname_personnel, 1, nchar(fname_personnel) - 5),
+          ".txt",
+          sep = ""),
+    header = TRUE,
+    sep = "\t",
+    as.is = TRUE,
+    na.strings = "NA",
+    colClasses = "character")
+  
+  useI <- which(personinfo$role != "pi" &
+                  personinfo$role != "creator" &
+                  personinfo$role != "contact")
+  
+  associated_party_list <- list()
+  for (j in 1:length(useI)){
+    associated_party_list[[j]] <- set_person(info_row = useI[j],
+                               person_role = "")
+  }
+  
+  dataset@associatedParty <- as(associated_party_list, "ListOfassociatedParty")
+  
+  # Add additional information
+  
+  if (file.exists(fname_additional_info)){
     
-    additional_info <- as(set_TextType(fname_references), "additionalInfo")
+    additional_info <- as(set_TextType(fname_additional_info), "additionalInfo")
     
     dataset@additionalInfo <- as(list(additional_info), "ListOfadditionalInfo")
 
