@@ -63,7 +63,7 @@ copy_templates <- function(path){
             to = path)
   
   file.copy(from = paste(path.package("EMLtools"),
-                         "/templates/datasetname_datatablename_attributes_draft.xlsx",
+                         "/templates/datatablename_attributes_draft.xlsx",
                          sep = ""),
             to = path)
   
@@ -78,7 +78,7 @@ copy_templates <- function(path){
             to = path)
   
   file.copy(from = paste(path.package("EMLtools"),
-                         "/templates/datasetname_shapefilesetname_shape_files_attributes_draft.xlsx",
+                         "/templates/shapefilesetname_shape_files_attributes_draft.xlsx",
                          sep = ""),
             to = path)
   

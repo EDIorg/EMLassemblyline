@@ -130,6 +130,17 @@ run_guide <- function() {
                  sep = ""))
   writeLines("\n")
   
+  # Manually create 'shapefilesetname_shape_files_attributes_draft.xlsx'
+  
+  readline(paste("If you have spatial data files, then fill out the file shapefilesname_shape_files_attributes_draft.xlsx.",
+                 "\n", "Be sure to include the shape file attribute names.",
+                 "\n", "Remove all formatting.",
+                 "\n", "Create a file for each .zip directory of shape files.",
+                 "\n",
+                 "Press <enter> when done.",
+                 sep = ""))
+  writeLines("\n")
+  
   # Manually create 'eml_configuration.R'
 
   readline(paste("Fill out the file eml_configuration.R.",
