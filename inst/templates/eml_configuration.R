@@ -87,6 +87,37 @@ spatial_vector_sizes <- trimws(c())
 spatial_vector_geometry <- trimws(c())
 
 
+# Set parameters for code/scripts that process this dataset -------------------
+
+# Name of script files
+
+code_names <- trimws(c())
+
+# Code file descriptions (order must follow the above listing of code names)
+
+code_description <- trimws(c())
+
+# Define code formatting (order must follow the above listing of code names).
+
+num_header_lines_code <- trimws(c())
+
+record_delimeter_code <- trimws(c())
+
+attribute_orientation_code <- trimws(c())
+
+field_delimeter_code <- trimws(c())
+
+quote_character <- trimws(c())
+
+# URL(s) of scripts/code (order must follow the above listing of code names).
+
+code_urls <- trimws(c())
+
+# Set entity type, this is a terse description of the code type (e.g. "R code")
+
+entity_type_code <- trimws(c())
+
+
 # Set additional parameters -------------------------------------------------
 
 # Dataset title
