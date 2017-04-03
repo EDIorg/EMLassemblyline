@@ -63,15 +63,6 @@ write_factors <- function(path) {
     )
   }
 
-  fname_table_attributes <- c()
-  for (i in 1:length(table_names)){
-    fname_table_attributes[i] <- paste(
-      substr(table_names[i], 1, nchar(table_names[i]) - 4),
-      "_attributes.xlsx",
-      sep = ""
-    )
-  }
-
   # Issue warning
 
   answer <- readline(
