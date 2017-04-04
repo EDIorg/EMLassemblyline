@@ -135,7 +135,7 @@ keywords <- trimws(c("Long Term Research in Environmental Biology", "LTREB", "Na
 
 # Geographic information
 #
-# Enter these as decimal degrees.
+# Enter these as character strings of decimal degrees.
 #
 # If more than one set of bounding coordinates exists, enter these into the
 # spread sheet "datasetname_spatial_bounds.xlsx".
