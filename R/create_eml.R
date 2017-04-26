@@ -301,53 +301,14 @@ create_eml <- function(path) {
     "intellectualRights")
 
   # Add coverage
-
-  if (is.null(geographic_location) | is.null(coordinate_north) |
-      is.null(coordinate_south) | is.null(coordinate_west) |
-      is.null(coordinate_east)){
-    
-    spatial_bounds <- read.xlsx2(
-      fname_spatial_bounds,
-      sheetIndex = 1,
-      colClasses = c("character",
-                     rep("numeric", 4)),
-      stringsAsFactors = F)
-    
-    spatial_coverage_list <- list()
-    for (j in 1:dim(spatial_bounds)[1]){
-      
-      geographic_coverage <- new("geographicCoverage")
-      geographic_coverage@geographicDescription <- spatial_bounds$description[j]
-      geographic_coverage@boundingCoordinates@westBoundingCoordinate <- new("westBoundingCoordinate", spatial_bounds$west_bounding_coordinate[j])
-      geographic_coverage@boundingCoordinates@eastBoundingCoordinate <- new("eastBoundingCoordinate", spatial_bounds$east_bounding_coordinate[j])
-      geographic_coverage@boundingCoordinates@northBoundingCoordinate <- new("northBoundingCoordinate", spatial_bounds$north_bounding_coordinate[j])
-      geographic_coverage@boundingCoordinates@southBoundingCoordinate <- new("southBoundingCoordinate", spatial_bounds$south_bounding_coordinate[j])
-      
-      spatial_coverage_list[[j]] <- geographic_coverage
-
-    }
-    
-    temporal_coverage <- new("temporalCoverage")
-    temporal_coverage@rangeOfDates@beginDate <- new("beginDate")
-    temporal_coverage@rangeOfDates@beginDate@calendarDate <- new("calendarDate", begin_date)
-    temporal_coverage@rangeOfDates@endDate@calendarDate <- new("calendarDate", end_date)
-    
-    coverage <- new("coverage")
-    coverage@temporalCoverage <- as(list(temporal_coverage), "ListOftemporalCoverage")
-    coverage@geographicCoverage <- as(spatial_coverage_list, "ListOfgeographicCoverage")
-    
-    dataset@coverage <- coverage
-
-  } else {
-    
-    dataset@coverage <- set_coverage(begin = begin_date,
-                                     end = end_date,
-                                     geographicDescription = geographic_location,
-                                     west = coordinate_west,
-                                     east = coordinate_east,
-                                     north = coordinate_north,
-                                     south = coordinate_south)
-  }
+  
+  dataset@coverage <- set_coverage(begin = begin_date,
+                                   end = end_date,
+                                   geographicDescription = geographic_location,
+                                   west = coordinate_west,
+                                   east = coordinate_east,
+                                   north = coordinate_north,
+                                   south = coordinate_south)
 
   # Add maintenance
   
@@ -380,6 +341,52 @@ create_eml <- function(path) {
   # Add methods
 
   dataset@methods <- set_methods(fname_methods)
+  
+  if (file.exists(paste(path, "/", "geographic_coverage.xlsx", sep = ""))){
+    
+    df_geographic_coverage <- xlsx::read.xlsx2(paste(path,
+                                                     "/",
+                                                     "geographic_coverage.xlsx",
+                                                     sep = ""),
+                                               sheetIndex = 1)
+    
+    df_geographic_coverage$latitude <- as.character(df_geographic_coverage$latitude)
+    
+    df_geographic_coverage$longitude <- as.character(df_geographic_coverage$longitude)
+    
+    df_geographic_coverage$site <- as.character(df_geographic_coverage$site)
+    
+    list_of_coverage <- list()
+    
+    for (i in 1:dim(df_geographic_coverage)[1]){
+      
+      coverage <- new("coverage")
+      
+      geographic_description <- new("geographicDescription", df_geographic_coverage$site[i])
+      
+      bounding_coordinates <- new("boundingCoordinates",
+                                  westBoundingCoordinate = df_geographic_coverage$longitude[i],
+                                  eastBoundingCoordinate = df_geographic_coverage$longitude[i],
+                                  northBoundingCoordinate = df_geographic_coverage$latitude[i],
+                                  southBoundingCoordinate = df_geographic_coverage$latitude[i])
+      
+      geographic_coverage <- new("geographicCoverage",
+                                 geographicDescription = geographic_description,
+                                 boundingCoordinates = bounding_coordinates)
+      
+      coverage@geographicCoverage <- as(list(geographic_coverage), "ListOfgeographicCoverage")
+      
+      list_of_coverage[[i]] <- coverage
+      
+    }
+
+    sampling <- new("sampling")
+    
+    sampling@studyExtent@coverage <- as(list_of_coverage, "ListOfcoverage")
+    
+    dataset@methods@sampling <- as(list(sampling), "ListOfsampling")
+
+  }
 
   # Add project and funding
 

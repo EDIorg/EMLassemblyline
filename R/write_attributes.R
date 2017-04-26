@@ -105,12 +105,20 @@ write_attributes <- function(path){
 
       # Read data table
 
-      df_table <- read.csv(
+      # df_table <- read.csv(
+      #   paste(path, "/", table_names[i], sep = ""),
+      #   header=TRUE,
+      #   sep=",",
+      #   quote="\"",
+      #   as.is=TRUE)
+      
+      df_table <- read.table(
         paste(path, "/", table_names[i], sep = ""),
         header=TRUE,
-        sep=",",
+        sep="\t",
         quote="\"",
-        as.is=TRUE)
+        as.is=TRUE,
+        comment.char = "")
 
       # Rename columns
 

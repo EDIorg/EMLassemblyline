@@ -77,7 +77,7 @@ write_factors <- function(path) {
 
       if (!is.na(match(
         paste(substr(attribute_files[i], 1, nchar(attribute_files[i]) - 16),
-              ".csv",
+              ".txt",
               sep = ""),
         table_names)) == T){
 
@@ -108,18 +108,32 @@ write_factors <- function(path) {
 
         factors_I <- which(attributes$columnClasses %in% "factor")
 
-        df_table <- read.csv(
+        # df_table <- read.csv(
+        #   paste(
+        #     path,
+        #     "/",
+        #     substr(attribute_files[i], 1, nchar(attribute_files[i]) - 16),
+        #     ".csv",
+        #     sep = ""),
+        #   header=TRUE,
+        #   sep=",",
+        #   quote="\"",
+        #   as.is=TRUE)
+
+        df_table <- read.table(
           paste(
             path,
             "/",
             substr(attribute_files[i], 1, nchar(attribute_files[i]) - 16),
-            ".csv",
+            ".txt",
             sep = ""),
           header=TRUE,
-          sep=",",
+          sep="\t",
           quote="\"",
-          as.is=TRUE)
-
+          as.is=TRUE,
+          comment.char = "")
+        
+        
         # If there are no factors then skip to the next file
 
         if (length(factors_I) > 0){
