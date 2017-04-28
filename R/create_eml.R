@@ -29,6 +29,7 @@ create_eml <- function(path) {
   library("methods")
   library("stringr")
   library("tools")
+  options(java.parameters = "-Xmx4000m")  # Allocate RAM to java
   
   template <- trimws(list.files(path, pattern = "*_template.docx"))
 
