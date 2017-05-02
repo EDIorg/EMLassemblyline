@@ -791,20 +791,20 @@ create_eml <- function(path) {
 
   # Are custom units present in these tables?
 
-  unitType_df <- read.xlsx2(
+  custom_units_df <- read.xlsx2(
     paste(path,
           "/",
           substr(template, 1, nchar(template) - 14),
-          "_unit_types.xlsx",
+          "_custom_units.xlsx",
           sep = ""),
     sheetIndex = 1,
-    colClasses = c("character","character","numeric"))
+    colClasses = c("character","character","character","numeric","character"))
 
-  write.table(unitType_df,
+  write.table(custom_units_df,
               paste(path,
                     "/",
                     substr(template, 1, nchar(template) - 14),
-                    "_unit_types.txt",
+                    "_custom_units.txt",
                     sep = ""),
               sep = "\t",
               row.names = F,
@@ -815,14 +815,14 @@ create_eml <- function(path) {
     paste(path,
           "/",
           substr(template, 1, nchar(template) - 14),
-          "_unit_types.txt",
+          "_custom_units.txt",
           sep = ""),
     header = TRUE,
     sep = "\t",
     as.is = TRUE,
     na.strings = "")
 
-  if (nrow(unitType_df) == 1 & sum(is.na(unitType_df)) > 0){
+  if (nrow(custom_units_df) == 1 & sum(is.na(custom_units_df)) > 1){
     custom_units <- "no"
   } else {
     custom_units <- "yes"
@@ -832,24 +832,24 @@ create_eml <- function(path) {
 
   if (custom_units == "yes"){
 
-    for (j in 1:ncol(unitType_df)){
-      if (class(unitType_df[ ,j]) == "character" ||
-          (class(unitType_df[ ,j]) == "factor")){
-        unitType_df[ ,j] <- trimws(unitType_df[ ,j])
-      }
-    }
-
-    custom_units_df <- read.xlsx2(
-      paste(path,
-            "/",
-            substr(template, 1, nchar(template) - 14),
-            "_custom_units.xlsx", sep = ""),
-      sheetIndex = 1,
-      colClasses = c("character",
-                     "character",
-                     "character",
-                     "numeric",
-                     "character"))
+    # for (j in 1:ncol(unitType_df)){
+    #   if (class(unitType_df[ ,j]) == "character" ||
+    #       (class(unitType_df[ ,j]) == "factor")){
+    #     unitType_df[ ,j] <- trimws(unitType_df[ ,j])
+    #   }
+    # }
+    # 
+    # custom_units_df <- read.xlsx2(
+    #   paste(path,
+    #         "/",
+    #         substr(template, 1, nchar(template) - 14),
+    #         "_custom_units.xlsx", sep = ""),
+    #   sheetIndex = 1,
+    #   colClasses = c("character",
+    #                  "character",
+    #                  "character",
+    #                  "numeric",
+    #                  "character"))
 
     write.table(custom_units_df,
                 paste(path,
@@ -880,8 +880,7 @@ create_eml <- function(path) {
       }
     }
 
-    unitsList <- set_unitList(custom_units_df,
-                              unitType_df)
+    unitsList <- set_unitList(custom_units_df)
   }
 
   # Compile data tables
