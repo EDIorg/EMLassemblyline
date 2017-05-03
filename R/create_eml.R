@@ -634,7 +634,7 @@ create_eml <- function(path) {
                              fieldDelimiter = field_delimeter[i])
 
     physical@size <- new("size",
-                         unit = "bytes",
+                         unit = "byte",
                          as.character(
                            file.size(
                              paste(path,
