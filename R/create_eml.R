@@ -464,6 +464,16 @@ create_eml <- function(path) {
       "Now building attributes for ... ",
       table_names[i],
       sep = ""))
+    
+    # Read data table
+    
+    df_table <- read.table(
+      paste(path, "/", table_names[i], sep = ""),
+      header=TRUE,
+      sep="\t",
+      quote="\"",
+      as.is=TRUE,
+      comment.char = "")
 
     # Read attributes file (encoding necessitates read/write/read)
     
@@ -652,6 +662,10 @@ create_eml <- function(path) {
 
     physical@distribution <- new("ListOfdistribution",
                                  c(distribution))
+    
+    # Get number of records
+    
+    number_of_records <- as.character(dim(df_table)[1])
 
     # Pull together information for the data table
 
@@ -659,7 +673,8 @@ create_eml <- function(path) {
                       entityName = table_names[i],
                       entityDescription = data_table_descriptions[i],
                       physical = physical,
-                      attributeList = attributeList)
+                      attributeList = attributeList,
+                      numberOfRecords = number_of_records)
 
     data_tables_stored[[i]] <- data_table
 
