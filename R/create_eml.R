@@ -432,13 +432,15 @@ create_eml <- function(path) {
                   personinfo$role != "creator" &
                   personinfo$role != "contact")
   
-  associated_party_list <- list()
-  for (j in 1:length(useI)){
-    associated_party_list[[j]] <- set_person(info_row = useI[j],
-                               person_role = "")
-  }
   
-  dataset@associatedParty <- as(associated_party_list, "ListOfassociatedParty")
+  if (length(useI) != 0){
+    associated_party_list <- list()
+    for (j in 1:length(useI)){
+      associated_party_list[[j]] <- set_person(info_row = useI[j],
+                                               person_role = "")
+    }
+    dataset@associatedParty <- as(associated_party_list, "ListOfassociatedParty")
+  }
   
   # Add additional information
   
