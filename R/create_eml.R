@@ -385,6 +385,8 @@ create_eml <- function(path) {
     
     sampling@studyExtent@coverage <- as(list_of_coverage, "ListOfcoverage")
     
+    sampling@samplingDescription <- as("Geographic coordinates of sampling sites", "samplingDescription")
+    
     dataset@methods@sampling <- as(list(sampling), "ListOfsampling")
 
   }
