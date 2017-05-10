@@ -672,8 +672,6 @@ create_eml <- function(path) {
     physical@distribution <- new("ListOfdistribution",
                                  c(distribution))
     
-    # Create checksum
-    
     if (os == "mac"){
       
       # Insert command to retrieve MD5 checksum in mac OS
@@ -736,22 +734,36 @@ create_eml <- function(path) {
         attributeOrientation = attribute_orientation_sv[i],
         fieldDelimiter = field_delimeter_sv[i])
 
-      physical@size <- new("size",
-                           spatial_vector_sizes[i])
-
       distribution <- new("distribution",
                           online = new("online",
                                        url = spatial_vector_urls[i]))
 
       physical@distribution <- new("ListOfdistribution", c(distribution))
       
-      # Create checksum
-      
       if (os == "mac"){
         
         # Insert command to retrieve MD5 checksum in mac OS
         
       } else if (os == "win"){
+        
+        command_input <- paste("dir ",
+                               path,
+                               "\\",
+                               spatial_vector_names[i],
+                               sep = "")
+        
+        command_output <- shell(command_input, intern = TRUE)
+        
+        command_output <- grep("1 File", command_output, value = TRUE)
+        
+        command_output <- regmatches(command_output, regexpr("[[:digit:]]+[[:punct:]].*bytes$", command_output))
+        
+        spatial_vector_dir_size <- gsub("[[:punct:]]|[[:alpha:]]|[[:space:]]","",command_output)
+        
+        physical@size <- new("size",
+                             unit = "byte",
+                             spatial_vector_dir_size)
+        
         
         command_certutil <- paste("CertUtil -hashfile ",
                                   path,

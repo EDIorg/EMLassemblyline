@@ -78,10 +78,6 @@ attribute_orientation_sv <- trimws(c())
 
 field_delimeter_sv <- trimws(c())
 
-# Enter size of .zip files IN BYTES (order must follow the above listing of zipped vector folder(s) names).
-
-spatial_vector_sizes <- trimws(c())
-
 # Geometry of spatial data (order must follow the above listing of zipped vector folder(s) names).
 
 spatial_vector_geometry <- trimws(c())
