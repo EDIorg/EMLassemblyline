@@ -672,6 +672,7 @@ create_eml <- function(path) {
     physical@distribution <- new("ListOfdistribution",
                                  c(distribution))
     
+
     if (os == "mac"){
       
       # Insert command to retrieve MD5 checksum in mac OS
