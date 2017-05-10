@@ -663,11 +663,18 @@ create_eml <- function(path) {
     physical@distribution <- new("ListOfdistribution",
                                  c(distribution))
     
-    # Create two checksums
+    # Create checksum
     
-    #physical@authentication <- as("ListOfAuthentication",
-    #                              list(new("authentication", method = "SHA-1"),
-    #                                new("authentication", method = "MD5")))
+    authentication_md5 <- new("authentication",
+                              method = "MD5",
+                              md5sum(
+                                paste(path,
+                                      "\\",
+                                      table_names[i],
+                                      sep = "")))
+    
+    physical@authentication <- as(list(authentication_md5),
+                                  "ListOfauthentication")
     
     # Get number of records
     
