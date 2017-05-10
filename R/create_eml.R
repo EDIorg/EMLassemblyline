@@ -32,6 +32,15 @@ create_eml <- function(path) {
   options(java.parameters = "-Xmx4000m")  # Allocate RAM to java
   
   template <- trimws(list.files(path, pattern = "*_template.docx"))
+  
+  # Get system information
+  
+  sysinfo <- Sys.info()["sysname"]
+  if (sysinfo == "Darwin"){
+    os <- "mac"
+  } else {
+    os <- "win"
+  }
 
   # Parameterize function -----------------------------------------------------
 
@@ -663,11 +672,33 @@ create_eml <- function(path) {
     physical@distribution <- new("ListOfdistribution",
                                  c(distribution))
     
-    # Create two checksums
+    # Create checksum
     
-    #physical@authentication <- as("ListOfAuthentication",
-    #                              list(new("authentication", method = "SHA-1"),
-    #                                new("authentication", method = "MD5")))
+    if (os == "mac"){
+      
+      # Insert command to retrieve MD5 checksum in mac OS
+      
+    } else if (os == "win"){
+      
+      command_certutil <- paste("CertUtil -hashfile ",
+                                path,
+                                "\\",
+                                table_names[i],
+                                " MD5",
+                                sep = "")
+      
+      certutil_output <- system(command_certutil, intern = T)
+      
+      checksum_md5 <- gsub(" ", "", certutil_output[2])
+      
+      authentication <- new("authentication",
+                            method = "MD5",
+                            checksum_md5)
+      
+      physical@authentication <- as(list(authentication),
+                                    "ListOfauthentication")
+      
+    }
     
     # Get number of records
     
@@ -696,7 +727,7 @@ create_eml <- function(path) {
       print(paste("Now building attributes for ... ",
                   spatial_vector_names[i], sep = ""))
 
-      # Create and set physical
+      # Create physical
 
       physical <- set_physical(
         spatial_vector_names[i],
@@ -713,7 +744,35 @@ create_eml <- function(path) {
                                        url = spatial_vector_urls[i]))
 
       physical@distribution <- new("ListOfdistribution", c(distribution))
-
+      
+      # Create checksum
+      
+      if (os == "mac"){
+        
+        # Insert command to retrieve MD5 checksum in mac OS
+        
+      } else if (os == "win"){
+        
+        command_certutil <- paste("CertUtil -hashfile ",
+                                  path,
+                                  "\\",
+                                  spatial_vector_names[i],
+                                  " MD5",
+                                  sep = "")
+        
+        certutil_output <- system(command_certutil, intern = T)
+        
+        checksum_md5 <- gsub(" ", "", certutil_output[2])
+        
+        authentication <- new("authentication",
+                              method = "MD5",
+                              checksum_md5)
+        
+        physical@authentication <- as(list(authentication),
+                                      "ListOfauthentication")
+        
+      }
+      
       # Read attributes file
 
       attributes <- read.xlsx2(
