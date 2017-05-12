@@ -16,7 +16,7 @@
 
 run_guide <- function() {
   
-  library("EML")
+  #library("EML")
 
   # Create working directory
 
@@ -102,17 +102,13 @@ run_guide <- function() {
 
   # Manually create 'datatableName_attributes_draft.xlsx'
   
-  standardUnits <- get_unitList()
-  View(standardUnits$units)
+  #standardUnits <- get_unitList()
+  #View(standardUnits$units)
   
   readline(paste("Fill out the file datatablename_attributes_draft.xlsx in the working directory.",
                  "\n", "Be sure to include the column names.",
                  "\n", "Remove all formatting.",
                  "\n", "Create a file for each data table of the dataset.",
-                 "\n",
-                 "\n", "See the standard unit dictionary for acceptable units.",
-                 "\n", "Enter values from the standard unit dictionary id column.",
-                 "\n", "If you have custom units not found in the dictionary, you can add definitions for these in the write attributes step, later.",
                  "\n",
                  "Press <enter> when done.",
                  sep = ""))
