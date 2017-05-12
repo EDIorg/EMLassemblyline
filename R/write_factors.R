@@ -205,17 +205,6 @@ write_factors <- function(path) {
                            fname_table_factors[i],
                            sep = "")))
 
-            system(paste("open ",
-                         path,
-                         "/",
-                         substr(template, 1, nchar(template) - 14),
-                         "_custom_units.csv", sep = ""))
-
-            system(paste("open ",
-                         path,"/",
-                         substr(template, 1, nchar(template) - 14),
-                         "_unit_types.csv", sep = ""))
-
           } else if (os == "win"){
 
             shell.exec(paste(path,"/",
@@ -224,18 +213,6 @@ write_factors <- function(path) {
                                     nchar(attribute_files[i]) - 16),
                              "_factors.xlsx",
                              sep = ""))
-
-            shell.exec(paste(path,"/",
-                             substr(template,
-                                    1,
-                                    nchar(template) - 14),
-                             "_custom_units.xlsx", sep = ""))
-
-            shell.exec(paste(path,"/",
-                             substr(template,
-                                    1,
-                                    nchar(template) - 14),
-                             "_unit_types.xlsx", sep = ""))
 
           }
 
