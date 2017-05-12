@@ -1,43 +1,38 @@
+# Config file for functions:
+# write_attributes.R
+# write_factors.R
+# create_eml.R
+
 
 # Set parameters for data tables ----------------------------------------------
 
 # Data table names
 
-table_names <- trimws(c("ltreb_ginseng_populations.csv",
-                        "ltreb_ginseng_coordinates.csv"))
+table_names <- trimws(c("gleon_chloride_concentrations.csv",
+                        "gleon_chloride_lake_characteristics.csv"))
 
 # Data table descriptions (order must follow the above listing of tables).
 
-data_table_descriptions <-trimws(c("Census information on wild populations of ginseng",
-                                   "Bounding coordinates for each ginseng population"))
+data_table_descriptions <-trimws(c("Long term chloride concentration data from 529 lakes and reservoirs around North America and Europe.",
+                                   "Lake characteristics, including climate, road density, and impervious surface data."))
 
-# New attribute names?
+# New attribute names? 
 # If yes then entries must must follow the listed order of table_names.
 # If no, then leave the list empty.
 
 new_attribute_names <- list(trimws(c()),
-                           trimws(c()))
+                            trimws(c()))
 
 # URLs of data tables (order must follow the above listing of tables)
 
-data_table_urls <- trimws(c("https://lter.limnology.wisc.edu/sites/default/files/data/ltreb_ginseng_populations.csv",
-                            "https://lter.limnology.wisc.edu/sites/default/files/data/ltreb_ginseng_coordinates.csv"))
-
-# Dataset maintenance
-# 
-# A brief description of the maintenance of this data set. This includes 
-# information about the frequency of update and whether data collection 
-# is ongoing.
-
-maintenance_description <- "ongoing"
+data_table_urls <- trimws(c("https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride/gleon_chloride_concentrations.csv",
+                            "https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride/gleon_chloride_lake_characteristics.csv"))
 
 # Enter date range of dataset
-#
-# Format must be: "YYYY-MM-DD"
 
-begin_date <- trimws("1998-01-01")
+begin_date <- "1940-01-31"
 
-end_date <- trimws("2016-01-01")
+end_date <- "2016-07-06"
 
 # Define table formatting (order must follow the above listing of tables)
 
@@ -58,114 +53,68 @@ field_delimeter <- trimws(c(",",
 
 # Name of zipped vector folder(s) names
 
-spatial_vector_names <- trimws(c())
+spatial_vector_names <- trimws(c("gleon_chloride_lake_shape_files.zip"))
 
 # Description(s) of Zipped vector folder contents (order must follow the above listing of zipped vector folder(s) names).
 
-spatial_vector_description <-trimws(c())
+spatial_vector_description <-trimws(c("Shapefiles that geographically delimited the perimeter of the lakes were required to quantify surrounding land use patterns. Shapefiles were acquired via five methods (see methods). Attributes inherited from these methods were preserved in the shape files. To find definitions for these attributes, please trace back to the methods creator."))
 
 # URL(s) of Zipped vector folder(s) (order must follow the above listing of zipped vector folder(s)).
 
-spatial_vector_urls <- trimws(c())
+spatial_vector_urls <- trimws(c("https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride/gleon_chloride_lake_shape_files.zip"))
 
 # Define spatial vector formatting (order must follow the above listing of zipped vector folder(s) names).
 
-num_header_lines_sv <- trimws(c())
+num_header_lines_sv <- trimws(c("1"))
 
-record_delimeter_sv <- trimws(c())
+record_delimeter_sv <- trimws(c("\\r\\n"))
 
-attribute_orientation_sv <- trimws(c())
+attribute_orientation_sv <- trimws(c("column"))
 
-field_delimeter_sv <- trimws(c())
+field_delimeter_sv <- trimws(c(","))
 
 # Geometry of spatial data (order must follow the above listing of zipped vector folder(s) names).
 
-spatial_vector_geometry <- trimws(c())
+spatial_vector_geometry <- trimws(c("Polygon"))
 
 
-# Set parameters for code/scripts that process this dataset -------------------
-
-# Name of script files
-
-code_names <- trimws(c())
-
-# Code file descriptions (order must follow the above listing of code names)
-
-code_description <- trimws(c())
-
-# Define code formatting (order must follow the above listing of code names).
-
-num_header_lines_code <- trimws(c())
-
-record_delimeter_code <- trimws(c())
-
-attribute_orientation_code <- trimws(c())
-
-field_delimeter_code <- trimws(c())
-
-quote_character <- trimws(c())
-
-# URL(s) of scripts/code (order must follow the above listing of code names).
-
-code_urls <- trimws(c())
-
-# Set entity type, this is a terse description of the code type (e.g. "R code")
-
-entity_type_code <- trimws(c())
-
-
-# Set additional parameters -------------------------------------------------
+# Set parameters for data set -------------------------------------------------
 
 # Dataset title
 
-dataset_title <- trimws("Long Term Research in Environmental Biology: Demographic census data for thirty natural populations of American Ginseng: 1998-2016")
+dataset_title <- trimws("Global Lake Ecological Observatory Network: Long term chloride concentration from 529 lakes and reservoirs around North America and Europe: 1940-2016")
 
 # Dataset keywords
 
-keywords <- trimws(c("Long Term Research in Environmental Biology", "LTREB", "National Science Foundation", "NSF",
-                     "ginseng", "Panax quinquefolius", "Araliaceae", 
-                     "plant demography", "plant ecology", "plants", "plant communities", "plant growth", "plant seeds",
-                     "harvest", "deer browse", "disease", "global change",
-                     "leaf area",
-                     "matrix models", "census", "surveys"))
+keywords = trimws(c("chloride", "lakes", "reservoirs", "roads", "limnology",
+                    "salt", "impervious surface", "freshwater", "land use",
+                    "land cover", "time series", "GLEON",
+                    "Global Lake Ecological Observatory Network", "NSF",
+                    "National Science Foundation"))
 
 # Geographic information
-#
-# Enter these as character strings of decimal degrees.
-#
-# If more than one set of bounding coordinates exists, enter these into the
-# spread sheet "datasetname_spatial_bounds.xlsx".
-#
-# If the there are many geographical points that describe sampling sites (e.g.
-# many lakes spread over a continent) repeat the lattidudinal value in both
-# the North and South fields, and likewise repeat the longitudinal value in
-# both the East and West fields.
 
-geographic_location <- NULL # Set this to NULL if more than one set of spatial coordinates exists
+geographic_location <- trimws("North America and Europe")
 
-coordinate_north <- NULL # Set this to NULL if more than one set of spatial coordinates exists
+coordinate_north = 69.0
 
-coordinate_east <- NULL # Set this to NULL if more than one set of spatial coordinates exists
+coordinate_east = 28.53
 
-coordinate_south <- NULL # Set this to NULL if more than one set of spatial coordinates exists
+coordinate_south = 28.38
 
-coordinate_west <- NULL # Set this to NULL if more than one set of spatial coordinates exists
+coordinate_west <- -119.95
 
 # Funding information
 
-funding_title = trimws(c("CRB: Effects of harvesting and white tailed deer browsing on demography and population viability of American ginseng",
-                         "LTREB: Population growth and viability of American Ginseng (Panax quinquefolius L.)",
-                         "LTREB renewal: Population growth and viability of American Ginseng (Panaxquinquefolius L.)"))
+funding_title = trimws("Collaborative research: Building analytical, synthesis, and human network skills needed for macrosystem science: A next generation graduate student training model based on GLEON")
 
-funding_grants = trimws("National Science Foundation DEB-0212411, DEB-0613611, DEB-11187021")
+funding_grants = trimws("National Science Foundation 1137327 and 1137353")
 
-# Set root level info
+# Set root level parameters
 
-data_package_id <- trimws("edi.9.2")
+data_package_id <- trimws("edi.8.2")
 
-root_system <- "https://pasta.lternet.edu"
-
-schema_location <- "eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd"
+root_system <- "edi"
 
 # Set access
 
@@ -181,3 +130,13 @@ access_order <- trimws("allowFirst")
 
 access_scope <- trimws("document")
 
+maintenance_description <- "complete"
+
+schema_location <- "eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd"
+
+
+# Do not edit these -----------------------------------------------------------
+
+# Identify dataset name
+
+template <- trimws(list.files(path, pattern = "*_template.docx"))
