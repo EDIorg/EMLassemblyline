@@ -1019,11 +1019,20 @@ create_eml <- function(path) {
 
   # Write EML
 
+  print("Writing EML ...")
+  
+  write_eml(eml, paste(path, "/", data_package_id, ".xml", sep = ""))
+  
+  # Print validation results
+  
   if (validation_result == "TRUE"){
-    print("Writing EML ...")
-    write_eml(eml, paste(path, "/", data_package_id, ".xml", sep = ""))
+    
+    print("EML passed validation.")
+    
   } else {
-    print("EML validaton failed. EML was not written to file.")
+    
+    print("EML validaton failed. See warnings for details.")
+    
   }
 
 }
