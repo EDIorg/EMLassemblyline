@@ -354,12 +354,15 @@ create_eml <- function(path) {
   
   if (file.exists(paste(path, "/", "geographic_coverage.xlsx", sep = ""))){
     
-    df_geographic_coverage <- xlsx::read.xlsx2(paste(path,
-                                                     "/",
-                                                     "geographic_coverage.xlsx",
-                                                     sep = ""),
-                                               sheetIndex = 1)
-    
+    df_geographic_coverage <- read.table(paste(path,
+                                               "/",
+                                               "geographic_coverage.csv",
+                                               sep = ""),
+                                         sep = ",",
+                                         header = TRUE,
+                                         as.is = TRUE,
+                                         na.strings = "NA")
+
     df_geographic_coverage$latitude <- as.character(df_geographic_coverage$latitude)
     
     df_geographic_coverage$longitude <- as.character(df_geographic_coverage$longitude)
@@ -476,13 +479,27 @@ create_eml <- function(path) {
     
     # Read data table
     
-    df_table <- read.table(
-      paste(path, "/", table_names[i], sep = ""),
-      header=TRUE,
-      sep="\t",
-      quote="\"",
-      as.is=TRUE,
-      comment.char = "")
+    if (field_delimeter[i] == ","){
+      
+      df_table <- read.table(
+        paste(path, "/", table_names[i], sep = ""),
+        header=TRUE,
+        sep=",",
+        quote="\"",
+        as.is=TRUE,
+        comment.char = "")
+      
+    } else if (field_delimeter[i] == "\\t"){
+      
+      df_table <- read.table(
+        paste(path, "/", table_names[i], sep = ""),
+        header=TRUE,
+        sep="\t",
+        quote="\"",
+        as.is=TRUE,
+        comment.char = "")
+      
+    }
 
     # Read attributes file (encoding necessitates read/write/read)
     

@@ -105,21 +105,28 @@ write_attributes <- function(path){
 
       # Read data table
 
-      # df_table <- read.csv(
-      #   paste(path, "/", table_names[i], sep = ""),
-      #   header=TRUE,
-      #   sep=",",
-      #   quote="\"",
-      #   as.is=TRUE)
+      if (field_delimeter[i] == ","){
+        
+        df_table <- read.table(
+          paste(path, "/", table_names[i], sep = ""),
+          header=TRUE,
+          sep=",",
+          quote="\"",
+          as.is=TRUE,
+          comment.char = "")
+        
+      } else if (field_delimeter[i] == "\\t"){
+        
+        df_table <- read.table(
+          paste(path, "/", table_names[i], sep = ""),
+          header=TRUE,
+          sep="\t",
+          quote="\"",
+          as.is=TRUE,
+          comment.char = "")
+        
+      }
       
-      df_table <- read.table(
-        paste(path, "/", table_names[i], sep = ""),
-        header=TRUE,
-        sep="\t",
-        quote="\"",
-        as.is=TRUE,
-        comment.char = "")
-
       # Rename columns
 
       if (length(new_attribute_names[[i]]) > 0){
