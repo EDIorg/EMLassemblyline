@@ -81,21 +81,7 @@ write_attributes <- function(path){
                row.names = F,
                showNA = F)
 
-    unit_types <- data.frame(id = character(1),
-                             dimension = character(1),
-                             power = character(1),
-                             stringsAsFactors = FALSE)
-
-    xlsx::write.xlsx(unit_types,
-               paste(path,
-                     "/",
-                     substr(template, 1, nchar(template) - 14),
-                     "_unit_types.xlsx", sep = ""),
-               col.names = T,
-               row.names = F,
-               showNA = F)
-
-
+    
     # Loop through data tables --------------------------------------------------
 
     for (i in 1:length(table_names)){
@@ -312,13 +298,6 @@ write_attributes <- function(path){
                      "_custom_units.xlsx",
                      sep = ""))
 
-        system(paste("open ",
-                     path,
-                     "/",
-                     substr(template, 1, nchar(template) - 14),
-                     "_unit_types.xlsx",
-                     sep = ""))
-
       } else if (os == "win"){
 
         shell.exec(paste(path,
@@ -330,11 +309,6 @@ write_attributes <- function(path){
                          "/",
                          substr(template, 1, nchar(template) - 14),
                          "_custom_units.xlsx", sep = ""))
-
-        shell.exec(paste(path,
-                         "/",
-                         substr(template, 1, nchar(template) - 14),
-                         "_unit_types.xlsx", sep = ""))
 
       }
 
@@ -402,13 +376,6 @@ write_attributes <- function(path){
                        "_custom_units.xlsx",
                        sep = ""))
   
-          system(paste("open ",
-                       path,
-                       "/",
-                       substr(template, 1, nchar(template) - 14),
-                       "_unit_types.xlsx",
-                       sep = ""))
-  
         } else if (os == "win"){
   
           shell.exec(paste(path,
@@ -423,11 +390,6 @@ write_attributes <- function(path){
                            "/",
                            substr(template, 1, nchar(template) - 14),
                            "_custom_units.xlsx", sep = ""))
-  
-          shell.exec(paste(path,
-                           "/",
-                           substr(template, 1, nchar(template) - 14),
-                           "_unit_types.xlsx", sep = ""))
   
         }
   
