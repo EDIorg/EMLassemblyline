@@ -75,11 +75,11 @@ write_factors <- function(path) {
 
     for (i in 1:length(attribute_files)){
 
-      if (!is.na(match(
-        paste(substr(attribute_files[i], 1, nchar(attribute_files[i]) - 16),
-              ".txt",
-              sep = ""),
-        table_names)) == T){
+      # if (!is.na(match(
+      #   paste(substr(attribute_files[i], 1, nchar(attribute_files[i]) - 16),
+      #         ".txt",
+      #         sep = ""),
+      #   table_names)) == T){
 
 
         print(paste("Now working on ... ",
@@ -108,30 +108,30 @@ write_factors <- function(path) {
 
         factors_I <- which(attributes$columnClasses %in% "factor")
 
-        # df_table <- read.csv(
-        #   paste(
-        #     path,
-        #     "/",
-        #     substr(attribute_files[i], 1, nchar(attribute_files[i]) - 16),
-        #     ".csv",
-        #     sep = ""),
-        #   header=TRUE,
-        #   sep=",",
-        #   quote="\"",
-        #   as.is=TRUE)
-
-        df_table <- read.table(
+        df_table <- read.csv(
           paste(
             path,
             "/",
             substr(attribute_files[i], 1, nchar(attribute_files[i]) - 16),
-            ".txt",
+            ".csv",
             sep = ""),
           header=TRUE,
-          sep="\t",
+          sep=",",
           quote="\"",
-          as.is=TRUE,
-          comment.char = "")
+          as.is=TRUE)
+
+        # df_table <- read.table(
+        #   paste(
+        #     path,
+        #     "/",
+        #     substr(attribute_files[i], 1, nchar(attribute_files[i]) - 16),
+        #     ".txt",
+        #     sep = ""),
+        #   header=TRUE,
+        #   sep="\t",
+        #   quote="\"",
+        #   as.is=TRUE,
+        #   comment.char = "")
         
         
         # If there are no factors then skip to the next file
@@ -221,7 +221,7 @@ write_factors <- function(path) {
           )
         }
 
-      }
+      #}
 
     }
 
