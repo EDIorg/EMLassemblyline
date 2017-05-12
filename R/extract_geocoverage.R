@@ -75,13 +75,13 @@ extract_geocoverage <- function(path, table.name, lat.col, lon.col, site.col){
   
   # Write file for inspection
   
-  xlsx::write.xlsx(geocoverage_out,
-                   paste(path,
-                         "/",
-                         "geographic_coverage.xlsx", sep = ""),
-                   col.names = T,
-                   row.names = F,
-                   showNA = F)
+  write.table(geocoverage_out,
+              paste(path,
+                    "/",
+                    "geographic_coverage.csv", sep = ""),
+              sep = ",",
+              col.names = T,
+              row.names = F)
   
   if (os == "mac"){
     
@@ -89,14 +89,14 @@ extract_geocoverage <- function(path, table.name, lat.col, lon.col, site.col){
                  paste(
                    path,
                    "/",
-                   "geographic_coverage.xlsx",
+                   "geographic_coverage.csv",
                    sep = "")))
     
   } else if (os == "win"){
     
     shell.exec(paste(path,
                      "/",
-                     "geographic_coverage.xlsx",
+                     "geographic_coverage.csv",
                      sep = ""))
     
   }
