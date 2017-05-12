@@ -103,19 +103,9 @@ create_eml <- function(path) {
       sep = "")
   }
 
-  fname_spatial_vector_attributes <- c()
-  for (i in 1:length(spatial_vector_names)){
-    fname_spatial_vector_attributes <- paste(
-      substr(spatial_vector_names[i], 1, nchar(spatial_vector_names[i]) - 4),
-      "_attributes.xlsx",
-      sep = "")
-  }
-
-  # Initialize data entity storage (tables and spatial vectors)
+  # Initialize data entity storage (tables)
 
   data_tables_stored <- list()
-
-  spatial_vectors_stored <- list()
 
   # Load helper function to set personnel roles
 
@@ -734,171 +724,6 @@ create_eml <- function(path) {
   }
 
 
-  # Loop through the number of spatial vector data entities -------------------
-
-  if (length(spatial_vector_names) > 0){
-
-    for (i in 1:length(spatial_vector_names)){
-
-      print(paste("Now building attributes for ... ",
-                  spatial_vector_names[i], sep = ""))
-
-      # Create physical
-
-      physical <- set_physical(
-        spatial_vector_names[i],
-        numHeaderLines = num_header_lines_sv[i],
-        recordDelimiter = record_delimeter_sv[i],
-        attributeOrientation = attribute_orientation_sv[i],
-        fieldDelimiter = field_delimeter_sv[i])
-
-      distribution <- new("distribution",
-                          online = new("online",
-                                       url = spatial_vector_urls[i]))
-
-      physical@distribution <- new("ListOfdistribution", c(distribution))
-      
-      if (os == "mac"){
-        
-        # Insert command to retrieve MD5 checksum in mac OS
-        
-      } else if (os == "win"){
-        
-        command_input <- paste("dir ",
-                               path,
-                               "\\",
-                               spatial_vector_names[i],
-                               sep = "")
-        
-        command_output <- shell(command_input, intern = TRUE)
-        
-        command_output <- grep("1 File", command_output, value = TRUE)
-        
-        command_output <- regmatches(command_output, regexpr("[[:digit:]]+[[:punct:]].*bytes$", command_output))
-        
-        spatial_vector_dir_size <- gsub("[[:punct:]]|[[:alpha:]]|[[:space:]]","",command_output)
-        
-        physical@size <- new("size",
-                             unit = "byte",
-                             spatial_vector_dir_size)
-        
-        
-        command_certutil <- paste("CertUtil -hashfile ",
-                                  path,
-                                  "\\",
-                                  spatial_vector_names[i],
-                                  " MD5",
-                                  sep = "")
-        
-        certutil_output <- system(command_certutil, intern = T)
-        
-        checksum_md5 <- gsub(" ", "", certutil_output[2])
-        
-        authentication <- new("authentication",
-                              method = "MD5",
-                              checksum_md5)
-        
-        physical@authentication <- as(list(authentication),
-                                      "ListOfauthentication")
-        
-      }
-      
-      # Read attributes file
-
-      attributes <- read.xlsx2(
-        paste(
-          path,
-          "/",
-          fname_spatial_vector_attributes[i],
-          sep = ""),
-        sheetIndex = 1,
-        colClasses = c(rep("character",7),
-                       rep("numeric",2),
-                       rep("character",2)))
-
-      write.table(
-        attributes,
-        paste(path,
-              "/",
-              substr(fname_spatial_vector_attributes[i],
-                     1,
-                     nchar(fname_spatial_vector_attributes[i]) - 5),
-              ".txt",
-              sep=""),
-        sep = "\t",
-        row.names = F,
-        quote = F,
-        fileEncoding = "UTF-8")
-
-      attributes <- read.table(
-        paste(path,
-              "/",
-              substr(fname_spatial_vector_attributes[i],
-                     1,
-                     nchar(fname_spatial_vector_attributes[i]) - 5),
-              ".txt",
-              sep=""),
-        header = TRUE,
-        sep = "\t",
-        as.is = TRUE,
-        na.strings = "NA")
-
-      useI <- attributes$missingValueCodeExplanation == ""
-
-      if (!is.na(useI)){
-
-        attributes$missingValueCode[!useI] <- "NA"
-
-        codeExplanations <- attributes$missingValueCodeExplanation
-
-        attributes$missingValueCodeExplanation <- as.logical(
-          attributes$missingValueCodeExplanation)
-
-        attributes$missingValueCodeExplanation[!useI] <- codeExplanations[
-          !useI]
-
-      } else {
-
-        attributes$missingValueCode <- as.character(
-          attributes$missingValueCode)
-
-        attributes$missingValueCodeExplanation <- as.character(
-          attributes$missingValueCodeExplanation)
-      }
-
-      # Clean extraneous white spaces from attributes tables
-
-      for (j in 1:ncol(attributes)){
-        if (class(attributes[ ,j]) == "character" ||
-            (class(attributes[ ,j]) == "factor")){
-          attributes[ ,j] <- trimws(attributes[ ,j])
-        }
-      }
-
-      # Get the column classes into a vector
-
-      col_classes <- attributes[ ,"columnClasses"]
-
-      # Create the attributeList element
-
-      attributeList <- set_attributes(attributes, col_classes = col_classes)
-
-      # Pull together information for the spatial vector object
-
-      spatial_vector <- new("spatialVector",
-                        entityName = spatial_vector_names[i],
-                        entityDescription = spatial_vector_description[i],
-                        physical = physical,
-                        attributeList = attributeList,
-                        geometry = spatial_vector_geometry[i])
-
-      spatial_vectors_stored[[i]] <- spatial_vector
-
-    }
-
-  }
-
-
   # Compile datatables, spatial vector folders, and metadata files ------------
 
   print("Compiling EML ...")
@@ -1001,13 +826,6 @@ create_eml <- function(path) {
 
   dataset@dataTable <- new("ListOfdataTable",
                            data_tables_stored)
-
-  # Compile spatial vectors
-
-  if (length(spatial_vector_names) != 0){
-    dataset@spatialVector <- new("ListOfspatialVector",
-                                 spatial_vectors_stored)
-  }
 
   # Build EML
 
