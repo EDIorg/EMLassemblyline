@@ -83,11 +83,6 @@ copy_templates <- function(path){
             to = path)
   
   file.copy(from = paste(path.package("EMLtools"),
-                         "/templates/datasetname_spatial_bounds.xlsx",
-                         sep = ""),
-            to = path)
-  
-  file.copy(from = paste(path.package("EMLtools"),
                          "/templates/datasetname_additional_info.docx",
                          sep = ""),
             to = path)
