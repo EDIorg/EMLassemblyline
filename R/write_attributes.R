@@ -220,8 +220,7 @@ write_attributes <- function(path){
         attributes$columnClasses %in% "character")  # Identify factors
 
       for (j in 1:length(potential_factors)){
-        if (length(unique(df_table[ ,potential_factors[j]])) <
-            length(df_table[ ,potential_factors[j]])*.1){
+        if (length(unique(df_table[ ,potential_factors[j]])) < 40){
           attributes$columnClasses[potential_factors[j]] <- "factor"
         }
       }
