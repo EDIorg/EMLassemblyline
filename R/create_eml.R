@@ -771,25 +771,6 @@ create_eml <- function(path) {
 
   if (custom_units == "yes"){
 
-    # for (j in 1:ncol(unitType_df)){
-    #   if (class(unitType_df[ ,j]) == "character" ||
-    #       (class(unitType_df[ ,j]) == "factor")){
-    #     unitType_df[ ,j] <- trimws(unitType_df[ ,j])
-    #   }
-    # }
-    # 
-    # custom_units_df <- read.xlsx2(
-    #   paste(path,
-    #         "/",
-    #         substr(template, 1, nchar(template) - 14),
-    #         "_custom_units.xlsx", sep = ""),
-    #   sheetIndex = 1,
-    #   colClasses = c("character",
-    #                  "character",
-    #                  "character",
-    #                  "numeric",
-    #                  "character"))
-
     write.table(custom_units_df,
                 paste(path,
                       "/",
@@ -852,14 +833,6 @@ create_eml <- function(path) {
 
   validation_result <- eml_validate(eml)
 
-  # Write EML
-
-  print("Writing EML ...")
-  
-  write_eml(eml, paste(path, "/", data_package_id, ".xml", sep = ""))
-  
-  # Print validation results
-  
   if (validation_result == "TRUE"){
     
     print("EML passed validation.")
@@ -869,6 +842,12 @@ create_eml <- function(path) {
     print("EML validaton failed. See warnings for details.")
     
   }
+  
+  # Write EML
 
+  print("Writing EML ...")
+  
+  write_eml(eml, paste(path, "/", data_package_id, ".xml", sep = ""))
+  
 }
 
