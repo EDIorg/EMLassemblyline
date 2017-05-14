@@ -53,12 +53,12 @@ copy_templates <- function(path){
             to = path)
   
   file.copy(from = paste(path.package("EMLtools"),
-                         "/templates/datasetname_cc0_1_intellectual_rights.md",
+                         "/templates/datasetname_cc0_1_intellectual_rights.docx",
                          sep = ""),
             to = path)
   
   file.copy(from = paste(path.package("EMLtools"),
-                         "/templates/datasetname_cc_by_4.0_intellectual_rights.md",
+                         "/templates/datasetname_cc_by_4.0_intellectual_rights.docx",
                          sep = ""),
             to = path)
   

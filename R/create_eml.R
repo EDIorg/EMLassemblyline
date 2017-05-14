@@ -67,12 +67,12 @@ create_eml <- function(path) {
                           substr(template, 1, nchar(template) - 14),
                           "_personnel.xlsx",
                           sep = "")
-
+  
   fname_intellectual_rights <- paste(path,
                                      "/",
                                      substr(template, 1,
                                             nchar(template) - 14),
-                                     "_intellectual_rights.md", sep = "")
+                                     "_intellectual_rights.docx", sep = "")
 
   fname_methods <- paste(path,
                          "/",
