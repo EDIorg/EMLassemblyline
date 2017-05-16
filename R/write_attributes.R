@@ -1,4 +1,4 @@
-#' Write data table attributes
+#' Write attributes for input data
 #'
 #' @description  A function for writting data table attributes.
 #'
@@ -24,7 +24,7 @@ write_attributes <- function(path){
   
   library("EML")
   library("xlsx")
-  library("rmarkdown")
+  #library("rmarkdown")
   
   template <- trimws(list.files(path, pattern = "*_template.docx"))
   
