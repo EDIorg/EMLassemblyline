@@ -22,9 +22,9 @@ A function for writting data table factors.
 \seealso{
 \code{\link{run_guide}} for guidance on setting up the working directory
 
-\code{\link{eml_configuration}} for configuring eml
-
 \code{\link{write_attributes}} for writing data attributes
 
 \code{\link{create_eml}} for creating EML
+
+\code{\link{copy_templates}} for creating template files
 }
