@@ -2,11 +2,16 @@
 % Please edit documentation in R/copy_templates.R
 \name{copy_templates}
 \alias{copy_templates}
+<<<<<<< HEAD
 \title{Copy template files to user specified directory}
+=======
+\title{Copy metadata templates to the dataset working directory}
+>>>>>>> simplify_attributes_table_editing
 \usage{
 copy_templates(path)
 }
 \arguments{
+<<<<<<< HEAD
 \item{path}{A path to the working directory containing data tables and other files 
 required by the EMLtools package.}
 }
@@ -48,4 +53,39 @@ code package.
 \code{\link{write_factors}} for writing data factors
 
 \code{\link{create_eml}} for creating EML
+=======
+\item{path}{A path to the dataset working directory.}
+}
+\value{
+datasetname_abstract.docx A file to contain the abstract of your
+    dataset.
+    
+    datasetname_additional_info.docx A file to contain additional
+    information about your dataset.
+    
+    datasetname_cc_by_4.0_intellectual_rights.docx One of two intellectual 
+    rights licenses to consider for your dataset. Do not edit this text.
+    
+    datasetname_cc0_1_intellectual_rights.docx One of two intellectual 
+    rights licenses to consider for your dataset. Do not edit this text.
+    
+    datasetname_methods.docx A file to contain methods used to create your
+    dataset.
+    
+    datasetname_personnel.xlsx A file to contain information on personnel
+    associated with this dataset.
+    
+    datatablename_attributes_draft.xlsx A file to contain information about
+    your data tables.
+    
+    eml_configuration.R A file to contain additional information about the
+    data entities (i.e. data tables, .zip directories of spatial vectors,
+    etc.).
+}
+\description{
+This function populates the dataset working directory with 
+    templates to be filled out by the data provider. These templates store
+    information about the data that are later called upon by 
+    \code{create_eml} when building the EML and writing the .xml file.
+>>>>>>> simplify_attributes_table_editing
 }

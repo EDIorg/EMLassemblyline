@@ -24,7 +24,7 @@ write_attributes <- function(path){
   
   library("EML")
   library("xlsx")
-  library("rmarkdown")
+  #library("rmarkdown")
   
   template <- trimws(list.files(path, pattern = "*_template.docx"))
   

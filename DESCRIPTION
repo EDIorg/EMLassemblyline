@@ -1,13 +1,27 @@
 Package: EMLtools
-Title: A set of functions to help create metadata in the Ecological Metadata Language standard
+Title: Functions to create metadata in the Ecological Metadata Language standard
 Version: 0.0.0.9000
 Authors@R: person("Colin", "Smith", email = "colin.smith@wisc.edu", role = c("aut", "cre"))
-Description: A set of functions to help create metadata in the Ecological Metadata Language standard
+Description: A set of functions facilitating a workflow to create metadata
+    for a user supplied data entity. Templates are copied to the working
+    directory and instructions prompt the user to provide requisite 
+    information. The user selects from a collection of functions to extract
+    information from the data entities, and finally executes a fancy wrapper
+    function to build, validate, and write the EML metadata to file.
 Depends: R (>= 3.3.2)
-Imports: EML, rJava, rmarkdown, xlsx, xlsxjars
+Imports: 
+    EML (>= 1.0.3),
+    rJava (>= 0.9-8),
+    stringr (>= 1.2.0), 
+    tools (>= 3.4.0),
+    xlsx (>= 0.5.7)
+Suggests:
 License: Creative Commons license CC0 1.0 Universal
 Encoding: UTF-8
 LazyData: true
 URL: http://github.com/EDIorg/EMLtools
 BugReports: http://github.com/EDIorg/EMLtools/issues
 RoxygenNote: 6.0.1
+SystemRequirements: 
+    Microsoft Word,
+    Microsoft Excel
