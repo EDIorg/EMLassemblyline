@@ -1,13 +1,19 @@
-#' User guide
+#' A guide for filling out metadata templates
 #'
-#' @description  A guide for creating files required by functions of the EMLtools package.
+#' @description  
+#'     A guide for filling out the metadata templates and configuration file
+#'     created by \code{copy_templates}.
 #'
 #' @usage run_guide()
 #'
-#' @return Prompts the user to complete a series of tasks before running other functions
-#' of the EMLtools package.
+#' @return
+#'     A series of prompts are displayed in the Console window describing steps
+#'     and rules for you to follow in completing the metadata templates.
+#'     Press <enter> to proceed to the next step.
 #'
 #' @details
+#' 
+#'     A reiteration of steps
 #'     datasetname_abstract.docx Enter the abstract for your dataset here.
 #'     
 #'     datasetname_additional_info.docx This is a good place to present 

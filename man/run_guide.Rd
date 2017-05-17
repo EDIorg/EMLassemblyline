@@ -2,7 +2,7 @@
 % Please edit documentation in R/run_guide.R
 \name{run_guide}
 \alias{run_guide}
-\title{User guide}
+\title{A guide for filling out the metadata templates}
 \usage{
 run_guide()
 }
@@ -11,7 +11,8 @@ Prompts the user to complete a series of tasks before running other functions
 of the EMLtools package.
 }
 \description{
-A guide for creating files required by functions of the EMLtools package.
+A guide for filling out the metadata templates and configuration file
+    created by \code{copy_templates}.
 }
 \details{
 datasetname_abstract.docx Enter the abstract for your dataset here.
@@ -41,16 +42,6 @@ datasetname_abstract.docx Enter the abstract for your dataset here.
     and dataset here.
 }
 \seealso{
-<<<<<<< HEAD
-\code{\link{write_attributes}} for writing data attributes
-
-\code{\link{write_factors}} for writing data factors
-
-\code{\link{create_eml}} for creating EML
-
-\code{\link{copy_templates}} for creating template files
-=======
 \code{\link{copy_templates}} to copy templates to the dataset
     working directory.
->>>>>>> simplify_attributes_table_editing
 }
