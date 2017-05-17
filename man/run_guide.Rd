@@ -13,12 +13,34 @@ of the EMLtools package.
 \description{
 A guide for creating files required by functions of the EMLtools package.
 }
+\details{
+datasetname_abstract.docx Enter the abstract for your dataset here.
+    
+    datasetname_additional_info.docx This is a good place to present 
+    additional text based information that doesn't fall under the scope
+    of the abstract or methods (e.g. A list of research articles derived
+    from this dataset).
+    
+    datasetname_cc_by_4.0_intellectual_rights.docx One of two recommended 
+    licenses for your dataset. Do not edit this text.
+    
+    datasetname_cc0_1_intellectual_rights.docx One of two recommended 
+    licenses for your dataset. Do not edit this text.
+    
+    datasetname_methods.docx Enter the methods used to create this dataset
+    here.
+    
+    datasetname_personnel.xlsx Enter information on personnel associated
+    with this dataset here.
+    
+    datatablename_attributes_draft.xlsx Enter information about the 
+    attributes of your data here. Replicate this file for each of your data
+    entities (i.e. data tables).
+    
+    eml_configuration.R Enter additional information about the data entities
+    and dataset here.
+}
 \seealso{
-\code{\link{write_attributes}} for writing data attributes
-
-\code{\link{write_factors}} for writing data factors
-
-\code{\link{create_eml}} for creating EML
-
-\code{\link{copy_templates}} for creating template files
+\code{\link{copy_templates}} to copy templates to the dataset
+    working directory.
 }

@@ -2,50 +2,42 @@
 % Please edit documentation in R/copy_templates.R
 \name{copy_templates}
 \alias{copy_templates}
-\title{Copy template files to user specified directory}
+\title{Copy metadata templates to the dataset working directory}
 \usage{
 copy_templates(path)
 }
 \arguments{
-\item{path}{A path to the working directory containing data tables and other files 
-required by the EMLtools package.}
+\item{path}{A path to the dataset working directory.}
 }
 \value{
-'datasetname_abstract.docx' - File containing the dataset abstract.
-
-'datasetname_methods.docx' - File containing the dataset methods.
-
-'datasetname_*_intellectual_rights.md' - File containing the intellectual rights of
-the dataset. The two release licenses recommended by the Environmental Data Initiative
-are available.
-
-'datasetname_personnel.xlsx' - File containing personnel information relevant to the
-dataset.
-
-'datasetname_datatablename_attributes_draft.xlsx' - File containing data table attribute 
-information. Replicate this file for each data table.
-
-'datasetname_shapefilesetname_shape_files_attributes_draft.xlsx' - File containing
-attribute information for a collection of shape files. Replicate this file for each data
-table.
-
-'eml_configuration.R' - File containing parameters for functions of this code package.
-
-NOTEs: Replace 'datasetname' with the name of your dataset. Replace datatablename and
-shapefilesetname with the name of your data tables and shape file sets. Remove the text
-'_cc0_1' or '_cc_by_4.0' from the intellectual rights file you choose to use.
+datasetname_abstract.docx A file to contain the abstract of your
+    dataset.
+    
+    datasetname_additional_info.docx A file to contain additional
+    information about your dataset.
+    
+    datasetname_cc_by_4.0_intellectual_rights.docx One of two intellectual 
+    rights licenses to consider for your dataset. Do not edit this text.
+    
+    datasetname_cc0_1_intellectual_rights.docx One of two intellectual 
+    rights licenses to consider for your dataset. Do not edit this text.
+    
+    datasetname_methods.docx A file to contain methods used to create your
+    dataset.
+    
+    datasetname_personnel.xlsx A file to contain information on personnel
+    associated with this dataset.
+    
+    datatablename_attributes_draft.xlsx A file to contain information about
+    your data tables.
+    
+    eml_configuration.R A file to contain additional information about the
+    data entities (i.e. data tables, .zip directories of spatial vectors,
+    etc.).
 }
 \description{
-A function for populating the working directory of a dataset with template
-files to be filled out by the user. These files are inputs to some functions of this 
-code package.
-}
-\seealso{
-\code{\link{run_guide}} for guidance on setting up the working directory
-
-\code{\link{write_attributes}} for writing data attributes
-
-\code{\link{write_factors}} for writing data factors
-
-\code{\link{create_eml}} for creating EML
+This function populates the dataset working directory with 
+    templates to be filled out by the data provider. These templates store
+    information about the data that are later called upon by 
+    \code{create_eml} when building the EML and writing the .xml file.
 }
