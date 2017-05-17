@@ -1,4 +1,4 @@
-#' Write data table attributes
+#' Write attributes for input data
 #'
 #' @description  A function for writting data table attributes.
 #'
