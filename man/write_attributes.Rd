@@ -2,7 +2,7 @@
 % Please edit documentation in R/write_attributes.R
 \name{write_attributes}
 \alias{write_attributes}
-\title{Write data table attributes}
+\title{Write attributes for input data}
 \usage{
 write_attributes(path)
 }
@@ -21,9 +21,9 @@ A function for writting data table attributes.
 \seealso{
 \code{\link{run_guide}} for guidance on setting up the working directory
 
-\code{\link{eml_configuration}} for configuring eml
-
 \code{\link{write_factors}} for writing data factors
 
 \code{\link{create_eml}} for creating EML
+
+\code{\link{copy_templates}} for creating template files
 }

@@ -14,11 +14,11 @@ of the EMLtools package.
 A guide for creating files required by functions of the EMLtools package.
 }
 \seealso{
-\code{\link{eml_configuration}} for configuring eml
-
 \code{\link{write_attributes}} for writing data attributes
 
 \code{\link{write_factors}} for writing data factors
 
 \code{\link{create_eml}} for creating EML
+
+\code{\link{copy_templates}} for creating template files
 }
