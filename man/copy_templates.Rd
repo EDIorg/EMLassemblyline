@@ -39,3 +39,11 @@ Create a working directory for your dataset and execute this
     information about the data that are later called upon by 
     \code{create_eml} when building the EML and writing the .xml file.
 }
+\details{
+If template files already exist in the working directory, new templates 
+    will not be transfered.
+}
+\seealso{
+\code{\link{run_guide}} for guidance on completing the template 
+    files.
+}

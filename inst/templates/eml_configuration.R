@@ -1,142 +1,256 @@
-# Config file for functions:
-# write_attributes.R
-# write_factors.R
-# create_eml.R
+#' The configuration file
+#'
+#' @description  This file contains information about the dataset that is 
+#'     not included in the template files. It is called upon by 
+#'     \code{write_attributes}, \code{write_factors}, and \code{create_eml}. 
+#'     This file contains the EMLtools version number that is required for 
+#'     successful operation.
+#'     
+#' @seealso \code{\link{copy_templates}} to copy metadata templates to the 
+#'     dataset working directory.
 
 
-# Set parameters for data tables ----------------------------------------------
-
-# Data table names
-
-table_names <- trimws(c("gleon_chloride_concentrations.csv",
-                        "gleon_chloride_lake_characteristics.csv"))
-
-# Data table descriptions (order must follow the above listing of tables).
-
-data_table_descriptions <-trimws(c("Long term chloride concentration data from 529 lakes and reservoirs around North America and Europe.",
-                                   "Lake characteristics, including climate, road density, and impervious surface data."))
-
-# New attribute names? 
-# If yes then entries must must follow the listed order of table_names.
-# If no, then leave the list empty.
-
-new_attribute_names <- list(trimws(c()),
-                            trimws(c()))
-
-# URLs of data tables (order must follow the above listing of tables)
-
-data_table_urls <- trimws(c("https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride/gleon_chloride_concentrations.csv",
-                            "https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride/gleon_chloride_lake_characteristics.csv"))
-
-# Enter date range of dataset
-
-begin_date <- "1940-01-31"
-
-end_date <- "2016-07-06"
-
-# Define table formatting (order must follow the above listing of tables)
-
-num_header_lines <- trimws(c("1",
-                             "1"))
-
-record_delimeter <- trimws(c("\\r\\n",
-                             "\\r\\n"))
-
-attribute_orientation <- trimws(c("column",
-                                  "column"))
-
-field_delimeter <- trimws(c(",",
-                            ","))
 
 
-# Set parameters for spatial vectors ------------------------------------------
-
-# Name of zipped vector folder(s) names
-
-spatial_vector_names <- trimws(c("gleon_chloride_lake_shape_files.zip"))
-
-# Description(s) of Zipped vector folder contents (order must follow the above listing of zipped vector folder(s) names).
-
-spatial_vector_description <-trimws(c("Shapefiles that geographically delimited the perimeter of the lakes were required to quantify surrounding land use patterns. Shapefiles were acquired via five methods (see methods). Attributes inherited from these methods were preserved in the shape files. To find definitions for these attributes, please trace back to the methods creator."))
-
-# URL(s) of Zipped vector folder(s) (order must follow the above listing of zipped vector folder(s)).
-
-spatial_vector_urls <- trimws(c("https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride/gleon_chloride_lake_shape_files.zip"))
-
-# Define spatial vector formatting (order must follow the above listing of zipped vector folder(s) names).
-
-num_header_lines_sv <- trimws(c("1"))
-
-record_delimeter_sv <- trimws(c("\\r\\n"))
-
-attribute_orientation_sv <- trimws(c("column"))
-
-field_delimeter_sv <- trimws(c(","))
-
-# Geometry of spatial data (order must follow the above listing of zipped vector folder(s) names).
-
-spatial_vector_geometry <- trimws(c("Polygon"))
+# Define dataset parameters ---------------------------------------------------
 
 
-# Set parameters for data set -------------------------------------------------
+# Enter a title for your dataset. Be descriptive (more than 5 words). We 
+# recommend the following syntax:
+#
+# "Project name: Broad description: Time span"
+#
+# Example:
+#
+# dataset_title <- "Global Lake Ecological Observatory Network: Long term chloride concentration from 529 lakes and reservoirs around North America and Europe: 1940-2016"
 
-# Dataset title
-
-dataset_title <- trimws("Global Lake Ecological Observatory Network: Long term chloride concentration from 529 lakes and reservoirs around North America and Europe: 1940-2016")
-
-# Dataset keywords
-
-keywords = trimws(c("chloride", "lakes", "reservoirs", "roads", "limnology",
-                    "salt", "impervious surface", "freshwater", "land use",
-                    "land cover", "time series", "GLEON",
-                    "Global Lake Ecological Observatory Network", "NSF",
-                    "National Science Foundation"))
-
-# Geographic information
-
-geographic_location <- trimws("North America and Europe")
-
-coordinate_north = 69.0
-
-coordinate_east = 28.53
-
-coordinate_south = 28.38
-
-coordinate_west <- -119.95
-
-# Funding information
-
-funding_title = trimws("Collaborative research: Building analytical, synthesis, and human network skills needed for macrosystem science: A next generation graduate student training model based on GLEON")
-
-funding_grants = trimws("National Science Foundation 1137327 and 1137353")
-
-# Set root level parameters
-
-data_package_id <- trimws("edi.8.2")
-
-root_system <- "edi"
-
-# Set access
-
-author_system <- "edi"
-
-allow_principals <- trimws(c("uid=csmith,o=LTER,dc=ecoinformatics,dc=org",
-                             "public"))
-
-allow_permissions <- trimws(c("all",
-                              "read")) # order follows allow_principals
-
-access_order <- trimws("allowFirst")
-
-access_scope <- trimws("document")
-
-maintenance_description <- "complete"
-
-schema_location <- "eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd"
+dataset_title <- ""
 
 
-# Do not edit these -----------------------------------------------------------
+# Enter the name of your dataset. This name must match that used for your 
+# template files.
+# 
+# Example:
+#
+# dataset_name <- "gleon_chloride"
 
-# Identify dataset name
+dataset_name <- ""
 
-template <- trimws(list.files(path, pattern = "*_template.docx"))
+
+# List keywords that best describe your dataset. Consult this resource 
+# (http://vocab.lternet.edu/vocab/vocab/index.php) as you populate the list.
+# Additionally, use keywords that describe your lab, station, and project 
+# (e.g. GLEON, NSF). Combine keywords into a vector.
+#
+# Example:
+#
+# keywords = c("chloride", "lakes", "reservoirs", "roads", "limnology",
+#              "salt", "impervious surface", "freshwater", "land use",
+#              "land cover", "time series", "GLEON",
+#              "Global Lake Ecological Observatory Network", "NSF",
+#              "National Science Foundation")
+
+keywords = c("")
+
+
+# Enter the beginning and ending dates covered by your dataset.
+#
+# Example:
+#
+# begin_date <- "1940-01-31"
+# 
+# end_date <- "2016-07-06"
+
+begin_date <- ""
+
+end_date <- ""
+
+
+# Enter the spatial bounding coordinates of your dataset (in decimal degrees) 
+# and a brief description. Longitudes west of the prime meridian and latitudes 
+# south of the equator are prefixed with a minus sign (i.e. dash -). A detailed 
+# list of sampling site coordinates can be supplied by using the 
+# extract_geocoverage() function.
+#
+# Example:
+#
+# geographic_location <- "North America and Europe"
+# 
+# coordinate_north <- 69.0
+# 
+# coordinate_east <- 28.53
+# 
+# coordinate_south <- 28.38
+# 
+# coordinate_west <- -119.95
+
+geographic_location <- ""
+
+coordinate_north <- 
+
+coordinate_east <- 
+
+coordinate_south <-
+
+coordinate_west <- 
+
+
+# Provide information on funding of this work. If several grants were involved,
+# list the main grant first.
+#
+# Example
+#
+# funding_title = "Collaborative research: Building analytical, synthesis, and human network skills needed for macrosystem science: A next generation graduate student training model based on GLEON"
+# 
+# funding_grants = "National Science Foundation 1137327 and 1137353"
+  
+funding_title = ""
+
+funding_grants = ""
+  
+
+# Specify whether data collection for this dataset is "ongoing" or "completed".
+#
+# Example:
+# 
+# maintenance_description <- "completed"
+
+maintenance_description <- ""  
+  
+
+# Enter information about the system you are publishing this dataset under. 
+# If you have not been provided a value for this field by EDI staff, enter the 
+# default value "edi".
+#
+# Example:
+#
+# root_system <- "edi"
+
+root_system <- ""
+
+
+# Enter your user ID. If you haven't received a user ID from EDI staff, use 
+# the default value "name".
+#
+# Example:
+#
+# user_id <- "clnsmith"
+
+user_id <- ""
+
+
+# Enter the author system your user ID is associated with. If you haven't 
+# received a author system specification from EDI staff, use the default value 
+# "edi".
+# 
+# Example:
+#
+# author_system <- "edi"
+
+author_system <- ""
+
+
+# Enter the data package ID. If you have not been provided a package ID from 
+# EDI staff, enter the default value "edi.1.1".
+#
+# Example:
+#
+# data_package_id <- "edi.8.2"
+
+data_package_id <- ""
+
+  
+
+  
+# Set data table parameters ---------------------------------------------------
+
+
+# Enter the full name(s) of your data tables as a combined vector.
+#
+# Example:
+#
+# table_names <- c("gleon_chloride_concentrations.csv",
+#                  "gleon_chloride_lake_characteristics.csv")
+
+table_names <- c("")
+
+
+# Provide a brief descriptions for your data tables. If more than one data 
+# table, then combine your descriptions into a vector (order must follow that 
+# listed in the table_names object).
+#
+# Example:
+#
+# data_table_descriptions <- c("Long term chloride concentration data from 529 lakes and reservoirs around North America and Europe.",
+#                                    "Lake characteristics, including climate, road density, and impervious surface data.")
+
+data_table_descriptions <- c("")
+
+
+# Enter the URLs of the data tables if you will have them stored on a publicly 
+# accessible server (i.e. does not require user ID or password) so PASTA can 
+# upload them into the repository. If you will be manually uploading your data 
+# tables to PASTA, then leave this object empty (i.e. ""). If more than one 
+# data table, then combine your descriptions into a vector (order must follow 
+# that listed in the table_names object).
+#
+# Example:
+#
+# data_table_urls <- c("https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride/gleon_chloride_concentrations.csv",
+#                      "https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride/gleon_chloride_lake_characteristics.csv")
+
+data_table_urls <- c("")
+
+
+# Define the number of header lines of your data table(s). This is the number of 
+# lines prior to the beginning of data. If there is more than one data table, 
+# then combine these values into a vector (order must follow that listed in the 
+# table_names object).
+#
+# Example:
+#
+# num_header_lines <- c("1", 
+#                       "1")
+
+num_header_lines <- c("")
+
+
+# Define the end of line specifier for your data table(s). This character 
+# denotes the end of a data row. If your computers operating system is 
+# Windows, then enter "\\r\\n". If you are using a Mac OS then use the value 
+# "\\n". If there is more than one data table, then combine these values into 
+# a vector (order must follow that listed in the table_names object).
+#
+# Example:
+#
+# record_delimeter <- c("\\r\\n",
+#                       "\\r\\n")
+
+record_delimeter <- c("")
+
+
+# Define the orientation of attributes in your data table. Acceptable values 
+# are "column" or "row". If there is more than one data table, then combine 
+# these values into a vector (order must follow that listed in the table_names 
+# object).
+#
+# Example:
+#
+# attribute_orientation <- c("column",
+#                            "column")
+
+attribute_orientation <- c("")
+
+
+# Define the field delimeter of your data tables. Acceptable values are "comma" 
+# and "tab". If there is more than one data table, then combine these values 
+# into a vector (order must follow that listed in the table_names object).
+#
+# Example:
+#
+# field_delimeter <- c("comma",
+#                      "comma")
+
+field_delimeter <- c("")
+
+

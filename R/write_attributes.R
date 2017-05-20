@@ -1,21 +1,56 @@
-#' Write attributes for input data
+#' Write attributes from input metadata
 #'
-#' @description  A function for writting data table attributes.
+#' @description  A function for writing attributes of a data entity specified 
+#'     in the user supplied file 
+#'     \emph{datasetname_datatablename_attributes_draft.xlsx}.
 #'
 #' @usage write_attributes(path)
 #'
-#' @param path A path to the working directory containing files required by the EMLtools
-#' package. Run the function run_guide() for instructions on how to populate this working
-#' directory with the requisite files.
+#' @param path A path to the dataset working directory containing completed 
+#'     metadata and configuration files.
 #'
-#' @return A .xlsx file in the specified working directory containing an approximated set
-#' of attributes for a specified data table. The user is prompted to refine this table.
+#' @return A file in the dataset working directory titled 
+#'     \emph{datasetname_datatablename_attributes.xlsx} containing attributes 
+#'     entered in the file 
+#'     \emph{datasetname_datatablename_attributes_draft.xlsx} along with 
+#'     attribute number type (i.e. whole, real, etc.), and minimum and maximum 
+#'     values.
+#'     
+#'     A file in the dataset working directory titled 
+#'     \emph{datasetname_custom_units.xlsx} definitions for custom units not 
+#'     found in the standard unit dictionary.
+#'     
+#' @details 
+#'     The user is guided through a series of steps in the process of 
+#'     finalizing attributes for the data table(s) of the dataset. If 
+#'     adjustments to the attributes table needs editing later, you do not have 
+#'     to execute this function again (doing so will overwrite your previous 
+#'     work) rather you can edit the content directly by opening the file in 
+#'     Excel. Additional information for each of these steps:
+#'         \itemize{
+#'             \item \strong{Overwrite existing files?} Would you like to 
+#'             overwrite your previous work? If so enter "y" into the
+#'             console. If not enter "n".  Once overwritten you will not be 
+#'             able to recover your work. If you select "y" you will over write 
+#'             all the attribute tables in the working directory previously 
+#'             created with this function. You can not choose to only 
+#'             overwrite one or another. If you must do this temporarily move 
+#'             your attribute table from the working directory while you create 
+#'             new ones.
+#'             \item \strong{Now building attributes for ...} An indicator 
+#'             message is printed to the console as each attribute table is 
+#'             compiled.
+#'         }
 #'
-#' @seealso \code{\link{run_guide}} for guidance on setting up the working directory
-#' @seealso \code{\link{write_factors}} for writing data factors
-#' @seealso \code{\link{create_eml}} for creating EML
-#' @seealso \code{\link{copy_templates}} for creating template files
-#'
+#' @seealso \code{\link{copy_templates}} to copy metadata templates to the 
+#'     dataset working directory.
+#' @seealso \code{\link{run_guide}} for guidance on completing the template 
+#'     files.
+#' @seealso \code{\link{write_factors}} to create the factors table if the 
+#'     attributes table contains factors.
+#' @seealso \code{\link{extract_geocoverage}} to extract detailed geographic 
+#'     coordinates of sampling sites.
+#' @seealso \code{\link{create_eml}} to write the EML file.
 
 
 write_attributes <- function(path){

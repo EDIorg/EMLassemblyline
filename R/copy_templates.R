@@ -32,6 +32,13 @@
 #'     
 #'     eml_configuration.R A file for information about your data entities 
 #'     (i.e. data tables, .zip directories of spatial vectors, etc.).
+#'     
+#' @details 
+#'     If template files already exist in the working directory, new templates 
+#'     will not be transfered.
+#'     
+#' @seealso \code{\link{run_guide}} for guidance on completing the template 
+#'     files.
 
 
 copy_templates <- function(path){
