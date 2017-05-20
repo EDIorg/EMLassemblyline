@@ -31,7 +31,10 @@ create_eml <- function(path) {
   library("tools")
   options(java.parameters = "-Xmx4000m")  # Allocate RAM to java
   
-  template <- trimws(list.files(path, pattern = "*_template.docx"))
+  template <- paste(dataset_name,
+                    "_template.docx",
+                    sep = "")
+  #template <- trimws(list.files(path, pattern = "*_template.docx"))
   
   # Get system information
   
@@ -240,6 +243,19 @@ create_eml <- function(path) {
 
   # Build eml-access module
 
+  allow_principals <- c(paste("uid=",
+                              user_id,
+                              ",o=LTER,dc=ecoinformatics,dc=org",
+                              sep = ""),
+                        "public")
+  
+  allow_permissions <- c("all",
+                         "read") # order follows allow_principals
+  
+  access_order <- "allowFirst"
+  
+  access_scope <- "document"
+  
   access <- new("access",
                 scope = access_scope,
                 order = access_order,
@@ -809,10 +825,10 @@ create_eml <- function(path) {
                            data_tables_stored)
 
   # Build EML
-
+  
   if (custom_units == "yes"){
     eml <- new("eml",
-               schemaLocation = schema_location,
+               schemaLocation = "eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd",
                packageId = data_package_id,
                system = root_system,
                access = access,

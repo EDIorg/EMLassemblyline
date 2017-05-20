@@ -26,8 +26,11 @@ write_factors <- function(path) {
   library("EML")
   library("xlsx")
   #library("rmarkdown")
-
-  template <- trimws(list.files(path, pattern = "*_template.docx"))
+  
+  template <- paste(dataset_name,
+                    "_template.docx",
+                    sep = "")
+  #template <- trimws(list.files(path, pattern = "*_template.docx"))
   
   # Load the configuration file
 
