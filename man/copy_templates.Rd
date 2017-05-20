@@ -15,6 +15,9 @@ datasetname_abstract.docx A file for the abstract of your data.
     datasetname_additional_info.docx A file for additional information about 
     your data.
     
+    datasetname_custom_units.xlsx A file for custom units not defined in 
+    the standard unit dictionary.
+    
     datasetname_cc_by_4.0_intellectual_rights.docx One of two intellectual 
     rights licenses to consider for your dataset. Do not edit this text.
     
@@ -38,4 +41,12 @@ Create a working directory for your dataset and execute this
     templates to be filled out by the data provider. These templates store
     information about the data that are later called upon by 
     \code{create_eml} when building the EML and writing the .xml file.
+}
+\details{
+If template files already exist in the working directory, new templates 
+    will not be transfered.
+}
+\seealso{
+\code{\link{run_guide}} for guidance on completing the template 
+    files.
 }

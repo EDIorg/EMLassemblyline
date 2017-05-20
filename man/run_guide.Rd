@@ -97,11 +97,24 @@ Additional information for completing each step:
         you in the Source window of RStudio. Search the dictionary for a 
         unit and enter the unit "name" as it appears in the  dictionary. 
         Unit names are case sensitive. If you cannot find a unit in the 
-        dictionary, there will be an opportunity when executing 
-        \code{\link{write_attributes}} to define custom units. Valid units 
-        must be convertible to SI Units (i.e. International System of 
-        Units). If it cannot be converted then list it in the attribute 
-        defintion field and enter "dimensionless" in the unit field. 
+        dictionary, enter the unit in the file 
+        datasetname_custom_units.xlsx. Valid custom units must be 
+        convertible to SI Units (i.e. International System of Units). If it 
+        cannot be converted then list it in the attribute defintion field 
+        and enter "dimensionless" in the unit field. To create a custom 
+        unit, define the:
+        \itemize{
+            \item \strong{id} This is equivalent to the unit name. Reference 
+            the standard unit dictionary formatting.
+            \item \strong{unitType} The type of unit being defined. 
+            Reference the dictionary for examples.
+            \item \strong{parentSI} The SI equivalent of the id you have 
+            entered.
+            \item \strong{multiplierToSI} This is the multiplier to convert 
+            from your custom unit to the SI unit equivalent.
+            \item \strong{description} A description of the custom unit. 
+            Reference the dictionary for examples.
+        }
         \item \strong{dateTimeFormatString} Enter the date time format 
         string for each attribute of "Date" class. Remember, a class of Date 
         specifies the attribute as a date, time, or datetime. Enter the 

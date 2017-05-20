@@ -16,6 +16,9 @@
 #'     datasetname_additional_info.docx A file for additional information about 
 #'     your data.
 #'     
+#'     datasetname_custom_units.xlsx A file for custom units not defined in 
+#'     the standard unit dictionary.
+#'     
 #'     datasetname_cc_by_4.0_intellectual_rights.docx One of two intellectual 
 #'     rights licenses to consider for your dataset. Do not edit this text.
 #'     
@@ -32,6 +35,13 @@
 #'     
 #'     eml_configuration.R A file for information about your data entities 
 #'     (i.e. data tables, .zip directories of spatial vectors, etc.).
+#'     
+#' @details 
+#'     If template files already exist in the working directory, new templates 
+#'     will not be transfered.
+#'     
+#' @seealso \code{\link{run_guide}} for guidance on completing the template 
+#'     files.
 
 
 copy_templates <- function(path){
@@ -43,6 +53,11 @@ copy_templates <- function(path){
   
   file.copy(from = paste(path.package("EMLtools"),
                          "/templates/datasetname_abstract.docx",
+                         sep = ""),
+            to = path)
+  
+  file.copy(from = paste(path.package("EMLtools"),
+                         "/templates/datasetname_custom_units.xlsx",
                          sep = ""),
             to = path)
   
