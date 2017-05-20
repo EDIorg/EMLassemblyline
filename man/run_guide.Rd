@@ -2,7 +2,7 @@
 % Please edit documentation in R/run_guide.R
 \name{run_guide}
 \alias{run_guide}
-\title{A guide for filling out the metadata templates}
+\title{A guide to completing the metadata templates}
 \usage{
 run_guide()
 }
@@ -12,13 +12,13 @@ A series of prompts are displayed in the Console window describing steps
     Press <enter> to proceed to the next step.
 }
 \description{
-A guide for filling out the metadata templates and configuration file
+A guide to completing the metadata templates and configuration file
     created by \code{copy_templates}.
 }
 \details{
-Additional details for each step:
+Additional information for completing each step:
     
-    "Move your data table(s) to the working directory." Move your datasets
+    \emph{"Move your data table(s) to the working directory."} Move your datasets
     to the working directory and rename them following the convention 
     'datasetname_datatablename.dat', where datasetname is the name of your
     dataset (e.g. gleon_chloride), datatablename is the name of your data 
@@ -26,26 +26,26 @@ Additional details for each step:
     your data table (e.g. .csv). In this example the data table name is
     gleon_chloride_lake_characteristics.csv.
     
-    "Write protect your data table(s)." Write protect your data table(s) to
+    \emph{"Write protect your data table(s)."} Write protect your data table(s) to
     prevent Microsoft Excel (used in the course of creating EML for your 
     dataset) from automatically converting date time fields to an Excel 
     preferred format. To do this, right click the file and select 
     'Read-only' if using Windows OS or 'locked' for Mac OS.
     
-    "Write an abstract for your dataset ...". Write an abstract for your
+    \emph{"Write an abstract for your dataset ..."} Write an abstract for your
     dataset in the file datasetname_abstract.docx (e.g.
     gleon_chloride_abstract.docx). The abstract should cover what, why, 
     when, where, and how. Do not use special characters, symbols, or special
     formatting.
     
-    "Place additional information ...". Place additional info in the file 
+    \emph{"Place additional information ..."} Place additional info in the file 
     datasetname_additional_info.docx (e.g. 
     gleon_chloride_additional_info.docx). This is a good place to present 
     additional text based information that doesn't fall under the scope of
     the abstract or methods (e.g. A list of research articles derived from
     this dataset). Do not use special characters, symbols, or special formatting.
     
-    "Select an intellectual rights license for your dataset." Select an
+    \emph{"Select an intellectual rights license for your dataset."} Select an
     intellectual rights license. We have two recommendations: 
     'datasetname_cc_by_4.0_intellectual_rights.docx' and
     'datasetname_cc0_1_intellectual_rights.docx'. Do not edit the text of
@@ -54,7 +54,7 @@ Additional details for each step:
     datasetname_intellectual_rights.docx (e.g. 
     gleon_chloride_intellectual_rights.docx)
     
-    "Write the methods for your dataset ...". Write the methods for your
+    \emph{"Write the methods for your dataset ..."} Write the methods for your
     dataset in the file datasetname_methods.docx (e.g. 
     gleon_chloride_methods.docx). Please be specific, include instrument 
     descriptions, or point to a protocol online. If this is a data 
@@ -62,7 +62,7 @@ Additional details for each step:
     plus general citation information. Do not use special characters, 
     symbols, or special formatting.
     
-    "Enter personnel information for your dataset ...". Enter personnel 
+    \emph{"Enter personnel information for your dataset ..."} Enter personnel 
     information for your dataset in the file datasetname_personnel.xlsx 
     (e.g. gleon_chloride_personnel.xlsx). Valid entries for role are: 
     "creator" = dataset creator, "pi" = principal investigator, "contact" = 
@@ -73,18 +73,78 @@ Additional details for each step:
     investigator are mandatory. Do not use special characters, 
     symbols, or special formatting.
     
-    "Add data table attributes ...". Add data table attributes to the file 
+    \emph{"Add data table attributes ..."} Add data table attributes to the file 
     datatablename_attributes_draft.xlsx 
-    (e.g. gleon_chloride_lake_characteristics_attributes_draft.xlsx). Create 
-    an attributes file for each data table. ENTER FIELD DEFINITIONS AND INSTRUCTIONS.
-    STANDARD UNIT DICTIONARY. Do not use special characters, symbols, or special formatting.
-
-    "Fill out the file eml_configuration.R." Provide additional information 
-    about your dataset. Detailed instructions are listed as comments in this 
-    file.
+    (e.g. gleon_chloride_lake_characteristics_attributes_draft.xlsx). 
+    Create an attributes file for each data table. Do not use special 
+    characters, symbols, or special formatting in this file. Instructions 
+    for completing the attribute table are as follows:
+    \itemize{
+        \item \strong{attributeDefinition} Define the attribute. Be 
+        specific, it can be lengthy. Do not use special characters or 
+        formatting. 
+        \item \strong{class} Specify the attribute class. This is the type 
+        of value stored under the attribute. Valid options are: "numeric" 
+        for numeric data, "character" for any data containing text or 
+        symbols, and "Date" for date time data. The list of valid options 
+        are case sensitive. If a attribute has class numeric or Date, then 
+        all values of this attribute must be either numeric or Date. If any 
+        character strings are present in the numeric attribute, it must be 
+        classified as character. Similarly if any values of Date do not 
+        match the date time format string (details below), then this 
+        attribute must be classified as character. 
+        \item \strong{unit} The standard unit dictionary has been opened for 
+        you in the Source window of RStudio. Search the dictionary for a 
+        unit and enter the unit "name" as it appears in the  dictionary. 
+        Unit names are case sensitive. If you cannot find a unit in the 
+        dictionary, there will be an opportunity when executing 
+        \code{\link{write_attributes}} to define custom units. Valid units 
+        must be convertible to SI Units (i.e. International System of 
+        Units). If it cannot be converted then list it in the attribute 
+        defintion field and enter "dimensionless" in the unit field. 
+        \item \strong{dateTimeFormatString} Enter the date time format 
+        string for each attribute of "Date" class. Remember, a class of Date 
+        specifies the attribute as a date, time, or datetime. Enter the 
+        format string in this field. Below are some general rules for 
+        constructing format strings. Additional information is listed under
+        "dateTime-eml-attribute" of the current EML specification 
+        (https://knb.ecoinformatics.org/#external//emlparser/docs/index.html).
+        Valid date time formats are a combination of date, time, and time 
+        zone strings:
+        \itemize{
+            \item \strong{Date format strings:} YYYY-MM-DD, YYYY, YYYYMMDD,
+            YYYY-MM, YYYYMM, YYYY-Www, YYYYWww, YYYY-Www-D, YYYYWwwD, 
+            YYYY-DDD, YYYYDDD; where "YYYY" is year, "MM" is month, "DD" is 
+            day of month, "W" (capitalized) denotes the following value 
+            "ww" is the week of year, and "DDD" is day of year.
+            \item \strong{Time format strings:} hh:mm:ss.sss, hhmmss.sss,
+            hh:mm:ss, hhmmss, hh:mm, hhmm, hh; where "hh" is hour (in 24 hr
+            clock), "mm" is minute, "ss" is second, and "ss.sss" is decimal
+            second.
+            \item\strong{Time zone format strings:} Z, +hh:mm, +hhmm, +hh,
+            -hh:mm, -hhmm, -hh; where "Z" (capitalized) is Coordinated 
+            Universal Time, and "+" and "-" denote times ahead and behind UTC
+            respectively.
+        }
+        If reporting a date without time, select one of the date format 
+        strings. If reporting a date and time, select one date and one time 
+        format string and combine with a single space (e.g. 
+        "YYYY-MM-DD hh:mm") or with a "T" (e.g. "YYYY-MM-DDThh:mm"). If 
+        reporting a date and time, it is recommended that a time zone 
+        specifier be appended without a space 
+        (e.g. "YYYY-MM-DD hh:mm-hh:mm", or "YYYY-MM-DDThh:mm-hh:mm").
+        \item \strong{missingValueCode} If a code for 'no data' is used,
+        specify it here (e.g. NA, -99999).
+        \item \strong{missingValueCodeExplanation} Define the missing value 
+        code here.
+    }
+   
+    \emph{"Fill out the file eml_configuration.R"} Provide additional 
+    information about your dataset. Detailed instructions are listed as 
+    comments in this file.
     
-    "Make sure all files of the working directory are closed." Some 
-    functions will error out if files are open.
+    \emph{"Make sure all files of the working directory are closed."} Some 
+    functions will error out if these files are open.
 }
 \seealso{
 \code{\link{copy_templates}} to copy metadata templates to the 

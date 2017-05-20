@@ -8,7 +8,8 @@ Description: A set of functions facilitating a workflow to create metadata
     information. The user selects from a collection of functions to extract
     information from the data entities, and finally executes a fancy wrapper
     function to build, validate, and write the EML metadata to file.
-Depends: R (>= 3.3.2)
+Depends: 
+    R (>= 3.3.2)
 Imports: 
     EML (>= 1.0.3),
     rJava (>= 0.9-8),
