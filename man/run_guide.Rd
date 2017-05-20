@@ -7,41 +7,86 @@
 run_guide()
 }
 \value{
-Prompts the user to complete a series of tasks before running other functions
-of the EMLtools package.
+A series of prompts are displayed in the Console window describing steps
+    and rules to be followed when filling out the metadata templates.
+    Press <enter> to proceed to the next step.
 }
 \description{
 A guide for filling out the metadata templates and configuration file
     created by \code{copy_templates}.
 }
 \details{
-datasetname_abstract.docx Enter the abstract for your dataset here.
+Additional details for each step:
     
-    datasetname_additional_info.docx This is a good place to present 
-    additional text based information that doesn't fall under the scope
-    of the abstract or methods (e.g. A list of research articles derived
-    from this dataset).
+    "Move your data table(s) to the working directory." Move your datasets
+    to the working directory and rename them following the convention 
+    'datasetname_datatablename.dat', where datasetname is the name of your
+    dataset (e.g. gleon_chloride), datatablename is the name of your data 
+    table (e.g. lake_characteristics), and .dat is the file extension of
+    your data table (e.g. .csv). In this example the data table name is
+    gleon_chloride_lake_characteristics.csv.
     
-    datasetname_cc_by_4.0_intellectual_rights.docx One of two recommended 
-    licenses for your dataset. Do not edit this text.
+    "Write protect your data table(s)." Write protect your data table(s) to
+    prevent Microsoft Excel (used in the course of creating EML for your 
+    dataset) from automatically converting date time fields to an Excel 
+    preferred format. To do this, right click the file and select 
+    'Read-only' if using Windows OS or 'locked' for Mac OS.
     
-    datasetname_cc0_1_intellectual_rights.docx One of two recommended 
-    licenses for your dataset. Do not edit this text.
+    "Write an abstract for your dataset ...". Write an abstract for your
+    dataset in the file datasetname_abstract.docx (e.g.
+    gleon_chloride_abstract.docx). The abstract should cover what, why, 
+    when, where, and how. Do not use special characters, symbols, or special
+    formatting.
     
-    datasetname_methods.docx Enter the methods used to create this dataset
-    here.
+    "Place additional information ...". Place additional info in the file 
+    datasetname_additional_info.docx (e.g. 
+    gleon_chloride_additional_info.docx). This is a good place to present 
+    additional text based information that doesn't fall under the scope of
+    the abstract or methods (e.g. A list of research articles derived from
+    this dataset). Do not use special characters, symbols, or special formatting.
     
-    datasetname_personnel.xlsx Enter information on personnel associated
-    with this dataset here.
+    "Select an intellectual rights license for your dataset." Select an
+    intellectual rights license. We have two recommendations: 
+    'datasetname_cc_by_4.0_intellectual_rights.docx' and
+    'datasetname_cc0_1_intellectual_rights.docx'. Do not edit the text of
+    these files. Delete the file you will not be using. Rename the file you
+    will be using to match the convention 
+    datasetname_intellectual_rights.docx (e.g. 
+    gleon_chloride_intellectual_rights.docx)
     
-    datatablename_attributes_draft.xlsx Enter information about the 
-    attributes of your data here. Replicate this file for each of your data
-    entities (i.e. data tables).
+    "Write the methods for your dataset ...". Write the methods for your
+    dataset in the file datasetname_methods.docx (e.g. 
+    gleon_chloride_methods.docx). Please be specific, include instrument 
+    descriptions, or point to a protocol online. If this is a data 
+    compilation please specify datasets used, preferably their DOI or URL 
+    plus general citation information. Do not use special characters, 
+    symbols, or special formatting.
     
-    eml_configuration.R Enter additional information about the data entities
-    and dataset here.
+    "Enter personnel information for your dataset ...". Enter personnel 
+    information for your dataset in the file datasetname_personnel.xlsx 
+    (e.g. gleon_chloride_personnel.xlsx). Valid entries for role are: 
+    "creator" = dataset creator, "pi" = principal investigator, "contact" = 
+    dataset contact. Any other entries into the 'role' column are 
+    acceptable and will be defined under the associated party element of 
+    this dataset. If a person serves more than one role, add this role as 
+    an additional line. A dataset creator, contact, and principal 
+    investigator are mandatory. Do not use special characters, 
+    symbols, or special formatting.
+    
+    "Add data table attributes ...". Add data table attributes to the file 
+    datatablename_attributes_draft.xlsx 
+    (e.g. gleon_chloride_lake_characteristics_attributes_draft.xlsx). Create 
+    an attributes file for each data table. ENTER FIELD DEFINITIONS AND INSTRUCTIONS.
+    STANDARD UNIT DICTIONARY. Do not use special characters, symbols, or special formatting.
+
+    "Fill out the file eml_configuration.R." Provide additional information 
+    about your dataset. Detailed instructions are listed as comments in this 
+    file.
+    
+    "Make sure all files of the working directory are closed." Some 
+    functions will error out if files are open.
 }
 \seealso{
-\code{\link{copy_templates}} to copy templates to the dataset
-    working directory.
+\code{\link{copy_templates}} to copy metadata templates to the 
+    dataset working directory.
 }

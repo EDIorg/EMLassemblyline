@@ -1,6 +1,7 @@
 #' Copy metadata templates to the dataset working directory
 #'
-#' @description  This function populates the dataset working directory with 
+#' @description  Create a working directory for your dataset and execute this
+#'     function. This function populates the dataset working directory with 
 #'     templates to be filled out by the data provider. These templates store
 #'     information about the data that are later called upon by 
 #'     \code{create_eml} when building the EML and writing the .xml file.
@@ -10,11 +11,10 @@
 #' @param path A path to the dataset working directory.
 #'
 #' @return 
-#'     datasetname_abstract.docx A file to contain the abstract of your
-#'     dataset.
+#'     datasetname_abstract.docx A file for the abstract of your data.
 #'     
-#'     datasetname_additional_info.docx A file to contain additional
-#'     information about your dataset.
+#'     datasetname_additional_info.docx A file for additional information about 
+#'     your data.
 #'     
 #'     datasetname_cc_by_4.0_intellectual_rights.docx One of two intellectual 
 #'     rights licenses to consider for your dataset. Do not edit this text.
@@ -22,18 +22,16 @@
 #'     datasetname_cc0_1_intellectual_rights.docx One of two intellectual 
 #'     rights licenses to consider for your dataset. Do not edit this text.
 #'     
-#'     datasetname_methods.docx A file to contain methods used to create your
-#'     dataset.
+#'     datasetname_methods.docx A file for methods used in create your data.
 #'     
-#'     datasetname_personnel.xlsx A file to contain information on personnel
-#'     associated with this dataset.
+#'     datasetname_personnel.xlsx A file for information on personnel 
+#'     associated with this data.
 #'     
-#'     datatablename_attributes_draft.xlsx A file to contain information about
-#'     your data tables.
+#'     datatablename_attributes_draft.xlsx A file for information about your 
+#'     data tables.
 #'     
-#'     eml_configuration.R A file to contain additional information about the
-#'     data entities (i.e. data tables, .zip directories of spatial vectors,
-#'     etc.).
+#'     eml_configuration.R A file for information about your data entities 
+#'     (i.e. data tables, .zip directories of spatial vectors, etc.).
 
 
 copy_templates <- function(path){
@@ -85,6 +83,3 @@ copy_templates <- function(path){
   
   
 }
-
-
-

@@ -1,208 +1,226 @@
-#' A guide for filling out metadata templates
+#' A guide to completing the metadata templates
 #'
 #' @description  
-#'     A guide for filling out the metadata templates and configuration file
+#'     A guide to completing the metadata templates and configuration file
 #'     created by \code{copy_templates}.
 #'
 #' @usage run_guide()
 #'
 #' @return
 #'     A series of prompts are displayed in the Console window describing steps
-#'     and rules for you to follow in completing the metadata templates.
+#'     and rules to be followed when filling out the metadata templates.
 #'     Press <enter> to proceed to the next step.
 #'
 #' @details
 #' 
-#'     A reiteration of steps
-#'     datasetname_abstract.docx Enter the abstract for your dataset here.
+#'     Additional details for each step:
 #'     
-#'     datasetname_additional_info.docx This is a good place to present 
-#'     additional text based information that doesn't fall under the scope
-#'     of the abstract or methods (e.g. A list of research articles derived
-#'     from this dataset).
+#'     "Move your data table(s) to the working directory." Move your datasets
+#'     to the working directory and rename them following the convention 
+#'     'datasetname_datatablename.dat', where datasetname is the name of your
+#'     dataset (e.g. gleon_chloride), datatablename is the name of your data 
+#'     table (e.g. lake_characteristics), and .dat is the file extension of
+#'     your data table (e.g. .csv). In this example the data table name is
+#'     gleon_chloride_lake_characteristics.csv.
 #'     
-#'     datasetname_cc_by_4.0_intellectual_rights.docx One of two recommended 
-#'     licenses for your dataset. Do not edit this text.
+#'     "Write protect your data table(s)." Write protect your data table(s) to
+#'     prevent Microsoft Excel (used in the course of creating EML for your 
+#'     dataset) from automatically converting date time fields to an Excel 
+#'     preferred format. To do this, right click the file and select 
+#'     'Read-only' if using Windows OS or 'locked' for Mac OS.
 #'     
-#'     datasetname_cc0_1_intellectual_rights.docx One of two recommended 
-#'     licenses for your dataset. Do not edit this text.
+#'     "Write an abstract for your dataset ...". Write an abstract for your
+#'     dataset in the file datasetname_abstract.docx (e.g.
+#'     gleon_chloride_abstract.docx). The abstract should cover what, why, 
+#'     when, where, and how. Do not use special characters, symbols, or special
+#'     formatting.
 #'     
-#'     datasetname_methods.docx Enter the methods used to create this dataset
-#'     here.
+#'     "Place additional information ...". Place additional info in the file 
+#'     datasetname_additional_info.docx (e.g. 
+#'     gleon_chloride_additional_info.docx). This is a good place to present 
+#'     additional text based information that doesn't fall under the scope of
+#'     the abstract or methods (e.g. A list of research articles derived from
+#'     this dataset). Do not use special characters, symbols, or special formatting.
 #'     
-#'     datasetname_personnel.xlsx Enter information on personnel associated
-#'     with this dataset here.
+#'     "Select an intellectual rights license for your dataset." Select an
+#'     intellectual rights license. We have two recommendations: 
+#'     'datasetname_cc_by_4.0_intellectual_rights.docx' and
+#'     'datasetname_cc0_1_intellectual_rights.docx'. Do not edit the text of
+#'     these files. Delete the file you will not be using. Rename the file you
+#'     will be using to match the convention 
+#'     datasetname_intellectual_rights.docx (e.g. 
+#'     gleon_chloride_intellectual_rights.docx)
 #'     
-#'     datatablename_attributes_draft.xlsx Enter information about the 
-#'     attributes of your data here. Replicate this file for each of your data
-#'     entities (i.e. data tables).
+#'     "Write the methods for your dataset ...". Write the methods for your
+#'     dataset in the file datasetname_methods.docx (e.g. 
+#'     gleon_chloride_methods.docx). Please be specific, include instrument 
+#'     descriptions, or point to a protocol online. If this is a data 
+#'     compilation please specify datasets used, preferably their DOI or URL 
+#'     plus general citation information. Do not use special characters, 
+#'     symbols, or special formatting.
 #'     
-#'     eml_configuration.R Enter additional information about the data entities
-#'     and dataset here.
+#'     "Enter personnel information for your dataset ...". Enter personnel 
+#'     information for your dataset in the file datasetname_personnel.xlsx 
+#'     (e.g. gleon_chloride_personnel.xlsx). Valid entries for role are: 
+#'     "creator" = dataset creator, "pi" = principal investigator, "contact" = 
+#'     dataset contact. Any other entries into the 'role' column are 
+#'     acceptable and will be defined under the associated party element of 
+#'     this dataset. If a person serves more than one role, add this role as 
+#'     an additional line. A dataset creator, contact, and principal 
+#'     investigator are mandatory. Do not use special characters, 
+#'     symbols, or special formatting.
+#'     
+#'     "Add data table attributes ...". Add data table attributes to the file 
+#'     datatablename_attributes_draft.xlsx 
+#'     (e.g. gleon_chloride_lake_characteristics_attributes_draft.xlsx). 
+#'     Create an attributes file for each data table. ENTER FIELD DEFINITIONS AND INSTRUCTIONS.
+#'     STANDARD UNIT DICTIONARY. Do not use special characters, symbols, or special formatting.
 #'
-#' @seealso \code{\link{copy_templates}} to copy templates to the dataset
-#'     working directory.
+#'     "Fill out the file eml_configuration.R." Provide additional information 
+#'     about your dataset. Detailed instructions are listed as comments in this 
+#'     file.
+#'     
+#'     "Make sure all files of the working directory are closed." Some 
+#'     functions will error out if files are open.
+#'
+#' @seealso \code{\link{copy_templates}} to copy metadata templates to the 
+#'     dataset working directory.
 
 
 run_guide <- function() {
   
-  #library("EML")
-
-  # Create working directory
-
-  readline(paste("Create a working directory for this data set.",
+  library("EML")
+  
+  # Additional details are presented in the R Documentation of this function
+  
+  readline(paste("Details for each of the following steps are found in the documentation for this function.",
                  "\n",
                  "Press <enter> when done.",
                  sep = ""))
   writeLines("\n")
-
-  # Move data tables
+  
+  # Move data tables to the working directory
   
   readline(paste("Move the data table(s) to the working directory.",
-                 "\n", "Use underscores to span spaces (e.g. lake_chloride.csv)",
+                 "\n", "Rename the files with the recommended convention.",
+                 "\n", "See R Documentation of run_guide() for details.",
                  "\n", "Do this for each data table.",
                  "\n",
                  "Press <enter> when done.",
                  sep = ""))
   writeLines("\n")
   
-  # Write protect the data tables
+  # Write protect data tables
   
   readline(paste("Write protect your data table(s).",
                  "\n", "Right click on the data table file.",
-                 "\n", "Select 'properties'.",
-                 "\n", "Select 'Read-only'.",
-                 "\n", "Click 'Apply'.",
+                 "\n", "Select 'Read-only' for Windows OS.",
+                 "\n", "Select 'locked' for Mac OS.",
                  "\n", "Click 'OK'.",
                  "\n", "Do this for each data table.",
                  "\n",
                  "Press <enter> when done.",
                  sep = ""))
   writeLines("\n")
-
-  # Create 'datasetName_template.docx'
+  # 
+  #   # Create 'datasetName_template.docx'
+  #   
+  #   readline(paste("Move the EDI metadata template of this data set to the working directory.",
+  #                  "\n", "Rename the template with the data set name and append with _template.docx.",
+  #                  "\n", "E.g. gleon_template.docx",
+  #                  "\n", "'gleon' is the data set name." ,
+  #                  "\n",
+  #                  "Press <enter> when done.",
+  #                  sep = ""))
+  #   writeLines("\n")
   
-  readline(paste("Move the EDI metadata template of this data set to the working directory.",
-                 "\n", "Rename the template with the data set name and append with _template.docx.",
-                 "\n", "E.g. gleon_template.docx",
-                 "\n", "'gleon' is the data set name." ,
-                 "\n",
-                 "Press <enter> when done.",
-                 sep = ""))
-  writeLines("\n")
-
-  # Create 'datasetName_methods.docx'
-
-  readline(paste("Fill out the file datasetname_methods.docx in the working directory.",
-                 "\n", "Remove any special formatting or unique characters.",
-                 "\n",
-                 "Press <enter> when done.",
-                 sep = ""))
-  writeLines("\n")
-
-  # Manually create 'datasetName_abstract.docx'
-
-  readline(paste("Fill out the file datasetname_abstract.docx in the working directory.",
-                 "\n", "Copy over the abstract from template.docx.",
-                 "\n", "Remove any special formatting or unique characters.",
-                 "\n",
-                 "Press <enter> when done.",
-                 sep = ""))
-  writeLines("\n")
-
-  # Manually create 'datasetName_personnel.xlsx'
-
-  readline(paste("Fill out the file datasetname_personnel.xlsx in the working directory.",
-                 "\n", "Add information for the dataset creator(s) (mandatory).",
-                 "\n", "Add principal investigator(s) information (mandatory, even if duplicating).",
-                 "\n", "Add dataset contact information (mandatory, even if duplicating).",
-                 "\n", "Add associated personnel information (optional, even if duplicating).",
-                 "\n",
-                 "\n", "Acceptable entries for the role field:",
-                 "\n", "\"pi\" (for principal investigator).",
-                 "\n", "\"creator\" (for dataset creator).",
-                 "\n", "\"contact\" (for dataset contact)",
-                 "\n", "Any other entries are accepted and will be catagorized as associated party.",
-                 "\n",
-                 "\n", "Remove any special formatting or unique characters.",
-                 "\n",
-                 "Press <enter> when done.",
-                 sep = ""))
-  writeLines("\n")
-
-  # Manually create 'datatableName_attributes_draft.xlsx'
+  # Create abstract
   
-  #standardUnits <- get_unitList()
-  #View(standardUnits$units)
-  
-  readline(paste("Fill out the file datatablename_attributes_draft.xlsx in the working directory.",
-                 "\n", "Be sure to include the column names.",
-                 "\n", "Remove all formatting.",
-                 "\n", "Create a file for each data table of the dataset.",
-                 "\n",
-                 "Press <enter> when done.",
-                 sep = ""))
-  writeLines("\n")
-
-  # Manually create 'datasetName_intellectual_rights.md'
-  
-  readline(paste("Select an intellectual rights license and edit the file name",
-                 "\n", "to have the form datasetname_intellectual_rights.md.",
-                 "\n", "Remove any non-used intellectual rights files from the working directory.",
+  readline(paste("Write an abstract for your dataset in the file datasetname_abstract.docx.",
+                 "\n", "Rename this file following the naming convention.",
                  "\n",
                  "Press <enter> when done.",
                  sep = ""))
   writeLines("\n")
   
-  # Manually create 'datasetName_additional_info.docx'
+  # Additional info
   
-  readline(paste("If you would like to include additional information with this dataset, enter it into datasetname_additional_info.docx.",
-                 "\n", "This is a good place for references to publications and theses derived from this dataset.",
-                 "\n", "Including this this information is optional.",
-                 "\n", "Remove any special formatting or unique characters.",
+  readline(paste("Place additional information in datasetname_additional_info.docx.",
+                 "\n", "Follow the file naming convention if you will be using it.",
+                 "\n", "Delete this file if you have no additional info to present.",
                  "\n",
                  "Press <enter> when done.",
                  sep = ""))
   writeLines("\n")
   
-  # Manually create 'shapefilesetname_shape_files_attributes_draft.xlsx'
+  # Select an intellectual rights license
   
-  readline(paste("If you have spatial data files, then fill out the file shapefilesname_shape_files_attributes_draft.xlsx.",
-                 "\n", "Be sure to include the shape file attribute names.",
-                 "\n", "Remove all formatting.",
-                 "\n", "Create a file for each .zip directory of shape files.",
+  readline(paste("Select an intellectual rights license for your dataset.",
+                 "\n", "Rename the one you choose and follow the naming convention.",
+                 "\n", "Delete the file you do not want.",
                  "\n",
                  "Press <enter> when done.",
                  sep = ""))
   writeLines("\n")
   
-  # Manually create 'eml_configuration.R'
-
+  # Add methods
+  
+  readline(paste("Write up methods for your dataset in the file datasetname_methods.docx.",
+                 "\n", "Rename this file following the naming convention.",
+                 "\n",
+                 "Press <enter> when done.",
+                 sep = ""))
+  writeLines("\n")
+  
+  # Add personnel information
+  
+  readline(paste("Enter personnel information for your dataset in the file datasetname_personnel.xlsx.",
+                 "\n", "Rename this file following the naming convention.",
+                 "\n",
+                 "Press <enter> when done.",
+                 sep = ""))
+  writeLines("\n")
+  
+  # Add table attributes (draft)
+  
+  standardUnits <- get_unitList()
+  View(standardUnits$units)
+  
+  readline(paste("Add data table attributes to the file datatablename_attributes_draft.xlsx.",
+                 "\n", "The standard units dictionary has been opened for you.",
+                 "\n", "Create an attributes file for each data table and rename following convention.",
+                 "\n",
+                 "Press <enter> when done.",
+                 sep = ""))
+  writeLines("\n")
+  
+  # Fill out the configuration file
+  
   readline(paste("Fill out the file eml_configuration.R.",
                  "\n",
                  "Press <enter> when done.",
                  sep = ""))
   writeLines("\n")
-
-  # Notify user to close all open files
-
+  
+  # Close all open files
+  
   readline(paste("Make sure all files of the working directory are closed.",
                  "\n",
                  "Press <enter> when done.",
                  sep = ""))
   writeLines("\n")
-
-
-  # Notify user they are ready to run scripts
-
-  readline(paste("OK. Now you can use these functions:",
+  
+  # Green light to run other functions of this package
+  
+  readline(paste("Now you can use these functions:",
                  "\n", "write_attributes()",
                  "\n", "write_factors()",
+                 "\n", "extract_geocoverage()",
                  "\n", "create_eml()",
                  "\n",
                  "Press <enter> when done.",
                  sep = ""))
   writeLines("\n")
-
+  
 }
 
