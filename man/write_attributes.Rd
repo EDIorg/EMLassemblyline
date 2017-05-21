@@ -7,8 +7,13 @@
 write_attributes(path)
 }
 \arguments{
+<<<<<<< HEAD
 \item{path}{A path to the dataset working directory with completed metadata 
 and configuration files.}
+=======
+\item{path}{A path to the dataset working directory containing completed 
+metadata and configuration files.}
+>>>>>>> 53cd5f22407c46d066355986c9c14ddd7275a06d
 }
 \value{
 A file in the dataset working directory titled 
@@ -17,14 +22,26 @@ A file in the dataset working directory titled
     \emph{datasetname_datatablename_attributes_draft.xlsx} along with 
     attribute number type (i.e. whole, real, etc.), and minimum and maximum 
     values.
+<<<<<<< HEAD
 }
 \description{
 A function for writing attributes of a data entity specified 
     in the user supplied file
+=======
+    
+    A file in the dataset working directory titled 
+    \emph{datasetname_custom_units.xlsx} definitions for custom units not 
+    found in the standard unit dictionary.
+}
+\description{
+A function for writing attributes of a data entity specified 
+    in the user supplied file 
+>>>>>>> 53cd5f22407c46d066355986c9c14ddd7275a06d
     \emph{datasetname_datatablename_attributes_draft.xlsx}.
 }
 \details{
 The user is guided through a series of steps in the process of 
+<<<<<<< HEAD
     finalizing attributes for the data table(s) of the dataset. If 
     adjustments to the attributes table needs editing later, you do not have 
     to execute this function again (doing so will overwrite your previous 
@@ -44,6 +61,10 @@ The user is guided through a series of steps in the process of
             message is printed to the console as each attribute table is 
             compiled.
         }
+=======
+    finalizing attributes for the data table(s) of the dataset working 
+    directory.
+>>>>>>> 53cd5f22407c46d066355986c9c14ddd7275a06d
 }
 \seealso{
 \code{\link{copy_templates}} to copy metadata templates to the 

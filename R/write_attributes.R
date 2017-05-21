@@ -1,13 +1,13 @@
 #' Write attributes from input metadata
 #'
 #' @description  A function for writing attributes of a data entity specified 
-#'     in the user supplied file
+#'     in the user supplied file 
 #'     \emph{datasetname_datatablename_attributes_draft.xlsx}.
 #'
 #' @usage write_attributes(path)
 #'
-#' @param path A path to the dataset working directory with completed metadata 
-#'     and configuration files.
+#' @param path A path to the dataset working directory containing completed 
+#'     metadata and configuration files.
 #'
 #' @return A file in the dataset working directory titled 
 #'     \emph{datasetname_datatablename_attributes.xlsx} containing attributes 
@@ -15,6 +15,9 @@
 #'     \emph{datasetname_datatablename_attributes_draft.xlsx} along with 
 #'     attribute number type (i.e. whole, real, etc.), and minimum and maximum 
 #'     values.
+#'     A file in the dataset working directory titled 
+#'     \emph{datasetname_custom_units.xlsx} definitions for custom units not 
+#'     found in the standard unit dictionary.
 #'     
 #' @details 
 #'     The user is guided through a series of steps in the process of 
