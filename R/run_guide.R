@@ -40,7 +40,8 @@
 #'     gleon_chloride_additional_info.docx). This is a good place to present 
 #'     additional text based information that doesn't fall under the scope of
 #'     the abstract or methods (e.g. A list of research articles derived from
-#'     this dataset). Do not use special characters, symbols, or special formatting.
+#'     this dataset). Do not use special characters, symbols, or special formatting. 
+#'     Delete this file if you have no additional information to present.
 #'     
 #'     \emph{"Select an intellectual rights license for your dataset."} Select an
 #'     intellectual rights license. We have two recommendations: 
@@ -49,7 +50,7 @@
 #'     these files. Delete the file you will not be using. Rename the file you
 #'     will be using to match the convention 
 #'     datasetname_intellectual_rights.docx (e.g. 
-#'     gleon_chloride_intellectual_rights.docx)
+#'     gleon_chloride_intellectual_rights.docx). Delete the file you will not be using.
 #'     
 #'     \emph{"Write the methods for your dataset ..."} Write the methods for your
 #'     dataset in the file datasetname_methods.docx (e.g. 
@@ -90,12 +91,17 @@
 #'         classified as character. Similarly if any values of Date do not 
 #'         match the date time format string (details below), then this 
 #'         attribute must be classified as character. 
-#'         \item \strong{unit} The standard unit dictionary has been opened for 
-#'         you in the Source window of RStudio. Search the dictionary for a 
-#'         unit and enter the unit "name" as it appears in the  dictionary. 
+#'         \item \strong{unit} If an attributes class is numeric, then you must
+#'         enter units for this attribute. If the attribute is numeric but does 
+#'         not have units, enter "dimensionless" in the unit field. If the 
+#'         attribute class is a character or vector, then leave the unit field 
+#'         blank. If the attribute is numeric and has units search the standard unit 
+#'         dictionary (opened in the source window) for the unit of interest
+#'         and enter the unit "name" as it appears in the  dictionary. 
 #'         Unit names are case sensitive. If you cannot find a unit in the 
 #'         dictionary, enter the unit in the file 
-#'         datasetname_custom_units.xlsx. Valid custom units must be 
+#'         datasetname_custom_units.xlsx. Rename this file to accord with the naming 
+#'         convention (e.g. gleon_chloride_custom_units.xlsx). Valid custom units must be 
 #'         convertible to SI Units (i.e. International System of Units). If it 
 #'         cannot be converted then list it in the attribute defintion field 
 #'         and enter "dimensionless" in the unit field. To create a custom 
@@ -115,7 +121,8 @@
 #'         \item \strong{dateTimeFormatString} Enter the date time format 
 #'         string for each attribute of "Date" class. Remember, a class of Date 
 #'         specifies the attribute as a date, time, or datetime. Enter the 
-#'         format string in this field. Below are some general rules for 
+#'         format string in this field. If the attribute class is not "Date", 
+#'         leave this field blank. Below are some general rules for 
 #'         constructing format strings. Additional information is listed under
 #'         "dateTime-eml-attribute" of the current EML specification 
 #'         (https://knb.ecoinformatics.org/#external//emlparser/docs/index.html).
@@ -195,18 +202,7 @@ run_guide <- function() {
                  "Press <enter> when done.",
                  sep = ""))
   writeLines("\n")
-  # 
-  #   # Create 'datasetName_template.docx'
-  #   
-  #   readline(paste("Move the EDI metadata template of this data set to the working directory.",
-  #                  "\n", "Rename the template with the data set name and append with _template.docx.",
-  #                  "\n", "E.g. gleon_template.docx",
-  #                  "\n", "'gleon' is the data set name." ,
-  #                  "\n",
-  #                  "Press <enter> when done.",
-  #                  sep = ""))
-  #   writeLines("\n")
-  
+
   # Create abstract
   
   readline(paste("Write an abstract for your dataset in the file datasetname_abstract.docx.",
@@ -220,7 +216,7 @@ run_guide <- function() {
   
   readline(paste("Place additional information in datasetname_additional_info.docx.",
                  "\n", "Follow the file naming convention if you will be using it.",
-                 "\n", "Delete this file if you have no additional info to present.",
+                 "\n", "Delete this file if you have no additional information to present.",
                  "\n",
                  "Press <enter> when done.",
                  sep = ""))
@@ -238,7 +234,7 @@ run_guide <- function() {
   
   # Add methods
   
-  readline(paste("Write up methods for your dataset in the file datasetname_methods.docx.",
+  readline(paste("Write the methods for your dataset in the file datasetname_methods.docx.",
                  "\n", "Rename this file following the naming convention.",
                  "\n",
                  "Press <enter> when done.",

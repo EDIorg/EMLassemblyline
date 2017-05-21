@@ -227,8 +227,8 @@ num_header_lines <- c("")
 record_delimeter <- c("")
 
 
-# Define the orientation of attributes in your data table. Acceptable values 
-# are "column" or "row". If there is more than one data table, then combine 
+# Define the orientation of attributes in your data table. Acceptable value 
+# is "column". If there is more than one data table, then combine 
 # these values into a vector (order must follow that listed in the table_names 
 # object).
 #

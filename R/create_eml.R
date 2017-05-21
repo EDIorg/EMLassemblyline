@@ -47,11 +47,6 @@ create_eml <- function(path) {
   library("tools")
   options(java.parameters = "-Xmx4000m")  # Allocate RAM to java
   
-  template <- paste(dataset_name,
-                    "_template.docx",
-                    sep = "")
-  #template <- trimws(list.files(path, pattern = "*_template.docx"))
-  
   # Get system information
   
   sysinfo <- Sys.info()["sysname"]
@@ -66,6 +61,10 @@ create_eml <- function(path) {
   # Load the datasets configuration file
 
   source(paste(path, "/eml_configuration.R", sep = ""))
+  
+  template <- paste(dataset_name,
+                    "_template.docx",
+                    sep = "")
 
   # Set file names
 
@@ -99,12 +98,6 @@ create_eml <- function(path) {
                          "_methods.docx",
                          sep = "")
   
-  fname_spatial_bounds <- paste(path,
-                                "/",
-                                substr(template, 1, nchar(template) - 14),
-                                "_spatial_bounds.xlsx",
-                                sep = "")
-  
 
   fname_table_attributes <- c()
   for (i in 1:length(table_names)){
@@ -113,14 +106,10 @@ create_eml <- function(path) {
       "_attributes.xlsx",
       sep = "")
   }
-
-  fname_table_factors <- c()
-  for (i in 1:length(table_names)){
-    fname_table_factors[i] <- paste(
-      substr(table_names[i], 1, nchar(table_names[i]) - 4),
-      "_factors.xlsx",
-      sep = "")
-  }
+  
+  fname_table_factors <- trimws(
+    list.files(path,
+               pattern = "*_factors.xlsx"))
 
   # Initialize data entity storage (tables)
 
@@ -374,7 +363,7 @@ create_eml <- function(path) {
 
   dataset@methods <- set_methods(fname_methods)
   
-  if (file.exists(paste(path, "/", "geographic_coverage.xlsx", sep = ""))){
+  if (file.exists(paste(path, "/", "geographic_coverage.csv", sep = ""))){
     
     df_geographic_coverage <- read.table(paste(path,
                                                "/",
@@ -501,7 +490,7 @@ create_eml <- function(path) {
     
     # Read data table
     
-    if (field_delimeter[i] == ","){
+    if (field_delimeter[i] == "comma"){
       
       df_table <- read.table(
         paste(path, "/", table_names[i], sep = ""),
@@ -511,7 +500,7 @@ create_eml <- function(path) {
         as.is=TRUE,
         comment.char = "")
       
-    } else if (field_delimeter[i] == "\\t"){
+    } else if (field_delimeter[i] == "tab"){
       
       df_table <- read.table(
         paste(path, "/", table_names[i], sep = ""),
@@ -570,29 +559,10 @@ create_eml <- function(path) {
     for (j in 10:11){
     attributes[ ,j] <- as.character(attributes[ ,j])
     }
-# 
-#     
-#     
-#     useI <- attributes$missingValueCodeExplanation == ""
-#     
-#     attributes$missingValueCode[!useI] <- "NA"
-# 
-#     codeExplanations <- attributes$missingValueCodeExplanation
-# 
-#     attributes$missingValueCodeExplanation <- as.logical(
-#       attributes$missingValueCodeExplanation)
-# 
-#     attributes$missingValueCodeExplanation[!useI] <- codeExplanations[!useI]
 
-    
     # Read factors file (encoding necessitates read/write/read)
 
-    fname_expected_factors <- paste(
-      substr(table_names[i], 1, nchar(table_names[i]) - 4),
-      "_factors.xlsx",
-      sep = "")
-
-    if (!is.na(match(fname_expected_factors, list.files(path)))){
+    if (!is.na(match(fname_table_factors[i], list.files(path)))){
 
       factors <- read.xlsx2(paste(
         path,
@@ -670,7 +640,7 @@ create_eml <- function(path) {
 
     # Create the attributeList element
 
-    if (!is.na(match(fname_expected_factors, list.files(path)))){
+    if (!is.na(match(fname_table_factors, list.files(path)))){
 
       if (dim(factors)[1] != 0){
         attributeList <- set_attributes(attributes,
@@ -754,7 +724,7 @@ create_eml <- function(path) {
     data_tables_stored[[i]] <- data_table
 
   }
-
+  
 
   # Compile datatables, spatial vector folders, and metadata files ------------
 

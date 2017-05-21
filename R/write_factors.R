@@ -27,7 +27,11 @@
 #'     \emph{datasetname_datatablename_attributes.xlsx} and then extracts 
 #'     unique values of these attribute to the table 
 #'     \emph{datasetname_datatablename_factors.xlsx}, which is then opened for 
-#'     the user to edit.  
+#'     the user to edit.
+#'     
+#'     When defining factors with unit values, refer to the standard unit 
+#'     dictionary "name" column. Enter the name in the definition column of 
+#'     the factors table. Note these values are case sensitive.
 #'
 #' @seealso \code{\link{copy_templates}} to copy metadata templates to the 
 #'     dataset working directory.
@@ -47,14 +51,13 @@ write_factors <- function(path) {
   library("xlsx")
   #library("rmarkdown")
   
+  # Load the configuration file
+  
+  source(paste(path, "/eml_configuration.R", sep = ""))
+  
   template <- paste(dataset_name,
                     "_template.docx",
                     sep = "")
-  #template <- trimws(list.files(path, pattern = "*_template.docx"))
-  
-  # Load the configuration file
-
-  source(paste(path, "/eml_configuration.R", sep = ""))
 
   # Get system information
 
@@ -98,13 +101,6 @@ write_factors <- function(path) {
 
     for (i in 1:length(attribute_files)){
 
-      # if (!is.na(match(
-      #   paste(substr(attribute_files[i], 1, nchar(attribute_files[i]) - 16),
-      #         ".txt",
-      #         sep = ""),
-      #   table_names)) == T){
-
-
         print(paste("Now working on ... ",
                     attribute_files[i], sep = ""))
 
@@ -143,20 +139,6 @@ write_factors <- function(path) {
           quote="\"",
           as.is=TRUE)
 
-        # df_table <- read.table(
-        #   paste(
-        #     path,
-        #     "/",
-        #     substr(attribute_files[i], 1, nchar(attribute_files[i]) - 16),
-        #     ".txt",
-        #     sep = ""),
-        #   header=TRUE,
-        #   sep="\t",
-        #   quote="\"",
-        #   as.is=TRUE,
-        #   comment.char = "")
-        
-        
         # If there are no factors then skip to the next file
 
         if (length(factors_I) > 0){
@@ -240,7 +222,7 @@ write_factors <- function(path) {
           }
 
           readline(
-            prompt = "Press <enter> once factors file and any custom units files have been edited, saved, and closed."
+            prompt = "Press <enter> once factors file has been edited, saved, and closed."
           )
         }
 

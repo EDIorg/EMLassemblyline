@@ -68,12 +68,19 @@ extract_geocoverage <- function(path, table.name, lat.col, lon.col, site.col){
     
     useI <- site_name[i] == df_table[site.col]
     
-    latitude_out[i] <- as.character(latitude[useI][1])
+    latitude_out[i] <- latitude[useI][1]
     
-    longitude_out[i] <- as.character(longitude[useI][1])
+    longitude_out[i] <- longitude[useI][1]
     
     site_out[i] <- site_name[i]
 
+  }
+  
+  if (class(latitude_out) != "numeric"){
+    print("Latitude contain non-numeric values. Remove these from your data table, then rerun this function.")
+  }
+  if (class(longitude_out) != "numeric"){
+    print("Longitude contain non-numeric values. Remove these from your data table, then rerun this function.")
   }
   
   geocoverage_out <- data.frame(latitude = latitude_out,
@@ -108,7 +115,7 @@ extract_geocoverage <- function(path, table.name, lat.col, lon.col, site.col){
     
   }
   
-  print("Latitute and longitude must be in decimal degree format.")
+  print("Latitude and longitude must be in decimal degree format.")
   
   print("Longitudes west of the prime meridian and latitudes south of the equator are prefixed with a minus sign (-).")
   
