@@ -282,8 +282,8 @@ run_guide <- function() {
   # Green light to run other functions of this package
   
   readline(paste("Now you can use these functions:",
-                 "\n", "write_attributes()",
-                 "\n", "write_factors()",
+                 "\n", "compile_attributes()",
+                 "\n", "define_factors()",
                  "\n", "extract_geocoverage()",
                  "\n", "create_eml()",
                  "\n",

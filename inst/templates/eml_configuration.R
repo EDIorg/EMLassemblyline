@@ -1,7 +1,7 @@
 # The configuration file
 #
 # This file contains information about the dataset that is not included in the 
-# template files. It is called upon by write_attributes.R, write_factors.R, and 
+# template files. It is called upon by compile_attributes.R, define_factors.R, and 
 # create_eml.R. This file contains the EMLtools version number that is required 
 # for successful operation.
 #

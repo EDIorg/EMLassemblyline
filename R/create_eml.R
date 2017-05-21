@@ -27,9 +27,9 @@
 #'     dataset working directory.
 #' @seealso \code{\link{run_guide}} for guidance on completing the template 
 #'     files.
-#' @seealso \code{\link{write_attributes}} to compile and write the attributes 
+#' @seealso \code{\link{compile_attributes}} to compile and write the attributes 
 #'     table.
-#' @seealso \code{\link{write_factors}} to create the factors table if the 
+#' @seealso \code{\link{define_factors}} to create the factors table if the 
 #'     attributes table contains factors.
 #' @seealso \code{\link{extract_geocoverage}} to extract detailed geographic 
 #'     coordinates of sampling sites.
