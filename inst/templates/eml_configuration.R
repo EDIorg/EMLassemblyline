@@ -188,9 +188,9 @@ data_table_descriptions <- c("")
 # Enter the URLs of the data tables if you will have them stored on a publicly 
 # accessible server (i.e. does not require user ID or password) so PASTA can 
 # upload them into the repository. If you will be manually uploading your data 
-# tables to PASTA, then leave this object empty (i.e. ""). If more than one 
-# data table, then combine your descriptions into a vector (order must follow 
-# that listed in the table_names object).
+# tables to PASTA, then leave this object empty (i.e. ""), and enter a value 
+# for storage_type below. If more than one data table, then combine your URLs 
+# into a vector (order must follow that listed in the table_names object).
 #
 # Example:
 #
@@ -198,6 +198,20 @@ data_table_descriptions <- c("")
 #                      "https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride/gleon_chloride_lake_characteristics.csv")
 
 data_table_urls <- c("")
+
+
+# If your data is not available online (i.e. doesn't have a publicly accessible 
+# URL), describe the medium on which the data is stored. If more than one data 
+# table, then combine your storage types into a vector (order must follow that 
+# listed in the table_names object).
+#
+# Example:
+#
+# storage_type <- ("Departmental server")
+#
+
+storage_type <- c("")
+
 
 
 # Define the number of header lines of your data table(s). This is the number of 

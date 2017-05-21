@@ -674,9 +674,15 @@ create_eml <- function(path) {
                                    table_names[i],
                                    sep = ""))))
 
-    distribution <- new("distribution",
-                        online = new("online",
-                                     url = data_table_urls[i]))
+    if (nchar(data_table_urls[i]) > 1){
+      distribution <- new("distribution",
+                          online = new("online",
+                                       url = data_table_urls[i]))
+    } else {
+      distribution <- new("distribution",
+                           offline = new("offline",
+                                         mediumName = storage_type[i]))
+    }
 
     physical@distribution <- new("ListOfdistribution",
                                  c(distribution))

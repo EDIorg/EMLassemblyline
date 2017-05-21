@@ -72,7 +72,7 @@
 #'     symbols, or special formatting.
 #'     
 #'     \emph{"Add data table attributes ..."} Add data table attributes to the file 
-#'     datatablename_attributes_draft.xlsx 
+#'     datasetname_datatablename_attributes_draft.xlsx 
 #'     (e.g. gleon_chloride_lake_characteristics_attributes_draft.xlsx). 
 #'     Create an attributes file for each data table. Do not use special 
 #'     characters, symbols, or special formatting in this file. Instructions 
