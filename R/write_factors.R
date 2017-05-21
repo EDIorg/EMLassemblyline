@@ -1,22 +1,42 @@
-#' Write data table factors
+#' Define factors and write to file
 #'
-#' @description  A function for writting data table factors.
+#' @description  A function for extracting and defining data table factors 
+#'     defined in the attributes table.
 #'
 #' @usage write_factors(path)
+#' 
+#'     Run this function whenever your data contain factors, and any of your 
+#'     \emph{datasetname_datatablename_attributes_draft.xlsx} or referenced 
+#'     data tables have changed.
 #'
-#' @param path A path to the working directory containing files required by the EMLtools
-#' package. Run the function run_guide() for instructions on how to populate this working
-#' directory with the requisite files.
+#' @param path A path to the dataset working directory containing the updated 
+#'     \emph{datasetname_datatablename_attributes.xlsx}, 
+#'     \emph{eml_configuration.R} and referenced data table files.
 #'
-#' @return A .xlsx file in the specified working directory containing an approximated set
-#' of factors based on the user supplied attributes.xlsx. The user is prompted to refine
-#' this table.
+#' @return A file in the dataset working directory titled 
+#'     \emph{datasetname_datatablename_factors.xlsx} containing factor 
+#'     definitions, which is called upon by the \emph{create_eml} function.
+#'     
+#' @details 
+#'     This function overwrites any 
+#'     \emph{datasetname_datatablename_factors.xlsx} files you have created in 
+#'     the dataset working directory. To prevent overwriting of a specific 
+#'     file, temporarily move the file out of the working directory.
+#'     
+#'     This function identifies character class attributes from the file 
+#'     \emph{datasetname_datatablename_attributes.xlsx} and then extracts 
+#'     unique values of these attribute to the table 
+#'     \emph{datasetname_datatablename_factors.xlsx}, which is then opened for 
+#'     the user to edit.  
 #'
-#' @seealso \code{\link{run_guide}} for guidance on setting up the working directory
-#' @seealso \code{\link{write_attributes}} for writing data attributes
-#' @seealso \code{\link{create_eml}} for creating EML
-#' @seealso \code{\link{copy_templates}} for creating template files
-#'
+#' @seealso \code{\link{copy_templates}} to copy metadata templates to the 
+#'     dataset working directory.
+#' @seealso \code{\link{run_guide}} for guidance on completing the template 
+#'     files.
+#' @seealso \code{\link{write_attributes}} to create the attributes table.
+#' @seealso \code{\link{extract_geocoverage}} to extract detailed geographic 
+#'     coordinates of sampling sites.
+#' @seealso \code{\link{create_eml}} to write the EML file.
 
 
 write_factors <- function(path) {

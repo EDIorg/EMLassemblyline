@@ -1,22 +1,29 @@
-#' Write geographic coverage of unique sampling sites to file
+#' Extract geographic coverage and write to file
 #'
-#' @description  A function to write latitude and longitude of unique sampling
-#' sites to file.
+#' @description  A function to extract detailed geographic coverage (latitude, 
+#'     longitude, site name) from the referenced data table and to be included 
+#'     under methods/geographicCoverage in the EML file.
 #'
 #' @usage extract_geocoverage(path, table.name, lat.col, lon.col, site.col)
 #'
-#' @param path Path to the directory containing the data table containing latitude, 
-#' longitude, and site name.
+#' @param path A path to the dataset working directory containing the data 
+#'     table containing decimal degree latitude, longitude, and site name.
 #' @param table.name Name of the input data table containing geographic 
-#' coverage data.
-#' @param lat.col Name of latitude column.
-#' @param lon.col Name of longitude column.
+#'     coverage data.
+#' @param lat.col Name of latitude column. Values of this column must be in 
+#'     decimal degrees. Latitudes south of the equator must be prefixed with 
+#'     a minus sign (i.e. dash, -).
+#' @param lon.col Name of longitude column. Values of this column must be in 
+#'     decimal degrees. Longitudes west of the prime meridian must be prefixed 
+#'     with a minus sign (i.e. dash, -). 
 #' @param site.col Name of site column.
 #'
-#' @return A file named datasetname_attributes_draft.xlsx
-#' @return A file named datasetname_attributes.xlsx
-#' @return A file named datasetname_attributes.txt
+#' @return 
+#'     A file in the dataset working directory titled 
+#'     \emph{geographic coverage.xlsx} containing decimal degree latitude, 
+#'     longitude, and site name.
 #'
+#' @seealso \code{\link{create_eml}} to write the EML file.
 
 
 extract_geocoverage <- function(path, table.name, lat.col, lon.col, site.col){

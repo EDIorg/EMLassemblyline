@@ -1,14 +1,12 @@
-#' The configuration file
-#'
-#' @description  This file contains information about the dataset that is 
-#'     not included in the template files. It is called upon by 
-#'     \code{write_attributes}, \code{write_factors}, and \code{create_eml}. 
-#'     This file contains the EMLtools version number that is required for 
-#'     successful operation.
-#'     
-#' @seealso \code{\link{copy_templates}} to copy metadata templates to the 
-#'     dataset working directory.
-
+# The configuration file
+#
+# This file contains information about the dataset that is not included in the 
+# template files. It is called upon by write_attributes.R, write_factors.R, and 
+# create_eml.R. This file contains the EMLtools version number that is required 
+# for successful operation.
+#
+# See copy_templates.R to copy metadata templates to the dataset working 
+# directory.
 
 
 

@@ -2,31 +2,37 @@
 % Please edit documentation in R/extract_geocoverage.R
 \name{extract_geocoverage}
 \alias{extract_geocoverage}
-\title{Write geographic coverage of unique sampling sites to file}
+\title{Extract geographic coverage of unique sampling sites and write to file}
 \usage{
 extract_geocoverage(path, table.name, lat.col, lon.col, site.col)
 }
 \arguments{
-\item{path}{Path to the directory containing the data table containing latitude, 
-longitude, and site name.}
+\item{path}{A path to the dataset working directory containing the data 
+table containing decimal degree latitude, longitude, and site name.}
 
 \item{table.name}{Name of the input data table containing geographic 
 coverage data.}
 
-\item{lat.col}{Name of latitude column.}
+\item{lat.col}{Name of latitude column. Values of this column must be in 
+decimal degrees. Latitudes south of the equator must be prefixed with 
+a minus sign (i.e. dash, -).}
 
-\item{lon.col}{Name of longitude column.}
+\item{lon.col}{Name of longitude column. Values of this column must be in 
+decimal degrees. Longitudes west of the prime meridian must be prefixed 
+with a minus sign (i.e. dash, -).}
 
 \item{site.col}{Name of site column.}
 }
 \value{
-A file named datasetname_attributes_draft.xlsx
-
-A file named datasetname_attributes.xlsx
-
-A file named datasetname_attributes.txt
+A file in the dataset working directory titled 
+    \emph{geographic coverage.xlsx} containing decimal degree latitude, 
+    longitude, and site name.
 }
 \description{
-A function to write latitude and longitude of unique sampling
-sites to file.
+A function to extract detailed geographic coverage (latitude, 
+    longitude, site name) from the referenced data table and to be included 
+    under methods/geographicCoverage in the EML file.
+}
+\seealso{
+\code{\link{create_eml}} to write the EML file.
 }

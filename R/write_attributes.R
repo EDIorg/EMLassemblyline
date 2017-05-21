@@ -1,45 +1,29 @@
-#' Write attributes from input metadata
+#' Compile attributes and write to file
 #'
-#' @description  A function for writing attributes of a data entity specified 
-#'     in the user supplied file 
-#'     \emph{datasetname_datatablename_attributes_draft.xlsx}.
+#' @description  A function to compile attributes for \emph{write_factors} 
+#'     and \emph{create_eml}.
 #'
 #' @usage write_attributes(path)
+#' 
+#'     Run this function whenever any of your 
+#'     \emph{datasetname_datatablename_attributes_draft.xlsx} or referenced 
+#'     data tables have changed.
 #'
-#' @param path A path to the dataset working directory containing completed 
-#'     metadata and configuration files.
+#' @param path A path to the dataset working directory containing the 
+#'     completed \emph{datasetname_datatablename_attributes_draft.xlsx}, and
+#'     \emph{eml_configuration.R} files as well as the referenced data table. 
 #'
 #' @return A file in the dataset working directory titled 
-#'     \emph{datasetname_datatablename_attributes.xlsx} containing attributes 
-#'     entered in the file 
-#'     \emph{datasetname_datatablename_attributes_draft.xlsx} along with 
-#'     attribute number type (i.e. whole, real, etc.), and minimum and maximum 
-#'     values.
-#'     A file in the dataset working directory titled 
-#'     \emph{datasetname_custom_units.xlsx} definitions for custom units not 
-#'     found in the standard unit dictionary.
+#'     \emph{datasetname_datatablename_attributes.xlsx} containing attribute 
+#'     information called upon by the functions \emph{write_factors} and 
+#'     \emph{create_eml}.
 #'     
 #' @details 
-#'     The user is guided through a series of steps in the process of 
-#'     finalizing attributes for the data table(s) of the dataset. If 
-#'     adjustments to the attributes table needs editing later, you do not have 
-#'     to execute this function again (doing so will overwrite your previous 
-#'     work) rather you can edit the content directly by opening the file in 
-#'     Excel. Additional information for each of these steps:
-#'         \itemize{
-#'             \item \strong{Overwrite existing files?} Would you like to 
-#'             overwrite your previous work? If so enter "y" into the
-#'             console. If not enter "n".  Once overwritten you will not be 
-#'             able to recover your work. If you select "y" you will over write 
-#'             all the attribute tables in the working directory previously 
-#'             created with this function. You can not choose to only 
-#'             overwrite one or another. If you must do this temporarily move 
-#'             your attribute table from the working directory while you create 
-#'             new ones.
-#'             \item \strong{Now building attributes for ...} An indicator 
-#'             message is printed to the console as each attribute table is 
-#'             compiled.
-#'         }
+#'     This function compiles information from 
+#'     \emph{datasetname_datatablename_attributes_draft.xlsx}, extracts 
+#'     attribute number types and minimum and maximum values from numeric 
+#'     attribues of your data table, and formats this meta data for the 
+#'     functions \emph{write_factors} and \emph{create_eml}.
 #'
 #' @seealso \code{\link{copy_templates}} to copy metadata templates to the 
 #'     dataset working directory.

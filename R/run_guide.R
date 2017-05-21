@@ -1,4 +1,4 @@
-#' A guide to completing the metadata templates
+#' Instructions for completing the metadata templates
 #'
 #' @description  
 #'     A guide to completing the metadata templates and configuration file

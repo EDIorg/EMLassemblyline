@@ -2,29 +2,46 @@
 % Please edit documentation in R/create_eml.R
 \name{create_eml}
 \alias{create_eml}
-\title{Create EML and write to file}
+\title{Create, validate, and write EML to file}
 \usage{
 create_eml(path)
 }
 \arguments{
-\item{path}{A path to the working directory containing files required by the EMLtools
-package. Run the function run_guide() for instructions on how to populate this working
-directory with the requisite files.}
+\item{path}{A path to the dataset working directory containing the 
+completed metadata templates, \emph{eml_configuration.R}, 
+\emph{datasetname_datatablename_attributes.xlsx}, 
+\emph{datasetname_datatablename_factors.xlsx} (if factors are present), 
+and \emph{geographic_coverage.xlsx} (if reporting detailed geographic 
+coverage).}
 }
 \value{
-A .xml file in the specified working directory. If the EML fails validation
-then the file is not written.
+Validation results printed to the \emph{Console}.
+    
+    An EML metadata file in the dataset working directory titled 
+    \emph{packageID.xml}.
 }
 \description{
-A function for writting metadata in the Ecological Metadata Language
-standard.
+A function to translate user supplied metadata into the EML 
+    schema, validate the EML, and write to file.
+}
+\details{
+If validation fails, open the EML document in a .xml editor to identify 
+    the source of error. Often the error is small and quickly resolved with 
+    the aid of an editors schema congruence functionality.
 }
 \seealso{
-\code{\link{run_guide}} for guidance on setting up the working directory
+\code{\link{copy_templates}} to copy metadata templates to the 
+    dataset working directory.
 
-\code{\link{write_attributes}} for writing data attributes
+\code{\link{run_guide}} for guidance on completing the template 
+    files.
 
-\code{\link{write_factors}} for writing data factors
+\code{\link{write_attributes}} to compile and write the attributes 
+    table.
 
-\code{\link{copy_templates}} for creating template files
+\code{\link{write_factors}} to create the factors table if the 
+    attributes table contains factors.
+
+\code{\link{extract_geocoverage}} to extract detailed geographic 
+    coordinates of sampling sites.
 }

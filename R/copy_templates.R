@@ -11,30 +11,33 @@
 #' @param path A path to the dataset working directory.
 #'
 #' @return 
-#'     datasetname_abstract.docx A file for the abstract of your data.
+#'     \emph{datasetname_abstract.docx} A file for the abstract of your data.
 #'     
-#'     datasetname_additional_info.docx A file for additional information about 
-#'     your data.
+#'     \emph{datasetname_additional_info.docx} A file for additional information 
+#'     about your data.
 #'     
-#'     datasetname_custom_units.xlsx A file for custom units not defined in 
-#'     the standard unit dictionary.
+#'     \emph{datasetname_custom_units.xlsx} A file for custom units not defined
+#'     in the standard unit dictionary.
 #'     
-#'     datasetname_cc_by_4.0_intellectual_rights.docx One of two intellectual 
-#'     rights licenses to consider for your dataset. Do not edit this text.
+#'     \emph{datasetname_cc_by_4.0_intellectual_rights.docx} One of two 
+#'     intellectual rights licenses to consider for your dataset. Do not edit 
+#'     this text.
 #'     
-#'     datasetname_cc0_1_intellectual_rights.docx One of two intellectual 
-#'     rights licenses to consider for your dataset. Do not edit this text.
+#'     \emph{datasetname_cc0_1_intellectual_rights.docx} One of two 
+#'     intellectual rights licenses to consider for your dataset. Do not edit 
+#'     this text.
 #'     
-#'     datasetname_methods.docx A file for methods used in create your data.
+#'     \emph{datasetname_methods.docx} A file for methods used in create your 
+#'     data.
 #'     
-#'     datasetname_personnel.xlsx A file for information on personnel 
+#'     \emph{datasetname_personnel.xlsx} A file for information on personnel 
 #'     associated with this data.
 #'     
-#'     datatablename_attributes_draft.xlsx A file for information about your 
-#'     data tables.
+#'     \emph{datatablename_attributes_draft.xlsx} A file for information about 
+#'     your data tables.
 #'     
-#'     eml_configuration.R A file for information about your data entities 
-#'     (i.e. data tables, .zip directories of spatial vectors, etc.).
+#'     \emph{eml_configuration.R} A file for information about your data 
+#'     entities (i.e. data tables, .zip directories of spatial vectors, etc.).
 #'     
 #' @details 
 #'     If template files already exist in the working directory, new templates 
