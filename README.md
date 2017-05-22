@@ -1,2 +1,2 @@
-# EMLtools
+# makeEML
 Tools for creating EML.
