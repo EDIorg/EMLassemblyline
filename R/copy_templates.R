@@ -49,52 +49,52 @@
 
 copy_templates <- function(path){
   
-  file.copy(from = paste(path.package("EMLtools"),
+  file.copy(from = paste(path.package("emlAssemblyLine"),
                          "/templates/eml_configuration.R",
                          sep = ""),
             to = path)
   
-  file.copy(from = paste(path.package("EMLtools"),
+  file.copy(from = paste(path.package("emlAssemblyLine"),
                          "/templates/datasetname_abstract.docx",
                          sep = ""),
             to = path)
   
-  file.copy(from = paste(path.package("EMLtools"),
+  file.copy(from = paste(path.package("emlAssemblyLine"),
                          "/templates/datasetname_custom_units.xlsx",
                          sep = ""),
             to = path)
   
-  file.copy(from = paste(path.package("EMLtools"),
+  file.copy(from = paste(path.package("emlAssemblyLine"),
                          "/templates/datasetname_cc0_1_intellectual_rights.docx",
                          sep = ""),
             to = path)
   
-  file.copy(from = paste(path.package("EMLtools"),
+  file.copy(from = paste(path.package("emlAssemblyLine"),
                          "/templates/datasetname_cc_by_4.0_intellectual_rights.docx",
                          sep = ""),
             to = path)
   
-  file.copy(from = paste(path.package("EMLtools"),
+  file.copy(from = paste(path.package("emlAssemblyLine"),
                          "/templates/datasetname_datatablename_attributes_draft.xlsx",
                          sep = ""),
             to = path)
   
-  file.copy(from = paste(path.package("EMLtools"),
+  file.copy(from = paste(path.package("emlAssemblyLine"),
                          "/templates/datasetname_methods.docx",
                          sep = ""),
             to = path)
   
-  file.copy(from = paste(path.package("EMLtools"),
+  file.copy(from = paste(path.package("emlAssemblyLine"),
                          "/templates/datasetname_personnel.xlsx",
                          sep = ""),
             to = path)
   
-  file.copy(from = paste(path.package("EMLtools"),
+  file.copy(from = paste(path.package("emlAssemblyLine"),
                          "/templates/shapefilesetname_shape_files_attributes_draft.xlsx",
                          sep = ""),
             to = path)
   
-  file.copy(from = paste(path.package("EMLtools"),
+  file.copy(from = paste(path.package("emlAssemblyLine"),
                          "/templates/datasetname_additional_info.docx",
                          sep = ""),
             to = path)
