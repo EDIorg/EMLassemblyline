@@ -1,2 +1,2 @@
 # makeEML
-Tools for creating EML.
+Make EML using R.
