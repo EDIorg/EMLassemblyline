@@ -16,7 +16,7 @@ Imports:
     stringr (>= 1.2.0), 
     tools (>= 3.4.0),
     xlsx (>= 0.5.7)
-Suggests: ,
+Suggests:
     knitr,
     rmarkdown
 License: Creative Commons license CC0 1.0 Universal
@@ -26,6 +26,4 @@ URL: http://github.com/EDIorg/EMLtools
 BugReports: http://github.com/EDIorg/EMLtools/issues
 RoxygenNote: 6.0.1
 SystemRequirements:
-    Microsoft Word,
-    Microsoft Excel
 VignetteBuilder: knitr
