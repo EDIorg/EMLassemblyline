@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_eml.R
 \name{create_eml}
 \alias{create_eml}
-\title{Create, validate, and write EML to file}
+\title{Create EML, then validate and write to file}
 \usage{
 create_eml(path)
 }
@@ -36,10 +36,10 @@ If validation fails, open the EML document in a .xml editor to identify
 \code{\link{run_guide}} for guidance on completing the template 
     files.
 
-\code{\link{write_attributes}} to compile and write the attributes 
+\code{\link{compile_attributes}} to compile and write the attributes 
     table.
 
-\code{\link{write_factors}} to create the factors table if the 
+\code{\link{define_factors}} to create the factors table if the 
     attributes table contains factors.
 
 \code{\link{extract_geocoverage}} to extract detailed geographic 

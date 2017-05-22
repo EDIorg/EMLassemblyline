@@ -32,8 +32,8 @@ copy_templates(path)
     \emph{datasetname_personnel.xlsx} A file for information on personnel 
     associated with this data.
     
-    \emph{datatablename_attributes_draft.xlsx} A file for information about 
-    your data tables.
+    \emph{datasetname_datatablename_attributes_draft.xlsx} A file for 
+    information about your data tables.
     
     \emph{eml_configuration.R} A file for information about your data 
     entities (i.e. data tables, .zip directories of spatial vectors, etc.).

@@ -2,7 +2,7 @@
 % Please edit documentation in R/extract_geocoverage.R
 \name{extract_geocoverage}
 \alias{extract_geocoverage}
-\title{Extract geographic coverage of unique sampling sites and write to file}
+\title{Extract geographic coverage and write to file}
 \usage{
 extract_geocoverage(path, table.name, lat.col, lon.col, site.col)
 }

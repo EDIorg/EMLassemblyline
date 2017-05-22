@@ -2,7 +2,7 @@
 % Please edit documentation in R/run_guide.R
 \name{run_guide}
 \alias{run_guide}
-\title{A guide to completing the metadata templates}
+\title{Instructions for completing the metadata templates}
 \usage{
 run_guide()
 }
@@ -43,7 +43,8 @@ Additional information for completing each step:
     gleon_chloride_additional_info.docx). This is a good place to present 
     additional text based information that doesn't fall under the scope of
     the abstract or methods (e.g. A list of research articles derived from
-    this dataset). Do not use special characters, symbols, or special formatting.
+    this dataset). Do not use special characters, symbols, or special formatting. 
+    Delete this file if you have no additional information to present.
     
     \emph{"Select an intellectual rights license for your dataset."} Select an
     intellectual rights license. We have two recommendations: 
@@ -52,7 +53,7 @@ Additional information for completing each step:
     these files. Delete the file you will not be using. Rename the file you
     will be using to match the convention 
     datasetname_intellectual_rights.docx (e.g. 
-    gleon_chloride_intellectual_rights.docx)
+    gleon_chloride_intellectual_rights.docx). Delete the file you will not be using.
     
     \emph{"Write the methods for your dataset ..."} Write the methods for your
     dataset in the file datasetname_methods.docx (e.g. 
@@ -74,7 +75,7 @@ Additional information for completing each step:
     symbols, or special formatting.
     
     \emph{"Add data table attributes ..."} Add data table attributes to the file 
-    datatablename_attributes_draft.xlsx 
+    datasetname_datatablename_attributes_draft.xlsx 
     (e.g. gleon_chloride_lake_characteristics_attributes_draft.xlsx). 
     Create an attributes file for each data table. Do not use special 
     characters, symbols, or special formatting in this file. Instructions 
@@ -93,12 +94,17 @@ Additional information for completing each step:
         classified as character. Similarly if any values of Date do not 
         match the date time format string (details below), then this 
         attribute must be classified as character. 
-        \item \strong{unit} The standard unit dictionary has been opened for 
-        you in the Source window of RStudio. Search the dictionary for a 
-        unit and enter the unit "name" as it appears in the  dictionary. 
+        \item \strong{unit} If an attributes class is numeric, then you must
+        enter units for this attribute. If the attribute is numeric but does 
+        not have units, enter "dimensionless" in the unit field. If the 
+        attribute class is a character or vector, then leave the unit field 
+        blank. If the attribute is numeric and has units search the standard unit 
+        dictionary (opened in the source window) for the unit of interest
+        and enter the unit "name" as it appears in the  dictionary. 
         Unit names are case sensitive. If you cannot find a unit in the 
         dictionary, enter the unit in the file 
-        datasetname_custom_units.xlsx. Valid custom units must be 
+        datasetname_custom_units.xlsx. Rename this file to accord with the naming 
+        convention (e.g. gleon_chloride_custom_units.xlsx). Valid custom units must be 
         convertible to SI Units (i.e. International System of Units). If it 
         cannot be converted then list it in the attribute defintion field 
         and enter "dimensionless" in the unit field. To create a custom 
@@ -118,7 +124,8 @@ Additional information for completing each step:
         \item \strong{dateTimeFormatString} Enter the date time format 
         string for each attribute of "Date" class. Remember, a class of Date 
         specifies the attribute as a date, time, or datetime. Enter the 
-        format string in this field. Below are some general rules for 
+        format string in this field. If the attribute class is not "Date", 
+        leave this field blank. Below are some general rules for 
         constructing format strings. Additional information is listed under
         "dateTime-eml-attribute" of the current EML specification 
         (https://knb.ecoinformatics.org/#external//emlparser/docs/index.html).

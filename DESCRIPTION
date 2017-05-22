@@ -8,21 +8,24 @@ Description: A set of functions facilitating a workflow to create metadata
     information. The user selects from a collection of functions to extract
     information from the data entities, and finally executes a fancy wrapper
     function to build, validate, and write the EML metadata to file.
-Depends: 
+Depends:
     R (>= 3.3.2)
-Imports: 
+Imports:
     EML (>= 1.0.3),
     rJava (>= 0.9-8),
     stringr (>= 1.2.0), 
     tools (>= 3.4.0),
     xlsx (>= 0.5.7)
-Suggests:
+Suggests: ,
+    knitr,
+    rmarkdown
 License: Creative Commons license CC0 1.0 Universal
 Encoding: UTF-8
 LazyData: true
 URL: http://github.com/EDIorg/EMLtools
 BugReports: http://github.com/EDIorg/EMLtools/issues
 RoxygenNote: 6.0.1
-SystemRequirements: 
+SystemRequirements:
     Microsoft Word,
     Microsoft Excel
+VignetteBuilder: knitr
