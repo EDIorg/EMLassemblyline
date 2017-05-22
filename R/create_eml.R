@@ -667,11 +667,17 @@ create_eml <- function(path) {
 
     # Set physical
 
+    if (field_delimeter[i] == "comma"){
+      fd <- ","
+    } else if (field_delimeter[i] == "tab"){
+      fd <- "\t"
+    }
+    
     physical <- set_physical(table_names[i],
                              numHeaderLines = num_header_lines[i],
                              recordDelimiter = record_delimeter[i],
                              attributeOrientation = attribute_orientation[i],
-                             fieldDelimiter = field_delimeter[i])
+                             fieldDelimiter = fd)
 
     physical@size <- new("size",
                          unit = "byte",
