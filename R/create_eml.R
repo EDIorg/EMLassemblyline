@@ -107,6 +107,14 @@ create_eml <- function(path) {
       sep = "")
   }
   
+  fname_table_factors <- c()
+  for (i in 1:length(table_names)){
+    fname_table_factors[i] <- paste(
+      substr(table_names[i], 1, nchar(table_names[i]) - 4),
+      "_factors.xlsx",
+      sep = "")
+  }
+  
   fname_table_factors <- trimws(
     list.files(path,
                pattern = "*_factors.xlsx"))
@@ -640,7 +648,7 @@ create_eml <- function(path) {
 
     # Create the attributeList element
 
-    if (!is.na(match(fname_table_factors, list.files(path)))){
+    if (!is.na(length(match(fname_table_factors[i], list.files(path))))){
 
       if (dim(factors)[1] != 0){
         attributeList <- set_attributes(attributes,
@@ -769,7 +777,7 @@ create_eml <- function(path) {
     as.is = TRUE,
     na.strings = "")
 
-  if (nrow(custom_units_df) == 1 & sum(is.na(custom_units_df)) > 1){
+  if (nrow(custom_units_df) < 1){
     custom_units <- "no"
   } else {
     custom_units <- "yes"
@@ -828,7 +836,7 @@ create_eml <- function(path) {
                additionalMetadata = as(unitsList, "additionalMetadata"))
   } else {
     eml <- new("eml",
-               schemaLocation = schema_location,
+               schemaLocation = "eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd",
                packageId = data_package_id,
                system = root_system,
                access = access,
