@@ -1,2 +1,2 @@
-# makeEML
-Make EML using R.
+# emlAssemblyLine
+A workflow and set of functions to make EML.

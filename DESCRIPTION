@@ -1,5 +1,5 @@
-Package: makeEML
-Title: Functions to create metadata in the Ecological Metadata Language standard
+Package: emlAssemblyLine
+Title: A workflow and set of functions to make EML.
 Version: 0.0.0.9000
 Authors@R: person("Colin", "Smith", email = "colin.smith@wisc.edu", role = c("aut", "cre"))
 Description: A set of functions facilitating a workflow to create metadata
@@ -22,8 +22,8 @@ Suggests:
 License: Creative Commons license CC0 1.0 Universal
 Encoding: UTF-8
 LazyData: true
-URL: http://github.com/EDIorg/make-eml-using-r
-BugReports: http://github.com/EDIorg/make-eml-using/issues
+URL: http://github.com/EDIorg/emlAssemblyLine
+BugReports: http://github.com/EDIorg/emlAssemblyLine/issues
 RoxygenNote: 6.0.1
 SystemRequirements:
 VignetteBuilder: knitr
