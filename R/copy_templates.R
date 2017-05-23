@@ -90,11 +90,6 @@ copy_templates <- function(path){
             to = path)
   
   file.copy(from = paste(path.package("emlAssemblyLine"),
-                         "/templates/shapefilesetname_shape_files_attributes_draft.xlsx",
-                         sep = ""),
-            to = path)
-  
-  file.copy(from = paste(path.package("emlAssemblyLine"),
                          "/templates/datasetname_additional_info.docx",
                          sep = ""),
             to = path)
