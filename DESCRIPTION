@@ -11,10 +11,6 @@ Description: A set of functions facilitating a workflow to create metadata
 Depends:
     R (>= 3.3.2),
     EML (>= 1.0.3),
-    methods (>= 3.4.0),
-    rJava (>= 0.9-8),
-    stringr (>= 1.2.0), 
-    tools (>= 3.4.0),
     xlsx (>= 0.5.7)
 Imports:
 Suggests:
