@@ -171,7 +171,7 @@
 
 run_guide <- function() {
   
-  library("EML")
+  #library("EML")
   
   # Additional details are presented in the R Documentation of this function
   

@@ -30,8 +30,6 @@
 #'     attribues of your data table, and formats this meta data for the 
 #'     functions \emph{define_factors} and \emph{create_eml}.
 #'
-#' @export
-#'
 #' @seealso \code{\link{copy_templates}} to copy metadata templates to the 
 #'     dataset working directory.
 #' @seealso \code{\link{run_guide}} for guidance on completing the template 
@@ -44,13 +42,7 @@
 
 
 compile_attributes <- function(path){
-  
-  # Parameterize function
-  
-  library("EML")
-  library("xlsx")
-  #library("rmarkdown")
-  
+
   # Load configuration file
 
   source(paste(path,
@@ -61,21 +53,12 @@ compile_attributes <- function(path){
                     "_template.docx",
                     sep = "")
 
-  # # Get system information
+  # # Issue warning
   # 
-  # sysinfo <- Sys.info()["sysname"]
-  # if (sysinfo == "Darwin"){
-  #   os <- "mac"
-  # } else {
-  #   os <- "win"
-  # }
+  # answer <- readline(
+  #   "Are you sure you want to build new attributes? This will overwrite your previous work! (y or n):  ")
 
-  # Issue warning
-
-  answer <- readline(
-    "Are you sure you want to build new attributes? This will overwrite your previous work! (y or n):  ")
-
-  if (answer == "y"){
+  #if (answer == "y"){
 
     # Set file names to be written
 
@@ -85,7 +68,7 @@ compile_attributes <- function(path){
 
       fname_table_attributes[i] <- paste(
         substr(table_names[i], 1, nchar(table_names[i]) - 4),
-        "_attributes.xlsx",
+        "_attributes.csv",
         sep = "")
 
     }
@@ -124,20 +107,18 @@ compile_attributes <- function(path){
       
       # Read attributes_draft table
       
-      df_attributes <- xlsx::read.xlsx2(
-        paste(
-          path,
-          "/",
-          substr(fname_table_attributes[i],
-                 1,
-                 nchar(fname_table_attributes[i]) - 5),
-          "_draft.xlsx",
-          sep = ""),
-        sheetIndex = 1)
-      
-      for (j in 1:dim(df_attributes)[2]){
-        df_attributes[ ,j] <- as.character(df_attributes[ ,j])
-      }
+      df_attributes <- read.table(
+        paste(path, 
+              "/", 
+              substr(fname_table_attributes[i], 1, nchar(fname_table_attributes[i]) - 4),
+              "_draft.csv",
+              sep = ""),
+        header=TRUE,
+        sep=",",
+        quote="\"",
+        as.is=TRUE,
+        comment.char = "",
+        colClasses = rep("character", 7))
       
       colnames(df_attributes) <- c("attributeName",
                                    "attributeDefinition",
@@ -191,22 +172,41 @@ compile_attributes <- function(path){
       
       attributes$missingValueCodeExplanation <- df_attributes$missingValueCodeExplanation
       
-      # Set attribute number type
+      # Set attribute number type, then minimumm and maximum values
 
       is_numeric <- which(attributes$columnClasses == "numeric")
+      attributes$minimum <- as.numeric(attributes$minimum)
+      attributes$maximum <- as.numeric(attributes$maximum)
       
       for (j in 1:length(is_numeric)){
+        
         raw <- df_table[ ,is_numeric[j]]
-        rounded <- floor(df_table[ ,is_numeric[j]])
+        
+        if (attributes$missingValueCode[is_numeric[j]] != ""){
+          useI <- raw == attributes$missingValueCode[is_numeric[j]]
+          raw <- as.numeric(raw[!useI])
+        }
+        
+        rounded <- floor(raw)
         if (length(raw) - sum(raw == rounded, na.rm = T) > 0){
           attributes$numberType[is_numeric[j]] <- "real"
-        } else if (min(df_table[ ,is_numeric[j]], na.rm = T) > 0){
+        } else if (min(raw, na.rm = T) > 0){
           attributes$numberType[is_numeric[j]] <- "natural"
-        } else if (min(df_table[ ,is_numeric[j]], na.rm = T) < 0){
+        } else if (min(raw, na.rm = T) < 0){
           attributes$numberType[is_numeric[j]] <- "integer"
         } else {
           attributes$numberType[is_numeric[j]] <- "whole"
         }
+        
+        
+        attributes$minimum[is_numeric[j]] <- round(min(raw,
+                                                       na.rm = TRUE),
+                                                   digits = 2)
+        
+        attributes$maximum[is_numeric[j]] <- round(max(raw,
+                                                         na.rm = TRUE),
+                                                     digits = 2)
+
       }
       
       is_character <- which(attributes$columnClasses == "character") 
@@ -215,23 +215,6 @@ compile_attributes <- function(path){
       
       attributes$numberType[use_i] <- "character"
 
-      # Set attribute minimum and maximum values
-      
-      attributes$minimum <- as.numeric(attributes$minimum)
-      attributes$maximum <- as.numeric(attributes$maximum)
-      
-      for (j in 1:length(is_numeric)){
-        attributes$minimum[is_numeric[j]] <- round(min(df_table[ ,is_numeric[j]],
-                                           na.rm = TRUE),
-                                       digits = 2)
-      }
-      
-      for (j in 1:length(is_numeric)){
-        attributes$maximum[is_numeric[j]] <- round(max(df_table[ ,is_numeric[j]],
-                                           na.rm = TRUE),
-                                       digits = 2)
-      }
-
       # Set attribute definition (i.e. "definition")
       
       use_i <- c(is_character, is_factor)
@@ -239,20 +222,10 @@ compile_attributes <- function(path){
       if (length(use_i) > 0){
         attributes$definition[use_i] <- attributes$attributeDefinition[use_i]
       }
-
-      # Write attributes table to file
-
-      xlsx::write.xlsx(attributes,
-                 paste(path,
-                       "/",
-                       fname_table_attributes[i],
-                       sep = ""),
-                 col.names = T,
-                 row.names = F,
-                 showNA = F)
+      
 
     }
 
-  }
+  #}
 
 }

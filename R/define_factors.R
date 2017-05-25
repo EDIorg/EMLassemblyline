@@ -47,12 +47,6 @@
 
 define_factors <- function(path) {
   
-  # Parameterize function
-  
-  library("EML")
-  library("xlsx")
-  #library("rmarkdown")
-  
   # Load the configuration file
   
   source(paste(path, "/eml_configuration.R", sep = ""))
@@ -74,10 +68,10 @@ define_factors <- function(path) {
 
   attribute_files <- trimws(
     list.files(path,
-               pattern = "*_attributes.xlsx"))
+               pattern = "*_attributes_draft.csv"))
 
   if (length(attribute_files) == 0){
-    print("No attribute files found ... run compile_attributes() to create them.")
+    print("No attribute_draft files found ... run copy_templates to import, then fill them out.")
   }
 
   # Set file names
@@ -86,7 +80,7 @@ define_factors <- function(path) {
   for (i in 1:length(table_names)){
     fname_table_factors[i] <- paste(
       substr(table_names[i], 1, nchar(table_names[i]) - 4),
-      "_factors.xlsx",
+      "_factors.csv",
       sep = ""
     )
   }
@@ -95,140 +89,140 @@ define_factors <- function(path) {
 
   answer <- readline(
     "Are you sure you want to build new factors? This will overwrite your previous work! (y or n):  ")
-
+  
   if (answer == "y"){
-
-
+    
     # Loop through data tables ------------------------------------------------
-
+    
     for (i in 1:length(attribute_files)){
 
-        print(paste("Now working on ... ",
-                    attribute_files[i], sep = ""))
+      print(paste("Now working on ... ",
+                  attribute_files[i], sep = ""))
 
-        # Read attributes file
-
-        attributes <- read.xlsx2(
-          paste(
-            path,
-            "/",
-            attribute_files[i],
+      # Read attribute_draft.csv file
+      
+      df_attributes <- read.table(
+        paste(path, 
+            "/", 
+            substr(fname_table_attributes[i], 1, nchar(fname_table_attributes[i]) - 4),
+            "_draft.csv",
             sep = ""),
-          sheetIndex = 1,
-          colClasses = c(rep("character",7),
-                         rep("numeric",2),
-                         rep("character",2)))
+        header=TRUE,
+        sep=",",
+        quote="\"",
+        as.is=TRUE,
+        comment.char = "",
+        colClasses = rep("character", 7))
+      
+      colnames(df_attributes) <- c("attributeName",
+                                 "attributeDefinition",
+                                 "class",
+                                 "unit",
+                                 "dateTimeFormatString",
+                                 "missingValueCode",
+                                 "missingValueCodeExplanation")
 
-        for (j in 1:dim(attributes)[2]){
-          if (class(attributes[ ,j]) == "factor"){
-            attributes[ ,j] <- as.character(attributes[ ,j])
-          }
+      # Build factor table
+
+      factors_I <- which(attributes$columnClasses %in% "factor")
+
+      df_table <- read.csv(
+        paste(
+          path,
+          "/",
+          substr(attribute_files[i], 1, nchar(attribute_files[i]) - 21),
+          ".csv",
+          sep = ""),
+        header=TRUE,
+        sep=",",
+        quote="\"",
+        as.is=TRUE)
+
+      # If there are no factors then skip to the next file
+
+      if (length(factors_I) > 0){
+
+        rows <- 0
+        for (j in 1:length(factors_I)){
+          factor_names <- unique(
+            eval(
+              parse(
+                text = paste(
+                  "df_table",
+                  "$",
+                  attributes$attributeName[factors_I[j]],
+                  sep = ""))))
+
+          rows <- length(factor_names) + rows
+
         }
 
-        # Build factor table
+        factors <- data.frame(attributeName = character(rows),
+                              code = character(rows),
+                              definition = character(rows),
+                              stringsAsFactors = F)
 
-        factors_I <- which(attributes$columnClasses %in% "factor")
+        row <- 1
+        for (j in 1:length(factors_I)){
 
-        df_table <- read.csv(
-          paste(
-            path,
-            "/",
-            substr(attribute_files[i], 1, nchar(attribute_files[i]) - 16),
-            ".csv",
-            sep = ""),
-          header=TRUE,
-          sep=",",
-          quote="\"",
-          as.is=TRUE)
+          factor_names <- unique(
+            eval(
+              parse(
+                text = paste(
+                  "df_table",
+                  "$",
+                  attributes$attributeName[factors_I[j]],
+                  sep = ""))))
 
-        # If there are no factors then skip to the next file
+          factors$attributeName[row:(length(factor_names)+row-1)] <-
+            attributes$attributeName[factors_I[j]]
 
-        if (length(factors_I) > 0){
+          factors$code[row:(length(factor_names)+row-1)] <- factor_names
 
-          rows <- 0
-          for (j in 1:length(factors_I)){
-            factor_names <- unique(
-              eval(
-                parse(
-                  text = paste(
-                    "df_table",
-                    "$",
-                    attributes$attributeName[factors_I[j]],
-                    sep = ""))))
+          row <- row + length(factor_names)
 
-            rows <- length(factor_names) + rows
+        }
 
-          }
+        # Write factor table
+        
+        write.table(factors,
+                    paste(path,
+                          "/",
+                          fname_table_factors[i],
+                          "_factors.csv",
+                          sep = ""),
+                    sep = ",",
+                    row.names = F,
+                    quote = F,
+                    fileEncoding = "UTF-8")
 
-          factors <- data.frame(attributeName = character(rows),
-                                code = character(rows),
-                                definition = character(rows),
-                                stringsAsFactors = F)
+        # Prompt the user to manually edit the factors file and custom unit files.
 
-          row <- 1
-          for (j in 1:length(factors_I)){
+        standardUnits <- get_unitList()
+        View(standardUnits$units)
 
-            factor_names <- unique(
-              eval(
-                parse(
-                  text = paste(
-                    "df_table",
-                    "$",
-                    attributes$attributeName[factors_I[j]],
-                    sep = ""))))
+        if (os == "mac"){
 
-            factors$attributeName[row:(length(factor_names)+row-1)] <-
-              attributes$attributeName[factors_I[j]]
+          system(paste("open",
+                       paste(
+                         path,
+                         "/",
+                         fname_table_factors[i],
+                         sep = "")))
 
-            factors$code[row:(length(factor_names)+row-1)] <- factor_names
+        } else if (os == "win"){
 
-            row <- row + length(factor_names)
-
-          }
-
-          # Write factor table
-
-          write.xlsx(factors,
-                     paste(path,
-                           "/",
-                           substr(attribute_files[i], 1, nchar(attribute_files[i]) - 16),
-                           "_factors.xlsx",
-                           sep = ""),
-                     col.names = T,
-                     row.names = F,
-                     showNA = F)
-
-          # Prompt the user to manually edit the factors file and custom unit files.
-
-          standardUnits <- get_unitList()
-          View(standardUnits$units)
-
-          if (os == "mac"){
-
-            system(paste("open",
-                         paste(
-                           path,
+          shell.exec(paste(path,
                            "/",
                            fname_table_factors[i],
-                           sep = "")))
+                           sep = ""))
 
-          } else if (os == "win"){
-
-            shell.exec(paste(path,"/",
-                             substr(attribute_files[i],
-                                    1,
-                                    nchar(attribute_files[i]) - 16),
-                             "_factors.xlsx",
-                             sep = ""))
-
-          }
-
-          readline(
-            prompt = "Press <enter> once factors file has been edited, saved, and closed."
-          )
         }
 
-      #}
+        readline(
+          prompt = "Press <enter> once factors file has been edited, saved, and closed."
+        )
+      }
 
     }
 
