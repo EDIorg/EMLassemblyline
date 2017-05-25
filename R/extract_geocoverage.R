@@ -32,7 +32,7 @@ extract_geocoverage <- function(path, table.name, lat.col, lon.col, site.col){
   
   # Load dependencies
   
-  library("xlsx")
+  #library("xlsx")
   
   # Get system information
   

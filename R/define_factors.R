@@ -49,8 +49,8 @@ define_factors <- function(path) {
   
   # Parameterize function
   
-  library("EML")
-  library("xlsx")
+  #library("EML")
+  #library("xlsx")
   #library("rmarkdown")
   
   # Load the configuration file
