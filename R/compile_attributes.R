@@ -30,6 +30,8 @@
 #'     attribues of your data table, and formats this meta data for the 
 #'     functions \emph{define_factors} and \emph{create_eml}.
 #'
+#' @export
+#'
 #' @seealso \code{\link{copy_templates}} to copy metadata templates to the 
 #'     dataset working directory.
 #' @seealso \code{\link{run_guide}} for guidance on completing the template 

@@ -43,6 +43,8 @@
 #'     If template files already exist in the working directory, new templates 
 #'     will not be transfered.
 #'     
+#' @export     
+#'     
 #' @seealso \code{\link{run_guide}} for guidance on completing the template 
 #'     files.
 

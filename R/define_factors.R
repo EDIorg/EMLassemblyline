@@ -33,6 +33,8 @@
 #'     dictionary "name" column. Enter the name in the definition column of 
 #'     the factors table. Note these values are case sensitive.
 #'
+#' @export
+#'
 #' @seealso \code{\link{copy_templates}} to copy metadata templates to the 
 #'     dataset working directory.
 #' @seealso \code{\link{run_guide}} for guidance on completing the template 

@@ -23,6 +23,8 @@
 #'     the source of error. Often the error is small and quickly resolved with 
 #'     the aid of an editors schema congruence functionality.
 #'
+#' @export
+#'
 #' @seealso \code{\link{copy_templates}} to copy metadata templates to the 
 #'     dataset working directory.
 #' @seealso \code{\link{run_guide}} for guidance on completing the template 

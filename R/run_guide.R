@@ -163,6 +163,8 @@
 #'     \emph{"Make sure all files of the working directory are closed."} Some 
 #'     functions will error out if these files are open.
 #'
+#' @export
+#'
 #' @seealso \code{\link{copy_templates}} to copy metadata templates to the 
 #'     dataset working directory.
 

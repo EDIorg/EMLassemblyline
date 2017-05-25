@@ -23,6 +23,8 @@
 #'     \emph{geographic coverage.xlsx} containing decimal degree latitude, 
 #'     longitude, and site name.
 #'
+#' @export
+#'
 #' @seealso \code{\link{create_eml}} to write the EML file.
 
 
