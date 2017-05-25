@@ -10,7 +10,7 @@ Description: A set of functions facilitating a workflow to create metadata
     function to build, validate, and write the EML metadata to file.
 Depends:
     EML (>= 1.0.3),
-    R (>= 3.4.0),
+    R (>= 3.2.5),
     xlsx (>= 0.5.7)
 Imports:
 Suggests:
