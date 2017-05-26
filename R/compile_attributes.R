@@ -47,9 +47,9 @@ compile_attributes <- function(path){
   
   # Parameterize function
   
-  #library("EML")
-  #library("xlsx")
-  #library("rmarkdown")
+  # library("EML")
+  # library("xlsx")
+  # library("rmarkdown")
   
   # Load configuration file
 
