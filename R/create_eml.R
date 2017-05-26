@@ -41,13 +41,13 @@ create_eml <- function(path) {
   
   # Parameterize function
   
-  #library("EML")
-  #library("xlsx")
-  #library("rmarkdown")
-  #library("methods")
-  #library("stringr")
-  #library("tools")
-  #options(java.parameters = "-Xmx4000m")  # Allocate RAM to java
+  library("EML")
+  library("xlsx")
+  library("rmarkdown")
+  library("methods")
+  library("stringr")
+  library("tools")
+  options(java.parameters = "-Xmx4000m")  # Allocate RAM to java
   
   # Get system information
   
