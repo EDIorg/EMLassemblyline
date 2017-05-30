@@ -39,10 +39,6 @@
 
 create_eml <- function(path) {
   
-  # Compile attributes
-  
-  compile_attributes(path = path)
-  
   # Get system information
   
   sysinfo <- Sys.info()["sysname"]
@@ -61,59 +57,63 @@ create_eml <- function(path) {
   template <- paste(dataset_name,
                     "_template.docx",
                     sep = "")
-
+  
+  # Compile attributes
+  
+  compile_attributes(path = path)
+  
   # Set file names
 
   fname_abstract <- paste(path,
                           "/",
                           substr(template, 1, nchar(template) - 14),
-                          "_abstract.docx",
+                          "_abstract.txt",
                           sep = "")
   
   fname_additional_info <- paste(path,
                             "/",
                             substr(template, 1, nchar(template) - 14),
-                            "_additional_info.docx",
+                            "_additional_info.txt",
                             sep = "")
 
   fname_personnel <- paste(path,
                            "/",
                           substr(template, 1, nchar(template) - 14),
-                          "_personnel.xlsx",
+                          "_personnel.csv",
                           sep = "")
   
   fname_intellectual_rights <- paste(path,
                                      "/",
                                      substr(template, 1,
                                             nchar(template) - 14),
-                                     "_intellectual_rights.docx", sep = "")
+                                     "_intellectual_rights.txt", sep = "")
 
   fname_methods <- paste(path,
                          "/",
                          substr(template, 1, nchar(template) - 14),
-                         "_methods.docx",
+                         "_methods.txt",
                          sep = "")
   
 
-  fname_table_attributes <- c()
-  for (i in 1:length(table_names)){
-    fname_table_attributes[i] <- paste(
-      substr(table_names[i], 1, nchar(table_names[i]) - 4),
-      "_attributes.xlsx",
-      sep = "")
-  }
+  # fname_table_attributes <- c()
+  # for (i in 1:length(table_names)){
+  #   fname_table_attributes[i] <- paste(
+  #     substr(table_names[i], 1, nchar(table_names[i]) - 4),
+  #     "_attributes.xlsx",
+  #     sep = "")
+  # }
   
   fname_table_factors <- c()
   for (i in 1:length(table_names)){
     fname_table_factors[i] <- paste(
       substr(table_names[i], 1, nchar(table_names[i]) - 4),
-      "_factors.xlsx",
+      "_factors.csv",
       sep = "")
   }
   
   fname_table_factors <- trimws(
     list.files(path,
-               pattern = "*_factors.xlsx"))
+               pattern = "*_factors.csv"))
 
   # Initialize data entity storage (tables)
 
@@ -224,12 +224,16 @@ create_eml <- function(path) {
 
   }
 
-  # Read/write personnel .xlsx
+  # Read/write personnel file
 
-  personinfo <- read.xlsx2(
+  personinfo <- read.table(
     fname_personnel,
-    sheetIndex = 1,
-    colClasses = c(rep("character",6)))
+    header=TRUE,
+    sep=",",
+    quote="\"",
+    as.is=TRUE,
+    comment.char = "",
+    colClasses = rep("character", 6))
 
   colnames(personinfo) <- c("givenName",
                             "surName",
@@ -239,7 +243,7 @@ create_eml <- function(path) {
                             "role")
 
   write.table(personinfo,
-              paste(substr(fname_personnel, 1, nchar(fname_personnel) - 5),
+              paste(substr(fname_personnel, 1, nchar(fname_personnel) - 4),
                     ".txt",
                     sep = ""),
               sep = "\t",
@@ -288,7 +292,7 @@ create_eml <- function(path) {
   # Add creators
 
   personinfo <- read.table(
-    paste(substr(fname_personnel, 1, nchar(fname_personnel) - 5),
+    paste(substr(fname_personnel, 1, nchar(fname_personnel) - 4),
           ".txt",
           sep = ""),
     header = TRUE,
@@ -344,7 +348,7 @@ create_eml <- function(path) {
   # Add contacts
 
   personinfo <- read.table(
-    paste(substr(fname_personnel, 1, nchar(fname_personnel) - 5),
+    paste(substr(fname_personnel, 1, nchar(fname_personnel) - 4),
           ".txt",
           sep = ""),
     header = TRUE,
@@ -421,7 +425,7 @@ create_eml <- function(path) {
   # Add project and funding
 
   personinfo <- read.table(
-    paste(substr(fname_personnel, 1, nchar(fname_personnel) - 5),
+    paste(substr(fname_personnel, 1, nchar(fname_personnel) - 4),
           ".txt",
           sep = ""),
     header = TRUE,
@@ -448,7 +452,7 @@ create_eml <- function(path) {
   # Add associated parties
   
   personinfo <- read.table(
-    paste(substr(fname_personnel, 1, nchar(fname_personnel) - 5),
+    paste(substr(fname_personnel, 1, nchar(fname_personnel) - 4),
           ".txt",
           sep = ""),
     header = TRUE,
@@ -488,7 +492,7 @@ create_eml <- function(path) {
   for (i in 1:length(table_names)){
 
     print(paste(
-      "Now building attributes for ... ",
+      "Building attributes for ... ",
       table_names[i],
       sep = ""))
     
@@ -518,62 +522,73 @@ create_eml <- function(path) {
 
     # Read attributes file (encoding necessitates read/write/read)
     
-    attributes <- read.xlsx2(paste(
-      path,
-      "/",
-      fname_table_attributes[i], sep = ""),
-      sheetIndex = 1,
-      colClasses = c(rep("character",7), rep("numeric",2),rep("character",2)),
-      stringsAsFactors = F)
-
-    write.table(
-      attributes,
-      paste(
-        path,
-        "/",
-        substr(fname_table_attributes[i],
-               1,
-               nchar(fname_table_attributes[i]) - 5),
-        ".txt",
-        sep=""),
-      sep = "\t",
-      row.names = F,
-      quote = F,
-      fileEncoding = "UTF-8")
-
-    attributes <- read.table(
-      paste(
-        path,
-        "/",
-        substr(fname_table_attributes[i],
-               1,
-               nchar(fname_table_attributes[i]) - 5),
-        ".txt",
-        sep = ""),
-      header = TRUE,
-      sep = "\t",
-      as.is = TRUE,
-    na.strings = "")
-    for (j in 1:7){
-    attributes[ ,j] <- as.character(attributes[ ,j])
-    }
-    for (j in 8:9){
-    attributes[ ,j] <- as.numeric(attributes[ ,j])
-    }
-    for (j in 10:11){
-    attributes[ ,j] <- as.character(attributes[ ,j])
-    }
+    # attributes <- read.xlsx2(paste(
+    #   path,
+    #   "/",
+    #   fname_table_attributes[i], sep = ""),
+    #   sheetIndex = 1,
+    #   colClasses = c(rep("character",7), rep("numeric",2),rep("character",2)),
+    #   stringsAsFactors = F)
+    # 
+    # write.table(
+    #   attributes,
+    #   paste(
+    #     path,
+    #     "/",
+    #     substr(fname_table_attributes[i],
+    #            1,
+    #            nchar(fname_table_attributes[i]) - 5),
+    #     ".txt",
+    #     sep=""),
+    #   sep = "\t",
+    #   row.names = F,
+    #   quote = F,
+    #   fileEncoding = "UTF-8")
+    # 
+    # attributes <- read.table(
+    #   paste(
+    #     path,
+    #     "/",
+    #     substr(fname_table_attributes[i],
+    #            1,
+    #            nchar(fname_table_attributes[i]) - 5),
+    #     ".txt",
+    #     sep = ""),
+    #   header = TRUE,
+    #   sep = "\t",
+    #   as.is = TRUE,
+    # na.strings = "")
+    # for (j in 1:7){
+    # attributes[ ,j] <- as.character(attributes[ ,j])
+    # }
+    # for (j in 8:9){
+    # attributes[ ,j] <- as.numeric(attributes[ ,j])
+    # }
+    # for (j in 10:11){
+    # attributes[ ,j] <- as.character(attributes[ ,j])
+    # }
 
     # Read factors file (encoding necessitates read/write/read)
 
     if (!is.na(match(fname_table_factors[i], list.files(path)))){
 
-      factors <- read.xlsx2(paste(
-        path,
-        "/",
-        fname_table_factors[i], sep = ""),
-        sheetIndex = 1,
-        colClasses = c(rep("character",3)))
+      factors <- read.table(
+        paste(
+          path,
+          "/",
+          fname_table_factors[i], sep = ""),
+        header=TRUE,
+        sep=",",
+        quote="\"",
+        as.is=TRUE,
+        comment.char = "")
+      
+      # factors <- read.xlsx2(paste(
+      #   path,
+      #   "/",
+      #   fname_table_factors[i], sep = ""),
+      #   sheetIndex = 1,
+      #   colClasses = c(rep("character",3)))
 
       if (dim(factors)[1] > 0){
 
@@ -584,34 +599,34 @@ create_eml <- function(path) {
         non_blank_rows <- nrow(factors) - sum(factors$attributeName == "")
         factors <- factors[1:non_blank_rows, 1:3]
 
-        write.table(
-          factors,
-          paste(
-            path,
-            "/",
-            substr(fname_table_factors[i],
-                   1,
-                   nchar(fname_table_factors[i]) - 5),
-            ".txt",
-            sep=""),
-          sep = "\t",
-          row.names = F,
-          quote = F,
-          fileEncoding = "UTF-8")
-
-        factors <- read.table(
-          paste(
-            path,
-            "/",
-            substr(fname_table_factors[i],
-                   1,
-                   nchar(fname_table_factors[i]) - 5),
-            ".txt",
-            sep=""),
-          header = TRUE,
-          sep = "\t",
-          as.is = TRUE,
-          na.strings = "NA")
+        # write.table(
+        #   factors,
+        #   paste(
+        #     path,
+        #     "/",
+        #     substr(fname_table_factors[i],
+        #            1,
+        #            nchar(fname_table_factors[i]) - 5),
+        #     ".txt",
+        #     sep=""),
+        #   sep = "\t",
+        #   row.names = F,
+        #   quote = F,
+        #   fileEncoding = "UTF-8")
+        # 
+        # factors <- read.table(
+        #   paste(
+        #     path,
+        #     "/",
+        #     substr(fname_table_factors[i],
+        #            1,
+        #            nchar(fname_table_factors[i]) - 5),
+        #     ".txt",
+        #     sep=""),
+        #   header = TRUE,
+        #   sep = "\t",
+        #   as.is = TRUE,
+        #   na.strings = "NA")
 
         # Clean extraneous white spaces from factors tables
 
@@ -748,78 +763,88 @@ create_eml <- function(path) {
 
   # Are custom units present in these tables?
 
-  custom_units_df <- read.xlsx2(
-    paste(path,
-          "/",
-          substr(template, 1, nchar(template) - 14),
-          "_custom_units.xlsx",
-          sep = ""),
-    sheetIndex = 1,
-    colClasses = c("character","character","character","numeric","character"))
+  # custom_units_df <- read.xlsx2(
+  #   paste(path,
+  #         "/",
+  #         substr(template, 1, nchar(template) - 14),
+  #         "_custom_units.xlsx",
+  #         sep = ""),
+  #   sheetIndex = 1,
+  #   colClasses = c("character","character","character","numeric","character"))
+  # 
+  # write.table(custom_units_df,
+  #             paste(path,
+  #                   "/",
+  #                   substr(template, 1, nchar(template) - 14),
+  #                   "_custom_units.txt",
+  #                   sep = ""),
+  #             sep = "\t",
+  #             row.names = F,
+  #             quote = F,
+  #             fileEncoding = "UTF-8")
 
-  write.table(custom_units_df,
-              paste(path,
-                    "/",
-                    substr(template, 1, nchar(template) - 14),
-                    "_custom_units.txt",
-                    sep = ""),
-              sep = "\t",
-              row.names = F,
-              quote = F,
-              fileEncoding = "UTF-8")
-
-  unitType_df <- read.table(
-    paste(path,
-          "/",
-          substr(template, 1, nchar(template) - 14),
-          "_custom_units.txt",
-          sep = ""),
-    header = TRUE,
-    sep = "\t",
-    as.is = TRUE,
-    na.strings = "")
-
-  if (nrow(custom_units_df) < 1){
-    custom_units <- "no"
-  } else {
-    custom_units <- "yes"
-  }
-
-  # Clean white spaces from custom_units and units_types
-
-  if (custom_units == "yes"){
-
-    write.table(custom_units_df,
-                paste(path,
-                      "/",
-                      substr(template, 1, nchar(template) - 14),
-                      "_custom_units.txt",
-                      sep = ""),
-                sep = "\t",
-                row.names = F,
-                quote = F,
-                fileEncoding = "UTF-8")
-
+  if (file.exists(paste(path,"/",substr(template, 1, nchar(template) - 14),"_custom_units.csv",sep = ""))){
+    
     custom_units_df <- read.table(
       paste(path,
             "/",
             substr(template, 1, nchar(template) - 14),
-            "_custom_units.txt",
+            "_custom_units.csv",
             sep = ""),
       header = TRUE,
       sep = "\t",
       as.is = TRUE,
       na.strings = "")
-
-    for (j in 1:ncol(custom_units_df)){
-      if (class(custom_units_df[ ,j]) == "character" ||
-          (class(custom_units_df[ ,j]) == "factor")){
-        custom_units_df[ ,j] <- trimws(custom_units_df[ ,j])
-      }
+    
+    if (nrow(custom_units_df) < 1){
+      custom_units <- "no"
+    } else {
+      custom_units <- "yes"
     }
-
-    unitsList <- set_unitList(custom_units_df)
+    
+    # Clean white spaces from custom_units and units_types
+    
+    if (custom_units == "yes"){
+      
+      # write.table(custom_units_df,
+      #             paste(path,
+      #                   "/",
+      #                   substr(template, 1, nchar(template) - 14),
+      #                   "_custom_units.txt",
+      #                   sep = ""),
+      #             sep = "\t",
+      #             row.names = F,
+      #             quote = F,
+      #             fileEncoding = "UTF-8")
+      # 
+      # custom_units_df <- read.table(
+      #   paste(path,
+      #         "/",
+      #         substr(template, 1, nchar(template) - 14),
+      #         "_custom_units.txt",
+      #         sep = ""),
+      #   header = TRUE,
+      #   sep = "\t",
+      #   as.is = TRUE,
+      #   na.strings = "")
+      
+      for (j in 1:ncol(custom_units_df)){
+        if (class(custom_units_df[ ,j]) == "character" ||
+            (class(custom_units_df[ ,j]) == "factor")){
+          custom_units_df[ ,j] <- trimws(custom_units_df[ ,j])
+        }
+      }
+      
+      unitsList <- set_unitList(custom_units_df)
+    }
+    
+    
+  } else {
+    
+    custom_units <- "no"
+    
   }
+
 
   # Compile data tables
 
@@ -827,6 +852,7 @@ create_eml <- function(path) {
                            data_tables_stored)
 
   # Build EML
+  
   
   if (custom_units == "yes"){
     eml <- new("eml",
@@ -853,7 +879,7 @@ create_eml <- function(path) {
 
   if (validation_result == "TRUE"){
     
-    print("EML passed validation.")
+    print("EML passed validation!")
     
   } else {
     

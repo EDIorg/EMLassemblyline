@@ -60,7 +60,8 @@ compile_attributes <- function(path){
 
   #if (answer == "y"){
 
-    # Set file names to be written
+    
+  # Set file names to be written ===========delete?=============================
 
     fname_table_attributes <- c()
 
@@ -72,13 +73,14 @@ compile_attributes <- function(path){
         sep = "")
 
     }
+    #===========================================================================
 
     
     # Loop through data tables --------------------------------------------------
 
     for (i in 1:length(table_names)){
 
-      print(paste("Now compiling attributes for ... ",
+      print(paste("Compiling attributes for ... ",
                   table_names[i], sep = ""))
 
       # Read data table

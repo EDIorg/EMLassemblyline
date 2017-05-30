@@ -103,10 +103,9 @@ define_factors <- function(path) {
       
       df_attributes <- read.table(
         paste(path, 
-            "/", 
-            substr(fname_table_attributes[i], 1, nchar(fname_table_attributes[i]) - 4),
-            "_draft.csv",
-            sep = ""),
+              "/", 
+              attribute_files[i],
+              sep = ""),
         header=TRUE,
         sep=",",
         quote="\"",
@@ -124,19 +123,39 @@ define_factors <- function(path) {
 
       # Build factor table
 
-      factors_I <- which(attributes$columnClasses %in% "factor")
-
-      df_table <- read.csv(
-        paste(
-          path,
-          "/",
-          substr(attribute_files[i], 1, nchar(attribute_files[i]) - 21),
-          ".csv",
-          sep = ""),
-        header=TRUE,
-        sep=",",
-        quote="\"",
-        as.is=TRUE)
+      factors_I <- which(df_attributes$class %in% "factor")
+      
+      # Read data table
+      
+      if (field_delimeter[i] == "comma"){
+        
+        df_table <- read.table(
+          paste(path, 
+                "/", 
+                substr(attribute_files[i], 1, nchar(attribute_files[i]) - 21),
+                ".csv",
+                sep = ""),
+          header=TRUE,
+          sep=",",
+          quote="\"",
+          as.is=TRUE,
+          comment.char = "")
+        
+      } else if (field_delimeter[i] == "tab"){
+        
+        df_table <- read.table(
+          paste(path, 
+                "/", 
+                substr(attribute_files[i], 1, nchar(attribute_files[i]) - 21),
+                ".txt",
+                sep = ""),
+          header=TRUE,
+          sep="\t",
+          quote="\"",
+          as.is=TRUE,
+          comment.char = "")
+        
+      }
 
       # If there are no factors then skip to the next file
 
@@ -150,7 +169,7 @@ define_factors <- function(path) {
                 text = paste(
                   "df_table",
                   "$",
-                  attributes$attributeName[factors_I[j]],
+                  df_attributes$attributeName[factors_I[j]],
                   sep = ""))))
 
           rows <- length(factor_names) + rows
@@ -171,11 +190,11 @@ define_factors <- function(path) {
                 text = paste(
                   "df_table",
                   "$",
-                  attributes$attributeName[factors_I[j]],
+                  df_attributes$attributeName[factors_I[j]],
                   sep = ""))))
 
           factors$attributeName[row:(length(factor_names)+row-1)] <-
-            attributes$attributeName[factors_I[j]]
+            df_attributes$attributeName[factors_I[j]]
 
           factors$code[row:(length(factor_names)+row-1)] <- factor_names
 
@@ -189,7 +208,6 @@ define_factors <- function(path) {
                     paste(path,
                           "/",
                           fname_table_factors[i],
-                          "_factors.csv",
                           sep = ""),
                     sep = ",",
                     row.names = F,
