@@ -57,21 +57,17 @@ define_factors <- function(path) {
 
   # Get system information
 
-  sysinfo <- Sys.info()["sysname"]
-  if (sysinfo == "Darwin"){
-    os <- "mac"
-  } else {
-    os <- "win"
+  attribute_files <- c()
+  
+  for (i in 1:length(table_names)){
+    attribute_files[i] <- paste(
+      substr(table_names[i], 1, nchar(table_names[i]) - 4),
+      "_attributes_draft.txt",
+      sep = "")
   }
 
-  # Identify the attribute files
-
-  attribute_files <- trimws(
-    list.files(path,
-               pattern = "*_attributes_draft.csv"))
-
   if (length(attribute_files) == 0){
-    print("No attribute_draft files found ... run copy_templates to import, then fill them out.")
+    print("No attribute_draft.txt files found ... run copy_templates to import, then fill them out.")
   }
 
   # Set file names
@@ -80,7 +76,7 @@ define_factors <- function(path) {
   for (i in 1:length(table_names)){
     fname_table_factors[i] <- paste(
       substr(table_names[i], 1, nchar(table_names[i]) - 4),
-      "_factors.csv",
+      "_factors.txt",
       sep = ""
     )
   }
@@ -96,9 +92,6 @@ define_factors <- function(path) {
     
     for (i in 1:length(attribute_files)){
 
-      print(paste("Now working on ... ",
-                  attribute_files[i], sep = ""))
-
       # Read attribute_draft.csv file
       
       df_attributes <- read.table(
@@ -107,7 +100,7 @@ define_factors <- function(path) {
               attribute_files[i],
               sep = ""),
         header=TRUE,
-        sep=",",
+        sep="\t",
         quote="\"",
         as.is=TRUE,
         comment.char = "",
@@ -160,6 +153,9 @@ define_factors <- function(path) {
       # If there are no factors then skip to the next file
 
       if (length(factors_I) > 0){
+        
+        print(paste("Writing ... ",
+                    fname_table_factors[i], sep = ""))
 
         rows <- 0
         for (j in 1:length(factors_I)){
@@ -209,7 +205,7 @@ define_factors <- function(path) {
                           "/",
                           fname_table_factors[i],
                           sep = ""),
-                    sep = ",",
+                    sep = "\t",
                     row.names = F,
                     quote = F,
                     fileEncoding = "UTF-8")
@@ -219,26 +215,8 @@ define_factors <- function(path) {
         standardUnits <- get_unitList()
         View(standardUnits$units)
 
-        if (os == "mac"){
-
-          system(paste("open",
-                       paste(
-                         path,
-                         "/",
-                         fname_table_factors[i],
-                         sep = "")))
-
-        } else if (os == "win"){
-
-          shell.exec(paste(path,
-                           "/",
-                           fname_table_factors[i],
-                           sep = ""))
-
-        }
-
         readline(
-          prompt = "Press <enter> once factors file has been edited, saved, and closed."
+          prompt = "Open the factors file for this data table and define factor codes. Save, close, and press <enter> when done."
         )
       }
 

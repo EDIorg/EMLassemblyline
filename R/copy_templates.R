@@ -57,42 +57,42 @@ copy_templates <- function(path){
             to = path)
   
   file.copy(from = paste(path.package("emlAssemblyLine"),
-                         "/templates/datasetname_abstract.docx",
+                         "/templates/datasetname_abstract.txt",
                          sep = ""),
             to = path)
   
   file.copy(from = paste(path.package("emlAssemblyLine"),
-                         "/templates/datasetname_custom_units.xlsx",
+                         "/templates/datasetname_custom_units.txt",
                          sep = ""),
             to = path)
   
   file.copy(from = paste(path.package("emlAssemblyLine"),
-                         "/templates/datasetname_cc0_1_intellectual_rights.docx",
+                         "/templates/datasetname_cc0_1_intellectual_rights.txt",
                          sep = ""),
             to = path)
   
   file.copy(from = paste(path.package("emlAssemblyLine"),
-                         "/templates/datasetname_cc_by_4.0_intellectual_rights.docx",
+                         "/templates/datasetname_cc_by_4.0_intellectual_rights.txt",
                          sep = ""),
             to = path)
   
   file.copy(from = paste(path.package("emlAssemblyLine"),
-                         "/templates/datasetname_datatablename_attributes_draft.xlsx",
+                         "/templates/datasetname_datatablename_attributes_draft.txt",
                          sep = ""),
             to = path)
   
   file.copy(from = paste(path.package("emlAssemblyLine"),
-                         "/templates/datasetname_methods.docx",
+                         "/templates/datasetname_methods.txt",
                          sep = ""),
             to = path)
   
   file.copy(from = paste(path.package("emlAssemblyLine"),
-                         "/templates/datasetname_personnel.xlsx",
+                         "/templates/datasetname_personnel.txt",
                          sep = ""),
             to = path)
   
   file.copy(from = paste(path.package("emlAssemblyLine"),
-                         "/templates/datasetname_additional_info.docx",
+                         "/templates/datasetname_additional_info.txt",
                          sep = ""),
             to = path)
   

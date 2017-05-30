@@ -207,7 +207,7 @@ run_guide <- function() {
 
   # Create abstract
   
-  readline(paste("Write an abstract for your dataset in the file datasetname_abstract.docx.",
+  readline(paste("Write an abstract for your dataset in the file datasetname_abstract.txt.",
                  "\n", "Rename this file following the naming convention.",
                  "\n",
                  "Press <enter> when done.",
@@ -216,7 +216,7 @@ run_guide <- function() {
   
   # Additional info
   
-  readline(paste("Place additional information in datasetname_additional_info.docx.",
+  readline(paste("Place additional information in datasetname_additional_info.txt.",
                  "\n", "Follow the file naming convention if you will be using it.",
                  "\n", "Delete this file if you have no additional information to present.",
                  "\n",
@@ -236,7 +236,7 @@ run_guide <- function() {
   
   # Add methods
   
-  readline(paste("Write the methods for your dataset in the file datasetname_methods.docx.",
+  readline(paste("Write the methods for your dataset in the file datasetname_methods.txt.",
                  "\n", "Rename this file following the naming convention.",
                  "\n",
                  "Press <enter> when done.",
@@ -245,7 +245,7 @@ run_guide <- function() {
   
   # Add personnel information
   
-  readline(paste("Enter personnel information for your dataset in the file datasetname_personnel.xlsx.",
+  readline(paste("Enter personnel information for your dataset in the file datasetname_personnel.txt.",
                  "\n", "Rename this file following the naming convention.",
                  "\n",
                  "Press <enter> when done.",
@@ -257,7 +257,7 @@ run_guide <- function() {
   standardUnits <- get_unitList()
   View(standardUnits$units)
   
-  readline(paste("Add data table attributes to the file datatablename_attributes_draft.xlsx.",
+  readline(paste("Add data table attributes to the file datatablename_attributes_draft.txt.",
                  "\n", "The standard units dictionary has been opened for you.",
                  "\n", "Create an attributes file for each data table and rename following convention.",
                  "\n",
@@ -284,7 +284,6 @@ run_guide <- function() {
   # Green light to run other functions of this package
   
   readline(paste("Now you can use these functions:",
-                 "\n", "compile_attributes()",
                  "\n", "define_factors()",
                  "\n", "extract_geocoverage()",
                  "\n", "create_eml()",

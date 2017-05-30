@@ -30,27 +30,35 @@
 
 extract_geocoverage <- function(path, table.name, lat.col, lon.col, site.col){
   
-  # Load dependencies
+  # Load the datasets configuration file
   
-  #library("xlsx")
+  source(paste(path, "/eml_configuration.R", sep = ""))
   
-  # Get system information
+  # Read data table
   
-  sysinfo <- Sys.info()["sysname"]
-  if (sysinfo == "Darwin"){
-    os <- "mac"
-  } else {
-    os <- "win"
+  use_i <- match(table.name, table_names)
+  
+  if (field_delimeter[use_i] == "comma"){
+    
+    df_table <- read.table(
+      paste(path, "/", table.name, sep = ""),
+      header=TRUE,
+      sep=",",
+      quote="\"",
+      as.is=TRUE,
+      comment.char = "")
+    
+  } else if (field_delimeter[use_i] == "tab"){
+    
+    df_table <- read.table(
+      paste(path, "/", table.name, sep = ""),
+      header=TRUE,
+      sep="\t",
+      quote="\"",
+      as.is=TRUE,
+      comment.char = "")
+    
   }
-  
-  # Load data table
-  
-  df_table <- read.csv(
-    paste(path, "/", table.name, sep = ""),
-    header=TRUE,
-    sep=",",
-    quote="\"",
-    as.is=TRUE)
   
   # Get vectors of latitude, longitude, and site
   
@@ -89,41 +97,17 @@ extract_geocoverage <- function(path, table.name, lat.col, lon.col, site.col){
                                 longitude = longitude_out,
                                 site = site_out)
   
-  # Write file for inspection
+  # Write data to file
+  
+  print("Data has been written to geographic_coverage.txt.")
   
   write.table(geocoverage_out,
               paste(path,
                     "/",
-                    "geographic_coverage.csv", sep = ""),
-              sep = ",",
-              col.names = T,
-              row.names = F)
-  
-  if (os == "mac"){
-    
-    system(paste("open",
-                 paste(
-                   path,
-                   "/",
-                   "geographic_coverage.csv",
-                   sep = "")))
-    
-  } else if (os == "win"){
-    
-    shell.exec(paste(path,
-                     "/",
-                     "geographic_coverage.csv",
-                     sep = ""))
-    
-  }
-  
-  print("Latitude and longitude must be in decimal degree format.")
-  
-  print("Longitudes west of the prime meridian and latitudes south of the equator are prefixed with a minus sign (-).")
-  
-  readline(
-    prompt = "Edit the geographic coverage file, save, close and press <enter> when done."
-  )
-  
+                    "geographic_coverage.txt", sep = ""),
+              sep = "\t",
+              row.names = F,
+              quote = F,
+              fileEncoding = "UTF-8")
 
 }
