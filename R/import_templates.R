@@ -1,55 +1,50 @@
-#' Copy metadata templates to the dataset working directory
+#' Import metadata templates
 #'
-#' @description  Create a working directory for your dataset and execute this
-#'     function. This function populates the dataset working directory with 
-#'     templates to be filled out by the data provider. These templates store
-#'     information about the data that are later called upon by 
-#'     \code{create_eml} when building the EML and writing the .xml file.
+#' @description  Import metadata templates to your dataset working directory. Use these templates to 
+#'     provide information about your data. Information in these templates are translated and written to 
+#'     the EML file with \code{make_eml}.
 #'
-#' @usage copy_templates(path)
+#' @usage import_templates(path)
 #'
 #' @param path A path to the dataset working directory.
 #'
 #' @return 
-#'     \emph{datasetname_abstract.docx} A file for the abstract of your data.
+#'     \emph{datasetname_abstract.txt} A text file for the abstract of your data.
 #'     
-#'     \emph{datasetname_additional_info.docx} A file for additional information 
+#'     \emph{datasetname_additional_info.txt} A text file for additional information 
 #'     about your data.
 #'     
-#'     \emph{datasetname_custom_units.xlsx} A file for custom units not defined
-#'     in the standard unit dictionary.
+#'     \emph{datasetname_custom_units.txt} A tab delimited table for custom units used in your data 
+#'     that are not defined in the standard unit dictionary.
 #'     
-#'     \emph{datasetname_cc_by_4.0_intellectual_rights.docx} One of two 
-#'     intellectual rights licenses to consider for your dataset. Do not edit 
-#'     this text.
+#'     \emph{datasetname_cc_by_4.0_intellectual_rights.txt} One of two
+#'     intellectual rights licenses to consider for your dataset. Do not edit the text of this file.
 #'     
-#'     \emph{datasetname_cc0_1_intellectual_rights.docx} One of two 
-#'     intellectual rights licenses to consider for your dataset. Do not edit 
-#'     this text.
+#'     \emph{datasetname_cc0_1_intellectual_rights.txt} One of two 
+#'     intellectual rights licenses to consider for your dataset. Do not edit the text of this file.
 #'     
-#'     \emph{datasetname_methods.docx} A file for methods used in create your 
+#'     \emph{datasetname_methods.txt} A text file for methods used in creating your 
 #'     data.
 #'     
-#'     \emph{datasetname_personnel.xlsx} A file for information on personnel 
+#'     \emph{datasetname_personnel.txt} A tab delimited table for information about personnel 
 #'     associated with this data.
 #'     
-#'     \emph{datasetname_datatablename_attributes_draft.xlsx} A file for 
+#'     \emph{datasetname_datatablename_attributes.txt} A tab delimited table for 
 #'     information about your data tables.
 #'     
-#'     \emph{eml_configuration.R} A file for information about your data 
-#'     entities (i.e. data tables, .zip directories of spatial vectors, etc.).
+#'     \emph{eml_configuration.R} A file for technical and general information about your data.
 #'     
 #' @details 
 #'     If template files already exist in the working directory, new templates 
-#'     will not be transfered.
+#'     will not be imported.
 #'     
 #' @export     
 #'     
-#' @seealso \code{\link{run_guide}} for guidance on completing the template 
+#' @seealso \code{\link{view_instructions}} for guidance on completing the template 
 #'     files.
 
 
-copy_templates <- function(path){
+import_templates <- function(path){
   
   file.copy(from = paste(path.package("emlAssemblyLine"),
                          "/templates/eml_configuration.R",
@@ -77,7 +72,7 @@ copy_templates <- function(path){
             to = path)
   
   file.copy(from = paste(path.package("emlAssemblyLine"),
-                         "/templates/datasetname_datatablename_attributes_draft.txt",
+                         "/templates/datasetname_datatablename_attributes.txt",
                          sep = ""),
             to = path)
   
