@@ -1,13 +1,46 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
+title: "Introduction to emlAssemblyLine"
+author: "Colin Smith"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Introduction to emlAssemblyLine}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+
+Introduction
+What is EML and why is it good?
+Problem/challenge.
+How does the EML Assembly Line simplify this challenge?
+A description of the assembly line (figure).
+- templates
+- extraction functions
+- wrapper
+The assembly line can be retooled to provide additional functionality and a custom EML product.
+
+While at first this may seem daunting. Of course this is a new process. Really, you have already done the most challengin part. Collected and refined the data to a usable set. You have all the information, now log it through these steps. Give your self a couple days to work through all this.
+
+## Current capabilities and requirements
+Data tables, comma or tab delimited
+
+Our priorities for building up the assembly line to produce EML for: spatial vectors and spatial raster
+data.
+
+## Collaboration
+[Collaborate with us](https://github.com/EDIorg/emlAssemblyLine)
+
+
+## References
+[Ecological Metadata Language](https://knb.ecoinformatics.org/#external//emlparser/docs/index.html)
+
+[EML R code package](https://github.com/ropensci/EML)
+
+# Assembling EML for an example dataset.
+
+
+
+
 
 Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
 
