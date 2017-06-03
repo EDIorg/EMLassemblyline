@@ -1,31 +1,36 @@
 #' Extract geographic coverage and write to file
 #'
-#' @description  A function to extract detailed geographic coverage (latitude, 
-#'     longitude, site name) from the referenced data table and to be included 
-#'     under methods/geographicCoverage in the EML file.
+#' @description  Extract detailed geographic coverage (latitude, 
+#'     longitude, site name) to be included in the dataset EML.
 #'
 #' @usage extract_geocoverage(path, table.name, lat.col, lon.col, site.col)
 #'
-#' @param path A path to the dataset working directory containing the data 
-#'     table containing decimal degree latitude, longitude, and site name.
-#' @param table.name Name of the input data table containing geographic 
-#'     coverage data.
-#' @param lat.col Name of latitude column. Values of this column must be in 
+#' @param path 
+#'     A path to the dataset working directory containing the data 
+#'     table with geographic information.
+#' @param table.name 
+#'     Name of the input data table containing geographic 
+#'     coverage data. The table name must include the file extension (e.g. .csv).
+#' @param lat.col 
+#'     Name of latitude column. Values of this column must be in 
 #'     decimal degrees. Latitudes south of the equator must be prefixed with 
 #'     a minus sign (i.e. dash, -).
-#' @param lon.col Name of longitude column. Values of this column must be in 
+#' @param lon.col 
+#'     Name of longitude column. Values of this column must be in 
 #'     decimal degrees. Longitudes west of the prime meridian must be prefixed 
 #'     with a minus sign (i.e. dash, -). 
-#' @param site.col Name of site column.
+#' @param site.col
+#'     Name of site column. This column lists site specific names to be associated
+#'     with the geographic coordinates.
 #'
 #' @return 
-#'     A file in the dataset working directory titled 
-#'     \emph{geographic coverage.xlsx} containing decimal degree latitude, 
-#'     longitude, and site name.
+#'     A tab delimited file in the dataset working directory titled 
+#'     \emph{geographic coverage.txt} and containing decimal degree latitude, 
+#'     decimal degree longitude, and site name.
 #'
 #' @export
 #'
-#' @seealso \code{\link{create_eml}} to write the EML file.
+#' @seealso \code{\link{make_eml}} to make the EML file.
 
 
 extract_geocoverage <- function(path, table.name, lat.col, lon.col, site.col){

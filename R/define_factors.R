@@ -1,48 +1,44 @@
 #' Define factors and write to file
 #'
-#' @description  A function for extracting and defining data table factors 
-#'     defined in the attributes table.
+#' @description  Identify and define data table factors.
 #'
 #' @usage define_factors(path)
 #' 
-#'     Run this function whenever your data contain factors, and any of your 
-#'     \emph{datasetname_datatablename_attributes_draft.xlsx} or referenced 
-#'     data tables have changed.
+#'     Run this function whenever your data contain attributes of class "factor" as listed in 
+#'     \emph{datasetname_datatablename_attributes.txt} files.
 #'
-#' @param path A path to the dataset working directory containing the updated 
-#'     \emph{datasetname_datatablename_attributes.xlsx}, 
-#'     \emph{eml_configuration.R} and referenced data table files.
+#' @param path A path to the dataset working directory containing 
+#'     \emph{datasetname_datatablename_attributes.txt}, 
+#'     \emph{eml_configuration.R}, and referenced data table files.
 #'
-#' @return A file in the dataset working directory titled 
-#'     \emph{datasetname_datatablename_factors.xlsx} containing factor 
-#'     definitions, which is called upon by the \emph{create_eml} function.
+#' @return A tab delimited file in the dataset working directory titled 
+#'     \emph{datasetname_datatablename_factors.txt} containing unique values of attributes of class "factor" 
+#'     which is translated and written to EML with \code{make_eml}.
 #'     
 #' @details 
 #'     This function overwrites any 
-#'     \emph{datasetname_datatablename_factors.xlsx} files you have created in 
-#'     the dataset working directory. To prevent overwriting of a specific 
-#'     file, temporarily move the file out of the working directory.
+#'     \emph{datasetname_datatablename_factors.txt} files you have created in 
+#'     the dataset working directory. To prevent overwriting of such 
+#'     files, temporarily move them out of the working directory.
 #'     
-#'     This function identifies character class attributes from the file 
-#'     \emph{datasetname_datatablename_attributes.xlsx} and then extracts 
-#'     unique values of these attribute to the table 
-#'     \emph{datasetname_datatablename_factors.xlsx}, which is then opened for 
-#'     the user to edit.
+#'     This function identifies "factor" class attributes from the file 
+#'     \emph{datasetname_datatablename_attributes.txt} and extracts 
+#'     unique values of these attributes to the table for you to provide definitions for.
+#'     Do not define factors with empty field contents. Delete these rows from this file.
 #'     
 #'     When defining factors with unit values, refer to the standard unit 
-#'     dictionary "name" column. Enter the name in the definition column of 
+#'     dictionary "name" column. Enter the unit name in the definition column of 
 #'     the factors table. Note these values are case sensitive.
 #'
 #' @export
 #'
-#' @seealso \code{\link{copy_templates}} to copy metadata templates to the 
+#' @seealso \code{\link{import_templates}} to import metadata templates to the 
 #'     dataset working directory.
-#' @seealso \code{\link{run_guide}} for guidance on completing the template 
+#' @seealso \code{\link{view_instructions}} for instructions on completing the template 
 #'     files.
-#' @seealso \code{\link{compile_attributes}} to create the attributes table.
 #' @seealso \code{\link{extract_geocoverage}} to extract detailed geographic 
 #'     coordinates of sampling sites.
-#' @seealso \code{\link{create_eml}} to write the EML file.
+#' @seealso \code{\link{make_eml}} to translate user supplied information into the EML file.
 
 
 define_factors <- function(path) {
@@ -62,12 +58,12 @@ define_factors <- function(path) {
   for (i in 1:length(table_names)){
     attribute_files[i] <- paste(
       substr(table_names[i], 1, nchar(table_names[i]) - 4),
-      "_attributes_draft.txt",
+      "_attributes.txt",
       sep = "")
   }
 
   if (length(attribute_files) == 0){
-    print("No attribute_draft.txt files found ... run copy_templates to import, then fill them out.")
+    print("No attribute files found ... run copy_templates to import, then fill them out.")
   }
 
   # Set file names

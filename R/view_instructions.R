@@ -158,13 +158,11 @@
 
 view_instructions <- function() {
   
-  #library("EML")
-  
   # Additional details are presented in the R Documentation of this function
   
   readline(paste("Details for each of the following steps are found in the documentation for this function.",
                  "\n",
-                 "Press <enter> when done.",
+                 "Press <enter> to continue.",
                  sep = ""))
   writeLines("\n")
   
@@ -172,19 +170,18 @@ view_instructions <- function() {
   
   readline(paste("Move the data table(s) to the working directory.",
                  "\n", "Rename the files with the recommended convention.",
-                 "\n", "See R Documentation of run_guide() for details.",
-                 "\n", "Do this for each data table.",
+                 "\n", "See R Documentation of view_instructions for details.",
                  "\n",
-                 "Press <enter> when done.",
+                 "Press <enter> to continue.",
                  sep = ""))
   writeLines("\n")
   
   # Create abstract
   
   readline(paste("Write an abstract for your dataset in the file datasetname_abstract.txt.",
-                 "\n", "Rename this file following the naming convention.",
+                 "\n", "Rename this file following convention.",
                  "\n",
-                 "Press <enter> when done.",
+                 "Press <enter> to continue.",
                  sep = ""))
   writeLines("\n")
   
@@ -194,35 +191,35 @@ view_instructions <- function() {
                  "\n", "Follow the file naming convention if you will be using it.",
                  "\n", "Delete this file if you have no additional information to present.",
                  "\n",
-                 "Press <enter> when done.",
+                 "Press <enter> to continue.",
                  sep = ""))
   writeLines("\n")
   
   # Select an intellectual rights license
   
   readline(paste("Select an intellectual rights license for your dataset.",
-                 "\n", "Rename the one you choose and follow the naming convention.",
-                 "\n", "Delete the file you do not want.",
+                 "\n", "Rename this file following convention.",
+                 "\n", "Delete the license you are not using.",
                  "\n",
-                 "Press <enter> when done.",
+                 "Press <enter> to continue.",
                  sep = ""))
   writeLines("\n")
   
   # Add methods
   
-  readline(paste("Write the methods for your dataset in the file datasetname_methods.txt.",
-                 "\n", "Rename this file following the naming convention.",
+  readline(paste("Write the methods for your dataset in datasetname_methods.txt.",
+                 "\n", "Rename this file following convention.",
                  "\n",
-                 "Press <enter> when done.",
+                 "Press <enter> to continue.",
                  sep = ""))
   writeLines("\n")
   
   # Add personnel information
   
-  readline(paste("Enter personnel information for your dataset in the file datasetname_personnel.txt.",
-                 "\n", "Rename this file following the naming convention.",
+  readline(paste("Enter personnel information for your dataset in datasetname_personnel.txt.",
+                 "\n", "Rename this file following convention.",
                  "\n",
-                 "Press <enter> when done.",
+                 "Press <enter> to continue.",
                  sep = ""))
   writeLines("\n")
   
@@ -231,11 +228,11 @@ view_instructions <- function() {
   standardUnits <- get_unitList()
   View(standardUnits$units)
   
-  readline(paste("Add data table attributes to the file datatablename_attributes_draft.txt.",
+  readline(paste("Add data table attributes to datatablename_attributes.txt.",
                  "\n", "The standard units dictionary has been opened for you.",
                  "\n", "Create an attributes file for each data table and rename following convention.",
                  "\n",
-                 "Press <enter> when done.",
+                 "Press <enter> to continue.",
                  sep = ""))
   writeLines("\n")
   
@@ -243,7 +240,7 @@ view_instructions <- function() {
   
   readline(paste("Fill out the file eml_configuration.R.",
                  "\n",
-                 "Press <enter> when done.",
+                 "Press <enter> to continue.",
                  sep = ""))
   writeLines("\n")
   
@@ -251,7 +248,7 @@ view_instructions <- function() {
   
   readline(paste("Make sure all files of the working directory are closed.",
                  "\n",
-                 "Press <enter> when done.",
+                 "Press <enter> to continue.",
                  sep = ""))
   writeLines("\n")
   
@@ -260,9 +257,9 @@ view_instructions <- function() {
   readline(paste("Now you can use these functions:",
                  "\n", "define_factors()",
                  "\n", "extract_geocoverage()",
-                 "\n", "create_eml()",
+                 "\n", "make_eml()",
                  "\n",
-                 "Press <enter> when done.",
+                 "Press <enter> to continue.",
                  sep = ""))
   writeLines("\n")
   

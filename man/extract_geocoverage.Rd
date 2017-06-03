@@ -8,10 +8,10 @@ extract_geocoverage(path, table.name, lat.col, lon.col, site.col)
 }
 \arguments{
 \item{path}{A path to the dataset working directory containing the data 
-table containing decimal degree latitude, longitude, and site name.}
+table with geographic information.}
 
 \item{table.name}{Name of the input data table containing geographic 
-coverage data.}
+coverage data. The table name must include the file extension (e.g. .csv).}
 
 \item{lat.col}{Name of latitude column. Values of this column must be in 
 decimal degrees. Latitudes south of the equator must be prefixed with 
@@ -21,18 +21,18 @@ a minus sign (i.e. dash, -).}
 decimal degrees. Longitudes west of the prime meridian must be prefixed 
 with a minus sign (i.e. dash, -).}
 
-\item{site.col}{Name of site column.}
+\item{site.col}{Name of site column. This column lists site specific names to be associated
+with the geographic coordinates.}
 }
 \value{
-A file in the dataset working directory titled 
-    \emph{geographic coverage.xlsx} containing decimal degree latitude, 
-    longitude, and site name.
+A tab delimited file in the dataset working directory titled 
+    \emph{geographic coverage.txt} and containing decimal degree latitude, 
+    decimal degree longitude, and site name.
 }
 \description{
-A function to extract detailed geographic coverage (latitude, 
-    longitude, site name) from the referenced data table and to be included 
-    under methods/geographicCoverage in the EML file.
+Extract detailed geographic coverage (latitude, 
+    longitude, site name) to be included in the dataset EML.
 }
 \seealso{
-\code{\link{create_eml}} to write the EML file.
+\code{\link{make_eml}} to make the EML file.
 }
