@@ -1,8 +1,9 @@
 #' Import metadata templates
 #'
-#' @description  Import metadata templates to your dataset working directory. Use these templates to 
-#'     provide information about your data. Information in these templates are translated and written to 
-#'     the EML file with \code{make_eml}.
+#' @description  Create a working directory for your dataset then run this function to import metadata templates.
+#'     Use these templates to 
+#'     provide information about your data. This information is translated and written to 
+#'     EML with \code{make_eml}.
 #'
 #' @usage import_templates(path)
 #'
