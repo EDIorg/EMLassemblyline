@@ -1,21 +1,19 @@
 ---
-title: "Introduction to emlAssemblyLine"
+title: "An introduction to the EML assembly line"
 author: "Colin Smith"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to emlAssemblyLine}
+  %\VignetteIndexEntry{introduction}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-Introduction
-What is EML and why is it good?
-Problem/challenge.
-How does the EML Assembly Line simplify this challenge?
-A description of the assembly line (figure).
+The Ecological Metadata Language (EML) is a metadata standard developed by and for the ecological community. It is an extensible schema allowing detailed documentation of how data was created, how it was processed, and the attributes of the data itself. A detailed EML file for a collection of data entities (i.e. tables, spatial vectors, images, etc.) extend the life cycle of data and facilitate persistence, discoverability, and reuse. The complexity and means of creating EML makes for a steep learning curve that is daunting challenge for inexperienced data provider. To overcome this challenge and simplify the process, we have created the EML Assembly Line in which you, the datta provider, are provided a linear process and tools to craft high quality EML your self.
+
+This assembly line ... (Figure 1).
 - templates
-- extraction functions
+- tools
 - wrapper
 The assembly line can be retooled to provide additional functionality and a custom EML product.
 
@@ -24,19 +22,20 @@ While at first this may seem daunting. Of course this is a new process. Really, 
 ## Current capabilities and requirements
 Data tables, comma or tab delimited
 
+## Expanded functionality under development
 Our priorities for building up the assembly line to produce EML for: spatial vectors and spatial raster
 data.
 
 ## Collaboration
 [Collaborate with us](https://github.com/EDIorg/emlAssemblyLine)
 
-
 ## References
 [Ecological Metadata Language](https://knb.ecoinformatics.org/#external//emlparser/docs/index.html)
 
 [EML R code package](https://github.com/ropensci/EML)
 
-# Assembling EML for an example dataset.
+## Assembling EML for an example dataset.
+See the vignette example for a demonstration of the assembly line.
 
 
 
