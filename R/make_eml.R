@@ -1,15 +1,14 @@
-#' Make EML, then validate and write to file
+#' Make EML
 #'
-#' @description  A function to translate user supplied metadata into the EML 
+#' @description  Translate user supplied metadata into the EML 
 #'     schema, validate the EML, and write to file.
 #'
 #' @usage make_eml(path)
 #'
 #' @param path A path to the dataset working directory containing the 
 #'     completed metadata templates, \emph{eml_configuration.R}, 
-#'     \emph{datasetname_datatablename_attributes.xlsx}, 
-#'     \emph{datasetname_datatablename_factors.xlsx} (if factors are present), 
-#'     and \emph{geographic_coverage.xlsx} (if reporting detailed geographic 
+#'     \emph{datasetname_datatablename_factors.txt} (if factors are present), 
+#'     and \emph{geographic_coverage.txt} (if reporting detailed geographic 
 #'     coverage).
 #'
 #' @return 
@@ -21,18 +20,16 @@
 #' @details 
 #'     If validation fails, open the EML document in a .xml editor to identify 
 #'     the source of error. Often the error is small and quickly resolved with 
-#'     the aid of an editors schema congruence functionality.
+#'     the aid of an editors schema congruence checker.
 #'
 #' @export
 #'
-#' @seealso \code{\link{copy_templates}} to copy metadata templates to the 
+#' @seealso \code{\link{import_templates}} to import metadata templates to the 
 #'     dataset working directory.
-#' @seealso \code{\link{run_guide}} for guidance on completing the template 
+#' @seealso \code{\link{view_instructions}} for instructions on completing the template 
 #'     files.
-#' @seealso \code{\link{compile_attributes}} to compile and write the attributes 
-#'     table.
-#' @seealso \code{\link{define_factors}} to create the factors table if the 
-#'     attributes table contains factors.
+#' @seealso \code{\link{define_factors}} to create the factors table (if the 
+#'     attributes table contains factors).
 #' @seealso \code{\link{extract_geocoverage}} to extract detailed geographic 
 #'     coordinates of sampling sites.
 

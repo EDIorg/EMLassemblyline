@@ -1,44 +1,6 @@
-#' Compile attributes and write to file
-#'
-#' @description  A function to compile attributes for \emph{define_factors} 
-#'     and \emph{create_eml}.
-#'
-#' @usage compile_attributes(path)
-#' 
-#'     Run this function whenever any of your 
-#'     \emph{datasetname_datatablename_attributes_draft.xlsx} or referenced 
-#'     data tables have changed.
-#'     
-#'     Note: This function overwrites any 
-#'     \emph{datasetname_datatablename_attributes.xlsx} files you have created in 
-#'     the dataset working directory. To prevent overwriting of a specific 
-#'     file, temporarily move the file out of the working directory.
-#'
-#' @param path A path to the dataset working directory containing the 
-#'     completed \emph{datasetname_datatablename_attributes_draft.xlsx}, and
-#'     \emph{eml_configuration.R} files as well as the referenced data table. 
-#'
-#' @return A file in the dataset working directory titled 
-#'     \emph{datasetname_datatablename_attributes.xlsx} containing attribute 
-#'     information called upon by the functions \emph{define_factors} and 
-#'     \emph{create_eml}.
-#'     
-#' @details 
-#'     This function compiles information from 
-#'     \emph{datasetname_datatablename_attributes_draft.xlsx}, extracts 
-#'     attribute number types and minimum and maximum values from numeric 
-#'     attribues of your data table, and formats this meta data for the 
-#'     functions \emph{define_factors} and \emph{create_eml}.
-#'
-#' @seealso \code{\link{copy_templates}} to copy metadata templates to the 
-#'     dataset working directory.
-#' @seealso \code{\link{run_guide}} for guidance on completing the template 
-#'     files.
-#' @seealso \code{\link{define_factors}} to create the factors table if the 
-#'     attributes table contains factors.
-#' @seealso \code{\link{extract_geocoverage}} to extract detailed geographic 
-#'     coordinates of sampling sites.
-#' @seealso \code{\link{create_eml}} to write the EML file.
+# This is a helper function for make_eml.R. 
+# It compiles attributes, retrieves minimum and maximum values for numeric data
+# and reformats the attributes table.
 
 
 compile_attributes <- function(path){
