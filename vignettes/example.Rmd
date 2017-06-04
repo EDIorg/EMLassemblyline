@@ -9,11 +9,10 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Assembly line overview
-- Core parts of every base level dataset EML 
-- Expanded features
-- Assemble
+Assembly line overview. See introduction vignette.
 
+## Installation
+Not in formal repo YET. Use devtools to install from github.
 
 Figure
 

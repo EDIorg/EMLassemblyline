@@ -1,5 +1,5 @@
 ---
-title: "An introduction to the EML assembly line"
+title: "EML Assembly Line"
 author: "Colin Smith"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -9,82 +9,25 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-The Ecological Metadata Language (EML) is a metadata standard developed by and for the ecological community. It is an extensible schema allowing detailed documentation of how data was created, how it was processed, and the attributes of the data itself. A detailed EML file for a collection of data entities (i.e. tables, spatial vectors, images, etc.) extend the life cycle of data and facilitate persistence, discoverability, and reuse. The complexity and means of creating EML makes for a steep learning curve that is daunting challenge for inexperienced data provider. To overcome this challenge and simplify the process, we have created the EML Assembly Line in which you, the datta provider, are provided a linear process and tools to craft high quality EML your self.
+The Ecological Metadata Language (EML) is a metadata specification developed by the ecological community and for the ecological community. EML communicates detailed information about data and how it was created. This metadata provides a basis for persistence, discoverability, and reuse, thereby extending the life cycle and value of the data. While the highly detailed and structured schema of EML is necessary to realize these benefits, it confronts the inexperienced data provider with a steep learning curve that few have time to tackle. To overcome this obstacle we have created the EML Assembly Line, a linear process and custom tools to craft high quality EML yourself.
 
-This assembly line ... (Figure 1).
-- templates
-- tools
-- wrapper
-The assembly line can be retooled to provide additional functionality and a custom EML product.
+EML assembly starts once you have compiled the data tables you would like to publish (Fig. 1). Next, import templates and view instructions to provide the core set of metadata for your dataset. Continue by operating tools to define and extract custom details of your data that you feel is important to communicate. Once you have built all the metadata parts, assemble these parts into the EML schema, run a validation check to ensure it is formatted correctly, and write the EML file. The EML file and your data comprise a data package that can be uploaded into a publicly accessible repository for reuse and citation.
 
-While at first this may seem daunting. Of course this is a new process. Really, you have already done the most challengin part. Collected and refined the data to a usable set. You have all the information, now log it through these steps. Give your self a couple days to work through all this.
+![Figure 1. Assembly line overview.](C:\\Users\\Colin\\Documents\\EDI\\figures\\eml_assembly_line_overview.jpg)
+
+While your first EML assembly may seem arduous and time consuming, we garuntee your next will be simpler and take less time. Really, you have already done the most challenging part. You have collected and processed a publication quality dataset with value for your own work, and possibly others. You have all the information up there in your head, now share and enjoy!
 
 ## Current capabilities and requirements
-Data tables, comma or tab delimited
+The EML assembly line is currently tooled for comma and tab delimited tables. Expanded functionality will be available in future versions. Currently we are developing the capacity to handle spatial vector and raster data entities.
 
-## Expanded functionality under development
-Our priorities for building up the assembly line to produce EML for: spatial vectors and spatial raster
-data.
+## Collaborate with us!
+User feed back will inform future development. We welcome any contributions (new code, bug reports, etc.) via [GitHub](https://github.com/EDIorg/emlAssemblyLine) and are available via email or phone if you would like to chat.
 
-## Collaboration
-[Collaborate with us](https://github.com/EDIorg/emlAssemblyLine)
+## Installation
+Until the emlAssemblyLine is apart of CRAN, you will need to install it with the devtools package. Run devtools::install_github("EDIorg/emlAssemblyLine").
 
 ## References
-[Ecological Metadata Language](https://knb.ecoinformatics.org/#external//emlparser/docs/index.html)
+[Ecological Metadata Language](https://knb.ecoinformatics.org/#external//emlparser/docs/index.html) A link to the EML schema.
 
-[EML R code package](https://github.com/ropensci/EML)
+[EML R code package](https://github.com/ropensci/EML) A link to the EML R package developed by the great people of the rOpenSci community. Without this package the emlAssemblyLine wouldn't work!
 
-## Assembling EML for an example dataset.
-See the vignette example for a demonstration of the assembly line.
-
-
-
-
-
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
-
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
-
-## Vignette Info
-
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
-
-## Styles
-
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
-
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
-
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
-```
-
-You can enable figure captions by `fig_caption: yes` in YAML:
-
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
-
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
-
-## More Examples
-
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
-
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
-```
-
-Also a quote using `>`:
-
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
