@@ -7,19 +7,19 @@
 view_instructions()
 }
 \value{
-Upon executing this function a series of prompts are displayed in the Console window providing instructions
-    for filling out the metadata templates.
+Upon executing this function a series of prompts are displayed in the console window providing instructions
+    for the metadata templates.
     Proceed to the next step by pressing <enter>. Additional details for each step are presented below.
 }
 \description{
-Instructions for completing the metadata templates and configuration file
+Instructions for the metadata templates and configuration file
     imported to the dataset working directory by \code{import_templates}.
 }
 \details{
 Detailed instructions for each step:
          
     \emph{"Move your data table(s) to the working directory."} Move your data tables
-    to the working directory and name them following the convention 
+    to the dataset working directory and name them following the convention 
     'datasetname_datatablename', where datasetname is the name of your
     dataset (e.g. gleon_chloride), and datatablename is the name of your data 
     table (e.g. lake_characteristics). In this example, the name of the data table becomes 

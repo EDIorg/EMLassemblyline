@@ -1,14 +1,14 @@
 #' Instructions for the metadata templates
 #'
 #' @description  
-#'     Instructions for completing the metadata templates and configuration file
+#'     Instructions for the metadata templates and configuration file
 #'     imported to the dataset working directory by \code{import_templates}.
 #'
 #' @usage view_instructions()
 #'
 #' @return
-#'     Upon executing this function a series of prompts are displayed in the Console window providing instructions
-#'     for filling out the metadata templates.
+#'     Upon executing this function a series of prompts are displayed in the console window providing instructions
+#'     for the metadata templates.
 #'     Proceed to the next step by pressing <enter>. Additional details for each step are presented below.
 #'
 #' @details
@@ -16,7 +16,7 @@
 #'     Detailed instructions for each step:
 #'          
 #'     \emph{"Move your data table(s) to the working directory."} Move your data tables
-#'     to the working directory and name them following the convention 
+#'     to the dataset working directory and name them following the convention 
 #'     'datasetname_datatablename', where datasetname is the name of your
 #'     dataset (e.g. gleon_chloride), and datatablename is the name of your data 
 #'     table (e.g. lake_characteristics). In this example, the name of the data table becomes 
@@ -161,6 +161,7 @@ view_instructions <- function() {
   # Additional details are presented in the R Documentation of this function
   
   readline(paste("Details for each of the following steps are found in the documentation for this function.",
+                 "(i.e. view_instructions.R)",
                  "\n",
                  "Press <enter> to continue.",
                  sep = ""))

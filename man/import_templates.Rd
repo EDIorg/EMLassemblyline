@@ -10,42 +10,40 @@ import_templates(path)
 \item{path}{A path to the dataset working directory.}
 }
 \value{
-\emph{datasetname_abstract.txt} A text file for the abstract of your data.
+\emph{datasetname_abstract.txt} A text file for the abstract of your dataset. This file is UTF-8 formatted.
     
     \emph{datasetname_additional_info.txt} A text file for additional information 
-    about your data.
+    about your dataset. This file is UTF-8 formatted.
     
     \emph{datasetname_custom_units.txt} A tab delimited table for custom units used in your data 
-    that are not defined in the standard unit dictionary.
+    that are not defined in the standard unit dictionary. This file is UTF-8 formatted.
     
     \emph{datasetname_cc_by_4.0_intellectual_rights.txt} One of two
-    intellectual rights licenses to consider for your dataset. Do not edit the text of this file.
+    intellectual rights licenses to consider for your dataset. Do not edit the text of this file. This file is UTF-8 formatted.
     
     \emph{datasetname_cc0_1_intellectual_rights.txt} One of two 
-    intellectual rights licenses to consider for your dataset. Do not edit the text of this file.
+    intellectual rights licenses to consider for your dataset. Do not edit the text of this file. This file is UTF-8 formatted.
     
     \emph{datasetname_methods.txt} A text file for methods used in creating your 
-    data.
+    data. This file is UTF-8 formatted.
     
     \emph{datasetname_personnel.txt} A tab delimited table for information about personnel 
-    associated with this data.
+    associated with this dataset. This file is UTF-8 formatted.
     
     \emph{datasetname_datatablename_attributes.txt} A tab delimited table for 
-    information about your data tables.
+    information about your data tables. This file is UTF-8 formatted.
     
     \emph{eml_configuration.R} A file for technical and general information about your data.
 }
 \description{
 Create a working directory for your dataset then run this function to import metadata templates.
     Use these templates to 
-    provide information about your data. This information is translated and written to 
-    EML with \code{make_eml}.
+    provide information about your data.
 }
 \details{
 If template files already exist in the working directory, new templates 
     will not be imported.
 }
 \seealso{
-\code{\link{view_instructions}} for guidance on completing the template 
-    files.
+\code{\link{view_instructions}} for guidance on completing the templates.
 }
