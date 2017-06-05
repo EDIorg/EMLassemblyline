@@ -1,13 +1,4 @@
----
-title: "EML Assembly Line"
-author: "Colin Smith"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{introduction}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
+# EML Assembly Line
 
 The Ecological Metadata Language (EML) is a metadata specification developed by the ecological community and for the ecological community. EML communicates detailed information about data and how it was created. This metadata provides a basis for persistence, discoverability, and reuse, thereby extending the life cycle and value of the data. While the highly detailed and structured schema of EML is necessary to realize these benefits, it confronts the inexperienced data provider with a steep learning curve that few have time to tackle. To overcome this obstacle we have created the EML Assembly Line, a linear process and custom tools to craft high quality EML yourself.
 
