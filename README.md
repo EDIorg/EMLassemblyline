@@ -18,8 +18,11 @@ User feed back will inform future development. We welcome contributions (i.e. ne
 
 ## Installation
 Until this code is apart of CRAN, you will need to install the EMLassemblyline with the devtools package: 
+
 install.packages("devtools")
+
 library(devtools)
+
 install_github("EDIorg/EMLassemblyline")
 
 ## References
