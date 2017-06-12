@@ -112,7 +112,7 @@ define_catvars <- function(path) {
 
       # Build factor table
 
-      catvars_I <- which(df_attributes$class %in% "factor")
+      catvars_I <- which(df_attributes$class %in% "categorical")
       
       # Read data table
       
@@ -121,7 +121,7 @@ define_catvars <- function(path) {
         df_table <- read.table(
           paste(path, 
                 "/", 
-                substr(attribute_files[i], 1, nchar(attribute_files[i]) - 21),
+                substr(attribute_files[i], 1, nchar(attribute_files[i]) - 15),
                 ".csv",
                 sep = ""),
           header=TRUE,
@@ -135,7 +135,7 @@ define_catvars <- function(path) {
         df_table <- read.table(
           paste(path, 
                 "/", 
-                substr(attribute_files[i], 1, nchar(attribute_files[i]) - 21),
+                substr(attribute_files[i], 1, nchar(attribute_files[i]) - 15),
                 ".txt",
                 sep = ""),
           header=TRUE,
