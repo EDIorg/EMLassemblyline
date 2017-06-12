@@ -1,20 +1,20 @@
 #' Make EML
 #'
 #' @description  Translate user supplied metadata into the EML 
-#'     schema, validate the EML, and write to file.
+#'     schema, validate the schema, and write to file.
 #'
 #' @usage make_eml(path)
 #'
 #' @param path A path to the dataset working directory containing the 
 #'     completed metadata templates, \emph{eml_configuration.R}, 
-#'     \emph{datasetname_datatablename_factors.txt} (if factors are present), 
+#'     \emph{datasetname_datatablename_catvars.txt} (if categorical variables are present), 
 #'     and \emph{geographic_coverage.txt} (if reporting detailed geographic 
 #'     coverage).
 #'
 #' @return 
 #'     Validation results printed to the \emph{Console}.
 #'     
-#'     An EML metadata file in the dataset working directory titled 
+#'     An EML metadata file written to the dataset working directory titled 
 #'     \emph{packageID.xml}.
 #'     
 #' @details 
@@ -28,8 +28,8 @@
 #'     dataset working directory.
 #' @seealso \code{\link{view_instructions}} for instructions on completing the template 
 #'     files.
-#' @seealso \code{\link{define_factors}} to create the factors table (if the 
-#'     attributes table contains factors).
+#' @seealso \code{\link{define_catvars}} to create the categorical variables table (if the 
+#'     attributes table contains categorical variables).
 #' @seealso \code{\link{extract_geocoverage}} to extract detailed geographic 
 #'     coordinates of sampling sites.
 
@@ -89,11 +89,11 @@ make_eml <- function(path) {
                          "_methods.txt",
                          sep = "")
   
-  fname_table_factors <- c()
+  fname_table_catvars <- c()
   for (i in 1:length(table_names)){
-    fname_table_factors[i] <- paste(
+    fname_table_catvars[i] <- paste(
       substr(table_names[i], 1, nchar(table_names[i]) - 4),
-      "_factors.txt",
+      "_catvars.txt",
       sep = "")
   }
 
@@ -480,37 +480,37 @@ make_eml <- function(path) {
       
     }
 
-    # Read factors file (encoding necessitates read/write/read)
+    # Read catvars file
 
-    if (!is.na(match(fname_table_factors[i], list.files(path)))){
+    if (!is.na(match(fname_table_catvars[i], list.files(path)))){
 
-      factors <- read.table(
+      catvars <- read.table(
         paste(
           path,
           "/",
-          fname_table_factors[i], sep = ""),
+          fname_table_catvars[i], sep = ""),
         header=TRUE,
         sep="\t",
         quote="\"",
         as.is=TRUE,
         comment.char = "")
       
-      if (dim(factors)[1] > 0){
+      if (dim(catvars)[1] > 0){
 
-        for (j in 1:dim(factors)[2]){
-          factors[ ,j] <- as.character(factors[ ,j])
+        for (j in 1:dim(catvars)[2]){
+          catvars[ ,j] <- as.character(catvars[ ,j])
         }
         
-        non_blank_rows <- nrow(factors) - sum(factors$attributeName == "")
-        factors <- factors[1:non_blank_rows, 1:3]
+        non_blank_rows <- nrow(catvars) - sum(catvars$attributeName == "")
+        catvars <- catvars[1:non_blank_rows, 1:3]
 
-        # Clean extraneous white spaces from factors tables
+        # Clean extraneous white spaces from catvars tables
 
-        if (dim(factors)[1] != 0){
-          for (j in 1:ncol(factors)){
-            if (class(factors[ ,j]) == "character" ||
-                (class(factors[ ,j]) == "factor")){
-              factors[ ,j] <- trimws(factors[ ,j])
+        if (dim(catvars)[1] != 0){
+          for (j in 1:ncol(catvars)){
+            if (class(catvars[ ,j]) == "character" ||
+                (class(catvars[ ,j]) == "factor")){
+              catvars[ ,j] <- trimws(catvars[ ,j])
             }
           }
         }
@@ -533,7 +533,7 @@ make_eml <- function(path) {
       # Create the attributeList element
       
       attributeList <- set_attributes(attributes,
-                                      factors = factors,
+                                      factors = catvars,
                                       col_classes = col_classes)
       
     } else {
@@ -542,7 +542,7 @@ make_eml <- function(path) {
       
       for (j in 1:ncol(attributes)){
         if (class(attributes[ ,j]) == "character" ||
-            (class(attributes[ ,j]) == "factor")){
+            (class(attributes[ ,j]) == "categorical")){
           attributes[ ,j] <- trimws(attributes[ ,j])
         }
       }

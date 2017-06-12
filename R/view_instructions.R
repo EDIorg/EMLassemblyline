@@ -7,9 +7,8 @@
 #' @usage view_instructions()
 #'
 #' @return
-#'     Upon executing this function a series of prompts are displayed in the console window providing instructions
-#'     for the metadata templates.
-#'     Proceed to the next step by pressing <enter>. Additional details for each step are presented below.
+#'     Upon executing this function a series of instructions are printed to the Console window.
+#'     Proceed to the next step by pressing <enter>. Additional details for each step are listed below.
 #'
 #' @details
 #' 
@@ -25,14 +24,14 @@
 #'     \emph{"Write an abstract for your dataset ..."} Write an abstract for your
 #'     dataset in the file datasetname_abstract.txt. Rename the file following convention (e.g.
 #'     gleon_chloride_abstract). The abstract should cover what, why, 
-#'     when, where, and how. Use only UTF-8 text and symbols.
+#'     when, where, and how. The template is a UTF-8 formatted file. Use only UTF-8 symbols and text.
 #'     
 #'     \emph{"Place additional information ..."} Place additional info in the file 
 #'     datasetname_additional_info.txt. Rename the file following convention (e.g. 
 #'     gleon_chloride_additional_info). This is a good place to share 
 #'     additional text based information that doesn't fall under the scope of
-#'     the abstract or methods (e.g. A list of research articles or theses derived from
-#'     this dataset). Use only UTF-8 text and symbols. 
+#'     the abstract or methods (e.g. a list of research articles or theses derived from
+#'     this dataset). The template is a UTF-8 formatted file. Use only UTF-8 symbols and text. 
 #'     Delete this file if you have no additional information to present.
 #'     
 #'     \emph{"Select an intellectual rights license for your dataset."} Select an
@@ -45,10 +44,10 @@
 #'     
 #'     \emph{"Write the methods for your dataset ..."} Explain the methods used to create this 
 #'     dataset in the file datasetname_methods.txt. Rename this file following convention (e.g. 
-#'     gleon_chloride_methods). Please be specific, include instrument 
-#'     descriptions, or point to a protocol online. If this dataset is a synthesis of smaller datasets
+#'     gleon_chloride_methods). Be specific, include instrument 
+#'     descriptions, or point to a protocol online. If this dataset is a synthesis of other datasets
 #'     please specify dataset origins, preferably their DOI or URL 
-#'     plus general citation information. Use only UTF-8 text and symbols.
+#'     plus general citation information. This file is a UTF-8 formatted file. Use only UTF-8 symbols and text.
 #'     
 #'     \emph{"Enter personnel information for your dataset ..."} Enter personnel 
 #'     information for your dataset in the file datasetname_personnel.txt. This is 
@@ -59,20 +58,20 @@
 #'     acceptable and will be defined under the associated party element of 
 #'     this dataset. If a person serves more than one role, duplicate this persons information
 #'     in another row but with the new role. A dataset creator, contact, and principal 
-#'     investigator are mandatory. Use only UTF-8 text and symbols.
+#'     investigator are mandatory. This file is a UTF-8 formatted file. Use only UTF-8 symbols and text.
 #'     
 #'     \emph{"Add data table attributes ..."} Add data table attributes to the file 
 #'     datasetname_datatablename_attributes.txt. This is a tab delimited file that
 #'     can be edited with a spreadsheet editor. Rename the file according to convention 
 #'     (e.g. gleon_chloride_lake_characteristics_attributes). 
-#'     Create an attributes file for each data table. Use only UTF-8 text and symbols. Instructions 
-#'     for completing the attribute table are as follows:
+#'     Create an attributes file for each data table. This file is a UTF-8 formatted file. Use only UTF-8 symbols and text.
+#'     Instructions for completing the attribute table are as follows:
 #'     \itemize{
 #'         \item \strong{attributeDefinition} Define the attribute. Be 
 #'         specific, it can be lengthy.
 #'         \item \strong{class} Specify the attribute class. This is the type 
 #'         of value stored under the attribute. Valid options are: "numeric" 
-#'         for numeric data, "character" for any data containing text or 
+#'         for numeric data, "categorical" for categorical variables, "character" for data containing text or 
 #'         symbols, and "Date" for date time data. The list of valid options 
 #'         are case sensitive. If an attribute has class of "numeric" or "Date", then 
 #'         all values of this attribute must be either numeric or date time. If any 
@@ -88,7 +87,7 @@
 #'         dictionary (opened in the source window) for the unit of interest
 #'         and enter the unit "name" as it appears in the  dictionary. 
 #'         Unit names are case sensitive. If you cannot find a unit in the 
-#'         dictionary, enter the unit in the tab delimited file 
+#'         dictionary, enter the unit in the tab delimited UTF-8 formatted file 
 #'         datasetname_custom_units.txt. Rename this file to accord with the naming 
 #'         convention (e.g. gleon_chloride_custom_units). Valid custom units must be 
 #'         convertible to SI Units (i.e. International System of Units). If it 
@@ -116,10 +115,11 @@
 #'         "dateTime-eml-attribute" of the current EML specification 
 #'         (https://knb.ecoinformatics.org/#external//emlparser/docs/index.html).
 #'         Valid date time formats are a combination of date, time, and time 
-#'         zone strings:
+#'         zone strings. Below are a set of best practice recomendations, and are
+#'         by no means the full list of acceptable format strings.
 #'         \itemize{
-#'             \item \strong{Date format strings:} YYYY-MM-DD, YYYY, YYYYMMDD,
-#'             YYYY-MM, YYYYMM, YYYY-DDD, YYYYDDD; where YYYY is year, MM is month, DD is 
+#'             \item \strong{Date format strings:} YYYY-MM-DD, YYYY/MM/DD YYYY, YYYYMMDD,
+#'             YYYY-MM, YYYY/MM, YYYYMM, YYYY-DDD, YYYY/DDD, YYYYDDD; where YYYY is year, MM is month, DD is 
 #'             day of month, and DDD"is day of year.
 #'             \item \strong{Time format strings:} hh:mm:ss.sss, hhmmss.sss,
 #'             hh:mm:ss, hhmmss, hh:mm, hhmm, hh; where hh is hour (in 24 hr
@@ -142,7 +142,6 @@
 #'         \item \strong{missingValueCodeExplanation} Define the missing value 
 #'         code here.
 #'     }
-#'    
 #'     \emph{"Fill out the file eml_configuration.R"} Provide additional 
 #'     information about your dataset. Detailed instructions are listed as 
 #'     comments in this file.

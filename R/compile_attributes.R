@@ -171,14 +171,14 @@ compile_attributes <- function(path){
     }
     
     is_character <- which(attributes$columnClasses == "character") 
-    is_factor <- which(attributes$columnClasses == "factor")
-    use_i <- c(is_character, is_factor)
+    is_catvar <- which(attributes$columnClasses == "categorical")
+    use_i <- c(is_character, is_catvar)
     
     attributes$numberType[use_i] <- "character"
 
     # Set attribute definition (i.e. "definition")
     
-    use_i <- c(is_character, is_factor)
+    use_i <- c(is_character, is_catvar)
     
     if (length(use_i) > 0){
       attributes$definition[use_i] <- attributes$attributeDefinition[use_i]

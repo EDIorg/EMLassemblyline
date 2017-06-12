@@ -1,7 +1,7 @@
 #' Extract geographic coverage and write to file
 #'
 #' @description  Extract detailed geographic coverage (latitude, 
-#'     longitude, site name) to be included in the dataset EML.
+#'     longitude, and site name) to be included in the EML.
 #'
 #' @usage extract_geocoverage(path, table.name, lat.col, lon.col, site.col)
 #'
@@ -24,8 +24,8 @@
 #'     with the geographic coordinates.
 #'
 #' @return 
-#'     A tab delimited file in the dataset working directory titled 
-#'     \emph{geographic coverage.txt} and containing decimal degree latitude, 
+#'     A tab delimited UTF-8 formatted file in the dataset working directory titled 
+#'     \emph{geographic_coverage.txt} and containing decimal degree latitude, 
 #'     decimal degree longitude, and site name.
 #'
 #' @export

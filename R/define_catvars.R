@@ -1,34 +1,34 @@
-#' Define factors and write to file
+#' Define categorical variables and write to file
 #'
-#' @description  Identify and define data table factors.
+#' @description  Identify and define categorical variables of your data tables.
 #'
-#' @usage define_factors(path)
+#' @usage define_catvars(path)
 #' 
-#'     Run this function whenever your data contain attributes of class "factor" as listed in 
+#'     Run this function whenever your data contain attributes of class "categorical" as listed in 
 #'     \emph{datasetname_datatablename_attributes.txt} files.
 #'
 #' @param path A path to the dataset working directory containing 
 #'     \emph{datasetname_datatablename_attributes.txt}, 
-#'     \emph{eml_configuration.R}, and referenced data table files.
+#'     \emph{eml_configuration.R}, and referenced data tables.
 #'
-#' @return A tab delimited file in the dataset working directory titled 
-#'     \emph{datasetname_datatablename_factors.txt} containing unique values of attributes of class "factor" 
+#' @return A tab delimited UTF-8 file in the dataset working directory titled 
+#'     \emph{datasetname_datatablename_catvars.txt} containing unique values of attributes of class "categorical" 
 #'     which is translated and written to EML with \code{make_eml}.
 #'     
 #' @details 
 #'     This function overwrites any 
-#'     \emph{datasetname_datatablename_factors.txt} files you have created in 
-#'     the dataset working directory. To prevent overwriting of such 
+#'     \emph{datasetname_datatablename_catvars.txt} files you have created in 
+#'     the dataset working directory. To prevent overwriting of these 
 #'     files, temporarily move them out of the working directory.
 #'     
-#'     This function identifies "factor" class attributes from the file 
+#'     This function identifies "categorical" class attributes from the file 
 #'     \emph{datasetname_datatablename_attributes.txt} and extracts 
-#'     unique values of these attributes to the table for you to provide definitions for.
-#'     Do not define factors with empty field contents. Delete these rows from this file.
+#'     unique values of these attributes to the table for you to define.
+#'     Do not define categorical variables with empty field contents. Delete these rows from this file.
 #'     
-#'     When defining factors with unit values, refer to the standard unit 
+#'     When defining categorical variables with unit values, refer to the standard unit 
 #'     dictionary "name" column. Enter the unit name in the definition column of 
-#'     the factors table. Note these values are case sensitive.
+#'     the categorical variables table. Note these values are case sensitive.
 #'
 #' @export
 #'
@@ -41,7 +41,7 @@
 #' @seealso \code{\link{make_eml}} to translate user supplied information into the EML file.
 
 
-define_factors <- function(path) {
+define_catvars <- function(path) {
   
   # Load the configuration file
   
@@ -68,11 +68,11 @@ define_factors <- function(path) {
 
   # Set file names
 
-  fname_table_factors <- c()
+  fname_table_catvars <- c()
   for (i in 1:length(table_names)){
-    fname_table_factors[i] <- paste(
+    fname_table_catvars[i] <- paste(
       substr(table_names[i], 1, nchar(table_names[i]) - 4),
-      "_factors.txt",
+      "_catvars.txt",
       sep = ""
     )
   }
@@ -80,7 +80,7 @@ define_factors <- function(path) {
   # Issue warning
 
   answer <- readline(
-    "Are you sure you want to build new factors? This will overwrite your previous work! (y or n):  ")
+    "Are you sure you want to build new categorical variable tables? This will overwrite your previous work! (y or n):  ")
   
   if (answer == "y"){
     
@@ -112,7 +112,7 @@ define_factors <- function(path) {
 
       # Build factor table
 
-      factors_I <- which(df_attributes$class %in% "factor")
+      catvars_I <- which(df_attributes$class %in% "factor")
       
       # Read data table
       
@@ -146,35 +146,35 @@ define_factors <- function(path) {
         
       }
 
-      # If there are no factors then skip to the next file
+      # If there are no catvars then skip to the next file
 
-      if (length(factors_I) > 0){
+      if (length(catvars_I) > 0){
         
         print(paste("Writing ... ",
-                    fname_table_factors[i], sep = ""))
+                    fname_table_catvars[i], sep = ""))
 
         rows <- 0
-        for (j in 1:length(factors_I)){
+        for (j in 1:length(catvars_I)){
           factor_names <- unique(
             eval(
               parse(
                 text = paste(
                   "df_table",
                   "$",
-                  df_attributes$attributeName[factors_I[j]],
+                  df_attributes$attributeName[catvars_I[j]],
                   sep = ""))))
 
           rows <- length(factor_names) + rows
 
         }
 
-        factors <- data.frame(attributeName = character(rows),
+        catvars <- data.frame(attributeName = character(rows),
                               code = character(rows),
                               definition = character(rows),
                               stringsAsFactors = F)
 
         row <- 1
-        for (j in 1:length(factors_I)){
+        for (j in 1:length(catvars_I)){
 
           factor_names <- unique(
             eval(
@@ -182,13 +182,13 @@ define_factors <- function(path) {
                 text = paste(
                   "df_table",
                   "$",
-                  df_attributes$attributeName[factors_I[j]],
+                  df_attributes$attributeName[catvars_I[j]],
                   sep = ""))))
 
-          factors$attributeName[row:(length(factor_names)+row-1)] <-
-            df_attributes$attributeName[factors_I[j]]
+          catvars$attributeName[row:(length(factor_names)+row-1)] <-
+            df_attributes$attributeName[catvars_I[j]]
 
-          factors$code[row:(length(factor_names)+row-1)] <- factor_names
+          catvars$code[row:(length(factor_names)+row-1)] <- factor_names
 
           row <- row + length(factor_names)
 
@@ -196,23 +196,23 @@ define_factors <- function(path) {
 
         # Write factor table
         
-        write.table(factors,
+        write.table(catvars,
                     paste(path,
                           "/",
-                          fname_table_factors[i],
+                          fname_table_catvars[i],
                           sep = ""),
                     sep = "\t",
                     row.names = F,
                     quote = F,
                     fileEncoding = "UTF-8")
 
-        # Prompt the user to manually edit the factors file and custom unit files.
+        # Prompt the user to manually edit the catvars file and custom unit files.
 
         standardUnits <- get_unitList()
         View(standardUnits$units)
 
         readline(
-          prompt = "Open the factors file for this data table and define factor codes. Save, close, and press <enter> when done."
+          prompt = "Open the categorical variables file for this data table and define factor codes. Save, close, and press <enter> when done."
         )
       }
 
