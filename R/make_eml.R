@@ -228,8 +228,6 @@ make_eml <- function(path) {
 
   # Create EML
   
-  print("Creating EML ...")
-  
   # Build eml-access module
 
   allow_principals <- c(paste("uid=",
@@ -449,10 +447,10 @@ make_eml <- function(path) {
 
   for (i in 1:length(table_names)){
 
-    print(paste(
-      "Building attributes for ... ",
-      table_names[i],
-      sep = ""))
+    # print(paste(
+    #   "Building attributes for ... ",
+    #   table_names[i],
+    #   sep = ""))
     
     attributes <- attributes_in[[1]][[i]]
     
@@ -709,12 +707,18 @@ make_eml <- function(path) {
                dataset = dataset)
   }
 
+  # Write EML
+
+  print("Writing EML ...")
+  
+  write_eml(eml, paste(path, "/", data_package_id, ".xml", sep = ""))
+  
   # Validate EML
-
+  
   print("Validating EML ...")
-
+  
   validation_result <- eml_validate(eml)
-
+  
   if (validation_result == "TRUE"){
     
     print("EML passed validation!")
@@ -725,13 +729,6 @@ make_eml <- function(path) {
     
   }
   
-  # Write EML
-
-  print("Writing EML ...")
-  
-  write_eml(eml, paste(path, "/", data_package_id, ".xml", sep = ""))
-  
-  print("EML has been written.")
   
 }
 

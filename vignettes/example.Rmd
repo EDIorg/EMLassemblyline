@@ -133,6 +133,8 @@ If reporting a date without time, select one of the date format strings. If repo
 - "missingValueCodeExplanation" Define the missing value code here.
 
 
+![](C:/Users/Colin/Documents/EDI/figures/custom_units.png)
+
 ![](C:/Users/Colin/Documents/EDI/figures/attributes_concentrations.png)
 
 
@@ -185,5 +187,12 @@ This returns a tab delimited UTF-8 formatted file in the dataset working directo
 
 ![](C:/Users/Colin/Documents/EDI/figures/geocoverage.png)
 
+## Make EML
 
+Now that we have created all the metadata parts we run the function make_eml.R with a path to the dataset working directory. Make EML compiles the metadata parts, runs a validation check to ensure the EML schema of this dataset complies with the EML standard, and writes the EML to a .xml file in the working directory. If validation fails, open the EML document in a .xml editor to identify the source of error. Often the error is small and quickly resolved with the aid of an editors schema congruence checker.
 
+```{r eval = FALSE}
+make_eml(path = "C:\\Users\\Colin\\Desktop\\gleon_chloride")
+```
+
+![](C:/Users/Colin/Documents/EDI/figures/eml.png)

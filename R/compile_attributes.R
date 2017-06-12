@@ -67,7 +67,7 @@ compile_attributes <- function(path){
       paste(path, 
             "/", 
             substr(fname_table_attributes[i], 1, nchar(fname_table_attributes[i]) - 4),
-            "_draft.txt",
+            ".txt",
             sep = ""),
       header=TRUE,
       sep="\t",
@@ -175,6 +175,8 @@ compile_attributes <- function(path){
     use_i <- c(is_character, is_catvar)
     
     attributes$numberType[use_i] <- "character"
+    
+    attributes$columnClasses[is_catvar] <- "factor"
 
     # Set attribute definition (i.e. "definition")
     
