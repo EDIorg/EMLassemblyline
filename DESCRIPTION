@@ -1,4 +1,4 @@
-Package: emlAssemblyLine
+Package: EMLassemblyline
 Title: A workflow and set of functions to make EML.
 Version: 0.0.0.9000
 Authors@R: person("Colin", "Smith", email = "colin.smith@wisc.edu", role = c("aut", "cre"))
@@ -16,8 +16,8 @@ Suggests:
 License: Creative Commons license CC0 1.0 Universal
 Encoding: UTF-8
 LazyData: true
-URL: http://github.com/EDIorg/emlAssemblyLine
-BugReports: http://github.com/EDIorg/emlAssemblyLine/issues
+URL: http://github.com/EDIorg/EMLassemblyline
+BugReports: http://github.com/EDIorg/EMLassemblyline/issues
 RoxygenNote: 6.0.1
 SystemRequirements:
 VignetteBuilder: knitr
