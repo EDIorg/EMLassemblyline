@@ -45,47 +45,47 @@
 
 import_templates <- function(path){
   
-  file.copy(from = paste(path.package("emlAssemblyLine"),
+  file.copy(from = paste(path.package("EMLassemblyline"),
                          "/templates/eml_configuration.R",
                          sep = ""),
             to = path)
   
-  file.copy(from = paste(path.package("emlAssemblyLine"),
+  file.copy(from = paste(path.package("EMLassemblyline"),
                          "/templates/datasetname_abstract.txt",
                          sep = ""),
             to = path)
   
-  file.copy(from = paste(path.package("emlAssemblyLine"),
+  file.copy(from = paste(path.package("EMLassemblyline"),
                          "/templates/datasetname_custom_units.txt",
                          sep = ""),
             to = path)
   
-  file.copy(from = paste(path.package("emlAssemblyLine"),
+  file.copy(from = paste(path.package("EMLassemblyline"),
                          "/templates/datasetname_cc0_1_intellectual_rights.txt",
                          sep = ""),
             to = path)
   
-  file.copy(from = paste(path.package("emlAssemblyLine"),
+  file.copy(from = paste(path.package("EMLassemblyline"),
                          "/templates/datasetname_cc_by_4.0_intellectual_rights.txt",
                          sep = ""),
             to = path)
   
-  file.copy(from = paste(path.package("emlAssemblyLine"),
+  file.copy(from = paste(path.package("EMLassemblyline"),
                          "/templates/datasetname_datatablename_attributes.txt",
                          sep = ""),
             to = path)
   
-  file.copy(from = paste(path.package("emlAssemblyLine"),
+  file.copy(from = paste(path.package("EMLassemblyline"),
                          "/templates/datasetname_methods.txt",
                          sep = ""),
             to = path)
   
-  file.copy(from = paste(path.package("emlAssemblyLine"),
+  file.copy(from = paste(path.package("EMLassemblyline"),
                          "/templates/datasetname_personnel.txt",
                          sep = ""),
             to = path)
   
-  file.copy(from = paste(path.package("emlAssemblyLine"),
+  file.copy(from = paste(path.package("EMLassemblyline"),
                          "/templates/datasetname_additional_info.txt",
                          sep = ""),
             to = path)
