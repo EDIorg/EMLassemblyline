@@ -9,22 +9,27 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-The Ecological Metadata Language (EML) is a metadata specification developed by the ecological community and for the ecological community. EML communicates detailed information about data and how it was created. This metadata provides a basis for persistence, discoverability, and reuse, thereby extending the life cycle and value of the data. While the highly structured schema of EML is necessary to realize these benefits, it confronts the inexperienced data provider with a steep learning curve that few have time to tackle. To overcome this obstacle we've created the EML Assembly Line, a linear process and custom tools to craft high quality EML yourself.
+The Ecological Metadata Language (EML) is a metadata standard developed by the ecological community for persistence, discoverability, and reuse of ecological data. EML extends the data lifespan allowing new insights and knowledge to be derived many years from now. While the highly detailed .xml structure of EML is necessary to organize and make searchable the metadata content, it confronts the inexperienced data provider with a steep learning curve that few have time to tackle. To overcome this we've created the EML Assembly Line, a linear process helping you craft high quality EML yourself! The EML Assembly Line is useful for publishing one-off datasets or providing a foundation for an EML factory.
 
-EML assembly starts once you have compiled the data tables you would like to publish (Fig. 1). Next, import templates and view instructions to provide the core set of metadata for your dataset. Continue by operating tools to define and extract custom details of your data that you feel is important to communicate. Once you have built all the metadata parts, assemble these parts into the EML schema, run a validation check, and write the EML file. The EML and your data comprise a package that can be uploaded into a publicly accessible repository for reuse and citation.
+Start creating EML once you have compiled the data for publication (Fig. 1). Next import templates and view instructions to build up the core metadata. If this core metadata doen't adequately describe your data, then call on additional functions to define and extract custom details to include in the final EML file. Once you have built all the metadata parts, assemble them into EML, run a validation check, and write the EML file. The EML and your data comprise a package that can be uploaded into a publicly accessible repository for reuse and citation.
 
 ![Figure 1. Assembly line overview.](https://github.com/EDIorg/EMLassemblyline/blob/master/eml_assembly_line_overview.jpg)
 
-While your first EML assembly may take some time, your next will be faster. Really, you've already done the most challenging part of collecting and compiling a publication quality dataset. You have all the information up there in your head, now document it and extend its lifespan.
+Figure 1. Assembly line overview.
+
+While your first EML assembly may take the better part of a work day, your next will be faster. You've already done the most challenging part of collecting and compiling a set of high quality data, now document it and extend it's lifespan!
 
 ## Current capabilities and requirements
-The EML assembly line is ready for comma and tab delimited tables. Expand functionality will be available in future versions. We are now developing the capacity to handle spatial vector and raster data entities.
+The EML assembly line accepts comma and tab delimited data tables. We are now developing the capacity to handle spatial vector and raster data entities.
 
-## Collaborate with us!
-User feed back will inform future development. We welcome any contributions (new code, bug reports, etc.) via [GitHub](https://github.com/EDIorg/EMLassemblyline) or email (colin.smith@wisc.edu).
+## Contribute
+User feed back will inform future development. We welcome contributions (i.e. new code, bug reports, etc.) via [GitHub](https://github.com/EDIorg/EMLassemblyline) or email (colin.smith@wisc.edu).
 
 ## Installation
-Until this code is apart of CRAN, you will need to install the EMLassemblyline with the devtools package. Run devtools::install_github("EDIorg/EMLassemblyline").
+Until this code is apart of CRAN, you will need to install the EMLassemblyline with the devtools package: 
+install.packages("devtools")
+library(devtools)
+install_github("EDIorg/EMLassemblyline")
 
 ## References
 [Ecological Metadata Language](https://knb.ecoinformatics.org/#external//emlparser/docs/index.html) A link to the EML schema.

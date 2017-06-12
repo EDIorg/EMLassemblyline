@@ -25,13 +25,13 @@ with a minus sign (i.e. dash, -).}
 with the geographic coordinates.}
 }
 \value{
-A tab delimited file in the dataset working directory titled 
-    \emph{geographic coverage.txt} and containing decimal degree latitude, 
+A tab delimited UTF-8 formatted file in the dataset working directory titled 
+    \emph{geographic_coverage.txt} and containing decimal degree latitude, 
     decimal degree longitude, and site name.
 }
 \description{
 Extract detailed geographic coverage (latitude, 
-    longitude, site name) to be included in the dataset EML.
+    longitude, and site name) to be included in the EML.
 }
 \seealso{
 \code{\link{make_eml}} to make the EML file.
