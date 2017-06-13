@@ -1,38 +1,47 @@
 #' Import metadata templates
 #'
-#' @description  Create a working directory for your dataset then run this function to import metadata templates.
-#'     Use these templates to 
-#'     provide information about your data.
+#' @description  
+#'     Create a working directory for your dataset then run this function to 
+#'     import metadata templates. Use these templates to provide information 
+#'     about your data.
 #'
-#' @usage import_templates(path)
+#' @usage 
+#'     import_templates(path)
 #'
-#' @param path A path to the dataset working directory.
+#' @param path 
+#'     A path to the dataset working directory.
 #'
 #' @return 
-#'     \emph{datasetname_abstract.txt} A text file for the abstract of your dataset. This file is UTF-8 formatted.
+#'     \emph{datasetname_abstract.txt} A text file for the abstract of your 
+#'     dataset. This file is UTF-8 formatted.
 #'     
-#'     \emph{datasetname_additional_info.txt} A text file for additional information 
-#'     about your dataset. This file is UTF-8 formatted.
+#'     \emph{datasetname_additional_info.txt} A text file for additional 
+#'     information about your dataset. This file is UTF-8 formatted.
 #'     
-#'     \emph{datasetname_custom_units.txt} A tab delimited table for custom units used in your data 
-#'     that are not defined in the standard unit dictionary. This file is UTF-8 formatted.
+#'     \emph{datasetname_custom_units.txt} A tab delimited table for custom 
+#'     units used in your data that are not defined in the standard unit 
+#'     dictionary. This file is UTF-8 formatted.
 #'     
-#'     \emph{datasetname_cc_by_4.0_intellectual_rights.txt} One of two
-#'     intellectual rights licenses to consider for your dataset. Do not edit the text of this file. This file is UTF-8 formatted.
+#'     \emph{datasetname_cc_by_4.0_intellectual_rights.txt} One of two 
+#'     intellectual rights licenses to consider for your dataset. Do not edit 
+#'     the text of this file. This file is UTF-8 formatted.
 #'     
-#'     \emph{datasetname_cc0_1_intellectual_rights.txt} One of two 
-#'     intellectual rights licenses to consider for your dataset. Do not edit the text of this file. This file is UTF-8 formatted.
+#'     \emph{datasetname_cc0_1_intellectual_rights.txt} One of two intellectual 
+#'     rights licenses to consider for your dataset. Do not edit the text of 
+#'     this file. This file is UTF-8 formatted.
 #'     
-#'     \emph{datasetname_methods.txt} A text file for methods used in creating your 
-#'     data. This file is UTF-8 formatted.
+#'     \emph{datasetname_methods.txt} A text file for methods used in creating 
+#'     your data. This file is UTF-8 formatted.
 #'     
-#'     \emph{datasetname_personnel.txt} A tab delimited table for information about personnel 
-#'     associated with this dataset. This file is UTF-8 formatted.
+#'     \emph{datasetname_personnel.txt} A tab delimited table for information 
+#'     about personnel associated with this dataset. This file is UTF-8 
+#'     formatted.
 #'     
-#'     \emph{datasetname_datatablename_attributes.txt} A tab delimited table for 
-#'     information about your data tables. This file is UTF-8 formatted.
+#'     \emph{datasetname_datatablename_attributes.txt} A tab delimited table 
+#'     for information about your data tables. This file is UTF-8 formatted.
 #'     
-#'     \emph{eml_configuration.R} A file for technical and general information about your data.
+#'     \emph{eml_configuration.R} A file for technical and general information 
+#'     about your data.
 #'     
 #' @details 
 #'     If template files already exist in the working directory, new templates 
@@ -40,7 +49,9 @@
 #'     
 #' @export     
 #'     
-#' @seealso \code{\link{view_instructions}} for guidance on completing the templates.
+#' @seealso 
+#'     \code{\link{view_instructions}} for guidance on completing the 
+#'     templates.
 
 
 import_templates <- function(path){
@@ -95,7 +106,7 @@ import_templates <- function(path){
                      to = path)
   
   if (isTRUE(value)){
-    print("datasetname_cc_by_4.0_intellectual_rights.txt ... ")
+    print("Importing datasetname_cc_by_4.0_intellectual_rights.txt ... ")
   } else {
     print("datasetname_cc_by_4.0_intellectual_rights.txt already exists ... ")
   }
