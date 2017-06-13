@@ -45,16 +45,10 @@
 
 import_templates <- function(path){
   
-  val_config <- file.copy(from = paste(path.package("EMLassemblyline"),
-                                  "/templates/eml_configuration.R",
-                                  sep = ""),
-                          to = path)
-  
-  if (isTRUE(val_config)){
-    print("eml_configuration.R has been imported")
-  } else {
-    print("eml_configuration.R has not been imported ... file already exists")
-  }
+  file.copy(from = paste(path.package("EMLassemblyline"),
+                         "/templates/eml_configuration.R",
+                         sep = ""),
+            to = path)
   
   file.copy(from = paste(path.package("EMLassemblyline"),
                          "/templates/datasetname_abstract.txt",
