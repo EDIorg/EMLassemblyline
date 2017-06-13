@@ -29,7 +29,7 @@ The GLEON Lake Chloride has been compiled into 3 entities. Two tables: gleon_chl
 
 Create a working directory for the dataset and name it using underscore characters "_" to span spaces between words (e.g. gleon_chloride). This directory stores metadata parts created in the assembly line and should be semi-permanent. These files will need to be edited in the event the dataset changes and/or the EML needs revision.
 
-![](C:/Users/Colin/Documents/EDI/figures/dataset_working_directory.png)
+![](https://github.com/EDIorg/EMLassemblyline/blob/master/figures/dataset_working_directory.png)
 
 ## Move data to the working directory
 
