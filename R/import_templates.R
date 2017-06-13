@@ -46,55 +46,103 @@
 import_templates <- function(path){
   
   value <- file.copy(from = paste(path.package("EMLassemblyline"),
-                         "/templates/eml_configuration.R",
-                         sep = ""),
-            to = path)
+                                  "/templates/eml_configuration.R",
+                                  sep = ""),
+                     to = path)
   
   if (isTRUE(value)){
     print("Importing eml_configuration.R ... ")
   } else {
-    print("eml_configuration.R already exists ... file has not been overwritten")
+    print("eml_configuration.R already exists ... ")
   }
   
-  file.copy(from = paste(path.package("EMLassemblyline"),
-                         "/templates/datasetname_abstract.txt",
-                         sep = ""),
-            to = path)
+  value <- file.copy(from = paste(path.package("EMLassemblyline"),
+                                  "/templates/datasetname_abstract.txt",
+                                  sep = ""),
+                     to = path)
   
-  file.copy(from = paste(path.package("EMLassemblyline"),
-                         "/templates/datasetname_custom_units.txt",
-                         sep = ""),
-            to = path)
+  if (isTRUE(value)){
+    print("Importing datasetname_abstract.txt ... ")
+  } else {
+    print("datasetname_abstract.txt already exists ... ")
+  }
   
-  file.copy(from = paste(path.package("EMLassemblyline"),
-                         "/templates/datasetname_cc0_1_intellectual_rights.txt",
-                         sep = ""),
-            to = path)
+  value <- file.copy(from = paste(path.package("EMLassemblyline"),
+                                  "/templates/datasetname_custom_units.txt",
+                                  sep = ""),
+                     to = path)
   
-  file.copy(from = paste(path.package("EMLassemblyline"),
-                         "/templates/datasetname_cc_by_4.0_intellectual_rights.txt",
-                         sep = ""),
-            to = path)
+  if (isTRUE(value)){
+    print("Importing datasetname_custom_units.txt ... ")
+  } else {
+    print("datasetname_custom_units.txt already exists ... ")
+  }
   
-  file.copy(from = paste(path.package("EMLassemblyline"),
-                         "/templates/datasetname_datatablename_attributes.txt",
-                         sep = ""),
-            to = path)
+  value <- file.copy(from = paste(path.package("EMLassemblyline"),
+                                  "/templates/datasetname_cc0_1_intellectual_rights.txt",
+                                  sep = ""),
+                     to = path)
   
-  file.copy(from = paste(path.package("EMLassemblyline"),
-                         "/templates/datasetname_methods.txt",
-                         sep = ""),
-            to = path)
+  if (isTRUE(value)){
+    print("Importing datasetname_cc0_1_intellectual_rights.txt ... ")
+  } else {
+    print("datasetname_cc0_1_intellectual_rights.txt already exists ... ")
+  }
   
-  file.copy(from = paste(path.package("EMLassemblyline"),
-                         "/templates/datasetname_personnel.txt",
-                         sep = ""),
-            to = path)
+  value <- file.copy(from = paste(path.package("EMLassemblyline"),
+                                  "/templates/datasetname_cc_by_4.0_intellectual_rights.txt",
+                                  sep = ""),
+                     to = path)
   
-  file.copy(from = paste(path.package("EMLassemblyline"),
-                         "/templates/datasetname_additional_info.txt",
-                         sep = ""),
-            to = path)
+  if (isTRUE(value)){
+    print("datasetname_cc_by_4.0_intellectual_rights.txt ... ")
+  } else {
+    print("datasetname_cc_by_4.0_intellectual_rights.txt already exists ... ")
+  }
+  
+  value <- file.copy(from = paste(path.package("EMLassemblyline"),
+                                  "/templates/datasetname_datatablename_attributes.txt",
+                                  sep = ""),
+                     to = path)
+  
+  if (isTRUE(value)){
+    print("Importing datasetname_datatablename_attributes.txt ... ")
+  } else {
+    print("datasetname_datatablename_attributes.txt already exists ... ")
+  }
+  
+  value <- file.copy(from = paste(path.package("EMLassemblyline"),
+                                  "/templates/datasetname_methods.txt",
+                                  sep = ""),
+                     to = path)
+  
+  if (isTRUE(value)){
+    print("Importing datasetname_methods.txt ... ")
+  } else {
+    print("datasetname_methods.txt already exists ... ")
+  }
+  
+  value <- file.copy(from = paste(path.package("EMLassemblyline"),
+                                  "/templates/datasetname_personnel.txt",
+                                  sep = ""),
+                     to = path)
+  
+  if (isTRUE(value)){
+    print("Importing datasetname_personnel.txt ... ")
+  } else {
+    print("datasetname_personnel.txt already exists ... ")
+  }
+  
+  value <- file.copy(from = paste(path.package("EMLassemblyline"),
+                                  "/templates/datasetname_additional_info.txt",
+                                  sep = ""),
+                     to = path)
+  
+  if (isTRUE(value)){
+    print("Importing datasetname_additional_info.txt ... ")
+  } else {
+    print("datasetname_additional_info.txt already exists ... ")
+  }
   
   
 }
