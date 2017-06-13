@@ -46,9 +46,9 @@
 import_templates <- function(path){
   
   file.copy(from = paste(path.package("EMLassemblyline"),
-                         "/templates/eml_configuration.R",
-                         sep = ""),
-            to = path)
+                                  "/templates/eml_configuration.R",
+                                  sep = ""),
+                          to = path)
   
   file.copy(from = paste(path.package("EMLassemblyline"),
                          "/templates/datasetname_abstract.txt",
