@@ -2,36 +2,36 @@
 % Please edit documentation in R/extract_geocoverage.R
 \name{extract_geocoverage}
 \alias{extract_geocoverage}
-\title{Extract geographic coverage and write to file}
+\title{Extract geographic coverage}
 \usage{
 extract_geocoverage(path, table.name, lat.col, lon.col, site.col)
 }
 \arguments{
-\item{path}{A path to the dataset working directory containing the data 
-table with geographic information.}
+\item{path}{A path to the dataset working directory containing the data table with 
+geographic information.}
 
-\item{table.name}{Name of the input data table containing geographic 
-coverage data. The table name must include the file extension (e.g. .csv).}
+\item{table.name}{Name of the input data table containing geographic coverage data. The 
+table name must include the file extension (e.g. .csv).}
 
-\item{lat.col}{Name of latitude column. Values of this column must be in 
-decimal degrees. Latitudes south of the equator must be prefixed with 
-a minus sign (i.e. dash, -).}
+\item{lat.col}{Name of latitude column. Values of this column must be in decimal 
+degrees. Latitudes south of the equator must be prefixed with a minus 
+sign (i.e. dash, -).}
 
-\item{lon.col}{Name of longitude column. Values of this column must be in 
-decimal degrees. Longitudes west of the prime meridian must be prefixed 
-with a minus sign (i.e. dash, -).}
+\item{lon.col}{Name of longitude column. Values of this column must be in decimal 
+degrees. Longitudes west of the prime meridian must be prefixed with a 
+minus sign (i.e. dash, -).}
 
-\item{site.col}{Name of site column. This column lists site specific names to be associated
-with the geographic coordinates.}
+\item{site.col}{Name of site column. This column lists site specific names to be 
+associated with the geographic coordinates.}
 }
 \value{
-A tab delimited UTF-8 formatted file in the dataset working directory titled 
-    \emph{geographic_coverage.txt} and containing decimal degree latitude, 
-    decimal degree longitude, and site name.
+A tab delimited UTF-8 formatted file in the dataset working directory 
+    titled \emph{geographic_coverage.txt} and containing decimal degree 
+    latitude, decimal degree longitude, and site name.
 }
 \description{
-Extract detailed geographic coverage (latitude, 
-    longitude, and site name) to be included in the EML.
+Extract detailed geographic coverage (latitude, longitude, and site 
+    name) to be included in the EML.
 }
 \seealso{
 \code{\link{make_eml}} to make the EML file.

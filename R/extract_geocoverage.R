@@ -1,32 +1,34 @@
-#' Extract geographic coverage and write to file
+#' Extract geographic coverage
 #'
-#' @description  Extract detailed geographic coverage (latitude, 
-#'     longitude, and site name) to be included in the EML.
+#' @description  
+#'     Extract detailed geographic coverage (latitude, longitude, and site 
+#'     name) to be included in the EML.
 #'
-#' @usage extract_geocoverage(path, table.name, lat.col, lon.col, site.col)
+#' @usage 
+#'     extract_geocoverage(path, table.name, lat.col, lon.col, site.col)
 #'
 #' @param path 
-#'     A path to the dataset working directory containing the data 
-#'     table with geographic information.
+#'     A path to the dataset working directory containing the data table with 
+#'     geographic information.
 #' @param table.name 
-#'     Name of the input data table containing geographic 
-#'     coverage data. The table name must include the file extension (e.g. .csv).
+#'     Name of the input data table containing geographic coverage data. The 
+#'     table name must include the file extension (e.g. .csv).
 #' @param lat.col 
-#'     Name of latitude column. Values of this column must be in 
-#'     decimal degrees. Latitudes south of the equator must be prefixed with 
-#'     a minus sign (i.e. dash, -).
+#'     Name of latitude column. Values of this column must be in decimal 
+#'     degrees. Latitudes south of the equator must be prefixed with a minus 
+#'     sign (i.e. dash, -).
 #' @param lon.col 
-#'     Name of longitude column. Values of this column must be in 
-#'     decimal degrees. Longitudes west of the prime meridian must be prefixed 
-#'     with a minus sign (i.e. dash, -). 
+#'     Name of longitude column. Values of this column must be in decimal 
+#'     degrees. Longitudes west of the prime meridian must be prefixed with a 
+#'     minus sign (i.e. dash, -). 
 #' @param site.col
-#'     Name of site column. This column lists site specific names to be associated
-#'     with the geographic coordinates.
+#'     Name of site column. This column lists site specific names to be 
+#'     associated with the geographic coordinates.
 #'
 #' @return 
-#'     A tab delimited UTF-8 formatted file in the dataset working directory titled 
-#'     \emph{geographic_coverage.txt} and containing decimal degree latitude, 
-#'     decimal degree longitude, and site name.
+#'     A tab delimited UTF-8 formatted file in the dataset working directory 
+#'     titled \emph{geographic_coverage.txt} and containing decimal degree 
+#'     latitude, decimal degree longitude, and site name.
 #'
 #' @export
 #'
@@ -37,9 +39,13 @@ extract_geocoverage <- function(path, table.name, lat.col, lon.col, site.col){
   
   # Load the datasets configuration file
   
+  print("Loading configuration file ...")
+  
   source(paste(path, "/eml_configuration.R", sep = ""))
   
   # Read data table
+  
+  print(paste("Reading", table.name, "...", sep = " "))
   
   use_i <- match(table.name, table_names)
   
@@ -67,6 +73,8 @@ extract_geocoverage <- function(path, table.name, lat.col, lon.col, site.col){
   
   # Get vectors of latitude, longitude, and site
   
+  print("Selecting variables ...")
+  
   latitude <- df_table[lat.col]
   
   longitude <- df_table[lon.col]
@@ -74,6 +82,8 @@ extract_geocoverage <- function(path, table.name, lat.col, lon.col, site.col){
   site_name <- unique(unlist(df_table[site.col]))
   
   # Output lat and long corresponding to sites
+  
+  print("Extracting coordinates and site names ...")
   
   latitude_out = c()
   longitude_out = c() 
@@ -104,7 +114,7 @@ extract_geocoverage <- function(path, table.name, lat.col, lon.col, site.col){
   
   # Write data to file
   
-  print("Data has been written to geographic_coverage.txt.")
+  print("Writing geographic_coverage.txt ...")
   
   write.table(geocoverage_out,
               paste(path,
@@ -114,5 +124,7 @@ extract_geocoverage <- function(path, table.name, lat.col, lon.col, site.col){
               row.names = F,
               quote = F,
               fileEncoding = "UTF-8")
+  
+  print("Done.")
 
 }
