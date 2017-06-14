@@ -83,6 +83,8 @@ Detailed instructions for each step:
     UTF-8 symbols and text. Instructions for completing the attribute table 
     are as follows:
     \itemize{
+        \item \strong{attributeName} Attribute name as it appears in the
+        data table and in the same order as in the data table.
         \item \strong{attributeDefinition} Define the attribute. Be 
         specific, it can be lengthy.
         \item \strong{class} Specify the attribute class. This is the type 
