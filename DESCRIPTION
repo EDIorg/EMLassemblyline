@@ -11,13 +11,15 @@ Description: A set of functions facilitating a workflow to create metadata
 Depends:
     EML (>= 1.0.1),
     R (>= 3.2.5)
-Imports:
+Imports: 
 Suggests:
+    knitr,
+    rmarkdown
 License: Creative Commons license CC0 1.0 Universal
 Encoding: UTF-8
 LazyData: true
 URL: http://github.com/EDIorg/EMLassemblyline
 BugReports: http://github.com/EDIorg/EMLassemblyline/issues
 RoxygenNote: 6.0.1
-SystemRequirements:
+SystemRequirements: 
 VignetteBuilder: knitr
