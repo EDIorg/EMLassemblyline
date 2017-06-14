@@ -56,6 +56,14 @@
 
 import_templates <- function(path){
   
+  # Check arguments
+  
+  if (missing(path)){
+    stop("Need to specify path to the dataset working directory.")
+  }
+  
+  # Begin function
+  
   value <- file.copy(from = paste(path.package("EMLassemblyline"),
                                   "/templates/eml_configuration.R",
                                   sep = ""),
