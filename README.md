@@ -23,7 +23,7 @@ install.packages("devtools")
 
 library(devtools)
 
-install_github("EDIorg/EMLassemblyline")
+install_github("EDIorg/EMLassemblyline", build_vignettes = TRUE, force = TRUE)
 
 ## References
 [Ecological Metadata Language](https://knb.ecoinformatics.org/#external//emlparser/docs/index.html) A link to the EML schema.
