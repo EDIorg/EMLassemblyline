@@ -29,13 +29,13 @@ The GLEON Lake Chloride has been compiled into 3 entities. Two tables: gleon_chl
 
 Create a working directory for the dataset and name it using underscore characters "_" to span spaces between words (e.g. gleon_chloride). This directory stores metadata parts created in the assembly line and should be semi-permanent. These files will need to be edited in the event the dataset changes and/or the EML needs revision.
 
-![](https://github.com/EDIorg/EMLassemblyline/blob/master/figures/dataset_working_directory.PNG)
+![](dataset_working_directory.PNG)
 
 ## Move data to the working directory
 
 Move the data tables to the dataset working directory and name them following the convention "datasetname_datatablename", where datasetname is the name of the dataset (e.g. gleon_chloride), and datatablename is the name of the data table (e.g. lake_characteristics). In this example, the data table names become "gleon_chloride_concentrations.csv" and "gleon_chloride_lake_characteristics.csv".
 
-![](https://github.com/EDIorg/EMLassemblyline/blob/master/figures/move_data.PNG)
+![](move_data.PNG)
 
 ## Import metadata templates
 
@@ -46,7 +46,7 @@ import_templates(path = "C:\\Users\\Colin\\Desktop\\gleon_chloride")
 ```
 
 
-![](https://github.com/EDIorg/EMLassemblyline/blob/master/figures/import_templates.PNG)
+![](import_templates.PNG)
 
 For more information about the import_templates.R function run:
 
@@ -75,27 +75,27 @@ gleon_chloride_abstract). The abstract should cover what, why, when, where, and 
 Place additional info in the file datasetname_additional_info.txt. Rename the file following convention (e.g. gleon_chloride_additional_info). This is a good place to share additional text based information that doesn't fall under the scope of
 the abstract or methods (e.g. a list of research articles or theses derived from this dataset). The template is a UTF-8 formatted file. Use only UTF-8 symbols and text. Delete this file if there is no additional information to present.
 
-![](https://github.com/EDIorg/EMLassemblyline/blob/master/figures/additional_info.PNG)
+![](additional_info.PNG)
 
 
 ## Intellectual rights
 
 Select an intellectual rights license. We have two recommendations: 'datasetname_cc_by_4.0_intellectual_rights.txt' and 'datasetname_cc0_1_intellectual_rights.txt'. Do not edit the text of these files. Delete the file that will not be using. Rename the file being used following convention (e.g. gleon_chloride_intellectual_rights).
 
-![](https://github.com/EDIorg/EMLassemblyline/blob/master/figures/intellectual_rights.PNG)
+![](intellectual_rights.PNG)
 
 
 ## Methods
 
 Explain the methods used to create this dataset in the file datasetname_methods.txt. Rename this file following convention (e.g. gleon_chloride_methods). Be specific, include instrument descriptions, or point to a protocol online. If this dataset is a synthesis of other datasets please specify dataset origins, preferably their DOI or URL plus general citation information. This file is a UTF-8 formatted file. Use only UTF-8 symbols and text.
 
-![](https://github.com/EDIorg/EMLassemblyline/blob/master/figures//methods.PNG)
+![](methods.PNG)
 
 ## Personnel information
 
 Enter personnel information for the dataset in the file datasetname_personnel.txt. This is a tab delimited file that can be edited with a spreadsheet editor. Rename the file according to convention (e.g. gleon_chloride_personnel). Valid entries for role are: "creator" = dataset creator, "pi" = principal investigator, "contact" = dataset contact. Any other entries into the 'role' column are acceptable and will be defined under the associated party element of this dataset. If a person serves more than one role, duplicate this persons information in another row but with the new role. A dataset creator, contact, and principal investigator are mandatory. This file is a UTF-8 formatted file. Use only UTF-8 symbols and text.
 
-![](https://github.com/EDIorg/EMLassemblyline/blob/master/figures/personnel.PNG)
+![](personnel.PNG)
 
 ## Table attributes
 
@@ -133,24 +133,24 @@ If reporting a date without time, select one of the date format strings. If repo
 - "missingValueCodeExplanation" Define the missing value code here.
 
 
-![](https://github.com/EDIorg/EMLassemblyline/blob/master/figures/custom_units.PNG)
+![](custom_units.PNG)
 
-![](https://github.com/EDIorg/EMLassemblyline/blob/master/figures/attributes_concentrations.PNG)
+![](attributes_concentrations.PNG)
 
 
-![](https://github.com/EDIorg/EMLassemblyline/blob/master/figures/attributes_characteristics.PNG)
+![](attributes_characteristics.PNG)
 
 ## Configuration file
 
 Fill out the file eml_configuration.R. Additional information information about the dataset is stored in this file. Instructions for this file are listed as comments within the file.
 
-![](https://github.com/EDIorg/EMLassemblyline/blob/master/figures/configuration.PNG)
+![](configuration.PNG)
 
 ## Close files of the working directory
 
 Make sure all files of the working directory are closed. Some functions will error out if these files are open. The working directory of this dataset is now populated with the core metadata templates.
 
-![](https://github.com/EDIorg/EMLassemblyline/blob/master/figures/dir_populated.PNG)
+![](dir_populated.PNG)
 
 ## Define categorical variables
 
@@ -162,11 +162,11 @@ define_catvars(path = "C:\\Users\\Colin\\Desktop\\gleon_chloride")
 
 The only attributes file containing categorical variables is "gleon_chloride_lake_characteristics_attributes.txt", and thus only one new file containing categorical variables is written to the working directory (i.e. gleon_chloride_lake_characteristics_catvars.txt").
 
-![](https://github.com/EDIorg/EMLassemblyline/blob/master/figures/dir_catvars.PNG)
+![](dir_catvars.PNG)
 
 After the catvars file is written, the standard units dictionary is opened in the RStudio Source window to consult if there are units to be defined. We must open this tab delimited file with a spreadsheet editor and provide definitions for each categorical variables in the "definition" column. The columns "attributeName" and "code" contain the unique codes found under each attributeName of class = categorical. Below we have provided definitions for each code. If a code is empty then delete the corresponding row.
 
-![](https://github.com/EDIorg/EMLassemblyline/blob/master/figures/catvars.PNG)
+![](catvars.PNG)
 
 ## Extract geographical coverage
 
@@ -183,9 +183,9 @@ extract_geocoverage(path = "C:\\Users\\Colin\\Desktop\\gleon_chloride",
 
 This returns a tab delimited UTF-8 formatted file in the dataset working directory titled geographic_coverage.txt and contains decimal degree latitude, decimal degree longitude, and site name.
 
-![](https://github.com/EDIorg/EMLassemblyline/blob/master/figures/dir_geocoverage.PNG)
+![](dir_geocoverage.PNG)
 
-![](https://github.com/EDIorg/EMLassemblyline/blob/master/figures/geocoverage.PNG)
+![](geocoverage.PNG)
 
 ## Make EML
 
@@ -195,4 +195,4 @@ Now that we have created all the metadata parts we run the function make_eml.R w
 make_eml(path = "C:\\Users\\Colin\\Desktop\\gleon_chloride")
 ```
 
-![](https://github.com/EDIorg/EMLassemblyline/blob/master/figures/eml.PNG)
+![](eml.PNG)
