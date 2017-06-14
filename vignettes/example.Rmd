@@ -68,7 +68,7 @@ view_instructions() # Prints instructions to the RStudio console window
 Write an abstract for the dataset in the file datasetname_abstract.txt. Rename the file following convention (e.g.
 gleon_chloride_abstract). The abstract should cover what, why, when, where, and how. The template is a UTF-8 formatted file. Use only UTF-8 symbols and text.
 
-![](abstract.PNG)
+![](vignettes/abstract.PNG)
 
 ## Additional information
 
