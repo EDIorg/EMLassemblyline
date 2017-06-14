@@ -1,5 +1,5 @@
 ---
-title: "example"
+title: "Making EML for the GLEON Lake Chloride dataset (an example)"
 author: "Colin Smith"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
