@@ -18,7 +18,9 @@ Until this code is apart of CRAN, you will need to install the EMLassemblyline w
 ```{r eval = FALSE}
 install.packages("devtools")
 library(devtools)
-install_github("EDIorg/EMLassemblyline")
+install_github("EDIorg/EMLassemblyline",
+               build_vignettes = TRUE,
+               force = TRUE)
 ```
 
 ## Compile data
