@@ -1,47 +1,65 @@
-#' Define categorical variables and write to file
+#' Define categorical variables
 #'
-#' @description  Identify and define categorical variables of your data tables.
+#' @description  
+#'     Identify and define categorical variables of your data tables.
 #'
 #' @usage define_catvars(path)
 #' 
-#'     Run this function whenever your data contain attributes of class "categorical" as listed in 
+#'     Run this function whenever your data contain attributes of class 
+#'     "categorical" as listed in 
 #'     \emph{datasetname_datatablename_attributes.txt} files.
 #'
-#' @param path A path to the dataset working directory containing 
+#' @param path 
+#'     A path to the dataset working directory containing 
 #'     \emph{datasetname_datatablename_attributes.txt}, 
 #'     \emph{eml_configuration.R}, and referenced data tables.
 #'
-#' @return A tab delimited UTF-8 file in the dataset working directory titled 
-#'     \emph{datasetname_datatablename_catvars.txt} containing unique values of attributes of class "categorical" 
-#'     which is translated and written to EML with \code{make_eml}.
+#' @return 
+#'     A tab delimited UTF-8 file in the dataset working directory titled 
+#'     \emph{datasetname_datatablename_catvars.txt} containing unique values 
+#'     of attributes of class "categorical" which is translated and written 
+#'     to EML with \code{make_eml}.
 #'     
 #' @details 
 #'     This function overwrites any 
 #'     \emph{datasetname_datatablename_catvars.txt} files you have created in 
-#'     the dataset working directory. To prevent overwriting of these 
-#'     files, temporarily move them out of the working directory.
+#'     the dataset working directory. To prevent overwriting of these files, 
+#'     temporarily move them out of the working directory.
 #'     
 #'     This function identifies "categorical" class attributes from the file 
-#'     \emph{datasetname_datatablename_attributes.txt} and extracts 
-#'     unique values of these attributes to the table for you to define.
-#'     Do not define categorical variables with empty field contents. Delete these rows from this file.
+#'     \emph{datasetname_datatablename_attributes.txt} and extracts unique 
+#'     values of these attributes to the table for you to define. Do not define 
+#'     categorical variables with empty field contents. Delete these rows from 
+#'     this file.
 #'     
-#'     When defining categorical variables with unit values, refer to the standard unit 
-#'     dictionary "name" column. Enter the unit name in the definition column of 
-#'     the categorical variables table. Note these values are case sensitive.
+#'     When defining categorical variables with unit values, refer to the 
+#'     standard unit dictionary "name" column. Enter the unit name in the 
+#'     definition column of the categorical variables table. Note these values 
+#'     are case sensitive.
 #'
 #' @export
 #'
-#' @seealso \code{\link{import_templates}} to import metadata templates to the 
+#' @seealso 
+#'     \code{\link{import_templates}} to import metadata templates to the 
 #'     dataset working directory.
-#' @seealso \code{\link{view_instructions}} for instructions on completing the template 
-#'     files.
-#' @seealso \code{\link{extract_geocoverage}} to extract detailed geographic 
+#' @seealso
+#'     \code{\link{view_instructions}} for instructions on completing the 
+#'     template files.
+#' @seealso 
+#'     \code{\link{extract_geocoverage}} to extract detailed geographic 
 #'     coordinates of sampling sites.
-#' @seealso \code{\link{make_eml}} to translate user supplied information into the EML file.
+#' @seealso 
+#'     \code{\link{make_eml}} to translate user supplied information into the 
+#'     EML file.
 
 
 define_catvars <- function(path) {
+  
+  # Check arguments
+  
+  if (missing(path)){
+    stop("Specify path to dataset working directory.")
+  }
   
   # Load the configuration file
   
