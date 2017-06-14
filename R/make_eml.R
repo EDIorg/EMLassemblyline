@@ -1,15 +1,18 @@
 #' Make EML
 #'
-#' @description  Translate user supplied metadata into the EML 
-#'     schema, validate the schema, and write to file.
+#' @description  
+#'     Translate user supplied metadata into the EML schema, validate the 
+#'     schema, and write to file.
 #'
-#' @usage make_eml(path)
+#' @usage 
+#'     make_eml(path)
 #'
-#' @param path A path to the dataset working directory containing the 
-#'     completed metadata templates, \emph{eml_configuration.R}, 
-#'     \emph{datasetname_datatablename_catvars.txt} (if categorical variables are present), 
-#'     and \emph{geographic_coverage.txt} (if reporting detailed geographic 
-#'     coverage).
+#' @param path 
+#'     A path to the dataset working directory containing the completed 
+#'     metadata templates, \emph{eml_configuration.R}, 
+#'     \emph{datasetname_datatablename_catvars.txt} (if categorical variables 
+#'     are present), and \emph{geographic_coverage.txt} (if reporting detailed 
+#'     geographic coverage).
 #'
 #' @return 
 #'     Validation results printed to the \emph{Console}.
@@ -24,18 +27,28 @@
 #'
 #' @export
 #'
-#' @seealso \code{\link{import_templates}} to import metadata templates to the 
+#' @seealso 
+#'     \code{\link{import_templates}} to import metadata templates to the 
 #'     dataset working directory.
-#' @seealso \code{\link{view_instructions}} for instructions on completing the template 
-#'     files.
-#' @seealso \code{\link{define_catvars}} to create the categorical variables table (if the 
-#'     attributes table contains categorical variables).
-#' @seealso \code{\link{extract_geocoverage}} to extract detailed geographic 
+#' @seealso 
+#'     \code{\link{view_instructions}} for instructions on completing the 
+#'     template files.
+#' @seealso 
+#'     \code{\link{define_catvars}} to create the categorical variables table 
+#'     (if the attributes table contains categorical variables).
+#' @seealso 
+#'     \code{\link{extract_geocoverage}} to extract detailed geographic 
 #'     coordinates of sampling sites.
 
 
 make_eml <- function(path) {
 
+  # Check arguments
+  
+  if (missing(path)){
+    stop("Specify path to dataset working directory.")
+  }
+  
   # Get system information
   
   sysinfo <- Sys.info()["sysname"]
@@ -46,6 +59,8 @@ make_eml <- function(path) {
   }
 
   # Load the datasets configuration file
+  
+  print("Loading configuration file ...")
 
   source(paste(path, "/eml_configuration.R", sep = ""))
   
@@ -208,6 +223,8 @@ make_eml <- function(path) {
 
   # Read personnel file
 
+  print("Read personnel file ...")
+  
   personinfo <- read.table(
     fname_personnel,
     header=TRUE,
@@ -226,9 +243,13 @@ make_eml <- function(path) {
 
   # Build modules--------------------------------------------------------------
 
+  print("Building EML ...")
+  
   # Create EML
   
   # Build eml-access module
+  
+  print("access ...")
 
   allow_principals <- c(paste("uid=",
                               user_id,
@@ -259,11 +280,15 @@ make_eml <- function(path) {
                       c(allow))
 
   # Build dataset module
+  
+  print("dataset ...")
 
   dataset <- new("dataset",
                  title = dataset_title)
 
   # Add creators
+  
+  print("creators ...")
 
   personinfo <- read.table(
     paste(substr(fname_personnel, 1, nchar(fname_personnel) - 4),
@@ -286,24 +311,34 @@ make_eml <- function(path) {
   dataset@creator <- as(creator_list, "ListOfcreator")
 
   # Add publicaton date
+  
+  print("publication date ...")
 
   dataset@pubDate <- as(format(Sys.time(), "%Y-%m-%d"), "pubDate")
 
   # Add abstract
+  
+  print("abstract ...")
 
   dataset@abstract <- as(set_TextType(fname_abstract), "abstract")
 
   # Add keywords
+  
+  print("keywords ...")
 
   dataset@keywordSet <- new("ListOfkeywordSet", c(new("keywordSet", keywords)))
 
   # Add intellectual rights
 
+  print("intellectual rights ...")
+  
   dataset@intellectualRights <- as(
     set_TextType(fname_intellectual_rights),
     "intellectualRights")
 
   # Add coverage
+  
+  print("coverage ...")
   
   dataset@coverage <- set_coverage(begin = begin_date,
                                    end = end_date,
@@ -315,11 +350,15 @@ make_eml <- function(path) {
 
   # Add maintenance
   
+  print("maintenance ...")
+  
   maintenance <- new("maintenance")
   maintenance@description <- as(maintenance_description, "description")
   dataset@maintenance <- maintenance
   
   # Add contacts
+  
+  print("contacts ...")
 
   personinfo <- read.table(
     paste(substr(fname_personnel, 1, nchar(fname_personnel) - 4),
@@ -342,10 +381,14 @@ make_eml <- function(path) {
   dataset@contact <- as(contact_list, "ListOfcontact")
 
   # Add methods
+  
+  print("methods ...")
 
   dataset@methods <- set_methods(fname_methods)
   
   if (file.exists(paste(path, "/", "geographic_coverage.txt", sep = ""))){
+    
+    print("sampling coordinates ...")
     
     df_geographic_coverage <- read.table(paste(path,
                                                "/",
@@ -401,6 +444,8 @@ make_eml <- function(path) {
   }
 
   # Add project and funding
+  
+  print("project and funding ...")
 
   useI <- which(personinfo$role == "pi")
 
@@ -419,6 +464,8 @@ make_eml <- function(path) {
   
   # Add associated parties
   
+  print("associated parties ...")
+  
   useI <- which(personinfo$role != "pi" &
                   personinfo$role != "creator" &
                   personinfo$role != "contact")
@@ -434,6 +481,8 @@ make_eml <- function(path) {
   
   # Add additional information
   
+  print("additional info ...")
+  
   if (file.exists(fname_additional_info)){
     
     additional_info <- as(set_TextType(fname_additional_info), "additionalInfo")
@@ -447,10 +496,9 @@ make_eml <- function(path) {
 
   for (i in 1:length(table_names)){
 
-    # print(paste(
-    #   "Building attributes for ... ",
-    #   table_names[i],
-    #   sep = ""))
+    print(paste(
+      table_names[i],
+      "data table ..."))
     
     attributes <- attributes_in[[1]][[i]]
     
@@ -643,6 +691,8 @@ make_eml <- function(path) {
 
   if (file.exists(paste(path,"/",substr(template, 1, nchar(template) - 14),"_custom_units.txt",sep = ""))){
     
+    print("custom units ...")
+    
     custom_units_df <- read.table(
       paste(path,
             "/",
@@ -688,6 +738,8 @@ make_eml <- function(path) {
                            data_tables_stored)
 
   # Build EML
+  
+  print("Compiling EML ...")
   
   
   if (custom_units == "yes"){

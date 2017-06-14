@@ -34,8 +34,7 @@ compile_attributes <- function(path){
 
   for (i in 1:length(table_names)){
 
-    print(paste("Compiling attributes for ... ",
-                table_names[i], sep = ""))
+    print(paste("Compiling", table_names[i], "attributes ..."))
 
     # Read data table
 

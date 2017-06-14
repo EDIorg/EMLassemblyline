@@ -7,11 +7,11 @@
 make_eml(path)
 }
 \arguments{
-\item{path}{A path to the dataset working directory containing the 
-completed metadata templates, \emph{eml_configuration.R}, 
-\emph{datasetname_datatablename_catvars.txt} (if categorical variables are present), 
-and \emph{geographic_coverage.txt} (if reporting detailed geographic 
-coverage).}
+\item{path}{A path to the dataset working directory containing the completed 
+metadata templates, \emph{eml_configuration.R}, 
+\emph{datasetname_datatablename_catvars.txt} (if categorical variables 
+are present), and \emph{geographic_coverage.txt} (if reporting detailed 
+geographic coverage).}
 }
 \value{
 Validation results printed to the \emph{Console}.
@@ -20,8 +20,8 @@ Validation results printed to the \emph{Console}.
     \emph{packageID.xml}.
 }
 \description{
-Translate user supplied metadata into the EML 
-    schema, validate the schema, and write to file.
+Translate user supplied metadata into the EML schema, validate the 
+    schema, and write to file.
 }
 \details{
 If validation fails, open the EML document in a .xml editor to identify 
@@ -32,11 +32,11 @@ If validation fails, open the EML document in a .xml editor to identify
 \code{\link{import_templates}} to import metadata templates to the 
     dataset working directory.
 
-\code{\link{view_instructions}} for instructions on completing the template 
-    files.
+\code{\link{view_instructions}} for instructions on completing the 
+    template files.
 
-\code{\link{define_catvars}} to create the categorical variables table (if the 
-    attributes table contains categorical variables).
+\code{\link{define_catvars}} to create the categorical variables table 
+    (if the attributes table contains categorical variables).
 
 \code{\link{extract_geocoverage}} to extract detailed geographic 
     coordinates of sampling sites.
