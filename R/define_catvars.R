@@ -235,17 +235,19 @@ define_catvars <- function(path) {
                     quote = F,
                     fileEncoding = "UTF-8")
 
-        # Prompt the user to manually edit the catvars file and custom unit files.
-
-        standardUnits <- get_unitList()
-        View(standardUnits$units)
-
-        readline(
-          prompt = "Open the categorical variables file for this data table and define factor codes. Save, close, and press <enter> when done."
-        )
       }
+      
+      writeLines("\n")
 
     }
+    
+    # Prompt the user to manually edit the catvars file and custom unit files.
+    
+    standardUnits <- get_unitList()
+    View(standardUnits$units)
+    
+    readline(
+      prompt = "Open the categorical variables file for this data table and define factor codes. Save, close, and press <enter> when done.")
 
   }
 
