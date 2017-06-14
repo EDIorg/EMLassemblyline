@@ -102,10 +102,10 @@ extract_geocoverage <- function(path, table.name, lat.col, lon.col, site.col){
   }
   
   if (class(latitude_out) != "numeric"){
-    print("Latitude contain non-numeric values. Remove these from your data table, then rerun this function.")
+    print("Latitude contains non-numeric values. Remove these from your data table, then rerun this function.")
   }
   if (class(longitude_out) != "numeric"){
-    print("Longitude contain non-numeric values. Remove these from your data table, then rerun this function.")
+    print("Longitude contains non-numeric values. Remove these from your data table, then rerun this function.")
   }
   
   geocoverage_out <- data.frame(latitude = latitude_out,
