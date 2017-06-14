@@ -15,7 +15,6 @@ Start creating EML once you have compiled the data for publication (Fig. 1). Nex
 
 ![Figure 1. Assembly line overview.](eml_assembly_line_overview.jpg)
 
-Figure 1. Assembly line overview.
 
 While your first EML assembly may take the better part of a work day, your next will be faster. You've already done the most challenging part of collecting and compiling a set of high quality data, now document it and extend it's lifespan!
 
