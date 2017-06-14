@@ -63,13 +63,15 @@ define_catvars <- function(path) {
   
   # Load the configuration file
   
+  print("Loading configuration file ...")
+  
   source(paste(path, "/eml_configuration.R", sep = ""))
   
   template <- paste(dataset_name,
                     "_template.docx",
                     sep = "")
 
-  # Get system information
+  # List expected attribute files
 
   attribute_files <- c()
   
@@ -81,10 +83,10 @@ define_catvars <- function(path) {
   }
 
   if (length(attribute_files) == 0){
-    print("No attribute files found ... run copy_templates to import, then fill them out.")
+    stop("No attribute files found ... run copy_templates to import attributes table, then fill them out.")
   }
 
-  # Set file names
+  # Set file names to be written
 
   fname_table_catvars <- c()
   for (i in 1:length(table_names)){
@@ -105,8 +107,12 @@ define_catvars <- function(path) {
     # Loop through data tables ------------------------------------------------
     
     for (i in 1:length(attribute_files)){
+      
+      print(paste("Creating", fname_table_catvars[i]))
 
       # Read attribute_draft.csv file
+      
+      print(paste("Reading", attribute_files[i]))
       
       df_attributes <- read.table(
         paste(path, 
@@ -128,11 +134,15 @@ define_catvars <- function(path) {
                                  "missingValueCode",
                                  "missingValueCodeExplanation")
 
-      # Build factor table
+      # Build catvars table
 
+      print("Identifying categorical variables ...")
+      
       catvars_I <- which(df_attributes$class %in% "categorical")
       
       # Read data table
+      
+      print("Reading data table ...")
       
       if (field_delimeter[i] == "comma"){
         
@@ -168,8 +178,7 @@ define_catvars <- function(path) {
 
       if (length(catvars_I) > 0){
         
-        print(paste("Writing ... ",
-                    fname_table_catvars[i], sep = ""))
+        print("Compiling catvars table ...")
 
         rows <- 0
         for (j in 1:length(catvars_I)){
@@ -213,6 +222,8 @@ define_catvars <- function(path) {
         }
 
         # Write factor table
+        
+        print(paste("Writing", fname_table_catvars[i]))
         
         write.table(catvars,
                     paste(path,
