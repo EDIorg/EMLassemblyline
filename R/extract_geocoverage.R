@@ -37,6 +37,28 @@
 
 extract_geocoverage <- function(path, table.name, lat.col, lon.col, site.col){
   
+  # Check arguments
+  
+  if (missing(path)){
+    stop("Specify path to dataset working directory.")
+  }
+  
+  if (missing(table.name)){
+    stop("Specify table name.")
+  }
+  
+  if (missing(lat.col)){
+    stop("Specify latitude column name.")
+  }
+  
+  if (missing(lat.col)){
+    stop("Specify latitude column name.")
+  }
+  
+  if (missing(lat.col)){
+    stop("Specify site column name.")
+  }
+  
   # Load the datasets configuration file
   
   print("Loading configuration file ...")
