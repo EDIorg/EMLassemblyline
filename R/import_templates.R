@@ -59,7 +59,7 @@ import_templates <- function(path){
   # Check arguments
   
   if (missing(path)){
-    stop("Need to specify path to the dataset working directory.")
+    stop("Specify path to the dataset working directory.")
   }
   
   # Begin function
