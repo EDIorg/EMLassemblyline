@@ -243,7 +243,7 @@ make_eml <- function(path) {
 
   # Build modules--------------------------------------------------------------
 
-  print("Building EML ...")
+  print("Building EML:")
   
   # Create EML
   

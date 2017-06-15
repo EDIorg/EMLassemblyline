@@ -108,7 +108,7 @@ define_catvars <- function(path) {
     
     for (i in 1:length(attribute_files)){
       
-      print(paste("Creating", fname_table_catvars[i]))
+      print(paste("Compiling", fname_table_catvars[i]))
 
       # Read attribute_draft.csv file
       
@@ -234,20 +234,24 @@ define_catvars <- function(path) {
                     row.names = F,
                     quote = F,
                     fileEncoding = "UTF-8")
+        
+        # Prompt the user to manually edit the catvars file and custom unit files.
+        
+        standardUnits <- get_unitList()
+        View(standardUnits$units)
+        
+        readline(
+          prompt = paste("Open", fname_table_catvars[i], "define factor codes, then save, close, and press <enter>."))
 
+      } else {
+        
+        print("No categorical variables found ...")
+        
       }
       
       writeLines("\n")
 
     }
-    
-    # Prompt the user to manually edit the catvars file and custom unit files.
-    
-    standardUnits <- get_unitList()
-    View(standardUnits$units)
-    
-    readline(
-      prompt = "Open the categorical variables file for this data table and define factor codes. Save, close, and press <enter> when done.")
 
   }
 
