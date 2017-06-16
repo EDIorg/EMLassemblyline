@@ -9,7 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Here we demonstrate use of the EMLassemblyline R code package to create EML for the Global Lakes Ecological Observatory Network (GLEON) Lake Chloride dataset. This data package has been curated with the Environmental Data Initiative (EDI) and is publicly accessible through the EDI data portal of the PASTA repository [here](https://portal.edirepository.org/nis/mapbrowse?scope=edi&identifier=8).
+Here we demonstrate use of the EMLassemblyline R code package to create EML for the Global Lakes Ecological Observatory Network (GLEON) Lake Chloride dataset. The corresponding data package has been curated with the Environmental Data Initiative (EDI) and is publicly accessible through the EDI data portal of the PASTA repository [here](https://portal.edirepository.org/nis/mapbrowse?scope=edi&identifier=8).
 
 ## Install EMLassemblyline
 
@@ -27,21 +27,21 @@ install_github("EDIorg/EMLassemblyline",
 
 The GLEON Lake Chloride has been compiled into 3 entities. Two tables: gleon_chloride_concentrations.csv (a file containing long term chloride concentration data from 529 lakes and reservoirs around North America and Europe), gleon_chloride_lake_characteristics (a file containing lake characteristics, including climate, road density, and impervious surface data) and one zip directory: gleon_chloride_lake_shape_files.zip (Shapefiles that geographically delimited the perimeter of the lakes were required to quantify surrounding land use patterns). We will not cover creating EML for the spatial data in this demonstration.
 
-## Create a dataset working directory
+## Create a working directory
 
-Create a working directory for the dataset and name it using underscore characters "_" to span spaces between words (e.g. gleon_chloride). This directory stores metadata parts created in the assembly line and should be semi-permanent. These files will need to be edited in the event the dataset changes and/or the EML needs revision.
+Create a working directory for the dataset and name it using underscore characters "_" to span spaces between words (e.g. gleon_chloride). This directory stores metadata parts created in the assembly line and should be semi-permanent. These files will need to be edited in the event the data package changes and/or the EML needs revision.
 
 ![](dataset_working_directory.PNG)
 
 ## Move data to the working directory
 
-Move the data tables to the dataset working directory and name them following the convention "datasetname_datatablename", where datasetname is the name of the dataset (e.g. gleon_chloride), and datatablename is the name of the data table (e.g. lake_characteristics). In this example, the data table names become "gleon_chloride_concentrations.csv" and "gleon_chloride_lake_characteristics.csv".
+Move the data tables to the working directory and name them following the convention "datasetname_datatablename", where datasetname is the name of the dataset (e.g. gleon_chloride), and datatablename is the name of the data table (e.g. lake_characteristics). In this example, the data table names become "gleon_chloride_concentrations.csv" and "gleon_chloride_lake_characteristics.csv".
 
 ![](move_data.PNG)
 
 ## Import metadata templates
 
-Import metadata templates to the dataset working directory. These metadata templates form the core of the metadata that will be later translated into EML. To import these templates run the import_templates.R function with a path to the working directory.
+Import metadata templates to the working directory. These metadata templates form the core of the metadata that will be later translated into EML. To import these templates run the import_templates.R function with a path to the working directory.
 
 ```{r eval = FALSE}
 import_templates(path = "C:\\Users\\Colin\\Desktop\\gleon_chloride")
@@ -172,7 +172,7 @@ After the catvars file is written, the standard units dictionary is opened in th
 
 ## Extract geographical coverage
 
-This dataset contains detailed geographical information of sampling locations that may be useful to include in the EML because these locations would be discoverable by someone running a search on lakes within a specified area. To create this metadata we need to extract the unique sampling points from the "gleon_chloride_lake_characteristics.csv" file, which contains latitude, longitude, and site name. To extract this information we run extract_geocoverage.R with a path to the dataset working directory containing this data table, the name of the table including the file extension, the name of the latitude column (containing decimal degrees with latitudes south of the equator prefixed with a minus sign), the name of the longitude column (containing decimal degrees with longitudes west of the prime meridian prefixed with a minus sign), and the name of the site column.
+This dataset contains detailed geographical information of sampling locations that may be useful to include in the EML because these locations would be discoverable by someone running a search on lakes within a specified area. To create this metadata we need to extract the unique sampling points from the "gleon_chloride_lake_characteristics.csv" file, which contains latitude, longitude, and site name. To extract this information we run extract_geocoverage.R with a path to the working directory containing this data table, the name of the table including the file extension, the name of the latitude column (containing decimal degrees with latitudes south of the equator prefixed with a minus sign), the name of the longitude column (containing decimal degrees with longitudes west of the prime meridian prefixed with a minus sign), and the name of the site column.
 
 ```{r eval = FALSE}
 extract_geocoverage(path = "C:\\Users\\Colin\\Desktop\\gleon_chloride",
@@ -183,7 +183,7 @@ extract_geocoverage(path = "C:\\Users\\Colin\\Desktop\\gleon_chloride",
 ```
 
 
-This returns a tab delimited UTF-8 formatted file in the dataset working directory titled geographic_coverage.txt and contains decimal degree latitude, decimal degree longitude, and site name.
+This returns a tab delimited UTF-8 formatted file in the working directory titled geographic_coverage.txt and contains decimal degree latitude, decimal degree longitude, and site name.
 
 ![](dir_geocoverage.PNG)
 
