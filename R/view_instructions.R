@@ -138,13 +138,13 @@
 #'         "dateTime-eml-attribute" of the current EML specification 
 #'         (https://knb.ecoinformatics.org/#external//emlparser/docs/index.html).
 #'         Valid date time formats are a combination of date, time, and time 
-#'         zone strings. Below are a set of best practice recomendations, and 
-#'         are by no means the full list of acceptable format strings.
+#'         zone strings. Below are a set of best practice recomendations that 
+#'         we strongly encourage you to follow, but are by no means the full 
+#'         list of currently acceptable format strings.
 #'         \itemize{
-#'             \item \strong{Date format strings:} YYYY-MM-DD, YYYY/MM/DD YYYY, 
-#'             YYYYMMDD, YYYY-MM, YYYY/MM, YYYYMM, YYYY-DDD, YYYY/DDD, YYYYDDD; 
-#'             where YYYY is year, MM is month, DD is day of month, and DDD is 
-#'             day of year.
+#'             \item \strong{Date format strings:} YYYY-MM-DD, YYYY, YYYYMMDD, 
+#'             YYYY-MM, YYYYMM, YYYY-DDD, YYYYDDD; where YYYY is year, MM is 
+#'             month, DD is day of month, and DDD is day of year.
 #'             \item \strong{Time format strings:} hh:mm:ss.sss, hhmmss.sss,
 #'             hh:mm:ss, hhmmss, hh:mm, hhmm, hh; where hh is hour (in 24 hr
 #'             clock), mm is minute, ss is second, and ss.sss is decimal 
