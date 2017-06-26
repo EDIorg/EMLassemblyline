@@ -58,19 +58,33 @@
 #'     personnel information for your dataset in the file 
 #'     datasetname_personnel.txt. This is a tab delimited file that can be 
 #'     edited with a spreadsheet editor. Rename the file according to 
-#'     convention (e.g. gleon_chloride_personnel). Valid entries for role are:
+#'     convention (e.g. gleon_chloride_personnel). Definitions for fields in 
+#'     this file:
 #'     \itemize{
-#'         \item \strong{creator} Dataset creator
-#'         \item \strong{pi} Principal investigator associated with this 
-#'         dataset
-#'         \item \strong{contact} Dataset contact
-#'     } 
-#'      Any other entries into the 'role' column are acceptable and will be 
-#'      defined under the associated party element of this dataset. If a person 
-#'      serves more than one role, duplicate this persons information in 
-#'      another row but with the new role. A dataset creator, contact, and 
-#'      principal investigator are mandatory. This file is a UTF-8 formatted 
-#'      file. Use only UTF-8 symbols and text.
+#'         \item \strong{givenName} Given name of person.
+#'         \item \strong{surName} Surname of person.
+#'         \item \strong{organizationName} Name of organization the person is 
+#'         associated with.
+#'         \item \strong{electronicMailAddress} Email address of person.
+#'         \item \strong{userId} ORCID of person (not required). An ORCID is 
+#'         like a social security number for scientists. Create one 
+#'         [here](https://orcid.org/).
+#'         \item \strong{role} Role of person with respect to this dataset.
+#'         Valid entries for role are:
+#'         \itemize{
+#'             \item \strong{creator} Dataset creator
+#'             \item \strong{pi} Principal investigator associated with this 
+#'             dataset
+#'             \item \strong{contact} Dataset contact
+#'         } 
+#'         A dataset creator, contact, and principal investigator are required. 
+#'         Any other entries into the 'role' column are acceptable and will be 
+#'         defined under the associated party element of this dataset. If a 
+#'         person serves more than one role, duplicate this persons information 
+#'         in another row but with the new role. This file is a UTF-8 formatted 
+#'         file. Use only UTF-8 symbols and text.
+#'     
+#'     }
 #'     
 #'     \emph{"Add data table attributes ..."} Add data table attributes to the 
 #'     file datasetname_datatablename_attributes.txt. This is a tab delimited 
@@ -104,16 +118,17 @@
 #'         then this attribute must be classified as "character".
 #'         \item \strong{unit} If an attributes class is numeric, then you must
 #'         provide units. If the attribute is numeric but does not have units, 
-#'         enter "dimensionless". If the attribute class is a character or 
-#'         vector, then leave the unit field blank. If the attribute is 
-#'         numeric and has units search the standard unit dictionary (opened 
-#'         in the source window) for the unit of interest and enter the unit 
-#'         "name" as it appears in the  dictionary. Unit names are case 
+#'         enter "dimensionless". If the attribute class is categorical, 
+#'         character, or Date then leave the unit field blank. If the attribute 
+#'         is numeric and has units search the standard unit dictionary (opened 
+#'         in the RStudio source window) for the unit of interest and enter the 
+#'         unit "name" as it appears in the  dictionary. Unit names are case 
 #'         sensitive. If you cannot find a unit in the dictionary, enter the 
 #'         unit in the tab delimited UTF-8 formatted file 
 #'         datasetname_custom_units.txt. Rename this file to accord with the 
-#'         naming convention (e.g. gleon_chloride_custom_units). Valid custom 
-#'         units must be convertible to SI Units (i.e. International System of 
+#'         naming convention (e.g. gleon_chloride_custom_units). If you have no 
+#'         custom units to report then delete this file. Valid custom units 
+#'         must be convertible to SI Units (i.e. International System of 
 #'         Units). If it cannot be converted to SI then list it in the 
 #'         attribute defintion and enter "dimensionless" in the unit field. To 
 #'         create a custom unit define the:
