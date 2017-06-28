@@ -72,18 +72,16 @@
 #'         \item \strong{role} Role of person with respect to this dataset.
 #'         Valid entries for role are:
 #'         \itemize{
-#'             \item \strong{creator} Dataset creator
+#'             \item \strong{creator} Dataset creator (required)
 #'             \item \strong{pi} Principal investigator associated with this 
-#'             dataset
-#'             \item \strong{contact} Dataset contact
+#'             dataset (required)
+#'             \item \strong{contact} Dataset contact (required)
+#'             \item Any other entries into the 'role' column are acceptable and will 
+#'             be defined under the associated party element of this dataset.
 #'         } 
-#'         A dataset creator, contact, and principal investigator are required. 
-#'         Any other entries into the 'role' column are acceptable and will be 
-#'         defined under the associated party element of this dataset. If a 
-#'         person serves more than one role, duplicate this persons information 
-#'         in another row but with the new role. This file is a UTF-8 formatted 
-#'         file. Use only UTF-8 symbols and text.
-#'     
+#'         If a person serves more than one role, duplicate this persons 
+#'         information in another row but with the new role. This file is a 
+#'         UTF-8 formatted file. Use only UTF-8 symbols and text.
 #'     }
 #'     
 #'     \emph{"Add data table attributes ..."} Add data table attributes to the 
