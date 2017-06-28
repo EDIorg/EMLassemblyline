@@ -26,9 +26,14 @@ User feed back will inform future development. We welcome contributions (i.e. ne
 
 ## Installation
 Until this code is apart of CRAN, you will need to install the EMLassemblyline with the devtools package: 
+
 install.packages("devtools")
+
 library(devtools)
+
 install_github("EDIorg/EMLassemblyline")
+
+library(EMLassemblyline)
 
 ## References
 [Ecological Metadata Language](https://knb.ecoinformatics.org/#external//emlparser/docs/index.html) A link to the EML schema.
