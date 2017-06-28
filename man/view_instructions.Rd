@@ -124,7 +124,14 @@ Detailed instructions for each step:
         character, or Date then leave the unit field blank. If the attribute 
         is numeric and has units search the standard unit dictionary (opened 
         in the RStudio source window) for the unit of interest and enter the 
-        unit "name" as it appears in the  dictionary. Unit names are case 
+        unit "name" as it appears in the  dictionary. If the dictionary is 
+        not open run these two lines of code in the console:
+        
+        \code{standardUnits <- get_unitList()}
+        
+        \code{View(standardUnits$units)}
+        
+        Unit names are case 
         sensitive. If you cannot find a unit in the dictionary, enter the 
         unit in the tab delimited UTF-8 formatted file 
         datasetname_custom_units.txt. Rename this file to accord with the 
