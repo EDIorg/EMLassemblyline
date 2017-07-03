@@ -643,7 +643,22 @@ make_eml <- function(path) {
 
     if (os == "mac"){
       
-      # Insert command to retrieve MD5 checksum in mac OS
+      command_certutil <- paste("md5 ",
+                                path,
+                                "/",
+                                table_names[i],
+                                sep = "")
+      
+      certutil_output <- system(command_certutil, intern = T)
+      
+      checksum_md5 <- gsub(".*= ", "", certutil_output)
+      
+      authentication <- new("authentication",
+                            method = "MD5",
+                            checksum_md5)
+      
+      physical@authentication <- as(list(authentication),
+                                    "ListOfauthentication")
       
     } else if (os == "win"){
       
