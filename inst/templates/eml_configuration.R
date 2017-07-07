@@ -266,3 +266,18 @@ attribute_orientation <- c("")
 field_delimeter <- c("")
 
 
+# Define the quote character used in your data tables. If the quote character 
+# is quotation marks, then enter \" below. If the quote character is an
+# apostrophe, then enter \' below. If there is no quote character used in your
+# data tables then leave as is. If there is more than one data table, then 
+# combine these values into a vector (order must follow that listed in the 
+# table_names object).
+#
+# Example:
+#
+# quote_character <- c("\"",
+#                      "\'")
+
+quote_character <- c("")
+
+

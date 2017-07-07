@@ -612,12 +612,27 @@ make_eml <- function(path) {
       fd <- "\t"
     }
     
-    physical <- set_physical(table_names[i],
-                             numHeaderLines = num_header_lines[i],
-                             recordDelimiter = record_delimeter[i],
-                             attributeOrientation = attribute_orientation[i],
-                             fieldDelimiter = fd)
+    if (nchar(quote_character) > 0){
+      
+      physical <- set_physical(table_names[i],
+                               numHeaderLines = num_header_lines[i],
+                               recordDelimiter = record_delimeter[i],
+                               attributeOrientation = attribute_orientation[i],
+                               fieldDelimiter = fd,
+                               quoteCharacter = quote_character[i])
+      
+    } else {
+      
+      physical <- set_physical(table_names[i],
+                               numHeaderLines = num_header_lines[i],
+                               recordDelimiter = record_delimeter[i],
+                               attributeOrientation = attribute_orientation[i],
+                               fieldDelimiter = fd)
+      
+    }
 
+    
+    
     physical@size <- new("size",
                          unit = "byte",
                          as.character(
