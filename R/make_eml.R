@@ -612,7 +612,7 @@ make_eml <- function(path) {
       fd <- "\t"
     }
     
-    if (nchar(quote_character) > 0){
+    if (nchar(quote_character[i]) > 0){
       
       physical <- set_physical(table_names[i],
                                numHeaderLines = num_header_lines[i],
