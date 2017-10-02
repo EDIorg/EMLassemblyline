@@ -6,10 +6,13 @@
 #'     about your data.
 #'
 #' @usage 
-#'     import_templates(path)
+#'     import_templates(path, dataset.name)
 #'
 #' @param path 
 #'     A path to the dataset working directory.
+#'     
+#' @param dataset.name
+#'     Name of your dataset. Link words with underscores (i.e. "_").
 #'
 #' @return 
 #'     \emph{datasetname_abstract.txt} A text file for the abstract of your 
@@ -54,12 +57,15 @@
 #'     templates.
 
 
-import_templates <- function(path){
+import_templates <- function(path, dataset.name){
   
   # Check arguments
   
   if (missing(path)){
     stop("Specify path to dataset working directory.")
+  }
+  if (missing(dataset.name)){
+    stop("Specify a name for your dataset.")
   }
   
   # Begin function
@@ -78,7 +84,11 @@ import_templates <- function(path){
   value <- file.copy(from = paste(path.package("EMLassemblyline"),
                                   "/templates/datasetname_abstract.txt",
                                   sep = ""),
-                     to = path)
+                     to = paste(path,
+                                "/",
+                                dataset.name,
+                                "_abstract.txt",
+                                sep = ""))
   
   if (isTRUE(value)){
     print("Importing datasetname_abstract.txt ... ")
@@ -89,7 +99,11 @@ import_templates <- function(path){
   value <- file.copy(from = paste(path.package("EMLassemblyline"),
                                   "/templates/datasetname_custom_units.txt",
                                   sep = ""),
-                     to = path)
+                     to = paste(path,
+                                "/",
+                                dataset.name,
+                                "_custom_units.txt",
+                                sep = ""))
   
   if (isTRUE(value)){
     print("Importing datasetname_custom_units.txt ... ")
@@ -100,7 +114,11 @@ import_templates <- function(path){
   value <- file.copy(from = paste(path.package("EMLassemblyline"),
                                   "/templates/datasetname_cc0_1_intellectual_rights.txt",
                                   sep = ""),
-                     to = path)
+                     to = paste(path,
+                                "/",
+                                dataset.name,
+                                "_cc0_1_intellectual_rights.txt",
+                                sep = ""))
   
   if (isTRUE(value)){
     print("Importing datasetname_cc0_1_intellectual_rights.txt ... ")
@@ -111,7 +129,11 @@ import_templates <- function(path){
   value <- file.copy(from = paste(path.package("EMLassemblyline"),
                                   "/templates/datasetname_cc_by_4.0_intellectual_rights.txt",
                                   sep = ""),
-                     to = path)
+                     to = paste(path,
+                                "/",
+                                dataset.name,
+                                "_cc_by_4.0_intellectual_rights.txt",
+                                sep = ""))
   
   if (isTRUE(value)){
     print("Importing datasetname_cc_by_4.0_intellectual_rights.txt ... ")
@@ -122,7 +144,11 @@ import_templates <- function(path){
   value <- file.copy(from = paste(path.package("EMLassemblyline"),
                                   "/templates/datasetname_datatablename_attributes.txt",
                                   sep = ""),
-                     to = path)
+                     to = paste(path,
+                                "/",
+                                dataset.name,
+                                "_datatablename_attributes.txt",
+                                sep = ""))
   
   if (isTRUE(value)){
     print("Importing datasetname_datatablename_attributes.txt ... ")
@@ -133,7 +159,11 @@ import_templates <- function(path){
   value <- file.copy(from = paste(path.package("EMLassemblyline"),
                                   "/templates/datasetname_methods.txt",
                                   sep = ""),
-                     to = path)
+                     to = paste(path,
+                                "/",
+                                dataset.name,
+                                "_methods.txt",
+                                sep = ""))
   
   if (isTRUE(value)){
     print("Importing datasetname_methods.txt ... ")
@@ -144,7 +174,11 @@ import_templates <- function(path){
   value <- file.copy(from = paste(path.package("EMLassemblyline"),
                                   "/templates/datasetname_personnel.txt",
                                   sep = ""),
-                     to = path)
+                     to = paste(path,
+                                "/",
+                                dataset.name,
+                                "_personnel.txt",
+                                sep = ""))
   
   if (isTRUE(value)){
     print("Importing datasetname_personnel.txt ... ")
@@ -155,7 +189,11 @@ import_templates <- function(path){
   value <- file.copy(from = paste(path.package("EMLassemblyline"),
                                   "/templates/datasetname_additional_info.txt",
                                   sep = ""),
-                     to = path)
+                     to = paste(path,
+                                "/",
+                                dataset.name,
+                                "_additional_info.txt",
+                                sep = ""))
   
   if (isTRUE(value)){
     print("Importing datasetname_additional_info.txt ... ")
