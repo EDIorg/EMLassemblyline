@@ -64,6 +64,10 @@ make_eml <- function(path) {
 
   source(paste(path, "/eml_configuration.R", sep = ""))
   
+  files_in <- list.files(path)
+  file_in <- grep("abstract.txt", files_in, value = T)
+  dataset_name <- substr(file_in, 1, nchar(file_in)-13)
+  
   template <- paste(dataset_name,
                     "_template.docx",
                     sep = "")
