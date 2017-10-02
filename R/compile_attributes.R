@@ -11,10 +11,6 @@ compile_attributes <- function(path){
                "/eml_configuration.R",
                sep = ""))
   
-  template <- paste(dataset_name,
-                    "_template.docx",
-                    sep = "")
-  
   # Set file names to be written 
 
   fname_table_attributes <- c()
