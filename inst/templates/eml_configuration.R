@@ -25,16 +25,6 @@
 dataset_title <- ""
 
 
-# Enter the name of your dataset. This name must match that used for your 
-# template files.
-# 
-# Example:
-#
-# dataset_name <- "gleon_chloride"
-
-dataset_name <- ""
-
-
 # List keywords that best describe your dataset. Consult this resource 
 # (http://vocab.lternet.edu/vocab/vocab/index.php) as you populate the list.
 # Additionally, use keywords that describe your lab, station, and project 
