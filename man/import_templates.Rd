@@ -4,10 +4,12 @@
 \alias{import_templates}
 \title{Import metadata templates}
 \usage{
-import_templates(path)
+import_templates(path, dataset.name)
 }
 \arguments{
 \item{path}{A path to the dataset working directory.}
+
+\item{dataset.name}{Name of your dataset. Link words with underscores (i.e. "_").}
 }
 \value{
 \emph{datasetname_abstract.txt} A text file for the abstract of your 
