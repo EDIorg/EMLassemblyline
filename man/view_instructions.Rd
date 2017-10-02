@@ -26,14 +26,12 @@ Detailed instructions for each step:
     of the data table becomes 'gleon_chloride_lake_characteristics'.
          
     \emph{"Write an abstract for your dataset ..."} Write an abstract for 
-    your dataset in the file datasetname_abstract.txt. Rename the file 
-    following convention (e.g. gleon_chloride_abstract). The abstract 
+    your dataset in the file datasetname_abstract.txt. The abstract 
     should cover what, why, when, where, and how. The template is a UTF-8 
     formatted file. Use only UTF-8 symbols and text.
     
     \emph{"Place additional information ..."} Place additional info in the 
-    file datasetname_additional_info.txt. Rename the file following 
-    convention (e.g. gleon_chloride_additional_info). This is a good place 
+    file datasetname_additional_info.txt. This is a good place 
     to share additional text based information that doesn't fall under the 
     scope of the abstract or methods (e.g. a list of research articles or 
     theses derived from this dataset). The template is a UTF-8 formatted 
@@ -44,13 +42,10 @@ Detailed instructions for each step:
     an intellectual rights license. We have two recommendations: 
     'datasetname_cc_by_4.0_intellectual_rights.txt' and 
     'datasetname_cc0_1_intellectual_rights.txt'. Do not edit the text of
-    these files. Delete the file you will not be using. Rename the file you
-    will be using following convention (e.g. 
-    gleon_chloride_intellectual_rights).
+    these files. Delete the file you will not be using.
     
     \emph{"Write the methods for your dataset ..."} Explain the methods used
-     to create this dataset in the file datasetname_methods.txt. Rename this 
-     file following convention (e.g. gleon_chloride_methods). Be specific, 
+     to create this dataset in the file datasetname_methods.txt. Be specific, 
      include instrument descriptions, or point to a protocol online. If this 
      dataset is a synthesis of other datasets please specify dataset origins, 
      preferably their DOI or URL plus general citation information. This 
@@ -59,8 +54,7 @@ Detailed instructions for each step:
     \emph{"Enter personnel information for your dataset ..."} Enter 
     personnel information for your dataset in the file 
     datasetname_personnel.txt. This is a tab delimited file that can be 
-    edited with a spreadsheet editor. Rename the file according to 
-    convention (e.g. gleon_chloride_personnel). Definitions for fields in 
+    edited with a spreadsheet editor. Definitions for fields in 
     this file:
     \itemize{
         \item \strong{givenName} Given name of person.
@@ -90,7 +84,8 @@ Detailed instructions for each step:
     file datasetname_datatablename_attributes.txt. This is a tab delimited 
     file that can be edited with a spreadsheet editor. Rename the file 
     according to convention (e.g. 
-    gleon_chloride_lake_characteristics_attributes). Create an attributes 
+    gleon_chloride_lake_characteristics_attributes, where gleon_chloride is 
+    the dataset name and lake_characteristics is the table name). Create an attributes 
     file for each data table. This file is a UTF-8 formatted file. Use only 
     UTF-8 symbols and text. Instructions for completing the attribute table 
     are as follows:
