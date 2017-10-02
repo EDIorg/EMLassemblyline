@@ -67,10 +67,6 @@ define_catvars <- function(path) {
   
   source(paste(path, "/eml_configuration.R", sep = ""))
   
-  template <- paste(dataset_name,
-                    "_template.docx",
-                    sep = "")
-
   # List expected attribute files
 
   attribute_files <- c()
