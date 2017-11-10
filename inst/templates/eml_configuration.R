@@ -82,21 +82,6 @@ coordinate_south <-
 
 coordinate_west <- 
 
-
-# Provide information on funding of this work. If several grants were involved,
-# list the main grant first.
-#
-# Example
-#
-# funding_title = "Collaborative research: Building analytical, synthesis, and human network skills needed for macrosystem science: A next generation graduate student training model based on GLEON"
-# 
-# funding_grants = "National Science Foundation 1137327 and 1137353"
-  
-funding_title = ""
-
-funding_grants = ""
-  
-
 # Specify whether data collection for this dataset is "ongoing" or "completed".
 #
 # Example:
