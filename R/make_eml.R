@@ -187,16 +187,30 @@ make_eml <- function(path) {
 
       rp_personnel <- as(principal_investigator, "personnel")
 
-      if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
-
+      if ((nchar(trimws(personinfo[info_row,"userId"])) == 19) |
+          (nchar(trimws(personinfo[info_row,"userId"])) == 37)){
         rp_userId <- new("userId")
-        rp_userId@directory <- new("xml_attribute", "http://orcid.org")
-        rp_userId@.Data <- paste("http://orcid.org/",
-                                 trimws(personinfo[info_row, "userId"]),
-                                 sep = "")
-        rp_personnel@userId <- new("ListOfuserId", c(rp_userId))
-
+        rp_userId@directory <- new("xml_attribute", "https://orcid.org")
+        if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
+          hold <- trimws(personinfo[info_row,"userId"])
+          hold <- paste("https://orcid.org/", hold, sep = "")
+          rp_userId@.Data <- hold
+        } else if (nchar(trimws(personinfo[info_row,"userId"])) == 37){
+          rp_userId@.Data <- trimws(personinfo[info_row,"userId"])
+        }
+        # creator@userId <- new("ListOfuserId", c(userId))
       }
+      
+      # if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
+      # 
+      #   rp_userId <- new("userId")
+      #   rp_userId@directory <- new("xml_attribute", "http://orcid.org")
+      #   rp_userId@.Data <- paste("http://orcid.org/",
+      #                            trimws(personinfo[info_row, "userId"]),
+      #                            sep = "")
+      #   rp_personnel@userId <- new("ListOfuserId", c(rp_userId))
+      # 
+      # }
 
       role <- new("role", "Principal Investigator")
       rp_personnel@role <- new("ListOfrole", c(role))
@@ -216,12 +230,27 @@ make_eml <- function(path) {
         organizationName = trimws(personinfo[info_row,"organizationName"]),
         electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"]))
       
-      if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
+      if ((nchar(trimws(personinfo[info_row,"userId"])) == 19) |
+          (nchar(trimws(personinfo[info_row,"userId"])) == 37)){
         userId <- new("userId")
-        userId@directory <- new("xml_attribute", "http://orcid.org")
-        userId@.Data <- trimws(personinfo[info_row,"userId"])
+        userId@directory <- new("xml_attribute", "https://orcid.org")
+        if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
+          hold <- trimws(personinfo[info_row,"userId"])
+          hold <- paste("https://orcid.org/", hold, sep = "")
+          userId@.Data <- hold
+        } else if (nchar(trimws(personinfo[info_row,"userId"])) == 37){
+          userId@.Data <- trimws(personinfo[info_row,"userId"])
+        }
         associated_party@userId <- new("ListOfuserId", c(userId))
+        # creator@userId <- new("ListOfuserId", c(userId))
       }
+      
+      # if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
+      #   userId <- new("userId")
+      #   userId@directory <- new("xml_attribute", "http://orcid.org")
+      #   userId@.Data <- trimws(personinfo[info_row,"userId"])
+      #   associated_party@userId <- new("ListOfuserId", c(userId))
+      # }
       
       role <- new("role", trimws(personinfo[info_row,"role"]))
       associated_party@role <- new("role", c(role))
@@ -457,21 +486,73 @@ make_eml <- function(path) {
   # Add project and funding
   
   print("project and funding ...")
-
+  
   useI <- which(personinfo$role == "pi")
-
+  
   pi_list <- list()
-  for (j in 1:length(useI)){
-    pi_list[[j]] <- set_person(info_row = useI[j],
-                                    person_role = "pi")
+  pi_list[[1]] <- set_person(info_row = useI[1],
+                             person_role = "pi")
+  
+  if (personinfo$fundingAgency[useI[1]] == ""){
+    project <- new("project",
+                   title = personinfo$projectTitle[useI[1]],
+                   personnel = pi_list,
+                   funding = "No funding to report")
+  } else {
+    project <- new("project",
+                   title = personinfo$projectTitle[useI[1]],
+                   personnel = pi_list,
+                   funding = paste(personinfo$fundingAgency[useI[1]],
+                                   ": ",
+                                   personinfo$fundingNumber[useI[1]],
+                                   sep = ""))
   }
-
-  project <- new("project",
-                 title = funding_title,
-                 personnel = pi_list,
-                 funding = funding_grants)
-
+  
   dataset@project <- project
+  
+  if (length(useI) > 1){
+    relatedProject_list <- list()
+    pi_list <- list()
+    for (i in 1:(length(useI)-1)){
+      pi_list[[1]] <- set_person(info_row = useI[i+1],
+                                 person_role = "pi")
+      if (personinfo$fundingAgency[useI[i+1]] == ""){
+        funding_title <- "No funding to report."
+        relatedProject_list[[i]] <- new("relatedProject",
+                                        title = personinfo$projectTitle[useI[i+1]],
+                                        personnel = pi_list,
+                                        funding = "No funding to report")
+      } else {
+        relatedProject_list[[i]] <- new("relatedProject",
+                                        title = personinfo$projectTitle[useI[i+1]],
+                                        personnel = pi_list,
+                                        funding = paste(personinfo$fundingAgency[useI[i+1]],
+                                                        ": ",
+                                                        personinfo$fundingNumber[useI[i+1]],
+                                                        sep = ""))
+      }
+    }
+    dataset@project@relatedProject <- as(relatedProject_list, "ListOfrelatedProject")
+  }
+  
+  # # Add project and funding
+  # 
+  # print("project and funding ...")
+  # 
+  # useI <- which(personinfo$role == "pi")
+  # 
+  # pi_list <- list()
+  # for (j in 1:length(useI)){
+  #   pi_list[[j]] <- set_person(info_row = useI[j],
+  #                                   person_role = "pi")
+  # }
+  # 
+  # project <- new("project",
+  #                title = funding_title,
+  #                personnel = pi_list,
+  #                funding = funding_grants)
+  # 
+  # dataset@project <- project
   
   # Add associated parties
   
