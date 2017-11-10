@@ -198,20 +198,8 @@ make_eml <- function(path) {
         } else if (nchar(trimws(personinfo[info_row,"userId"])) == 37){
           rp_userId@.Data <- trimws(personinfo[info_row,"userId"])
         }
-        # creator@userId <- new("ListOfuserId", c(userId))
       }
       
-      # if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
-      # 
-      #   rp_userId <- new("userId")
-      #   rp_userId@directory <- new("xml_attribute", "http://orcid.org")
-      #   rp_userId@.Data <- paste("http://orcid.org/",
-      #                            trimws(personinfo[info_row, "userId"]),
-      #                            sep = "")
-      #   rp_personnel@userId <- new("ListOfuserId", c(rp_userId))
-      # 
-      # }
-
       role <- new("role", "Principal Investigator")
       rp_personnel@role <- new("ListOfrole", c(role))
 
@@ -242,16 +230,8 @@ make_eml <- function(path) {
           userId@.Data <- trimws(personinfo[info_row,"userId"])
         }
         associated_party@userId <- new("ListOfuserId", c(userId))
-        # creator@userId <- new("ListOfuserId", c(userId))
       }
-      
-      # if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
-      #   userId <- new("userId")
-      #   userId@directory <- new("xml_attribute", "http://orcid.org")
-      #   userId@.Data <- trimws(personinfo[info_row,"userId"])
-      #   associated_party@userId <- new("ListOfuserId", c(userId))
-      # }
-      
+
       role <- new("role", trimws(personinfo[info_row,"role"]))
       associated_party@role <- new("role", c(role))
       
@@ -272,14 +252,17 @@ make_eml <- function(path) {
     quote="\"",
     as.is=TRUE,
     comment.char = "",
-    colClasses = rep("character", 6))
+    colClasses = rep("character", 8))
 
   colnames(personinfo) <- c("givenName",
                             "surName",
                             "organizationName",
                             "electronicMailAddress",
                             "userId",
-                            "role")
+                            "role",
+                            "projectTitle",
+                            "fundingAgency",
+                            "fundingNumber")
 
   # Build modules--------------------------------------------------------------
 
@@ -494,10 +477,17 @@ make_eml <- function(path) {
                              person_role = "pi")
   
   if (personinfo$fundingAgency[useI[1]] == ""){
-    project <- new("project",
-                   title = personinfo$projectTitle[useI[1]],
-                   personnel = pi_list,
-                   funding = "No funding to report")
+    if (personinfo$projectTitle[useI[1]] == ""){
+      project <- new("project",
+                     title = "No project title to report",
+                     personnel = pi_list,
+                     funding = "No funding to report")
+    } else {
+      project <- new("project",
+                     title = personinfo$projectTitle[useI[1]],
+                     personnel = pi_list,
+                     funding = "No funding to report")
+    }
   } else {
     project <- new("project",
                    title = personinfo$projectTitle[useI[1]],
@@ -534,25 +524,6 @@ make_eml <- function(path) {
     }
     dataset@project@relatedProject <- as(relatedProject_list, "ListOfrelatedProject")
   }
-  
-  # # Add project and funding
-  # 
-  # print("project and funding ...")
-  # 
-  # useI <- which(personinfo$role == "pi")
-  # 
-  # pi_list <- list()
-  # for (j in 1:length(useI)){
-  #   pi_list[[j]] <- set_person(info_row = useI[j],
-  #                                   person_role = "pi")
-  # }
-  # 
-  # project <- new("project",
-  #                title = funding_title,
-  #                personnel = pi_list,
-  #                funding = funding_grants)
-  # 
-  # dataset@project <- project
   
   # Add associated parties
   
