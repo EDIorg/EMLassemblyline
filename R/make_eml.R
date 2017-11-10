@@ -152,10 +152,17 @@ make_eml <- function(path) {
         organizationName = trimws(personinfo[info_row,"organizationName"]),
         electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"]))
 
-      if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
+      if ((nchar(trimws(personinfo[info_row,"userId"])) == 19) |
+          (nchar(trimws(personinfo[info_row,"userId"])) == 37)){
         userId <- new("userId")
-        userId@directory <- new("xml_attribute", "http://orcid.org")
-        userId@.Data <- trimws(personinfo[info_row,"userId"])
+        userId@directory <- new("xml_attribute", "https://orcid.org")
+        if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
+          hold <- trimws(personinfo[info_row,"userId"])
+          hold <- paste("https://orcid.org/", hold, sep = "")
+          userId@.Data <- hold
+        } else if (nchar(trimws(personinfo[info_row,"userId"])) == 37){
+          userId@.Data <- trimws(personinfo[info_row,"userId"])
+        }
         creator@userId <- new("ListOfuserId", c(userId))
       }
 
