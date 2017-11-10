@@ -79,6 +79,18 @@
 #'         If a person serves more than one role, duplicate this persons 
 #'         information in another row but with the new role. This file is a 
 #'         UTF-8 formatted file. Use only UTF-8 symbols and text.
+#'         \item \strong{projectTitle} Title of the project this dataset was 
+#'         created under (required). Project titles are only listed on lines 
+#'         where the personnel role is \emph{pi}. If auxiliary projects were 
+#'         involved in creating this dataset then add a new line of personnel 
+#'         below the primary project and list the auxiliary project title and 
+#'         associated \emph{pi}.
+#'         \item \strong{fundingAgency} Name of the entity funding the creation
+#'         of this dataset (required). Only include an entry in this column for
+#'         rows where role = \emph{pi}.
+#'         \item \strong{fundingNumber} Number of the grant or award that 
+#'         supported creation of this dataset (required). Only include an entry 
+#'         in this column for rows where role = \emph{pi}.
 #'     }
 #'     
 #'     \emph{"Add data table attributes ..."} Add data table attributes to the 
