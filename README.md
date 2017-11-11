@@ -54,25 +54,8 @@ Several people have participated in this project. [View the current list of team
 
 This project is licensed under the [CC0 1.0 Universal (CC0 1.0)](https://creativecommons.org/publicdomain/zero/1.0/legalcode) License - see the LICENSE file for details.
 
+## Related materials
 
+[Learn everything you wanted to know about the Ecological Metadata Language standard.](https://knb.ecoinformatics.org/#external//emlparser/docs/index.html)
 
-
-
-
-
-## Installation
-Until this code is apart of CRAN, you will need to install the EMLassemblyline with the devtools package: 
-
-install.packages("devtools")
-
-library(devtools)
-
-install_github("EDIorg/EMLassemblyline", build_vignettes = TRUE, force = TRUE)
-
-library(EMLassemblyline)
-
-## References
-[Ecological Metadata Language](https://knb.ecoinformatics.org/#external//emlparser/docs/index.html) A link to the EML schema.
-
-[EML R code package](https://github.com/ropensci/EML) A link to the EML R package developed by the great people of the rOpenSci community. Without this package the EMLassemblyline wouldn't work!
-
+[Reference the community developed best practices for EML content.](https://environmentaldatainitiative.org/resources/assemble-data-and-metadata/step-3-create-eml-metadata/best-practices-for-dataset-metadata-in-ecological-metadata-language-eml/)
