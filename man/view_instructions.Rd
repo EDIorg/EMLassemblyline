@@ -62,12 +62,10 @@ Detailed instructions for each step:
         \item \strong{organizationName} Name of organization the person is 
         associated with.
         \item \strong{electronicMailAddress} Email address of person.
-        \item \strong{userId} ORCID of person (not required). Valid entries 
-        for this ID are the 12 digit number separated by dashes 
-        (i.e. XXXX-XXXX-XXXX-XXXX), or the number including the scheme and 
-        host information (i.e. https://orcid.org/XXXX-XXXX-XXXX-XXXX). An
-        ORCID is like a social security number for scientists. [Create one 
-        here](https://orcid.org/).
+        \item \strong{userId} ORCID of person (not required). A valid entry
+        for userId is the 12 digit number separated by dashes 
+        (i.e. XXXX-XXXX-XXXX-XXXX). An ORCID is like a social security 
+        number for scientists. [Create one here](https://orcid.org/).
         \item \strong{role} Role of person with respect to this dataset.
         Valid entries for role are:
         \itemize{

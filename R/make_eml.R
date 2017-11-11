@@ -152,20 +152,14 @@ make_eml <- function(path) {
         organizationName = trimws(personinfo[info_row,"organizationName"]),
         electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"]))
 
-      if ((nchar(trimws(personinfo[info_row,"userId"])) == 19) |
-          (nchar(trimws(personinfo[info_row,"userId"])) == 37)){
+      if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
         userId <- new("userId")
         userId@directory <- new("xml_attribute", "https://orcid.org")
-        if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
-          hold <- trimws(personinfo[info_row,"userId"])
-          hold <- paste("https://orcid.org/", hold, sep = "")
-          userId@.Data <- hold
-        } else if (nchar(trimws(personinfo[info_row,"userId"])) == 37){
-          userId@.Data <- trimws(personinfo[info_row,"userId"])
-        }
+        hold <- trimws(personinfo[info_row,"userId"])
+        hold <- paste("https://orcid.org/", hold, sep = "")
+        userId@.Data <- hold
         creator@userId <- new("ListOfuserId", c(userId))
       }
-
       creator
 
     } else if (person_role == "pi"){
@@ -187,22 +181,15 @@ make_eml <- function(path) {
 
       rp_personnel <- as(principal_investigator, "personnel")
 
-      if ((nchar(trimws(personinfo[info_row,"userId"])) == 19) |
-          (nchar(trimws(personinfo[info_row,"userId"])) == 37)){
+      if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
         rp_userId <- new("userId")
         rp_userId@directory <- new("xml_attribute", "https://orcid.org")
-        if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
-          hold <- trimws(personinfo[info_row,"userId"])
-          hold <- paste("https://orcid.org/", hold, sep = "")
-          rp_userId@.Data <- hold
-        } else if (nchar(trimws(personinfo[info_row,"userId"])) == 37){
-          rp_userId@.Data <- trimws(personinfo[info_row,"userId"])
-        }
+        hold <- trimws(personinfo[info_row,"userId"])
+        hold <- paste("https://orcid.org/", hold, sep = "")
+        rp_userId@.Data <- hold
       }
-      
       role <- new("role", "Principal Investigator")
       rp_personnel@role <- new("ListOfrole", c(role))
-
       rp_personnel
 
     } else {
@@ -218,23 +205,16 @@ make_eml <- function(path) {
         organizationName = trimws(personinfo[info_row,"organizationName"]),
         electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"]))
       
-      if ((nchar(trimws(personinfo[info_row,"userId"])) == 19) |
-          (nchar(trimws(personinfo[info_row,"userId"])) == 37)){
+      if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
         userId <- new("userId")
         userId@directory <- new("xml_attribute", "https://orcid.org")
-        if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
-          hold <- trimws(personinfo[info_row,"userId"])
-          hold <- paste("https://orcid.org/", hold, sep = "")
-          userId@.Data <- hold
-        } else if (nchar(trimws(personinfo[info_row,"userId"])) == 37){
-          userId@.Data <- trimws(personinfo[info_row,"userId"])
-        }
+        hold <- trimws(personinfo[info_row,"userId"])
+        hold <- paste("https://orcid.org/", hold, sep = "")
+        userId@.Data <- hold
         associated_party@userId <- new("ListOfuserId", c(userId))
       }
-
       role <- new("role", trimws(personinfo[info_row,"role"]))
       associated_party@role <- new("role", c(role))
-      
       associated_party
 
     }
