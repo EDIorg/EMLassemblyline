@@ -23,7 +23,6 @@ Every time you want to use `EMLassemblyline` you will have to load it.
 library(EMLassemblyline)
 ```
 
-
 ## Compile data
 
 The GLEON Lake Chloride dataset is composed of 3 data entities. Two tables (gleon_chloride_concentrations.csv, gleon_chloride_lake_characteristics.csv) and one zip directory of shapefiles (gleon_chloride_lake_shape_files.zip). We'll cover how to create EML for the tables in this demonstration, and will address shapefile EML in a separate demo.
@@ -60,11 +59,6 @@ import_templates(path = "C:\\Users\\Colin\\Desktop\\gleon_chloride", dataset.nam
 
 ![](https://github.com/EDIorg/EMLassemblyline/blob/master/vignettes/import_templates.PNG)
 
-For more information about the import_templates.R function run:
-
-```{r eval = FALSE}
-?import_templates
-```
 
 ## Move data to the working directory
 
@@ -81,41 +75,39 @@ Now that we have the metadata templates imported to the working directory we can
 view_instructions() # Prints instructions to the RStudio console window
 ```
 
-## Abstract
+### Abstract
 
-Write an abstract for the dataset in the file datasetname_abstract.txt. Rename the file following convention (e.g.
-gleon_chloride_abstract). The abstract should cover what, why, when, where, and how. The template is a UTF-8 formatted file. Use only UTF-8 symbols and text.
+Write an abstract for the dataset in the file datasetname_abstract.txt. The abstract should cover what, why, when, where, and how. The template is a UTF-8 formatted file. Use only UTF-8 symbols and text when completing.
 
-![](abstract.PNG)
+![](https://github.com/EDIorg/EMLassemblyline/blob/master/vignettes/abstract.PNG)
 
-## Additional information
+### Additional information
 
-Place additional info in the file datasetname_additional_info.txt. Rename the file following convention (e.g. gleon_chloride_additional_info). This is a good place to share additional text based information that doesn't fall under the scope of
-the abstract or methods (e.g. a list of research articles or theses derived from this dataset). The template is a UTF-8 formatted file. Use only UTF-8 symbols and text. Delete this file if there is no additional information to present.
+Place additional info in the file datasetname_additional_info.txt. This is a good place to share additional text based information that doesn't fall under the scope of the abstract or methods (e.g. a list of research articles or theses derived from this dataset). The template is a UTF-8 formatted file. Use only UTF-8 symbols and text. Delete this file if you have no additional information to present.
 
-![](additional_info.PNG)
+![](https://github.com/EDIorg/EMLassemblyline/blob/master/vignettes/additional_info.PNG)
 
 
-## Intellectual rights
+### Intellectual rights
 
-Select an intellectual rights license. We have two recommendations: 'datasetname_cc_by_4.0_intellectual_rights.txt' and 'datasetname_cc0_1_intellectual_rights.txt'. Do not edit the text of these files. Delete the file that will not be using. Rename the file being used following convention (e.g. gleon_chloride_intellectual_rights).
+Select an intellectual rights license. We have two recommendations: 'datasetname_cc_by_4.0_intellectual_rights.txt' and 'datasetname_cc0_1_intellectual_rights.txt'. Do not edit the text of these files. Delete the file that you will not be using. Rename the one you will be using following convention datasetname_intellectual_rights (e.g. gleon_chloride_intellectual_rights).
 
-![](intellectual_rights.PNG)
+![](https://github.com/EDIorg/EMLassemblyline/blob/master/vignettes/intellectual_rights.PNG)
 
 
-## Methods
+### Methods
 
 Explain the methods used to create this dataset in the file datasetname_methods.txt. Rename this file following convention (e.g. gleon_chloride_methods). Be specific, include instrument descriptions, or point to a protocol online. If this dataset is a synthesis of other datasets please specify dataset origins, preferably their DOI or URL plus general citation information. This file is a UTF-8 formatted file. Use only UTF-8 symbols and text.
 
 ![](methods.PNG)
 
-## Personnel information
+### Personnel information
 
 Enter personnel information for the dataset in the file datasetname_personnel.txt. This is a tab delimited file that can be edited with a spreadsheet editor. Rename the file according to convention (e.g. gleon_chloride_personnel). Valid entries for role are: "creator" = dataset creator, "pi" = principal investigator, "contact" = dataset contact. Any other entries into the 'role' column are acceptable and will be defined under the associated party element of this dataset. If a person serves more than one role, duplicate this persons information in another row but with the new role. A dataset creator, contact, and principal investigator are mandatory. This file is a UTF-8 formatted file. Use only UTF-8 symbols and text.
 
 ![](personnel.PNG)
 
-## Table attributes
+### Table attributes
 
 Add data table attributes to the file datasetname_datatablename_attributes.txt. This is a tab delimited file that
 can be edited with a spreadsheet editor. Rename the file according to convention (e.g. gleon_chloride_lake_characteristics_attributes). Create an attributes file for each data table. This file is a UTF-8 formatted file. Use only UTF-8 symbols and text. Instructions for completing the attribute table are as follows:
@@ -158,13 +150,13 @@ If reporting a date without time, select one of the date format strings. If repo
 
 ![](attributes_characteristics.PNG)
 
-## Configuration file
+### Configuration file
 
 Fill out the file eml_configuration.R. Additional information information about the dataset is stored in this file. Instructions for this file are listed as comments within the file.
 
 ![](configuration.PNG)
 
-## Close files of the working directory
+### Close files of the working directory
 
 Make sure all files of the working directory are closed. Some functions will error out if these files are open. The working directory of this dataset is now populated with the core metadata templates.
 
