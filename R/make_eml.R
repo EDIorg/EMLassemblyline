@@ -328,8 +328,30 @@ make_eml <- function(path) {
   # Add keywords
   
   print("keywords ...")
-
-  dataset@keywordSet <- new("ListOfkeywordSet", c(new("keywordSet", keywords)))
+  
+  keywords <- read.table(paste(path.package("EMLassemblyline"),
+                               "/templates/datasetname_keywords.txt",
+                               sep = ""),
+                         sep = "\t",
+                         header = T,
+                         as.is = T)
+  
+  list_keywordSet <- xml_in@dataset@keywordSet
+  
+  list_keywordSet[[length(list_keywordSet)+1]] <- new("keywordSet",
+                                                      keyword = "ecocomDP")
+  
+  lter_keywordSet <- list()
+  use_i <- keywords[["keywordThesaurus"]] == "LTER Controlled Vocabulary"
+  keywords <- keywords[use_i, "keyword"]
+  for (i in 1:length(keywords)){
+    lter_keywordSet[[i]] <- as(keywords[i], "keyword")
+  }
+  
+  list_keywordSet[[length(list_keywordSet)+1]] <- new("keywordSet",
+                                                      lter_keywordSet,
+                                                      keywordThesaurus = "LTER Controlled Vocabulary")
+  dataset@keywordSet <- list_keywordSet
 
   # Add intellectual rights
 

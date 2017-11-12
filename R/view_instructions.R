@@ -32,8 +32,6 @@
 #'     of your dataset (e.g. gleon_chloride), and datatablename is the name of 
 #'     your data table (e.g. lake_characteristics). In this example, the name 
 #'     of the data table becomes 'gleon_chloride_lake_characteristics'.
-#'     
-#'     \emph{"Import templates to the working directory."} 
 #'          
 #'     \emph{"Write an abstract for your dataset ..."} Write an abstract for 
 #'     your dataset in the file datasetname_abstract.txt. The abstract 
@@ -47,6 +45,20 @@
 #'     theses derived from this dataset). The template is a UTF-8 formatted 
 #'     file. Use only UTF-8 symbols and text. Delete this file if you have no 
 #'     additional information to present.
+#'     
+#'     \emph{"Fill out the keywords template"} List keywords that best describe
+#'     your dataset. Consult this resource (http://vocab.lternet.edu/vocab/vocab/index.php) 
+#'     as you populate the keywords template. Additionally, use keywords that 
+#'     describe your lab, station, and project (e.g. GLEON, NSF, etc.). This is 
+#'     a tab delimited file that can be edited with a spreadsheet editor. This 
+#'     file is UTF-8 formatted. Definitions for fields in this file:
+#'     \itemize{
+#'         \item \strong{keyword} A keyword describing your dataset.
+#'         \item \strong{keywordThesaurus} A keywordThesaurus (i.e. controlled
+#'         vocuabulary) corresponding to the keyword listed in the keyword field. 
+#'         If the keyword is not from a thesaurus or controlled vocabulary, leave
+#'         corresponding entry in the keywordThesaurus field blank.
+#'     }
 #'     
 #'     \emph{"Select an intellectual rights license for your dataset."} Select 
 #'     an intellectual rights license. We have two recommendations: 
@@ -295,6 +307,14 @@ view_instructions <- function() {
   readline(paste("Select an intellectual rights license for your dataset.",
                  "\n", "Delete the license you are not using.",
                  "\n", "Rename it according to convention.",
+                 "\n",
+                 "Press ENTER to continue.",
+                 sep = ""))
+  writeLines("\n")
+  
+  # Keywords
+  
+  readline(paste("Fill out the keywords template.",
                  "\n",
                  "Press ENTER to continue.",
                  sep = ""))

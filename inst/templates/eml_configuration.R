@@ -23,22 +23,6 @@
 dataset_title <- ""
 
 
-# List keywords that best describe your dataset. Consult this resource 
-# (http://vocab.lternet.edu/vocab/vocab/index.php) as you populate the list.
-# Additionally, use keywords that describe your lab, station, and project 
-# (e.g. GLEON, NSF). Combine keywords into a vector.
-#
-# Example:
-#
-# keywords = c("chloride", "lakes", "reservoirs", "roads", "limnology",
-#              "salt", "impervious surface", "freshwater", "land use",
-#              "land cover", "time series", "GLEON",
-#              "Global Lake Ecological Observatory Network", "NSF",
-#              "National Science Foundation")
-
-keywords = c("")
-
-
 # Enter the beginning and ending dates covered by your dataset.
 #
 # Example:

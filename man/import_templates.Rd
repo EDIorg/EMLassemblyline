@@ -30,6 +30,9 @@ import_templates(path, dataset.name)
     rights licenses to consider for your dataset. Do not edit the text of 
     this file. This file is UTF-8 formatted.
     
+    \emph{datasetname_keywords.txt} A tab delimited table for keywords. This 
+    file is UTF-8 formatted.
+    
     \emph{datasetname_methods.txt} A text file for methods used in creating 
     your data. This file is UTF-8 formatted.
     

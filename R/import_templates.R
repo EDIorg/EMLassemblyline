@@ -33,6 +33,9 @@
 #'     rights licenses to consider for your dataset. Do not edit the text of 
 #'     this file. This file is UTF-8 formatted.
 #'     
+#'     \emph{datasetname_keywords.txt} A tab delimited table for keywords. This 
+#'     file is UTF-8 formatted.
+#'     
 #'     \emph{datasetname_methods.txt} A text file for methods used in creating 
 #'     your data. This file is UTF-8 formatted.
 #'     
@@ -199,6 +202,21 @@ import_templates <- function(path, dataset.name){
     print("Importing datasetname_additional_info.txt ... ")
   } else {
     print("datasetname_additional_info.txt already exists ... ")
+  }
+  
+  value <- file.copy(from = paste(path.package("EMLassemblyline"),
+                                  "/templates/datasetname_keywords.txt",
+                                  sep = ""),
+                     to = paste(path,
+                                "/",
+                                dataset.name,
+                                "_keywords.txt",
+                                sep = ""))
+  
+  if (isTRUE(value)){
+    print("Importing datasetname_keywords.txt ... ")
+  } else {
+    print("datasetname_keywords.txt already exists ... ")
   }
   
   
