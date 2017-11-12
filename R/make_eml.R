@@ -489,7 +489,7 @@ make_eml <- function(path) {
       if (personinfo$fundingAgency[useI[i+1]] == ""){
         funding_title <- "No funding to report."
         relatedProject_list[[i]] <- new("relatedProject",
-                                        title = personinfo$projectTitle[useI[i+1]],
+                                        title = "No project title to report",
                                         personnel = pi_list,
                                         funding = "No funding to report")
       } else {
