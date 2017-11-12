@@ -90,6 +90,12 @@ make_eml <- function(path) {
                             "_additional_info.txt",
                             sep = "")
 
+  fname_keywords <- paste(path,
+                           "/",
+                           substr(template, 1, nchar(template) - 14),
+                           "_keywords.txt",
+                           sep = "")
+  
   fname_personnel <- paste(path,
                            "/",
                           substr(template, 1, nchar(template) - 14),
@@ -329,29 +335,31 @@ make_eml <- function(path) {
   
   print("keywords ...")
   
-  keywords <- read.table(paste(path.package("EMLassemblyline"),
-                               "/templates/datasetname_keywords.txt",
-                               sep = ""),
-                         sep = "\t",
-                         header = T,
-                         as.is = T)
+  keywords <- read.table(
+    paste(substr(fname_keywords, 1, nchar(fname_keywords) - 4),
+          ".txt",
+          sep = ""),
+    header = TRUE,
+    sep = "\t",
+    as.is = TRUE,
+    na.strings = "NA",
+    colClasses = "character")
   
-  list_keywordSet <- xml_in@dataset@keywordSet
-  
-  list_keywordSet[[length(list_keywordSet)+1]] <- new("keywordSet",
-                                                      keyword = "ecocomDP")
-  
-  lter_keywordSet <- list()
-  use_i <- keywords[["keywordThesaurus"]] == "LTER Controlled Vocabulary"
-  keywords <- keywords[use_i, "keyword"]
-  for (i in 1:length(keywords)){
-    lter_keywordSet[[i]] <- as(keywords[i], "keyword")
+  list_keywordSet <- list()
+
+  uni_keywordThesaurus <- unique(keywords$keywordThesaurus)
+  for (i in 1:length(uni_keywordThesaurus)){
+    keywordSet <- list()
+    use_i <- uni_keywordThesaurus[i] == keywords[["keywordThesaurus"]]
+    kws <- keywords$keyword[use_i]
+    for (k in 1:length(kws)){
+      keywordSet[[k]] <- as(kws[k], "keyword")
+    }
+    list_keywordSet[[i]] <- new("keywordSet",
+                           keywordSet,
+                           keywordThesaurus = uni_keywordThesaurus[i])
   }
-  
-  list_keywordSet[[length(list_keywordSet)+1]] <- new("keywordSet",
-                                                      lter_keywordSet,
-                                                      keywordThesaurus = "LTER Controlled Vocabulary")
-  dataset@keywordSet <- list_keywordSet
+  dataset@keywordSet <- as(list_keywordSet, "ListOfkeywordSet")
 
   # Add intellectual rights
 
