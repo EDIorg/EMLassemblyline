@@ -17,18 +17,30 @@ Instructions for the metadata templates and configuration file imported
 }
 \details{
 Detailed instructions for each step:
-         
+    
+    \emph{"Create a working directory for your dataset and import metadata
+    templates."} If you haven't already, create a working directory for the 
+    dataset and name it using underscore characters to span between words 
+    (e.g. gleon_chloride). This directory will contain the metadata parts 
+    created in the assembly line process. Run the function 
+    \code{import_templates} to import metadata templates into the working 
+    directory. For help running \code{import_templates} consult the 
+    functions documentation by entering \code{?import_templates} into the 
+    RStudio Console window.
+    
     \emph{"Move your data table(s) to the working directory."} Move your 
     data tables to the dataset working directory and name them following the 
     convention 'datasetname_datatablename', where datasetname is the name 
     of your dataset (e.g. gleon_chloride), and datatablename is the name of 
     your data table (e.g. lake_characteristics). In this example, the name 
     of the data table becomes 'gleon_chloride_lake_characteristics'.
+    
+    \emph{"Import templates to the working directory."} 
          
     \emph{"Write an abstract for your dataset ..."} Write an abstract for 
     your dataset in the file datasetname_abstract.txt. The abstract 
     should cover what, why, when, where, and how. The template is a UTF-8 
-    formatted file. Use only UTF-8 symbols and text.
+    formatted file. Use only UTF-8 symbols and text when completing.
     
     \emph{"Place additional information ..."} Place additional info in the 
     file datasetname_additional_info.txt. This is a good place 
@@ -42,7 +54,9 @@ Detailed instructions for each step:
     an intellectual rights license. We have two recommendations: 
     'datasetname_cc_by_4.0_intellectual_rights.txt' and 
     'datasetname_cc0_1_intellectual_rights.txt'. Do not edit the text of
-    these files. Delete the file you will not be using.
+    these files. Delete the file you will not be using. Rename the one you 
+    will be using to datasetname_intellectual_rights (e.g. 
+    datasetname_intellectual_rights).
     
     \emph{"Write the methods for your dataset ..."} Explain the methods used
      to create this dataset in the file datasetname_methods.txt. Be specific, 
