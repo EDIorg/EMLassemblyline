@@ -230,6 +230,13 @@ Detailed instructions for each step:
     documentation of this function \code{?extract_geocoverage} to present
     this information in your metadata.
 }
+\note{
+You may see a series of warnings reported after `make_eml` has completed. 
+    These can be ignored if your EML passes validation. If validation fails,
+    open the EML file in an XML editor and look for the invalid section. 
+    Often a minor tweak to the EML can be made manually to bring it into 
+    compliance with the EML schema.
+}
 \seealso{
 \code{\link{import_templates}} to import metadata templates to the 
     dataset working directory.
