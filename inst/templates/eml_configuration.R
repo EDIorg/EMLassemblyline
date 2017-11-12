@@ -1,11 +1,9 @@
-# The configuration file
+# The configuration file for EMLassemblyline
 #
 # This file contains information about the dataset that is not included in the 
-# template files. It is called upon by compile_attributes.R, define_factors.R, and 
-# create_eml.R. This file contains the EMLtools version number that is required 
-# for successful operation.
+# template files or as arguments to the function.
 #
-# See copy_templates.R to copy metadata templates to the dataset working 
+# See import_templates.R to copy metadata templates (including this one) to the dataset working 
 # directory.
 
 
@@ -57,8 +55,8 @@ end_date <- ""
 # Enter the spatial bounding coordinates of your dataset (in decimal degrees) 
 # and a brief description. Longitudes west of the prime meridian and latitudes 
 # south of the equator are prefixed with a minus sign (i.e. dash -). A detailed 
-# list of sampling site coordinates can be supplied by using the 
-# extract_geocoverage() function.
+# list of sampling site coordinates can be supplied (in addition to those below)
+# by running the extract_geocoverage function.
 #
 # Example:
 #
@@ -107,7 +105,7 @@ root_system <- ""
 #
 # Example:
 #
-# user_id <- "clnsmith"
+# user_id <- "casmith"
 
 user_id <- ""
 
@@ -138,7 +136,9 @@ data_package_id <- ""
 # Set data table parameters ---------------------------------------------------
 
 
-# Enter the full name(s) of your data tables as a combined vector.
+# Enter the full name(s) of your data tables, including the file extension. If
+# you have more than one file, separate them with a column as in the example
+# below.
 #
 # Example:
 #
@@ -150,7 +150,7 @@ table_names <- c("")
 
 # Provide a brief descriptions for your data tables. If more than one data 
 # table, then combine your descriptions into a vector (order must follow that 
-# listed in the table_names object).
+# listed in table_names as you defined above).
 #
 # Example:
 #
@@ -165,7 +165,7 @@ data_table_descriptions <- c("")
 # upload them into the repository. If you will be manually uploading your data 
 # tables to PASTA, then leave this object empty (i.e. ""), and enter a value 
 # for storage_type below. If more than one data table, then combine your URLs 
-# into a vector (order must follow that listed in the table_names object).
+# into a vector (order must follow that listed in table_names as you defined above).
 #
 # Example:
 #
@@ -178,7 +178,7 @@ data_table_urls <- c("")
 # If your data is not available online (i.e. doesn't have a publicly accessible 
 # URL), describe the medium on which the data is stored. If more than one data 
 # table, then combine your storage types into a vector (order must follow that 
-# listed in the table_names object).
+# listed in table_names).
 #
 # Example:
 #
@@ -191,8 +191,8 @@ storage_type <- c("")
 
 # Define the number of header lines of your data table(s). This is the number of 
 # lines prior to the beginning of data. If there is more than one data table, 
-# then combine these values into a vector (order must follow that listed in the 
-# table_names object).
+# then combine these values into a vector (order must follow that listed in 
+# table_names).
 #
 # Example:
 #
@@ -206,7 +206,7 @@ num_header_lines <- c("")
 # denotes the end of a data row. If your computers operating system is 
 # Windows, then enter "\\r\\n". If you are using a Mac OS then use the value 
 # "\\n". If there is more than one data table, then combine these values into 
-# a vector (order must follow that listed in the table_names object).
+# a vector (order must follow that listed in table_names).
 #
 # Example:
 #
@@ -218,8 +218,7 @@ record_delimeter <- c("")
 
 # Define the orientation of attributes in your data table. Acceptable value 
 # is "column". If there is more than one data table, then combine 
-# these values into a vector (order must follow that listed in the table_names 
-# object).
+# these values into a vector (order must follow that listed in table_names).
 #
 # Example:
 #
@@ -231,7 +230,7 @@ attribute_orientation <- c("")
 
 # Define the field delimeter of your data tables. Acceptable values are "comma" 
 # and "tab". If there is more than one data table, then combine these values 
-# into a vector (order must follow that listed in the table_names object).
+# into a vector (order must follow that listed in table_names).
 #
 # Example:
 #
@@ -245,8 +244,8 @@ field_delimeter <- c("")
 # is quotation marks, then enter \" below. If the quote character is an
 # apostrophe, then enter \' below. If there is no quote character used in your
 # data tables then leave as is. If there is more than one data table, then 
-# combine these values into a vector (order must follow that listed in the 
-# table_names object).
+# combine these values into a vector (order must follow that listed in  
+# table_names).
 #
 # Example:
 #

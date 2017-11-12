@@ -115,12 +115,13 @@
 #'     UTF-8 symbols and text. Instructions for completing the attribute table 
 #'     are as follows:
 #'     \itemize{
-#'         \item \strong{attributeName} Attribute name as it appears in the
-#'         data table and in the same order as in the data table.
-#'         \item \strong{attributeDefinition} Define the attribute. Be 
-#'         specific, it can be lengthy.
-#'         \item \strong{class} Specify the attribute class. This is the type 
-#'         of value stored under the attribute. Valid options are: 
+#'         \item \strong{attributeName} Attribute name (column name) as 
+#'         it appears in the data table and in the same order as in the data 
+#'         table.
+#'         \item \strong{attributeDefinition} Define the attribute (column 
+#'         name). Be specific, it can be lengthy.
+#'         \item \strong{class} Specify the attribute (column) class. This 
+#'         is the type of value stored under the attribute. Valid options are: 
 #'         \itemize{
 #'             \item \strong{numeric} For numeric variables.
 #'             \item \strong{categorical} For categorical variables.
@@ -214,6 +215,18 @@
 #'     
 #'     \emph{"Make sure all files of the working directory are closed."} Some 
 #'     functions will error out if these files are open.
+#'     
+#'     \emph{Define categorical variables} If you have categorical variables 
+#'     listed in your attributes tables, you will need to supply definitions 
+#'     for the categorical variable codes. Run the function \code{define_catvars},
+#'     and consult the documentation of this function \code{?define_catvars} to
+#'     define categorical variables.
+#'     
+#'     \emph{Extract detailed geographic coverage} If your dataset contains 
+#'     more than one sampling location, then you will want to communicate this
+#'     information. Run the function \code{extract_geocoverage}, and consult
+#'     documentation of this function \code{?extract_geocoverage} to present
+#'     this information in your metadata.
 #'
 #' @export
 #'
@@ -285,7 +298,7 @@ view_instructions <- function() {
   
   readline(paste("Write the methods for your dataset in datasetname_methods.txt.",
                  "\n",
-                 "Press <enter> to continue.",
+                 "Press ENTER to continue.",
                  sep = ""))
   writeLines("\n")
   
@@ -293,7 +306,7 @@ view_instructions <- function() {
   
   readline(paste("Enter personnel information for your dataset in datasetname_personnel.txt.",
                  "\n",
-                 "Press <enter> to continue.",
+                 "Press ENTER to continue.",
                  sep = ""))
   writeLines("\n")
   
@@ -304,9 +317,10 @@ view_instructions <- function() {
   
   readline(paste("Add data table attributes to datatablename_attributes.txt.",
                  "\n", "The standard units dictionary has been opened for you.",
-                 "\n", "Create an attributes file for each data table and rename following convention.",
+                 "\n", "Create an attributes file for each data table you have",
+                 "\n", "and rename following convention.",
                  "\n",
-                 "Press <enter> to continue.",
+                 "Press ENTER to continue.",
                  sep = ""))
   writeLines("\n")
   
@@ -314,7 +328,7 @@ view_instructions <- function() {
   
   readline(paste("Fill out the file eml_configuration.R.",
                  "\n",
-                 "Press <enter> to continue.",
+                 "Press ENTER to continue.",
                  sep = ""))
   writeLines("\n")
   
@@ -322,7 +336,7 @@ view_instructions <- function() {
   
   readline(paste("Make sure all files of the working directory are closed.",
                  "\n",
-                 "Press <enter> to continue.",
+                 "Press ENTER to continue.",
                  sep = ""))
   writeLines("\n")
   
@@ -333,7 +347,7 @@ view_instructions <- function() {
                  "\n", "extract_geocoverage()",
                  "\n", "make_eml()",
                  "\n",
-                 "Press <enter> to continue.",
+                 "Press ENTER to continue.",
                  sep = ""))
   writeLines("\n")
   
