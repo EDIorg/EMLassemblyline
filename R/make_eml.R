@@ -142,6 +142,15 @@ make_eml <- function(path) {
         individualName = individualName,
         organizationName = trimws(personinfo[info_row,"organizationName"]),
         electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"]))
+      
+      if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
+        userId <- new("userId")
+        userId@directory <- new("xml_attribute", "https://orcid.org")
+        hold <- trimws(personinfo[info_row,"userId"])
+        hold <- paste("https://orcid.org/", hold, sep = "")
+        userId@.Data <- hold
+        contact@userId <- new("ListOfuserId", c(userId))
+      }
 
       contact
 
@@ -193,6 +202,7 @@ make_eml <- function(path) {
         hold <- trimws(personinfo[info_row,"userId"])
         hold <- paste("https://orcid.org/", hold, sep = "")
         rp_userId@.Data <- hold
+        rp_personnel@userId <- new("ListOfuserId", c(rp_userId))
       }
       role <- new("role", "Principal Investigator")
       rp_personnel@role <- new("ListOfrole", c(role))
@@ -485,6 +495,15 @@ make_eml <- function(path) {
   pi_list <- list()
   pi_list[[1]] <- set_person(info_row = useI[1],
                              person_role = "pi")
+  
+  # if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
+  #   userId <- new("userId")
+  #   userId@directory <- new("xml_attribute", "https://orcid.org")
+  #   hold <- trimws(personinfo[info_row,"userId"])
+  #   hold <- paste("https://orcid.org/", hold, sep = "")
+  #   userId@.Data <- hold
+  #   contact@userId <- new("ListOfuserId", c(userId))
+  # }
   
   if (personinfo$fundingAgency[useI[1]] == ""){
     if (personinfo$projectTitle[useI[1]] == ""){
