@@ -738,14 +738,9 @@ make_eml <- function(path) {
       distribution <- new("distribution",
                           online = new("online",
                                        url = data_table_urls[i]))
-    } else {
-      distribution <- new("distribution",
-                           offline = new("offline",
-                                         mediumName = storage_type[i]))
+      physical@distribution <- new("ListOfdistribution",
+                                   c(distribution))
     }
-
-    physical@distribution <- new("ListOfdistribution",
-                                 c(distribution))
     
 
     if (os == "mac"){
