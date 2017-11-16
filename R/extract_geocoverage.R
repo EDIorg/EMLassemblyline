@@ -71,25 +71,33 @@ extract_geocoverage <- function(path, table.name, lat.col, lon.col, site.col){
   
   use_i <- match(table.name, table_names)
   
-  if (field_delimeter[use_i] == "comma"){
-    
-    df_table <- read.table(
-      paste(path, "/", table.name, sep = ""),
-      header=TRUE,
-      sep=",",
-      quote="\"",
-      as.is=TRUE,
-      comment.char = "")
-    
-  } else if (field_delimeter[use_i] == "tab"){
-    
-    df_table <- read.table(
-      paste(path, "/", table.name, sep = ""),
-      header=TRUE,
-      sep="\t",
-      quote="\"",
-      as.is=TRUE,
-      comment.char = "")
+  df_table <- read.table(
+    paste(path, "/", table.name, sep = ""),
+    header=TRUE,
+    sep=",",
+    quote="\"",
+    as.is=TRUE,
+    comment.char = "")
+  
+  # if (field_delimeter[use_i] == "comma"){
+  #   
+  #   df_table <- read.table(
+  #     paste(path, "/", table.name, sep = ""),
+  #     header=TRUE,
+  #     sep=",",
+  #     quote="\"",
+  #     as.is=TRUE,
+  #     comment.char = "")
+  #   
+  # } else if (field_delimeter[use_i] == "tab"){
+  #   
+  #   df_table <- read.table(
+  #     paste(path, "/", table.name, sep = ""),
+  #     header=TRUE,
+  #     sep="\t",
+  #     quote="\"",
+  #     as.is=TRUE,
+  #     comment.char = "")
     
   }
   
