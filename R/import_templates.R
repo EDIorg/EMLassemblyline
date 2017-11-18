@@ -60,16 +60,50 @@
 #'     templates.
 
 
-import_templates <- function(path, dataset.name){
+import_templates <- function(path, license, data.names, data.types){
   
-  # Check arguments
+  # Check for arguments -------------------------------------------------------
   
   if (missing(path)){
-    stop("Specify path to dataset working directory.")
+    stop("Specify path to your dataset working directory.")
   }
-  if (missing(dataset.name)){
-    stop("Specify a name for your dataset.")
+  if (missing(license)){
+    stop("Specify a license for your dataset.")
   }
+  if (missing(data.names)){
+    stop("Specify the names of all the data entities in your dataset.")
+  }
+  if (missing(data.types)){
+    stop("Specify the types of data included in this dataset.")
+  }
+  
+  # Check if arguments make sense ---------------------------------------------
+  
+  # Working directory name is valid
+  
+  #str_view(path, "/.+$")
+  
+  # License is a valid option
+  
+  if (!str_detect(license, "CC0|CCBY|other")){
+    stop('Invalid license. Please choose "CC0", "CCBY", or "other".')
+  }
+  
+  # Data names are valid
+  
+  files <- list.files(path)
+  files <- c(files, str_replace(files, "\\.[:alnum:]*$", replacement = ""))
+  use_i <- str_detect(string = files,
+                      pattern = str_c("^", data.names, "$", collapse = "|"))
+  if (!sum(use_i) == length(data.names)){
+    if(sum(use_i) == 0){
+      stop(paste("Invalid file name(s) entered: ", paste(data.names, collapse = ", "), sep = ""))
+    } else {
+      name_issues <- data.names[!files[use_i] == data.names]
+      stop(paste("Invalid data.names entered: ", paste(name_issues, collapse = ", "), sep = ""))
+    }
+  }
+  
   
   # Begin function
   
