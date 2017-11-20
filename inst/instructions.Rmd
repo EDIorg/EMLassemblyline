@@ -17,7 +17,7 @@ Name this directory after your dataset. Span spaces with underscores (e.g. "gleo
 
 # Step 2: Move your dataset to this directory
 
-Move the final versions of your data entities (tables or zip files) into this directory. These should be the final versions of the data you are ready to publish. Do not include draft files or parts of the dataset you will not be publishing.
+Move the final versions of your data entities (tables or zip files) into this directory. These should be the final versions of the data you are ready to publish.
 
 Rename these files following these rules: (1) replace blank spaces with underscores (2) remove symbols, parentheses, and periods.
 
@@ -35,27 +35,15 @@ This information is released under the Creative Commons license - Attribution - 
 
 # Step 5: Identfy the types of data in your dataset
 
-The assembly line works for many types of data but you will need to tell it what kind you have. There are 4 types to select from: (1) "table" (2) "spatial_vector" (3) "spatial_raster" (4) "other".
+Right now the assembly line only works for data in tabular format. If your data is something other than tabular, we appologize for the wait. Check back soon!
 
 ### table
 
 A flat file composed of columns containing variables and rows containing observations. Column names must follow these rules: (1) replace blank spaces with underscores (2) remove symbols, parentheses, and periods.
 
-### spatial_vector
-
-A zip directory containing spatial vector files and supporting files. Often used within the geospatial domain.
-
-### spatial_raster
-
-A zip directory containing spatial raster files and supporting files. Often used within the geospatial domain.
-
-### other
-
-Other data types not included in the above categories. These data should be aggregated in a zip directory.
-
 # Step 6: Import the core metadata templates
 
-Run the function `import_templates` to populate the working directory with the core metadata templates for you to complete. You will need to supply a few arguments for this function to work correctly. When this function runs it will perform a series of checks and report any issues found.
+Run the function `import_templates` to populate the working directory with the core metadata templates for you to complete. You will need to supply a few arguments for this function to work correctly.
 
 ```{r setup, include=FALSE}
 # View documentation on how to use this function
@@ -65,8 +53,8 @@ Run the function `import_templates` to populate the working directory with the c
 import_templates(path = "/Users/csmith/Desktop/gleon_chloride",
                  license = "CC0",
                  data.names = c("lake_concentrations.csv",
-                                "lake_characteristics.csv"),
-                 data.types = "table")
+                                "lake_characteristics.csv")
+                 )
 ```
 
 # Step 7: 

@@ -4,12 +4,13 @@
 \alias{import_templates}
 \title{Import metadata templates}
 \usage{
-import_templates(path, dataset.name)
+import_templates(path, license, data.names)
 }
 \arguments{
-\item{path}{A path to the dataset working directory.}
+\item{path}{A character string specifying a path to the dataset working directory
+(e.g. "C:/Users/Colin/Documents/data_sets/gleon_chloride").}
 
-\item{dataset.name}{Name of your dataset. Link words with underscores (i.e. "_").}
+\item{license}{A license for your dataset. Select one of 3 options (see details below).}
 }
 \value{
 \emph{datasetname_abstract.txt} A text file for the abstract of your 

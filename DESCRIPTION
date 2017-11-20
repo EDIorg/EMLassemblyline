@@ -11,6 +11,7 @@ Description: A set of functions facilitating a workflow to create metadata
 Depends:
     EML (>= 1.0.1),
     stringr (>= 1.2.0),
+    reader (>= 1.0.6),
     R (>= 3.2.5)
 Imports: 
 Suggests:

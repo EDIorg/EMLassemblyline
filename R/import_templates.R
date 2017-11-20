@@ -6,13 +6,13 @@
 #'     about your data.
 #'
 #' @usage 
-#'     import_templates(path, dataset.name)
+#'     import_templates(path, license, data.names)
 #'
 #' @param path 
-#'     A path to the dataset working directory.
-#'     
-#' @param dataset.name
-#'     Name of your dataset. Link words with underscores (i.e. "_").
+#'     A character string specifying a path to the dataset working directory
+#'     (e.g. "C:/Users/Colin/Documents/data_sets/gleon_chloride").
+#' @param license
+#'     A license for your dataset. Select one of 3 options (see details below).
 #'
 #' @return 
 #'     \emph{datasetname_abstract.txt} A text file for the abstract of your 
@@ -60,7 +60,7 @@
 #'     templates.
 
 
-import_templates <- function(path, license, data.names, data.types){
+import_templates <- function(path, license, data.names){
   
   # Check for arguments -------------------------------------------------------
   
@@ -73,19 +73,18 @@ import_templates <- function(path, license, data.names, data.types){
   if (missing(data.names)){
     stop("Specify the names of all the data entities in your dataset.")
   }
-  if (missing(data.types)){
-    stop("Specify the types of data included in this dataset.")
-  }
+
+  # Check arguments and modify ------------------------------------------------
   
-  # Check if arguments make sense ---------------------------------------------
+  # Convert arguments to lower case
   
-  # Working directory name is valid
+  license.low <- tolower(license)
   
-  #str_view(path, "/.+$")
+  data.types.low <- tolower(data.types)
   
   # License is a valid option
   
-  if (!str_detect(license, "CC0|CCBY|other")){
+  if (!str_detect(license.low, "cc0|ccby|other")){
     stop('Invalid license. Please choose "CC0", "CCBY", or "other".')
   }
   
@@ -104,154 +103,325 @@ import_templates <- function(path, license, data.names, data.types){
     }
   }
   
+  # Copy non-attributes templates to working directory with correct names -----
   
-  # Begin function
-  
-  value <- file.copy(from = paste(path.package("EMLassemblyline"),
-                                  "/templates/eml_configuration.R",
-                                  sep = ""),
-                     to = path)
-  
-  if (isTRUE(value)){
-    print("Importing eml_configuration.R ... ")
-  } else {
-    print("eml_configuration.R already exists ... ")
-  }
+  # Abstract
   
   value <- file.copy(from = paste(path.package("EMLassemblyline"),
-                                  "/templates/datasetname_abstract.txt",
+                                  "/templates/abstract.txt",
                                   sep = ""),
                      to = paste(path,
                                 "/",
-                                dataset.name,
-                                "_abstract.txt",
+                                "abstract.txt",
                                 sep = ""))
   
   if (isTRUE(value)){
-    print("Importing datasetname_abstract.txt ... ")
+    print("Importing abstract.txt ...")
   } else {
-    print("datasetname_abstract.txt already exists ... ")
+    print("abstract.txt already exists ...")
   }
   
+  # Additional info
+  
   value <- file.copy(from = paste(path.package("EMLassemblyline"),
-                                  "/templates/datasetname_custom_units.txt",
+                                  "/templates/additional_info.txt",
                                   sep = ""),
                      to = paste(path,
                                 "/",
-                                dataset.name,
-                                "_custom_units.txt",
+                                "additional_info.txt",
                                 sep = ""))
-  
   if (isTRUE(value)){
-    print("Importing datasetname_custom_units.txt ... ")
+    print("Importing additional_info.txt", " ...")
   } else {
-    print("datasetname_custom_units.txt already exists ... ")
+    print("additional_info.txt already exists ...")
   }
   
+  # Configuration
+  
   value <- file.copy(from = paste(path.package("EMLassemblyline"),
-                                  "/templates/datasetname_cc0_1_intellectual_rights.txt",
+                                  "/templates/configuration.R",
                                   sep = ""),
                      to = paste(path,
                                 "/",
-                                dataset.name,
-                                "_cc0_1_intellectual_rights.txt",
+                                "configuration.R",
                                 sep = ""))
   
   if (isTRUE(value)){
-    print("Importing datasetname_cc0_1_intellectual_rights.txt ... ")
+    print("Importing configuration.R ...")
   } else {
-    print("datasetname_cc0_1_intellectual_rights.txt already exists ... ")
+    print("configuration.R already exists ...")
   }
   
+  # Custom units
+  
   value <- file.copy(from = paste(path.package("EMLassemblyline"),
-                                  "/templates/datasetname_cc_by_4.0_intellectual_rights.txt",
+                                  "/templates/custom_units.txt",
                                   sep = ""),
                      to = paste(path,
                                 "/",
-                                dataset.name,
-                                "_cc_by_4.0_intellectual_rights.txt",
+                                "custom_units.txt",
                                 sep = ""))
   
   if (isTRUE(value)){
-    print("Importing datasetname_cc_by_4.0_intellectual_rights.txt ... ")
+    print("Importing custom_units.txt ...")
   } else {
-    print("datasetname_cc_by_4.0_intellectual_rights.txt already exists ... ")
+    print("custom_units.txt already exists ...")
   }
   
+  # Instructions
+  
   value <- file.copy(from = paste(path.package("EMLassemblyline"),
-                                  "/templates/datasetname_datatablename_attributes.txt",
+                                  "/templates/instructions.pdf",
                                   sep = ""),
                      to = paste(path,
                                 "/",
-                                dataset.name,
-                                "_datatablename_attributes.txt",
+                                "instructions.pdf",
                                 sep = ""))
   
   if (isTRUE(value)){
-    print("Importing datasetname_datatablename_attributes.txt ... ")
+    print("Importing instructions.pdf ...")
   } else {
-    print("datasetname_datatablename_attributes.txt already exists ... ")
+    print("Instructions.pdf already exists ...")
   }
   
+  # Intellectual rights license
+  
+  if (license.low == "cc0"){
+    value <- file.copy(from = paste(path.package("EMLassemblyline"),
+                                    "/templates/intellectual_rights_cc0.txt",
+                                    sep = ""),
+                       to = paste(path,
+                                  "/",
+                                  "intellectual_rights.txt",
+                                  sep = ""))
+    if (isTRUE(value)){
+      print("Importing intellectual_rights.txt ...")
+    } else {
+      print("intellectual_rights.txt already exists ...")
+    }
+  } else if (license.low == "ccby"){
+    value <- file.copy(from = paste(path.package("EMLassemblyline"),
+                                    "/templates/intellectual_rights_ccby4.0.txt",
+                                    sep = ""),
+                       to = paste(path,
+                                  "/",
+                                  "intellectual_rights.txt",
+                                  sep = ""))
+    if (isTRUE(value)){
+      print("Importing intellectual_rights.txt ...")
+    } else {
+      print("intellectual_rights.txt already exists ...")
+    }
+  } else if (license.low == "other"){
+    value <- file.copy(from = paste(path.package("EMLassemblyline"),
+                                    "/templates/intellectual_rights_other.txt",
+                                    sep = ""),
+                       to = paste(path,
+                                  "/",
+                                  "intellectual_rights.txt",
+                                  sep = ""))
+    if (isTRUE(value)){
+      print("Importing intellectual_rights.txt ...")
+    } else {
+      print("intellectual_rights.txt already exists ...")
+    }
+  }
+  
+  # Keywords
+
   value <- file.copy(from = paste(path.package("EMLassemblyline"),
-                                  "/templates/datasetname_methods.txt",
+                                  "/templates/keywords.txt",
                                   sep = ""),
                      to = paste(path,
                                 "/",
-                                dataset.name,
-                                "_methods.txt",
+                                "keywords.txt",
                                 sep = ""))
   
   if (isTRUE(value)){
-    print("Importing datasetname_methods.txt ... ")
+    print("Importing keywords.txt ...")
   } else {
-    print("datasetname_methods.txt already exists ... ")
+    print("keywords.txt already exists ...")
   }
   
+  # Methods
+  
   value <- file.copy(from = paste(path.package("EMLassemblyline"),
-                                  "/templates/datasetname_personnel.txt",
+                                  "/templates/methods.txt",
                                   sep = ""),
                      to = paste(path,
                                 "/",
-                                dataset.name,
-                                "_personnel.txt",
+                                "methods.txt",
                                 sep = ""))
   
   if (isTRUE(value)){
-    print("Importing datasetname_personnel.txt ... ")
+    print("Importing methods.txt ...")
   } else {
-    print("datasetname_personnel.txt already exists ... ")
+    print("methods.txt already exists ...")
   }
   
+  # My workflow script
+  
   value <- file.copy(from = paste(path.package("EMLassemblyline"),
-                                  "/templates/datasetname_additional_info.txt",
+                                  "/templates/my_workflow.R",
                                   sep = ""),
                      to = paste(path,
                                 "/",
-                                dataset.name,
-                                "_additional_info.txt",
+                                "my_workflow.R",
                                 sep = ""))
   
   if (isTRUE(value)){
-    print("Importing datasetname_additional_info.txt ... ")
+    print("Importing my_workflow.R ...")
   } else {
-    print("datasetname_additional_info.txt already exists ... ")
+    print("my_workflow.R already exists ...")
   }
   
+  # Personnel
+  
   value <- file.copy(from = paste(path.package("EMLassemblyline"),
-                                  "/templates/datasetname_keywords.txt",
+                                  "/templates/personnel.txt",
                                   sep = ""),
                      to = paste(path,
                                 "/",
-                                dataset.name,
-                                "_keywords.txt",
+                                "personnel.txt",
                                 sep = ""))
   
   if (isTRUE(value)){
-    print("Importing datasetname_keywords.txt ... ")
+    print("Importing personnel.txt ...")
   } else {
-    print("datasetname_keywords.txt already exists ... ")
+    print("personnel.txt already exists ...")
   }
   
+  # Copy attributes files to working directory --------------------------------
+
+  # Check for valid column names
   
+  # Extract attributes
+  
+  
+  attributes <- list()
+  for (i in 1:length(data.names)){
+    
+    # Read data table
+    
+    file_path <- paste(path,
+                       "/",
+                       data.names[i],
+                       sep = "")
+    
+    delim_guess <- get.delim(file_path,
+                             n = 1)
+
+    df_table <- read.table(file_path,
+                           header = TRUE,
+                           sep = delim_guess,
+                           quote = "\"",
+                           as.is = TRUE,
+                           comment.char = "")
+    
+    # Initialize attribute table
+    
+    rows <- ncol(df_table)
+    attributes[[i]] <- data.frame(attributeName = character(rows),
+                             attributeDefinition = character(rows),
+                             class = character(rows),
+                             unit = character(rows),
+                             dateTimeFormatString = character(rows),
+                             missingValueCode = character(rows),
+                             missingValueCodeExplanation = character(rows),
+                             stringsAsFactors = FALSE)
+
+    # Get names
+    
+    attributes[[i]]$attributeName <- colnames(df_table)
+    
+    # Guess character and numeric classes
+    
+    guess <- unname(unlist(lapply(df_table, class)))
+    guess_map <- c(character = "character", 
+                   logical = "numeric", 
+                   factor = "character",
+                   integer = "numeric",
+                   numeric = "numeric")
+    guess <- unname(guess_map[guess])
+    
+    # Guess Date class
+    
+    use_i <- guess == "character"
+    if (sum(potential) > 0){
+      potential_date_cols <- colnames(df_table)[use_i]
+      potential_date_i <- str_detect(tolower(potential_date_cols), "date|time")
+      guess_datetime <- potential_date_cols[potential_date_i]
+      use_i <- match(guess_datetime, attributes[[i]]$attributeName)
+      guess[use_i] <- "Date"
+    }
+    
+    # Guess factor class
+    
+    use_i <- guess == "character"
+    if (sum(potential) > 0){
+      potential_fact_cols <- colnames(df_table)[use_i]
+      use_i2 <- match(potential_fact_cols, colnames(df_table))
+      unique_lengths <- apply(df_table[ ,use_i2], 2, function(x)length(unique(x)))
+      potential_facts <- unique_lengths <= 30
+      if (sum(potential_facts) > 0){
+        potential_facts <- names(potential_facts[potential_facts == TRUE])
+        use_i <- match(potential_facts, attributes[[i]]$attributeName)
+        guess[use_i] <- "factor"
+      }
+    }
+    
+    # Update attributes class
+    
+    attributes[[i]]$class <- guess
+    
+    # Add unit for numeric data
+    
+    use_i <- attributes[[i]]$class == "numeric"
+    if (sum(use_i) > 0){
+      attributes[[i]]$unit[use_i] <- "Add units"
+    }
+    
+    # Add date time format strings for Date data
+    
+    use_i <- attributes[[i]]$class == "Date"
+    if (sum(use_i) > 0){
+      attributes[[i]]$dateTimeFormatString[use_i] <- "Add datetime specifier"
+    }
+    
+    # Write table to file
+    
+    value <- file.exists(paste(path,
+                                 "/",
+                                 "attributes_",
+                                 substr(data.names[i], 1, nchar(data.names[i]) - 4),
+                                 ".txt",
+                                 sep = ""))
+    if (!isTRUE(value)){
+      
+      print(paste("Importing attributes_",
+                  substr(data.names[i], 1, nchar(data.names[i]) - 4),
+                  ".txt ...",
+                  sep = ""))
+      
+      write.table(attributes[[i]],
+                  paste(path,
+                        "/",
+                        "attributes_",
+                        substr(data.names[i], 1, nchar(data.names[i]) - 4),
+                        ".txt",
+                        sep = ""),
+                  sep = "\t",
+                  row.names = F,
+                  quote = F,
+                  fileEncoding = "UTF-8")
+      
+    } else {
+      print(paste("attributes_",
+            substr(data.names[i], 1, nchar(data.names[i]) - 4),
+            ".txt already exists ...",
+            sep = ""))
+    }
+
+  }
+
 }
