@@ -746,9 +746,11 @@ make_eml <- function(path) {
     if (os == "mac"){
       
       command_certutil <- paste("md5 ",
+                                "\"",
                                 path,
                                 "/",
                                 table_names[i],
+                                "\"",
                                 sep = "")
       
       certutil_output <- system(command_certutil, intern = T)
@@ -765,9 +767,11 @@ make_eml <- function(path) {
     } else if (os == "win"){
       
       command_certutil <- paste("CertUtil -hashfile ",
+                                "\"",
                                 path,
                                 "\\",
                                 table_names[i],
+                                "\"",
                                 " MD5",
                                 sep = "")
       
