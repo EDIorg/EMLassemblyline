@@ -8,7 +8,7 @@ compile_attributes <- function(path){
   # Load configuration file
 
   source(paste(path,
-               "/eml_configuration.R",
+               "/configuration.R",
                sep = ""))
   
   # Set file names to be written 

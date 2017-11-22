@@ -3,64 +3,108 @@
 #' @description  
 #'     Create a working directory for your dataset then run this function to 
 #'     import metadata templates. Use these templates to provide information 
-#'     about your data.
+#'     about your data. 
 #'
 #' @usage 
-#'     import_templates(path, license, data.names)
+#'     import_templates(path, license, data.files = c("data.file.1", "data.file.2", "etc"))
 #'
 #' @param path 
 #'     A character string specifying a path to the dataset working directory
 #'     (e.g. "C:/Users/Colin/Documents/data_sets/gleon_chloride").
 #' @param license
-#'     A license for your dataset. Select one of 3 options (see details below).
+#'     A character string specifying the license for your dataset. Select "CC0",
+#'     "CCBY", or "other". Additional information about these licenses are 
+#'     listed below in "details".
+#' @param data.files
+#'     A list of character strings specifying the names of the data files
+#'     of your dataset.
 #'
 #' @return 
-#'     \emph{datasetname_abstract.txt} A text file for the abstract of your 
-#'     dataset. This file is UTF-8 formatted.
+#'     \emph{abstract.txt} A text file for the abstract of your 
+#'     dataset.
 #'     
-#'     \emph{datasetname_additional_info.txt} A text file for additional 
-#'     information about your dataset. This file is UTF-8 formatted.
+#'     \emph{additional_info.txt} A text file for additional 
+#'     information about your dataset.
 #'     
-#'     \emph{datasetname_custom_units.txt} A tab delimited table for custom 
+#'     \emph{attributes_datafilename.txt} A tab delimited table for information 
+#'     about your data tables. Note: each of your data files will have a 
+#'     corresponding attributes.txt file. \code{import_templates} makes a series of 
+#'     informed guesses about the attributes of your data files and 
+#'     writes them in this file. You will have to verify this information is correct.
+#'     
+#'     \emph{configuration.R} A file for supplying additional parameters to 
+#'     functions used in the assemblyline.
+#'     
+#'     \emph{custom_units.txt} A tab delimited table for custom 
 #'     units used in your data that are not defined in the standard unit 
-#'     dictionary. This file is UTF-8 formatted.
+#'     dictionary.
 #'     
-#'     \emph{datasetname_cc_by_4.0_intellectual_rights.txt} One of two 
-#'     intellectual rights licenses to consider for your dataset. Do not edit 
-#'     the text of this file. This file is UTF-8 formatted.
+#'     \emph{instructions.pdf} Step by step instructions on how to operate the 
+#'     assembly line.
 #'     
-#'     \emph{datasetname_cc0_1_intellectual_rights.txt} One of two intellectual 
-#'     rights licenses to consider for your dataset. Do not edit the text of 
-#'     this file. This file is UTF-8 formatted.
+#'     \emph{intellectual_rights.txt} The selected intellectual rights license 
+#'     for your dataset.
 #'     
-#'     \emph{datasetname_keywords.txt} A tab delimited table for keywords. This 
-#'     file is UTF-8 formatted.
+#'     \emph{keywords.txt} A tab delimited table for keywords.
 #'     
-#'     \emph{datasetname_methods.txt} A text file for methods used in creating 
-#'     your data. This file is UTF-8 formatted.
+#'     \emph{methods.txt} A text file for methods used in creating your data.
 #'     
-#'     \emph{datasetname_personnel.txt} A tab delimited table for information 
-#'     about personnel associated with this dataset. This file is UTF-8 
-#'     formatted.
+#'     \emph{my_workflow.R} A blank R script file in which to build your 
+#'     assembly line workflow.
 #'     
-#'     \emph{datasetname_datatablename_attributes.txt} A tab delimited table 
-#'     for information about your data tables. This file is UTF-8 formatted.
-#'     
-#'     \emph{eml_configuration.R} A file for technical and general information 
-#'     about your data.
+#'     \emph{personnel.txt} A tab delimited table for information about 
+#'     personnel associated with this dataset.
 #'     
 #' @details 
 #'     If template files already exist in the working directory, new templates 
 #'     will not be imported.
 #'     
+#'     Here is the text of the recommended intellectual rights licenses.
+#'     \itemize{
+#'         \item \strong{CCO} This data package is released to the “public 
+#'         domain” under Creative Commons CC0 1.0 “No Rights Reserved” (see: 
+#'         https://creativecommons.org/publicdomain/zero/1.0/). It is 
+#'         considered professional etiquette to provide attribution of the 
+#'         original work if this data package is shared in whole or by 
+#'         individual components. A generic citation is provided for this data 
+#'         package on the website https://portal.edirepository.org (herein 
+#'         “website”) in the summary metadata page. Communication (and 
+#'         collaboration) with the creators of this data package is recommended 
+#'         to prevent duplicate research or publication. This data package (and 
+#'         its components) is made available “as is” and with no warranty of 
+#'         accuracy or fitness for use. The creators of this data package and 
+#'         the website shall not be liable for any damages resulting from 
+#'         misinterpretation or misuse of the data package or its components. 
+#'         Periodic updates of this data package may be available from the 
+#'         website. Thank you.
+#'         \item \strong{CCBY} This information is released under the Creative 
+#'         Commons license - Attribution - CC BY 
+#'         (https://creativecommons.org/licenses/by/4.0/). The consumer of 
+#'         these data ("Data User" herein) is required to cite it appropriately 
+#'         in any publication that results from its use. The Data User should 
+#'         realize that these data may be actively used by others for ongoing 
+#'         research and that coordination may be necessary to prevent duplicate 
+#'         publication. The Data User is urged to contact the authors of these 
+#'         data if any questions about methodology or results occur. Where 
+#'         appropriate, the Data User is encouraged to consider collaboration 
+#'         or co-authorship with the authors. The Data User should realize that 
+#'         misinterpretation of data may occur if used out of context of the 
+#'         original study. While substantial efforts are made to ensure the 
+#'         accuracy of data and associated documentation, complete accuracy of 
+#'         data sets cannot be guaranteed. All data are made available "as is." 
+#'         The Data User should be aware, however, that data are updated 
+#'         periodically and it is the responsibility of the Data User to check 
+#'         for new versions of the data. The data authors and the repository 
+#'         where these data were obtained shall not be liable for damages 
+#'         resulting from any use or misinterpretation of the data. Thank you.
+#'         \item \strong{other} This option is not recommended! Enter the text
+#'         of your custom intellectual rights license.
+#'     }
+#'     
 #' @export     
 #'     
-#' @seealso 
-#'     \code{\link{view_instructions}} for guidance on completing the 
-#'     templates.
 
-
-import_templates <- function(path, license, data.names){
+import_templates <- function(path, license, data.files){
   
   # Check for arguments -------------------------------------------------------
   
@@ -70,17 +114,17 @@ import_templates <- function(path, license, data.names){
   if (missing(license)){
     stop("Specify a license for your dataset.")
   }
-  if (missing(data.names)){
-    stop("Specify the names of all the data entities in your dataset.")
+  if (missing(data.files)){
+    stop("Specify the names of all the data files in your dataset.")
   }
 
-  # Check arguments and modify ------------------------------------------------
+  # Check arguments and modify for script -------------------------------------
+  
+  print("Checking input arguments ...")
   
   # Convert arguments to lower case
   
   license.low <- tolower(license)
-  
-  data.types.low <- tolower(data.types)
   
   # License is a valid option
   
@@ -93,15 +137,22 @@ import_templates <- function(path, license, data.names){
   files <- list.files(path)
   files <- c(files, str_replace(files, "\\.[:alnum:]*$", replacement = ""))
   use_i <- str_detect(string = files,
-                      pattern = str_c("^", data.names, "$", collapse = "|"))
-  if (!sum(use_i) == length(data.names)){
+                      pattern = str_c("^", data.files, "$", collapse = "|"))
+  if (!sum(use_i) == length(data.files)){
     if(sum(use_i) == 0){
-      stop(paste("Invalid file name(s) entered: ", paste(data.names, collapse = ", "), sep = ""))
+      stop(paste("Invalid data.files entered: ", paste(data.files, collapse = ", "), sep = ""))
     } else {
-      name_issues <- data.names[!files[use_i] == data.names]
-      stop(paste("Invalid data.names entered: ", paste(name_issues, collapse = ", "), sep = ""))
+      name_issues <- data.files[!files[use_i] == data.files]
+      stop(paste("Invalid data.files entered: ", paste(name_issues, collapse = ", "), sep = ""))
     }
   }
+  
+  # Get actual file names for script
+  
+  files <- list.files(path)
+  use_i <- str_detect(string = files,
+                    pattern = str_c("^", data.files, collapse = "|"))
+  data_files <- files[use_i]
   
   # Copy non-attributes templates to working directory with correct names -----
   
@@ -130,6 +181,7 @@ import_templates <- function(path, license, data.names){
                                 "/",
                                 "additional_info.txt",
                                 sep = ""))
+  
   if (isTRUE(value)){
     print("Importing additional_info.txt", " ...")
   } else {
@@ -187,6 +239,7 @@ import_templates <- function(path, license, data.names){
   # Intellectual rights license
   
   if (license.low == "cc0"){
+    
     value <- file.copy(from = paste(path.package("EMLassemblyline"),
                                     "/templates/intellectual_rights_cc0.txt",
                                     sep = ""),
@@ -194,12 +247,15 @@ import_templates <- function(path, license, data.names){
                                   "/",
                                   "intellectual_rights.txt",
                                   sep = ""))
+    
     if (isTRUE(value)){
       print("Importing intellectual_rights.txt ...")
     } else {
       print("intellectual_rights.txt already exists ...")
     }
+    
   } else if (license.low == "ccby"){
+    
     value <- file.copy(from = paste(path.package("EMLassemblyline"),
                                     "/templates/intellectual_rights_ccby4.0.txt",
                                     sep = ""),
@@ -207,11 +263,13 @@ import_templates <- function(path, license, data.names){
                                   "/",
                                   "intellectual_rights.txt",
                                   sep = ""))
+    
     if (isTRUE(value)){
       print("Importing intellectual_rights.txt ...")
     } else {
       print("intellectual_rights.txt already exists ...")
     }
+    
   } else if (license.low == "other"){
     value <- file.copy(from = paste(path.package("EMLassemblyline"),
                                     "/templates/intellectual_rights_other.txt",
@@ -220,6 +278,7 @@ import_templates <- function(path, license, data.names){
                                   "/",
                                   "intellectual_rights.txt",
                                   sep = ""))
+    
     if (isTRUE(value)){
       print("Importing intellectual_rights.txt ...")
     } else {
@@ -292,24 +351,61 @@ import_templates <- function(path, license, data.names){
   }
   
   # Copy attributes files to working directory --------------------------------
-
+  
   # Check for valid column names
+  
+  print("Checking data.files for valid column names ...")
+  
+  for (i in 1:length(data_files)){
+    
+    file_path <- paste(path,
+                       "/",
+                       data_files[i],
+                       sep = "")
+    
+    delim_guess <- get.delim(file_path,
+                             n = 2)
+    
+    df_table <- read.table(file_path,
+                           header = TRUE,
+                           sep = delim_guess,
+                           quote = "\"",
+                           as.is = TRUE,
+                           comment.char = "")
+    
+    column_names <- colnames(df_table)
+    use_i <- str_detect(string = column_names,
+                        pattern = "\\.")
+    
+    if (sum(use_i) > 0){
+      stop(paste("Invalid column names detected in ", 
+                 data_files[i],
+                 ":  ",
+                 paste(column_names[use_i], collapse = ", "), 
+                 '  Replace characters located at periods "." in the above listed column names with underscores "_"',
+                 sep = "")
+           )
+    }
+  }
   
   # Extract attributes
   
-  
   attributes <- list()
-  for (i in 1:length(data.names)){
+  for (i in 1:length(data_files)){
+    
+    print(paste("Detecting attributes of",
+                data_files[i],
+                "..."))
     
     # Read data table
     
     file_path <- paste(path,
                        "/",
-                       data.names[i],
+                       data_files[i],
                        sep = "")
     
     delim_guess <- get.delim(file_path,
-                             n = 1)
+                             n = 2)
 
     df_table <- read.table(file_path,
                            header = TRUE,
@@ -393,13 +489,13 @@ import_templates <- function(path, license, data.names){
     value <- file.exists(paste(path,
                                  "/",
                                  "attributes_",
-                                 substr(data.names[i], 1, nchar(data.names[i]) - 4),
+                                 substr(data_files[i], 1, nchar(data_files[i]) - 4),
                                  ".txt",
                                  sep = ""))
     if (!isTRUE(value)){
       
       print(paste("Importing attributes_",
-                  substr(data.names[i], 1, nchar(data.names[i]) - 4),
+                  substr(data_files[i], 1, nchar(data_files[i]) - 4),
                   ".txt ...",
                   sep = ""))
       
@@ -407,7 +503,7 @@ import_templates <- function(path, license, data.names){
                   paste(path,
                         "/",
                         "attributes_",
-                        substr(data.names[i], 1, nchar(data.names[i]) - 4),
+                        substr(data_files[i], 1, nchar(data_files[i]) - 4),
                         ".txt",
                         sep = ""),
                   sep = "\t",
@@ -417,7 +513,7 @@ import_templates <- function(path, license, data.names){
       
     } else {
       print(paste("attributes_",
-            substr(data.names[i], 1, nchar(data.names[i]) - 4),
+            substr(data_files[i], 1, nchar(data_files[i]) - 4),
             ".txt already exists ...",
             sep = ""))
     }

@@ -5,28 +5,27 @@
 #'     name) to be included in the EML.
 #'
 #' @usage 
-#'     extract_geocoverage(path, table.name, lat.col, lon.col, site.col)
+#'     extract_geocoverage(path, data.file, lat.col, lon.col, site.col)
 #'
 #' @param path 
 #'     A path to the dataset working directory containing the data table with 
 #'     geographic information.
-#' @param table.name 
-#'     Name of the input data table containing geographic coverage data. The 
-#'     table name must include the file extension (e.g. .csv).
+#' @param data.file 
+#'     Name of the input data table containing geographic coverage data..
 #' @param lat.col 
 #'     Name of latitude column. Values of this column must be in decimal 
 #'     degrees. Latitudes south of the equator must be prefixed with a minus 
-#'     sign (i.e. dash, -).
+#'     sign (i.e. dash, "-").
 #' @param lon.col 
 #'     Name of longitude column. Values of this column must be in decimal 
 #'     degrees. Longitudes west of the prime meridian must be prefixed with a 
-#'     minus sign (i.e. dash, -). 
+#'     minus sign (i.e. dash, "-"). 
 #' @param site.col
 #'     Name of site column. This column lists site specific names to be 
 #'     associated with the geographic coordinates.
 #'
 #' @return 
-#'     A tab delimited UTF-8 formatted file in the dataset working directory 
+#'     A tab delimited file in the dataset working directory 
 #'     titled \emph{geographic_coverage.txt} and containing decimal degree 
 #'     latitude, decimal degree longitude, and site name.
 #'
@@ -35,16 +34,16 @@
 #' @seealso \code{\link{make_eml}} to make the EML file.
 
 
-extract_geocoverage <- function(path, table.name, lat.col, lon.col, site.col){
+extract_geocoverage <- function(path, data.file, lat.col, lon.col, site.col){
   
-  # Check arguments
+  # Check for arguments -------------------------------------------------------
   
   if (missing(path)){
     stop("Specify path to dataset working directory.")
   }
   
-  if (missing(table.name)){
-    stop("Specify table name.")
+  if (missing(data.file)){
+    stop("Specify the data file containing the geographic coordinates.")
   }
   
   if (missing(lat.col)){
@@ -59,22 +58,59 @@ extract_geocoverage <- function(path, table.name, lat.col, lon.col, site.col){
     stop("Specify site column name.")
   }
   
+  # Check arguments and modify for script -------------------------------------
+  
+  print("Checking input arguments ...")
+  
+  # Data names are valid
+  
+  files <- list.files(path)
+  files <- c(files, str_replace(files, "\\.[:alnum:]*$", replacement = ""))
+  use_i <- str_detect(string = files,
+                      pattern = str_c("^", data.file, "$", collapse = "|"))
+  if (!sum(use_i) == length(data.file)){
+    if(sum(use_i) == 0){
+      stop(paste("Invalid data.file entered: ", paste(data.file, collapse = ", "), sep = ""))
+    } else {
+      name_issues <- data.files[!files[use_i] == data.file]
+      stop(paste("Invalid data.file entered: ", paste(name_issues, collapse = ", "), sep = ""))
+    }
+  }
+  
+  # Get actual file name for script
+  
+  files <- list.files(path)
+  use_i <- str_detect(string = files,
+                      pattern = str_c("^", data.file, collapse = "|"))
+  data_files <- files[use_i]
+  
+  # Path is valid
+  
+  value <- file.exists(paste(path, "/", data.file, sep = ""))
+  if (!isTRUE(value)){
+    stop(paste('Invalid file path entered: ', path))
+  }
+  
   # Load the datasets configuration file
   
-  print("Loading configuration file ...")
+  print("Loading configuration.R ...")
   
-  source(paste(path, "/eml_configuration.R", sep = ""))
+  source(paste(path, "/configuration.R", sep = ""))
   
   # Read data table
   
-  print(paste("Reading", table.name, "...", sep = " "))
+  delim_guess <- get.delim(paste(path,
+                                 "/",
+                                 data.file,
+                                 sep = ""),
+                           n = 2)
   
-  use_i <- match(table.name, table_names)
+  print(paste("Reading", data.file, "...", sep = " "))
   
   df_table <- read.table(
-    paste(path, "/", table.name, sep = ""),
+    paste(path, "/", data.file, sep = ""),
     header=TRUE,
-    sep=",",
+    sep = delim_guess,
     quote="\"",
     as.is=TRUE,
     comment.char = "")
