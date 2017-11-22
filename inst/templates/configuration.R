@@ -156,7 +156,7 @@ data_table_descriptions <- c("")
 # data_table_urls <- c("https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride/gleon_chloride_concentrations.csv",
 #                      "https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride/gleon_chloride_lake_characteristics.csv")
 
-data_table_urls <- c("")
+data_table_urls <- c("") # assume all data files are in same directory and paste file name suffix on the end
 
 
 # Define the number of header lines of your data table(s). This is the number of 
@@ -169,7 +169,7 @@ data_table_urls <- c("")
 # num_header_lines <- c("1", 
 #                       "1")
 
-num_header_lines <- c("")
+num_header_lines <- c("") # default to 1, add over ride option
 
 
 # Define the end of line specifier for your data table(s). This character 
@@ -183,7 +183,7 @@ num_header_lines <- c("")
 # record_delimeter <- c("\\r\\n",
 #                       "\\r\\n")
 
-record_delimeter <- c("")
+record_delimeter <- c("") # Can this be automated? Command line call?
 
 
 # Define the orientation of attributes in your data table. Acceptable value 
@@ -195,7 +195,7 @@ record_delimeter <- c("")
 # attribute_orientation <- c("column",
 #                            "column")
 
-attribute_orientation <- c("")
+attribute_orientation <- c("") # constrain inputs to column orientation
 
 
 # Define the field delimeter of your data tables. Acceptable values are "comma" 
@@ -207,7 +207,7 @@ attribute_orientation <- c("")
 # field_delimeter <- c("comma",
 #                      "comma")
 
-field_delimeter <- c("")
+field_delimeter <- c("") # auto detect
 
 
 # Define the quote character used in your data tables. If the quote character 
@@ -222,6 +222,6 @@ field_delimeter <- c("")
 # quote_character <- c("\"",
 #                      "\'")
 
-quote_character <- c("")
+quote_character <- c("") # default to " but allow over ride
 
 
