@@ -1,63 +1,75 @@
 ---
-title: "Instructions for EMLassemblyline"
+title: "Instructions for operating the EML assembly line"
 author: "Colin Smith"
-date: "November 17, 2017"
-output: pdf_document
+date: "November 27, 2017"
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 # Overview
 
-Here is a decision tree for the assembly line to help you to decide which functions you should call to maximize the metadata for your dataset. Each step will ask you to fill out a series of templates (metadata parts) that are later rendered into EML metadata by the `make_eml` function.
+The EML assembly line will help you create high quality metadata for your dataset. Below is a set of step-by-step instructions for making EML metadata for tabular data. The assembly line will soon be capable of handling other data types including: spatial vector, spatial raster, and images.
 
-# Step 1: Create a working directory for your dataset
 
-Create a new directory for your dataset. This is where the metadata parts created in the assembly line process will be stored, and available to you in the future should you need to change the metadata content.
+# Step 1: Create a directory for your dataset
 
-Name this directory after your dataset. Span spaces with underscores (e.g. "gleon_chloride")
+Create a new directory for your dataset. This is where the metadata parts created in the assembly line process will be stored and available for editing should you need to change the content.
 
-# Step 2: Move your dataset to this directory
+Name this directory after your dataset. Replace spaces with underscores (e.g. "name of your directory" should be "name_of_your_directory").
 
-Move the final versions of your data entities (tables or zip files) into this directory. These should be the final versions of the data you are ready to publish.
+# Step 2: Move your dataset to the directory
 
-Rename these files following these rules: (1) replace blank spaces with underscores (2) remove symbols, parentheses, and periods.
+Move the final versions of your data tables into this directory. These should be the final versions of the data you are ready to publish.
+
+Rename these files following these rules:
+* replace symbols with words
+* replace parentheses with underscores
+* replace periods with underscores
+* replace blank spaces with underscores
+
+e.g. "name.of.(your) d@t@.file" should be "name_of_your_data_file"
+
 
 # Step 3: Select an intellectual rights license
 
-We recommend two intellectual rights licenses to be included with your dataset: (1) "CC0" the most accomodating of data reuse and (2) "CCBY" requires attribution. We do allow a 3rd option "other" in which you can specify a customized intellectual rights license but advise against this.
+We recommend two intellectual rights licenses for your dataset:
+1. __CC0__ the most accomodating of data reuse ... This data package is released to the “public domain” under Creative Commons CC0 1.0 “No Rights Reserved” (see: https://creativecommons.org/publicdomain/zero/1.0/). It is considered professional etiquette to provide attribution of the original work if this data package is shared in whole or by individual components. A generic citation is provided for this data package on the website https://portal.edirepository.org (herein “website”) in the summary metadata page. Communication (and collaboration) with the creators of this data package is recommended to prevent duplicate research or publication. This data package (and its components) is made available “as is” and with no warranty of accuracy or fitness for use. The creators of this data package and the website shall not be liable for any damages resulting from misinterpretation or misuse of the data package or its components. Periodic updates of this data package may be available from the website. Thank you.
+2. __CCBY__ requires attribution ... This information is released under the Creative Commons license - Attribution - CC BY (https://creativecommons.org/licenses/by/4.0/). The consumer of these data ("Data User" herein) is required to cite it appropriately in any publication that results from its use. The Data User should realize that these data may be actively used by others for ongoing research and that coordination may be necessary to prevent duplicate publication. The Data User is urged to contact the authors of these data if any questions about methodology or results occur. Where appropriate, the Data User is encouraged to consider collaboration or co-authorship with the authors. The Data User should realize that misinterpretation of data may occur if used out of context of the original study. While substantial efforts are made to ensure the accuracy of data and associated documentation, complete accuracy of data sets cannot be guaranteed. All data are made available "as is." The Data User should be aware, however, that data are updated periodically and it is the responsibility of the Data User to check for new versions of the data. The data authors and the repository where these data were obtained shall not be liable for damages resulting from any use or misinterpretation of the data. Thank you.
 
-### CC0
 
-This data package is released to the “public domain” under Creative Commons CC0 1.0 “No Rights Reserved” (see: https://creativecommons.org/publicdomain/zero/1.0/). It is considered professional etiquette to provide attribution of the original work if this data package is shared in whole or by individual components. A generic citation is provided for this data package on the website https://portal.edirepository.org (herein “website”) in the summary metadata page. Communication (and collaboration) with the creators of this data package is recommended to prevent duplicate research or publication. This data package (and its components) is made available “as is” and with no warranty of accuracy or fitness for use. The creators of this data package and the website shall not be liable for any damages resulting from misinterpretation or misuse of the data package or its components. Periodic updates of this data package may be available from the website. Thank you.
+# Step 4: Identfy the types of data in your dataset
 
-### CCBY
-
-This information is released under the Creative Commons license - Attribution - CC BY (https://creativecommons.org/licenses/by/4.0/). The consumer of these data ("Data User" herein) is required to cite it appropriately in any publication that results from its use. The Data User should realize that these data may be actively used by others for ongoing research and that coordination may be necessary to prevent duplicate publication. The Data User is urged to contact the authors of these data if any questions about methodology or results occur. Where appropriate, the Data User is encouraged to consider collaboration or co-authorship with the authors. The Data User should realize that misinterpretation of data may occur if used out of context of the original study. While substantial efforts are made to ensure the accuracy of data and associated documentation, complete accuracy of data sets cannot be guaranteed. All data are made available "as is." The Data User should be aware, however, that data are updated periodically and it is the responsibility of the Data User to check for new versions of the data. The data authors and the repository where these data were obtained shall not be liable for damages resulting from any use or misinterpretation of the data. Thank you.
-
-# Step 5: Identfy the types of data in your dataset
-
-Right now the assembly line only works for data in tabular format. If your data is something other than tabular, we appologize for the wait. Check back soon!
+Currently, the assembly line only works for tabular data.
 
 ### table
 
-A flat file composed of columns containing variables and rows containing observations. Column names must follow these rules: (1) replace blank spaces with underscores (2) remove symbols, parentheses, and periods.
+A flat file composed of columns containing variables and rows containing observations. Column names must follow these rules:
+* replace symbols with words
+* replace parentheses with underscores
+* replace periods with underscores
+* replace blank spaces with underscores
 
-# Step 6: Import the core metadata templates
+e.g. "land.cover.use (%)" should be "percent_land_cover_use"
 
-Run the function `import_templates` to populate the working directory with the core metadata templates for you to complete. You will need to supply a few arguments for this function to work correctly.
 
-```{r setup, include=FALSE}
+# Step 5: Import the core metadata templates
+
+Run the function `import_templates` to populate the directory with metadata templates for you to complete. You will need to supply a few arguments to this function.
+
+```
 # View documentation on how to use this function
 ?import_templates
 
 # Import templates for an example dataset licensed under CC0, with 2 tables.
 import_templates(path = "/Users/csmith/Desktop/gleon_chloride",
                  license = "CC0",
-                 data.names = c("lake_concentrations.csv",
-                                "lake_characteristics.csv")
+                 data.names = c("lake_chloride_concentrations",
+                                "lake_characteristics")
                  )
 ```
 
-# Step 7: 
+# Step 6: 
 
 At the command prompt of 
 \code{import_templates} to import metadata templates into the working 
@@ -419,7 +431,7 @@ view_instructions <- function() {
 
 
 
-```{r setup, include=FALSE}
+```
 knitr::opts_chunk$set(echo = TRUE)
 ```
 

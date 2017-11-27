@@ -1,63 +1,75 @@
 #' Import metadata templates
 #'
 #' @description  
-#'     Create a working directory for your dataset then run this function to 
-#'     import metadata templates. Use these templates to provide information 
-#'     about your data. 
+#'     Run this function to import metadata templates for your dataset. 
+#'     Information entered in these templates will be rendered into EML by 
+#'     \code{make_eml} during the last step of the assembly line process.
 #'
 #' @usage 
-#'     import_templates(path, license, data.files = c("data.file.1", "data.file.2", "etc"))
+#'     import_templates(path = "", license = "", data.files = c("data.file.1", "data.file.2", "etc."))
 #'
 #' @param path 
 #'     A character string specifying a path to the dataset working directory
 #'     (e.g. "C:/Users/Colin/Documents/data_sets/gleon_chloride").
+#'     
 #' @param license
-#'     A character string specifying the license for your dataset. Select "CC0",
-#'     "CCBY", or "other". Additional information about these licenses are 
-#'     listed below in "details".
+#'     A character string specifying the license for your dataset. Select "CC0" 
+#'     or "CCBY". Additional information about these licenses are listed below 
+#'     under "details".
+#'     
 #' @param data.files
 #'     A list of character strings specifying the names of the data files
-#'     of your dataset.
+#'     of your dataset. It is not necessary to include the file extension.
 #'
 #' @return 
-#'     \emph{abstract.txt} A text file for the abstract of your 
-#'     dataset.
+#'     \strong{abstract.txt} A text file for the abstract of your dataset. Edit 
+#'     this file in a text editor. Do not include special characters, symbols, 
+#'     or formatting. Keep it simple! Describe your methods in plain text. 
+#'     Remove any smart quotes or other symbols specific to Microsoft Office.
 #'     
-#'     \emph{additional_info.txt} A text file for additional 
-#'     information about your dataset.
+#'     \strong{additional_info.txt} A text file for additional information about 
+#'     your dataset.
 #'     
-#'     \emph{attributes_datafilename.txt} A tab delimited table for information 
-#'     about your data tables. Note: each of your data files will have a 
-#'     corresponding attributes.txt file. \code{import_templates} makes a series of 
-#'     informed guesses about the attributes of your data files and 
-#'     writes them in this file. You will have to verify this information is correct.
+#'     \strong{attributes_datafilename.txt} A tab delimited table for information 
+#'     about your data tables. Edit this file in a spread sheet editor, DO NOT 
+#'     edit in a text editor. NOTE: each of your data files will have a 
+#'     corresponding attributes.txt file. \code{import_templates} makes a 
+#'     series of informed guesses about the attributes of your data files and 
+#'     writes them in these files. You must verify this information is correct.
 #'     
-#'     \emph{configuration.R} A file for supplying additional parameters to 
-#'     functions used in the assemblyline.
+#'     \strong{configuration.R} A file for supplying additional parameters to 
+#'     functions used in the assembly line. Edit this file in RStudio.
 #'     
-#'     \emph{custom_units.txt} A tab delimited table for custom 
-#'     units used in your data that are not defined in the standard unit 
-#'     dictionary.
+#'     \strong{custom_units.txt} A tab delimited table for custom units used in 
+#'     your data that are not defined in the standard unit dictionary. Edit 
+#'     this file in a spread sheet editor, DO NOT edit in a text editor.
 #'     
-#'     \emph{instructions.pdf} Step by step instructions on how to operate the 
+#'     \strong{instructions.pdf} Step-by-step instructions on how to operate the 
 #'     assembly line.
 #'     
-#'     \emph{intellectual_rights.txt} The selected intellectual rights license 
-#'     for your dataset.
+#'     \strong{intellectual_rights.txt} The selected intellectual rights license 
+#'     for your dataset. DO NOT edit the text of this file.
 #'     
-#'     \emph{keywords.txt} A tab delimited table for keywords.
+#'     \strong{keywords.txt} A tab delimited table for keywords. Edit this file 
+#'     in a spread sheet editor, DO NOT edit in a text editor.
 #'     
-#'     \emph{methods.txt} A text file for methods used in creating your data.
+#'     \strong{methods.txt} A text file for the methods followed in 
+#'     collecting/creating your dataset. Edit this file in a text editor. Do 
+#'     not include special characters, symbols, or formatting. Keep it simple! 
+#'     Describe your methods in plain text. Remove any smart quotes or other 
+#'     symbols specific to Microsoft Office.
 #'     
-#'     \emph{my_workflow.R} A blank R script file in which to build your 
-#'     assembly line workflow.
+#'     \strong{my_workflow.R} A blank R script for you to build an assembly 
+#'     line workflow, which can be revisited or modified for future assembly 
+#'     line runs.
 #'     
-#'     \emph{personnel.txt} A tab delimited table for information about 
-#'     personnel associated with this dataset.
+#'     \strong{personnel.txt} A tab delimited table for information about 
+#'     personnel associated with your dataset. Edit this file in a spread sheet 
+#'     editor, DO NOT edit in a text editor.
 #'     
 #' @details 
-#'     If template files already exist in the working directory, new templates 
-#'     will not be imported.
+#'     New templates will not be imported if template files already exist in 
+#'     the directory.
 #'     
 #'     Here is the text of the recommended intellectual rights licenses.
 #'     \itemize{
@@ -97,8 +109,6 @@
 #'         for new versions of the data. The data authors and the repository 
 #'         where these data were obtained shall not be liable for damages 
 #'         resulting from any use or misinterpretation of the data. Thank you.
-#'         \item \strong{other} This option is not recommended! Enter the text
-#'         of your custom intellectual rights license.
 #'     }
 #'     
 #' @export     
@@ -128,8 +138,8 @@ import_templates <- function(path, license, data.files){
   
   # License is a valid option
   
-  if (!str_detect(license.low, "cc0|ccby|other")){
-    stop('Invalid license. Please choose "CC0", "CCBY", or "other".')
+  if (!str_detect(license.low, "cc0|ccby")){
+    stop('Invalid license. Please choose "CC0" or "CCBY".')
   }
   
   # Data names are valid
@@ -270,20 +280,6 @@ import_templates <- function(path, license, data.files){
       print("intellectual_rights.txt already exists ...")
     }
     
-  } else if (license.low == "other"){
-    value <- file.copy(from = paste(path.package("EMLassemblyline"),
-                                    "/templates/intellectual_rights_other.txt",
-                                    sep = ""),
-                       to = paste(path,
-                                  "/",
-                                  "intellectual_rights.txt",
-                                  sep = ""))
-    
-    if (isTRUE(value)){
-      print("Importing intellectual_rights.txt ...")
-    } else {
-      print("intellectual_rights.txt already exists ...")
-    }
   }
   
   # Keywords
