@@ -40,7 +40,7 @@ We recommend two intellectual rights licenses for your dataset:
 
 # Step 4: Identfy the types of data in your dataset
 
-Currently, the assembly line only works for tabular data.
+Currently, the assembly line only works for tabular data and is the default option.
 
 ### table
 
@@ -58,7 +58,10 @@ e.g. "land.cover.use (%)" should be "percent_land_cover_use"
 Run the function `import_templates` to populate the directory with metadata templates for you to complete. You will need to supply a few arguments to this function.
 
 ```
-# View documentation on how to use this function
+# First load the EMLassemblyline package
+library(EMLassemblyline)
+
+# View documentation on how to use the import_templates function
 ?import_templates
 
 # Import templates for an example dataset licensed under CC0, with 2 tables.
@@ -69,215 +72,125 @@ import_templates(path = "/Users/csmith/Desktop/gleon_chloride",
                  )
 ```
 
-# Step 6: 
+# Step 7: Script your workflow
 
-At the command prompt of 
-\code{import_templates} to import metadata templates into the working 
-directory. For help running \code{import_templates} consult the 
-functions documentation by entering \code{?import_templates} into the 
-RStudio Console window.
-    
-    \emph{"Move your data table(s) to the working directory."} Move your 
-    data tables to the dataset working directory and name them following the 
-    convention 'datasetname_datatablename', where datasetname is the name 
-    of your dataset (e.g. gleon_chloride), and datatablename is the name of 
-    your data table (e.g. lake_characteristics). In this example, the name 
-    of the data table becomes 'gleon_chloride_lake_characteristics'.
-         
-    \emph{"Write an abstract for your dataset ..."} Write an abstract for 
-    your dataset in the file datasetname_abstract.txt. The abstract 
-    should cover what, why, when, where, and how. The template is a UTF-8 
-    formatted file. Use only UTF-8 symbols and text when completing.
-    
-    \emph{"Place additional information ..."} Place additional info in the 
-    file datasetname_additional_info.txt. This is a good place 
-    to share additional text based information that doesn't fall under the 
-    scope of the abstract or methods (e.g. a list of research articles or 
-    theses derived from this dataset). The template is a UTF-8 formatted 
-    file. Use only UTF-8 symbols and text. Delete this file if you have no 
-    additional information to present.
-    
-    \emph{"Fill out the keywords template"} List keywords that best describe
-    your dataset. Consult this resource (http://vocab.lternet.edu/vocab/vocab/index.php) 
-    as you populate the keywords template. Additionally, use keywords that 
-    describe your lab, station, and project (e.g. GLEON, NSF, etc.). This is 
-    a tab delimited file that can be edited with a spreadsheet editor. This 
-    file is UTF-8 formatted. Definitions for fields in this file:
-    \itemize{
-        \item \strong{keyword} A keyword describing your dataset.
-        \item \strong{keywordThesaurus} A keywordThesaurus (i.e. controlled
-        vocuabulary) corresponding to the keyword listed in the keyword field. 
-        If the keyword is not from a thesaurus or controlled vocabulary, leave
-        corresponding entry in the keywordThesaurus field blank.
-    }
-    
-    
-    
-    \emph{"Write the methods for your dataset ..."} Explain the methods used
-     to create this dataset in the file datasetname_methods.txt. Be specific, 
-     include instrument descriptions, or point to a protocol online. If this 
-     dataset is a synthesis of other datasets please specify dataset origins, 
-     preferably their DOI or URL plus general citation information. This 
-     file is a UTF-8 formatted file. Use only UTF-8 symbols and text.
-    
-    \emph{"Enter personnel information for your dataset ..."} Enter 
-    personnel information for your dataset in the file 
-    datasetname_personnel.txt. This is a tab delimited file that can be 
-    edited with a spreadsheet editor. Definitions for fields in 
-    this file:
-    \itemize{
-        \item \strong{givenName} Given name of person.
-        \item \strong{surName} Surname of person.
-        \item \strong{organizationName} Name of organization the person is 
-        associated with.
-        \item \strong{electronicMailAddress} Email address of person.
-        \item \strong{userId} ORCID of person (not required). A valid entry
-        for userId is the 12 digit number separated by dashes 
-        (i.e. XXXX-XXXX-XXXX-XXXX). An ORCID is like a social security 
-        number for scientists. [Create one here](https://orcid.org/).
-        \item \strong{role} Role of person with respect to this dataset.
+Open __my_workflow.R__ in RStudio. This is a blank script for you to build an assembly line workflow, which can be revisited or modified for future assembly line runs.
+
+
+# Step 8: Abstract
+
+Open the file __abstract.txt__ and write an abstract for your dataset. The abstract should cover what, why, when, where, and how for your dataset. Write your abstract in plain text.
+
+Do not use special characters, symbols, or formatting, including hyperlinks (URLs are acceptable). The reason for this is that the EML schema only allows characters that are apart of the unicode character set.
+
+If you are copying over your abstract from Microsoft Word you will want to remove non-unicode characters. To do this go to this web service http://utils.paranoiaworks.org/diacriticsremover/ and paste your abstract into the window. Click the button "Remove Diacritics" to remove these non-compliant characters, then copy the text from the window and into __abstract.txt__. You will want to give it one last look over after performing this operation to ensure no information has been lost.
+
+
+# Step 9: Methods
+
+Open the file __methods.txt__ and describe the methods for your dataset. Be specific, include instrument descriptions, or point to a protocol online. If this dataset is a synthesis of other datasets please specify dataset origins, preferably their DOI or URL plus general citation information. 
+
+Write your methods in plain text. Do not use special characters, symbols, or formatting, including hyperlinks (URLs are acceptable). The reason for this is that the EML schema only allows characters that are apart of the unicode character set.
+
+If you are copying over your methods from Microsoft Word you will want to remove non-unicode characters. To do this go to [this web service](http://utils.paranoiaworks.org/diacriticsremover/) and paste your methods into the window. Click the button "Remove Diacritics" to remove these non-compliant characters, then copy the text from the window and into __methods.txt__. You will want to give it one last look over after performing this operation to ensure no information has been lost.
+
+
+# Step 10: Additional information
+
+Do you have additional text based information that doesn't fall under the scope of the abstract or methods for your dataset (e.g. a list of research articles or theses derived from this dataset)? If so, then open __additional_info.txt__ in a text editor and add this information. You can delete this file if you won't be using it, or you can keep it around for later if you change your mind.
+
+Write your additional information in plain text. Do not use special characters, symbols, or formatting, including hyperlinks (URLs are acceptable). The reason for this is that the EML schema only allows characters that are apart of the unicode character set.
+
+If you are copying over your additional information from Microsoft Word you will want to remove non-unicode characters. To do this go to [this web service](http://utils.paranoiaworks.org/diacriticsremover/) and paste your additional information into the window. Click the button "Remove Diacritics" to remove these non-compliant characters, then copy the text from the window and into __additional_info.txt__. You will want to give it one last look over after performing this operation to ensure no information has been lost.
+
+
+# Step 11: Keywords
+
+Open the tab delimited file __keywords.txt__ in a spread sheet editor and list the keywords that best describe your dataset. DO NOT edit this file in a text editor. [Consult the LTER controlled vocabulary](http://vocab.lternet.edu/vocab/vocab/index.php) for keywords. In addition to keywords about the data include keywords that describe your lab, station, and project (e.g. OBFS, LTREB, etc.).
+
+Definitions for columns of this file:
+* __keyword__ A keyword describing your dataset.
+* __keywordThesaurus__ A keywordThesaurus (i.e. a controlled vocabulary like the resource listed above) corresponding to the keyword listed in the keyword column. If the keyword is not from a thesaurus or controlled vocabulary, leave corresponding entry in the keywordThesaurus field blank.
+
+# Step 12: Personnel
+
+Open the tab delimited file __personnel.txt__ in a spread sheet editor and enter information about the personnel associated with this dataset.
+
+Definitions for columns of this file:
+* **givenName** Given name of person (required).
+* **surName*__** Surname of person (required).
+* **organizationName** Name of organization the person is associated with (not required).
+* **electronicMailAddress** Email address of person (not required unless a contact for your dataset).
+* **userId** ORCID of person (not required). A valid entry for userId is the 16 digit number separated by dashes (i.e. XXXX-XXXX-XXXX-XXXX). An ORCID is like a social security number for scientists. [Create one here](https://orcid.org/).
+    + **role** Role of person with respect to this dataset.
         Valid entries for role are:
-        \itemize{
-            \item \strong{creator} Dataset creator (required)
-            \item \strong{pi} Principal investigator associated with this 
-            dataset (required)
-            \item \strong{contact} Dataset contact (required)
-            \item Any other entries into the 'role' column are acceptable and will 
-            be defined under the associated party element of this dataset.
-        } 
-        If a person serves more than one role, duplicate this persons 
-        information in another row but with the new role. This file is a 
-        UTF-8 formatted file. Use only UTF-8 symbols and text.
-        \item \strong{projectTitle} Title of the project this dataset was 
-        created under (recommended). Project titles are only listed on lines 
-        where the personnel role is \emph{pi}. If auxiliary projects were 
-        involved in creating this dataset then add a new line of personnel 
-        below the primary project and list the auxiliary project title and 
-        associated \emph{pi}.
-        \item \strong{fundingAgency} Name of the entity funding the creation
-        of this dataset (recommended). Only include an entry in this column for
-        rows where role = \emph{pi}.
-        \item \strong{fundingNumber} Number of the grant or award that 
-        supported creation of this dataset (recommended). Only include an entry 
-        in this column for rows where role = \emph{pi}.
-    }
+        * **creator** Dataset creator (required; at least 1 creator must be listed for your dataset).
+        * **pi** Principal investigator associated with this dataset (required; at least 1 pi must be listed for your dataset).
+        * **contact** Dataset contact (required; at least 1 contact must be listed for your dataset).
+        * Any other entries into the 'role' column are acceptable and will be defined under the associated party element of this dataset with whatever value is entered under role.
+    + If a person serves more than one role, duplicate this persons information in another row but with the additional role.
+* **projectTitle** Title of the project this dataset was created under (required). Project titles are only listed on lines where the personnel role is **pi**. If auxiliary projects were involved in creating this dataset then add a new line of personnel below the primary project and list the auxiliary project title and associated **pi**.
+* **fundingAgency** Name of the entity funding the creation of this dataset (required). Only include an entry in this column for rows where role **pi**.
+* **fundingNumber** Number of the grant or award that supported creation of this dataset (required). Only include an entry in this column for rows where role **pi**.
+
+
+# Step 13: Attributes
     
-    \emph{"Add data table attributes ..."} Add data table attributes to the 
-    file datasetname_datatablename_attributes.txt. This is a tab delimited 
-    file that can be edited with a spreadsheet editor. Rename the file 
-    according to convention (e.g. 
-    gleon_chloride_lake_characteristics_attributes, where gleon_chloride is 
-    the dataset name and lake_characteristics is the table name). Create an attributes 
-    file for each data table. This file is a UTF-8 formatted file. Use only 
-    UTF-8 symbols and text. Instructions for completing the attribute table 
-    are as follows:
-    \itemize{
-        \item \strong{attributeName} Attribute name (column name) as 
-        it appears in the data table and in the same order as in the data 
-        table.
-        \item \strong{attributeDefinition} Define the attribute (column 
-        name). Be specific, it can be lengthy.
-        \item \strong{class} Specify the attribute (column) class. This 
-        is the type of value stored under the attribute. Valid options are: 
-        \itemize{
-            \item \strong{numeric} For numeric variables.
-            \item \strong{categorical} For categorical variables.
-            \item \strong{character} For variables containing text or 
-            symbols that are not categorical. 
-            \item \strong{Date} For date time data.
-        }
-        
-        The list of valid options are case sensitive. If an attribute has 
-        class of "numeric" or "Date", then all values of this attribute must 
-        be either numeric or date time. If any character strings are present 
-        in an otherwise "numeric" attribute, this attribute must be 
-        classified as "character". Similarly if any values of a "Date" 
-        attribute do not match the date time format string (details below), 
-        then this attribute must be classified as "character".
-        \item \strong{unit} If an attributes class is numeric, then you must
-        provide units. If the attribute is numeric but does not have units, 
-        enter "dimensionless". If the attribute class is categorical, 
-        character, or Date then leave the unit field blank. If the attribute 
-        is numeric and has units search the standard unit dictionary (opened 
-        in the RStudio source window) for the unit of interest and enter the 
-        unit "name" as it appears in the  dictionary. If the dictionary is 
-        not open run these two lines of code in the console:
-        
-        \code{standardUnits <- get_unitList()}
-        
-        \code{View(standardUnits$units)}
-        
-        Unit names are case 
-        sensitive. If you cannot find a unit in the dictionary, enter the 
-        unit in the tab delimited UTF-8 formatted file 
-        datasetname_custom_units.txt. Rename this file to accord with the 
-        naming convention (e.g. gleon_chloride_custom_units). If you have no 
-        custom units to report then delete this file. Valid custom units 
-        must be convertible to SI Units (i.e. International System of 
-        Units). If it cannot be converted to SI then list it in the 
-        attribute defintion and enter "dimensionless" in the unit field. To 
-        create a custom unit define the:
-        \itemize{
-            \item \strong{id} This is equivalent to the unit name. Reference 
-            the standard unit dictionary formatting.
-            \item \strong{unitType} The type of unit being defined. 
-            Reference the dictionary for examples.
-            \item \strong{parentSI} The SI equivalent of the id you have 
-            entered.
-            \item \strong{multiplierToSI} This is the multiplier to convert 
-            from your custom unit to the SI unit equivalent.
-            \item \strong{description} A description of the custom unit. 
-            Reference the dictionary for examples.
-        }
-        \item \strong{dateTimeFormatString} Enter the date time format 
-        string for each attribute of "Date" class. Remember, a class of 
-        "Date" specifies the attribute as a date, time, or datetime. Enter 
-        the format string in this field. If the attribute class is not 
-        "Date", leave this field blank. Below are rules for constructing 
-        format strings. Additional information is listed under 
-        "dateTime-eml-attribute" of the current EML specification 
-        (https://knb.ecoinformatics.org/#external//emlparser/docs/index.html).
-        Valid date time formats are a combination of date, time, and time 
-        zone strings. Below are a set of best practice recomendations that 
-        we strongly encourage you to follow, but are by no means the full 
-        list of currently acceptable format strings.
-        \itemize{
-            \item \strong{Date format strings:} YYYY-MM-DD, YYYY, YYYYMMDD, 
-            YYYY-MM, YYYYMM, YYYY-DDD, YYYYDDD; where YYYY is year, MM is 
-            month, DD is day of month, and DDD is day of year.
-            \item \strong{Time format strings:} hh:mm:ss.sss, hhmmss.sss,
-            hh:mm:ss, hhmmss, hh:mm, hhmm, hh; where hh is hour (in 24 hr
-            clock), mm is minute, ss is second, and ss.sss is decimal 
-            second.
-            \item\strong{Time zone format strings:} Z, +hh:mm, +hhmm, +hh,
-            -hh:mm, -hhmm, -hh; where Z (capitalized) is Coordinated 
-            Universal Time, and + and - denote times ahead and behind UTC
-            respectively.
-        }
-        If reporting a date without time, select one of the date format 
-        strings. If reporting a date and time, select one date and one time 
-        format string and combine with a single space (e.g. 
-        YYYY-MM-DD hh:mm) or with a "T" (e.g. YYYY-MM-DDThh:mm). If 
-        reporting a date and time, it is recommended that a time zone 
-        specifier be appended without a space (e.g. YYYY-MM-DD hh:mm-hh:mm, 
-        or YYYY-MM-DDThh:mm-hh:mm).
-        \item \strong{missingValueCode} If a code for 'no data' is used,
-        specify it here (e.g. NA, -99999).
-        \item \strong{missingValueCodeExplanation} Define the missing value 
-        code here.
-    }
-    \emph{"Fill out the file eml_configuration.R"} Provide additional 
-    information about your dataset. Detailed instructions are listed as 
-    comments in this file.
+An __attributes_datatablename.txt__ file has been created for each of your data tables. Edit each of these tab delimited files in a spread sheet editor. DO NOT edit this file in a text editor. You will see this file has been partially populated with information detected by the `import_templates` function. You will have to double check values listed in all the columns except __attributeName__. 
+
+Instructions for completing the attribute table are as follows:
+* **attributeName** Attribute name (column name) as it appears in the data table and in the same order.
+* **attributeDefinition** Define the attribute. Be specific, it can be lengthy.
+* **class** Specify the attribute class. This is the type of value stored under the attribute.     + **numeric** For numeric variables.
+    + **categorical** For categorical variables.
+    + **character** For variables containing text or symbols that are not categorical.
+    + **Date** For date time data.
+* The list of valid options are case sensitive. If an attribute has class of "numeric" or "Date", then all values of this attribute must be either numeric or date time. If any character strings are present in an otherwise "numeric" attribute, this attribute must be classified as "character". Similarly if any values of a "Date" attribute do not match the date time format string (details below), then this attribute must be classified as "character".
+* **unit** If an attributes class is numeric, then you must provide units. If the attribute is numeric but does not have units, enter "dimensionless". If the attribute class is categorical, character, or Date then leave the unit field blank. If the attribute is numeric and has units search the standard unit dictionary for the unit of interest and enter the unit "name" as it appears in the dictionary (unit names are case sensitive). Open the dictionary by running these lines of code in the RStudio console window:
+
+```
+# Import the standard units list
+standardUnits <- get_unitList()
+
+# View and search the standard units
+View(standardUnits$Units)
+
+```
+
+* If you cannot find a unit in the dictionary, create one and add it to __custom_units.txt__. Open this tab delimited file in a spread sheet editor. DO NOT edit this file in a text editor. If you have no custom units to report then delete this file. Valid custom units must be convertible to SI Units (i.e. International System of Units). If it cannot be converted to SI then list it in the attribute defintion and enter "dimensionless" in the unit field. To create a custom unit define the:
+    + **id** This is equivalent to the unit name. Reference the standard unit dictionary formatting.
+    + **unitType** The type of unit being defined. Reference the dictionary for examples.
+    + **parentSI** The SI equivalent of the id you have entered.
+    + **multiplierToSI** This is the multiplier to convert from your custom unit to the SI unit equivalent.
+    + **description** A description of the custom unit. Reference the dictionary for examples.
+
+* **dateTimeFormatString** Enter the date time format string for each attribute of "Date" class. Remember, a class of "Date" specifies the attribute as a date, time, or datetime. Enter the format string in this field. If the attribute class is not "Date", leave this field blank. Below are rules for constructing format strings. Additional information is listed under "dateTime-eml-attribute" of the current [EML specification](https://knb.ecoinformatics.org/#external//emlparser/docs/index.html). Valid date time formats are a combination of date, time, and time zone strings. Below are a set of best practice recomendations that we strongly encourage you to follow, but are by no means the full list of currently acceptable format strings.
+    + **Date format strings:** YYYY-MM-DD, YYYY, YYYYMMDD, YYYY-MM, YYYYMM, YYYY-DDD, YYYYDDD; where YYYY is year, MM is month, DD is day of month, and DDD is day of year.
+    + **Time format strings:** hh:mm:ss.sss, hhmmss.sss, hh:mm:ss, hhmmss, hh:mm, hhmm, hh; where hh is hour (in 24 hr clock), mm is minute, ss is second, and ss.sss is decimal second.
+    + **Time zone format strings:** Z, +hh:mm, +hhmm, +hh, -hh:mm, -hhmm, -hh; where Z (capitalized) is Coordinated Universal Time, and + and - denote times ahead and behind UTC respectively.
+If reporting a date without time, select one of the date format strings. If reporting a date and time, select one date and one time format string and combine with a single space (e.g. YYYY-MM-DD hh:mm) or with a "T" (e.g. YYYY-MM-DDThh:mm). If reporting a date and time, it is recommended that a time zone specifier be appended without a space (e.g. YYYY-MM-DD hh:mm-hh:mm, or YYYY-MM-DDThh:mm-hh:mm).
+* **missingValueCode** If a code for 'no data' is used, specify it here (e.g. NA, -99999).
+* **missingValueCodeExplanation** Define the missing value code here.
     
-    \emph{"Make sure all files of the working directory are closed."} Some 
-    functions will error out if these files are open.
     
-    \emph{Define categorical variables} If you have categorical variables 
-    listed in your attributes tables, you will need to supply definitions 
-    for the categorical variable codes. Run the function \code{define_catvars},
-    and consult the documentation of this function \code{?define_catvars} to
-    define categorical variables.
+# Step 14: Configuration    
+
+Open __configuration.R__ in RStudio and supply additional parameters to functions used in the assembly line. Detailed instructions are listed in this file.
+    
+# Step 15: Close files
+
+Make sure all files of your dataset directory are closed. Some functions will error out if these files are open.
+
+# Step 16: Categorical variables
+
+If your data tables contain any attributes with the categorical class, you will need to supply definitions for the categorical variable codes. Use the function `define_catvars` to do this.
+
+```
+# View documentation for this function
+?define_catvars
+
+
+```
     
     \emph{Extract detailed geographic coverage} If your dataset contains 
     more than one sampling location, then you will want to communicate this

@@ -164,6 +164,16 @@ import_templates <- function(path, license, data.files){
                     pattern = str_c("^", data.files, collapse = "|"))
   data_files <- files[use_i]
   
+  # Detect users operating system
+  
+  sysinfo <- Sys.info()["sysname"]
+  if (sysinfo == "Darwin"){
+    os <- "mac"
+  } else {
+    os <- "win"
+  }
+  
+  
   # Copy non-attributes templates to working directory with correct names -----
   
   # Abstract
@@ -193,7 +203,7 @@ import_templates <- function(path, license, data.files){
                                 sep = ""))
   
   if (isTRUE(value)){
-    print("Importing additional_info.txt", " ...")
+    print("Importing additional_info.txt ...")
   } else {
     print("additional_info.txt already exists ...")
   }
@@ -359,8 +369,13 @@ import_templates <- function(path, license, data.files){
                        data_files[i],
                        sep = "")
     
-    delim_guess <- get.delim(file_path,
-                             n = 2)
+    if (os == "mac"){
+      delim_guess <- get.delim(file_path,
+                               n = 2)
+    } else if (os == "win"){
+      delim_guess <- get.delim(file_path,
+                               n = 1)
+    }
     
     df_table <- read.table(file_path,
                            header = TRUE,
@@ -384,7 +399,7 @@ import_templates <- function(path, license, data.files){
     }
   }
   
-  # Extract attributes
+  # Extract attributes for each data file
   
   attributes <- list()
   for (i in 1:length(data_files)){
@@ -400,8 +415,13 @@ import_templates <- function(path, license, data.files){
                        data_files[i],
                        sep = "")
     
-    delim_guess <- get.delim(file_path,
-                             n = 2)
+    if (os == "mac"){
+      delim_guess <- get.delim(file_path,
+                               n = 2)
+    } else if (os == "win"){
+      delim_guess <- get.delim(file_path,
+                               n = 1)
+    }
 
     df_table <- read.table(file_path,
                            header = TRUE,
@@ -430,7 +450,7 @@ import_templates <- function(path, license, data.files){
     
     guess <- unname(unlist(lapply(df_table, class)))
     guess_map <- c(character = "character", 
-                   logical = "numeric", 
+                   logical = "character", 
                    factor = "character",
                    integer = "numeric",
                    numeric = "numeric")
@@ -439,7 +459,7 @@ import_templates <- function(path, license, data.files){
     # Guess Date class
     
     use_i <- guess == "character"
-    if (sum(potential) > 0){
+    if (sum(use_i) > 0){
       potential_date_cols <- colnames(df_table)[use_i]
       potential_date_i <- str_detect(tolower(potential_date_cols), "date|time")
       guess_datetime <- potential_date_cols[potential_date_i]
@@ -450,7 +470,7 @@ import_templates <- function(path, license, data.files){
     # Guess factor class
     
     use_i <- guess == "character"
-    if (sum(potential) > 0){
+    if (sum(use_i) > 0){
       potential_fact_cols <- colnames(df_table)[use_i]
       use_i2 <- match(potential_fact_cols, colnames(df_table))
       unique_lengths <- apply(df_table[ ,use_i2], 2, function(x)length(unique(x)))
@@ -458,7 +478,7 @@ import_templates <- function(path, license, data.files){
       if (sum(potential_facts) > 0){
         potential_facts <- names(potential_facts[potential_facts == TRUE])
         use_i <- match(potential_facts, attributes[[i]]$attributeName)
-        guess[use_i] <- "factor"
+        guess[use_i] <- "categorical"
       }
     }
     
@@ -470,14 +490,14 @@ import_templates <- function(path, license, data.files){
     
     use_i <- attributes[[i]]$class == "numeric"
     if (sum(use_i) > 0){
-      attributes[[i]]$unit[use_i] <- "Add units"
+      attributes[[i]]$unit[use_i] <- "!Add units here!"
     }
     
     # Add date time format strings for Date data
     
     use_i <- attributes[[i]]$class == "Date"
     if (sum(use_i) > 0){
-      attributes[[i]]$dateTimeFormatString[use_i] <- "Add datetime specifier"
+      attributes[[i]]$dateTimeFormatString[use_i] <- "!Add datetime specifier here!"
     }
     
     # Write table to file
