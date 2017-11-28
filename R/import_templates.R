@@ -243,17 +243,17 @@ import_templates <- function(path, license, data.files){
   # Instructions
   
   value <- file.copy(from = paste(path.package("EMLassemblyline"),
-                                  "/templates/instructions.pdf",
+                                  "/inst/instructions.html",
                                   sep = ""),
                      to = paste(path,
                                 "/",
-                                "instructions.pdf",
+                                "instructions.html",
                                 sep = ""))
   
   if (isTRUE(value)){
-    print("Importing instructions.pdf ...")
+    print("Importing instructions.html ...")
   } else {
-    print("Instructions.pdf already exists ...")
+    print("Instructions.html already exists ...")
   }
   
   # Intellectual rights license
