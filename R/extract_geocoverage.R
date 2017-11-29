@@ -59,7 +59,7 @@ extract_geocoverage <- function(path, data.file, lat.col, lon.col, site.col){
   
   # Check arguments and modify for script -------------------------------------
   
-  message("Checking input arguments ...")
+  message("Checking input arguments.")
   
   # Data names are valid
   
@@ -106,77 +106,102 @@ extract_geocoverage <- function(path, data.file, lat.col, lon.col, site.col){
                      data_file,
                      sep = "")
   
+  nlines <- length(readLines(file_path))
+  
   if (os == "mac"){
     delim_guess <- get.delim(file_path,
-                             n = 2)
+                             n = nlines/2,
+                             delims = c("\t",
+                                        ",",
+                                        ";",
+                                        "|"))
   } else if (os == "win"){
     delim_guess <- get.delim(file_path,
-                             n = 1)
+                                n = nlines/2,
+                                delims = c("\t",
+                                           ",",
+                                           ";",
+                                           "|"))
   }
   
-  message(paste("Reading", data_file, "...", sep = " "))
-  
-  df_table <- read.table(file_path,
-                         header = TRUE,
-                         sep = delim_guess,
-                         quote = "\"",
-                         as.is = TRUE,
-                         comment.char = "")
-  
-  # Get vectors of latitude, longitude, and site
-  
-  message("Selecting variables ...")
-  
-  latitude <- df_table[lat.col]
-  
-  longitude <- df_table[lon.col]
-  
-  site_name <- unique(unlist(df_table[site.col]))
-  
-  # Output lat and long corresponding to sites
-  
-  message("Extracting coordinates and site names ...")
-  
-  latitude_out = c()
-  longitude_out = c() 
-  site_out = c()
-  
-  for (i in 1:length(site_name)){
+  if (file.exists(paste(path, "/geographic_coverage.txt", sep = ""))){
     
-    useI <- site_name[i] == df_table[site.col]
+    message("geographic_coverage.txt already exists!")
     
-    latitude_out[i] <- latitude[useI][1]
+  } else {
     
-    longitude_out[i] <- longitude[useI][1]
+    message(paste("Reading ", data_file, ".", sep = ""))
     
-    site_out[i] <- site_name[i]
+    df_table <- read.table(file_path,
+                           header = TRUE,
+                           sep = delim_guess,
+                           quote = "\"",
+                           as.is = TRUE,
+                           comment.char = "")
+    
+    df_table <- df_table[ ,c(lat.col, lon.col, site.col)]
+    
+    # Remove incomplete lines
+    
+    use_i <- df_table[site.col] == ""
+    df_table[use_i, site.col] <- NA
+    df_table <- df_table[complete.cases(df_table), ]
+    
+    # Get vectors of latitude, longitude, and site
+    
+    latitude <- df_table[lat.col]
+    
+    longitude <- df_table[lon.col]
+    
+    site_name <- unique(unlist(df_table[site.col]))
+    
+    # Output lat and long corresponding to sites
+    
+    message("Extracting coordinates and site names.")
+    
+    latitude_out = c()
+    longitude_out = c() 
+    site_out = c()
+    
+    for (i in 1:length(site_name)){
+      
+      useI <- site_name[i] == df_table[site.col]
+      
+      latitude_out[i] <- latitude[useI][1]
+      
+      longitude_out[i] <- longitude[useI][1]
+      
+      site_out[i] <- site_name[i]
+      
+    }
+    
+    if (class(latitude_out) != "numeric"){
+      stop("Latitude contains non-numeric values. Remove these from your data table, then rerun this function.")
+    }
+    if (class(longitude_out) != "numeric"){
+      stop("Longitude contains non-numeric values. Remove these from your data table, then rerun this function.")
+    }
+    
+    geocoverage_out <- data.frame(latitude = latitude_out,
+                                  longitude = longitude_out,
+                                  site = site_out,
+                                  stringsAsFactors = F)
+    
+    # Write data to file
+    
+    message("Writing geographic_coverage.txt.")
+    
+    write.table(geocoverage_out,
+                paste(path,
+                      "/",
+                      "geographic_coverage.txt", sep = ""),
+                sep = "\t",
+                row.names = F,
+                quote = F,
+                fileEncoding = "UTF-8")
 
   }
-  
-  if (class(latitude_out) != "numeric"){
-    stop("Latitude contains non-numeric values. Remove these from your data table, then rerun this function.")
-  }
-  if (class(longitude_out) != "numeric"){
-    stop("Longitude contains non-numeric values. Remove these from your data table, then rerun this function.")
-  }
-  
-  geocoverage_out <- data.frame(latitude = latitude_out,
-                                longitude = longitude_out,
-                                site = site_out)
-  
-  # Write data to file
-  
-  message("Writing geographic_coverage.txt ...")
-  
-  write.table(geocoverage_out,
-              paste(path,
-                    "/",
-                    "geographic_coverage.txt", sep = ""),
-              sep = "\t",
-              row.names = F,
-              quote = F,
-              fileEncoding = "UTF-8")
-  
+
   message("Done.")
 
 }

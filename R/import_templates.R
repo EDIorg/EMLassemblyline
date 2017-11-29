@@ -6,7 +6,7 @@
 #'     \code{make_eml} during the last step of the assembly line process.
 #'
 #' @usage 
-#'     import_templates(path = "", license = "", data.files = c("data.file.1", "data.file.2", "etc."))
+#'     import_templates(path = "", license = "", data.files = c("data.file.1", "data.file.2", "etc."), sep)
 #'
 #' @param path 
 #'     A character string specifying a path to the dataset working directory
@@ -130,7 +130,7 @@ import_templates <- function(path, license, data.files){
 
   # Check arguments and modify for script -------------------------------------
   
-  message("Checking input arguments ...")
+  message("Checking input arguments.")
   
   # Convert arguments to lower case
   
@@ -173,6 +173,37 @@ import_templates <- function(path, license, data.files){
     os <- "win"
   }
   
+  # Auto detect field delimiters of input data files
+  # and construct data file paths
+  
+  delim_guess <- c()
+  file_path <- c()
+  for (i in 1:length(data_files)){
+    
+    file_path[i] <- paste(path,
+                       "/",
+                       data_files[i],
+                       sep = "")
+    
+    nlines <- length(readLines(file_path[i]))
+    
+    if (os == "mac"){
+      delim_guess[i] <- get.delim(file_path[i],
+                               n = nlines/2,
+                               delims = c("\t",
+                                          ",",
+                                          ";",
+                                          "|"))
+    } else if (os == "win"){
+      delim_guess[i] <- get.delim(file_path[i],
+                                  n = nlines/2,
+                                  delims = c("\t",
+                                             ",",
+                                             ";",
+                                             "|"))
+    }
+  }
+  
   
   # Copy non-attributes templates to working directory with correct names -----
   
@@ -187,9 +218,9 @@ import_templates <- function(path, license, data.files){
                                 sep = ""))
   
   if (isTRUE(value)){
-    message("Importing abstract.txt ...")
+    message("Importing abstract.txt.")
   } else {
-    message("abstract.txt already exists ...")
+    message("abstract.txt already exists!")
   }
   
   # Additional info
@@ -203,9 +234,9 @@ import_templates <- function(path, license, data.files){
                                 sep = ""))
   
   if (isTRUE(value)){
-    message("Importing additional_info.txt ...")
+    message("Importing additional_info.txt.")
   } else {
-    message("additional_info.txt already exists ...")
+    message("additional_info.txt already exists!")
   }
   
   # Configuration
@@ -219,9 +250,9 @@ import_templates <- function(path, license, data.files){
                                 sep = ""))
   
   if (isTRUE(value)){
-    message("Importing configuration.R ...")
+    message("Importing configuration.R.")
   } else {
-    message("configuration.R already exists ...")
+    message("configuration.R already exists!")
   }
   
   # Custom units
@@ -235,9 +266,9 @@ import_templates <- function(path, license, data.files){
                                 sep = ""))
   
   if (isTRUE(value)){
-    message("Importing custom_units.txt ...")
+    message("Importing custom_units.txt.")
   } else {
-    message("custom_units.txt already exists ...")
+    message("custom_units.txt already exists!")
   }
   
   # Instructions
@@ -251,9 +282,9 @@ import_templates <- function(path, license, data.files){
                                 sep = ""))
   
   if (isTRUE(value)){
-    message("Importing instructions.html ...")
+    message("Importing instructions.html.")
   } else {
-    message("instructions.html already exists ...")
+    message("instructions.html already exists!")
   }
   
   # Intellectual rights license
@@ -269,9 +300,9 @@ import_templates <- function(path, license, data.files){
                                   sep = ""))
     
     if (isTRUE(value)){
-      message("Importing intellectual_rights.txt ...")
+      message("Importing intellectual_rights.txt.")
     } else {
-      message("intellectual_rights.txt already exists ...")
+      message("intellectual_rights.txt already exists!")
     }
     
   } else if (license.low == "ccby"){
@@ -285,9 +316,9 @@ import_templates <- function(path, license, data.files){
                                   sep = ""))
     
     if (isTRUE(value)){
-      message("Importing intellectual_rights.txt ...")
+      message("Importing intellectual_rights.txt.")
     } else {
-      message("intellectual_rights.txt already exists ...")
+      message("intellectual_rights.txt already exists!")
     }
     
   }
@@ -303,9 +334,9 @@ import_templates <- function(path, license, data.files){
                                 sep = ""))
   
   if (isTRUE(value)){
-    message("Importing keywords.txt ...")
+    message("Importing keywords.txt.")
   } else {
-    message("keywords.txt already exists ...")
+    message("keywords.txt already exists!")
   }
   
   # Methods
@@ -319,9 +350,9 @@ import_templates <- function(path, license, data.files){
                                 sep = ""))
   
   if (isTRUE(value)){
-    message("Importing methods.txt ...")
+    message("Importing methods.txt.")
   } else {
-    message("methods.txt already exists ...")
+    message("methods.txt already exists!")
   }
   
   # My workflow script
@@ -335,9 +366,9 @@ import_templates <- function(path, license, data.files){
                                 sep = ""))
   
   if (isTRUE(value)){
-    message("Importing my_workflow.R ...")
+    message("Importing my_workflow.R.")
   } else {
-    message("my_workflow.R already exists ...")
+    message("my_workflow.R already exists!")
   }
   
   # Personnel
@@ -351,35 +382,22 @@ import_templates <- function(path, license, data.files){
                                 sep = ""))
   
   if (isTRUE(value)){
-    message("Importing personnel.txt ...")
+    message("Importing personnel.txt.")
   } else {
-    message("personnel.txt already exists ...")
+    message("personnel.txt already exists!")
   }
   
   # Copy attributes files to working directory --------------------------------
   
   # Check for valid column names
   
-  message("Checking data.files for valid column names ...")
+  message("Checking data.files for valid column names.")
   
   for (i in 1:length(data_files)){
     
-    file_path <- paste(path,
-                       "/",
-                       data_files[i],
-                       sep = "")
-    
-    if (os == "mac"){
-      delim_guess <- get.delim(file_path,
-                               n = 2)
-    } else if (os == "win"){
-      delim_guess <- get.delim(file_path,
-                               n = 1)
-    }
-    
-    df_table <- read.table(file_path,
+    df_table <- read.table(file_path[i],
                            header = TRUE,
-                           sep = delim_guess,
+                           sep = delim_guess[i],
                            quote = "\"",
                            as.is = TRUE,
                            comment.char = "")
@@ -404,28 +422,16 @@ import_templates <- function(path, license, data.files){
   attributes <- list()
   for (i in 1:length(data_files)){
     
-    message(paste("Detecting attributes of",
+    message(paste("Detecting attributes of ",
                 data_files[i],
-                "..."))
+                ".",
+                sep = ""))
     
     # Read data table
-    
-    file_path <- paste(path,
-                       "/",
-                       data_files[i],
-                       sep = "")
-    
-    if (os == "mac"){
-      delim_guess <- get.delim(file_path,
-                               n = 2)
-    } else if (os == "win"){
-      delim_guess <- get.delim(file_path,
-                               n = 1)
-    }
 
-    df_table <- read.table(file_path,
+    df_table <- read.table(file_path[i],
                            header = TRUE,
-                           sep = delim_guess,
+                           sep = delim_guess[i],
                            quote = "\"",
                            as.is = TRUE,
                            comment.char = "")
@@ -512,7 +518,7 @@ import_templates <- function(path, license, data.files){
       
       message(paste("Importing attributes_",
                   substr(data_files[i], 1, nchar(data_files[i]) - 4),
-                  ".txt ...",
+                  ".txt.",
                   sep = ""))
       
       write.table(attributes[[i]],
@@ -530,7 +536,7 @@ import_templates <- function(path, license, data.files){
     } else {
       message(paste("attributes_",
             substr(data_files[i], 1, nchar(data_files[i]) - 4),
-            ".txt already exists ...",
+            ".txt already exists!",
             sep = ""))
     }
 

@@ -49,7 +49,7 @@ define_catvars <- function(path) {
   
   # Get attribute file names and data file names
   
-  message("Identifying data table names ...")
+  message("Identifying data table names.")
   
   files <- list.files(path)
   use_i <- str_detect(string = files,
@@ -61,11 +61,43 @@ define_catvars <- function(path) {
   use_i <- str_detect(string = files,
                       pattern = str_c("^", table_names_base, collapse = "|"))
   table_names <- files[use_i]
+  data_files <- table_names
   
   # Set file names to be written
 
   fname_table_catvars <- str_c("catvars_", table_names_base, ".txt")
 
+  # Auto detect field delimiters of input data files
+  # and construct data file paths
+  
+  delim_guess <- c()
+  file_path <- c()
+  for (i in 1:length(data_files)){
+    
+    file_path[i] <- paste(path,
+                          "/",
+                          data_files[i],
+                          sep = "")
+    
+    nlines <- length(readLines(file_path[i]))
+    
+    if (os == "mac"){
+      delim_guess[i] <- get.delim(file_path[i],
+                                  n = nlines/2,
+                                  delims = c("\t",
+                                             ",",
+                                             ";",
+                                             "|"))
+    } else if (os == "win"){
+      delim_guess[i] <- get.delim(file_path[i],
+                                  n = nlines/2,
+                                  delims = c("\t",
+                                             ",",
+                                             ";",
+                                             "|"))
+    }
+  }
+  
   # Loop through data tables --------------------------------------------------
   
   for (i in 1:length(attribute_files)){
@@ -79,11 +111,9 @@ define_catvars <- function(path) {
       
     } else {
       
-      message(paste("Compiling", fname_table_catvars[i], "..."))
-      
       # Read attributes_datatablename.txt
       
-      message(paste("Reading", attribute_files[i], "..."))
+      message(paste("Reading ", attribute_files[i], ".", sep = ""))
       
       df_attributes <- read.table(
         paste(path, 
@@ -111,24 +141,11 @@ define_catvars <- function(path) {
       
       # Read data table
       
-      message(paste("Reading", table_names[i], "..."))
+      message(paste("Reading ", table_names[i], ".", sep = ""))
       
-      file_path <- paste(path,
-                         "/",
-                         table_names[i],
-                         sep = "")
-      
-      if (os == "mac"){
-        delim_guess <- get.delim(file_path,
-                                 n = 2)
-      } else if (os == "win"){
-        delim_guess <- get.delim(file_path,
-                                 n = 1)
-      }
-      
-      df_table <- read.table(file_path,
+      df_table <- read.table(file_path[i],
                              header=TRUE,
-                             sep=delim_guess,
+                             sep=delim_guess[i],
                              quote="\"",
                              as.is=TRUE,
                              comment.char = "")
@@ -137,7 +154,7 @@ define_catvars <- function(path) {
       
       if (length(catvars_I) > 0){
         
-        message("Identifying categorical variables ...")
+        message("Identifying categorical variables.")
         
         rows <- 0
         for (j in 1:length(catvars_I)){
@@ -206,7 +223,7 @@ define_catvars <- function(path) {
 
       } else {
         
-        message("No categorical variables found ...")
+        message("No categorical variables found.")
         
       }
       
