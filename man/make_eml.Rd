@@ -8,36 +8,23 @@ make_eml(path)
 }
 \arguments{
 \item{path}{A path to the dataset working directory containing the completed 
-metadata templates, \emph{eml_configuration.R}, 
-\emph{datasetname_datatablename_catvars.txt} (if categorical variables 
+metadata templates, \emph{configuration.R}, 
+\emph{catvars_datatablename.txt} (if categorical variables 
 are present), and \emph{geographic_coverage.txt} (if reporting detailed 
 geographic coverage).}
 }
 \value{
-Validation results printed to the \emph{Console}.
+Validation results printed to the RStudio \emph{Console}.
     
-    An EML metadata file written to the dataset working directory titled 
+    An EML file written to the dataset working directory titled 
     \emph{packageID.xml}.
 }
 \description{
-Translate user supplied metadata into the EML schema, validate the 
-    schema, and write to file.
+Translate user supplied metadata templates into the EML, validate the 
+    EML, and write to file.
 }
 \details{
 If validation fails, open the EML document in a .xml editor to identify 
     the source of error. Often the error is small and quickly resolved with 
-    the aid of an editors schema congruence checker.
-}
-\seealso{
-\code{\link{import_templates}} to import metadata templates to the 
-    dataset working directory.
-
-\code{\link{view_instructions}} for instructions on completing the 
-    template files.
-
-\code{\link{define_catvars}} to create the categorical variables table 
-    (if the attributes table contains categorical variables).
-
-\code{\link{extract_geocoverage}} to extract detailed geographic 
-    coordinates of sampling sites.
+    the aid of an editors schema validator.
 }

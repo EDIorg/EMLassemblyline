@@ -1,114 +1,89 @@
 #' Define categorical variables
 #'
 #' @description  
-#'     Identify and define categorical variables of your data tables.
+#'     Identify and define categorical variables for your data tables.
 #'
 #' @usage define_catvars(path)
 #' 
 #'     Run this function whenever your data contain attributes of class 
-#'     "categorical" as listed in 
-#'     \emph{datasetname_datatablename_attributes.txt} files.
+#'     "categorical" listed in \emph{attributes_datatablename.txt} files.
 #'
 #' @param path 
 #'     A path to the dataset working directory containing 
-#'     \emph{datasetname_datatablename_attributes.txt}, 
-#'     \emph{eml_configuration.R}, and referenced data tables.
+#'     \emph{attributes_datatablename.txt} and the respecive data tables.
 #'
 #' @return 
 #'     A tab delimited UTF-8 file in the dataset working directory titled 
-#'     \emph{datasetname_datatablename_catvars.txt} containing unique values 
-#'     of attributes of class "categorical" which is translated and written 
-#'     to EML with \code{make_eml}.
+#'     \emph{catvars_datatablename.txt} containing unique codes of attributes 
+#'     of class "categorical". Open this file in a spreadsheet editor to 
+#'     supply definitions for listed codes.
 #'     
 #' @details 
-#'     This function overwrites any 
-#'     \emph{datasetname_datatablename_catvars.txt} files you have created in 
-#'     the dataset working directory. To prevent overwriting of these files, 
-#'     temporarily move them out of the working directory.
+#'     This function will not overwrite any 
+#'     \emph{catvars_datatablename.txt} files you have created in 
+#'     the dataset working directory.
 #'     
 #'     This function identifies "categorical" class attributes from the file 
-#'     \emph{datasetname_datatablename_attributes.txt} and extracts unique 
-#'     values of these attributes to the table for you to define. Do not define 
-#'     categorical variables with empty field contents. Delete these rows from 
-#'     this file.
-#'     
-#'     When defining categorical variables with unit values, refer to the 
-#'     standard unit dictionary "name" column. Enter the unit name in the 
-#'     definition column of the categorical variables table. Note these values 
-#'     are case sensitive.
+#'     \emph{attributes_datatablename.txt} and extracts unique 
+#'     values of these attributes to the table for you to define.
 #'
 #' @export
 #'
-#' @seealso 
-#'     \code{\link{import_templates}} to import metadata templates to the 
-#'     dataset working directory.
-#' @seealso
-#'     \code{\link{view_instructions}} for instructions on completing the 
-#'     template files.
-#' @seealso 
-#'     \code{\link{extract_geocoverage}} to extract detailed geographic 
-#'     coordinates of sampling sites.
-#' @seealso 
-#'     \code{\link{make_eml}} to translate user supplied information into the 
-#'     EML file.
-
 
 define_catvars <- function(path) {
   
   # Check arguments
   
   if (missing(path)){
-    stop("Specify path to dataset working directory.")
+    stop("Specify path to your dataset working directory.")
   }
   
-  # Load the configuration file
+  # Detect users operating system
   
-  print("Loading configuration file ...")
-  
-  source(paste(path, "/eml_configuration.R", sep = ""))
-  
-  # List expected attribute files
-
-  attribute_files <- c()
-  
-  for (i in 1:length(table_names)){
-    attribute_files[i] <- paste(
-      substr(table_names[i], 1, nchar(table_names[i]) - 4),
-      "_attributes.txt",
-      sep = "")
+  sysinfo <- Sys.info()["sysname"]
+  if (sysinfo == "Darwin"){
+    os <- "mac"
+  } else {
+    os <- "win"
   }
-
-  if (length(attribute_files) == 0){
-    stop("No attribute files found ... run copy_templates to import attributes table, then fill them out.")
-  }
-
+  
+  # Get attribute file names and data file names
+  
+  message("Identifying data table names ...")
+  
+  files <- list.files(path)
+  use_i <- str_detect(string = files,
+                      pattern = "^attributes")
+  attribute_files <- files[use_i]
+  table_names_base <- str_sub(string = attribute_files,
+                              start = 12,
+                              end = nchar(attribute_files)-4)
+  use_i <- str_detect(string = files,
+                      pattern = str_c("^", table_names_base, collapse = "|"))
+  table_names <- files[use_i]
+  
   # Set file names to be written
 
-  fname_table_catvars <- c()
-  for (i in 1:length(table_names)){
-    fname_table_catvars[i] <- paste(
-      substr(table_names[i], 1, nchar(table_names[i]) - 4),
-      "_catvars.txt",
-      sep = ""
-    )
-  }
+  fname_table_catvars <- str_c("catvars_", table_names_base, ".txt")
 
-  # Issue warning
-
-  answer <- readline(
-    "Are you sure you want to build new categorical variable tables? This will overwrite your previous work! (y or n):  ")
+  # Loop through data tables --------------------------------------------------
   
-  if (answer == "y"){
+  for (i in 1:length(attribute_files)){
     
-    # Loop through data tables ------------------------------------------------
+    use_i <- str_detect(string = files,
+                        pattern = fname_table_catvars[i])
     
-    for (i in 1:length(attribute_files)){
+    if (sum(use_i) > 0){
       
-      print(paste("Compiling", fname_table_catvars[i]))
-
-      # Read attribute_draft.csv file
+      message(paste(files[use_i], "already exists! Skipping this one."))
       
-      print(paste("Reading", attribute_files[i]))
+    } else {
+      
+      message(paste("Compiling", fname_table_catvars[i], "..."))
+      
+      # Read attributes_datatablename.txt
+      
+      message(paste("Reading", attribute_files[i], "..."))
       
       df_attributes <- read.table(
         paste(path, 
@@ -123,59 +98,47 @@ define_catvars <- function(path) {
         colClasses = rep("character", 7))
       
       colnames(df_attributes) <- c("attributeName",
-                                 "attributeDefinition",
-                                 "class",
-                                 "unit",
-                                 "dateTimeFormatString",
-                                 "missingValueCode",
-                                 "missingValueCodeExplanation")
-
+                                   "attributeDefinition",
+                                   "class",
+                                   "unit",
+                                   "dateTimeFormatString",
+                                   "missingValueCode",
+                                   "missingValueCodeExplanation")
+      
       # Build catvars table
-
-      print("Identifying categorical variables ...")
       
       catvars_I <- which(df_attributes$class %in% "categorical")
       
       # Read data table
       
-      print("Reading data table ...")
+      message(paste("Reading", table_names[i], "..."))
       
-      if (field_delimeter[i] == "comma"){
-        
-        df_table <- read.table(
-          paste(path, 
-                "/", 
-                substr(attribute_files[i], 1, nchar(attribute_files[i]) - 15),
-                ".csv",
-                sep = ""),
-          header=TRUE,
-          sep=",",
-          quote="\"",
-          as.is=TRUE,
-          comment.char = "")
-        
-      } else if (field_delimeter[i] == "tab"){
-        
-        df_table <- read.table(
-          paste(path, 
-                "/", 
-                substr(attribute_files[i], 1, nchar(attribute_files[i]) - 15),
-                ".txt",
-                sep = ""),
-          header=TRUE,
-          sep="\t",
-          quote="\"",
-          as.is=TRUE,
-          comment.char = "")
-        
+      file_path <- paste(path,
+                         "/",
+                         table_names[i],
+                         sep = "")
+      
+      if (os == "mac"){
+        delim_guess <- get.delim(file_path,
+                                 n = 2)
+      } else if (os == "win"){
+        delim_guess <- get.delim(file_path,
+                                 n = 1)
       }
+      
+      df_table <- read.table(file_path,
+                             header=TRUE,
+                             sep=delim_guess,
+                             quote="\"",
+                             as.is=TRUE,
+                             comment.char = "")
 
       # If there are no catvars then skip to the next file
-
+      
       if (length(catvars_I) > 0){
         
-        print("Compiling catvars table ...")
-
+        message("Identifying categorical variables ...")
+        
         rows <- 0
         for (j in 1:length(catvars_I)){
           factor_names <- unique(
@@ -186,19 +149,19 @@ define_catvars <- function(path) {
                   "$",
                   df_attributes$attributeName[catvars_I[j]],
                   sep = ""))))
-
+          
           rows <- length(factor_names) + rows
-
+          
         }
-
+        
         catvars <- data.frame(attributeName = character(rows),
                               code = character(rows),
                               definition = character(rows),
                               stringsAsFactors = F)
-
+        
         row <- 1
         for (j in 1:length(catvars_I)){
-
+          
           factor_names <- unique(
             eval(
               parse(
@@ -207,19 +170,29 @@ define_catvars <- function(path) {
                   "$",
                   df_attributes$attributeName[catvars_I[j]],
                   sep = ""))))
-
+          
           catvars$attributeName[row:(length(factor_names)+row-1)] <-
             df_attributes$attributeName[catvars_I[j]]
-
+          
           catvars$code[row:(length(factor_names)+row-1)] <- factor_names
-
+          
           row <- row + length(factor_names)
-
+          
+        }
+        
+        # Remove rows with empty codes
+        
+        use_i <- catvars$code == ""
+        if (sum(use_i, na.rm = T) > 0){
+          use_i <- match("", catvars$code)
+          index <- seq(length(catvars$code))
+          use_i <- index %in% use_i
+          catvars <- catvars[!use_i, ]
         }
 
-        # Write factor table
+        # Write catvar table
         
-        print(paste("Writing", fname_table_catvars[i]))
+        message(paste("Writing", fname_table_catvars[i]))
         
         write.table(catvars,
                     paste(path,
@@ -230,26 +203,18 @@ define_catvars <- function(path) {
                     row.names = F,
                     quote = F,
                     fileEncoding = "UTF-8")
-        
-        # Prompt the user to manually edit the catvars file and custom unit files.
-        
-        standardUnits <- get_unitList()
-        View(standardUnits$units)
-        
-        readline(
-          prompt = paste("Open", fname_table_catvars[i], "define factor codes, then save, close, and press <enter>."))
 
       } else {
         
-        print("No categorical variables found ...")
+        message("No categorical variables found ...")
         
       }
       
-      writeLines("\n")
-
     }
-
+    
   }
+  
+  message("Done.")
 
 }
 

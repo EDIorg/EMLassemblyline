@@ -31,7 +31,6 @@
 #'
 #' @export
 #'
-#' @seealso \code{\link{make_eml}} to make the EML file.
 
 
 extract_geocoverage <- function(path, data.file, lat.col, lon.col, site.col){
@@ -60,7 +59,7 @@ extract_geocoverage <- function(path, data.file, lat.col, lon.col, site.col){
   
   # Check arguments and modify for script -------------------------------------
   
-  print("Checking input arguments ...")
+  message("Checking input arguments ...")
   
   # Data names are valid
   
@@ -82,42 +81,51 @@ extract_geocoverage <- function(path, data.file, lat.col, lon.col, site.col){
   files <- list.files(path)
   use_i <- str_detect(string = files,
                       pattern = str_c("^", data.file, collapse = "|"))
-  data_files <- files[use_i]
+  data_file <- files[use_i]
   
   # Path is valid
   
-  value <- file.exists(paste(path, "/", data.file, sep = ""))
+  value <- file.exists(paste(path, "/", data_file, sep = ""))
   if (!isTRUE(value)){
     stop(paste('Invalid file path entered: ', path))
   }
   
-  # Load the datasets configuration file
+  # Detect users operating system
   
-  print("Loading configuration.R ...")
-  
-  source(paste(path, "/configuration.R", sep = ""))
+  sysinfo <- Sys.info()["sysname"]
+  if (sysinfo == "Darwin"){
+    os <- "mac"
+  } else {
+    os <- "win"
+  }
   
   # Read data table
   
-  delim_guess <- get.delim(paste(path,
-                                 "/",
-                                 data.file,
-                                 sep = ""),
-                           n = 2)
+  file_path <- paste(path,
+                     "/",
+                     data_file,
+                     sep = "")
   
-  print(paste("Reading", data.file, "...", sep = " "))
+  if (os == "mac"){
+    delim_guess <- get.delim(file_path,
+                             n = 2)
+  } else if (os == "win"){
+    delim_guess <- get.delim(file_path,
+                             n = 1)
+  }
   
-  df_table <- read.table(
-    paste(path, "/", data.file, sep = ""),
-    header=TRUE,
-    sep = delim_guess,
-    quote="\"",
-    as.is=TRUE,
-    comment.char = "")
+  message(paste("Reading", data_file, "...", sep = " "))
+  
+  df_table <- read.table(file_path,
+                         header = TRUE,
+                         sep = delim_guess,
+                         quote = "\"",
+                         as.is = TRUE,
+                         comment.char = "")
   
   # Get vectors of latitude, longitude, and site
   
-  print("Selecting variables ...")
+  message("Selecting variables ...")
   
   latitude <- df_table[lat.col]
   
@@ -127,7 +135,7 @@ extract_geocoverage <- function(path, data.file, lat.col, lon.col, site.col){
   
   # Output lat and long corresponding to sites
   
-  print("Extracting coordinates and site names ...")
+  message("Extracting coordinates and site names ...")
   
   latitude_out = c()
   longitude_out = c() 
@@ -146,10 +154,10 @@ extract_geocoverage <- function(path, data.file, lat.col, lon.col, site.col){
   }
   
   if (class(latitude_out) != "numeric"){
-    print("Latitude contains non-numeric values. Remove these from your data table, then rerun this function.")
+    stop("Latitude contains non-numeric values. Remove these from your data table, then rerun this function.")
   }
   if (class(longitude_out) != "numeric"){
-    print("Longitude contains non-numeric values. Remove these from your data table, then rerun this function.")
+    stop("Longitude contains non-numeric values. Remove these from your data table, then rerun this function.")
   }
   
   geocoverage_out <- data.frame(latitude = latitude_out,
@@ -158,7 +166,7 @@ extract_geocoverage <- function(path, data.file, lat.col, lon.col, site.col){
   
   # Write data to file
   
-  print("Writing geographic_coverage.txt ...")
+  message("Writing geographic_coverage.txt ...")
   
   write.table(geocoverage_out,
               paste(path,
@@ -169,6 +177,6 @@ extract_geocoverage <- function(path, data.file, lat.col, lon.col, site.col){
               quote = F,
               fileEncoding = "UTF-8")
   
-  print("Done.")
+  message("Done.")
 
 }

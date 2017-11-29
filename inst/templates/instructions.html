@@ -124,41 +124,53 @@ $(document).ready(function () {
 </div>
 
 
-<div id="overview" class="section level1">
-<h1>Overview</h1>
+<div id="overview" class="section level3">
+<h3>Overview</h3>
 <p>The EML assembly line will help you create high quality metadata for your dataset. Below is a set of step-by-step instructions for making EML metadata for tabular data. The assembly line will soon be capable of handling other data types including: spatial vector, spatial raster, and images.</p>
 </div>
-<div id="step-1-create-a-directory-for-your-dataset" class="section level1">
-<h1>Step 1: Create a directory for your dataset</h1>
+<div id="step-1-create-a-directory-for-your-dataset" class="section level3">
+<h3>Step 1: Create a directory for your dataset</h3>
 <p>Create a new directory for your dataset. This is where the metadata parts created in the assembly line process will be stored and available for editing should you need to change the content.</p>
-<p>Name this directory after your dataset. Replace spaces with underscores (e.g. “name of your directory” should be “name_of_your_directory”).</p>
+<p>Name this directory after your dataset. Replace spaces with underscores (e.g. <code>name of your directory</code> should be <code>name_of_your_directory</code>).</p>
 </div>
-<div id="step-2-move-your-dataset-to-the-directory" class="section level1">
-<h1>Step 2: Move your dataset to the directory</h1>
+<div id="step-2-move-your-dataset-to-the-directory" class="section level3">
+<h3>Step 2: Move your dataset to the directory</h3>
 <p>Move the final versions of your data tables into this directory. These should be the final versions of the data you are ready to publish.</p>
-<p>Rename these files following these rules: * replace symbols with words * replace parentheses with underscores * replace periods with underscores * replace blank spaces with underscores</p>
-<p>e.g. “name.of.(your) <a href="mailto:d@t">d@t</a>@.file” should be “name_of_your_data_file”</p>
+<p>Rename these files following these rules:</p>
+<ul>
+<li>replace symbols with words</li>
+<li>replace parentheses with underscores</li>
+<li>replace periods with underscores</li>
+<li>replace blank spaces with underscores</li>
+</ul>
+<p>e.g. <code>name.of.(your) d@t@.file</code> should be <code>name_of_your_data_file</code></p>
 </div>
-<div id="step-3-select-an-intellectual-rights-license" class="section level1">
-<h1>Step 3: Select an intellectual rights license</h1>
-<p>We recommend two intellectual rights licenses for your dataset:</p>
+<div id="step-3-select-an-intellectual-rights-license" class="section level3">
+<h3>Step 3: Select an intellectual rights license</h3>
+<p>We recommend two intellectual rights licenses:</p>
 <ol style="list-style-type: decimal">
 <li><p><strong>CC0</strong> the most accomodating of data reuse … This data package is released to the “public domain” under Creative Commons CC0 1.0 “No Rights Reserved” (see: <a href="https://creativecommons.org/publicdomain/zero/1.0/" class="uri">https://creativecommons.org/publicdomain/zero/1.0/</a>). It is considered professional etiquette to provide attribution of the original work if this data package is shared in whole or by individual components. A generic citation is provided for this data package on the website <a href="https://portal.edirepository.org" class="uri">https://portal.edirepository.org</a> (herein “website”) in the summary metadata page. Communication (and collaboration) with the creators of this data package is recommended to prevent duplicate research or publication. This data package (and its components) is made available “as is” and with no warranty of accuracy or fitness for use. The creators of this data package and the website shall not be liable for any damages resulting from misinterpretation or misuse of the data package or its components. Periodic updates of this data package may be available from the website. Thank you.</p></li>
 <li><p><strong>CCBY</strong> requires attribution … This information is released under the Creative Commons license - Attribution - CC BY (<a href="https://creativecommons.org/licenses/by/4.0/" class="uri">https://creativecommons.org/licenses/by/4.0/</a>). The consumer of these data (“Data User” herein) is required to cite it appropriately in any publication that results from its use. The Data User should realize that these data may be actively used by others for ongoing research and that coordination may be necessary to prevent duplicate publication. The Data User is urged to contact the authors of these data if any questions about methodology or results occur. Where appropriate, the Data User is encouraged to consider collaboration or co-authorship with the authors. The Data User should realize that misinterpretation of data may occur if used out of context of the original study. While substantial efforts are made to ensure the accuracy of data and associated documentation, complete accuracy of data sets cannot be guaranteed. All data are made available “as is.” The Data User should be aware, however, that data are updated periodically and it is the responsibility of the Data User to check for new versions of the data. The data authors and the repository where these data were obtained shall not be liable for damages resulting from any use or misinterpretation of the data. Thank you.</p></li>
 </ol>
 </div>
-<div id="step-4-identfy-the-types-of-data-in-your-dataset" class="section level1">
-<h1>Step 4: Identfy the types of data in your dataset</h1>
+<div id="step-4-identfy-the-types-of-data-in-your-dataset" class="section level3">
+<h3>Step 4: Identfy the types of data in your dataset</h3>
 <p>Currently, the assembly line only works for tabular data and is the default option.</p>
-<div id="table" class="section level3">
-<h3>table</h3>
-<p>A flat file composed of columns containing variables and rows containing observations. Column names must follow these rules: * replace symbols with words * replace parentheses with underscores * replace periods with underscores * replace blank spaces with underscores</p>
-<p>e.g. “land.cover.use (%)” should be “percent_land_cover_use”</p>
+<div id="table" class="section level4">
+<h4>table</h4>
+<p>A flat file composed of columns containing variables and rows containing observations. Column names must follow these rules:</p>
+<ul>
+<li>replace symbols with words</li>
+<li>replace parentheses with underscores</li>
+<li>replace periods with underscores</li>
+<li>replace blank spaces with underscores</li>
+</ul>
+<p>e.g. <code>land.cover.use (%)</code> should be <code>percent_land_cover_use</code></p>
 </div>
 </div>
-<div id="step-5-import-the-core-metadata-templates" class="section level1">
-<h1>Step 5: Import the core metadata templates</h1>
-<p>Run the function <code>import_templates</code> to populate the directory with metadata templates for you to complete. You will need to supply a few arguments to this function.</p>
+<div id="step-5-import-the-core-metadata-templates" class="section level3">
+<h3>Step 5: Import the core metadata templates</h3>
+<p>Run the function <code>import_templates</code> in the RStudio Console window to populate the directory with metadata templates for you to complete. You will need to supply a few arguments to this function.</p>
 <pre><code># First load the EMLassemblyline package
 library(EMLassemblyline)
 
@@ -172,42 +184,76 @@ import_templates(path = &quot;/Users/csmith/Desktop/gleon_chloride&quot;,
                                 &quot;lake_characteristics&quot;)
                  )</code></pre>
 </div>
-<div id="step-7-script-your-workflow" class="section level1">
-<h1>Step 7: Script your workflow</h1>
+<div id="step-6-script-your-workflow" class="section level3">
+<h3>Step 6: Script your workflow</h3>
 <p>Open <strong>my_workflow.R</strong> in RStudio. This is a blank script for you to build an assembly line workflow, which can be revisited or modified for future assembly line runs.</p>
 </div>
-<div id="step-8-abstract" class="section level1">
-<h1>Step 8: Abstract</h1>
+<div id="step-7-abstract" class="section level3">
+<h3>Step 7: Abstract</h3>
 <p>Open the file <strong>abstract.txt</strong> and write an abstract for your dataset. The abstract should cover what, why, when, where, and how for your dataset. Write your abstract in plain text.</p>
 <p>Do not use special characters, symbols, or formatting. Don’t use hyperlinks (URLs are acceptable). The reason for this is that the EML schema only allows characters that are apart of the unicode character set.</p>
 <p>NOTE: You can create your abstract in Microsoft Word and then copy over to <strong>abstract.txt</strong> but first you will need to remove any non-unicode characters. To do this go to <a href="http://utils.paranoiaworks.org/diacriticsremover/">this web service</a> and paste your abstract into the window. Click the button “Remove Diacritics” to remove these non-compliant characters, then copy the resultant text into <strong>abstract.txt</strong>. You will want to give it one last look over after performing this operation to ensure no information has been lost.</p>
 </div>
-<div id="step-9-methods" class="section level1">
-<h1>Step 9: Methods</h1>
+<div id="step-8-methods" class="section level3">
+<h3>Step 8: Methods</h3>
 <p>Open the file <strong>methods.txt</strong> and describe the methods for your dataset. Be specific, include instrument descriptions, or point to a protocol online. If this dataset is a synthesis of other datasets please specify dataset origins, preferably their DOI or URL plus general citation information.</p>
 <p>Do not use special characters, symbols, or formatting. Don’t use hyperlinks (URLs are acceptable). The reason for this is that the EML schema only allows characters that are apart of the unicode character set.</p>
 <p>NOTE: You can create your methods in Microsoft Word and then copy over to <strong>methods.txt</strong> but first you will need to remove any non-unicode characters. To do this go to <a href="http://utils.paranoiaworks.org/diacriticsremover/">this web service</a> and paste your methods into the window. Click the button “Remove Diacritics” to remove these non-compliant characters, then copy the resultant text into <strong>methods.txt</strong>. You will want to give it one last look over after performing this operation to ensure no information has been lost.</p>
 </div>
-<div id="step-10-additional-information" class="section level1">
-<h1>Step 10: Additional information</h1>
+<div id="step-9-additional-information" class="section level3">
+<h3>Step 9: Additional information</h3>
 <p>Do you have additional text based information that doesn’t fall under the scope of the abstract or methods for your dataset (e.g. a list of research articles or theses derived from this dataset)? If so, then open <strong>additional_info.txt</strong> in a text editor and add this information. You can delete this file if you won’t be using it, or you can keep it around for later if you change your mind.</p>
 <p>Do not use special characters, symbols, or formatting. Don’t use hyperlinks (URLs are acceptable). The reason for this is that the EML schema only allows characters that are apart of the unicode character set.</p>
 <p>NOTE: You can create your additional information in Microsoft Word and then copy over to <strong>additional_info.txt</strong> but first you will need to remove any non-unicode characters. To do this go to <a href="http://utils.paranoiaworks.org/diacriticsremover/">this web service</a> and paste your additional information into the window. Click the button “Remove Diacritics” to remove these non-compliant characters, then copy the resultant text into <strong>additional_info.txt</strong>. You will want to give it one last look over after performing this operation to ensure no information has been lost.</p>
 </div>
-<div id="step-11-keywords" class="section level1">
-<h1>Step 11: Keywords</h1>
+<div id="step-10-keywords" class="section level3">
+<h3>Step 10: Keywords</h3>
 <p>Open the tab delimited file <strong>keywords.txt</strong> in a spreadsheet editor and list the keywords that best describe your dataset. DO NOT edit this file in a text editor. <a href="http://vocab.lternet.edu/vocab/vocab/index.php">Consult the LTER controlled vocabulary</a> for keywords. In addition to keywords about the data include keywords that describe your lab, station, and project (e.g. OBFS, LTREB, etc.).</p>
-<p>Definitions for columns of this file: * <strong>keyword</strong> A keyword describing your dataset. * <strong>keywordThesaurus</strong> A keywordThesaurus (i.e. a controlled vocabulary like the resource listed above) corresponding to the keyword listed in the keyword column. If the keyword is not from a thesaurus or controlled vocabulary, leave corresponding entry in the keywordThesaurus field blank.</p>
+<p>Definitions for columns of this file:</p>
+<ul>
+<li><strong>keyword</strong> A keyword describing your dataset.</li>
+<li><strong>keywordThesaurus</strong> A keywordThesaurus (i.e. a controlled vocabulary like the resource listed above) corresponding to the keyword listed in the keyword column. If the keyword is not from a thesaurus or controlled vocabulary, leave corresponding entry in the keywordThesaurus field blank.</li>
+</ul>
 </div>
-<div id="step-12-personnel" class="section level1">
-<h1>Step 12: Personnel</h1>
+<div id="step-11-personnel" class="section level3">
+<h3>Step 11: Personnel</h3>
 <p>Open the tab delimited file <strong>personnel.txt</strong> in a spreadsheet editor and enter information about the personnel associated with this dataset.</p>
-<p>Definitions for columns of this file: * <strong>givenName</strong> Given name of person (required). * **surName*__** Surname of person (required). * <strong>organizationName</strong> Name of organization the person is associated with (not required). * <strong>electronicMailAddress</strong> Email address of person (not required unless a contact for your dataset). * <strong>userId</strong> ORCID of person (not required). A valid entry for userId is the 16 digit number separated by dashes (i.e. XXXX-XXXX-XXXX-XXXX). An ORCID is like a social security number for scientists. <a href="https://orcid.org/">Create one here</a>. + <strong>role</strong> Role of person with respect to this dataset. Valid entries for role are: * <strong>creator</strong> Dataset creator (required; at least 1 creator must be listed for your dataset). * <strong>pi</strong> Principal investigator associated with this dataset (required; at least 1 pi must be listed for your dataset). * <strong>contact</strong> Dataset contact (required; at least 1 contact must be listed for your dataset). * Any other entries into the ‘role’ column are acceptable and will be defined under the associated party element of this dataset with whatever value is entered under role. + If a person serves more than one role, duplicate this persons information in another row but with the additional role. * <strong>projectTitle</strong> Title of the project this dataset was created under (required). Project titles are only listed on lines where the personnel role is <strong>pi</strong>. If auxiliary projects were involved in creating this dataset then add a new line of personnel below the primary project and list the auxiliary project title and associated <strong>pi</strong>. * <strong>fundingAgency</strong> Name of the entity funding the creation of this dataset (required). Only include an entry in this column for rows where role <strong>pi</strong>. * <strong>fundingNumber</strong> Number of the grant or award that supported creation of this dataset (required). Only include an entry in this column for rows where role <strong>pi</strong>.</p>
+<p>Definitions for columns of this file:</p>
+<ul>
+<li><strong>givenName</strong> Given name of person (required).</li>
+<li><strong>surName</strong> Surname of person (required).</li>
+<li><strong>organizationName</strong> Name of organization the person is associated with (not required).</li>
+<li><strong>electronicMailAddress</strong> Email address of person (not required unless a contact for your dataset).</li>
+<li><strong>userId</strong> ORCID of person (not required). A valid entry for userId is the 16 digit number separated by dashes (i.e. XXXX-XXXX-XXXX-XXXX). An ORCID is like a social security number for scientists. <a href="https://orcid.org/">Create one here</a>.</li>
+<li><strong>role</strong> Role of person with respect to this dataset. Valid entries for role are:
+<ul>
+<li><strong>creator</strong> Dataset creator (required; at least 1 creator must be listed for your dataset).</li>
+<li><strong>pi</strong> Principal investigator associated with this dataset (required; at least 1 pi must be listed for your dataset).</li>
+<li><strong>contact</strong> Dataset contact (required; at least 1 contact must be listed for your dataset).</li>
+<li>Any other entries into the ‘role’ column are acceptable and will be defined under the associated party element of this dataset with whatever value is entered under role.</li>
+<li>If a person serves more than one role, duplicate this persons information in another row but with the additional role.</li>
+</ul></li>
+<li><strong>projectTitle</strong> Title of the project this dataset was created under (required). Project titles are only listed on lines where the personnel role is pi. If auxiliary projects were involved in creating this dataset then add a new line of personnel below the primary project and list the auxiliary project title and associated pi.</li>
+<li><strong>fundingAgency</strong> Name of the entity funding the creation of this dataset (required). Only include an entry in this column for rows where role pi.</li>
+<li><strong>fundingNumber</strong> Number of the grant or award that supported creation of this dataset (required). Only include an entry in this column for rows where role pi.</li>
+</ul>
 </div>
-<div id="step-13-attributes" class="section level1">
-<h1>Step 13: Attributes</h1>
+<div id="step-12-attributes" class="section level3">
+<h3>Step 12: Attributes</h3>
 <p>An <strong>attributes_datatablename.txt</strong> file has been created for each of your data tables. Edit each of these tab delimited files in a spreadsheet editor. DO NOT edit this file in a text editor. You will see this file has been partially populated with information detected by the <code>import_templates</code> function. You will have to double check values listed in all the columns except <strong>attributeName</strong>.</p>
-<p>Instructions for completing the attribute table are as follows: * <strong>attributeName</strong> Attribute name (column name) as it appears in the data table and in the same order. * <strong>attributeDefinition</strong> Define the attribute. Be specific, it can be lengthy. * <strong>class</strong> Specify the attribute class. This is the type of value stored under the attribute. + <strong>numeric</strong> For numeric variables. + <strong>categorical</strong> For categorical variables. + <strong>character</strong> For variables containing text or symbols that are not categorical. + <strong>Date</strong> For date time data. * The list of valid options are case sensitive. If an attribute has class of “numeric” or “Date”, then all values of this attribute must be either numeric or date time. If any character strings are present in an otherwise “numeric” attribute, this attribute must be classified as “character”. Similarly if any values of a “Date” attribute do not match the date time format string (details below), then this attribute must be classified as “character”. * <strong>unit</strong> If an attributes class is numeric, then you must provide units. If the attribute is numeric but does not have units, enter “dimensionless”. If the attribute class is categorical, character, or Date then leave the unit field blank. If the attribute is numeric and has units search the standard unit dictionary for the unit of interest and enter the unit “name” as it appears in the dictionary (unit names are case sensitive). Open the dictionary by running these lines of code in the RStudio console window:</p>
+<p>Instructions for completing the attribute table are as follows:</p>
+<ul>
+<li><strong>attributeName</strong> Attribute name (column name) as it appears in the data table and in the same order.</li>
+<li><strong>attributeDefinition</strong> Define the attribute. Be specific, it can be lengthy.</li>
+<li><strong>class</strong> Specify the attribute class. This is the type of value stored under the attribute. + <strong>numeric</strong> For numeric variables.
+<ul>
+<li><strong>categorical</strong> For categorical variables.</li>
+<li><strong>character</strong> For variables containing text or symbols that are not categorical.</li>
+<li><strong>Date</strong> For date time data.</li>
+<li>The list of valid options are case sensitive. If an attribute has class of <code>numeric</code> or <code>Date</code>, then all values of this attribute must be either numeric or date time. If any character strings are present in an otherwise <code>numeric</code> attribute, this attribute must be classified as <code>character</code>. Similarly if any values of a “Date” attribute do not match the date time format string (details below), then this attribute must be classified as <code>character</code>.</li>
+</ul></li>
+<li><strong>unit</strong> If an attributes class is numeric, then you must provide units. If the attribute is numeric but does not have units, enter <code>dimensionless</code>. If the attribute class is categorical, character, or Date then leave the unit field blank. If the attribute is numeric and has units search the standard unit dictionary for the unit of interest and enter the unit <code>name</code> as it appears in the dictionary (unit names are case sensitive). Open the dictionary by running these lines of code in the RStudio console window:</li>
+</ul>
 <pre><code># Import the standard units list
 standardUnits &lt;- get_unitList()
 
@@ -233,16 +279,16 @@ View(standardUnits$Units)
 <li><strong>missingValueCodeExplanation</strong> Define the missing value code here.</li>
 </ul>
 </div>
-<div id="step-14-configuration" class="section level1">
-<h1>Step 14: Configuration</h1>
+<div id="step-13-configuration" class="section level3">
+<h3>Step 13: Configuration</h3>
 <p>Open <strong>configuration.R</strong> in RStudio and supply additional parameters to functions used in the assembly line. Detailed instructions are listed in this file.</p>
 </div>
-<div id="step-15-close-files" class="section level1">
-<h1>Step 15: Close files</h1>
+<div id="step-14-close-files" class="section level3">
+<h3>Step 14: Close files</h3>
 <p>Make sure all files of your dataset directory are closed. Some functions will error out if these files are open.</p>
 </div>
-<div id="step-16-categorical-variables" class="section level1">
-<h1>Step 16: Categorical variables</h1>
+<div id="step-15-categorical-variables" class="section level3">
+<h3>Step 15: Categorical variables</h3>
 <p>If your data tables contain any attributes with the categorical class, you will need to supply definitions for the categorical codes. Use the function <code>define_catvars</code> to do this. <code>define_catvars</code> searches through each attribute file looking for attributes with a categorical class. If found, the function extracts unique categorical codes for each attribute and writes them to a file for you to define.</p>
 <pre><code># View documentation for this function
 ?define_catvars
@@ -250,11 +296,11 @@ View(standardUnits$Units)
 # Run this function for your dataset
 define_catvars(path = &quot;/Users/csmith/Desktop/gleon_chloride&quot;)
 </code></pre>
-<p>A tab delimited <strong>catvars_datatablename.txt</strong> will be created for each of your data tables containing categorical variables. Open these in a spreadsheet editor and add definitions for each code. Blank codes are not valid. Replace these with character strings and rerun <code>define_catvars</code>.</p>
+<p>A tab delimited <strong>catvars_datatablename.txt</strong> will be created for each of your data tables containing categorical variables. Open these in a spreadsheet editor and add definitions for each code.</p>
 </div>
-<div id="step-17-geographic-coverage" class="section level1">
-<h1>Step 17: Geographic coverage</h1>
-<p>If your dataset contains more than one sampling location (point locations are currently supported, areas are not), then you will want to add this information to your metadata. Often a data user will search for data withing a geographic area.</p>
+<div id="step-16-geographic-coverage" class="section level3">
+<h3>Step 16: Geographic coverage</h3>
+<p>If your dataset contains more than one sampling location, then you will want to add this information to your metadata. As of now the assembly line only supports point locations, multiple areas are not yet supported. Often a data user will search for data withing a geographic area.</p>
 <p>Run the function <code>extract_geocoverage</code> to get the unique latitude, longitude, and site name combinations from your data and write to file. <code>extract_geocoverage</code> requires specific inputs that may require altering the latitude and longitude formate of your data. See documenation for details.</p>
 <pre><code># View documentation for this function
 ?extract_geocoverage
@@ -267,12 +313,20 @@ extract_geocoverage(path = &quot;/Users/csmith/Desktop/gleon_chloride&quot;,
                     site.col = &quot;lake_name&quot;)</code></pre>
 <p>This function outputs a tab delimited file named <strong>geographic_coverage.txt</strong> to your dataset directory. You may edit this in a spreadsheet editor if you’d like, but if the data table this information has been extracted from is accurate, then there is no need for editing.</p>
 </div>
-<div id="step-18-make-eml" class="section level1">
-<h1>Step 18: Make EML</h1>
-<p>You may see a series of warnings reported after <code>make_eml</code> has completed. These can be ignored if your EML passes validation. If validation fails, open the EML file in an XML editor and look for the invalid section. Often a minor tweak to the EML can be made manually to bring it into compliance with the EML schema.</p>
+<div id="step-17-make-eml" class="section level3">
+<h3>Step 17: Make EML</h3>
+<p>Now you are ready to synthesize your completed metadata templates into EML. This step is relatively simple. The <code>make_eml</code> function requires only one argument, the path to the dataset working directory.</p>
+<pre><code># View documentation for this function
+?make_eml
+
+# Make EML for your dataset
+make_eml(path = &quot;/Users/csmith/Desktop/gleon_chloride&quot;)
+</code></pre>
+<p>If your EML is valid you will receive the message: <strong>EML passed validation!</strong>. If validation fails, open the EML file in an XML editor and look for the invalid section. Often a minor tweak to the EML can be made manually to bring it into compliance with the EML schema.</p>
 </div>
-<div id="step-20-upload-your-data-package-to-the-edi-repository" class="section level1">
-<h1>Step 20: Upload your data package to the EDI repository</h1>
+<div id="step-18-upload-your-data-package-to-the-edi-repository" class="section level3">
+<h3>Step 18: Upload your data package to the EDI repository</h3>
+<p>Your data and metadata form a package that may be uploaded to the <a href="https://portal.edirepository.org/nis/home.jsp">EDI data repository</a>. <a href="https://environmentaldatainitiative.org/resources/assemble-data-and-metadata/step-4-submit-your-data-package/">Follow these instructions</a> to upload your data package.</p>
 </div>
 
 

@@ -32,6 +32,3 @@ A tab delimited file in the dataset working directory
 Extract detailed geographic coverage (latitude, longitude, and site 
     name) to be included in the EML.
 }
-\seealso{
-\code{\link{make_eml}} to make the EML file.
-}

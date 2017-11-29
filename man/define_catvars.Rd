@@ -7,50 +7,27 @@
 define_catvars(path)
 
     Run this function whenever your data contain attributes of class 
-    "categorical" as listed in 
-    \emph{datasetname_datatablename_attributes.txt} files.
+    "categorical" listed in \emph{attributes_datatablename.txt} files.
 }
 \arguments{
 \item{path}{A path to the dataset working directory containing 
-\emph{datasetname_datatablename_attributes.txt}, 
-\emph{eml_configuration.R}, and referenced data tables.}
+\emph{attributes_datatablename.txt} and the respecive data tables.}
 }
 \value{
 A tab delimited UTF-8 file in the dataset working directory titled 
-    \emph{datasetname_datatablename_catvars.txt} containing unique values 
-    of attributes of class "categorical" which is translated and written 
-    to EML with \code{make_eml}.
+    \emph{catvars_datatablename.txt} containing unique codes of attributes 
+    of class "categorical". Open this file in a spreadsheet editor to 
+    supply definitions for listed codes.
 }
 \description{
-Identify and define categorical variables of your data tables.
+Identify and define categorical variables for your data tables.
 }
 \details{
-This function overwrites any 
-    \emph{datasetname_datatablename_catvars.txt} files you have created in 
-    the dataset working directory. To prevent overwriting of these files, 
-    temporarily move them out of the working directory.
+This function will not overwrite any 
+    \emph{catvars_datatablename.txt} files you have created in 
+    the dataset working directory.
     
     This function identifies "categorical" class attributes from the file 
-    \emph{datasetname_datatablename_attributes.txt} and extracts unique 
-    values of these attributes to the table for you to define. Do not define 
-    categorical variables with empty field contents. Delete these rows from 
-    this file.
-    
-    When defining categorical variables with unit values, refer to the 
-    standard unit dictionary "name" column. Enter the unit name in the 
-    definition column of the categorical variables table. Note these values 
-    are case sensitive.
-}
-\seealso{
-\code{\link{import_templates}} to import metadata templates to the 
-    dataset working directory.
-
-\code{\link{view_instructions}} for instructions on completing the 
-    template files.
-
-\code{\link{extract_geocoverage}} to extract detailed geographic 
-    coordinates of sampling sites.
-
-\code{\link{make_eml}} to translate user supplied information into the 
-    EML file.
+    \emph{attributes_datatablename.txt} and extracts unique 
+    values of these attributes to the table for you to define.
 }

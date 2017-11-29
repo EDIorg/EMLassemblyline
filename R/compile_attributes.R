@@ -5,24 +5,24 @@
 
 compile_attributes <- function(path){
 
-  # Load configuration file
-
-  source(paste(path,
-               "/configuration.R",
-               sep = ""))
+  # Load the datasets configuration file
+  
+  source(paste(path, "/configuration.R", sep = ""))
   
   # Set file names to be written 
 
-  fname_table_attributes <- c()
-
-  for (i in 1:length(table_names)){
-
-    fname_table_attributes[i] <- paste(
-      substr(table_names[i], 1, nchar(table_names[i]) - 4),
-      "_attributes.txt",
-      sep = "")
-
-  }
+  files <- list.files(path)
+  use_i <- str_detect(string = files,
+                      pattern = "^attributes")
+  attribute_files <- files[use_i]
+  fname_table_attributes <- attribute_files
+  table_names_base <- str_sub(string = attribute_files,
+                              start = 12,
+                              end = nchar(attribute_files)-4)
+  use_i <- str_detect(string = files,
+                      pattern = str_c("^", table_names_base, collapse = "|"))
+  table_names <- files[use_i]
+  
 
   # Loop through data tables --------------------------------------------------
   
@@ -30,46 +30,41 @@ compile_attributes <- function(path){
 
   for (i in 1:length(table_names)){
 
-    print(paste("Compiling", table_names[i], "attributes ..."))
+    message(paste("Compiling", fname_table_attributes[i], "..."))
 
-    # Read data table
-
-    if (field_delimeter[i] == "comma"){
-      
-      df_table <- read.table(
-        paste(path, "/", table_names[i], sep = ""),
-        header=TRUE,
-        sep=",",
-        quote="\"",
-        as.is=TRUE,
-        comment.char = "")
-      
-    } else if (field_delimeter[i] == "tab"){
-      
-      df_table <- read.table(
-        paste(path, "/", table_names[i], sep = ""),
-        header=TRUE,
-        sep="\t",
-        quote="\"",
-        as.is=TRUE,
-        comment.char = "")
-      
+    
+    file_path <- paste(path,
+                       "/",
+                       table_names[i],
+                       sep = "")
+    
+    if (os == "mac"){
+      delim_guess <- get.delim(file_path,
+                               n = 2)
+    } else if (os == "win"){
+      delim_guess <- get.delim(file_path,
+                               n = 1)
     }
     
-    # Read attributes_draft table
+    df_table <- read.table(file_path,
+                           header = TRUE,
+                           sep = delim_guess,
+                           quote = "\"",
+                           as.is = TRUE,
+                           comment.char = "")
     
-    df_attributes <- read.table(
-      paste(path, 
-            "/", 
-            substr(fname_table_attributes[i], 1, nchar(fname_table_attributes[i]) - 4),
-            ".txt",
-            sep = ""),
-      header=TRUE,
-      sep="\t",
-      quote="\"",
-      as.is=TRUE,
-      comment.char = "",
-      colClasses = rep("character", 7))
+    # Read attributes_datatablename
+    
+    df_attributes <- read.table(paste(path,
+                                      "/",
+                                      fname_table_attributes[i],
+                                      sep = ""),
+                                header=TRUE,
+                                sep="\t",
+                                quote="\"",
+                                as.is=TRUE,
+                                comment.char = "",
+                                colClasses = rep("character", 7))
     
     colnames(df_attributes) <- c("attributeName",
                                  "attributeDefinition",

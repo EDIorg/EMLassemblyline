@@ -1,44 +1,32 @@
 #' Make EML
 #'
 #' @description  
-#'     Translate user supplied metadata into the EML schema, validate the 
-#'     schema, and write to file.
+#'     Translate user supplied metadata templates into the EML, validate the 
+#'     EML, and write to file.
 #'
 #' @usage 
 #'     make_eml(path)
 #'
 #' @param path 
 #'     A path to the dataset working directory containing the completed 
-#'     metadata templates, \emph{eml_configuration.R}, 
-#'     \emph{datasetname_datatablename_catvars.txt} (if categorical variables 
+#'     metadata templates, \emph{configuration.R}, 
+#'     \emph{catvars_datatablename.txt} (if categorical variables 
 #'     are present), and \emph{geographic_coverage.txt} (if reporting detailed 
 #'     geographic coverage).
 #'
 #' @return 
-#'     Validation results printed to the \emph{Console}.
+#'     Validation results printed to the RStudio \emph{Console}.
 #'     
-#'     An EML metadata file written to the dataset working directory titled 
+#'     An EML file written to the dataset working directory titled 
 #'     \emph{packageID.xml}.
 #'     
 #' @details 
 #'     If validation fails, open the EML document in a .xml editor to identify 
 #'     the source of error. Often the error is small and quickly resolved with 
-#'     the aid of an editors schema congruence checker.
+#'     the aid of an editors schema validator.
 #'
 #' @export
 #'
-#' @seealso 
-#'     \code{\link{import_templates}} to import metadata templates to the 
-#'     dataset working directory.
-#' @seealso 
-#'     \code{\link{view_instructions}} for instructions on completing the 
-#'     template files.
-#' @seealso 
-#'     \code{\link{define_catvars}} to create the categorical variables table 
-#'     (if the attributes table contains categorical variables).
-#' @seealso 
-#'     \code{\link{extract_geocoverage}} to extract detailed geographic 
-#'     coordinates of sampling sites.
 
 
 make_eml <- function(path) {
@@ -60,17 +48,17 @@ make_eml <- function(path) {
 
   # Load the datasets configuration file
   
-  print("Loading configuration file ...")
+  message("Loading configuration.R ...")
 
-  source(paste(path, "/eml_configuration.R", sep = ""))
+  source(paste(path, "/configuration.R", sep = ""))
   
-  files_in <- list.files(path)
-  file_in <- grep("abstract.txt", files_in, value = T)
-  dataset_name <- substr(file_in, 1, nchar(file_in)-13)
-  
-  template <- paste(dataset_name,
-                    "_template.docx",
-                    sep = "")
+  # files_in <- list.files(path)
+  # file_in <- grep("abstract.txt", files_in, value = T)
+  # dataset_name <- substr(file_in, 1, nchar(file_in)-13)
+  # 
+  # template <- paste(dataset_name,
+  #                   "_template.docx",
+  #                   sep = "")
   
   # Compile attributes
   
@@ -78,50 +66,30 @@ make_eml <- function(path) {
   
   # Set file names
 
-  fname_abstract <- paste(path,
-                          "/",
-                          substr(template, 1, nchar(template) - 14),
-                          "_abstract.txt",
-                          sep = "")
+  fname_abstract <- paste(path, "/abstract.txt", sep = "")
   
-  fname_additional_info <- paste(path,
-                            "/",
-                            substr(template, 1, nchar(template) - 14),
-                            "_additional_info.txt",
-                            sep = "")
+  fname_additional_info <- paste(path, "/additional_info.txt", sep = "")
 
-  fname_keywords <- paste(path,
-                           "/",
-                           substr(template, 1, nchar(template) - 14),
-                           "_keywords.txt",
-                           sep = "")
+  fname_keywords <- paste(path, "/keywords.txt", sep = "")
   
-  fname_personnel <- paste(path,
-                           "/",
-                          substr(template, 1, nchar(template) - 14),
-                          "_personnel.txt",
-                          sep = "")
+  fname_personnel <- paste(path, "/personnel.txt", sep = "")
   
-  fname_intellectual_rights <- paste(path,
-                                     "/",
-                                     substr(template, 1,
-                                            nchar(template) - 14),
-                                     "_intellectual_rights.txt", sep = "")
+  fname_intellectual_rights <- paste(path, "/intellectual_rights.txt", sep = "")
 
-  fname_methods <- paste(path,
-                         "/",
-                         substr(template, 1, nchar(template) - 14),
-                         "_methods.txt",
-                         sep = "")
+  fname_methods <- paste(path, "/methods.txt", sep = "")
+  
+  fname_custom_units <- paste(path, "/custom_units.txt", sep = "")
+  
+  files <- list.files(path)
   
   fname_table_catvars <- c()
   for (i in 1:length(table_names)){
-    fname_table_catvars[i] <- paste(
+    fname_table_catvars[i] <- paste("catvars_",
       substr(table_names[i], 1, nchar(table_names[i]) - 4),
-      "_catvars.txt",
+      ".txt",
       sep = "")
   }
-
+  
   # Initialize data entity storage (tables)
 
   data_tables_stored <- list()
@@ -239,7 +207,7 @@ make_eml <- function(path) {
 
   # Read personnel file
 
-  print("Read personnel file ...")
+  message("Read personnel file ...")
   
   personinfo <- read.table(
     fname_personnel,
@@ -259,16 +227,18 @@ make_eml <- function(path) {
                             "projectTitle",
                             "fundingAgency",
                             "fundingNumber")
+  
+  personinfo$role <- tolower(personinfo$role)
 
   # Build modules--------------------------------------------------------------
 
-  print("Building EML:")
+  message("Building EML:")
   
   # Create EML
   
   # Build eml-access module
   
-  print("access ...")
+  message("access ...")
 
   allow_principals <- c(paste("uid=",
                               user_id,
@@ -300,14 +270,14 @@ make_eml <- function(path) {
 
   # Build dataset module
   
-  print("dataset ...")
+  message("dataset ...")
 
   dataset <- new("dataset",
                  title = dataset_title)
 
   # Add creators
   
-  print("creators ...")
+  message("creators ...")
 
   personinfo <- read.table(
     paste(substr(fname_personnel, 1, nchar(fname_personnel) - 4),
@@ -331,19 +301,19 @@ make_eml <- function(path) {
 
   # Add publicaton date
   
-  print("publication date ...")
+  message("publication date ...")
 
   dataset@pubDate <- as(format(Sys.time(), "%Y-%m-%d"), "pubDate")
 
   # Add abstract
   
-  print("abstract ...")
+  message("abstract ...")
 
   dataset@abstract <- as(set_TextType(fname_abstract), "abstract")
 
   # Add keywords
   
-  print("keywords ...")
+  message("keywords ...")
   
   keywords <- read.table(
     paste(substr(fname_keywords, 1, nchar(fname_keywords) - 4),
@@ -373,7 +343,7 @@ make_eml <- function(path) {
 
   # Add intellectual rights
 
-  print("intellectual rights ...")
+  message("intellectual rights ...")
   
   dataset@intellectualRights <- as(
     set_TextType(fname_intellectual_rights),
@@ -381,7 +351,7 @@ make_eml <- function(path) {
 
   # Add coverage
   
-  print("coverage ...")
+  message("coverage ...")
   
   dataset@coverage <- set_coverage(begin = begin_date,
                                    end = end_date,
@@ -393,7 +363,7 @@ make_eml <- function(path) {
 
   # Add maintenance
   
-  print("maintenance ...")
+  message("maintenance ...")
   
   maintenance <- new("maintenance")
   maintenance@description <- as(maintenance_description, "description")
@@ -401,17 +371,7 @@ make_eml <- function(path) {
   
   # Add contacts
   
-  print("contacts ...")
-
-  personinfo <- read.table(
-    paste(substr(fname_personnel, 1, nchar(fname_personnel) - 4),
-          ".txt",
-          sep = ""),
-    header = TRUE,
-    sep = "\t",
-    as.is = TRUE,
-    na.strings = "NA",
-    colClasses = "character")
+  message("contacts ...")
 
   useI <- which(personinfo$role == "contact")
 
@@ -425,13 +385,13 @@ make_eml <- function(path) {
 
   # Add methods
   
-  print("methods ...")
+  message("methods ...")
 
   dataset@methods <- set_methods(fname_methods)
   
   if (file.exists(paste(path, "/", "geographic_coverage.txt", sep = ""))){
     
-    print("sampling coordinates ...")
+    message("sampling coordinates ...")
     
     df_geographic_coverage <- read.table(paste(path,
                                                "/",
@@ -488,13 +448,13 @@ make_eml <- function(path) {
 
   # Add project and funding
   
-  print("project and funding ...")
+  message("project and funding ...")
   
   useI <- which(personinfo$role == "pi")
   
   pi_list <- list()
-  pi_list[[1]] <- set_person(info_row = useI[1],
-                             person_role = "pi")
+  pi_list[[1]] <- suppressWarnings(set_person(info_row = useI[1],
+                             person_role = "pi"))
   
   # if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
   #   userId <- new("userId")
@@ -533,8 +493,8 @@ make_eml <- function(path) {
     relatedProject_list <- list()
     pi_list <- list()
     for (i in 1:(length(useI)-1)){
-      pi_list[[1]] <- set_person(info_row = useI[i+1],
-                                 person_role = "pi")
+      pi_list[[1]] <- suppressWarnings(set_person(info_row = useI[i+1],
+                                                  person_role = "pi"))
       if (personinfo$fundingAgency[useI[i+1]] == ""){
         funding_title <- "No funding to report."
         relatedProject_list[[i]] <- new("relatedProject",
@@ -556,7 +516,7 @@ make_eml <- function(path) {
   
   # Add associated parties
   
-  print("associated parties ...")
+  message("associated parties ...")
   
   useI <- which(personinfo$role != "pi" &
                   personinfo$role != "creator" &
@@ -565,15 +525,15 @@ make_eml <- function(path) {
   if (length(useI) != 0){
     associated_party_list <- list()
     for (j in 1:length(useI)){
-      associated_party_list[[j]] <- set_person(info_row = useI[j],
-                                               person_role = "")
+      associated_party_list[[j]] <- suppressWarnings(set_person(info_row = useI[j],
+                                               person_role = ""))
     }
     dataset@associatedParty <- as(associated_party_list, "ListOfassociatedParty")
   }
   
   # Add additional information
   
-  print("additional info ...")
+  message("additional info ...")
   
   if (file.exists(fname_additional_info)){
     
@@ -588,7 +548,7 @@ make_eml <- function(path) {
 
   for (i in 1:length(table_names)){
 
-    print(paste(
+    message(paste(
       table_names[i],
       "data table ..."))
     
@@ -596,27 +556,25 @@ make_eml <- function(path) {
     
     # Read data table
     
-    if (field_delimeter[i] == "comma"){
-      
-      df_table <- read.table(
-        paste(path, "/", table_names[i], sep = ""),
-        header=TRUE,
-        sep=",",
-        quote="\"",
-        as.is=TRUE,
-        comment.char = "")
-      
-    } else if (field_delimeter[i] == "tab"){
-      
-      df_table <- read.table(
-        paste(path, "/", table_names[i], sep = ""),
-        header=TRUE,
-        sep="\t",
-        quote="\"",
-        as.is=TRUE,
-        comment.char = "")
-      
+    file_path <- paste(path,
+                       "/",
+                       table_names[i],
+                       sep = "")
+    
+    if (os == "mac"){
+      delim_guess <- get.delim(file_path,
+                               n = 2)
+    } else if (os == "win"){
+      delim_guess <- get.delim(file_path,
+                               n = 1)
     }
+    
+    df_table <- read.table(file_path,
+                           header = TRUE,
+                           sep = delim_guess,
+                           quote = "\"",
+                           as.is = TRUE,
+                           comment.char = "")
 
     # Read catvars file
 
@@ -670,9 +628,9 @@ make_eml <- function(path) {
       
       # Create the attributeList element
       
-      attributeList <- set_attributes(attributes,
+      attributeList <- suppressWarnings(set_attributes(attributes,
                                       factors = catvars,
-                                      col_classes = col_classes)
+                                      col_classes = col_classes))
       
     } else {
       
@@ -691,35 +649,35 @@ make_eml <- function(path) {
       
       # Create the attributeList element
       
-      attributeList <- set_attributes(attributes,
-                                      col_classes = col_classes)
+      attributeList <- suppressWarnings(set_attributes(attributes,
+                                      col_classes = col_classes))
       
     }
 
     # Set physical
 
-    if (field_delimeter[i] == "comma"){
-      fd <- ","
-    } else if (field_delimeter[i] == "tab"){
-      fd <- "\t"
-    }
+    # if (field_delimeter[i] == "comma"){
+    #   fd <- ","
+    # } else if (field_delimeter[i] == "tab"){
+    #   fd <- "\t"
+    # }
     
     if (nchar(quote_character[i]) > 0){
       
       physical <- set_physical(table_names[i],
-                               numHeaderLines = num_header_lines[i],
+                               numHeaderLines = "1",
                                recordDelimiter = record_delimeter[i],
-                               attributeOrientation = attribute_orientation[i],
-                               fieldDelimiter = fd,
+                               attributeOrientation = "column",
+                               fieldDelimiter = delim_guess,
                                quoteCharacter = quote_character[i])
       
     } else {
       
       physical <- set_physical(table_names[i],
-                               numHeaderLines = num_header_lines[i],
+                               numHeaderLines = "1",
                                recordDelimiter = record_delimeter[i],
-                               attributeOrientation = attribute_orientation[i],
-                               fieldDelimiter = fd)
+                               attributeOrientation = "column",
+                               fieldDelimiter = delim_guess)
       
     }
 
@@ -734,10 +692,14 @@ make_eml <- function(path) {
                                    table_names[i],
                                    sep = ""))))
 
-    if (nchar(data_table_urls[i]) > 1){
+    if (nchar(data_table_urls) > 1){
+      data_table_url <- paste(data_table_urls,
+                              "/",
+                              table_names[i],
+                              sep = "")
       distribution <- new("distribution",
                           online = new("online",
-                                       url = data_table_urls[i]))
+                                       url = data_table_url))
       physical@distribution <- new("ListOfdistribution",
                                    c(distribution))
     }
@@ -810,16 +772,10 @@ make_eml <- function(path) {
 
   # Are custom units present in these tables?
 
-  if (file.exists(paste(path,"/",substr(template, 1, nchar(template) - 14),"_custom_units.txt",sep = ""))){
-    
-    print("custom units ...")
-    
+  if (file.exists(fname_custom_units)){
+
     custom_units_df <- read.table(
-      paste(path,
-            "/",
-            substr(template, 1, nchar(template) - 14),
-            "_custom_units.txt",
-            sep = ""),
+      fname_custom_units,
       header = TRUE,
       sep = "\t",
       as.is = TRUE,
@@ -834,6 +790,8 @@ make_eml <- function(path) {
     # Clean white spaces from custom_units and units_types
     
     if (custom_units == "yes"){
+      
+      message("custom units ...")
       
       for (j in 1:ncol(custom_units_df)){
         if (class(custom_units_df[ ,j]) == "character" ||
@@ -860,7 +818,7 @@ make_eml <- function(path) {
 
   # Build EML
   
-  print("Compiling EML ...")
+  message("Compiling EML ...")
   
   
   if (custom_units == "yes"){
@@ -882,26 +840,27 @@ make_eml <- function(path) {
 
   # Write EML
 
-  print("Writing EML ...")
+  message("Writing EML ...")
   
   write_eml(eml, paste(path, "/", data_package_id, ".xml", sep = ""))
   
   # Validate EML
   
-  print("Validating EML ...")
+  message("Validating EML ...")
   
   validation_result <- eml_validate(eml)
   
   if (validation_result == "TRUE"){
     
-    print("EML passed validation!")
+    message("EML passed validation!")
     
   } else {
     
-    print("EML validaton failed. See warnings for details.")
+    message("EML validaton failed. See warnings for details.")
     
   }
   
+  message("Done.")
   
 }
 

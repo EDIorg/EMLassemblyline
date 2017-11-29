@@ -130,7 +130,7 @@ import_templates <- function(path, license, data.files){
 
   # Check arguments and modify for script -------------------------------------
   
-  print("Checking input arguments ...")
+  message("Checking input arguments ...")
   
   # Convert arguments to lower case
   
@@ -187,9 +187,9 @@ import_templates <- function(path, license, data.files){
                                 sep = ""))
   
   if (isTRUE(value)){
-    print("Importing abstract.txt ...")
+    message("Importing abstract.txt ...")
   } else {
-    print("abstract.txt already exists ...")
+    message("abstract.txt already exists ...")
   }
   
   # Additional info
@@ -203,9 +203,9 @@ import_templates <- function(path, license, data.files){
                                 sep = ""))
   
   if (isTRUE(value)){
-    print("Importing additional_info.txt ...")
+    message("Importing additional_info.txt ...")
   } else {
-    print("additional_info.txt already exists ...")
+    message("additional_info.txt already exists ...")
   }
   
   # Configuration
@@ -219,9 +219,9 @@ import_templates <- function(path, license, data.files){
                                 sep = ""))
   
   if (isTRUE(value)){
-    print("Importing configuration.R ...")
+    message("Importing configuration.R ...")
   } else {
-    print("configuration.R already exists ...")
+    message("configuration.R already exists ...")
   }
   
   # Custom units
@@ -235,15 +235,15 @@ import_templates <- function(path, license, data.files){
                                 sep = ""))
   
   if (isTRUE(value)){
-    print("Importing custom_units.txt ...")
+    message("Importing custom_units.txt ...")
   } else {
-    print("custom_units.txt already exists ...")
+    message("custom_units.txt already exists ...")
   }
   
   # Instructions
   
   value <- file.copy(from = paste(path.package("EMLassemblyline"),
-                                  "/inst/instructions.html",
+                                  "/templates/instructions.html",
                                   sep = ""),
                      to = paste(path,
                                 "/",
@@ -251,9 +251,9 @@ import_templates <- function(path, license, data.files){
                                 sep = ""))
   
   if (isTRUE(value)){
-    print("Importing instructions.html ...")
+    message("Importing instructions.html ...")
   } else {
-    print("Instructions.html already exists ...")
+    message("instructions.html already exists ...")
   }
   
   # Intellectual rights license
@@ -269,9 +269,9 @@ import_templates <- function(path, license, data.files){
                                   sep = ""))
     
     if (isTRUE(value)){
-      print("Importing intellectual_rights.txt ...")
+      message("Importing intellectual_rights.txt ...")
     } else {
-      print("intellectual_rights.txt already exists ...")
+      message("intellectual_rights.txt already exists ...")
     }
     
   } else if (license.low == "ccby"){
@@ -285,9 +285,9 @@ import_templates <- function(path, license, data.files){
                                   sep = ""))
     
     if (isTRUE(value)){
-      print("Importing intellectual_rights.txt ...")
+      message("Importing intellectual_rights.txt ...")
     } else {
-      print("intellectual_rights.txt already exists ...")
+      message("intellectual_rights.txt already exists ...")
     }
     
   }
@@ -303,9 +303,9 @@ import_templates <- function(path, license, data.files){
                                 sep = ""))
   
   if (isTRUE(value)){
-    print("Importing keywords.txt ...")
+    message("Importing keywords.txt ...")
   } else {
-    print("keywords.txt already exists ...")
+    message("keywords.txt already exists ...")
   }
   
   # Methods
@@ -319,9 +319,9 @@ import_templates <- function(path, license, data.files){
                                 sep = ""))
   
   if (isTRUE(value)){
-    print("Importing methods.txt ...")
+    message("Importing methods.txt ...")
   } else {
-    print("methods.txt already exists ...")
+    message("methods.txt already exists ...")
   }
   
   # My workflow script
@@ -335,9 +335,9 @@ import_templates <- function(path, license, data.files){
                                 sep = ""))
   
   if (isTRUE(value)){
-    print("Importing my_workflow.R ...")
+    message("Importing my_workflow.R ...")
   } else {
-    print("my_workflow.R already exists ...")
+    message("my_workflow.R already exists ...")
   }
   
   # Personnel
@@ -351,16 +351,16 @@ import_templates <- function(path, license, data.files){
                                 sep = ""))
   
   if (isTRUE(value)){
-    print("Importing personnel.txt ...")
+    message("Importing personnel.txt ...")
   } else {
-    print("personnel.txt already exists ...")
+    message("personnel.txt already exists ...")
   }
   
   # Copy attributes files to working directory --------------------------------
   
   # Check for valid column names
   
-  print("Checking data.files for valid column names ...")
+  message("Checking data.files for valid column names ...")
   
   for (i in 1:length(data_files)){
     
@@ -404,7 +404,7 @@ import_templates <- function(path, license, data.files){
   attributes <- list()
   for (i in 1:length(data_files)){
     
-    print(paste("Detecting attributes of",
+    message(paste("Detecting attributes of",
                 data_files[i],
                 "..."))
     
@@ -510,7 +510,7 @@ import_templates <- function(path, license, data.files){
                                  sep = ""))
     if (!isTRUE(value)){
       
-      print(paste("Importing attributes_",
+      message(paste("Importing attributes_",
                   substr(data_files[i], 1, nchar(data_files[i]) - 4),
                   ".txt ...",
                   sep = ""))
@@ -528,12 +528,14 @@ import_templates <- function(path, license, data.files){
                   fileEncoding = "UTF-8")
       
     } else {
-      print(paste("attributes_",
+      message(paste("attributes_",
             substr(data_files[i], 1, nchar(data_files[i]) - 4),
             ".txt already exists ...",
             sep = ""))
     }
 
   }
+  
+  message("Done.")
 
 }
