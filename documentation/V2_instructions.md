@@ -4,6 +4,20 @@
 
 The EML assembly line will help you create high quality metadata for your dataset. Below is a set of step-by-step instructions for making EML metadata for tabular data. The assembly line will soon be capable of handling other data types including: spatial vector, spatial raster, and images.
 
+#### Installation
+
+`EMLassemblyline v2.0` is not quite ready for prime time. Until then you will need to install from the development branch of this Github repository.
+
+```
+# Install and load devtools
+install.packages("devtools")
+library(devtools)
+
+# Install and load EMLassemblyline from the development branch
+install_github("EDIorg/EMLassemblyline", ref = "development")
+library(EMLassemblyline)
+```
+
 
 ### Step 1: Create a directory for your dataset
 
