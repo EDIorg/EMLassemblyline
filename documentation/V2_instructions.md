@@ -78,7 +78,7 @@ library(EMLassemblyline)
 # Import templates for an example dataset licensed under CC0, with 2 tables.
 import_templates(path = "/Users/csmith/Desktop/gleon_chloride",
                  license = "CC0",
-                 data.names = c("lake_chloride_concentrations",
+                 data.files = c("lake_chloride_concentrations",
                                 "lake_characteristics")
                  )
 ```
