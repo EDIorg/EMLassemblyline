@@ -18,7 +18,7 @@ compile_attributes <- function(path){
     os <- "win"
   }
   
-  # Set file names to be written 
+  # Get names of data files with associated attribute files
 
   files <- list.files(path)
   use_i <- str_detect(string = files,
@@ -39,7 +39,7 @@ compile_attributes <- function(path){
 
   for (i in 1:length(table_names)){
 
-    message(paste("Compiling", fname_table_attributes[i], "..."))
+    message(paste("Compiling", fname_table_attributes[i]))
 
     
     file_path <- paste(path,
@@ -92,6 +92,123 @@ compile_attributes <- function(path){
                                  "dateTimeFormatString",
                                  "missingValueCode",
                                  "missingValueCodeExplanation")
+    
+    # Convert user inputs to consistent case
+    
+    df_attributes$class <- tolower(df_attributes$class)
+    
+    # Validate attributes -----------------------------------------------------
+    
+    # Validate attributes: Remaining prompts in units field
+    
+    use_i <- str_detect(string = df_attributes$unit,
+                        pattern = "^!.*!$")
+    
+    if (sum(use_i) > 0){
+      hold <- df_attributes$attributeName[use_i]
+      stop(paste(fname_table_attributes[i], 
+                 " contains invalid units. Please edit the units of these attributes: ",
+                 paste(hold, collapse = ", ")))
+    }
+    
+    # Validate attributes: Remaining prompts in dateTimeFormatString field
+    
+    use_i <- str_detect(string = df_attributes$dateTimeFormatString,
+                        pattern = "^!.*!$")
+    
+    if (sum(use_i) > 0){
+      hold <- df_attributes$attributeName[use_i]
+      stop(paste(fname_table_attributes[i], 
+                 " contains invalid dateTimeFormatString(s). Please edit the dateTimeFormatString(s) of these attributes: ",
+                 paste(hold, collapse = ", ")))
+    }
+    
+    # Validate attributes: Each attribute has a definition
+    
+    use_i <- sum(df_attributes$attributeName != "") ==  sum(df_attributes$attributeDefinition != "")
+    
+    if (!isTRUE(use_i)){
+      hold <- df_attributes$attributeName[df_attributes$attributeDefinition == ""]
+      stop(paste(fname_table_attributes[i], 
+                 " contains attributes without defintions. Please add definitions to these attributes: ",
+                 paste(hold, collapse = ", ")))
+    }
+    
+    # Validate attributes: Each attribute has a class
+    
+    use_i <- sum(df_attributes$attributeName != "") ==  sum(df_attributes$class != "")
+    
+    if (!isTRUE(use_i)){
+      hold <- df_attributes$attributeName[df_attributes$class == ""]
+      stop(paste(fname_table_attributes[i], 
+                 " contains attributes without a class. Please add a class to these attributes: ",
+                 paste(hold, collapse = ", ")))
+    }
+    
+    # Validate attributes: Each Date class has an entry
+    
+    use_i <- df_attributes$class == "date"
+    use_i2 <- df_attributes$dateTimeFormatString != ""
+    use_i3 <- use_i2 == use_i
+    
+    if (sum(!use_i3) > 0){
+      hold <- df_attributes$attributeName[!use_i3]
+      stop(paste(fname_table_attributes[i], 
+                 " has Date attributes without a dateTimeFormatString. Please add format strings to these attributes: ",
+                 paste(hold, collapse = ", ")))
+    }
+    
+    # Validate attributes: class == numeric has non-blank units
+    
+    use_i <- df_attributes$class == "numeric"
+    use_i2 <- df_attributes$unit != ""
+    use_i3 <- use_i2 == use_i
+    
+    if (sum(use_i3) < length(use_i3)){
+      hold <- df_attributes$attributeName[!use_i3]
+      stop(paste(fname_table_attributes[i], 
+                 " has numeric attributes without units. Please add units to these attributes: ",
+                 paste(hold, collapse = ", ")))
+    }
+    
+    # Validate attributes: missingValueCodes have missingValueCodeExplanations
+    use_i <- df_attributes$missingValueCode %in% ""
+    use_i2 <- df_attributes$missingValueCodeExplanation == ""
+    use_i3 <- use_i2 != use_i
+    
+    if (sum(use_i3) > 0){
+      hold <- df_attributes$attributeName[use_i3]
+      stop(paste(fname_table_attributes[i], 
+                 " has missingValueCode(s) without missingValueCodeExplanation(s). Please fix this for these attributes: ",
+                 paste(hold, collapse = ", ")))
+    }
+    
+    # Validate attributes: missingValueCodeExplanations have non-blank missingValuecodeExplanations
+    use_i <- df_attributes$missingValueCodeExplanation != ""
+    use_i2 <- df_attributes$missingValueCode %in% ""
+    use_i3 <- use_i2 == use_i
+    
+    if (sum(use_i3) > 0){
+      hold <- df_attributes$attributeName[use_i3]
+      stop(paste(fname_table_attributes[i], 
+                 " has blank missingValueCode(s). Blank missing value codes are not allowed. Please fix your data and metadata for these attributes: ",
+                 paste(hold, collapse = ", ")))
+    }
+    
+    
+    # Modify attributes -------------------------------------------------------
+    
+    # Modify attributes: remove units class != numeric
+    
+    use_i <- df_attributes$class != "numeric"
+    use_i2 <- df_attributes$unit == ""
+    use_i3 <- use_i2 != use_i
+    
+    if (sum(use_i3) > 0){
+      df_attributes$unit[use_i3] <- ""
+    }
+    
+    # ------------------------------------------------
     
     # Initialize outgoing attribute table 
 
@@ -181,11 +298,14 @@ compile_attributes <- function(path){
     
     is_character <- which(attributes$columnClasses == "character") 
     is_catvar <- which(attributes$columnClasses == "categorical")
+    is_date <- which(attributes$columnClasses == "date")
     use_i <- c(is_character, is_catvar)
     
     attributes$numberType[use_i] <- "character"
     
     attributes$columnClasses[is_catvar] <- "factor"
+    
+    attributes$columnClasses[is_date] <- "Date"
 
     # Set attribute definition (i.e. "definition")
     

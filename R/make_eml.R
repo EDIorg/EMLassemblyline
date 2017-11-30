@@ -199,7 +199,7 @@ make_eml <- function(path) {
 
   # Read personnel file
 
-  message("Read personnel file.")
+  message("Reading personnel file.")
   
   personinfo <- read.table(
     fname_personnel,
@@ -221,6 +221,33 @@ make_eml <- function(path) {
                             "fundingNumber")
   
   personinfo$role <- tolower(personinfo$role)
+  
+  # Validate personnel.txt ----------------------------------------------------
+  
+  # Validate personnel: required roles are present
+  
+  if (sum(personinfo$role %in% "creator") == 0){
+    stop("Your dataset is missing a creator. Add one to personnel.txt.")
+  }
+  if (sum(personinfo$role %in% "contact") == 0){
+    stop("Your dataset is missing a contact. Add one to personnel.txt.")
+  }
+  if (sum(personinfo$role %in% "pi") == 0){
+    stop("Your dataset is missing a principal investigator. Add one to personnel.txt.")
+  }
+  
+  # Validate personnel: fundingNumber is present if fundingAgency is present
+  
+  use_i <- personinfo$fundingAgency != ""
+  use_i2 <- personinfo$fundingNumber != ""
+  use_i3 <- use_i != use_i2
+  
+  if (sum(use_i3 > 0)){
+    rown <- seq(length(use_i3))[use_i3] + 1
+    stop(paste("Row number(s): ",
+               paste(rown, collapse = ", "),
+               " of personnel.txt are missing fundingNumber or fundingAgency. If one is listed, the other musth be listed as well. Please add these."))
+  }
 
   # Build modules--------------------------------------------------------------
 
@@ -300,6 +327,10 @@ make_eml <- function(path) {
   # Add abstract
   
   message("<abstract>")
+  
+  if (!file.exists(fname_abstract)){
+    stop("abstract.txt doesn't exist!")
+  }
 
   dataset@abstract <- as(set_TextType(fname_abstract), "abstract")
 
@@ -336,6 +367,10 @@ make_eml <- function(path) {
   # Add intellectual rights
 
   message("<intellectualRights>")
+  
+  if (!file.exists(fname_intellectual_rights)){
+    stop("intellectual_rights.txt doesn't exist!")
+  }
   
   dataset@intellectualRights <- as(
     set_TextType(fname_intellectual_rights),
@@ -378,6 +413,10 @@ make_eml <- function(path) {
   # Add methods
   
   message("<methods>")
+  
+  if (!file.exists(fname_methods)){
+    stop("methods.txt doesn't exist!")
+  }
 
   dataset@methods <- set_methods(fname_methods)
   
@@ -448,35 +487,36 @@ make_eml <- function(path) {
   pi_list[[1]] <- suppressWarnings(set_person(info_row = useI[1],
                              person_role = "pi"))
   
-  # if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
-  #   userId <- new("userId")
-  #   userId@directory <- new("xml_attribute", "https://orcid.org")
-  #   hold <- trimws(personinfo[info_row,"userId"])
-  #   hold <- paste("https://orcid.org/", hold, sep = "")
-  #   userId@.Data <- hold
-  #   contact@userId <- new("ListOfuserId", c(userId))
-  # }
-  
-  if (personinfo$fundingAgency[useI[1]] == ""){
-    if (personinfo$projectTitle[useI[1]] == ""){
+  if (personinfo$projectTitle[useI[1]] == ""){
+    if (personinfo$fundingAgency[useI[1]] == ""){
       project <- new("project",
                      title = "No project title to report",
                      personnel = pi_list,
                      funding = "No funding to report")
     } else {
       project <- new("project",
-                     title = personinfo$projectTitle[useI[1]],
+                     title = "No project title to report",
+                     personnel = pi_list,
+                     funding = paste(personinfo$fundingAgency[useI[1]],
+                                     ": ",
+                                     personinfo$fundingNumber[useI[1]],
+                                     sep = ""))
+    }
+  } else if (personinfo$projectTitle[useI[1]] != ""){
+    if (personinfo$fundingAgency[useI[1]] == ""){
+      project <- new("project",
+                     title = personinfo$projectTitle[useI[[1]]],
                      personnel = pi_list,
                      funding = "No funding to report")
+    } else {
+      project <- new("project",
+                     title = personinfo$projectTitle[useI[[1]]],
+                     personnel = pi_list,
+                     funding = paste(personinfo$fundingAgency[useI[1]],
+                                     ": ",
+                                     personinfo$fundingNumber[useI[1]],
+                                     sep = ""))
     }
-  } else {
-    project <- new("project",
-                   title = personinfo$projectTitle[useI[1]],
-                   personnel = pi_list,
-                   funding = paste(personinfo$fundingAgency[useI[1]],
-                                   ": ",
-                                   personinfo$fundingNumber[useI[1]],
-                                   sep = ""))
   }
   
   dataset@project <- project
@@ -487,20 +527,36 @@ make_eml <- function(path) {
     for (i in 1:(length(useI)-1)){
       pi_list[[1]] <- suppressWarnings(set_person(info_row = useI[i+1],
                                                   person_role = "pi"))
-      if (personinfo$fundingAgency[useI[i+1]] == ""){
-        funding_title <- "No funding to report."
-        relatedProject_list[[i]] <- new("relatedProject",
-                                        title = "No project title to report",
-                                        personnel = pi_list,
-                                        funding = "No funding to report")
-      } else {
-        relatedProject_list[[i]] <- new("relatedProject",
-                                        title = personinfo$projectTitle[useI[i+1]],
-                                        personnel = pi_list,
-                                        funding = paste(personinfo$fundingAgency[useI[i+1]],
-                                                        ": ",
-                                                        personinfo$fundingNumber[useI[i+1]],
-                                                        sep = ""))
+      if (personinfo$projectTitle[useI[i+1]] == ""){
+        if (personinfo$fundingAgency[useI[i+1]] == ""){
+          relatedProject_list[[i]] <- new("relatedProject",
+                                          title = "No project title to report",
+                                          personnel = pi_list,
+                                          funding = "No funding to report")
+        } else {
+          relatedProject_list[[i]] <- new("relatedProject",
+                                          title = "No project title to report",
+                                          personnel = pi_list,
+                                          funding = paste(personinfo$fundingAgency[useI[i+1]],
+                                                          ": ",
+                                                          personinfo$fundingNumber[useI[i+1]],
+                                                          sep = ""))
+        }
+      } else if (personinfo$projectTitle[useI[i+1]] != ""){
+        if (personinfo$fundingAgency[useI[i+1]] == ""){
+          relatedProject_list[[i]] <- new("relatedProject",
+                                          title = personinfo$projectTitle[useI[[i+1]]],
+                                          personnel = pi_list,
+                                          funding = "No funding to report")
+        } else {
+          relatedProject_list[[i]] <- new("relatedProject",
+                                          title = personinfo$projectTitle[useI[[i+1]]],
+                                          personnel = pi_list,
+                                          funding = paste(personinfo$fundingAgency[useI[i+1]],
+                                                          ": ",
+                                                          personinfo$fundingNumber[useI[i+1]],
+                                                          sep = ""))
+        }
       }
     }
     dataset@project@relatedProject <- as(relatedProject_list, "ListOfrelatedProject")
@@ -592,6 +648,19 @@ make_eml <- function(path) {
         quote="\"",
         as.is=TRUE,
         comment.char = "")
+      
+      # Validate catvars: Definitions for each code
+      
+      use_i <- sum(catvars$attributeName != "") ==  sum(catvars$definition != "")
+      
+      if (!isTRUE(use_i)){
+        hold <- catvars$code[catvars$definition == ""]
+        stop(paste(fname_table_catvars[i], 
+                   " contains codes without definition. Please add definitions to these codes: ",
+                   paste(hold, collapse = ", ")))
+      }
+      
+      # If content is present
       
       if (dim(catvars)[1] > 0){
 

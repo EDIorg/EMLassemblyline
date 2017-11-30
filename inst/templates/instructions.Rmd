@@ -135,9 +135,9 @@ Definitions for columns of this file:
     + **contact** Dataset contact (required; at least 1 contact must be listed for your dataset).
     + Any other entries into the 'role' column are acceptable and will be defined under the associated party element of this dataset with whatever value is entered under role.
     + If a person serves more than one role, duplicate this persons information in another row but with the additional role.
-* **projectTitle** Title of the project this dataset was created under (required). Project titles are only listed on lines where the personnel role is pi. If auxiliary projects were involved in creating this dataset then add a new line of personnel below the primary project and list the auxiliary project title and associated pi.
-* **fundingAgency** Name of the entity funding the creation of this dataset (required). Only include an entry in this column for rows where role pi.
-* **fundingNumber** Number of the grant or award that supported creation of this dataset (required). Only include an entry in this column for rows where role pi.
+* **projectTitle** Title of the project this dataset was created under (optional). Project titles are only listed on lines where the personnel role is pi. If auxiliary projects were involved in creating this dataset then add a new line of personnel below the primary project and list the auxiliary project title and associated pi.
+* **fundingAgency** Name of the entity funding the creation of this dataset (optional; but required if fundingNumber is present). Only include an entry in this column for rows where role pi.
+* **fundingNumber** Number of the grant or award that supported creation of this dataset (optional; but required if fundingAgency is present). Only include an entry in this column for rows where role pi.
 
 
 ### Step 12: Attributes
