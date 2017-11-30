@@ -109,12 +109,12 @@ extract_geocoverage <- function(path, data.file, lat.col, lon.col, site.col){
   nlines <- length(readLines(file_path))
   
   if (os == "mac"){
-    delim_guess <- get.delim(file_path,
-                             n = nlines/2,
+    delim_guess <- suppressWarnings(get.delim(file_path,
+                             n = 2,
                              delims = c("\t",
                                         ",",
                                         ";",
-                                        "|"))
+                                        "|")))
   } else if (os == "win"){
     delim_guess <- get.delim(file_path,
                                 n = nlines/2,

@@ -48,17 +48,9 @@ make_eml <- function(path) {
 
   # Load the datasets configuration file
   
-  message("Loading configuration.R ...")
+  message("Loading configuration.R.")
 
   source(paste(path, "/configuration.R", sep = ""))
-  
-  # files_in <- list.files(path)
-  # file_in <- grep("abstract.txt", files_in, value = T)
-  # dataset_name <- substr(file_in, 1, nchar(file_in)-13)
-  # 
-  # template <- paste(dataset_name,
-  #                   "_template.docx",
-  #                   sep = "")
   
   # Compile attributes
   
@@ -207,7 +199,7 @@ make_eml <- function(path) {
 
   # Read personnel file
 
-  message("Read personnel file ...")
+  message("Read personnel file.")
   
   personinfo <- read.table(
     fname_personnel,
@@ -232,13 +224,13 @@ make_eml <- function(path) {
 
   # Build modules--------------------------------------------------------------
 
-  message("Building EML:")
+  message("Building EML ...")
   
   # Create EML
   
   # Build eml-access module
   
-  message("access ...")
+  message("<access>")
 
   allow_principals <- c(paste("uid=",
                               user_id,
@@ -270,14 +262,14 @@ make_eml <- function(path) {
 
   # Build dataset module
   
-  message("dataset ...")
+  message("<dataset>")
 
   dataset <- new("dataset",
                  title = dataset_title)
 
   # Add creators
   
-  message("creators ...")
+  message("<creators>")
 
   personinfo <- read.table(
     paste(substr(fname_personnel, 1, nchar(fname_personnel) - 4),
@@ -301,19 +293,19 @@ make_eml <- function(path) {
 
   # Add publicaton date
   
-  message("publication date ...")
+  message("<publicationDate>")
 
   dataset@pubDate <- as(format(Sys.time(), "%Y-%m-%d"), "pubDate")
 
   # Add abstract
   
-  message("abstract ...")
+  message("<abstract>")
 
   dataset@abstract <- as(set_TextType(fname_abstract), "abstract")
 
   # Add keywords
   
-  message("keywords ...")
+  message("<keywordSet>")
   
   keywords <- read.table(
     paste(substr(fname_keywords, 1, nchar(fname_keywords) - 4),
@@ -343,7 +335,7 @@ make_eml <- function(path) {
 
   # Add intellectual rights
 
-  message("intellectual rights ...")
+  message("<intellectualRights>")
   
   dataset@intellectualRights <- as(
     set_TextType(fname_intellectual_rights),
@@ -351,7 +343,7 @@ make_eml <- function(path) {
 
   # Add coverage
   
-  message("coverage ...")
+  message("<coverage>")
   
   dataset@coverage <- set_coverage(begin = begin_date,
                                    end = end_date,
@@ -363,7 +355,7 @@ make_eml <- function(path) {
 
   # Add maintenance
   
-  message("maintenance ...")
+  message("<maintenance>")
   
   maintenance <- new("maintenance")
   maintenance@description <- as(maintenance_description, "description")
@@ -371,7 +363,7 @@ make_eml <- function(path) {
   
   # Add contacts
   
-  message("contacts ...")
+  message("<contacts>")
 
   useI <- which(personinfo$role == "contact")
 
@@ -385,13 +377,13 @@ make_eml <- function(path) {
 
   # Add methods
   
-  message("methods ...")
+  message("<methods>")
 
   dataset@methods <- set_methods(fname_methods)
   
   if (file.exists(paste(path, "/", "geographic_coverage.txt", sep = ""))){
     
-    message("sampling coordinates ...")
+    message("<geographicDescription>")
     
     df_geographic_coverage <- read.table(paste(path,
                                                "/",
@@ -448,7 +440,7 @@ make_eml <- function(path) {
 
   # Add project and funding
   
-  message("project and funding ...")
+  message("<project>")
   
   useI <- which(personinfo$role == "pi")
   
@@ -516,7 +508,7 @@ make_eml <- function(path) {
   
   # Add associated parties
   
-  message("associated parties ...")
+  message("<associatedParty")
   
   useI <- which(personinfo$role != "pi" &
                   personinfo$role != "creator" &
@@ -533,7 +525,7 @@ make_eml <- function(path) {
   
   # Add additional information
   
-  message("additional info ...")
+  message("<additionalInfo>")
   
   if (file.exists(fname_additional_info)){
     
@@ -549,8 +541,8 @@ make_eml <- function(path) {
   for (i in 1:length(table_names)){
 
     message(paste(
-      table_names[i],
-      "data table ..."))
+      "<dataTable> ...",
+      table_names[i]))
     
     attributes <- attributes_in[[1]][[i]]
     
@@ -561,12 +553,22 @@ make_eml <- function(path) {
                        table_names[i],
                        sep = "")
     
+    nlines <- length(readLines(file_path))
+    
     if (os == "mac"){
-      delim_guess <- get.delim(file_path,
-                               n = 2)
+      delim_guess <- suppressWarnings(get.delim(file_path,
+                                                n = 2,
+                                                delims = c("\t",
+                                                           ",",
+                                                           ";",
+                                                           "|")))
     } else if (os == "win"){
       delim_guess <- get.delim(file_path,
-                               n = 1)
+                               n = nlines/2,
+                               delims = c("\t",
+                                          ",",
+                                          ";",
+                                          "|"))
     }
     
     df_table <- read.table(file_path,
@@ -791,7 +793,7 @@ make_eml <- function(path) {
     
     if (custom_units == "yes"){
       
-      message("custom units ...")
+      message("<additionalMetadata>")
       
       for (j in 1:ncol(custom_units_df)){
         if (class(custom_units_df[ ,j]) == "character" ||
@@ -818,7 +820,7 @@ make_eml <- function(path) {
 
   # Build EML
   
-  message("Compiling EML ...")
+  message("Compiling EML.")
   
   
   if (custom_units == "yes"){
@@ -840,13 +842,13 @@ make_eml <- function(path) {
 
   # Write EML
 
-  message("Writing EML ...")
+  message("Writing EML.")
   
   write_eml(eml, paste(path, "/", data_package_id, ".xml", sep = ""))
   
   # Validate EML
   
-  message("Validating EML ...")
+  message("Validating EML.")
   
   validation_result <- eml_validate(eml)
   

@@ -9,6 +9,15 @@ compile_attributes <- function(path){
   
   source(paste(path, "/configuration.R", sep = ""))
   
+  # Detect users operating system
+  
+  sysinfo <- Sys.info()["sysname"]
+  if (sysinfo == "Darwin"){
+    os <- "mac"
+  } else {
+    os <- "win"
+  }
+  
   # Set file names to be written 
 
   files <- list.files(path)
@@ -38,12 +47,22 @@ compile_attributes <- function(path){
                        table_names[i],
                        sep = "")
     
+    nlines <- length(readLines(file_path))
+    
     if (os == "mac"){
-      delim_guess <- get.delim(file_path,
-                               n = 2)
+      delim_guess <- suppressWarnings(get.delim(file_path,
+                                                   n = 2,
+                                                   delims = c("\t",
+                                                              ",",
+                                                              ";",
+                                                              "|")))
     } else if (os == "win"){
       delim_guess <- get.delim(file_path,
-                               n = 1)
+                                  n = nlines/2,
+                                  delims = c("\t",
+                                             ",",
+                                             ";",
+                                             "|"))
     }
     
     df_table <- read.table(file_path,

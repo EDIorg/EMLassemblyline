@@ -188,12 +188,12 @@ import_templates <- function(path, license, data.files){
     nlines <- length(readLines(file_path[i]))
     
     if (os == "mac"){
-      delim_guess[i] <- get.delim(file_path[i],
-                               n = nlines/2,
+      delim_guess[i] <- suppressWarnings(get.delim(file_path[i],
+                               n = 2,
                                delims = c("\t",
                                           ",",
                                           ";",
-                                          "|"))
+                                          "|")))
     } else if (os == "win"){
       delim_guess[i] <- get.delim(file_path[i],
                                   n = nlines/2,
