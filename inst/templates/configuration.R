@@ -36,7 +36,6 @@ begin_date <- ""
 end_date <- ""
 
 
-
 # Enter the spatial bounding coordinates of your dataset (in decimal degrees) 
 # and a brief description. Longitudes west of the prime meridian and latitudes 
 # south of the equator are prefixed with a minus sign (i.e. dash -). A detailed 
@@ -47,23 +46,23 @@ end_date <- ""
 #
 # geographic_location <- "North America and Europe"
 # 
-# coordinate_north <- 69.0
+# coordinate_north <- "69.0"
 # 
-# coordinate_east <- 28.53
+# coordinate_east <- "28.53"
 # 
-# coordinate_south <- 28.38
+# coordinate_south <- "28.38"
 # 
-# coordinate_west <- -119.95
+# coordinate_west <- "-119.95"
 
 geographic_location <- ""
 
-coordinate_north <- 
+coordinate_north <- ""
 
-coordinate_east <- 
+coordinate_east <- ""
 
-coordinate_south <- 
+coordinate_south <- ""
 
-coordinate_west <- 
+coordinate_west <- ""
 
 # Specify whether data collection for this dataset is "ongoing" or "completed".
 #
@@ -72,38 +71,6 @@ coordinate_west <-
 # maintenance_description <- "completed"
 
 maintenance_description <- ""
-  
-
-# Enter information about the system you are publishing this dataset under. 
-# If you have not been provided a value for this field by EDI staff, enter the 
-# default value "edi".
-#
-# Example:
-#
-# root_system <- "edi"
-
-root_system <- ""
-
-
-# Enter your user ID. If you haven't received a user ID from EDI staff, use 
-# the default value "name".
-#
-# Example:
-#
-# user_id <- "casmith"
-
-user_id <- ""
-
-
-# Enter the author system your user ID is associated with. If you haven't 
-# received a author system specification from EDI staff, use the default value 
-# "edi".
-# 
-# Example:
-#
-# author_system <- "edi"
-
-author_system <- ""
 
 
 # Enter the data package ID. If you have not been provided a package ID from 
@@ -114,8 +81,6 @@ author_system <- ""
 # data_package_id <- "edi.8.2"
 
 data_package_id <- ""
-
-  
 
   
 # Set data table parameters ---------------------------------------------------

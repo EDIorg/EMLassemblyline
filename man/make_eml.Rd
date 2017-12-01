@@ -12,6 +12,13 @@ metadata templates, \emph{configuration.R},
 \emph{catvars_datatablename.txt} (if categorical variables 
 are present), and \emph{geographic_coverage.txt} (if reporting detailed 
 geographic coverage).}
+
+\item{user.id}{A character string specifying your EDI data repository user ID. If you
+don't have one, contact EDI (info@environmentaldatainitiative.org) to 
+get one, or don't use this argument when running \code{make_eml}.}
+
+\item{author.system}{A character string specifying the author system your user ID is 
+associated with. If you are}
 }
 \value{
 Validation results printed to the RStudio \emph{Console}.

@@ -13,6 +13,13 @@
 #'     \emph{catvars_datatablename.txt} (if categorical variables 
 #'     are present), and \emph{geographic_coverage.txt} (if reporting detailed 
 #'     geographic coverage).
+#' @param user.id
+#'     A character string specifying your EDI data repository user ID. If you
+#'     don't have one, contact EDI (info@environmentaldatainitiative.org) to 
+#'     get one, or don't use this argument when running \code{make_eml}.
+#' @param author.system
+#'     A character string specifying the author system your user ID is 
+#'     associated with. If you are 
 #'
 #' @return 
 #'     Validation results printed to the RStudio \emph{Console}.
@@ -29,7 +36,7 @@
 #'
 
 
-make_eml <- function(path) {
+make_eml <- function(path, user.id) {
 
   # Check arguments
   
@@ -189,7 +196,7 @@ make_eml <- function(path) {
         userId@.Data <- hold
         associated_party@userId <- new("ListOfuserId", c(userId))
       }
-      role <- new("role", trimws(personinfo[info_row,"role"]))
+      role <- new("role", str_to_title(trimws(personinfo[info_row,"role"])))
       associated_party@role <- new("role", c(role))
       associated_party
 
@@ -248,26 +255,50 @@ make_eml <- function(path) {
                paste(rown, collapse = ", "),
                " of personnel.txt are missing fundingNumber or fundingAgency. If one is listed, the other musth be listed as well. Please add these."))
   }
-
+  
+  # Validate personnel: project info is associated with first listed PI
+  
+  use_i <- personinfo$role == "pi"
+  pis <- personinfo[use_i, ]
+  pi_proj <- pis[ , c("projectTitle", "fundingAgency", "fundingNumber")]
+  
+  if ((sum(pi_proj == "") > 0) & (sum(pi_proj[1, ] == "") == 3)){
+    stop("The first Principal Investigator listed in personnel.txt is missing a projectTitle, fundingAgency, or fundingNumber. The first listed PI represents the major project and requires this. Please add one.")
+  }
+  
   # Build modules--------------------------------------------------------------
 
   message("Building EML ...")
   
   # Create EML
   
-  # Build eml-access module
+  # Build eml-access module ---------------------------------------------------
   
   message("<access>")
+  
+  if (!missing(user.id)){
+    allow_principals <- c(paste("uid=",
+                                user.id,
+                                ",o=LTER,dc=ecoinformatics,dc=org",
+                                sep = ""),
+                          "public")
+    
+    allow_permissions <- c("all",
+                           "read")
+  } else if (exists("user_id")){
+    allow_principals <- c(paste("uid=",
+                                user_id,
+                                ",o=LTER,dc=ecoinformatics,dc=org",
+                                sep = ""),
+                          "public")
+    
+    allow_permissions <- c("all",
+                           "read")
+  } else {
+    allow_principals <- c("public")
+    allow_permissions <- c("read")
+  }
 
-  allow_principals <- c(paste("uid=",
-                              user_id,
-                              ",o=LTER,dc=ecoinformatics,dc=org",
-                              sep = ""),
-                        "public")
-  
-  allow_permissions <- c("all",
-                         "read")
-  
   access_order <- "allowFirst"
   
   access_scope <- "document"
@@ -275,7 +306,7 @@ make_eml <- function(path) {
   access <- new("access",
                 scope = access_scope,
                 order = access_order,
-                authSystem = author_system)
+                authSystem = "https://pasta.edirepository.org/authentication")
 
   allow <- list()
   for (i in 1:length(allow_principals)){
@@ -334,10 +365,14 @@ make_eml <- function(path) {
 
   dataset@abstract <- as(set_TextType(fname_abstract), "abstract")
 
-  # Add keywords
+  # Add keywords --------------------------------------------------------------
   
   message("<keywordSet>")
   
+  if (!isTRUE(file.exists(fname_keywords))){
+    stop('keywords.txt does not exist! Run import_templates.txt to regenerate this template.')
+  }
+
   keywords <- read.table(
     paste(substr(fname_keywords, 1, nchar(fname_keywords) - 4),
           ".txt",
@@ -347,6 +382,17 @@ make_eml <- function(path) {
     as.is = TRUE,
     na.strings = "NA",
     colClasses = "character")
+  
+  colnames(keywords) <- c("keyword", "keywordThesaurus")
+  
+  # Edit keywords: Remove blank keyword entries
+  
+  use_i <- keywords$keyword == ""
+  if (sum(use_i) > 0){
+    keywords <- keywords[!use_i, ]
+  }
+  
+  # 
   
   list_keywordSet <- list()
 
@@ -376,19 +422,27 @@ make_eml <- function(path) {
     set_TextType(fname_intellectual_rights),
     "intellectualRights")
 
-  # Add coverage
+  # Add coverage --------------------------------------------------------------
   
   message("<coverage>")
+  
+  # Validate coverage: North or South and East or West coordinates are required
+  
+  if ((coordinate_north == "") | (coordinate_south == "") | (coordinate_east == "" | (coordinate_west == ""))){
+    stop("Error in geographic coverage of the configuration.R file. North, east, south, and west coordinates are required. If reporting a point and not an area, replicate the respective latitude and longitude coordinates.")
+  }
+
+  # Set geocoverage
   
   dataset@coverage <- set_coverage(begin = begin_date,
                                    end = end_date,
                                    geographicDescription = geographic_location,
-                                   west = coordinate_west,
-                                   east = coordinate_east,
-                                   north = coordinate_north,
-                                   south = coordinate_south)
+                                   west = as.numeric(coordinate_west),
+                                   east = as.numeric(coordinate_east),
+                                   north = as.numeric(coordinate_north),
+                                   south = as.numeric(coordinate_south))
 
-  # Add maintenance
+  # Add maintenance -----------------------------------------------------------
   
   message("<maintenance>")
   
@@ -564,7 +618,7 @@ make_eml <- function(path) {
   
   # Add associated parties
   
-  message("<associatedParty")
+  message("<associatedParty>")
   
   useI <- which(personinfo$role != "pi" &
                   personinfo$role != "creator" &
@@ -896,7 +950,7 @@ make_eml <- function(path) {
     eml <- new("eml",
                schemaLocation = "eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd",
                packageId = data_package_id,
-               system = root_system,
+               system = "edi",
                access = access,
                dataset = dataset,
                additionalMetadata = as(unitsList, "additionalMetadata"))
@@ -904,7 +958,7 @@ make_eml <- function(path) {
     eml <- new("eml",
                schemaLocation = "eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd",
                packageId = data_package_id,
-               system = root_system,
+               system = "edi",
                access = access,
                dataset = dataset)
   }
