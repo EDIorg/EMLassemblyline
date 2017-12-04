@@ -32,20 +32,20 @@
 
 define_catvars <- function(path) {
   
-  # Check arguments
+  
+  # Check arguments and parameterize ------------------------------------------
   
   if (missing(path)){
-    stop("Specify path to your dataset working directory.")
+    stop('Input argument "path" is missing! Specify the path to your dataset working directory.')
   }
   
-  # Detect users operating system
+  # Validate path
   
-  sysinfo <- Sys.info()["sysname"]
-  if (sysinfo == "Darwin"){
-    os <- "mac"
-  } else {
-    os <- "win"
-  }
+  validate_path(path)
+  
+  # Detect operating system
+  
+  os <- detect_os()
   
   # Get attribute file names and data file names
   
@@ -54,6 +54,9 @@ define_catvars <- function(path) {
   files <- list.files(path)
   use_i <- str_detect(string = files,
                       pattern = "^attributes")
+  if (sum(use_i) == 0){
+    stop('There are no attributes.txt files in your dataset working directory. Please fix this.')
+  }
   attribute_files <- files[use_i]
   table_names_base <- str_sub(string = attribute_files,
                               start = 12,
@@ -67,36 +70,10 @@ define_catvars <- function(path) {
 
   fname_table_catvars <- str_c("catvars_", table_names_base, ".txt")
 
-  # Auto detect field delimiters of input data files
-  # and construct data file paths
+  # Detect field delimiters of data files
   
-  delim_guess <- c()
-  file_path <- c()
-  for (i in 1:length(data_files)){
-    
-    file_path[i] <- paste(path,
-                          "/",
-                          data_files[i],
-                          sep = "")
-    
-    nlines <- length(readLines(file_path[i]))
-    
-    if (os == "mac"){
-      delim_guess[i] <- suppressWarnings(get.delim(file_path[i],
-                                  n = 2,
-                                  delims = c("\t",
-                                             ",",
-                                             ";",
-                                             "|")))
-    } else if (os == "win"){
-      delim_guess[i] <- get.delim(file_path[i],
-                                  n = nlines/2,
-                                  delims = c("\t",
-                                             ",",
-                                             ";",
-                                             "|"))
-    }
-  }
+  delim_guess <- detect_delimiter(path, data.files = data_files, os)
+  
   
   # Loop through data tables --------------------------------------------------
   
@@ -143,7 +120,12 @@ define_catvars <- function(path) {
       
       message(paste("Reading ", table_names[i], ".", sep = ""))
       
-      df_table <- read.table(file_path[i],
+      data_path <- paste(path,
+                            "/",
+                            data_files[i],
+                            sep = "")
+      
+      df_table <- read.table(data_path,
                              header=TRUE,
                              sep=delim_guess[i],
                              quote="\"",
@@ -228,7 +210,7 @@ define_catvars <- function(path) {
       }
       
     }
-    
+
   }
   
   message("Done.")

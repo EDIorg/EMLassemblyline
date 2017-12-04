@@ -4,21 +4,74 @@
 \alias{make_eml}
 \title{Make EML}
 \usage{
-make_eml(path)
+make_eml(path = "", dataset.title = "", data.files = c("df.1", "df.2", "etc."), 
+    data.files.description = c("df.1.desc", df.2.desc"), 
+    data.files.quote.character = c("df.1.quote.char", "df.2.quote.char"),
+    data.files.url = "", temporal.coverage, = c("begin_date", "end_date"), 
+    geographic.description = "", 
+    geographic.coordinates = c("North_latitude", "East_longitude", 
+    "West_longitude", "South_latitude"), maintenance.description = "", 
+    user.id = "", package.id = "")
 }
 \arguments{
 \item{path}{A path to the dataset working directory containing the completed 
-metadata templates, \emph{configuration.R}, 
-\emph{catvars_datatablename.txt} (if categorical variables 
+metadata templates, \emph{catvars_datatablename.txt} (if categorical variables 
 are present), and \emph{geographic_coverage.txt} (if reporting detailed 
 geographic coverage).}
+
+\item{dataset.title}{A character string specifying the title for your dataset. Be descriptive
+(more than 5 words). We recommend the following format: Project name: 
+Broad description: Time span" (e.g. "GLEON: Long term lake chloride 
+concentrations from North America and Europe: 1940-2016").}
+
+\item{data.files}{A list of character strings specifying the names of the data files
+of your dataset (e.g. data.files = c("lake_chloride_concentrations.csv", 
+"lake_characteristics.csv"))}
+
+\item{data.files.description}{A list of character strings briefly describing the data files listed in the 
+data.files argument and in the same order as listed in the data.files
+argument (e.g. data.files.description = c("Chloride concentration data.", 
+"Climate, road density, and impervious surface data."))}
+
+\item{data.files.quote.character}{A list of character strings defining the quote characters used in your 
+data files and in the same order as listed in the data.files argument.  
+If the quote character is a quotation, then enter \". If the quote 
+character is an apostrophe, then enter \'. If there is no quote 
+character then don't use this argument when running \code{make_eml}.
+Example: data.files.quote.character = c("\"", "\"").}
+
+\item{data.files.url}{A character string specifying the URL of where your data tables are 
+stored on a publicly accessible server (i.e. does not require user ID 
+or password). The EDI data repository software, PASTA+, will use this to
+upload your data into the repository. If you will be manually uploading 
+your data tables, then don't use this argument when running 
+\code{make_eml}. Example: data.files.url = "https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride"}
+
+\item{temporal.coverage}{A list of character strings specifying the beginning and ending dates 
+of your dataset. Use the format 'YYYY-MM-DD'.}
+
+\item{geographic.description}{A character string describing the geographic coverage of your dataset 
+(e.g. "North America and Europe").}
+
+\item{geographic.coordinates}{A list of character strings specifying the spatial bounding 
+coordinates of your dataset in decimal degrees. The list must follow 
+this order: "North", "East", "South", "West". Longitudes west of the 
+prime meridian and latitudes south of the equator are prefixed with a 
+minus sign (i.e. dash -). If you don't have an area, but rather a point,
+Repeat the latitude value for North and South, and repeat the longitude
+value for East and West (e.g. geographic.coordinates = c("28.38", 
+"-119.95", "28.38", "-119.95")).}
+
+\item{maintenance.description}{A character string specifying whether data collection for this dataset 
+is "ongoing" or "completed".}
 
 \item{user.id}{A character string specifying your EDI data repository user ID. If you
 don't have one, contact EDI (info@environmentaldatainitiative.org) to 
 get one, or don't use this argument when running \code{make_eml}.}
 
-\item{author.system}{A character string specifying the author system your user ID is 
-associated with. If you are}
+\item{package.id}{A character string specifying package ID for your data package. If you
+don't have a package ID, then don't use this argument when running
+\code{make_eml}. A non-input package ID defaults to "edi.101.1".}
 }
 \value{
 Validation results printed to the RStudio \emph{Console}.

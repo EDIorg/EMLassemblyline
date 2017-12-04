@@ -4,7 +4,7 @@
 \alias{import_templates}
 \title{Import metadata templates}
 \usage{
-import_templates(path = "", license = "", data.files = c("data.file.1", "data.file.2", "etc."), sep)
+import_templates(path = "", license = "", data.files = c("data.file.1", "data.file.2", "etc."))
 }
 \arguments{
 \item{path}{A character string specifying a path to the dataset working directory

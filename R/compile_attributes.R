@@ -5,18 +5,9 @@
 
 compile_attributes <- function(path){
 
-  # Load the datasets configuration file
-  
-  source(paste(path, "/configuration.R", sep = ""))
-  
   # Detect users operating system
   
-  sysinfo <- Sys.info()["sysname"]
-  if (sysinfo == "Darwin"){
-    os <- "mac"
-  } else {
-    os <- "win"
-  }
+  os <- detect_os()
   
   # Get names of data files with associated attribute files
 

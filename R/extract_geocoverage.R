@@ -35,94 +35,48 @@
 
 extract_geocoverage <- function(path, data.file, lat.col, lon.col, site.col){
   
-  # Check for arguments -------------------------------------------------------
-  
-  if (missing(path)){
-    stop("Specify path to dataset working directory.")
-  }
-  
-  if (missing(data.file)){
-    stop("Specify the data file containing the geographic coordinates.")
-  }
-  
-  if (missing(lat.col)){
-    stop("Specify latitude column name.")
-  }
-  
-  if (missing(lat.col)){
-    stop("Specify latitude column name.")
-  }
-  
-  if (missing(lat.col)){
-    stop("Specify site column name.")
-  }
-  
-  # Check arguments and modify for script -------------------------------------
+  # Check arguments and parameterize ------------------------------------------
   
   message("Checking input arguments.")
   
-  # Data names are valid
-  
-  files <- list.files(path)
-  files <- c(files, str_replace(files, "\\.[:alnum:]*$", replacement = ""))
-  use_i <- str_detect(string = files,
-                      pattern = str_c("^", data.file, "$", collapse = "|"))
-  if (!sum(use_i) == length(data.file)){
-    if(sum(use_i) == 0){
-      stop(paste("Invalid data.file entered: ", paste(data.file, collapse = ", "), sep = ""))
-    } else {
-      name_issues <- data.files[!files[use_i] == data.file]
-      stop(paste("Invalid data.file entered: ", paste(name_issues, collapse = ", "), sep = ""))
-    }
+  if (missing(path)){
+    stop('Input argument "path" is missing! Specify the path to dataset working directory.')
+  }
+  if (missing(data.file)){
+    stop('Input argument "data.file" is missing! Specify the data file containing the geographic coordinates.')
+  }
+  if (missing(lat.col)){
+    stop('Input argument "lat.col" is missing! Specify latitude column name.')
+  }
+  if (missing(lon.col)){
+    stop('Input argument "lon.col" is missing! Specify longitude column name.')
+  }
+  if (missing(site.col)){
+    stop('Input argument "site.col" is missing! Specify site column name.')
   }
   
-  # Get actual file name for script
+  # Validate path
   
-  files <- list.files(path)
-  use_i <- str_detect(string = files,
-                      pattern = str_c("^", data.file, collapse = "|"))
-  data_file <- files[use_i]
+  validate_path(path)
   
-  # Path is valid
+  # Validate file names
+
+  data_file <- validate_file_names(path, data.files = data.file)
   
-  value <- file.exists(paste(path, "/", data_file, sep = ""))
-  if (!isTRUE(value)){
-    stop(paste('Invalid file path entered: ', path))
-  }
+  # Detect operating system
   
-  # Detect users operating system
+  os <- detect_os()
   
-  sysinfo <- Sys.info()["sysname"]
-  if (sysinfo == "Darwin"){
-    os <- "mac"
-  } else {
-    os <- "win"
-  }
+  # Detect data file delimeter
   
-  # Read data table
+  delim_guess <- detect_delimeter(path, data.files = data_file, os)
+  
+  # Read data table -----------------------------------------------------------
   
   file_path <- paste(path,
                      "/",
                      data_file,
                      sep = "")
-  
-  nlines <- length(readLines(file_path))
-  
-  if (os == "mac"){
-    delim_guess <- suppressWarnings(get.delim(file_path,
-                             n = 2,
-                             delims = c("\t",
-                                        ",",
-                                        ";",
-                                        "|")))
-  } else if (os == "win"){
-    delim_guess <- get.delim(file_path,
-                                n = nlines/2,
-                                delims = c("\t",
-                                           ",",
-                                           ";",
-                                           "|"))
-  }
   
   if (file.exists(paste(path, "/geographic_coverage.txt", sep = ""))){
     
@@ -191,14 +145,14 @@ extract_geocoverage <- function(path, data.file, lat.col, lon.col, site.col){
     
     message("Writing geographic_coverage.txt.")
     
-    write.table(geocoverage_out,
+    suppressWarnings(write.table(geocoverage_out,
                 paste(path,
                       "/",
                       "geographic_coverage.txt", sep = ""),
                 sep = "\t",
                 row.names = F,
                 quote = F,
-                fileEncoding = "UTF-8")
+                fileEncoding = "UTF-8"))
 
   }
 

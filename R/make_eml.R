@@ -5,21 +5,74 @@
 #'     EML, and write to file.
 #'
 #' @usage 
-#'     make_eml(path)
+#'     make_eml(path = "", dataset.title = "", data.files = c("df.1", "df.2", "etc."), 
+#'     data.files.description = c("df.1.desc", df.2.desc"), 
+#'     data.files.quote.character = c("df.1.quote.char", "df.2.quote.char"),
+#'     data.files.url = "", temporal.coverage, = c("begin_date", "end_date"), 
+#'     geographic.description = "", 
+#'     geographic.coordinates = c("North_latitude", "East_longitude", 
+#'     "West_longitude", "South_latitude"), maintenance.description = "", 
+#'     user.id = "", package.id = "")
 #'
 #' @param path 
 #'     A path to the dataset working directory containing the completed 
-#'     metadata templates, \emph{configuration.R}, 
-#'     \emph{catvars_datatablename.txt} (if categorical variables 
+#'     metadata templates, \emph{catvars_datatablename.txt} (if categorical variables 
 #'     are present), and \emph{geographic_coverage.txt} (if reporting detailed 
 #'     geographic coverage).
+#' @param dataset.title
+#'     A character string specifying the title for your dataset. Be descriptive
+#'     (more than 5 words). We recommend the following format: Project name: 
+#'     Broad description: Time span" (e.g. "GLEON: Long term lake chloride 
+#'     concentrations from North America and Europe: 1940-2016").
+#' @param data.files
+#'     A list of character strings specifying the names of the data files
+#'     of your dataset (e.g. data.files = c("lake_chloride_concentrations.csv", 
+#'     "lake_characteristics.csv"))
+#' @param data.files.description
+#'     A list of character strings briefly describing the data files listed in the 
+#'     data.files argument and in the same order as listed in the data.files
+#'     argument (e.g. data.files.description = c("Chloride concentration data.", 
+#'     "Climate, road density, and impervious surface data."))
+#' @param data.files.quote.character
+#'     A list of character strings defining the quote characters used in your 
+#'     data files and in the same order as listed in the data.files argument.  
+#'     If the quote character is a quotation, then enter \". If the quote 
+#'     character is an apostrophe, then enter \'. If there is no quote 
+#'     character then don't use this argument when running \code{make_eml}.
+#'     Example: data.files.quote.character = c("\"", "\"").
+#' @param data.files.url
+#'     A character string specifying the URL of where your data tables are 
+#'     stored on a publicly accessible server (i.e. does not require user ID 
+#'     or password). The EDI data repository software, PASTA+, will use this to
+#'     upload your data into the repository. If you will be manually uploading 
+#'     your data tables, then don't use this argument when running 
+#'     \code{make_eml}. Example: data.files.url = "https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride"
+#' @param temporal.coverage
+#'     A list of character strings specifying the beginning and ending dates 
+#'     of your dataset. Use the format 'YYYY-MM-DD'.
+#' @param geographic.description
+#'     A character string describing the geographic coverage of your dataset 
+#'     (e.g. "North America and Europe").
+#' @param geographic.coordinates
+#'     A list of character strings specifying the spatial bounding 
+#'     coordinates of your dataset in decimal degrees. The list must follow 
+#'     this order: "North", "East", "South", "West". Longitudes west of the 
+#'     prime meridian and latitudes south of the equator are prefixed with a 
+#'     minus sign (i.e. dash -). If you don't have an area, but rather a point,
+#'     Repeat the latitude value for North and South, and repeat the longitude
+#'     value for East and West (e.g. geographic.coordinates = c("28.38", 
+#'     "-119.95", "28.38", "-119.95")).
+#' @param maintenance.description
+#'     A character string specifying whether data collection for this dataset 
+#'     is "ongoing" or "completed".
 #' @param user.id
 #'     A character string specifying your EDI data repository user ID. If you
 #'     don't have one, contact EDI (info@environmentaldatainitiative.org) to 
 #'     get one, or don't use this argument when running \code{make_eml}.
-#' @param author.system
-#'     A character string specifying the author system your user ID is 
-#'     associated with. If you are 
+#' @param package.id
+#'     A character string specifying package ID for your data package. If you
+#'     don't have a package ID, then don't use this argument when running
+#'     \code{make_eml}. A non-input package ID defaults to "edi.101.1".
 #'
 #' @return 
 #'     Validation results printed to the RStudio \emph{Console}.
@@ -36,30 +89,86 @@
 #'
 
 
-make_eml <- function(path, user.id) {
+make_eml <- function(path, dataset.title, data.files, data.files.description, 
+                     data.files.quote.character, data.files.url,
+                     temporal.coverage, geographic.description, 
+                     geographic.coordinates, maintenance.description, user.id, 
+                     package.id) {
 
-  # Check arguments
+  # Check arguments and parameterize ------------------------------------------
   
   if (missing(path)){
-    stop("Specify path to dataset working directory.")
+    stop('Input argument "path" is missing! Specify path to your dataset working directory.')
+  }
+  if (missing(dataset.title)){
+    stop('Input argument "dataset.title" is missing! Add a title for your dataset.')
+  }
+  if (missing(data.files)){
+    stop('Input argument "data.files" is missing! List the names of your datasets data files.')
+  }
+  if (missing(data.files.description)){
+    stop('Input argument "data.files.description" is missing! Please describe your data files.')
+  }
+  if (missing(temporal.coverage)){
+    stop('Input argument "temporal.coverage" is missing! Add the temporal coverage of your dataset.')
+  }
+  if (missing(geographic.description)){
+    stop('Input argument "geographic.description" is missing! Add this description for your dataset.')
+  }
+  if (missing(geographic.coordinates)){
+    stop('Input argument "geographic.coordinates" is missing! Add add geographic coordinates for your dataset.')
+  }
+  if (missing(maintenance.description)){
+    stop('Input argument "maintenance.description" is missing! Indicate whether data collection is "ongoing" or "completed" for your dataset.')
   }
   
-  # Get system information
+  # Validate path
   
-  sysinfo <- Sys.info()["sysname"]
-  if (sysinfo == "Darwin"){
-    os <- "mac"
+  validate_path(path)
+  
+  # Validate data file names
+  
+  table_names <- validate_file_names(path, data.files)
+  
+  # Detect operating system
+  
+  os <- detect_os()
+  
+  # Set package ID
+  
+  if (!missing(package.id)){
+    data_package_id <- package.id
   } else {
-    os <- "win"
+    data_package_id <- "edi.101.1"
   }
-
-  # Load the datasets configuration file
   
-  message("Loading configuration.R.")
-
-  source(paste(path, "/configuration.R", sep = ""))
+  # Validate data.files.description
   
-  # Compile attributes
+  if (length(data.files.description) != length(data.files)){
+    stop('The number of descriptions listed in the argument "data.files.description" does not match the number of files listed in the argument "data.files". These must match.')
+  }
+  
+  # Validate data.files.quote.character
+  
+  if (!missing(data.files.quote.character)){
+    if (length(data.files.quote.character) != length(data.files)){
+      stop('The number of quote characters listed in the argument "data.files.quote.character" does not match the number of files listed in the argument "data.files". These must match.')
+    }
+  }
+  
+  # Validate temporal.coverage
+  
+  if (length(temporal.coverage) != 2){
+    stop('The argument "temporal.coverage" requires both a begin date and end date. Please fix this.')
+  }
+  
+  # Validate geographic.coordinates
+  
+  if (length(geographic.coordinates) != 4){
+    stop('The argument "geographic.coordinates" requires North, East, South, and West bounding coordinates. If reporting a point and not an area, replicate the respective latitude and longitude coordinates.")')
+  }
+  
+  # Compile attributes --------------------------------------------------------
   
   attributes_in <- compile_attributes(path = path)
   
@@ -323,7 +432,7 @@ make_eml <- function(path, user.id) {
   message("<dataset>")
 
   dataset <- new("dataset",
-                 title = dataset_title)
+                 title = dataset.title)
 
   # Add creators
   
@@ -426,28 +535,22 @@ make_eml <- function(path, user.id) {
   
   message("<coverage>")
   
-  # Validate coverage: North or South and East or West coordinates are required
-  
-  if ((coordinate_north == "") | (coordinate_south == "") | (coordinate_east == "" | (coordinate_west == ""))){
-    stop("Error in geographic coverage of the configuration.R file. North, east, south, and west coordinates are required. If reporting a point and not an area, replicate the respective latitude and longitude coordinates.")
-  }
-
   # Set geocoverage
   
-  dataset@coverage <- set_coverage(begin = begin_date,
-                                   end = end_date,
-                                   geographicDescription = geographic_location,
-                                   west = as.numeric(coordinate_west),
-                                   east = as.numeric(coordinate_east),
-                                   north = as.numeric(coordinate_north),
-                                   south = as.numeric(coordinate_south))
+  dataset@coverage <- set_coverage(begin = temporal.coverage[1],
+                                   end = temporal.coverage[2],
+                                   geographicDescription = geographic.description,
+                                   west = as.numeric(geographic.coordinates[4]),
+                                   east = as.numeric(geographic.coordinates[2]),
+                                   north = as.numeric(geographic.coordinates[1]),
+                                   south = as.numeric(geographic.coordinates[3]))
 
   # Add maintenance -----------------------------------------------------------
   
   message("<maintenance>")
   
   maintenance <- new("maintenance")
-  maintenance@description <- as(maintenance_description, "description")
+  maintenance@description <- as(maintenance.description, "description")
   dataset@maintenance <- maintenance
   
   # Add contacts
@@ -780,27 +883,28 @@ make_eml <- function(path, user.id) {
     }
 
     # Set physical
-
-    # if (field_delimeter[i] == "comma"){
-    #   fd <- ","
-    # } else if (field_delimeter[i] == "tab"){
-    #   fd <- "\t"
-    # }
     
-    if (nchar(quote_character[i]) > 0){
+    
+    if (os == "mac"){
+      record_delimeter <- "\\n"
+    } else if (os == "win"){
+      record_delimeter <- "\\r\\n"
+    }
+
+    if (!missing("data.files.quote.character")){
       
       physical <- set_physical(table_names[i],
                                numHeaderLines = "1",
-                               recordDelimiter = record_delimeter[i],
+                               recordDelimiter = record_delimeter,
                                attributeOrientation = "column",
                                fieldDelimiter = delim_guess,
-                               quoteCharacter = quote_character[i])
+                               quoteCharacter = data.files.quote.character[i])
       
     } else {
       
       physical <- set_physical(table_names[i],
                                numHeaderLines = "1",
-                               recordDelimiter = record_delimeter[i],
+                               recordDelimiter = record_delimeter,
                                attributeOrientation = "column",
                                fieldDelimiter = delim_guess)
       
@@ -817,8 +921,8 @@ make_eml <- function(path, user.id) {
                                    table_names[i],
                                    sep = ""))))
 
-    if (nchar(data_table_urls) > 1){
-      data_table_url <- paste(data_table_urls,
+    if (!missing(data.files.url)){
+      data_table_url <- paste(data.files.url,
                               "/",
                               table_names[i],
                               sep = "")
@@ -883,7 +987,7 @@ make_eml <- function(path, user.id) {
 
     data_table <- new("dataTable",
                       entityName = table_names[i],
-                      entityDescription = data_table_descriptions[i],
+                      entityDescription = data.files.description[i],
                       physical = physical,
                       attributeList = attributeList,
                       numberOfRecords = number_of_records)

@@ -6,17 +6,15 @@
 #'     \code{make_eml} during the last step of the assembly line process.
 #'
 #' @usage 
-#'     import_templates(path = "", license = "", data.files = c("data.file.1", "data.file.2", "etc."), sep)
+#'     import_templates(path = "", license = "", data.files = c("data.file.1", "data.file.2", "etc."))
 #'
 #' @param path 
 #'     A character string specifying a path to the dataset working directory
 #'     (e.g. "C:/Users/Colin/Documents/data_sets/gleon_chloride").
-#'     
 #' @param license
 #'     A character string specifying the license for your dataset. Select "CC0" 
 #'     or "CCBY". Additional information about these licenses are listed below 
 #'     under "details".
-#'     
 #' @param data.files
 #'     A list of character strings specifying the names of the data files
 #'     of your dataset. It is not necessary to include the file extension.
@@ -116,96 +114,46 @@
 
 import_templates <- function(path, license, data.files){
   
-  # Check for arguments -------------------------------------------------------
-  
-  if (missing(path)){
-    stop("Specify path to your dataset working directory.")
-  }
-  if (missing(license)){
-    stop("Specify a license for your dataset.")
-  }
-  if (missing(data.files)){
-    stop("Specify the names of all the data files in your dataset.")
-  }
-
-  # Check arguments and modify for script -------------------------------------
+  # Check arguments and parameterize ------------------------------------------
   
   message("Checking input arguments.")
   
-  # Convert arguments to lower case
+  if (missing(path)){
+    stop('Input argument "path" is missing! Specify the path to your dataset working directory.')
+  }
+  if (missing(license)){
+    stop('Input argument "license" is missing! Specify a license for your dataset.')
+  }
+  if (missing(data.files)){
+    stop('Input argument "data.files" is missing! Specify the names of all the data files in your dataset.')
+  }
+
+  # Valdate path
+  
+  validate_path(path)
+  
+  # Validate license
   
   license.low <- tolower(license)
-  
-  # License is a valid option
   
   if (!str_detect(license.low, "cc0|ccby")){
     stop('Invalid license. Please choose "CC0" or "CCBY".')
   }
   
-  # Data names are valid
+  # Validate data.files
   
-  files <- list.files(path)
-  files <- c(files, str_replace(files, "\\.[:alnum:]*$", replacement = ""))
-  use_i <- str_detect(string = files,
-                      pattern = str_c("^", data.files, "$", collapse = "|"))
-  if (!sum(use_i) == length(data.files)){
-    if(sum(use_i) == 0){
-      stop(paste("Invalid data.files entered: ", paste(data.files, collapse = ", "), sep = ""))
-    } else {
-      name_issues <- data.files[!files[use_i] == data.files]
-      stop(paste("Invalid data.files entered: ", paste(name_issues, collapse = ", "), sep = ""))
-    }
-  }
+  data_files <- validate_file_names(path, data.files)
   
-  # Get actual file names for script
+  # Detect operating system
   
-  files <- list.files(path)
-  use_i <- str_detect(string = files,
-                    pattern = str_c("^", data.files, collapse = "|"))
-  data_files <- files[use_i]
+  os <- detect_os()
   
-  # Detect users operating system
+  # Detect file delimeters
   
-  sysinfo <- Sys.info()["sysname"]
-  if (sysinfo == "Darwin"){
-    os <- "mac"
-  } else {
-    os <- "win"
-  }
+  delim_guess <- detect_delimiter(path, data.files, os)
+
   
-  # Auto detect field delimiters of input data files
-  # and construct data file paths
-  
-  delim_guess <- c()
-  file_path <- c()
-  for (i in 1:length(data_files)){
-    
-    file_path[i] <- paste(path,
-                       "/",
-                       data_files[i],
-                       sep = "")
-    
-    nlines <- length(readLines(file_path[i]))
-    
-    if (os == "mac"){
-      delim_guess[i] <- suppressWarnings(get.delim(file_path[i],
-                               n = 2,
-                               delims = c("\t",
-                                          ",",
-                                          ";",
-                                          "|")))
-    } else if (os == "win"){
-      delim_guess[i] <- get.delim(file_path[i],
-                                  n = nlines/2,
-                                  delims = c("\t",
-                                             ",",
-                                             ";",
-                                             "|"))
-    }
-  }
-  
-  
-  # Copy non-attributes templates to working directory with correct names -----
+  # Copy templates to path if they don't exist --------------------------------
   
   # Abstract
   
@@ -237,22 +185,6 @@ import_templates <- function(path, license, data.files){
     message("Importing additional_info.txt.")
   } else {
     message("additional_info.txt already exists!")
-  }
-  
-  # Configuration
-  
-  value <- file.copy(from = paste(path.package("EMLassemblyline"),
-                                  "/templates/configuration.R",
-                                  sep = ""),
-                     to = paste(path,
-                                "/",
-                                "configuration.R",
-                                sep = ""))
-  
-  if (isTRUE(value)){
-    message("Importing configuration.R.")
-  } else {
-    message("configuration.R already exists!")
   }
   
   # Custom units
@@ -355,7 +287,7 @@ import_templates <- function(path, license, data.files){
     message("methods.txt already exists!")
   }
   
-  # My workflow script
+  # Blank script (my_workflow.R)
   
   value <- file.copy(from = paste(path.package("EMLassemblyline"),
                                   "/templates/my_workflow.R",
@@ -395,7 +327,12 @@ import_templates <- function(path, license, data.files){
   
   for (i in 1:length(data_files)){
     
-    df_table <- read.table(file_path[i],
+    data_path <- paste(path,
+                          "/",
+                          data_files[i],
+                          sep = "")
+    
+    df_table <- read.table(data_path,
                            header = TRUE,
                            sep = delim_guess[i],
                            quote = "\"",
@@ -428,8 +365,13 @@ import_templates <- function(path, license, data.files){
                 sep = ""))
     
     # Read data table
+    
+    data_path <- paste(path,
+                       "/",
+                       data_files[i],
+                       sep = "")
 
-    df_table <- read.table(file_path[i],
+    df_table <- read.table(data_path,
                            header = TRUE,
                            sep = delim_guess[i],
                            quote = "\"",
