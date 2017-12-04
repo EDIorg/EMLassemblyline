@@ -157,7 +157,7 @@ $(document).ready(function () {
 <h3>Step 4: Identfy the types of data in your dataset</h3>
 <p>Currently, the assembly line only works for tabular data and is the default option.</p>
 <div id="table" class="section level4">
-<h4>table</h4>
+<h4>Table</h4>
 <p>A flat file composed of columns containing variables and rows containing observations. Column names must follow these rules:</p>
 <ul>
 <li>replace symbols with words</li>
@@ -186,76 +186,77 @@ library(EMLassemblyline)
 import_templates(path = &quot;/Users/csmith/Desktop/gleon_chloride&quot;,
                  license = &quot;CC0&quot;,
                  data.files = c(&quot;lake_chloride_concentrations&quot;,
-                                &quot;lake_characteristics&quot;)
-                 )</code></pre>
+                                &quot;lake_characteristics&quot;))</code></pre>
 </div>
 <div id="step-6-script-your-workflow" class="section level3">
 <h3>Step 6: Script your workflow</h3>
-<p>Open <strong>my_workflow.R</strong> in RStudio. This is a blank script for you to build an assembly line workflow, which can be revisited or modified for future assembly line runs.</p>
+<p>Open <code>my_workflow.R</code> in RStudio. This is a blank script for you to build an assembly line workflow, which can be revisited or modified for future assembly line runs.</p>
 </div>
 <div id="step-7-abstract" class="section level3">
 <h3>Step 7: Abstract</h3>
-<p>Open the file <strong>abstract.txt</strong> and write an abstract for your dataset. The abstract should cover what, why, when, where, and how for your dataset. Write your abstract in plain text.</p>
-<p>Do not use special characters, symbols, or formatting. Don’t use hyperlinks (URLs are acceptable). The reason for this is that the EML schema only allows characters that are apart of the unicode character set.</p>
-<p>NOTE: You can create your abstract in Microsoft Word and then copy over to <strong>abstract.txt</strong> but first you will need to remove any non-unicode characters. To do this go to <a href="http://utils.paranoiaworks.org/diacriticsremover/">this web service</a> and paste your abstract into the window. Click the button “Remove Diacritics” to remove these non-compliant characters, then copy the resultant text into <strong>abstract.txt</strong>. You will want to give it one last look over after performing this operation to ensure no information has been lost.</p>
+<p>Open the file <code>abstract.txt</code> and write an abstract for your dataset. The abstract should cover what, why, when, where, and how for your dataset. Write your abstract in plain text.</p>
+<p>Do not use special characters, symbols, formatting, or hyperlinks (URLs are acceptable). The reason for this is that the EML schema only allows characters that are apart of the unicode character set.</p>
+<p>NOTE: You can create your abstract in Microsoft Word and then copy over to <code>abstract.txt</code> but first you will need to remove any non-unicode characters. To do this go to <a href="http://utils.paranoiaworks.org/diacriticsremover/">this web service</a> and paste your abstract into the window. Click the button “Remove Diacritics” to remove these non-compliant characters, then copy the resultant text into <code>abstract.txt</code>. You will want to give your abstract one last look over after performing this operation to ensure no information has been lost.</p>
 </div>
 <div id="step-8-methods" class="section level3">
 <h3>Step 8: Methods</h3>
-<p>Open the file <strong>methods.txt</strong> and describe the methods for your dataset. Be specific, include instrument descriptions, or point to a protocol online. If this dataset is a synthesis of other datasets please specify dataset origins, preferably their DOI or URL plus general citation information.</p>
-<p>Do not use special characters, symbols, or formatting. Don’t use hyperlinks (URLs are acceptable). The reason for this is that the EML schema only allows characters that are apart of the unicode character set.</p>
-<p>NOTE: You can create your methods in Microsoft Word and then copy over to <strong>methods.txt</strong> but first you will need to remove any non-unicode characters. To do this go to <a href="http://utils.paranoiaworks.org/diacriticsremover/">this web service</a> and paste your methods into the window. Click the button “Remove Diacritics” to remove these non-compliant characters, then copy the resultant text into <strong>methods.txt</strong>. You will want to give it one last look over after performing this operation to ensure no information has been lost.</p>
+<p>Open the file <code>methods.txt</code> and describe the methods for your dataset. Be specific, include instrument descriptions, or point to a protocol online. If this dataset is a synthesis of other datasets please specify dataset origins, preferably their DOI or URL plus general citation information.</p>
+<p>Do not use special characters, symbols, formatting, or hyperlinks (URLs are acceptable). The reason for this is that the EML schema only allows characters that are apart of the unicode character set.</p>
+<p>NOTE: You can create your methods in Microsoft Word and then copy over to <code>methods.txt</code> but first you will need to remove any non-unicode characters. To do this go to <a href="http://utils.paranoiaworks.org/diacriticsremover/">this web service</a> and paste your methods into the window. Click the button “Remove Diacritics” to remove these non-compliant characters, then copy the resultant text into <code>methods.txt</code>. You will want to give your methods one last look over after performing this operation to ensure no information has been lost.</p>
 </div>
 <div id="step-9-additional-information" class="section level3">
 <h3>Step 9: Additional information</h3>
-<p>Do you have additional text based information that doesn’t fall under the scope of the abstract or methods for your dataset (e.g. a list of research articles or theses derived from this dataset)? If so, then open <strong>additional_info.txt</strong> in a text editor and add this information. You can delete this file if you won’t be using it, or you can keep it around for later if you change your mind.</p>
-<p>Do not use special characters, symbols, or formatting. Don’t use hyperlinks (URLs are acceptable). The reason for this is that the EML schema only allows characters that are apart of the unicode character set.</p>
-<p>NOTE: You can create your additional information in Microsoft Word and then copy over to <strong>additional_info.txt</strong> but first you will need to remove any non-unicode characters. To do this go to <a href="http://utils.paranoiaworks.org/diacriticsremover/">this web service</a> and paste your additional information into the window. Click the button “Remove Diacritics” to remove these non-compliant characters, then copy the resultant text into <strong>additional_info.txt</strong>. You will want to give it one last look over after performing this operation to ensure no information has been lost.</p>
+<p><code>additional_info.txt</code> is a good place for text based information about your dataset that doesn’t fall under the scope of the abstract or methods (e.g. a list of research articles or theses derived from this dataset). If you have this information and would like to share it then open <code>additional_info.txt</code> in a text editor and add it. You can delete this file if you won’t be using it, or you can keep it around in case you change your mind.</p>
+<p>Do not use special characters, symbols, formatting, or hyperlinks (URLs are acceptable). The reason for this is that the EML schema only allows characters that are apart of the unicode character set.</p>
+<p>NOTE: You can create your additional information in Microsoft Word and then copy over to <code>additional_info.txt</code> but first you will need to remove any non-unicode characters. To do this go to <a href="http://utils.paranoiaworks.org/diacriticsremover/">this web service</a> and paste your additional information into the window. Click the button “Remove Diacritics” to remove these non-compliant characters, then copy the resultant text into <code>additional_info.txt</code>. You will want to give your additional information one last look over after performing this operation to ensure no information has been lost.</p>
 </div>
 <div id="step-10-keywords" class="section level3">
 <h3>Step 10: Keywords</h3>
-<p>Open the tab delimited file <strong>keywords.txt</strong> in a spreadsheet editor and list the keywords that best describe your dataset. DO NOT edit this file in a text editor. <a href="http://vocab.lternet.edu/vocab/vocab/index.php">Consult the LTER controlled vocabulary</a> for keywords. In addition to keywords about the data include keywords that describe your lab, station, and project (e.g. OBFS, LTREB, etc.).</p>
+<p>Open the tab delimited file <code>keywords.txt</code> in a spreadsheet editor and list the keywords that best describe your dataset. DO NOT edit this file in a text editor. <a href="http://vocab.lternet.edu/vocab/vocab/index.php">Consult the LTER controlled vocabulary</a> for keywords. In addition to keywords describing the data, you may want to include keywords that describe your lab, station, and project (e.g. OBFS, LTREB, etc.).</p>
 <p>Definitions for columns of this file:</p>
 <ul>
 <li><strong>keyword</strong> A keyword describing your dataset.</li>
-<li><strong>keywordThesaurus</strong> A keywordThesaurus (i.e. a controlled vocabulary like the resource listed above) corresponding to the keyword listed in the keyword column. If the keyword is not from a thesaurus or controlled vocabulary, leave corresponding entry in the keywordThesaurus field blank.</li>
+<li><strong>keywordThesaurus</strong> A keywordThesaurus (i.e. a controlled vocabulary like the resource listed above) corresponding to the keyword listed in the keyword column. If the keyword is not from a thesaurus or controlled vocabulary, leave corresponding entry in the keywordThesaurus column blank.</li>
 </ul>
 </div>
 <div id="step-11-personnel" class="section level3">
 <h3>Step 11: Personnel</h3>
-<p>Open the tab delimited file <strong>personnel.txt</strong> in a spreadsheet editor and enter information about the personnel associated with this dataset.</p>
+<p>Open the tab delimited file <code>personnel.txt</code> in a spreadsheet editor and enter information about the personnel associated with this dataset.</p>
 <p>Definitions for columns of this file:</p>
 <ul>
-<li><strong>givenName</strong> Given name of person (required).</li>
-<li><strong>surName</strong> Surname of person (required).</li>
-<li><strong>organizationName</strong> Name of organization the person is associated with (not required).</li>
-<li><strong>electronicMailAddress</strong> Email address of person (not required unless a contact for your dataset).</li>
-<li><strong>userId</strong> ORCID of person (not required). A valid entry for userId is the 16 digit number separated by dashes (i.e. XXXX-XXXX-XXXX-XXXX). An ORCID is like a social security number for scientists. <a href="https://orcid.org/">Create one here</a>.</li>
+<li><strong>givenName</strong> First name of person.</li>
+<li><strong>surName</strong> Last name of person.</li>
+<li><strong>organizationName</strong> Name of organization the person is associated with.</li>
+<li><strong>electronicMailAddress</strong> Email address of person.</li>
+<li><strong>userId</strong> ORCID of person (not required). A valid entry for userId is the 16 digit ORCID number separated by dashes (i.e. XXXX-XXXX-XXXX-XXXX). An ORCID is like a social security number for scientists and links your dataset with your ORCID. <a href="https://orcid.org/">Create one here</a>.</li>
 <li><strong>role</strong> Role of person with respect to this dataset. Valid entries for role are:
 <ul>
 <li><strong>creator</strong> Dataset creator (required; at least 1 creator must be listed for your dataset).</li>
-<li><strong>pi</strong> Principal investigator associated with this dataset (required; at least 1 pi must be listed for your dataset).</li>
+<li><strong>PI</strong> Principal investigator associated with this dataset (required; at least 1 PI must be listed for your dataset).</li>
 <li><strong>contact</strong> Dataset contact (required; at least 1 contact must be listed for your dataset).</li>
 <li>Any other entries into the ‘role’ column are acceptable and will be defined under the associated party element of this dataset with whatever value is entered under role.</li>
 <li>If a person serves more than one role, duplicate this persons information in another row but with the additional role.</li>
+<li>Similarly if a role is shared among many people, list the individuals with the shared role on separate lines.</li>
 </ul></li>
-<li><strong>projectTitle</strong> Title of the project this dataset was created under (optional). Project titles are only listed on lines where the personnel role is pi. If auxiliary projects were involved in creating this dataset then add a new line of personnel below the primary project and list the auxiliary project title and associated pi.</li>
-<li><strong>fundingAgency</strong> Name of the entity funding the creation of this dataset (optional; but required if fundingNumber is present). Only include an entry in this column for rows where role pi.</li>
-<li><strong>fundingNumber</strong> Number of the grant or award that supported creation of this dataset (optional; but required if fundingAgency is present). Only include an entry in this column for rows where role pi.</li>
+<li><strong>projectTitle</strong> Title of the project this dataset was created under (optional). Project titles are only listed on lines where the personnel role is PI. If auxiliary projects were involved in creating this dataset then add a new line of personnel below the primary project and list the auxiliary project title and associated PI.</li>
+<li><strong>fundingAgency</strong> Name of the entity funding the creation of this dataset (optional; but required if fundingNumber is present). Only include an entry in this column for rows where role PI.</li>
+<li><strong>fundingNumber</strong> Number of the grant or award that supported creation of this dataset (optional; but required if fundingAgency is present). Only include an entry in this column for rows where role PI.</li>
 </ul>
 </div>
 <div id="step-12-attributes" class="section level3">
 <h3>Step 12: Attributes</h3>
-<p>An <strong>attributes_datatablename.txt</strong> file has been created for each of your data tables. Edit each of these tab delimited files in a spreadsheet editor. DO NOT edit this file in a text editor. You will see this file has been partially populated with information detected by the <code>import_templates</code> function. You will have to double check values listed in all the columns except <strong>attributeName</strong>.</p>
+<p>An <code>attributes_datatablename.txt</code> file has been created for each of your data tables. Edit each of these tab delimited files in a spreadsheet editor. DO NOT edit this file in a text editor. You will see this file has been partially populated with information detected by the <code>import_templates</code> function. You will have to double check values listed in all the columns except <code>attributeName</code>.</p>
 <p>Instructions for completing the attribute table are as follows:</p>
 <ul>
-<li><strong>attributeName</strong> Attribute name (column name) as it appears in the data table and in the same order.</li>
-<li><strong>attributeDefinition</strong> Define the attribute. Be specific, it can be lengthy.</li>
-<li><strong>class</strong> Specify the attribute class. This is the type of value stored under the attribute. + <strong>numeric</strong> For numeric variables.
+<li><strong>attributeName</strong> Enter attribute names (i.e. column names) as they appear in the data table and in the same order as listed in the data table.</li>
+<li><strong>attributeDefinition</strong> Enter definitions for each attribute. Be specific, it can be lengthy.</li>
+<li><strong>class</strong> Enter the attribute class. This is the type of value stored under the attribute. Valid options for class are:
 <ul>
+<li><strong>numeric</strong> For numeric variables.</li>
 <li><strong>categorical</strong> For categorical variables.</li>
 <li><strong>character</strong> For variables containing text or symbols that are not categorical.</li>
-<li><strong>Date</strong> For date time data.</li>
-<li>The list of valid options are case sensitive. If an attribute has class of <code>numeric</code> or <code>Date</code>, then all values of this attribute must be either numeric or date time. If any character strings are present in an otherwise <code>numeric</code> attribute, this attribute must be classified as <code>character</code>. Similarly if any values of a “Date” attribute do not match the date time format string (details below), then this attribute must be classified as <code>character</code>.</li>
+<li><strong>Date</strong> For date time variables.</li>
+<li>If an attribute has class of <code>numeric</code> or <code>Date</code>, then all values of this attribute must be either numeric or date time. If any character strings are present in an otherwise <code>numeric</code> attribute, this attribute must be classified as <code>character</code>. Similarly if any values of a “Date” attribute do not match the date time format string (details below), then this attribute must be classified as <code>character</code>.</li>
 </ul></li>
 <li><strong>unit</strong> If an attributes class is numeric, then you must provide units. If the attribute is numeric but does not have units, enter <code>dimensionless</code>. If the attribute class is categorical, character, or Date then leave the unit field blank. If the attribute is numeric and has units search the standard unit dictionary for the unit of interest and enter the unit <code>name</code> as it appears in the dictionary (unit names are case sensitive). Open the dictionary by running these lines of code in the RStudio console window:</li>
 </ul>
@@ -263,19 +264,23 @@ import_templates(path = &quot;/Users/csmith/Desktop/gleon_chloride&quot;,
 view_unit_dictionary()
 </code></pre>
 <ul>
-<li>If you cannot find a unit in the dictionary, create one and add it to <strong>custom_units.txt</strong>. Open this tab delimited file in a spreadsheet editor. DO NOT edit this file in a text editor. If you have no custom units to report then delete this file. Valid custom units must be convertible to SI Units (i.e. International System of Units). If it cannot be converted to SI then list it in the attribute defintion and enter “dimensionless” in the unit field. To create a custom unit define the:
+<li>If you cannot find a unit in the dictionary, create one and add it to <code>custom_units.txt</code>. Open this tab delimited file in a spreadsheet editor. DO NOT edit this file in a text editor. If you have no custom units to report you may delete this file, but may also keep it around if you think it may be of future use. Valid custom units must be convertible to SI Units (i.e. International System of Units). If it cannot be converted to SI then list it in the attribute defintion and enter “dimensionless” in the unit field. To create a custom unit define the:
 <ul>
-<li><strong>id</strong> This is equivalent to the unit name. Reference the standard unit dictionary formatting.</li>
+<li><strong>id</strong> This is equivalent to the unit name.</li>
 <li><strong>unitType</strong> The type of unit being defined. Reference the dictionary for examples.</li>
 <li><strong>parentSI</strong> The SI equivalent of the id you have entered.</li>
 <li><strong>multiplierToSI</strong> This is the multiplier to convert from your custom unit to the SI unit equivalent.</li>
 <li><strong>description</strong> A description of the custom unit. Reference the dictionary for examples.</li>
 </ul></li>
-<li><strong>dateTimeFormatString</strong> Enter the date time format string for each attribute of “Date” class. Remember, a class of “Date” specifies the attribute as a date, time, or datetime. Enter the format string in this field. If the attribute class is not “Date”, leave this field blank. Below are rules for constructing format strings. Additional information is listed under “dateTime-eml-attribute” of the current <a href="https://knb.ecoinformatics.org/#external//emlparser/docs/index.html">EML specification</a>. Valid date time formats are a combination of date, time, and time zone strings. Below are a set of best practice recomendations that we strongly encourage you to follow, but are by no means the full list of currently acceptable format strings.
+<li><strong>dateTimeFormatString</strong> Enter the date time format string for each attribute of “Date” class. Remember, a class of “Date” specifies the attribute as a date, time, or datetime. Enter the format string in this field. If the attribute class is not “Date”, leave this field blank. Below are rules for constructing format strings.
 <ul>
-<li><strong>Date format strings:</strong> YYYY-MM-DD, YYYY, YYYYMMDD, YYYY-MM, YYYYMM, YYYY-DDD, YYYYDDD; where YYYY is year, MM is month, DD is day of month, and DDD is day of year.</li>
-<li><strong>Time format strings:</strong> hh:mm:ss.sss, hhmmss.sss, hh:mm:ss, hhmmss, hh:mm, hhmm, hh; where hh is hour (in 24 hr clock), mm is minute, ss is second, and ss.sss is decimal second.</li>
-<li><strong>Time zone format strings:</strong> Z, +hh:mm, +hhmm, +hh, -hh:mm, -hhmm, -hh; where Z (capitalized) is Coordinated Universal Time, and + and - denote times ahead and behind UTC respectively. If reporting a date without time, select one of the date format strings. If reporting a date and time, select one date and one time format string and combine with a single space (e.g. YYYY-MM-DD hh:mm) or with a “T” (e.g. YYYY-MM-DDThh:mm). If reporting a date and time, it is recommended that a time zone specifier be appended without a space (e.g. YYYY-MM-DD hh:mm-hh:mm, or YYYY-MM-DDThh:mm-hh:mm).</li>
+<li><strong>year</strong> Use <code>Y</code> to denote a year string (e.g. 2017 is represented as <code>YYYY</code>).</li>
+<li><strong>month</strong> Use <code>M</code> to denote a month string (e.g. 2017-05 is represented as <code>YYYY-MM</code>).</li>
+<li><strong>day</strong> Use <code>D</code> to denote a day string (e.g. 2017-05-09 is represented as <code>YYYY-MM-DD</code>).</li>
+<li><strong>hour</strong> Use <code>h</code> to denote a hour string (e.g. 2017-05-09 13 is represented as <code>YYYY-MM-DD hh</code>).</li>
+<li><strong>minute</strong> use <code>m</code> to denote a minute string (e.g. 2017-05-09 13:15 is represented as <code>YYYY-MM-DD hh:mm</code>).</li>
+<li><strong>second</strong> use <code>s</code> to denote a second string (e.g. 2017-05-09 13:15:00 is represented as <code>YYYY-MM-DD hh:mm:ss</code>).</li>
+<li><strong>Time zone format strings:</strong> use <code>+</code> or <code>-</code> along with a time string to denote time zone offsets (e.g. <code>2017-05-09 13:15:00+05:00</code> is represented as <code>YYYY-MM-DD hh:mm:ss+hh:mm</code>).</li>
 </ul></li>
 <li><strong>missingValueCode</strong> If a code for ‘no data’ is used, specify it here (e.g. NA, -99999).</li>
 <li><strong>missingValueCodeExplanation</strong> Define the missing value code here.</li>
@@ -288,18 +293,30 @@ view_unit_dictionary()
 <div id="step-14-categorical-variables" class="section level3">
 <h3>Step 14: Categorical variables</h3>
 <p>If your data tables contain any attributes with the categorical class, you will need to supply definitions for the categorical codes. Use the function <code>define_catvars</code> to do this. <code>define_catvars</code> searches through each attribute file looking for attributes with a categorical class. If found, the function extracts unique categorical codes for each attribute and writes them to a file for you to define.</p>
+<p>This function requires only one input argument:</p>
+<ol style="list-style-type: decimal">
+<li><strong>path</strong> A path to the dataset working directory containing <code>attributes_datatablename.txt</code> files and the respecive data tables.</li>
+</ol>
 <pre><code># View documentation for this function
 ?define_catvars
 
-# Run this function for your dataset
+# Run this function
 define_catvars(path = &quot;/Users/csmith/Desktop/gleon_chloride&quot;)
 </code></pre>
-<p>A tab delimited <strong>catvars_datatablename.txt</strong> will be created for each of your data tables containing categorical variables. Open these in a spreadsheet editor and add definitions for each code.</p>
+<p>A tab delimited <code>catvars_datatablename.txt</code> will be created for each of your data tables containing categorical variables. Open these in a spreadsheet editor and add definitions for each code. Do not edit this file in a text editor.</p>
 </div>
 <div id="step-15-geographic-coverage" class="section level3">
 <h3>Step 15: Geographic coverage</h3>
-<p>If your dataset contains more than one sampling location, then you will want to add this information to your metadata. As of now the assembly line only supports point locations, multiple areas are not yet supported. Often a data user will search for data withing a geographic area.</p>
+<p>If your dataset contains more than one sampling location, then you will want to add this information to your metadata. Often a data user will search for data withing a geographic area. As of now the assembly line only supports point locations, multiple areas are not yet supported.</p>
 <p>Run the function <code>extract_geocoverage</code> to get the unique latitude, longitude, and site name combinations from your data and write to file. <code>extract_geocoverage</code> requires specific inputs that may require altering the latitude and longitude formate of your data. See documenation for details.</p>
+<p>Arguments required by this function are:</p>
+<ol style="list-style-type: decimal">
+<li><strong>path</strong> A path to the dataset working directory containing the data table with geographic information.</li>
+<li><strong>data.file</strong> Name of the input data table containing geographic coverage data.</li>
+<li><strong>lat.col</strong> Name of latitude column. Values of this column must be in decimal degrees. Latitudes south of the equator must be prefixed with a minus sign (i.e. dash, “-”).</li>
+<li><strong>lon.col</strong> Name of longitude column. Values of this column must be in decimal degrees. Longitudes west of the prime meridian must be prefixed with a minus sign (i.e. dash, “-”).</li>
+<li><strong>site.col</strong> Name of site column. This column lists site specific names to be associated with the geographic coordinates.</li>
+</ol>
 <pre><code># View documentation for this function
 ?extract_geocoverage
 
@@ -309,33 +326,33 @@ extract_geocoverage(path = &quot;/Users/csmith/Desktop/gleon_chloride&quot;,
                     lat.col = &quot;lake_latitude&quot;,
                     lon.col = &quot;lake_longitude&quot;,
                     site.col = &quot;lake_name&quot;)</code></pre>
-<p>This function outputs a tab delimited file named <strong>geographic_coverage.txt</strong> to your dataset directory. You may edit this in a spreadsheet editor if you’d like, but if the data table this information has been extracted from is accurate, then there is no need for editing.</p>
+<p>This function outputs a tab delimited file named <code>geographic_coverage.txt</code> to your dataset directory. You may edit this in a spreadsheet editor if you’d like, but if the data table this information has been extracted from is accurate, then there is no need for editing.</p>
 </div>
 <div id="step-16-make-eml" class="section level3">
 <h3>Step 16: Make EML</h3>
 <p>Now you are ready to synthesize your completed metadata templates into EML. This step is relatively simple, but requires several arguments:</p>
-<ul>
-<li><strong>path</strong> A path to the dataset working directory</li>
-<li><strong>dataset.title</strong> A character string specifying the title for your dataset.</li>
+<ol style="list-style-type: decimal">
+<li><strong>path</strong> A path to the dataset working directory.</li>
+<li><strong>dataset.title</strong> A character string specifying the title for your dataset. Be descriptive (more than 5 words). We recommend the following format: <code>Project name: Broad description: Time span</code> (e.g. “GLEON: Long term lake chloride concentrations from North America and Europe: 1940-2016”).</li>
 <li><strong>data.files</strong> A list of character strings specifying the names of the data files of your dataset.</li>
 <li><strong>data.files.description</strong> A list of character strings briefly describing the data files listed in the data.files argument and in the same order as listed in the data.files argument.</li>
-<li><strong>data.files.quote.character</strong> A list of character strings defining the quote characters used in your data files and in the same order as listed in the data.files argument. If the quote character is a quotation, then enter &quot;. If the quote character is an apostrophe, then enter '. If there is no quote character then don’t use this argument when running <code>make_eml</code>.</li>
+<li><strong>data.files.quote.character</strong> A list of character strings defining the quote characters used in your data files and in the same order as listed in the data.files argument. If the quote character is a quotation, then enter <code>&quot;\&quot;&quot;</code>. If the quote character is an apostrophe, then enter <code>&quot;\'&quot;</code>. If there is no quote character then don’t use this argument when running <code>make_eml</code>.</li>
 <li><strong>data.files.url</strong> A character string specifying the URL of where your data tables are stored on a publicly accessible server (i.e. does not require user ID or password). The EDI data repository software, PASTA+, will use this to upload your data into the repository. If you will be manually uploading your data tables, then don’t use this argument when running <code>make_eml</code>.</li>
-<li><strong>temporal.coverage</strong> A list of character strings specifying the beginning and ending dates of your dataset. Use the format ‘YYYY-MM-DD’.</li>
+<li><strong>temporal.coverage</strong> A list of character strings specifying the beginning and ending dates of your dataset. Use the format <code>YYYY-MM-DD</code>.</li>
 <li><strong>geographic.description</strong> A character string describing the geographic coverage of your dataset.</li>
 <li><strong>geographic.coordinates</strong> A list of character strings specifying the spatial bounding coordinates of your dataset in decimal degrees. The list must follow this order: “North”, “East”, “South”, “West”. Longitudes west of the prime meridian and latitudes south of the equator are prefixed with a minus sign (i.e. dash -). If you don’t have an area, but rather a point. Repeat the latitude value for North and South, and repeat the longitude value for East and West.</li>
 <li><strong>maintenance.description</strong> A character string specifying whether data collection for this dataset is “ongoing” or “completed”.</li>
 <li><strong>user.id</strong> A character string specifying your EDI data repository user ID. If you don’t have one, contact EDI (<a href="mailto:info@environmentaldatainitiative.org">info@environmentaldatainitiative.org</a>) to get one, or don’t use this argument when running <code>make_eml</code>.</li>
-<li><strong>package.id</strong> A character string specifying package ID for your data package. If you don’t have a package ID, then don’t use this argument when running <code>make_eml</code>. A non-input package ID defaults to “edi.101.1”.</li>
-</ul>
+<li><strong>package.id</strong> A character string specifying the package ID for your data package. If you don’t have a package ID, then don’t use this argument when running <code>make_eml</code>. A non-input package ID defaults to “edi.101.1”.</li>
+</ol>
 <pre><code># View documentation for this function
 ?make_eml
 
-# Make EML for your dataset
+# Run this function
 make_eml(path = &quot;/Users/csmith/Desktop/gleon_chloride&quot;,
          dataset.title = &quot;GLEON: Long term lake chloride concentrations from North America and Europe: 1940-2016&quot;,
          data.files = c(&quot;lake_chloride_concentrations&quot;,
-                        &quot;lake_characteristics.csv&quot;),
+                        &quot;lake_characteristics&quot;),
          data.files.description = c(&quot;Chloride concentration data.&quot;, 
                                     &quot;Climate, road density, and impervious surface data.&quot;),
          data.files.quote.character = c(&quot;\&quot;&quot;, &quot;\&quot;&quot;),
@@ -346,7 +363,7 @@ make_eml(path = &quot;/Users/csmith/Desktop/gleon_chloride&quot;,
          user.id = &quot;csmith&quot;,
          package.id = &quot;edi.201.1&quot;)
 </code></pre>
-<p>If your EML is valid you will receive the message: <strong>EML passed validation!</strong>. If validation fails, open the EML file in an XML editor and look for the invalid section. Often a minor tweak to the EML can be made manually to bring it into compliance with the EML schema.</p>
+<p>Your EML file will be written to your data directory with the name <code>packageID.xml</code>. If your EML is valid you will receive the message: <code>EML passed validation!</code>. If validation fails, open the EML file in an XML editor and look for the invalid section. Often a minor tweak to the EML can be made manually to bring it into compliance with the EML schema.</p>
 </div>
 <div id="step-17-upload-your-data-package-to-the-edi-repository" class="section level3">
 <h3>Step 17: Upload your data package to the EDI repository</h3>

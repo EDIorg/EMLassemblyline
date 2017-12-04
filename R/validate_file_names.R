@@ -58,6 +58,15 @@ validate_file_names <- function(path, data.files){
                       pattern = str_c("^", data.files, collapse = "|"))
   data_files <- files[use_i]
   
-  data_files
+  # Reorder file names to match input ordering --------------------------------
   
+  data_files_out <- c()
+  for (i in 1:length(data.files)){
+    use_i <- str_detect(string = data_files,
+                        pattern = str_c("^", data.files[i], collapse = "|"))
+    data_files_out[i] <- data_files[use_i]
+  }
+  
+  data_files_out
+
 }

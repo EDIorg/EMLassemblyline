@@ -11,7 +11,7 @@
 #'     A path to the dataset working directory containing the data table with 
 #'     geographic information.
 #' @param data.file 
-#'     Name of the input data table containing geographic coverage data..
+#'     Name of the input data table containing geographic coverage data.
 #' @param lat.col 
 #'     Name of latitude column. Values of this column must be in decimal 
 #'     degrees. Latitudes south of the equator must be prefixed with a minus 
@@ -63,6 +63,13 @@ extract_geocoverage <- function(path, data.file, lat.col, lon.col, site.col){
 
   data_file <- validate_file_names(path, data.files = data.file)
   
+  # Get file names ------------------------------------------------------------
+  
+  files <- list.files(path)
+  use_i <- str_detect(string = files,
+                      pattern = str_c("^", data_file, collapse = "|"))
+  data_files <- files[use_i]
+  
   # Detect operating system
   
   os <- detect_os()
@@ -92,6 +99,22 @@ extract_geocoverage <- function(path, data.file, lat.col, lon.col, site.col){
                            quote = "\"",
                            as.is = TRUE,
                            comment.char = "")
+    
+    # Validate column names
+    
+    columns <- colnames(df_table)
+    columns_in <- c(lat.col, lon.col, site.col)
+    use_i <- str_detect(string = columns,
+                        pattern = str_c("^", columns_in, "$", collapse = "|"))
+    if (sum(use_i) > 0){
+      use_i2 <- columns[use_i]
+      use_i3 <- columns_in %in% use_i2
+      if (sum(use_i) != 3){
+        stop(paste("Invalid column names entered: ", paste(columns_in[!use_i3], collapse = ", "), sep = ""))
+      }
+    }
+    
+    # Subset table names
     
     df_table <- df_table[ ,c(lat.col, lon.col, site.col)]
     

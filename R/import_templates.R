@@ -137,7 +137,7 @@ import_templates <- function(path, license, data.files){
   license.low <- tolower(license)
   
   if (!str_detect(license.low, "cc0|ccby")){
-    stop('Invalid license. Please choose "CC0" or "CCBY".')
+    stop('Invalid value entered for the "license" argument. Please choose "CC0" or "CCBY".')
   }
   
   # Validate data.files

@@ -10,7 +10,7 @@ extract_geocoverage(path, data.file, lat.col, lon.col, site.col)
 \item{path}{A path to the dataset working directory containing the data table with 
 geographic information.}
 
-\item{data.file}{Name of the input data table containing geographic coverage data..}
+\item{data.file}{Name of the input data table containing geographic coverage data.}
 
 \item{lat.col}{Name of latitude column. Values of this column must be in decimal 
 degrees. Latitudes south of the equator must be prefixed with a minus 

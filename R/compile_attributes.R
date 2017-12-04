@@ -3,14 +3,14 @@
 # and reformats the attributes table.
 
 
-compile_attributes <- function(path){
+compile_attributes <- function(path, data.files){
 
   # Detect users operating system
   
   os <- detect_os()
   
   # Get names of data files with associated attribute files
-
+  
   files <- list.files(path)
   use_i <- str_detect(string = files,
                       pattern = "^attributes")
@@ -22,6 +22,18 @@ compile_attributes <- function(path){
   use_i <- str_detect(string = files,
                       pattern = str_c("^", table_names_base, collapse = "|"))
   table_names <- files[use_i]
+  
+  # Synchronize ordering of data files and attribute files
+  
+  table_names <- validate_file_names(path, data.files)
+  
+  attribute_files_out <- c()
+  for (i in 1:length(table_names)){
+    use_i <- str_detect(string = attribute_files,
+                        pattern = str_c(str_sub(table_names[i], 1, nchar(table_names[i])-4), collapse = "|"))
+    attribute_files_out[i] <- attribute_files[use_i]
+  }
+  fname_table_attributes <- attribute_files_out
   
 
   # Loop through data tables --------------------------------------------------

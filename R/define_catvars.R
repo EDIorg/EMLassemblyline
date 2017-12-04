@@ -72,7 +72,7 @@ define_catvars <- function(path) {
 
   # Detect field delimiters of data files
   
-  delim_guess <- detect_delimiter(path, data.files = data_files, os)
+  delim_guess <- detect_delimeter(path, data.files = data_files, os)
   
   
   # Loop through data tables --------------------------------------------------

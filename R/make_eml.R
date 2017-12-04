@@ -176,7 +176,7 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
   
   # Compile attributes --------------------------------------------------------
   
-  attributes_in <- compile_attributes(path = path)
+  attributes_in <- compile_attributes(path, data.files)
   
   # Set file names
 
