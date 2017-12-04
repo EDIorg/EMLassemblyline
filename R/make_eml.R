@@ -3,26 +3,31 @@
 #' @description  
 #'     Translate user supplied metadata templates into the EML, validate the 
 #'     EML, and write to file.
-#'
+#'     
 #' @usage 
-#'     make_eml(path = "", dataset.title = "", data.files = c("df.1", "df.2", "etc."), 
-#'     data.files.description = c("df.1.desc", df.2.desc"), 
-#'     data.files.quote.character = c("df.1.quote.char", "df.2.quote.char"),
-#'     data.files.url = "", temporal.coverage, = c("begin_date", "end_date"), 
+#'     make_eml(path = "", 
+#'     dataset.title = "", 
+#'     data.files = c("df.1", "df.2", ...), 
+#'     data.files.description = c("df1.desc", "df.2.desc", ...), 
+#'     data.files.quote.character = c("df.1.quote.char", "df.2.quote.char", ...), 
+#'     data.files.url = "", 
+#'     temporal.coverage = c("begin_date", "end_date"), 
 #'     geographic.description = "", 
-#'     geographic.coordinates = c("North_latitude", "East_longitude", 
-#'     "West_longitude", "South_latitude"), maintenance.description = "", 
-#'     user.id = "", package.id = "")
-#'
+#'     geographic.coordinates = c("North", "East", "South", "West"), 
+#'     maintenance.description = "", 
+#'     user.id = "", 
+#'     package.id = "")
+#'     
 #' @param path 
 #'     A path to the dataset working directory containing the completed 
-#'     metadata templates, \emph{catvars_datatablename.txt} (if categorical variables 
+#'     metadata templates, \emph{attributes_datatablename.txt}, 
+#'     \emph{catvars_datatablename.txt} (if categorical variables 
 #'     are present), and \emph{geographic_coverage.txt} (if reporting detailed 
 #'     geographic coverage).
 #' @param dataset.title
 #'     A character string specifying the title for your dataset. Be descriptive
 #'     (more than 5 words). We recommend the following format: Project name: 
-#'     Broad description: Time span" (e.g. "GLEON: Long term lake chloride 
+#'     Broad description: Time span (e.g. "GLEON: Long term lake chloride 
 #'     concentrations from North America and Europe: 1940-2016").
 #' @param data.files
 #'     A list of character strings specifying the names of the data files
@@ -36,20 +41,20 @@
 #' @param data.files.quote.character
 #'     A list of character strings defining the quote characters used in your 
 #'     data files and in the same order as listed in the data.files argument.  
-#'     If the quote character is a quotation, then enter \". If the quote 
-#'     character is an apostrophe, then enter \'. If there is no quote 
+#'     If the quote character is a quotation, then enter "\\"". If the quote 
+#'     character is an apostrophe, then enter "\\'". If there is no quote 
 #'     character then don't use this argument when running \code{make_eml}.
-#'     Example: data.files.quote.character = c("\"", "\"").
+#'     Example: data.files.quote.character = c("\\"", "\\"").
 #' @param data.files.url
 #'     A character string specifying the URL of where your data tables are 
 #'     stored on a publicly accessible server (i.e. does not require user ID 
 #'     or password). The EDI data repository software, PASTA+, will use this to
 #'     upload your data into the repository. If you will be manually uploading 
 #'     your data tables, then don't use this argument when running 
-#'     \code{make_eml}. Example: data.files.url = "https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride"
+#'     \code{make_eml}. Example: data.files.url = "https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride".
 #' @param temporal.coverage
 #'     A list of character strings specifying the beginning and ending dates 
-#'     of your dataset. Use the format 'YYYY-MM-DD'.
+#'     of your dataset. use the format YYYY-MM-DD.
 #' @param geographic.description
 #'     A character string describing the geographic coverage of your dataset 
 #'     (e.g. "North America and Europe").
@@ -66,14 +71,15 @@
 #'     A character string specifying whether data collection for this dataset 
 #'     is "ongoing" or "completed".
 #' @param user.id
-#'     A character string specifying your EDI data repository user ID. If you
-#'     don't have one, contact EDI (info@environmentaldatainitiative.org) to 
-#'     get one, or don't use this argument when running \code{make_eml}.
+#'     A character string specifying your user ID for the EDI data repository.
+#'     If you do not have one, contact EDI (info@environmentaldatainitiative.org)
+#'     to obtain one. Alternatively, do not use this argument when running
+#'     \code{make_eml}.
 #' @param package.id
-#'     A character string specifying package ID for your data package. If you
-#'     don't have a package ID, then don't use this argument when running
-#'     \code{make_eml}. A non-input package ID defaults to "edi.101.1".
-#'
+#'     A character string specifying the package ID for your data package. If 
+#'     you do not have a package ID, then do not use this argument when running 
+#'     \code{make_eml}. A missing package ID defaults to \emph{edi.101.1}.
+#'     
 #' @return 
 #'     Validation results printed to the RStudio \emph{Console}.
 #'     

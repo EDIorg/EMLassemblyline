@@ -21,10 +21,10 @@
 #' @return 
 #'     A character string representation of the field delimeters listed in 
 #'     order of files listed in the data.files argument.
-#'     \item{\t}{tab}
-#'     \item{,}{comma}
-#'     \item{;}{semi-colon}
-#'     \item{|}{pipe}
+#'     \item{"\\t"}{tab}
+#'     \item{","}{comma}
+#'     \item{";"}{semi-colon}
+#'     \item{"|"}{pipe}
 #'
 #' @export
 #'
