@@ -225,6 +225,7 @@ import_templates(path = &quot;/Users/csmith/Desktop/gleon_chloride&quot;,
 <p>Definitions for columns of this file:</p>
 <ul>
 <li><strong>givenName</strong> First name of person.</li>
+<li><strong>middleInitial</strong> Middle initial of person.</li>
 <li><strong>surName</strong> Last name of person.</li>
 <li><strong>organizationName</strong> Name of organization the person is associated with.</li>
 <li><strong>electronicMailAddress</strong> Email address of person.</li>
@@ -233,7 +234,7 @@ import_templates(path = &quot;/Users/csmith/Desktop/gleon_chloride&quot;,
 <ul>
 <li><strong>creator</strong> Dataset creator (required; at least 1 creator must be listed for your dataset).</li>
 <li><strong>PI</strong> Principal investigator associated with this dataset (required; at least 1 PI must be listed for your dataset).</li>
-<li><strong>contact</strong> Dataset contact (required; at least 1 contact must be listed for your dataset).</li>
+<li><strong>contact</strong> Dataset contact (required; at least 1 contact must be listed for your dataset). The contact may be a person or a position at an organization. To list a position as a contact (e.g. Data Manager), Enter the position name in the <code>givenName</code> column and leave <code>middleInitial</code> and <code>surName</code> blank.</li>
 <li>Any other entries into the ‘role’ column are acceptable and will be defined under the associated party element of this dataset with whatever value is entered under role.</li>
 <li>If a person serves more than one role, duplicate this persons information in another row but with the additional role.</li>
 <li>Similarly if a role is shared among many people, list the individuals with the shared role on separate lines.</li>

@@ -214,24 +214,46 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
 
     if (person_role == "contact"){
 
-      individualName <- new(
-        "individualName",
-        givenName = trimws(personinfo[info_row,"givenName"]),
-        surName = trimws(personinfo[info_row,"surName"]))
-
-      contact <- new(
-        "contact",
-        individualName = individualName,
-        organizationName = trimws(personinfo[info_row,"organizationName"]),
-        electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"]))
-      
-      if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
-        userId <- new("userId")
-        userId@directory <- new("xml_attribute", "https://orcid.org")
-        hold <- trimws(personinfo[info_row,"userId"])
-        hold <- paste("https://orcid.org/", hold, sep = "")
-        userId@.Data <- hold
-        contact@userId <- new("ListOfuserId", c(userId))
+      if ((personinfo[info_row, "givenName"] != "") & (personinfo[info_row, "middleInitial"] == "") & (personinfo[info_row, "surName"] == "")){
+        
+        contact <- new(
+          "contact",
+          organizationName = trimws(personinfo[info_row,"organizationName"]),
+          positionName = str_to_title(trimws(personinfo[info_row,"givenName"])),
+          electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"]))
+        
+        if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
+          userId <- new("userId")
+          userId@directory <- new("xml_attribute", "https://orcid.org")
+          hold <- trimws(personinfo[info_row,"userId"])
+          hold <- paste("https://orcid.org/", hold, sep = "")
+          userId@.Data <- hold
+          contact@userId <- new("ListOfuserId", c(userId))
+        }
+        
+      } else {
+        
+        individualName <- new(
+          "individualName",
+          givenName = c(trimws(personinfo[info_row,"givenName"]),
+                        trimws(personinfo[info_row,"middleInitial"])),
+          surName = trimws(personinfo[info_row,"surName"]))
+        
+        contact <- new(
+          "contact",
+          individualName = individualName,
+          organizationName = trimws(personinfo[info_row,"organizationName"]),
+          electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"]))
+        
+        if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
+          userId <- new("userId")
+          userId@directory <- new("xml_attribute", "https://orcid.org")
+          hold <- trimws(personinfo[info_row,"userId"])
+          hold <- paste("https://orcid.org/", hold, sep = "")
+          userId@.Data <- hold
+          contact@userId <- new("ListOfuserId", c(userId))
+        }
+        
       }
 
       contact
@@ -240,7 +262,8 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
 
       individualName <- new(
         "individualName",
-        givenName = trimws(personinfo[info_row,"givenName"]),
+        givenName = c(trimws(personinfo[info_row,"givenName"]),
+                      trimws(personinfo[info_row,"middleInitial"])),
         surName = trimws(personinfo[info_row,"surName"]))
 
       creator <- new(
@@ -263,7 +286,8 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
 
       individualName <- new(
         "individualName",
-        givenName = trimws(personinfo[info_row,"givenName"]),
+        givenName = c(trimws(personinfo[info_row,"givenName"]),
+                      trimws(personinfo[info_row,"middleInitial"])),
         surName = trimws(personinfo[info_row,"surName"]))
 
       principal_investigator <- as.person(
@@ -289,12 +313,13 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
       role <- new("role", "Principal Investigator")
       rp_personnel@role <- new("ListOfrole", c(role))
       rp_personnel
-
+      
     } else {
       
       individualName <- new(
         "individualName",
-        givenName = trimws(personinfo[info_row,"givenName"]),
+        givenName = c(trimws(personinfo[info_row,"givenName"]),
+                      trimws(personinfo[info_row,"middleInitial"])),
         surName = trimws(personinfo[info_row,"surName"]))
       
       associated_party <- new(
@@ -333,6 +358,7 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
     colClasses = rep("character", 8))
 
   colnames(personinfo) <- c("givenName",
+                            "middleInitial",
                             "surName",
                             "organizationName",
                             "electronicMailAddress",
@@ -443,16 +469,6 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
   # Add creators
   
   message("<creators>")
-
-  personinfo <- read.table(
-    paste(substr(fname_personnel, 1, nchar(fname_personnel) - 4),
-          ".txt",
-          sep = ""),
-    header = TRUE,
-    sep = "\t",
-    as.is = TRUE,
-    na.strings = "NA",
-    colClasses = "character")
 
   useI <- which(personinfo$role == "creator")
 
