@@ -134,6 +134,7 @@ Open the tab delimited file `personnel.txt` in a spreadsheet editor and enter in
 Definitions for columns of this file:
 
 * **givenName** First name of person.
+* **middleInitial** Middle initial of person.
 * **surName** Last name of person.
 * **organizationName** Name of organization the person is associated with.
 * **electronicMailAddress** Email address of person.
@@ -141,7 +142,7 @@ Definitions for columns of this file:
 * **role** Role of person with respect to this dataset. Valid entries for role are:
     + **creator** Dataset creator (required; at least 1 creator must be listed for your dataset).
     + **PI** Principal investigator associated with this dataset (required; at least 1 PI must be listed for your dataset).
-    + **contact** Dataset contact (required; at least 1 contact must be listed for your dataset).
+    + **contact** Dataset contact (required; at least 1 contact must be listed for your dataset). The contact may be a person or a position at an organization. To list a position as a contact (e.g. Data Manager), Enter the position name in the `givenName` column and leave `middleInitial` and `surName` blank.
     + Any other entries into the 'role' column are acceptable and will be defined under the associated party element of this dataset with whatever value is entered under role.
     + If a person serves more than one role, duplicate this persons information in another row but with the additional role.
     + Similarly if a role is shared among many people, list the individuals with the shared role on separate lines.
