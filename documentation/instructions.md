@@ -6,7 +6,7 @@ The EML assembly line will help you create high quality metadata for your datase
 
 #### Installation
 
-Install from the GitHub repository housing this project.
+Install from the GitHub.
 
 ```
 # Install and load devtools
