@@ -16,6 +16,8 @@ The `EMLassemblyline` requires little operational knowledge of the R programming
 
 [An example of using the EML assembly line.](https://github.com/EDIorg/EMLassemblyline/blob/master/documentation/example.md)
 
+[Instructions for EML assembly line 2.0](https://github.com/EDIorg/EMLassemblyline/blob/master/documentation/V2_instructions.md)
+
 #### R package
 
 `EMLassemblyline` is a collection of wrapper functions to the `EML` R package developed by [Boettiger et al. (2017)](https://github.com/ropensci/EML). For an understanding of what is going on under the hood of the assembly line, we recommend you first take a look at the `EML` R package. Once you understand this you will be able to customize the assembly line for your own workflows or become a developer of this project.
