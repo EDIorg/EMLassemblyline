@@ -14,7 +14,7 @@ The `EMLassemblyline` requires little operational knowledge of the R programming
 
 [A list of the EML schema elements that are populated by the assembly line with some notes on the level of detail supplied to these elements.](https://github.com/EDIorg/EMLassemblyline/blob/development/documentation/schema_use.md)
 
-[Instructions for EML assembly line 2.0](https://github.com/EDIorg/EMLassemblyline/blob/development/documentation/V2_instructions.md)
+[Instructions for operating the EML assembly line](https://github.com/EDIorg/EMLassemblyline/blob/development/documentation/instructions.md)
 
 #### R package
 
