@@ -1,4 +1,4 @@
-# Instructions for EML assembly line (version 2)
+# Instructions for the EML assembly line
 
 ### Overview
 
