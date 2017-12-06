@@ -6,7 +6,7 @@ The EML assembly line will help you create high quality metadata for your datase
 
 #### Installation
 
-`EMLassemblyline v2.0` is not quite ready for prime time. Until then you will need to install from the development branch of this Github repository.
+Install from the GitHub repository housing this project.
 
 ```
 # Install and load devtools
@@ -14,7 +14,7 @@ install.packages("devtools")
 library(devtools)
 
 # Install and load EMLassemblyline from the development branch
-install_github("EDIorg/EMLassemblyline", ref = "development")
+install_github("EDIorg/EMLassemblyline")
 library(EMLassemblyline)
 ```
 
