@@ -555,9 +555,11 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
 
   # Add coverage --------------------------------------------------------------
   
-  message("<coverage>")
+  # Set temporal and geographic coverage
   
-  # Set geocoverage
+  message("<temporalCoverage>")
+  
+  message("<geographicCoverage>")
   
   dataset@coverage <- set_coverage(begin = temporal.coverage[1],
                                    end = temporal.coverage[2],
@@ -566,6 +568,12 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
                                    east = as.numeric(geographic.coordinates[2]),
                                    north = as.numeric(geographic.coordinates[1]),
                                    south = as.numeric(geographic.coordinates[3]))
+  
+  if (file.exists(paste(path, "/", "taxonomicCoverage.xml", sep = ""))){
+    message("<taxonomicCoverage>")
+    taxonomic_coverage <- read_eml(paste(path, "/", "taxonomicCoverage.xml", sep = ""))
+    dataset@coverage@taxonomicCoverage <- as(list(taxonomic_coverage), "ListOftaxonomicCoverage")
+  }
 
   # Add maintenance -----------------------------------------------------------
   
