@@ -13,7 +13,7 @@ Install from the GitHub.
 install.packages("devtools")
 library(devtools)
 
-# Install and load EMLassemblyline from the development branch
+# Install and load EMLassemblyline
 install_github("EDIorg/EMLassemblyline")
 library(EMLassemblyline)
 ```
