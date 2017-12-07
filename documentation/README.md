@@ -8,4 +8,4 @@ This is a directory for general documentation, including:
 
 [A list of the EML schema elements that are populated by the assembly line with some notes on the level of detail supplied to these elements.](https://github.com/EDIorg/EMLassemblyline/blob/master/documentation/schema_use.md)
 
-[Instructions for operating the EML assembly line](https://github.com/EDIorg/EMLassemblyline/blob/development/documentation/instructions.md)
+[Instructions for operating the EML assembly line](https://github.com/EDIorg/EMLassemblyline/blob/master/documentation/instructions.md)
