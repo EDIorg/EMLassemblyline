@@ -87,6 +87,36 @@ detect_delimeter <- function(path, data.files, os){
                                              ";",
                                              "|"))
     }
+    
+    # Secondary check on delimeter detection with manual override
+    
+    file_extension <- substr(data_files[i], 
+                             nchar(data_files[i])-3,
+                             nchar(data_files[i]))
+    
+    if ((delim_guess[i] == ",") & (file_extension == ".txt")){
+      message(paste("I'm having trouble identifying the field delimeter of ", data_files[i],
+                    ". Enter the field delimeter of this file.",
+                    ' Valid options are:  ,  \\t  ;  |', sep = ""))
+      answer <- readline('ENTER here: ')
+      if (answer == "\\t"){
+        delim_guess[i] <- "\t"
+      } else {
+        delim_guess[i] <- answer
+      }
+    } else if ((delim_guess[i] == "\t") & (file_extension == ".csv")){
+      message(paste("I'm having trouble identifying the field delimeter of ", data_files[i],
+                    ". Enter the field delimeter of this file.",
+                    ' Valid options are:  ,  \\t  ;  |', sep = ""))
+      answer <- readline('ENTER here: ')
+      if (answer == "\\t"){
+        delim_guess[i] <- "\t"
+      } else {
+        delim_guess[i] <- answer
+      }
+    }
+    
+    
   }
   
   delim_guess
