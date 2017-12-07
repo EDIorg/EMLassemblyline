@@ -150,7 +150,7 @@ import_templates <- function(path, license, data.files){
   
   # Detect file delimeters
   
-  delim_guess <- detect_delimeter(path, data.files, os)
+  delim_guess <- detect_delimeter(path, data.files = data_files, os)
 
   
   # Copy templates to path if they don't exist --------------------------------

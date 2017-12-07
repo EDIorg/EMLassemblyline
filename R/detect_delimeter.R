@@ -81,7 +81,7 @@ detect_delimeter <- function(path, data.files, os){
     } else if (os == "win"){
       
       delim_guess[i] <- get.delim(data_path[i],
-                                  n = nlines/2,
+                                  n = 1,
                                   delims = c("\t",
                                              ",",
                                              ";",
