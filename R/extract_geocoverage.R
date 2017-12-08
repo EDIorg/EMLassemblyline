@@ -63,6 +63,10 @@ extract_geocoverage <- function(path, data.file, lat.col, lon.col, site.col){
 
   data_file <- validate_file_names(path, data.files = data.file)
   
+  # Validate fields of data.files
+  
+  validate_fields(path, data.files = data_file)
+  
   # Get file names ------------------------------------------------------------
   
   files <- list.files(path)

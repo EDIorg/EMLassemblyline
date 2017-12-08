@@ -144,6 +144,10 @@ import_templates <- function(path, license, data.files){
   
   data_files <- validate_file_names(path, data.files)
   
+  # Validate fields of data.files
+  
+  validate_fields(path, data.files = data_files)
+  
   # Detect operating system
   
   os <- detect_os()

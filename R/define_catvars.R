@@ -66,6 +66,10 @@ define_catvars <- function(path) {
   table_names <- files[use_i]
   data_files <- table_names
   
+  # Validate fields of data.files
+  
+  validate_fields(path, data.files = data_files)
+  
   # Set file names to be written
 
   fname_table_catvars <- str_c("catvars_", table_names_base, ".txt")

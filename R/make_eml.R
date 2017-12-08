@@ -136,6 +136,10 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
   
   table_names <- validate_file_names(path, data.files)
   
+  # Validate fields of data.files
+  
+  validate_fields(path, data.files = table_names)
+  
   # Detect operating system
   
   os <- detect_os()
