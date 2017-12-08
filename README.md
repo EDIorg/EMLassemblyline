@@ -10,11 +10,11 @@ The `EMLassemblyline` requires little operational knowledge of the R programming
 
 #### Documenation
 
-[A schematic representation of the assembly line process.](https://github.com/EDIorg/EMLassemblyline/blob/development/documentation/schematic.md)
+[A schematic representation of the assembly line process.](https://github.com/EDIorg/EMLassemblyline/blob/master/documentation/schema_use.md)
 
-[A list of the EML schema elements that are populated by the assembly line with some notes on the level of detail supplied to these elements.](https://github.com/EDIorg/EMLassemblyline/blob/development/documentation/schema_use.md)
+[A list of the EML schema elements that are populated by the assembly line with some notes on the level of detail supplied to these elements.](https://github.com/EDIorg/EMLassemblyline/blob/master/documentation/schematic.md)
 
-[Instructions for operating the EML assembly line](https://github.com/EDIorg/EMLassemblyline/blob/development/documentation/instructions.md)
+[Instructions for operating the EML assembly line](https://github.com/EDIorg/EMLassemblyline/blob/master/documentation/instructions.md)
 
 #### R package
 
