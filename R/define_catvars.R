@@ -101,13 +101,14 @@ define_catvars <- function(path) {
               "/", 
               attribute_files[i],
               sep = ""),
-        header=TRUE,
+        header = T,
         sep="\t",
         quote="\"",
         as.is=TRUE,
         comment.char = "",
+        fill = T,
         colClasses = rep("character", 7))
-      
+      df_attributes <- df_attributes[ ,1:7]
       colnames(df_attributes) <- c("attributeName",
                                    "attributeDefinition",
                                    "class",
@@ -115,6 +116,7 @@ define_catvars <- function(path) {
                                    "dateTimeFormatString",
                                    "missingValueCode",
                                    "missingValueCodeExplanation")
+      
       
       # Build catvars table
       

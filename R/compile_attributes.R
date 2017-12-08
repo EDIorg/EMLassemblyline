@@ -81,13 +81,14 @@ compile_attributes <- function(path, data.files){
                                       "/",
                                       fname_table_attributes[i],
                                       sep = ""),
-                                header=TRUE,
+                                header = T,
                                 sep="\t",
                                 quote="\"",
                                 as.is=TRUE,
                                 comment.char = "",
+                                fill = T,
                                 colClasses = rep("character", 7))
-    
+    df_attributes <- df_attributes[ ,1:7]
     colnames(df_attributes) <- c("attributeName",
                                  "attributeDefinition",
                                  "class",
@@ -95,6 +96,8 @@ compile_attributes <- function(path, data.files){
                                  "dateTimeFormatString",
                                  "missingValueCode",
                                  "missingValueCodeExplanation")
+    
+    
     
     # Convert user inputs to consistent case
     

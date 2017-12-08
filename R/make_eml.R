@@ -351,16 +351,17 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
   # Read personnel file
 
   message("Reading personnel file.")
-  
+
   personinfo <- read.table(
     fname_personnel,
-    header=TRUE,
+    header = T,
     sep="\t",
     quote="\"",
     as.is=TRUE,
     comment.char = "",
-    colClasses = rep("character", 8))
-
+    fill = T,
+    colClasses = rep("character", 10))
+  personinfo <- personinfo[ ,1:10]
   colnames(personinfo) <- c("givenName",
                             "middleInitial",
                             "surName",
@@ -512,13 +513,16 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
     paste(substr(fname_keywords, 1, nchar(fname_keywords) - 4),
           ".txt",
           sep = ""),
-    header = TRUE,
-    sep = "\t",
-    as.is = TRUE,
-    na.strings = "NA",
-    colClasses = "character")
-  
-  colnames(keywords) <- c("keyword", "keywordThesaurus")
+    header = T,
+    sep="\t",
+    quote="\"",
+    as.is=TRUE,
+    comment.char = "",
+    fill = T,
+    colClasses = rep("character", 2))
+  keywords <- keywords[ ,1:2]
+  colnames(keywords) <- c("keyword", 
+                          "keywordThesaurus")
   
   # Edit keywords: Remove blank keyword entries
   
@@ -619,14 +623,20 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
                                                "/",
                                                "geographic_coverage.txt",
                                                sep = ""),
-                                         sep = "\t",
-                                         header = TRUE,
-                                         as.is = TRUE,
-                                         quote="",
+                                         header = T,
+                                         sep="\t",
+                                         quote="\"",
+                                         as.is=TRUE,
+                                         comment.char = "",
+                                         fill = T,
                                          na.strings = "NA",
                                          colClasses = c("numeric","numeric","character"),
                                          comment.char = "#",
                                          fileEncoding = "UTF-8")
+    df_geographic_coverage <- df_geographic_coverage[ ,1:3]
+    colnames(df_geographic_coverage) <- c("latitude",
+                                          "longitude",
+                                          "site")
     
     df_geographic_coverage$latitude <- as.character(df_geographic_coverage$latitude)
     
@@ -800,23 +810,7 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
                        table_names[i],
                        sep = "")
     
-    nlines <- length(readLines(file_path))
-    
-    if (os == "mac"){
-      delim_guess <- suppressWarnings(get.delim(file_path,
-                                                n = 2,
-                                                delims = c("\t",
-                                                           ",",
-                                                           ";",
-                                                           "|")))
-    } else if (os == "win"){
-      delim_guess <- get.delim(file_path,
-                               n = nlines/2,
-                               delims = c("\t",
-                                          ",",
-                                          ";",
-                                          "|"))
-    }
+    delim_guess <- detect_delimeter(path, data.files = table_names[i], os)
     
     df_table <- read.table(file_path,
                            header = TRUE,
@@ -834,11 +828,17 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
           path,
           "/",
           fname_table_catvars[i], sep = ""),
-        header=TRUE,
+        header = T,
         sep="\t",
         quote="\"",
         as.is=TRUE,
-        comment.char = "")
+        comment.char = "",
+        fill = T,
+        colClasses = rep("character", 3))
+      catvars <- catvars[ ,1:3]
+      colnames(catvars) <- c("attributeName",
+                             "code",
+                             "definition")
       
       # Validate catvars: Definitions for each code
       
@@ -1039,10 +1039,19 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
 
     custom_units_df <- read.table(
       fname_custom_units,
-      header = TRUE,
-      sep = "\t",
-      as.is = TRUE,
-      na.strings = "")
+      header = T,
+      sep="\t",
+      quote="\"",
+      as.is=TRUE,
+      comment.char = "",
+      fill = T,
+      colClasses = rep("character", 5))
+    custom_units_df <- custom_units_df[ ,1:5]
+    colnames(custom_units_df) <- c("id",
+                                   "unitType",
+                                   "parentSI",
+                                   "multiplierToSI",
+                                   "description")
     
     if (nrow(custom_units_df) < 1){
       custom_units <- "no"
