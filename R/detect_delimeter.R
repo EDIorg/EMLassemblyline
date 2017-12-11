@@ -68,7 +68,8 @@ detect_delimeter <- function(path, data.files, os){
                           data_files[i],
                           sep = "")
     
-    nlines <- length(readLines(data_path[i]))
+    nlines <- length(readLines(data_path[i],
+                               warn = F))
     
     if (os == "mac"){
       
