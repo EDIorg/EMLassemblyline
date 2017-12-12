@@ -618,7 +618,6 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
                                          fill = T,
                                          na.strings = "NA",
                                          colClasses = c("numeric","numeric","character"),
-                                         comment.char = "#",
                                          fileEncoding = "UTF-8")
     df_geographic_coverage <- df_geographic_coverage[ ,1:3]
     colnames(df_geographic_coverage) <- c("latitude",
