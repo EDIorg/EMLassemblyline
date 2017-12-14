@@ -4,17 +4,14 @@
 \alias{detect_non_utf8}
 \title{Detect non-UTF-8 encoded character strings}
 \usage{
-detect_non_utf8(str = "", method = "")
+detect_non_utf8(x = "", x.type = "")
 }
 \arguments{
-\item{x}{A character vector.
-\itemize{
-    \item{table} Check character strings of table and report column, 
-    row, and value of offending character string.
-    row of offending entity.
-    \item{text} Check paragraphs of input text and report line number 
-    and value of character string.
-}}
+\item{x}{A variable containing character strings.}
+
+\item{x.source}{File name from which x was created. This value is referenced when 
+reporting errors to the user and prompting them to fix these errors.
+Most often this should be a file name the user can modify.}
 }
 \description{
 Identify non-UTF-8 encoded character strings and report location 
