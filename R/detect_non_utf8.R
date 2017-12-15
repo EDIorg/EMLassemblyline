@@ -22,8 +22,6 @@ detect_non_utf8 <- function(x, x.type, x.source){
   
   # Check arguments and parameterize ------------------------------------------
   
-  message('Checking input arguments.')
-  
   if (missing(x)){
     stop('Input argument "x" is missing! Specify the variable to be tested.')
   }
@@ -38,20 +36,25 @@ detect_non_utf8 <- function(x, x.type, x.source){
   # Test character vector -----------------------------------------------------
   
   if (is.character(x)){
-    info <- stri_enc_isutf8(x)
-    if (!isTRUE(info)){
-      stop(paste0('This line contains Non-UTF-8 encoded characters: "', x, '" ... Please remove suspect characters.'))
+    x2 <- unlist(strsplit(x, " "))
+    use_i <- stri_enc_isutf8(x2)
+    if ((sum(!use_i) == 1) & (length(x2) == 1)){
+      stop(paste0('\nNon-UTF-8 encoded characters detected in:', 
+                  '\n', '"', x, '"', '\n',
+                  'Please replace or remove suspect characters.'))
+    } else if (sum(!use_i) > 0){
+      suspects <- paste0(x2[!use_i], collapse = ", ")
+      stop(paste0('\nNon-UTF-8 encoded characters detected in:',
+                  '\n', '"', x, '"', '\n',
+                  'Suspect character strings are:\n', 
+                  suspects, 
+                  '\nPlease replace or remove suspect characters.'))
     }
-    
   }
-  
-  
   
   # Test data.frame -----------------------------------------------------------
   
   if (is.data.frame(x)){
-    
-    message(paste0('Searching ', x.source))
     
     if (missing(x.source)){
       stop('Input argument "x.source" is missing! Specify the data source from which "x" was created.')
@@ -79,7 +82,7 @@ detect_non_utf8 <- function(x, x.type, x.source){
 
   }
   
+  # Test prose ----------------------------------------------------------------
   
-  message('Done.')
   
 }
