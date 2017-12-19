@@ -16,5 +16,6 @@ of your dataset. It is not necessary to include the file extension.}
 If incongruence is found an error is returned.
 }
 \description{
-This function checks for congruence between fields of a data table.
+This function checks for congruence in the number of fields among rows 
+    of a data table.
 }
