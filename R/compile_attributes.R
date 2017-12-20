@@ -50,23 +50,7 @@ compile_attributes <- function(path, data.files){
                        table_names[i],
                        sep = "")
     
-    nlines <- length(readLines(file_path))
-    
-    if (os == "mac"){
-      delim_guess <- suppressWarnings(get.delim(file_path,
-                                                   n = 2,
-                                                   delims = c("\t",
-                                                              ",",
-                                                              ";",
-                                                              "|")))
-    } else if (os == "win"){
-      delim_guess <- get.delim(file_path,
-                                  n = nlines/2,
-                                  delims = c("\t",
-                                             ",",
-                                             ";",
-                                             "|"))
-    }
+    delim_guess <- detect_delimeter(path = path, data.files = table_names[i], os = os)
     
     df_table <- read.table(file_path,
                            header = TRUE,
