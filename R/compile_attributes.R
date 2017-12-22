@@ -29,9 +29,9 @@ compile_attributes <- function(path, data.files){
   
   attribute_files_out <- c()
   for (i in 1:length(table_names)){
-    use_i <- str_detect(string = attribute_files,
-                        pattern = str_c(str_sub(table_names[i], 1, nchar(table_names[i])-4), collapse = "|"))
-    attribute_files_out[i] <- attribute_files[use_i]
+    attribute_files_out[i] <- paste0('attributes_',
+                                     str_c(str_sub(table_names[i], 1, nchar(table_names[i])-4), collapse = "|"),
+                                     '.txt')
   }
   fname_table_attributes <- attribute_files_out
   
@@ -258,7 +258,8 @@ compile_attributes <- function(path, data.files){
     
     attributes$missingValueCodeExplanation <- df_attributes$missingValueCodeExplanation
     
-    # Set attribute number type, then minimumm and maximum values
+    # Set attribute number type, then minimumm and maximum values. Throw an 
+    # error if non-numeric values are found.
 
     is_numeric <- which(attributes$columnClasses == "numeric")
     attributes$minimum <- as.numeric(attributes$minimum)
@@ -272,6 +273,15 @@ compile_attributes <- function(path, data.files){
       if (attributes$missingValueCode[is_numeric[j]] != ""){
         useI <- raw == attributes$missingValueCode[is_numeric[j]]
         raw <- as.numeric(raw[!useI])
+      }
+      
+      if ((class(raw) == "character") | (class(raw) == "factor")){
+        stop(paste0('Characters strings found in the column "',
+                    colnames(df_table)[is_numeric[j]],
+                    '" of the file "',
+                    table_names[i],
+                    '". ',
+                    'Please remove these non-numeric characters and try again.'))
       }
       
       
