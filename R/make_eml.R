@@ -385,19 +385,22 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
   if (sum(personinfo$role %in% "contact") == 0){
     stop("Your dataset is missing a contact. Add one to personnel.txt.")
   }
-  if (sum(personinfo$role %in% "pi") == 0){
-    stop("Your dataset is missing a principal investigator. Add one to personnel.txt.")
-  }
+  # if (sum(personinfo$role %in% "pi") == 0){
+  #   stop("Your dataset is missing a principal investigator. Add one to personnel.txt.")
+  # }
   
   # Validate personnel: project info is associated with first listed PI
   
   use_i <- personinfo$role == "pi"
-  pis <- personinfo[use_i, ]
-  pi_proj <- pis[ , c("projectTitle", "fundingAgency", "fundingNumber")]
-  
-  if ((sum(pi_proj != "") > 0) & (sum(pi_proj[1, ] == "") == 3)){
-    stop("The first Principal Investigator listed in personnel.txt is missing a projectTitle, fundingAgency, or fundingNumber. The first listed PI represents the major project and requires this. Please add one.")
+  if (sum(use_i) > 0){
+    pis <- personinfo[use_i, ]
+    pi_proj <- pis[ , c("projectTitle", "fundingAgency", "fundingNumber")]
+    
+    if ((sum(pi_proj != "") > 0) & (sum(pi_proj[1, ] == "") == 3)){
+      stop("The first Principal Investigator listed in personnel.txt is missing a projectTitle, fundingAgency, or fundingNumber. The first listed PI represents the major project and requires this. Please add one.")
+    }
   }
+  
   
   # Build modules--------------------------------------------------------------
 
@@ -517,8 +520,6 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
   if (sum(use_i) > 0){
     keywords <- keywords[!use_i, ]
   }
-  
-  # 
   
   list_keywordSet <- list()
 
@@ -666,140 +667,144 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
 
   # Add project and funding
   
-  message("<project>")
-  
   useI <- which(personinfo$role == "pi")
   
-  pi_list <- list()
-  pi_list[[1]] <- suppressWarnings(set_person(info_row = useI[1],
-                             person_role = "pi"))
-  
-  if (personinfo$projectTitle[useI[1]] == ""){
-    if (personinfo$fundingAgency[useI[1]] == ""){
-      if (personinfo$fundingNumber[useI[1]] == ""){
-        project <- new("project",
-                       title = "No project title to report",
-                       personnel = pi_list,
-                       funding = "No funding to report")
-      } else if (personinfo$fundingNumber[useI[1]] != ""){
-        project <- new("project",
-                       title = "No project title to report",
-                       personnel = pi_list,
-                       funding = personinfo$fundingNumber[useI[1]])
-      }
-    } else if (personinfo$fundingAgency[useI[1]] != ""){
-      if (personinfo$fundingNumber[useI[1]] == ""){
-        project <- new("project",
-                       title = "No project title to report",
-                       personnel = pi_list,
-                       funding = personinfo$fundingAgency[useI[1]])
-      } else if (personinfo$fundingNumber[useI[1]] != ""){
-        project <- new("project",
-                       title = "No project title to report",
-                       personnel = pi_list,
-                       funding = paste0(personinfo$fundingAgency[useI[1]],
-                                        ": ",
-                                        personinfo$fundingNumber[useI[1]]))
-      }
-    }
-  } else if (personinfo$projectTitle[useI[1]] != ""){
-    if (personinfo$fundingAgency[useI[1]] == ""){
-      if (personinfo$fundingNumber[useI[1]] == ""){
-        project <- new("project",
-                       title = personinfo$projectTitle[useI[1]],
-                       personnel = pi_list,
-                       funding = "No funding to report")
-      } else if (personinfo$fundingNumber[useI[1]] != ""){
-        project <- new("project",
-                       title = personinfo$projectTitle[useI[1]],
-                       personnel = pi_list,
-                       funding = personinfo$fundingNumber[useI[1]])
-      }
-    } else if (personinfo$fundingAgency[useI[1]] != ""){
-      if (personinfo$fundingNumber[useI[1]] == ""){
-        project <- new("project",
-                       title = personinfo$projectTitle[useI[1]],
-                       personnel = pi_list,
-                       funding = personinfo$fundingAgency[useI[1]])
-      } else if (personinfo$fundingNumber[useI[1]] != ""){
-        project <- new("project",
-                       title = personinfo$projectTitle[useI[1]],
-                       personnel = pi_list,
-                       funding = paste0(personinfo$fundingAgency[useI[1]],
-                                        ": ",
-                                        personinfo$fundingNumber[useI[1]]))
-      }
-    }
-  }
-  dataset@project <- project
-  
-  
-  if (length(useI) > 1){
-    relatedProject_list <- list()
+  if (!identical(useI, integer(0))){
+    
+    message("<project>")
+    
     pi_list <- list()
-    for (i in 1:(length(useI)-1)){
-      pi_list[[1]] <- suppressWarnings(set_person(info_row = useI[i+1],
-                                                  person_role = "pi"))
-      
-      if (personinfo$projectTitle[useI[i+1]] == ""){
-        if (personinfo$fundingAgency[useI[i+1]] == ""){
-          if (personinfo$fundingNumber[useI[i+1]] == ""){
-            relatedProject_list[[i]] <- new("relatedProject",
-                           title = "No project title to report",
-                           personnel = pi_list,
-                           funding = "No funding to report")
-          } else if (personinfo$fundingNumber[useI[i+1]] != ""){
-            relatedProject_list[[i]] <- new("relatedProject",
-                           title = "No project title to report",
-                           personnel = pi_list,
-                           funding = personinfo$fundingNumber[useI[i+1]])
-          }
-        } else if (personinfo$fundingAgency[useI[i+1]] != ""){
-          if (personinfo$fundingNumber[useI[i+1]] == ""){
-            relatedProject_list[[i]] <- new("relatedProject",
-                           title = "No project title to report",
-                           personnel = pi_list,
-                           funding = personinfo$fundingAgency[useI[i+1]])
-          } else if (personinfo$fundingNumber[useI[i+1]] != ""){
-            relatedProject_list[[i]] <- new("relatedProject",
-                           title = "No project title to report",
-                           personnel = pi_list,
-                           funding = paste0(personinfo$fundingAgency[useI[i+1]],
-                                            ": ",
-                                            personinfo$fundingNumber[useI[i+1]]))
-          }
+    pi_list[[1]] <- suppressWarnings(set_person(info_row = useI[1],
+                                                person_role = "pi"))
+    
+    if (personinfo$projectTitle[useI[1]] == ""){
+      if (personinfo$fundingAgency[useI[1]] == ""){
+        if (personinfo$fundingNumber[useI[1]] == ""){
+          project <- new("project",
+                         title = "No project title to report",
+                         personnel = pi_list,
+                         funding = "No funding to report")
+        } else if (personinfo$fundingNumber[useI[1]] != ""){
+          project <- new("project",
+                         title = "No project title to report",
+                         personnel = pi_list,
+                         funding = personinfo$fundingNumber[useI[1]])
         }
-      } else if (personinfo$projectTitle[useI[i+1]] != ""){
-        if (personinfo$fundingAgency[useI[i+1]] == ""){
-          if (personinfo$fundingNumber[useI[i+1]] == ""){
-            relatedProject_list[[i]] <- new("relatedProject",
-                           title = personinfo$projectTitle[useI[i+1]],
-                           personnel = pi_list,
-                           funding = "No funding to report")
-          } else if (personinfo$fundingNumber[useI[i+1]] != ""){
-            relatedProject_list[[i]] <- new("relatedProject",
-                           title = personinfo$projectTitle[useI[i+1]],
-                           personnel = pi_list,
-                           funding = personinfo$fundingNumber[useI[i+1]])
-          }
-        } else if (personinfo$fundingAgency[useI[i+1]] != ""){
-          if (personinfo$fundingNumber[useI[i+1]] == ""){
-            relatedProject_list[[i]] <- new("relatedProject",
-                           title = personinfo$projectTitle[useI[i+1]],
-                           personnel = pi_list,
-                           funding = personinfo$fundingAgency[useI[i+1]])
-          } else if (personinfo$fundingNumber[useI[i+1]] != ""){
-            relatedProject_list[[i]] <- new("relatedProject",
-                           title = personinfo$projectTitle[useI[i+1]],
-                           personnel = pi_list,
-                           funding = paste0(personinfo$fundingAgency[useI[i+1]],
-                                            ": ",
-                                            personinfo$fundingNumber[useI[i+1]]))
-          }
+      } else if (personinfo$fundingAgency[useI[1]] != ""){
+        if (personinfo$fundingNumber[useI[1]] == ""){
+          project <- new("project",
+                         title = "No project title to report",
+                         personnel = pi_list,
+                         funding = personinfo$fundingAgency[useI[1]])
+        } else if (personinfo$fundingNumber[useI[1]] != ""){
+          project <- new("project",
+                         title = "No project title to report",
+                         personnel = pi_list,
+                         funding = paste0(personinfo$fundingAgency[useI[1]],
+                                          ": ",
+                                          personinfo$fundingNumber[useI[1]]))
+        }
+      }
+    } else if (personinfo$projectTitle[useI[1]] != ""){
+      if (personinfo$fundingAgency[useI[1]] == ""){
+        if (personinfo$fundingNumber[useI[1]] == ""){
+          project <- new("project",
+                         title = personinfo$projectTitle[useI[1]],
+                         personnel = pi_list,
+                         funding = "No funding to report")
+        } else if (personinfo$fundingNumber[useI[1]] != ""){
+          project <- new("project",
+                         title = personinfo$projectTitle[useI[1]],
+                         personnel = pi_list,
+                         funding = personinfo$fundingNumber[useI[1]])
+        }
+      } else if (personinfo$fundingAgency[useI[1]] != ""){
+        if (personinfo$fundingNumber[useI[1]] == ""){
+          project <- new("project",
+                         title = personinfo$projectTitle[useI[1]],
+                         personnel = pi_list,
+                         funding = personinfo$fundingAgency[useI[1]])
+        } else if (personinfo$fundingNumber[useI[1]] != ""){
+          project <- new("project",
+                         title = personinfo$projectTitle[useI[1]],
+                         personnel = pi_list,
+                         funding = paste0(personinfo$fundingAgency[useI[1]],
+                                          ": ",
+                                          personinfo$fundingNumber[useI[1]]))
         }
       }
     }
-    dataset@project@relatedProject <- as(relatedProject_list, "ListOfrelatedProject")
+    dataset@project <- project
+    
+    
+    if (length(useI) > 1){
+      relatedProject_list <- list()
+      pi_list <- list()
+      for (i in 1:(length(useI)-1)){
+        pi_list[[1]] <- suppressWarnings(set_person(info_row = useI[i+1],
+                                                    person_role = "pi"))
+        
+        if (personinfo$projectTitle[useI[i+1]] == ""){
+          if (personinfo$fundingAgency[useI[i+1]] == ""){
+            if (personinfo$fundingNumber[useI[i+1]] == ""){
+              relatedProject_list[[i]] <- new("relatedProject",
+                                              title = "No project title to report",
+                                              personnel = pi_list,
+                                              funding = "No funding to report")
+            } else if (personinfo$fundingNumber[useI[i+1]] != ""){
+              relatedProject_list[[i]] <- new("relatedProject",
+                                              title = "No project title to report",
+                                              personnel = pi_list,
+                                              funding = personinfo$fundingNumber[useI[i+1]])
+            }
+          } else if (personinfo$fundingAgency[useI[i+1]] != ""){
+            if (personinfo$fundingNumber[useI[i+1]] == ""){
+              relatedProject_list[[i]] <- new("relatedProject",
+                                              title = "No project title to report",
+                                              personnel = pi_list,
+                                              funding = personinfo$fundingAgency[useI[i+1]])
+            } else if (personinfo$fundingNumber[useI[i+1]] != ""){
+              relatedProject_list[[i]] <- new("relatedProject",
+                                              title = "No project title to report",
+                                              personnel = pi_list,
+                                              funding = paste0(personinfo$fundingAgency[useI[i+1]],
+                                                               ": ",
+                                                               personinfo$fundingNumber[useI[i+1]]))
+            }
+          }
+        } else if (personinfo$projectTitle[useI[i+1]] != ""){
+          if (personinfo$fundingAgency[useI[i+1]] == ""){
+            if (personinfo$fundingNumber[useI[i+1]] == ""){
+              relatedProject_list[[i]] <- new("relatedProject",
+                                              title = personinfo$projectTitle[useI[i+1]],
+                                              personnel = pi_list,
+                                              funding = "No funding to report")
+            } else if (personinfo$fundingNumber[useI[i+1]] != ""){
+              relatedProject_list[[i]] <- new("relatedProject",
+                                              title = personinfo$projectTitle[useI[i+1]],
+                                              personnel = pi_list,
+                                              funding = personinfo$fundingNumber[useI[i+1]])
+            }
+          } else if (personinfo$fundingAgency[useI[i+1]] != ""){
+            if (personinfo$fundingNumber[useI[i+1]] == ""){
+              relatedProject_list[[i]] <- new("relatedProject",
+                                              title = personinfo$projectTitle[useI[i+1]],
+                                              personnel = pi_list,
+                                              funding = personinfo$fundingAgency[useI[i+1]])
+            } else if (personinfo$fundingNumber[useI[i+1]] != ""){
+              relatedProject_list[[i]] <- new("relatedProject",
+                                              title = personinfo$projectTitle[useI[i+1]],
+                                              personnel = pi_list,
+                                              funding = paste0(personinfo$fundingAgency[useI[i+1]],
+                                                               ": ",
+                                                               personinfo$fundingNumber[useI[i+1]]))
+            }
+          }
+        }
+      }
+      dataset@project@relatedProject <- as(relatedProject_list, "ListOfrelatedProject")
+    }
+    
   }
   
   # Add associated parties
