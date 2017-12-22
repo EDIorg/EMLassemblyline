@@ -61,6 +61,17 @@ compile_attributes <- function(path, data.files){
     
     # Read attributes_datatablename
     
+    field_count <- count.fields(file = paste0(path,
+                                              "/",
+                                              fname_table_attributes[i]),
+                                              sep = "\t")
+    if (sum(field_count > 7) > 0){
+      stop(paste0('Some of the information in "',
+                 fname_table_attributes[i],
+                 '" is not in the correct columns. ',
+                 "Please double check the organization of content in this file."))
+    }
+    
     df_attributes <- read.table(paste(path,
                                       "/",
                                       fname_table_attributes[i],
