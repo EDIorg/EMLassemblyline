@@ -173,6 +173,7 @@ compile_attributes <- function(path, data.files){
     }
     
     # Validate attributes: missingValueCodes have missingValueCodeExplanations
+    
     use_i <- df_attributes$missingValueCode %in% ""
     use_i2 <- df_attributes$missingValueCodeExplanation == ""
     use_i3 <- use_i2 != use_i
@@ -185,6 +186,7 @@ compile_attributes <- function(path, data.files){
     }
     
     # Validate attributes: missingValueCodeExplanations have non-blank missingValuecodeExplanations
+    
     use_i <- df_attributes$missingValueCodeExplanation != ""
     use_i2 <- df_attributes$missingValueCode %in% ""
     use_i3 <- use_i2 == use_i
@@ -265,47 +267,53 @@ compile_attributes <- function(path, data.files){
     attributes$minimum <- as.numeric(attributes$minimum)
     attributes$maximum <- as.numeric(attributes$maximum)
     
-    for (j in 1:length(is_numeric)){
+    if (!identical(is_numeric, integer(0))){
       
-      raw <- df_table[ ,is_numeric[j]]
-      
-      
-      if (attributes$missingValueCode[is_numeric[j]] != ""){
-        useI <- raw == attributes$missingValueCode[is_numeric[j]]
-        raw <- as.numeric(raw[!useI])
-      }
-      
-      if ((class(raw) == "character") | (class(raw) == "factor")){
-        stop(paste0('Characters strings found in the column "',
-                    colnames(df_table)[is_numeric[j]],
-                    '" of the file "',
-                    table_names[i],
-                    '". ',
-                    'Please remove these non-numeric characters and try again.'))
-      }
-      
-      
-      rounded <- floor(raw)
-      if (length(raw) - sum(raw == rounded, na.rm = T) > 0){
-        attributes$numberType[is_numeric[j]] <- "real"
-      } else if (min(raw, na.rm = T) > 0){
-        attributes$numberType[is_numeric[j]] <- "natural"
-      } else if (min(raw, na.rm = T) < 0){
-        attributes$numberType[is_numeric[j]] <- "integer"
-      } else {
-        attributes$numberType[is_numeric[j]] <- "whole"
-      }
-      
-      
-      attributes$minimum[is_numeric[j]] <- round(min(raw,
-                                                     na.rm = TRUE),
-                                                 digits = 2)
-      
-      attributes$maximum[is_numeric[j]] <- round(max(raw,
+      for (j in 1:length(is_numeric)){
+        
+        raw <- df_table[ ,is_numeric[j]]
+        
+        
+        if (attributes$missingValueCode[is_numeric[j]] != ""){
+          useI <- raw == attributes$missingValueCode[is_numeric[j]]
+          raw <- as.numeric(raw[!useI])
+        }
+        
+        if ((class(raw) == "character") | (class(raw) == "factor")){
+          stop(paste0('Characters strings found in the column "',
+                      colnames(df_table)[is_numeric[j]],
+                      '" of the file "',
+                      table_names[i],
+                      '". ',
+                      'Please remove these non-numeric characters and try again.'))
+        }
+        
+        
+        rounded <- floor(raw)
+        if (length(raw) - sum(raw == rounded, na.rm = T) > 0){
+          attributes$numberType[is_numeric[j]] <- "real"
+        } else if (min(raw, na.rm = T) > 0){
+          attributes$numberType[is_numeric[j]] <- "natural"
+        } else if (min(raw, na.rm = T) < 0){
+          attributes$numberType[is_numeric[j]] <- "integer"
+        } else {
+          attributes$numberType[is_numeric[j]] <- "whole"
+        }
+        
+        
+        attributes$minimum[is_numeric[j]] <- round(min(raw,
                                                        na.rm = TRUE),
                                                    digits = 2)
-
+        
+        attributes$maximum[is_numeric[j]] <- round(max(raw,
+                                                       na.rm = TRUE),
+                                                   digits = 2)
+        
+      }
+      
     }
+    
+    
     
     is_character <- which(attributes$columnClasses == "character") 
     is_catvar <- which(attributes$columnClasses == "categorical")
