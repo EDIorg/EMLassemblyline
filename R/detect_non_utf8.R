@@ -18,7 +18,7 @@
 #'
 
 
-detect_non_utf8 <- function(x, x.type, x.source){
+detect_non_utf8 <- function(x, x.source){
   
   # Check arguments and parameterize ------------------------------------------
   
@@ -89,15 +89,15 @@ detect_non_utf8 <- function(x, x.type, x.source){
     for (i in 1:length(x)){
       hold <- stri_enc_isutf8(x[i])
       if (!isTRUE(hold)){
-        parts <- unlist(strsplit(x, " "))
+        parts <- unlist(strsplit(x[i], " "))
         parts_isutf8 <- stri_enc_isutf8(parts)
         use_i <- seq(length(parts_isutf8))[!parts_isutf8]
         if (!identical(use_i, integer(0))){
           parts[use_i] <- '!NON-UTF-8!'
           para_out <- paste(parts, collapse = " ")
-          stop(paste0('\nNon-UTF-8 encoded characters detected in this file:',
+          stop(paste0('\nNon-UTF-8 encoded characters detected in the file:',
                       '\n', '"', x.source, '"',
-                      '\nAnd in this paragraph (Non-UTF-8 encoded characters have been marked):',
+                      '\n ... and in this paragraph (Non-UTF-8 encoded characters have been marked "!NON-UTF-8!"). Please replace this text with UTF-8 encoded characters:',
                       '\n', para_out))
         }
       }
