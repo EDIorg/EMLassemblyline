@@ -300,14 +300,19 @@ compile_attributes <- function(path, data.files){
           attributes$numberType[is_numeric[j]] <- "whole"
         }
         
+        # If all numeric values are NA then set min and max to NA
         
-        attributes$minimum[is_numeric[j]] <- round(min(raw,
-                                                       na.rm = TRUE),
-                                                   digits = 2)
-        
-        attributes$maximum[is_numeric[j]] <- round(max(raw,
-                                                       na.rm = TRUE),
-                                                   digits = 2)
+        if (length(raw) == sum(is.na(raw))){
+          attributes$minimum[is_numeric[j]] <- NA
+          attributes$maximum[is_numeric[j]] <- NA
+        } else {
+          attributes$minimum[is_numeric[j]] <- round(min(raw,
+                                                         na.rm = TRUE),
+                                                     digits = 2)
+          attributes$maximum[is_numeric[j]] <- round(max(raw,
+                                                         na.rm = TRUE),
+                                                     digits = 2)
+        }
         
       }
       
