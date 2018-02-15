@@ -413,7 +413,7 @@ import_templates <- function(path, license, data.files){
     use_i <- guess == "character"
     if (sum(use_i) > 0){
       potential_date_cols <- colnames(df_table)[use_i]
-      potential_date_i <- str_detect(tolower(potential_date_cols), "date|time")
+      potential_date_i <- str_detect(tolower(potential_date_cols), "date|time|day")
       guess_datetime <- potential_date_cols[potential_date_i]
       use_i <- match(guess_datetime, attributes[[i]]$attributeName)
       guess[use_i] <- "Date"
