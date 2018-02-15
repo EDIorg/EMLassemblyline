@@ -425,7 +425,11 @@ import_templates <- function(path, license, data.files){
     if (sum(use_i) > 0){
       potential_fact_cols <- colnames(df_table)[use_i]
       use_i2 <- match(potential_fact_cols, colnames(df_table))
-      unique_lengths <- apply(df_table[ ,use_i2], 2, function(x)length(unique(x)))
+      if (length(use_i2) == 1){
+        unique_lengths <- length(unique(df_table[ ,use_i2]))
+      } else {
+        unique_lengths <- apply(df_table[ ,use_i2], 2, function(x)length(unique(x)))
+      }
       potential_facts <- unique_lengths <= dim(df_table)[1]*0.3
       if (sum(potential_facts) > 0){
         potential_facts <- names(potential_facts[potential_facts == TRUE])
