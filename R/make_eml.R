@@ -377,29 +377,7 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
   
   # Validate personnel.txt ----------------------------------------------------
   
-  # Validate personnel: required roles are present
-  
-  if (sum(personinfo$role %in% "creator") == 0){
-    stop("Your dataset is missing a creator. Add one to personnel.txt.")
-  }
-  if (sum(personinfo$role %in% "contact") == 0){
-    stop("Your dataset is missing a contact. Add one to personnel.txt.")
-  }
-  # if (sum(personinfo$role %in% "pi") == 0){
-  #   stop("Your dataset is missing a principal investigator. Add one to personnel.txt.")
-  # }
-  
-  # Validate personnel: project info is associated with first listed PI
-  
-  use_i <- personinfo$role == "pi"
-  if (sum(use_i) > 0){
-    pis <- personinfo[use_i, ]
-    pi_proj <- pis[ , c("projectTitle", "fundingAgency", "fundingNumber")]
-    
-    if ((sum(pi_proj != "") > 0) & (sum(pi_proj[1, ] == "") == 3)){
-      stop("The first Principal Investigator listed in personnel.txt is missing a projectTitle, fundingAgency, or fundingNumber. The first listed PI represents the major project and requires this. Please add one.")
-    }
-  }
+  personinfo <- validate_personnel(x = personinfo)
   
   
   # Build modules--------------------------------------------------------------
