@@ -198,6 +198,20 @@ compile_attributes <- function(path, data.files){
                  paste(hold, collapse = ", ")))
     }
     
+    # Validate attributes: missingValueCodes only have 1 entry per column
+    
+    vec <- df_attributes$missingValueCode
+    vec[is.na(df_attributes$missingValueCode)] <- "NA"
+    use_i <- str_count(vec, '[,]|[\\s]') > 0
+    if (sum(use_i) > 0){
+      hold <- df_attributes$attributeName[use_i]
+      stop(paste(fname_table_attributes[i], 
+                 ' has more than one missingValueCode.', 
+                 '\nOnly one missingValueCode per attribute is allowed.', 
+                 '\nPlease fix your data and metadata for these attributes: \n',
+                 paste(hold, collapse = ", ")))
+    }
+    
     
     # Modify attributes -------------------------------------------------------
     
@@ -260,8 +274,8 @@ compile_attributes <- function(path, data.files){
     
     attributes$missingValueCodeExplanation <- df_attributes$missingValueCodeExplanation
     
-    # Set attribute number type, then minimumm and maximum values. Throw an 
-    # error if non-numeric values are found.
+    # Remove missing value codes, set attribute number type, then minimumm and 
+    # maximum values. Throw an error if non-numeric values are found.
 
     is_numeric <- which(attributes$columnClasses == "numeric")
     attributes$minimum <- as.numeric(attributes$minimum)
