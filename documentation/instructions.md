@@ -148,7 +148,7 @@ Definitions for columns of this file:
     + Any other entries into the 'role' column are acceptable and will be defined under the associated party element of this dataset with whatever value is entered under role.
     + If a person serves more than one role, duplicate this persons information in another row but with the additional role.
     + Similarly if a role is shared among many people, list the individuals with the shared role on separate lines.
-* **projectTitle** Title of the project this dataset was created under (optional). Project titles are only listed on lines where the personnel role is PI. If auxiliary projects were involved in creating this dataset then add a new line of personnel below the primary project and list the auxiliary project title and associated PI.
+* **projectTitle** Title of the project this dataset was created under (optional). Project titles are only listed on lines where the personnel role is PI. If an auxiliary project was involved in creating this dataset then add a new row below the row containing the primary project and list the project title and associated PI. Do this for each auxiliary project.
 * **fundingAgency** Name of the entity funding the creation of this dataset (optional). Only include an entry in this column for rows where role PI.
 * **fundingNumber** Number of the grant or award that supported creation of this dataset (optional). Only include an entry in this column for rows where role PI.
 
