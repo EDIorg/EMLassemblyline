@@ -205,10 +205,10 @@ compile_attributes <- function(path, data.files){
     use_i <- str_count(vec, '[,]|[\\s]') > 0
     if (sum(use_i) > 0){
       hold <- df_attributes$attributeName[use_i]
-      stop(paste(fname_table_attributes[i], 
+      stop(paste0(fname_table_attributes[i], 
                  ' has more than one missingValueCode.', 
                  '\nOnly one missingValueCode per attribute is allowed.', 
-                 '\nPlease fix your data and metadata for these attributes: \n',
+                 'Please fix your data and metadata for these attributes:\n',
                  paste(hold, collapse = ", ")))
     }
     
