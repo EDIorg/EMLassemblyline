@@ -190,7 +190,7 @@ view_unit_dictionary()
     + **minute** use `m` to denote a minute string (e.g. 2017-05-09 13:15 is represented as `YYYY-MM-DD hh:mm`).
     + **second** use `s` to denote a second string (e.g. 2017-05-09 13:15:00 is represented as `YYYY-MM-DD hh:mm:ss`).
     + **Time zone format strings:** use `+` or `-` along with a time string to denote time zone offsets (e.g. `2017-05-09 13:15:00+05:00` is represented as `YYYY-MM-DD hh:mm:ss+hh:mm`).
-* **missingValueCode** If a code for 'no data' is used, specify it here (e.g. NA, -99999).
+* **missingValueCode** If a code for 'no data' is used, specify it here (e.g. NA, -99999, etc.). Only one missingValueCode is allowed for a single attribute.
 * **missingValueCodeExplanation** Define the missing value code here.
     
     
