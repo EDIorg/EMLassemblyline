@@ -102,6 +102,8 @@ compile_attributes <- function(path, data.files){
     
     # Validate attributes: Remaining prompts in units field
     
+    df_attributes$unit[is.na(df_attributes$unit)] <- ""
+    
     use_i <- str_detect(string = df_attributes$unit,
                         pattern = "^!.*!$")
     
@@ -114,9 +116,11 @@ compile_attributes <- function(path, data.files){
     
     # Validate attributes: Remaining prompts in dateTimeFormatString field
     
+    df_attributes$dateTimeFormatString[is.na(df_attributes$dateTimeFormatString)] <- ""
+    
     use_i <- str_detect(string = df_attributes$dateTimeFormatString,
                         pattern = "^!.*!$")
-    
+
     if (sum(use_i) > 0){
       hold <- df_attributes$attributeName[use_i]
       stop(paste(fname_table_attributes[i], 
@@ -177,6 +181,12 @@ compile_attributes <- function(path, data.files){
     use_i <- df_attributes$missingValueCode %in% ""
     use_i2 <- df_attributes$missingValueCodeExplanation == ""
     use_i3 <- use_i2 != use_i
+    
+    if (sum(is.na(use_i3)) > 0){
+      stop(paste(fname_table_attributes[i], 
+                 " missingValueCodeExplanation(s) are absent for the missingValueCodes you have entered. Please fix this.",
+                 "NA's listed in the missingValueCode column are interpreted as missingValueCodes and are expecting explanation."))
+    }
     
     if (sum(use_i3) > 0){
       hold <- df_attributes$attributeName[use_i3]
