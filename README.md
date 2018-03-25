@@ -45,7 +45,7 @@ We welcome contributions of all forms including code, bug reports, and requests 
 
 ## Versioning
 
-We do not yet have any versions available. Stay tuned!
+This project follows the [semantic versioning specification](https://semver.org).
 
 ## Authors
 
