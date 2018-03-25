@@ -51,10 +51,6 @@ We do not yet have any versions available. Stay tuned!
 
 Several people have participated in this project. [View the current list of team members and contributors](https://github.com/EDIorg/EMLassemblyline/blob/master/AUTHORS.md).
 
-## License
-
-This project is licensed under the [CC0 1.0 Universal (CC0 1.0)](https://creativecommons.org/publicdomain/zero/1.0/legalcode) License - see the LICENSE file for details.
-
 ## Related materials
 
 [Learn everything you wanted to know about the Ecological Metadata Language standard.](https://knb.ecoinformatics.org/#external//emlparser/docs/index.html)
