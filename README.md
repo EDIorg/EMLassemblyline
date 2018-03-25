@@ -35,10 +35,6 @@ library(EMLassemblyline)
 
 Now reference the documentation listed above to start operating the assembly line.
 
-## Running the tests
-
-We have not yet formalized our testing.
-
 ## Contributing
 
 We welcome contributions of all forms including code, bug reports, and requests for development. Please reference our [code conduct](https://github.com/EDIorg/EMLassemblyline/blob/master/CODE_OF_CONDUCT.md) and [contributing guidelines](https://github.com/EDIorg/EMLassemblyline/blob/master/CONTRIBUTING.md) for submitting pull requrests.
