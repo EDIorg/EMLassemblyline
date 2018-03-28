@@ -35,25 +35,17 @@ library(EMLassemblyline)
 
 Now reference the documentation listed above to start operating the assembly line.
 
-## Running the tests
-
-We have not yet formalized our testing.
-
 ## Contributing
 
 We welcome contributions of all forms including code, bug reports, and requests for development. Please reference our [code conduct](https://github.com/EDIorg/EMLassemblyline/blob/master/CODE_OF_CONDUCT.md) and [contributing guidelines](https://github.com/EDIorg/EMLassemblyline/blob/master/CONTRIBUTING.md) for submitting pull requrests.
 
 ## Versioning
 
-We do not yet have any versions available. Stay tuned!
+This project follows the [semantic versioning specification](https://semver.org).
 
 ## Authors
 
 Several people have participated in this project. [View the current list of team members and contributors](https://github.com/EDIorg/EMLassemblyline/blob/master/AUTHORS.md).
-
-## License
-
-This project is licensed under the [CC0 1.0 Universal (CC0 1.0)](https://creativecommons.org/publicdomain/zero/1.0/legalcode) License - see the LICENSE file for details.
 
 ## Related materials
 
