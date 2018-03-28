@@ -1,6 +1,6 @@
 Package: EMLassemblyline
 Title: A workflow and set of functions to make EML.
-Version: 2.3.3
+Version: 2.3.4
 Authors@R: person("Colin", "Smith", email = "colin.smith@wisc.edu", role = c("aut", "cre"))
 Description: A set of functions facilitating a workflow to create metadata
     for a user supplied data entity. Templates are copied to the working

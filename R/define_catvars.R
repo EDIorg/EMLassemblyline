@@ -26,6 +26,9 @@
 #'     This function identifies "categorical" class attributes from the file 
 #'     \emph{attributes_datatablename.txt} and extracts unique 
 #'     values of these attributes to the table for you to define.
+#'     
+#'     Duplicate data file names are not allowed, even if they are different 
+#'     file types.
 #'
 #' @export
 #'
@@ -65,6 +68,12 @@ define_catvars <- function(path) {
                       pattern = str_c("^", table_names_base, collapse = "|"))
   table_names <- files[use_i]
   data_files <- table_names
+  
+  # Send warning if data table name is repeated more than once
+  
+  if (length(unique(tools::file_path_sans_ext(data_files))) != length(data_files)){
+    stop('Duplicate data file names exist in this directory. Please remove duplicates, even if they are a different file type.')
+  }
   
   # Validate fields of data.files
   

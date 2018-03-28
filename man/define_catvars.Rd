@@ -30,4 +30,7 @@ This function will not overwrite any
     This function identifies "categorical" class attributes from the file 
     \emph{attributes_datatablename.txt} and extracts unique 
     values of these attributes to the table for you to define.
+    
+    Duplicate data file names are not allowed, even if they are different 
+    file types.
 }
