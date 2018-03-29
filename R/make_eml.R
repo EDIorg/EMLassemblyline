@@ -950,6 +950,8 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
       record_delimeter <- "\\n"
     } else if (os == "win"){
       record_delimeter <- "\\r\\n"
+    } else if (os == "lin"){
+      record_delimeter <- "\\n"
     }
 
     if (!missing("data.files.quote.character")){
@@ -1037,6 +1039,28 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
       
       physical@authentication <- as(list(authentication),
                                     "ListOfauthentication")
+      
+    } else if (os == "lin"){
+      
+      command_certutil <- paste0("md5sum ",
+                                 "\"",
+                                 path,
+                                 "/",
+                                 table_names[i],
+                                 "\"")
+      
+      certutil_output <- system(command_certutil, intern = T)
+      
+      checksum_md5 <- strsplit(certutil_output, split = " ")[[1]][1]
+      
+      authentication <- new("authentication",
+                            method = "MD5",
+                            checksum_md5)
+      
+      physical@authentication <- as(list(authentication),
+                                    "ListOfauthentication")
+      
+      
       
     }
     

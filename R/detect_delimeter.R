@@ -53,7 +53,7 @@ detect_delimeter <- function(path, data.files, os){
   
   # Validate os
   
-  if (isTRUE((os != "win") & (os != "mac"))){
+  if (isTRUE((os != "win") & (os != "mac") & (os != "lin"))){
     stop('The value of input argument "os" is invalid.')
   }
   
@@ -80,6 +80,14 @@ detect_delimeter <- function(path, data.files, os){
                                                               ";",
                                                               "|")))
     } else if (os == "win"){
+      
+      delim_guess[i] <- get.delim(data_path[i],
+                                  n = 1,
+                                  delims = c("\t",
+                                             ",",
+                                             ";",
+                                             "|"))
+    } else if (os == "lin"){
       
       delim_guess[i] <- get.delim(data_path[i],
                                   n = 1,
