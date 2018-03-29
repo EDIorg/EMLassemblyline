@@ -845,6 +845,11 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
 
     if (!is.na(match(fname_table_catvars[i], list.files(path)))){
 
+      validate_fields(
+        path = path,
+        data.files = fname_table_catvars[i]
+      )
+      
       catvars <- read.table(
         paste(
           path,
