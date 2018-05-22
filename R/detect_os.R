@@ -10,6 +10,7 @@
 #' @return 
 #'     \item{win}{Windows OS}
 #'     \item{mac}{Mac OS}
+#'     \item{lin}{Linux OS}
 #'
 #' @export
 #'
@@ -18,6 +19,8 @@ detect_os <- function(){
   sysinfo <- Sys.info()["sysname"]
   if (sysinfo == "Darwin"){
     os <- "mac"
+  } else if (sysinfo == "Linux"){
+    os <- "lin"
   } else {
     os <- "win"
   }
