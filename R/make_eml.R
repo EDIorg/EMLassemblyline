@@ -535,13 +535,73 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
   
   message("<geographicCoverage>")
   
-  dataset@coverage <- set_coverage(begin = temporal.coverage[1],
-                                   end = temporal.coverage[2],
-                                   geographicDescription = geographic.description,
-                                   west = as.numeric(geographic.coordinates[4]),
-                                   east = as.numeric(geographic.coordinates[2]),
-                                   north = as.numeric(geographic.coordinates[1]),
-                                   south = as.numeric(geographic.coordinates[3]))
+  if (file.exists(paste0(path, '/', 'bounding_boxes.txt'))){
+    
+    bounding_boxes <- suppressMessages(
+      read_tsv(
+        paste0(
+          path,
+          '/',
+          'bounding_boxes.txt'
+          )
+        )
+      )
+    
+    bounding_boxes <- as.data.frame(
+      bounding_boxes
+      )
+    
+    bounding_boxes <- lapply(bounding_boxes, as.character)
+    
+    if (length(bounding_boxes$geographicDescription) != 0){
+      
+      dataset@coverage <- set_coverage(begin = temporal.coverage[1],
+                                       end = temporal.coverage[2]
+                                       )
+      
+      list_of_coverage <- list()
+      
+      for (i in 1:length(bounding_boxes$geographicDescription)){
+          
+        geographicCoverage <- new("geographicCoverage")
+        
+        geographic_description <- new("geographicDescription", bounding_boxes$geographicDescription[i])
+        
+        bounding_coordinates <- new("boundingCoordinates",
+                                    westBoundingCoordinate = bounding_boxes$westBoundingCoordinate[i],
+                                    eastBoundingCoordinate = bounding_boxes$eastBoundingCoordinate[i],
+                                    northBoundingCoordinate = bounding_boxes$northBoundingCoordinate[i],
+                                    southBoundingCoordinate = bounding_boxes$southBoundingCoordinate[i])
+        
+        geographic_coverage <- new("geographicCoverage",
+                                   geographicDescription = geographic_description,
+                                   boundingCoordinates = bounding_coordinates)
+        
+        # geographicCoverage <- as(list(geographic_coverage), "ListOfgeographicCoverage")
+        
+        list_of_coverage[[i]] <- geographic_coverage
+        
+        # coverage@geographicCoverage <- as(list(geographic_coverage), "ListOfgeographicCoverage")
+        # 
+        # list_of_coverage[[i]] <- coverage
+        
+      }
+      
+      dataset@coverage@geographicCoverage <- as(list_of_coverage, "ListOfgeographicCoverage")
+      
+    }
+    
+  } else {
+    
+    dataset@coverage <- set_coverage(begin = temporal.coverage[1],
+                                     end = temporal.coverage[2],
+                                     geographicDescription = geographic.description,
+                                     west = as.numeric(geographic.coordinates[4]),
+                                     east = as.numeric(geographic.coordinates[2]),
+                                     north = as.numeric(geographic.coordinates[1]),
+                                     south = as.numeric(geographic.coordinates[3]))
+    
+  }
   
   if (file.exists(paste(path, "/", "taxonomicCoverage.xml", sep = ""))){
     message("<taxonomicCoverage>")
@@ -1209,4 +1269,6 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
   message("Done.")
   
 }
+
+
 
