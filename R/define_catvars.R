@@ -222,7 +222,7 @@ define_catvars <- function(path) {
         
         message(paste("Writing", fname_table_catvars[i]))
         
-        write.table(catvars,
+        suppressWarnings(write.table(catvars,
                     paste(path,
                           "/",
                           fname_table_catvars[i],
@@ -230,7 +230,7 @@ define_catvars <- function(path) {
                     sep = "\t",
                     row.names = F,
                     quote = F,
-                    fileEncoding = "UTF-8")
+                    fileEncoding = "UTF-8"))
 
       } else {
         
