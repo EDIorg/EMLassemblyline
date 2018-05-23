@@ -191,6 +191,22 @@ import_templates <- function(path, license, data.files){
     message("additional_info.txt already exists!")
   }
   
+  # Bounding boxes (geographic coverage)
+  
+  value <- file.copy(from = paste(path.package("EMLassemblyline"),
+                                  "/templates/bounding_boxes.txt",
+                                  sep = ""),
+                     to = paste(path,
+                                "/",
+                                "bounding_boxes.txt",
+                                sep = ""))
+  
+  if (isTRUE(value)){
+    message("Importing bounding_boxes.txt.")
+  } else {
+    message("bounding_boxes.txt already exists!")
+  }
+  
   # Custom units
   
   value <- file.copy(from = paste(path.package("EMLassemblyline"),
