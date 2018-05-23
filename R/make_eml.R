@@ -477,7 +477,7 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
     stop('keywords.txt does not exist! Run import_templates.txt to regenerate this template.')
   }
 
-  keywords <- read.table(
+  keywords <- suppressWarnings(read.table(
     paste(substr(fname_keywords, 1, nchar(fname_keywords) - 4),
           ".txt",
           sep = ""),
@@ -487,8 +487,8 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
     as.is=TRUE,
     comment.char = "",
     fill = T,
-    colClasses = rep("character", 2))
-  keywords <- keywords[ ,1:2]
+    colClasses = rep("character", 2)))
+   keywords <- keywords[ ,1:2]
   colnames(keywords) <- c("keyword", 
                           "keywordThesaurus")
   
