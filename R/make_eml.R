@@ -834,12 +834,26 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
     
     delim_guess <- detect_delimeter(path, data.files = table_names[i], os)
     
-    df_table <- read.table(file_path,
-                           header = TRUE,
-                           sep = delim_guess,
-                           quote = "\"",
-                           as.is = TRUE,
-                           comment.char = "")
+    if (delim_guess == ','){
+      df_table <- suppressMessages(
+        read_csv(
+          file = file_path
+        )
+      )
+    } else if (delim_guess == '\t'){
+      df_table <- suppressMessages(
+        read_tsv(
+          file = file_path
+        )
+      )
+    }
+    
+    # df_table <- read.table(file_path,
+    #                        header = TRUE,
+    #                        sep = delim_guess,
+    #                        quote = "\"",
+    #                        as.is = TRUE,
+    #                        comment.char = "")
 
     # Read catvars file
 
