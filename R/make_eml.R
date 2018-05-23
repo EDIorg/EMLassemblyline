@@ -961,31 +961,38 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
 
     # Set physical
     
-    
-    if (os == "mac"){
-      record_delimeter <- "\\n"
-    } else if (os == "win"){
-      record_delimeter <- "\\r\\n"
-    } else if (os == "lin"){
-      record_delimeter <- "\\n"
-    }
-
     if (!missing("data.files.quote.character")){
       
+      physical_temp <- set_physical(
+        paste0(
+          path,
+          '/',
+          table_names[i]
+          )
+        )
+
       physical <- set_physical(table_names[i],
                                numHeaderLines = "1",
-                               recordDelimiter = record_delimeter,
+                               recordDelimiter = unlist(eml_get(physical_temp, 'recordDelimiter')),
                                attributeOrientation = "column",
-                               fieldDelimiter = delim_guess,
+                               fieldDelimiter = unlist(eml_get(physical_temp, 'fieldDelimiter')),
                                quoteCharacter = data.files.quote.character[i])
       
     } else {
       
+      physical_temp <- set_physical(
+        paste0(
+          path,
+          '/',
+          table_names[i]
+        )
+      )
+      
       physical <- set_physical(table_names[i],
                                numHeaderLines = "1",
-                               recordDelimiter = record_delimeter,
+                               recordDelimiter = unlist(eml_get(physical_temp, 'recordDelimiter')),
                                attributeOrientation = "column",
-                               fieldDelimiter = delim_guess)
+                               fieldDelimiter = unlist(eml_get(physical_temp, 'fieldDelimiter')))
       
     }
 
