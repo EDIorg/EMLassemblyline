@@ -66,6 +66,8 @@ compile_attributes <- function(path, data.files){
       )
     }
     
+    df_table <- as.data.frame(df_table)
+    
     # df_table <- read.table(file_path,
     #                        header = TRUE,
     #                        sep = delim_guess,

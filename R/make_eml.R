@@ -848,6 +848,8 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
       )
     }
     
+    df_table <- as.data.frame(df_table)
+    
     # df_table <- read.table(file_path,
     #                        header = TRUE,
     #                        sep = delim_guess,

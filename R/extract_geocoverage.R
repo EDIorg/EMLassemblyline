@@ -111,6 +111,8 @@ extract_geocoverage <- function(path, data.file, lat.col, lon.col, site.col){
       )
     }
     
+    df_table <- as.data.frame(df_table)
+    
     # df_table <- read.table(file_path,
     #                        header = TRUE,
     #                        sep = delim_guess,
