@@ -405,26 +405,28 @@ import_templates <- function(path, license, data.files){
                        data_files[i],
                        sep = "")
     
-    if (delim_guess[i] == ','){
-      df_table <- suppressMessages(
-        read_csv(
-          file = data_path
-        )
-      )
-    } else if (delim_guess[i] == '\t'){
-      df_table <- suppressMessages(
-        read_tsv(
-          file = data_path
-        )
-      )
-    }
+    # if (delim_guess[i] == ','){
+    #   df_table <- suppressMessages(
+    #     read_csv(
+    #       file = data_path
+    #     )
+    #   )
+    # } else if (delim_guess[i] == '\t'){
+    #   df_table <- suppressMessages(
+    #     read_tsv(
+    #       file = data_path
+    #     )
+    #   )
+    # }
+    # 
+    # df_table <- as.data.frame(df_table)
 
-    # df_table <- read.table(data_path,
-    #                        header = TRUE,
-    #                        sep = delim_guess[i],
-    #                        quote = "\"",
-    #                        as.is = TRUE,
-    #                        comment.char = "")
+    df_table <- read.table(data_path,
+                           header = TRUE,
+                           sep = delim_guess[i],
+                           quote = "\"",
+                           as.is = TRUE,
+                           comment.char = "")
     
     # Initialize attribute table
     
