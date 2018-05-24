@@ -9,6 +9,7 @@
 #'     dataset.title = "", 
 #'     data.files = c("df.1", "df.2", ...), 
 #'     data.files.description = c("df1.desc", "df.2.desc", ...), 
+#'     zip.dir.description = "",
 #'     data.files.quote.character = c("df.1.quote.char", "df.2.quote.char", ...), 
 #'     data.files.url = "", 
 #'     temporal.coverage = c("begin_date", "end_date"), 
@@ -38,6 +39,9 @@
 #'     data.files argument and in the same order as listed in the data.files
 #'     argument (e.g. data.files.description = c("Chloride concentration data.", 
 #'     "Climate, road density, and impervious surface data."))
+#' @param zip.dir.description
+#'     A character string briefly describing the contents of any .zip directory
+#'     present in the working directory.
 #' @param data.files.quote.character
 #'     A list of character strings defining the quote characters used in your 
 #'     data files and in the same order as listed in the data.files argument.  
@@ -96,7 +100,7 @@
 
 
 make_eml <- function(path, dataset.title, data.files, data.files.description, 
-                     data.files.quote.character, data.files.url,
+                     data.files.quote.character, data.files.url, zip.dir.description,
                      temporal.coverage, geographic.description, 
                      geographic.coordinates, maintenance.description, user.id, 
                      package.id) {
@@ -1222,7 +1226,117 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
   dataset@dataTable <- new("ListOfdataTable",
                            data_tables_stored)
 
-  # Build EML
+  # Add otherEntity -----------------------------------------------------------
+  
+  zip_dir_found <- list.files(
+    path, 
+    pattern = paste(
+      "\\",
+      '.zip',
+      "$",
+      sep = ""
+      )
+    )
+  
+  if (length(zip_dir_found) > 0){
+    
+    message("<otherEntity>")
+    
+    if (missing(zip.dir.description)){
+      stop('Input argument "zip.dir.description" is missing! Briefly describe your .zip directory.')
+    }
+    
+    list_of_other_entity <- list()
+    
+    for (i in 1:length(zip_dir_found)){
+      
+      # Create new other entity element
+      
+      other_entity <- new("otherEntity")
+      
+      # Add code file names
+      
+      other_entity@entityName <- zip_dir_found[i]
+      
+      # Add description
+      
+      description <- zip.dir.description
+      
+      other_entity@entityDescription <- description
+      
+      #  Build physical
+      
+      physical <- new("physical",
+                      objectName = zip_dir_found[i])
+      
+      format_name <- "zip directory"
+      entity_type <- "zip directory"
+      physical@dataFormat@externallyDefinedFormat@formatName <- format_name
+
+      physical@size <- new("size", unit = "bytes", as(as.character(file.size(paste(path, "/", zip_dir_found[i], sep = ""))), "size"))
+
+      if (os == "mac"){
+        
+        command_certutil <- paste("md5 ",
+                                  path,
+                                  "/",
+                                  zip_dir_found[i],
+                                  sep = "")
+        
+        certutil_output <- system(command_certutil, intern = T)
+        
+        checksum_md5 <- gsub(".*= ", "", certutil_output)
+        
+        authentication <- new("authentication",
+                              method = "MD5",
+                              checksum_md5)
+        
+        physical@authentication <- as(list(authentication),
+                                      "ListOfauthentication")
+        
+      } else if (os == "win"){
+        
+        command_certutil <- paste("CertUtil -hashfile ",
+                                  path,
+                                  "\\",
+                                  zip_dir_found[i],
+                                  " MD5",
+                                  sep = "")
+        
+        certutil_output <- system(command_certutil, intern = T)
+        
+        checksum_md5 <- gsub(" ", "", certutil_output[2])
+        
+        authentication <- new("authentication",
+                              method = "MD5",
+                              checksum_md5)
+        
+        physical@authentication <- as(list(authentication),
+                                      "ListOfauthentication")
+        
+      }
+      
+      other_entity@physical <- as(c(physical), "ListOfphysical")
+      
+      # Add entity type
+      
+      other_entity@entityType <- entity_type
+
+      # Add other entity to list
+      
+      list_of_other_entity[[i]] <- other_entity
+      
+    }
+    
+    dataset@otherEntity <- new("ListOfotherEntity",
+                               list_of_other_entity)
+
+  }
+  
+  
+  
+  
+  # Build EML -----------------------------------------------------------------
   
   message("Compiling EML.")
   

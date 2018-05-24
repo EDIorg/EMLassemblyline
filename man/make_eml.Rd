@@ -8,6 +8,7 @@ make_eml(path = "",
     dataset.title = "", 
     data.files = c("df.1", "df.2", ...), 
     data.files.description = c("df1.desc", "df.2.desc", ...), 
+    zip.dir.description = "",
     data.files.quote.character = c("df.1.quote.char", "df.2.quote.char", ...), 
     data.files.url = "", 
     temporal.coverage = c("begin_date", "end_date"), 
@@ -51,6 +52,9 @@ or password). The EDI data repository software, PASTA+, will use this to
 upload your data into the repository. If you will be manually uploading 
 your data tables, then don't use this argument when running 
 \code{make_eml}. Example: data.files.url = "https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride".}
+
+\item{zip.dir.description}{A character string briefly describing the contents of any .zip directory
+present in the working directory.}
 
 \item{temporal.coverage}{A list of character strings specifying the beginning and ending dates 
 of your dataset. use the format YYYY-MM-DD.}
