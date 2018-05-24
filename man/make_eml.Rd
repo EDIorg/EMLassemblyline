@@ -62,15 +62,6 @@ of your dataset. use the format YYYY-MM-DD.}
 \item{geographic.description}{A character string describing the geographic coverage of your dataset 
 (e.g. "North America and Europe").}
 
-\item{geographic.coordinates}{A list of character strings specifying the spatial bounding 
-coordinates of your dataset in decimal degrees. The list must follow 
-this order: "North", "East", "South", "West". Longitudes west of the 
-prime meridian and latitudes south of the equator are prefixed with a 
-minus sign (i.e. dash -). If you don't have an area, but rather a point,
-Repeat the latitude value for North and South, and repeat the longitude
-value for East and West (e.g. geographic.coordinates = c("28.38", 
-"-119.95", "28.38", "-119.95")).}
-
 \item{maintenance.description}{A character string specifying whether data collection for this dataset 
 is "ongoing" or "completed".}
 
@@ -82,6 +73,15 @@ to obtain one. Alternatively, do not use this argument when running
 \item{package.id}{A character string specifying the package ID for your data package. If 
 you do not have a package ID, then do not use this argument when running 
 \code{make_eml}. A missing package ID defaults to \emph{edi.101.1}.}
+
+\item{geographic.coordinates}{A list of character strings specifying the spatial bounding 
+coordinates of your dataset in decimal degrees. The list must follow 
+this order: "North", "East", "South", "West". Longitudes west of the 
+prime meridian and latitudes south of the equator are prefixed with a 
+minus sign (i.e. dash -). If you don't have an area, but rather a point,
+Repeat the latitude value for North and South, and repeat the longitude
+value for East and West (e.g. geographic.coordinates = c("28.38", 
+"-119.95", "28.38", "-119.95")).}
 }
 \value{
 Validation results printed to the RStudio \emph{Console}.
