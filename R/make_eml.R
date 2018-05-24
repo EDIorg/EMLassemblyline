@@ -125,9 +125,9 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
   if (missing(geographic.description)){
     stop('Input argument "geographic.description" is missing! Add this description for your dataset.')
   }
-  if (missing(geographic.coordinates)){
-    stop('Input argument "geographic.coordinates" is missing! Add add geographic coordinates for your dataset.')
-  }
+  # if (missing(geographic.coordinates)){
+  #   stop('Input argument "geographic.coordinates" is missing! Add add geographic coordinates for your dataset.')
+  # }
   if (missing(maintenance.description)){
     stop('Input argument "maintenance.description" is missing! Indicate whether data collection is "ongoing" or "completed" for your dataset.')
   }
