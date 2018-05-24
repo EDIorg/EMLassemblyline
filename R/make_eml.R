@@ -62,15 +62,6 @@
 #' @param geographic.description
 #'     A character string describing the geographic coverage of your dataset 
 #'     (e.g. "North America and Europe").
-#' @param geographic.coordinates
-#'     A list of character strings specifying the spatial bounding 
-#'     coordinates of your dataset in decimal degrees. The list must follow 
-#'     this order: "North", "East", "South", "West". Longitudes west of the 
-#'     prime meridian and latitudes south of the equator are prefixed with a 
-#'     minus sign (i.e. dash -). If you don't have an area, but rather a point,
-#'     Repeat the latitude value for North and South, and repeat the longitude
-#'     value for East and West (e.g. geographic.coordinates = c("28.38", 
-#'     "-119.95", "28.38", "-119.95")).
 #' @param maintenance.description
 #'     A character string specifying whether data collection for this dataset 
 #'     is "ongoing" or "completed".
