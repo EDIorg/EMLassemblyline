@@ -168,9 +168,9 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
   
   # Validate geographic.coordinates
   
-  if (length(geographic.coordinates) != 4){
-    stop('The argument "geographic.coordinates" requires North, East, South, and West bounding coordinates. If reporting a point and not an area, replicate the respective latitude and longitude coordinates.")')
-  }
+  # if (length(geographic.coordinates) != 4){
+  #   stop('The argument "geographic.coordinates" requires North, East, South, and West bounding coordinates. If reporting a point and not an area, replicate the respective latitude and longitude coordinates.")')
+  # }
   
   # Compile attributes --------------------------------------------------------
   
