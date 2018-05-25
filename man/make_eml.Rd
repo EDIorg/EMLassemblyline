@@ -40,18 +40,19 @@ argument (e.g. data.files.description = c("Chloride concentration data.",
 "Climate, road density, and impervious surface data."))}
 
 \item{data.files.quote.character}{A list of character strings defining the quote characters used in your 
-data files and in the same order as listed in the data.files argument.  
+data files and in the same order as listed in the data.files argument.
+This argument is required only if your data contain quotations.  
 If the quote character is a quotation, then enter "\\"". If the quote 
-character is an apostrophe, then enter "\\'". If there is no quote 
-character then don't use this argument when running \code{make_eml}.
-Example: data.files.quote.character = c("\\"", "\\"").}
+character is an apostrophe, then enter "\\'". Example: 
+data.files.quote.character = c("\\"", "\\"").}
 
 \item{data.files.url}{A character string specifying the URL of where your data tables are 
 stored on a publicly accessible server (i.e. does not require user ID 
-or password). The EDI data repository software, PASTA+, will use this to
-upload your data into the repository. If you will be manually uploading 
-your data tables, then don't use this argument when running 
-\code{make_eml}. Example: data.files.url = "https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride".}
+or password). This argument is required only if your data are accessible 
+from a publicly accesible URL. The EDI data repository software, PASTA+, 
+will use this to upload your data into the repository. If you will be 
+manually uploading your data tables, then don't use this argument.
+Example: data.files.url = "https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride".}
 
 \item{zip.dir.description}{A character string briefly describing the contents of any .zip directory
 present in the working directory.}
@@ -59,8 +60,20 @@ present in the working directory.}
 \item{temporal.coverage}{A list of character strings specifying the beginning and ending dates 
 of your dataset. use the format YYYY-MM-DD.}
 
-\item{geographic.description}{A character string describing the geographic coverage of your dataset 
-(e.g. "North America and Europe").}
+\item{geographic.coordinates}{A list of character strings specifying the spatial bounding
+coordinates of your dataset in decimal degrees. This argument is not 
+required if you are supplying bounding coordinates in the 
+bounding_boxes.txt template file. The list must follow
+this order: North, East, South, West. Longitudes West of the 
+prime meridian and latitudes South of the equator are prefixed with a
+minus sign (i.e. dash -). If you don't have an area, but rather a point,
+Repeat the latitude value for North and South, and repeat the longitude
+value for East and West (e.g. geographic.coordinates = c('28.38',
+'-119.95', '28.38', '-119.95)).}
+
+\item{geographic.description}{A character string describing the geographic coverage of your dataset. 
+Don't use this argument if you are supplying geographic.coordinates in 
+the bounding_boxes.txt template file. Example: "North America and Europe".}
 
 \item{maintenance.description}{A character string specifying whether data collection for this dataset 
 is "ongoing" or "completed".}
@@ -70,9 +83,10 @@ If you do not have one, contact EDI (info@environmentaldatainitiative.org)
 to obtain one. Alternatively, do not use this argument when running
 \code{make_eml}.}
 
-\item{package.id}{A character string specifying the package ID for your data package. If 
-you do not have a package ID, then do not use this argument when running 
-\code{make_eml}. A missing package ID defaults to \emph{edi.101.1}.}
+\item{package.id}{A character string specifying the package ID for your data package. 
+A missing package ID defaults to \emph{edi.101.1}. A package ID must
+contain the scope, package number, and revision number 
+(e.g. 'edi.101.1').}
 }
 \value{
 Validation results printed to the RStudio \emph{Console}.

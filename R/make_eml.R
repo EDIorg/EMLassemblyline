@@ -44,24 +44,37 @@
 #'     present in the working directory.
 #' @param data.files.quote.character
 #'     A list of character strings defining the quote characters used in your 
-#'     data files and in the same order as listed in the data.files argument.  
+#'     data files and in the same order as listed in the data.files argument.
+#'     This argument is required only if your data contain quotations.  
 #'     If the quote character is a quotation, then enter "\\"". If the quote 
-#'     character is an apostrophe, then enter "\\'". If there is no quote 
-#'     character then don't use this argument when running \code{make_eml}.
-#'     Example: data.files.quote.character = c("\\"", "\\"").
+#'     character is an apostrophe, then enter "\\'". Example: 
+#'     data.files.quote.character = c("\\"", "\\"").
 #' @param data.files.url
 #'     A character string specifying the URL of where your data tables are 
 #'     stored on a publicly accessible server (i.e. does not require user ID 
-#'     or password). The EDI data repository software, PASTA+, will use this to
-#'     upload your data into the repository. If you will be manually uploading 
-#'     your data tables, then don't use this argument when running 
-#'     \code{make_eml}. Example: data.files.url = "https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride".
+#'     or password). This argument is required only if your data are accessible 
+#'     from a publicly accesible URL. The EDI data repository software, PASTA+, 
+#'     will use this to upload your data into the repository. If you will be 
+#'     manually uploading your data tables, then don't use this argument.
+#'     Example: data.files.url = "https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride".
 #' @param temporal.coverage
 #'     A list of character strings specifying the beginning and ending dates 
 #'     of your dataset. use the format YYYY-MM-DD.
+#' @param geographic.coordinates
+#'     A list of character strings specifying the spatial bounding
+#'     coordinates of your dataset in decimal degrees. This argument is not 
+#'     required if you are supplying bounding coordinates in the 
+#'     bounding_boxes.txt template file. The list must follow
+#'     this order: North, East, South, West. Longitudes West of the 
+#'     prime meridian and latitudes South of the equator are prefixed with a
+#'     minus sign (i.e. dash -). If you don't have an area, but rather a point,
+#'     Repeat the latitude value for North and South, and repeat the longitude
+#'     value for East and West (e.g. geographic.coordinates = c('28.38',
+#'     '-119.95', '28.38', '-119.95)).
 #' @param geographic.description
-#'     A character string describing the geographic coverage of your dataset 
-#'     (e.g. "North America and Europe").
+#'     A character string describing the geographic coverage of your dataset. 
+#'     Don't use this argument if you are supplying geographic.coordinates in 
+#'     the bounding_boxes.txt template file. Example: "North America and Europe".
 #' @param maintenance.description
 #'     A character string specifying whether data collection for this dataset 
 #'     is "ongoing" or "completed".
@@ -71,9 +84,10 @@
 #'     to obtain one. Alternatively, do not use this argument when running
 #'     \code{make_eml}.
 #' @param package.id
-#'     A character string specifying the package ID for your data package. If 
-#'     you do not have a package ID, then do not use this argument when running 
-#'     \code{make_eml}. A missing package ID defaults to \emph{edi.101.1}.
+#'     A character string specifying the package ID for your data package. 
+#'     A missing package ID defaults to \emph{edi.101.1}. A package ID must
+#'     contain the scope, package number, and revision number 
+#'     (e.g. 'edi.101.1').
 #'     
 #' @return 
 #'     Validation results printed to the RStudio \emph{Console}.
@@ -92,7 +106,7 @@
 
 make_eml <- function(path, dataset.title, data.files, data.files.description, 
                      data.files.quote.character, data.files.url, zip.dir.description,
-                     temporal.coverage, geographic.description, maintenance.description, user.id, 
+                     temporal.coverage, geographic.coordinates, geographic.description, maintenance.description, user.id, 
                      package.id) {
 
   # Check arguments and parameterize ------------------------------------------
@@ -115,9 +129,9 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
   if (missing(geographic.description)){
     stop('Input argument "geographic.description" is missing! Add this description for your dataset.')
   }
-  # if (missing(geographic.coordinates)){
-  #   stop('Input argument "geographic.coordinates" is missing! Add add geographic coordinates for your dataset.')
-  # }
+  if (missing(geographic.coordinates) & !file.exists(paste0(path, '/', 'bounding_boxes.txt'))){
+    stop('Input argument "geographic.coordinates" is missing and the "bounding_boxes.txt" template is missing! Add geographic bounding coordinates for your dataset.')
+  }
   if (missing(maintenance.description)){
     stop('Input argument "maintenance.description" is missing! Indicate whether data collection is "ongoing" or "completed" for your dataset.')
   }
@@ -549,6 +563,10 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
     
     if (length(bounding_boxes$geographicDescription) != 0){
       
+      if (!missing(geographic.coordinates)){
+        stop('The input argument "geographic.coordinates" and the "bounding_boxes.txt" template are present! Choose one of these methods for reporting the geographic bounding coordinates for your dataset.')
+      }
+      
       dataset@coverage <- set_coverage(begin = temporal.coverage[1],
                                        end = temporal.coverage[2]
                                        )
@@ -582,6 +600,12 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
       }
       
       dataset@coverage@geographicCoverage <- as(list_of_coverage, "ListOfgeographicCoverage")
+      
+    } else {
+      
+      if (missing(geographic.coordinates)){
+        stop('Input argument "geographic.coordinates" is missing and the "bounding_boxes.txt" template is empty! Add geographic bounding coordinates for your dataset.')
+      }
       
     }
     
