@@ -2,6 +2,7 @@
 
 export(define_catvars)
 export(detect_delimeter)
+export(detect_eol)
 export(detect_non_utf8)
 export(detect_os)
 export(extract_geocoverage)
