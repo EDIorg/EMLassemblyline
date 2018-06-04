@@ -1039,6 +1039,12 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
 
     # Set physical
     
+    eol <- detect_eol(
+      path = path,
+      file.name = table_names[i],
+      os = os
+    )
+    
     if (!missing("data.files.quote.character")){
       
       physical_temp <- set_physical(
@@ -1051,7 +1057,7 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
 
       physical <- set_physical(table_names[i],
                                numHeaderLines = "1",
-                               recordDelimiter = unlist(eml_get(physical_temp, 'recordDelimiter')),
+                               recordDelimiter = eol,
                                attributeOrientation = "column",
                                fieldDelimiter = unlist(eml_get(physical_temp, 'fieldDelimiter')),
                                quoteCharacter = data.files.quote.character[i])
@@ -1068,7 +1074,7 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
       
       physical <- set_physical(table_names[i],
                                numHeaderLines = "1",
-                               recordDelimiter = unlist(eml_get(physical_temp, 'recordDelimiter')),
+                               recordDelimiter = eol,
                                attributeOrientation = "column",
                                fieldDelimiter = unlist(eml_get(physical_temp, 'fieldDelimiter')))
       

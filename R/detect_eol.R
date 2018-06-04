@@ -22,7 +22,8 @@
 #'
 #' @export
 #'
-#'
+
+
 detect_eol <- function(path, file.name, os){
 
   # Check arguments -----------------------------------------------------
@@ -68,36 +69,31 @@ detect_eol <- function(path, file.name, os){
 
   } else if (os == 'win'){
 
-    command <- paste0(
-      'od -c ',
-      path,
-      '/',
-      file.name
-    )
+    output <- '\\r  \\n'
     
-    output <- system(
-      command,
-      intern = T
-    )
+  } else if (os == 'lin'){
+    
+    output <- '\\\\n'
     
   }
-
+  
+  
   use_i <- str_detect(
     output,
     '\\\\r  \\\\n'
   )
 
   if (sum(use_i) > 0){
-    eol <- '\\\\r\\\\n'
+    eol <- '\\r\\n'
   } else {
     use_i <- str_detect(
       output,
       '\\\\n'
     )
     if (sum(use_i) > 0){
-      eol <- '\\\\n'
+      eol <- '\\n'
     } else {
-      eol <- '\\\\r'
+      eol <- '\\r'
     }
   } 
 
