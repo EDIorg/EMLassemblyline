@@ -126,9 +126,9 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
   if (missing(temporal.coverage)){
     stop('Input argument "temporal.coverage" is missing! Add the temporal coverage of your dataset.')
   }
-  if (missing(geographic.description)){
-    stop('Input argument "geographic.description" is missing! Add this description for your dataset.')
-  }
+  # if (missing(geographic.description)){
+  #   stop('Input argument "geographic.description" is missing! Add this description for your dataset.')
+  # }
   if (missing(geographic.coordinates) & !file.exists(paste0(path, '/', 'bounding_boxes.txt'))){
     stop('Input argument "geographic.coordinates" is missing and the "bounding_boxes.txt" template is missing! Add geographic bounding coordinates for your dataset.')
   }
@@ -565,6 +565,9 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
       
       if (!missing(geographic.coordinates)){
         stop('The input argument "geographic.coordinates" and the "bounding_boxes.txt" template are present! Choose one of these methods for reporting the geographic bounding coordinates for your dataset.')
+      }
+      if (!missing(geographic.description)){
+        stop('Input argument "geographic.description" is present and the "bounding_boxes.txt" template is in use! Please remove the "geographic.description" input argument.')
       }
       
       dataset@coverage <- set_coverage(begin = temporal.coverage[1],
