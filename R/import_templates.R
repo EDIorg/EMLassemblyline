@@ -388,7 +388,7 @@ import_templates <- function(path, license, data.files){
     }
   }
   
-  # Extract attributes for each data file
+  # Extract attributes for each data file -------------------------------------
   
   attributes <- list()
   for (i in 1:length(data_files)){
@@ -426,7 +426,8 @@ import_templates <- function(path, license, data.files){
                            sep = delim_guess[i],
                            quote = "\"",
                            as.is = TRUE,
-                           comment.char = "")
+                           comment.char = "",
+                           na.strings = c('NA','NULL'))
     
     # Initialize attribute table
     
