@@ -355,13 +355,15 @@ import_templates <- function(path, license, data.files){
     if (delim_guess[i] == ','){
       df_table <- suppressMessages(
         read_csv(
-          file = data_path
+          file = data_path,
+          na = c('NA', 'NULL')
         )
       )
     } else if (delim_guess[i] == '\t'){
       df_table <- suppressMessages(
         read_tsv(
-          file = data_path
+          file = data_path,
+          na = c('NA', 'NULL')
         )
       )
     }
