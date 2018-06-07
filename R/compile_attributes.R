@@ -52,28 +52,29 @@ compile_attributes <- function(path, data.files){
     
     delim_guess <- detect_delimeter(path = path, data.files = table_names[i], os = os)
     
-    if (delim_guess == ','){
-      df_table <- suppressMessages(
-        read_csv(
-          file = file_path
-        )
-      )
-    } else if (delim_guess == '\t'){
-      df_table <- suppressMessages(
-        read_tsv(
-          file = file_path
-        )
-      )
-    }
+    # if (delim_guess == ','){
+    #   df_table <- suppressMessages(
+    #     read_csv(
+    #       file = file_path,
+    #       quote = "\""
+    #     )
+    #   )
+    # } else if (delim_guess == '\t'){
+    #   df_table <- suppressMessages(
+    #     read_tsv(
+    #       file = file_path
+    #     )
+    #   )
+    # }
+    # 
+    # df_table <- as.data.frame(df_table)
     
-    df_table <- as.data.frame(df_table)
-    
-    # df_table <- read.table(file_path,
-    #                        header = TRUE,
-    #                        sep = delim_guess,
-    #                        quote = "\"",
-    #                        as.is = TRUE,
-    #                        comment.char = "")
+    df_table <- read.table(file_path,
+                           header = TRUE,
+                           sep = delim_guess,
+                           quote = "\"",
+                           as.is = TRUE,
+                           comment.char = "")
     
     # Read attributes_datatablename
     
@@ -81,7 +82,8 @@ compile_attributes <- function(path, data.files){
                                               "/",
                                               fname_table_attributes[i]),
                                               sep = "\t")
-    if (sum(field_count > 7) > 0){
+    
+    if (!is.na((sum(field_count) > 0)) & (sum(field_count > 7) > 0)){
       stop(paste0('Some of the information in "',
                  fname_table_attributes[i],
                  '" is not in the correct columns. ',
@@ -270,6 +272,16 @@ compile_attributes <- function(path, data.files){
                              stringsAsFactors = FALSE)
 
     # Set attribute names
+    
+    if (length(attributes$attributeName) != length(df_attributes$attributeName)){
+      stop(
+        paste(
+          'The number of attributes listed in ',
+          fname_table_attributes[i],
+          ' does not match the number of columns listed in the corresponding data table. Please correct this. '
+          )
+        )
+    }
 
     attributes$attributeName <- df_attributes$attributeName
 
