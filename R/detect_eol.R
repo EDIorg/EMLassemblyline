@@ -16,9 +16,6 @@
 #' 
 #' @return 
 #'     A character string representation of the EOL character.
-#'     \item{"\\r"}
-#'     \item{"\\n"}
-#'     \item{"\\r\\n"}
 #'
 #' @export
 #'

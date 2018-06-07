@@ -17,9 +17,6 @@ function is to be called. Valid options are generated from
 }
 \value{
 A character string representation of the EOL character.
-    \item{"\\r"}
-    \item{"\\n"}
-    \item{"\\r\\n"}
 }
 \description{
 Detect EOL character of input input files and return value
