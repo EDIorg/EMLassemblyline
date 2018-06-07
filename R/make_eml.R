@@ -606,6 +606,15 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
       
     } else {
       
+      dataset@coverage <- set_coverage(begin = temporal.coverage[1],
+                                       end = temporal.coverage[2],
+                                       geographicDescription = geographic.description,
+                                       west = as.numeric(geographic.coordinates[4]),
+                                       east = as.numeric(geographic.coordinates[2]),
+                                       north = as.numeric(geographic.coordinates[1]),
+                                       south = as.numeric(geographic.coordinates[3]))
+      
+      
       if (missing(geographic.coordinates)){
         stop('Input argument "geographic.coordinates" is missing and the "bounding_boxes.txt" template is empty! Add geographic bounding coordinates for your dataset.')
       }
