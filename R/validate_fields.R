@@ -58,7 +58,7 @@ validate_fields <- function(path, data.files){
       guess_correct <- counts_tbl$counts[counts_tbl$Freq %in% max(counts_tbl$Freq)]
       guess_incorrect <- counts_tbl$counts[!counts_tbl$counts %in% guess_correct]
       locations_incorrect <- sort(seq(1, length(counts))[counts %in% guess_incorrect])
-      stop(paste0(data_files[i], " contains an inconsistent number of field delimeters. ",
+      warning(paste0(data_files[i], " contains an inconsistent number of field delimeters. ",
                   "The correct number of field delimiters for this table appears to be ", guess_correct, ". ",
                   "Deviation from this occurs at rows: ", paste(locations_incorrect, collapse = ", "),
                   " ... Check the number of field delimiters in these rows. All rows of your table must contain a consistent number of fields."))
