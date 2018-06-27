@@ -16,15 +16,13 @@
 #' 
 #' @return 
 #'     A character string representation of the EOL character.
-#'     \item{"\\r"}
-#'     \item{"\\n"}
-#'     \item{"\\r\\n"}
 #'
 #' @export
 #'
 
+
 detect_eol <- function(path, file.name, os){
-  
+
   # Check arguments -----------------------------------------------------
   
   if (missing(path)){
@@ -36,25 +34,24 @@ detect_eol <- function(path, file.name, os){
   if (missing(os)){
     stop('Input argument "os" is missing! Specify your operating system.')
   }
-  
+
   # Validate path
-  
+
   validate_path(path)
-  
+
   # Validate file.name
-  
+
   file_name <- validate_file_names(path, file.name)
-  
+
   # Validate os
-  
+
   if (isTRUE((os != "win") & (os != "mac") & (os != "lin"))){
     stop('The value of input argument "os" is invalid.')
   }
-  
   # Detect end of line character ----------------------------------------------
-  
+
   if (os == 'mac'){
-    
+
     command <- paste0(
       'od -c ',
       path,
@@ -66,42 +63,37 @@ detect_eol <- function(path, file.name, os){
       command,
       intern = T
     )
-    
+
   } else if (os == 'win'){
+
+    output <- '\\r  \\n'
     
-    command <- paste0(
-      'od -c ',
-      path,
-      '/',
-      file.name
-    )
+  } else if (os == 'lin'){
     
-    output <- system(
-      command,
-      intern = T
-    )
+    output <- '\\\\n'
     
   }
   
+  
   use_i <- str_detect(
     output,
-    '\\\\r\\\\n'
+    '\\\\r  \\\\n'
   )
-  
+
   if (sum(use_i) > 0){
-    eol <- '\\\\r\\\\n'
+    eol <- '\\r\\n'
   } else {
     use_i <- str_detect(
       output,
       '\\\\n'
     )
     if (sum(use_i) > 0){
-      eol <- '\\\\n'
+      eol <- '\\n'
     } else {
-      eol <- '\\\\r'
+      eol <- '\\r'
     }
   } 
-  
+
   eol
-  
+
 }

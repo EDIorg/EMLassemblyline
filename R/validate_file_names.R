@@ -47,13 +47,15 @@ validate_file_names <- function(path, data.files){
       stop(paste("Invalid data.files entered: ", paste(data.files, collapse = ", "), sep = ""))
     } else {
       name_issues <- data.files[!files[use_i] == data.files]
-      stop(paste("Invalid data.files entered: ", paste(name_issues, collapse = ", "), sep = ""))
+      stop(paste("Please remove Invalid data.files entered: ", paste(name_issues, collapse = ", "), sep = ""))
     }
   }
   
   # Get file names ------------------------------------------------------------
 
   files <- list.files(path)
+  # use_i <- str_detect(string = files,
+  #                     pattern = str_c(data.files,'\\.', collapse = "|"))
   use_i <- str_detect(string = files,
                       pattern = str_c("^", data.files, collapse = "|"))
   data_files <- files[use_i]

@@ -9,6 +9,7 @@
 #'     dataset.title = "", 
 #'     data.files = c("df.1", "df.2", ...), 
 #'     data.files.description = c("df1.desc", "df.2.desc", ...), 
+#'     zip.dir.description = "",
 #'     data.files.quote.character = c("df.1.quote.char", "df.2.quote.char", ...), 
 #'     data.files.url = "", 
 #'     temporal.coverage = c("begin_date", "end_date"), 
@@ -38,35 +39,42 @@
 #'     data.files argument and in the same order as listed in the data.files
 #'     argument (e.g. data.files.description = c("Chloride concentration data.", 
 #'     "Climate, road density, and impervious surface data."))
+#' @param zip.dir.description
+#'     A character string briefly describing the contents of any .zip directory
+#'     present in the working directory.
 #' @param data.files.quote.character
 #'     A list of character strings defining the quote characters used in your 
-#'     data files and in the same order as listed in the data.files argument.  
+#'     data files and in the same order as listed in the data.files argument.
+#'     This argument is required only if your data contain quotations.  
 #'     If the quote character is a quotation, then enter "\\"". If the quote 
-#'     character is an apostrophe, then enter "\\'". If there is no quote 
-#'     character then don't use this argument when running \code{make_eml}.
-#'     Example: data.files.quote.character = c("\\"", "\\"").
+#'     character is an apostrophe, then enter "\\'". Example: 
+#'     data.files.quote.character = c("\\"", "\\"").
 #' @param data.files.url
 #'     A character string specifying the URL of where your data tables are 
 #'     stored on a publicly accessible server (i.e. does not require user ID 
-#'     or password). The EDI data repository software, PASTA+, will use this to
-#'     upload your data into the repository. If you will be manually uploading 
-#'     your data tables, then don't use this argument when running 
-#'     \code{make_eml}. Example: data.files.url = "https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride".
+#'     or password). This argument is required only if your data are accessible 
+#'     from a publicly accesible URL. The EDI data repository software, PASTA+, 
+#'     will use this to upload your data into the repository. If you will be 
+#'     manually uploading your data tables, then don't use this argument.
+#'     Example: data.files.url = "https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride".
 #' @param temporal.coverage
 #'     A list of character strings specifying the beginning and ending dates 
 #'     of your dataset. use the format YYYY-MM-DD.
-#' @param geographic.description
-#'     A character string describing the geographic coverage of your dataset 
-#'     (e.g. "North America and Europe").
 #' @param geographic.coordinates
-#'     A list of character strings specifying the spatial bounding 
-#'     coordinates of your dataset in decimal degrees. The list must follow 
-#'     this order: "North", "East", "South", "West". Longitudes west of the 
-#'     prime meridian and latitudes south of the equator are prefixed with a 
+#'     A list of character strings specifying the spatial bounding
+#'     coordinates of your dataset in decimal degrees. This argument is not 
+#'     required if you are supplying bounding coordinates in the 
+#'     bounding_boxes.txt template file. The list must follow
+#'     this order: North, East, South, West. Longitudes West of the 
+#'     prime meridian and latitudes South of the equator are prefixed with a
 #'     minus sign (i.e. dash -). If you don't have an area, but rather a point,
 #'     Repeat the latitude value for North and South, and repeat the longitude
-#'     value for East and West (e.g. geographic.coordinates = c("28.38", 
-#'     "-119.95", "28.38", "-119.95")).
+#'     value for East and West (e.g. geographic.coordinates = c('28.38',
+#'     '-119.95', '28.38', '-119.95)).
+#' @param geographic.description
+#'     A character string describing the geographic coverage of your dataset. 
+#'     Don't use this argument if you are supplying geographic.coordinates in 
+#'     the bounding_boxes.txt template file. Example: "North America and Europe".
 #' @param maintenance.description
 #'     A character string specifying whether data collection for this dataset 
 #'     is "ongoing" or "completed".
@@ -76,9 +84,10 @@
 #'     to obtain one. Alternatively, do not use this argument when running
 #'     \code{make_eml}.
 #' @param package.id
-#'     A character string specifying the package ID for your data package. If 
-#'     you do not have a package ID, then do not use this argument when running 
-#'     \code{make_eml}. A missing package ID defaults to \emph{edi.101.1}.
+#'     A character string specifying the package ID for your data package. 
+#'     A missing package ID defaults to \emph{edi.101.1}. A package ID must
+#'     contain the scope, package number, and revision number 
+#'     (e.g. 'edi.101.1').
 #'     
 #' @return 
 #'     Validation results printed to the RStudio \emph{Console}.
@@ -96,9 +105,8 @@
 
 
 make_eml <- function(path, dataset.title, data.files, data.files.description, 
-                     data.files.quote.character, data.files.url,
-                     temporal.coverage, geographic.description, 
-                     geographic.coordinates, maintenance.description, user.id, 
+                     data.files.quote.character, data.files.url, zip.dir.description,
+                     temporal.coverage, geographic.coordinates, geographic.description, maintenance.description, user.id, 
                      package.id) {
 
   # Check arguments and parameterize ------------------------------------------
@@ -118,11 +126,11 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
   if (missing(temporal.coverage)){
     stop('Input argument "temporal.coverage" is missing! Add the temporal coverage of your dataset.')
   }
-  if (missing(geographic.description)){
-    stop('Input argument "geographic.description" is missing! Add this description for your dataset.')
-  }
-  if (missing(geographic.coordinates)){
-    stop('Input argument "geographic.coordinates" is missing! Add add geographic coordinates for your dataset.')
+  # if (missing(geographic.description)){
+  #   stop('Input argument "geographic.description" is missing! Add this description for your dataset.')
+  # }
+  if (missing(geographic.coordinates) & !file.exists(paste0(path, '/', 'bounding_boxes.txt'))){
+    stop('Input argument "geographic.coordinates" is missing and the "bounding_boxes.txt" template is missing! Add geographic bounding coordinates for your dataset.')
   }
   if (missing(maintenance.description)){
     stop('Input argument "maintenance.description" is missing! Indicate whether data collection is "ongoing" or "completed" for your dataset.')
@@ -174,9 +182,9 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
   
   # Validate geographic.coordinates
   
-  if (length(geographic.coordinates) != 4){
-    stop('The argument "geographic.coordinates" requires North, East, South, and West bounding coordinates. If reporting a point and not an area, replicate the respective latitude and longitude coordinates.")')
-  }
+  # if (length(geographic.coordinates) != 4){
+  #   stop('The argument "geographic.coordinates" requires North, East, South, and West bounding coordinates. If reporting a point and not an area, replicate the respective latitude and longitude coordinates.")')
+  # }
   
   # Compile attributes --------------------------------------------------------
   
@@ -477,7 +485,7 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
     stop('keywords.txt does not exist! Run import_templates.txt to regenerate this template.')
   }
 
-  keywords <- read.table(
+  keywords <- suppressWarnings(read.table(
     paste(substr(fname_keywords, 1, nchar(fname_keywords) - 4),
           ".txt",
           sep = ""),
@@ -487,8 +495,8 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
     as.is=TRUE,
     comment.char = "",
     fill = T,
-    colClasses = rep("character", 2))
-  keywords <- keywords[ ,1:2]
+    colClasses = rep("character", 2)))
+   keywords <- keywords[ ,1:2]
   colnames(keywords) <- c("keyword", 
                           "keywordThesaurus")
   
@@ -535,13 +543,95 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
   
   message("<geographicCoverage>")
   
-  dataset@coverage <- set_coverage(begin = temporal.coverage[1],
-                                   end = temporal.coverage[2],
-                                   geographicDescription = geographic.description,
-                                   west = as.numeric(geographic.coordinates[4]),
-                                   east = as.numeric(geographic.coordinates[2]),
-                                   north = as.numeric(geographic.coordinates[1]),
-                                   south = as.numeric(geographic.coordinates[3]))
+  if (file.exists(paste0(path, '/', 'bounding_boxes.txt'))){
+    
+    bounding_boxes <- suppressMessages(
+      read_tsv(
+        paste0(
+          path,
+          '/',
+          'bounding_boxes.txt'
+          )
+        )
+      )
+    
+    bounding_boxes <- as.data.frame(
+      bounding_boxes
+      )
+    
+    bounding_boxes <- lapply(bounding_boxes, as.character)
+    
+    if (length(bounding_boxes$geographicDescription) != 0){
+      
+      if (!missing(geographic.coordinates)){
+        stop('The input argument "geographic.coordinates" and the "bounding_boxes.txt" template are present! Choose one of these methods for reporting the geographic bounding coordinates for your dataset.')
+      }
+      if (!missing(geographic.description)){
+        stop('Input argument "geographic.description" is present and the "bounding_boxes.txt" template is in use! Please remove the "geographic.description" input argument.')
+      }
+      
+      dataset@coverage <- set_coverage(begin = temporal.coverage[1],
+                                       end = temporal.coverage[2]
+                                       )
+      
+      list_of_coverage <- list()
+      
+      for (i in 1:length(bounding_boxes$geographicDescription)){
+          
+        geographicCoverage <- new("geographicCoverage")
+        
+        geographic_description <- new("geographicDescription", bounding_boxes$geographicDescription[i])
+        
+        bounding_coordinates <- new("boundingCoordinates",
+                                    westBoundingCoordinate = bounding_boxes$westBoundingCoordinate[i],
+                                    eastBoundingCoordinate = bounding_boxes$eastBoundingCoordinate[i],
+                                    northBoundingCoordinate = bounding_boxes$northBoundingCoordinate[i],
+                                    southBoundingCoordinate = bounding_boxes$southBoundingCoordinate[i])
+        
+        geographic_coverage <- new("geographicCoverage",
+                                   geographicDescription = geographic_description,
+                                   boundingCoordinates = bounding_coordinates)
+        
+        # geographicCoverage <- as(list(geographic_coverage), "ListOfgeographicCoverage")
+        
+        list_of_coverage[[i]] <- geographic_coverage
+        
+        # coverage@geographicCoverage <- as(list(geographic_coverage), "ListOfgeographicCoverage")
+        # 
+        # list_of_coverage[[i]] <- coverage
+        
+      }
+      
+      dataset@coverage@geographicCoverage <- as(list_of_coverage, "ListOfgeographicCoverage")
+      
+    } else {
+      
+      dataset@coverage <- set_coverage(begin = temporal.coverage[1],
+                                       end = temporal.coverage[2],
+                                       geographicDescription = geographic.description,
+                                       west = as.numeric(geographic.coordinates[4]),
+                                       east = as.numeric(geographic.coordinates[2]),
+                                       north = as.numeric(geographic.coordinates[1]),
+                                       south = as.numeric(geographic.coordinates[3]))
+      
+      
+      if (missing(geographic.coordinates)){
+        stop('Input argument "geographic.coordinates" is missing and the "bounding_boxes.txt" template is empty! Add geographic bounding coordinates for your dataset.')
+      }
+      
+    }
+    
+  } else {
+    
+    dataset@coverage <- set_coverage(begin = temporal.coverage[1],
+                                     end = temporal.coverage[2],
+                                     geographicDescription = geographic.description,
+                                     west = as.numeric(geographic.coordinates[4]),
+                                     east = as.numeric(geographic.coordinates[2]),
+                                     north = as.numeric(geographic.coordinates[1]),
+                                     south = as.numeric(geographic.coordinates[3]))
+    
+  }
   
   if (file.exists(paste(path, "/", "taxonomicCoverage.xml", sep = ""))){
     message("<taxonomicCoverage>")
@@ -834,6 +924,22 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
     
     delim_guess <- detect_delimeter(path, data.files = table_names[i], os)
     
+    # if (delim_guess == ','){
+    #   df_table <- suppressMessages(
+    #     read_csv(
+    #       file = file_path
+    #     )
+    #   )
+    # } else if (delim_guess == '\t'){
+    #   df_table <- suppressMessages(
+    #     read_tsv(
+    #       file = file_path
+    #     )
+    #   )
+    # }
+    # 
+    # df_table <- as.data.frame(df_table)
+    
     df_table <- read.table(file_path,
                            header = TRUE,
                            sep = delim_guess,
@@ -945,31 +1051,44 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
 
     # Set physical
     
+    eol <- detect_eol(
+      path = path,
+      file.name = table_names[i],
+      os = os
+    )
     
-    if (os == "mac"){
-      record_delimeter <- "\\n"
-    } else if (os == "win"){
-      record_delimeter <- "\\r\\n"
-    } else if (os == "lin"){
-      record_delimeter <- "\\n"
-    }
-
     if (!missing("data.files.quote.character")){
       
+      physical_temp <- set_physical(
+        paste0(
+          path,
+          '/',
+          table_names[i]
+          )
+        )
+
       physical <- set_physical(table_names[i],
                                numHeaderLines = "1",
-                               recordDelimiter = record_delimeter,
+                               recordDelimiter = eol,
                                attributeOrientation = "column",
-                               fieldDelimiter = delim_guess,
+                               fieldDelimiter = unlist(eml_get(physical_temp, 'fieldDelimiter')),
                                quoteCharacter = data.files.quote.character[i])
       
     } else {
       
+      physical_temp <- set_physical(
+        paste0(
+          path,
+          '/',
+          table_names[i]
+        )
+      )
+      
       physical <- set_physical(table_names[i],
                                numHeaderLines = "1",
-                               recordDelimiter = record_delimeter,
+                               recordDelimiter = eol,
                                attributeOrientation = "column",
-                               fieldDelimiter = delim_guess)
+                               fieldDelimiter = unlist(eml_get(physical_temp, 'fieldDelimiter')))
       
     }
 
@@ -1139,7 +1258,117 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
   dataset@dataTable <- new("ListOfdataTable",
                            data_tables_stored)
 
-  # Build EML
+  # Add otherEntity -----------------------------------------------------------
+  
+  zip_dir_found <- list.files(
+    path, 
+    pattern = paste(
+      "\\",
+      '.zip',
+      "$",
+      sep = ""
+      )
+    )
+  
+  if (length(zip_dir_found) > 0){
+    
+    message("<otherEntity>")
+    
+    if (missing(zip.dir.description)){
+      stop('Input argument "zip.dir.description" is missing! Briefly describe your .zip directory.')
+    }
+    
+    list_of_other_entity <- list()
+    
+    for (i in 1:length(zip_dir_found)){
+      
+      # Create new other entity element
+      
+      other_entity <- new("otherEntity")
+      
+      # Add code file names
+      
+      other_entity@entityName <- zip_dir_found[i]
+      
+      # Add description
+      
+      description <- zip.dir.description
+      
+      other_entity@entityDescription <- description
+      
+      #  Build physical
+      
+      physical <- new("physical",
+                      objectName = zip_dir_found[i])
+      
+      format_name <- "zip directory"
+      entity_type <- "zip directory"
+      physical@dataFormat@externallyDefinedFormat@formatName <- format_name
+
+      physical@size <- new("size", unit = "bytes", as(as.character(file.size(paste(path, "/", zip_dir_found[i], sep = ""))), "size"))
+
+      if (os == "mac"){
+        
+        command_certutil <- paste("md5 ",
+                                  path,
+                                  "/",
+                                  zip_dir_found[i],
+                                  sep = "")
+        
+        certutil_output <- system(command_certutil, intern = T)
+        
+        checksum_md5 <- gsub(".*= ", "", certutil_output)
+        
+        authentication <- new("authentication",
+                              method = "MD5",
+                              checksum_md5)
+        
+        physical@authentication <- as(list(authentication),
+                                      "ListOfauthentication")
+        
+      } else if (os == "win"){
+        
+        command_certutil <- paste("CertUtil -hashfile ",
+                                  path,
+                                  "\\",
+                                  zip_dir_found[i],
+                                  " MD5",
+                                  sep = "")
+        
+        certutil_output <- system(command_certutil, intern = T)
+        
+        checksum_md5 <- gsub(" ", "", certutil_output[2])
+        
+        authentication <- new("authentication",
+                              method = "MD5",
+                              checksum_md5)
+        
+        physical@authentication <- as(list(authentication),
+                                      "ListOfauthentication")
+        
+      }
+      
+      other_entity@physical <- as(c(physical), "ListOfphysical")
+      
+      # Add entity type
+      
+      other_entity@entityType <- entity_type
+
+      # Add other entity to list
+      
+      list_of_other_entity[[i]] <- other_entity
+      
+    }
+    
+    dataset@otherEntity <- new("ListOfotherEntity",
+                               list_of_other_entity)
+
+  }
+  
+  
+  
+  
+  # Build EML -----------------------------------------------------------------
   
   message("Compiling EML.")
   
@@ -1186,4 +1415,6 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
   message("Done.")
   
 }
+
+
 

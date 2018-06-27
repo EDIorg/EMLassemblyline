@@ -106,8 +106,8 @@ define_catvars <- function(path) {
       message(paste("Reading ", attribute_files[i], ".", sep = ""))
       
       df_attributes <- read.table(
-        paste(path, 
-              "/", 
+        paste(path,
+              "/",
               attribute_files[i],
               sep = ""),
         header = T,
@@ -140,12 +140,26 @@ define_catvars <- function(path) {
                             data_files[i],
                             sep = "")
       
-      df_table <- read.table(data_path,
-                             header=TRUE,
-                             sep=delim_guess[i],
-                             quote="\"",
-                             as.is=TRUE,
-                             comment.char = "")
+      if (delim_guess[i] == ','){
+        df_table <- suppressMessages(
+          read_csv(
+            file = data_path
+            )
+          )
+      } else if (delim_guess[i] == '\t'){
+        df_table <- suppressMessages(
+          read_tsv(
+            file = data_path
+          )
+        )
+      }
+      
+      # df_table <- read.table(data_path,
+      #                        header=TRUE,
+      #                        sep=delim_guess[i],
+      #                        quote="\"",
+      #                        as.is=TRUE,
+      #                        comment.char = "")
 
       # If there are no catvars then skip to the next file
       
@@ -208,7 +222,7 @@ define_catvars <- function(path) {
         
         message(paste("Writing", fname_table_catvars[i]))
         
-        write.table(catvars,
+        suppressWarnings(write.table(catvars,
                     paste(path,
                           "/",
                           fname_table_catvars[i],
@@ -216,7 +230,7 @@ define_catvars <- function(path) {
                     sep = "\t",
                     row.names = F,
                     quote = F,
-                    fileEncoding = "UTF-8")
+                    fileEncoding = "UTF-8"))
 
       } else {
         
