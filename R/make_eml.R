@@ -328,29 +328,52 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
       
     } else {
       
-      individualName <- new(
-        "individualName",
-        givenName = c(trimws(personinfo[info_row,"givenName"]),
-                      trimws(personinfo[info_row,"middleInitial"])),
-        surName = trimws(personinfo[info_row,"surName"]))
-      
-      associated_party <- new(
-        "associatedParty",
-        individualName = individualName,
-        organizationName = trimws(personinfo[info_row,"organizationName"]),
-        electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"]))
-      
-      if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
-        userId <- new("userId")
-        userId@directory <- new("xml_attribute", "https://orcid.org")
-        hold <- trimws(personinfo[info_row,"userId"])
-        hold <- paste("https://orcid.org/", hold, sep = "")
-        userId@.Data <- hold
-        associated_party@userId <- new("ListOfuserId", c(userId))
+      if ((personinfo[info_row, "givenName"] == "") & (personinfo[info_row, "middleInitial"] == "") & (personinfo[info_row, "surName"] == "")){
+        
+        associated_party <- new(
+          "associatedParty",
+          organizationName = trimws(personinfo[info_row,"organizationName"]),
+          electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"]))
+        
+        if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
+          userId <- new("userId")
+          userId@directory <- new("xml_attribute", "https://orcid.org")
+          hold <- trimws(personinfo[info_row,"userId"])
+          hold <- paste("https://orcid.org/", hold, sep = "")
+          userId@.Data <- hold
+          associated_party@userId <- new("ListOfuserId", c(userId))
+        }
+        role <- new("role", str_to_title(trimws(personinfo[info_row,"role"])))
+        associated_party@role <- new("role", c(role))
+        associated_party
+        
+      } else {
+        
+        individualName <- new(
+          "individualName",
+          givenName = c(trimws(personinfo[info_row,"givenName"]),
+                        trimws(personinfo[info_row,"middleInitial"])),
+          surName = trimws(personinfo[info_row,"surName"]))
+        
+        associated_party <- new(
+          "associatedParty",
+          individualName = individualName,
+          organizationName = trimws(personinfo[info_row,"organizationName"]),
+          electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"]))
+        
+        if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
+          userId <- new("userId")
+          userId@directory <- new("xml_attribute", "https://orcid.org")
+          hold <- trimws(personinfo[info_row,"userId"])
+          hold <- paste("https://orcid.org/", hold, sep = "")
+          userId@.Data <- hold
+          associated_party@userId <- new("ListOfuserId", c(userId))
+        }
+        role <- new("role", str_to_title(trimws(personinfo[info_row,"role"])))
+        associated_party@role <- new("role", c(role))
+        associated_party
+        
       }
-      role <- new("role", str_to_title(trimws(personinfo[info_row,"role"])))
-      associated_party@role <- new("role", c(role))
-      associated_party
 
     }
 
