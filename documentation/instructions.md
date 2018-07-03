@@ -218,7 +218,9 @@ A tab delimited __catvars_datatablename.txt__ will be created for each of your d
 
 ### Step 15: Geographic coverage
 
-If your dataset contains more than one sampling location, then you will want to add this information to your metadata. Often a data user will search for data withing a geographic area. As of now the assembly line only supports point locations, multiple areas are not yet supported.
+If your dataset contains more than one sampling point or area, then you will want to add this information to your metadata. Often a data user will search for data withing a geographic area.
+
+#### Geographic points
 
 Run the function `extract_geocoverage` to get the unique latitude, longitude, and site name combinations from your data and write to file. `extract_geocoverage` requires specific inputs that may require altering the latitude and longitude formate of your data. See documenation for details.
 
@@ -244,6 +246,16 @@ extract_geocoverage(path = "/Users/csmith/Desktop/gleon_chloride",
 
 This function outputs a tab delimited file named `geographic_coverage.txt` to your dataset directory. You may edit this in a spreadsheet editor if you'd like, but if the data table this information has been extracted from is accurate, then there is no need for editing.
 
+#### Geographic areas
+
+The `import_templates` function created a tab delimited table (bounding_boxes.txt) in your working directory. Instructions for completing this file:
+
+* **geographicDescription** Enter a brief description for each geographic area.
+* **westBoundingCoordinate** Enter the western most geographic coordinate (in decimal degrees) of the area. Longitudes west of the prime meridian are prefixed with a minus sign (i.e. dash -). 
+* **eastBoundingCoordinate** Enter the eastern most geographic coordinate (in decimal degrees) of the area. Longitudes west of the prime meridian are prefixed with a minus sign (i.e. dash -). 
+* **northBoundingCoordinate** Enter the northern most geographic coordinate (in decimal degrees) of the area. Latitudes south of the equator are prefixed with a minus sign (i.e. dash -).
+* **southBoundingCoordinate** Enter the northern most geographic coordinate (in decimal degrees) of the area. Latitudes south of the equator are prefixed with a minus sign (i.e. dash -).
+
 ### Step 16: Make EML
     
 Now you are ready to synthesize your completed metadata templates into EML. This step is relatively simple, but requires several arguments:
@@ -257,8 +269,8 @@ Now you are ready to synthesize your completed metadata templates into EML. This
 7. **zip.dir** A list of character strings specifying the names of the zip directories of your dataset.
 8. **zip.dir.description** A list of character strings briefly describing the zip directories listed in the zip.dir argument and in the same order as listed in the zip.dir argument.
 7. **temporal.coverage** A list of character strings specifying the beginning and ending dates of your dataset. Use the format `YYYY-MM-DD`.
-8. **geographic.description** A character string describing the geographic coverage of your dataset.
-9. **geographic.coordinates** A list of character strings specifying the spatial bounding coordinates of your dataset in decimal degrees. The list must follow this order: "North", "East", "South", "West". Longitudes west of the prime meridian and latitudes south of the equator are prefixed with a minus sign (i.e. dash -). If you don't have an area, but rather a point. Repeat the latitude value for North and South, and repeat the longitude value for East and West.
+8. **geographic.coordinates** A list of character strings specifying the spatial bounding coordinates of your dataset in decimal degrees. The list must follow this order: "North", "East", "South", "West". Longitudes west of the prime meridian and latitudes south of the equator are prefixed with a minus sign (i.e. dash -). If you don't have an area, but rather a point. Repeat the latitude value for North and South, and repeat the longitude value for East and West.
+9. **geographic.description** A character string describing the geographic coverage of your dataset.
 10. **maintenance.description** A character string specifying whether data collection for this dataset is "ongoing" or "completed".
 11. **user.id** A character string specifying your EDI data repository user ID. If you don't have one, contact EDI (info@environmentaldatainitiative.org) to get one, or don't use this argument when running `make_eml`.
 12. **package.id** A character string specifying the package ID for your data package. If you don't have a package ID, then don't use this argument when running `make_eml`. A non-input package ID defaults to "edi.101.1".
