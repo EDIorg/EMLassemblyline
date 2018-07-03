@@ -52,7 +52,7 @@ There are 2 options for intellectual rights licenses:
 
 ### Step 4: Identfy the types of data in your dataset
 
-Currently, the assembly line only works for tabular data and is the default option.
+Currently, the assembly line only works for tabular data and .zip directories.
 
 #### table
 
@@ -65,6 +65,9 @@ A flat file composed of columns containing variables and rows containing observa
 
 e.g. `land.cover.use (%)` should be `percent_land_cover_use`
 
+#### .zip directory
+
+A .zip directory containing anything you want to put into it. .zip directory name should follow the same naming rules as for a table.
 
 ### Step 5: Import the core metadata templates
 
@@ -72,7 +75,7 @@ Run the function `import_templates` in the RStudio Console to populate the direc
 
 1. **path** A path to your dataset working directory.
 2. **license** The license for your dataset ("CC0" or "CCBY").
-3. **data.files** A list of the data files of your dataset. File extension is not required.
+3. **data.files** A list of the data tables of your dataset. File extension is not required. Do not include .zip directories here, they will be added in the `make_eml` step.
 
 ```
 # First load the EMLassemblyline package
@@ -251,6 +254,8 @@ Now you are ready to synthesize your completed metadata templates into EML. This
 4. **data.files.description** A list of character strings briefly describing the data files listed in the data.files argument and in the same order as listed in the data.files argument.
 5. **data.files.quote.character** A list of character strings defining the quote characters used in your data files and in the same order as listed in the data.files argument. If the quote character is a quotation, then enter `"\""`. If the quote character is an apostrophe, then enter `"\'"`. If there is no quote character then don't use this argument when running `make_eml`.
 6. **data.files.url** A character string specifying the URL of where your data tables are stored on a publicly accessible server (i.e. does not require user ID or password). The EDI data repository software, PASTA+, will use this to upload your data into the repository. If you will be manually uploading your data tables, then don't use this argument when running `make_eml`. 
+7. **zip.dir** A list of character strings specifying the names of the zip directories of your dataset.
+8. **zip.dir.description** A list of character strings briefly describing the zip directories listed in the zip.dir argument and in the same order as listed in the zip.dir argument.
 7. **temporal.coverage** A list of character strings specifying the beginning and ending dates of your dataset. Use the format `YYYY-MM-DD`.
 8. **geographic.description** A character string describing the geographic coverage of your dataset.
 9. **geographic.coordinates** A list of character strings specifying the spatial bounding coordinates of your dataset in decimal degrees. The list must follow this order: "North", "East", "South", "West". Longitudes west of the prime meridian and latitudes south of the equator are prefixed with a minus sign (i.e. dash -). If you don't have an area, but rather a point. Repeat the latitude value for North and South, and repeat the longitude value for East and West.
