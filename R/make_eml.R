@@ -9,8 +9,9 @@
 #'     dataset.title = "", 
 #'     data.files = c("df.1", "df.2", ...), 
 #'     data.files.description = c("df1.desc", "df.2.desc", ...), 
-#'     zip.dir.description = "",
 #'     data.files.quote.character = c("df.1.quote.char", "df.2.quote.char", ...), 
+#'     zip.dir = "",
+#'     zip.dir.description = "",
 #'     data.files.url = "", 
 #'     temporal.coverage = c("begin_date", "end_date"), 
 #'     geographic.description = "", 
@@ -39,9 +40,6 @@
 #'     data.files argument and in the same order as listed in the data.files
 #'     argument (e.g. data.files.description = c("Chloride concentration data.", 
 #'     "Climate, road density, and impervious surface data."))
-#' @param zip.dir.description
-#'     A character string briefly describing the contents of any .zip directory
-#'     present in the working directory.
 #' @param data.files.quote.character
 #'     A list of character strings defining the quote characters used in your 
 #'     data files and in the same order as listed in the data.files argument.
@@ -57,6 +55,12 @@
 #'     will use this to upload your data into the repository. If you will be 
 #'     manually uploading your data tables, then don't use this argument.
 #'     Example: data.files.url = "https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride".
+#' @param zip.dir
+#'     A character string specifying the names of .zip directories of your 
+#'     dataset.
+#' @param zip.dir.description
+#'     A character string briefly describing the contents of any .zip directory
+#'     present in the working directory.
 #' @param temporal.coverage
 #'     A list of character strings specifying the beginning and ending dates 
 #'     of your dataset. use the format YYYY-MM-DD.
@@ -105,7 +109,7 @@
 
 
 make_eml <- function(path, dataset.title, data.files, data.files.description, 
-                     data.files.quote.character, data.files.url, zip.dir.description,
+                     data.files.quote.character, data.files.url, zip.dir, zip.dir.description,
                      temporal.coverage, geographic.coordinates, geographic.description, maintenance.description, user.id, 
                      package.id) {
 
@@ -126,9 +130,6 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
   if (missing(temporal.coverage)){
     stop('Input argument "temporal.coverage" is missing! Add the temporal coverage of your dataset.')
   }
-  # if (missing(geographic.description)){
-  #   stop('Input argument "geographic.description" is missing! Add this description for your dataset.')
-  # }
   if (missing(geographic.coordinates) & !file.exists(paste0(path, '/', 'bounding_boxes.txt'))){
     stop('Input argument "geographic.coordinates" is missing and the "bounding_boxes.txt" template is missing! Add geographic bounding coordinates for your dataset.')
   }
@@ -179,12 +180,24 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
   if (length(temporal.coverage) != 2){
     stop('The argument "temporal.coverage" requires both a begin date and end date. Please fix this.')
   }
+  if (length(temporal.coverage) != 2){
+    stop('The argument "temporal.coverage" requires both a begin date and end date. Please fix this.')
+  }
   
-  # Validate geographic.coordinates
+  # Validate zip.dir and zip.dir.description
   
-  # if (length(geographic.coordinates) != 4){
-  #   stop('The argument "geographic.coordinates" requires North, East, South, and West bounding coordinates. If reporting a point and not an area, replicate the respective latitude and longitude coordinates.")')
-  # }
+  if ((!missing(zip.dir)) & (missing(zip.dir.description))){
+    stop('The argument "zip.dir.description" is missing and "zip.dir" is present. Add a description for your zip directory.')
+  }
+  if ((!missing(zip.dir.description)) & (missing(zip.dir))){
+    stop('The argument "zip.dir" is missing and "zip.dir.description" is present. Add the zip directories you are describing.')
+  }
+  if ((!missing(zip.dir.description)) & (!missing(zip.dir))){
+    if ((length(zip.dir)) != (length(zip.dir.description))){
+      stop('The number of zip.dir and zip.dir.descriptions must match!')
+    }
+    
+  }
   
   # Compile attributes --------------------------------------------------------
   
@@ -560,101 +573,75 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
 
   # Add coverage --------------------------------------------------------------
   
-  # Set temporal and geographic coverage
-  
   message("<temporalCoverage>")
   
+  dataset@coverage <- set_coverage(
+    begin = temporal.coverage[1],
+    end = temporal.coverage[2]
+  )
+  
   message("<geographicCoverage>")
+  
+  list_of_coverage <- list()
+  
+  # Add coverage defined in arguments of make_eml
+  
+  if (!missing(geographic.coordinates) & !missing(geographic.description)){
+    geographic_description <- new("geographicDescription", geographic.description)
+    bounding_coordinates <- new("boundingCoordinates",
+                                westBoundingCoordinate = geographic.coordinates[4],
+                                eastBoundingCoordinate = geographic.coordinates[2],
+                                northBoundingCoordinate = geographic.coordinates[1],
+                                southBoundingCoordinate = geographic.coordinates[3])
+    geographic_coverage <- new("geographicCoverage",
+                               geographicDescription = geographic_description,
+                               boundingCoordinates = bounding_coordinates)
+    list_of_coverage[[(length(list_of_coverage)+1)]] <- geographic_coverage
+  }
+  
+  # Add coverage defined in bounding_boxes.txt
   
   if (file.exists(paste0(path, '/', 'bounding_boxes.txt'))){
     
     bounding_boxes <- suppressMessages(
-      read_tsv(
-        paste0(
-          path,
-          '/',
-          'bounding_boxes.txt'
+      as.data.frame(
+        read_tsv(
+          paste0(
+            path,
+            '/',
+            'bounding_boxes.txt'
           )
         )
       )
+    )
     
-    bounding_boxes <- as.data.frame(
-      bounding_boxes
-      )
-    
-    bounding_boxes <- lapply(bounding_boxes, as.character)
-    
-    if (length(bounding_boxes$geographicDescription) != 0){
+    if (nrow(bounding_boxes) != 0){
       
-      if (!missing(geographic.coordinates)){
-        stop('The input argument "geographic.coordinates" and the "bounding_boxes.txt" template are present! Choose one of these methods for reporting the geographic bounding coordinates for your dataset.')
-      }
-      if (!missing(geographic.description)){
-        stop('Input argument "geographic.description" is present and the "bounding_boxes.txt" template is in use! Please remove the "geographic.description" input argument.')
-      }
-      
-      dataset@coverage <- set_coverage(begin = temporal.coverage[1],
-                                       end = temporal.coverage[2]
-                                       )
-      
-      list_of_coverage <- list()
+      bounding_boxes <- lapply(bounding_boxes, as.character)
       
       for (i in 1:length(bounding_boxes$geographicDescription)){
-          
-        geographicCoverage <- new("geographicCoverage")
         
         geographic_description <- new("geographicDescription", bounding_boxes$geographicDescription[i])
-        
         bounding_coordinates <- new("boundingCoordinates",
                                     westBoundingCoordinate = bounding_boxes$westBoundingCoordinate[i],
                                     eastBoundingCoordinate = bounding_boxes$eastBoundingCoordinate[i],
                                     northBoundingCoordinate = bounding_boxes$northBoundingCoordinate[i],
                                     southBoundingCoordinate = bounding_boxes$southBoundingCoordinate[i])
-        
         geographic_coverage <- new("geographicCoverage",
                                    geographicDescription = geographic_description,
                                    boundingCoordinates = bounding_coordinates)
-        
-        # geographicCoverage <- as(list(geographic_coverage), "ListOfgeographicCoverage")
-        
-        list_of_coverage[[i]] <- geographic_coverage
-        
-        # coverage@geographicCoverage <- as(list(geographic_coverage), "ListOfgeographicCoverage")
-        # 
-        # list_of_coverage[[i]] <- coverage
+        list_of_coverage[[(length(list_of_coverage)+1)]] <- geographic_coverage
         
       }
       
       dataset@coverage@geographicCoverage <- as(list_of_coverage, "ListOfgeographicCoverage")
       
-    } else {
-      
-      dataset@coverage <- set_coverage(begin = temporal.coverage[1],
-                                       end = temporal.coverage[2],
-                                       geographicDescription = geographic.description,
-                                       west = as.numeric(geographic.coordinates[4]),
-                                       east = as.numeric(geographic.coordinates[2]),
-                                       north = as.numeric(geographic.coordinates[1]),
-                                       south = as.numeric(geographic.coordinates[3]))
-      
-      
-      if (missing(geographic.coordinates)){
-        stop('Input argument "geographic.coordinates" is missing and the "bounding_boxes.txt" template is empty! Add geographic bounding coordinates for your dataset.')
-      }
-      
-    }
-    
-  } else {
-    
-    dataset@coverage <- set_coverage(begin = temporal.coverage[1],
-                                     end = temporal.coverage[2],
-                                     geographicDescription = geographic.description,
-                                     west = as.numeric(geographic.coordinates[4]),
-                                     east = as.numeric(geographic.coordinates[2]),
-                                     north = as.numeric(geographic.coordinates[1]),
-                                     south = as.numeric(geographic.coordinates[3]))
+    } 
     
   }
+  
+  dataset@coverage@geographicCoverage <- as(list_of_coverage, "ListOfgeographicCoverage")
+  
   
   if (file.exists(paste(path, "/", "taxonomicCoverage.xml", sep = ""))){
     message("<taxonomicCoverage>")
@@ -1283,110 +1270,103 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
 
   # Add otherEntity -----------------------------------------------------------
   
-  zip_dir_found <- list.files(
-    path, 
-    pattern = paste(
-      "\\",
-      '.zip',
-      "$",
-      sep = ""
-      )
-    )
-  
-  if (length(zip_dir_found) > 0){
+  if (!missing(zip.dir)){
     
-    message("<otherEntity>")
-    
-    if (missing(zip.dir.description)){
-      stop('Input argument "zip.dir.description" is missing! Briefly describe your .zip directory.')
-    }
-    
-    list_of_other_entity <- list()
-    
-    for (i in 1:length(zip_dir_found)){
-      
-      # Create new other entity element
-      
-      other_entity <- new("otherEntity")
-      
-      # Add code file names
-      
-      other_entity@entityName <- zip_dir_found[i]
-      
-      # Add description
-      
-      description <- zip.dir.description
-      
-      other_entity@entityDescription <- description
-      
-      #  Build physical
-      
-      physical <- new("physical",
-                      objectName = zip_dir_found[i])
-      
-      format_name <- "zip directory"
-      entity_type <- "zip directory"
-      physical@dataFormat@externallyDefinedFormat@formatName <- format_name
+    if (length(zip.dir) > 0){
 
-      physical@size <- new("size", unit = "bytes", as(as.character(file.size(paste(path, "/", zip_dir_found[i], sep = ""))), "size"))
-
-      if (os == "mac"){
+      list_of_other_entity <- list()
+      
+      for (i in 1:length(zip.dir)){
         
-        command_certutil <- paste("md5 ",
-                                  path,
-                                  "/",
-                                  zip_dir_found[i],
-                                  sep = "")
+        message(paste0("<otherEntity> ... ", zip.dir[i]))
         
-        certutil_output <- system(command_certutil, intern = T)
+        # Create new other entity element
         
-        checksum_md5 <- gsub(".*= ", "", certutil_output)
+        other_entity <- new("otherEntity")
         
-        authentication <- new("authentication",
-                              method = "MD5",
-                              checksum_md5)
+        # Add code file names
         
-        physical@authentication <- as(list(authentication),
-                                      "ListOfauthentication")
+        other_entity@entityName <- zip.dir[i]
         
-      } else if (os == "win"){
+        # Add description
         
-        command_certutil <- paste("CertUtil -hashfile ",
-                                  path,
-                                  "\\",
-                                  zip_dir_found[i],
-                                  " MD5",
-                                  sep = "")
+        description <- zip.dir.description[i]
         
-        certutil_output <- system(command_certutil, intern = T)
+        other_entity@entityDescription <- description
         
-        checksum_md5 <- gsub(" ", "", certutil_output[2])
+        #  Build physical
         
-        authentication <- new("authentication",
-                              method = "MD5",
-                              checksum_md5)
+        physical <- new("physical",
+                        objectName = zip.dir[i])
         
-        physical@authentication <- as(list(authentication),
-                                      "ListOfauthentication")
+        format_name <- "zip directory"
+        entity_type <- "zip directory"
+        physical@dataFormat@externallyDefinedFormat@formatName <- format_name
+        
+        physical@size <- new("size", unit = "bytes", as(as.character(file.size(paste(path, "/", zip.dir[i], sep = ""))), "size"))
+        
+        if (os == "mac"){
+          
+          command_certutil <- paste("md5 ",
+                                    path,
+                                    "/",
+                                    zip.dir[i],
+                                    sep = "")
+          
+          certutil_output <- system(command_certutil, intern = T)
+          
+          checksum_md5 <- gsub(".*= ", "", certutil_output)
+          
+          authentication <- new("authentication",
+                                method = "MD5",
+                                checksum_md5)
+          
+          physical@authentication <- as(list(authentication),
+                                        "ListOfauthentication")
+          
+        } else if (os == "win"){
+          
+          command_certutil <- paste("CertUtil -hashfile ",
+                                    path,
+                                    "\\",
+                                    zip.dir[i],
+                                    " MD5",
+                                    sep = "")
+          
+          certutil_output <- system(command_certutil, intern = T)
+          
+          checksum_md5 <- gsub(" ", "", certutil_output[2])
+          
+          authentication <- new("authentication",
+                                method = "MD5",
+                                checksum_md5)
+          
+          physical@authentication <- as(list(authentication),
+                                        "ListOfauthentication")
+          
+        }
+        
+        other_entity@physical <- as(c(physical), "ListOfphysical")
+        
+        # Add entity type
+        
+        other_entity@entityType <- entity_type
+        
+        # Add other entity to list
+        
+        list_of_other_entity[[i]] <- other_entity
         
       }
       
-      other_entity@physical <- as(c(physical), "ListOfphysical")
-      
-      # Add entity type
-      
-      other_entity@entityType <- entity_type
-
-      # Add other entity to list
-      
-      list_of_other_entity[[i]] <- other_entity
+      dataset@otherEntity <- new("ListOfotherEntity",
+                                 list_of_other_entity)
       
     }
     
-    dataset@otherEntity <- new("ListOfotherEntity",
-                               list_of_other_entity)
-
+    
   }
+  
+  
   
   
   
