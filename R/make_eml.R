@@ -617,10 +617,10 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
   if (!missing(geographic.coordinates) & !missing(geographic.description)){
     geographic_description <- new("geographicDescription", geographic.description)
     bounding_coordinates <- new("boundingCoordinates",
-                                westBoundingCoordinate = geographic.coordinates[4],
-                                eastBoundingCoordinate = geographic.coordinates[2],
-                                northBoundingCoordinate = geographic.coordinates[1],
-                                southBoundingCoordinate = geographic.coordinates[3])
+                                westBoundingCoordinate = as.character(geographic.coordinates[4]),
+                                eastBoundingCoordinate = as.character(geographic.coordinates[2]),
+                                northBoundingCoordinate = as.character(geographic.coordinates[1]),
+                                southBoundingCoordinate = as.character(geographic.coordinates[3]))
     geographic_coverage <- new("geographicCoverage",
                                geographicDescription = geographic_description,
                                boundingCoordinates = bounding_coordinates)
