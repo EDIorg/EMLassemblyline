@@ -83,10 +83,18 @@
 #'     A character string specifying whether data collection for this dataset 
 #'     is "ongoing" or "completed".
 #' @param user.id
-#'     A character string specifying your user ID for the EDI data repository.
-#'     If you do not have one, contact EDI (info@environmentaldatainitiative.org)
-#'     to obtain one. Alternatively, do not use this argument when running
-#'     \code{make_eml}.
+#'     A character string, or list of character strings, specifying your user 
+#'     ID for the EDI data repository. The user.id controls editing access to 
+#'     your data package. If you do not have one, contact EDI 
+#'     (info@@environmentaldatainitiative.org) to obtain one. In the meantime 
+#'     do not use this argument when running `make_eml`.
+#' @param affiliation
+#'     A character string, or list of character strings, specifying the 
+#'     affiliation of your user ID. In a list, the associations must follow the 
+#'     same order of the corresponding values listed under user.id. This is the 
+#'     affiliation used when logging in to the EDI Data Portal and can be: 
+#'     "LTER" or "EDI". If you don't have a user.id then do not use this 
+#'     argument when running `make_eml`.
 #' @param package.id
 #'     A character string specifying the package ID for your data package. 
 #'     A missing package ID defaults to \emph{edi.101.1}. A package ID must
@@ -111,7 +119,7 @@
 make_eml <- function(path, dataset.title, data.files, data.files.description, 
                      data.files.quote.character, data.files.url, zip.dir, zip.dir.description,
                      temporal.coverage, geographic.coordinates, geographic.description, maintenance.description, user.id, 
-                     package.id) {
+                     affiliation, package.id) {
 
   # Check arguments and parameterize ------------------------------------------
   
@@ -135,6 +143,12 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
   }
   if (missing(maintenance.description)){
     stop('Input argument "maintenance.description" is missing! Indicate whether data collection is "ongoing" or "completed" for your dataset.')
+  }
+  if (!missing(user.id) & missing(affiliation)){
+    stop('Input argument "affiliation" is missing! Add one.')
+  }
+  if (!missing(affiliation) & missing(user.id)){
+    stop('Input argument "user.id" is missing! Add one.')
   }
   
   # Validate path
@@ -196,8 +210,18 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
     if ((length(zip.dir)) != (length(zip.dir.description))){
       stop('The number of zip.dir and zip.dir.descriptions must match!')
     }
-    
   }
+  
+  # Validate user.id and association
+  if (!missing(user.id) & !missing(affiliation)){
+    if (length(user.id) != length(affiliation)){
+      stop('The number of values listed in arguments "user.id" and "affiliation" do not match. Each user.id must have a corresponding affiliation')
+    }
+    if (sum(sum(affiliation == 'LTER'), sum(affiliation == 'EDI')) != length(affiliation)){
+      stop('Input argument "affiliation" is not "EDI" or "LTER"! Only "EDI" and "LTER" are acceptable values.')
+    }
+  }
+  
   
   # Compile attributes --------------------------------------------------------
   
@@ -434,29 +458,33 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
   
   message("<access>")
   
-  if (!missing(user.id)){
-    allow_principals <- c(paste("uid=",
-                                user.id,
-                                ",o=LTER,dc=ecoinformatics,dc=org",
-                                sep = ""),
-                          "public")
-    
-    allow_permissions <- c("all",
-                           "read")
-  } else if (exists("user_id")){
-    allow_principals <- c(paste("uid=",
-                                user_id,
-                                ",o=LTER,dc=ecoinformatics,dc=org",
-                                sep = ""),
-                          "public")
-    
-    allow_permissions <- c("all",
-                           "read")
+  if (!missing(user.id) & !missing(affiliation)){
+    list_of_allow_principals <- list()
+    list_of_allow_permissions <- list()
+    for (i in 1:length(user.id)){
+      list_of_allow_principals[[i]] <- c(
+        paste0(
+          'uid=',
+          user.id[i],
+          ',o=',
+          affiliation[i],
+          ',dc=ecoinformatics,dc=org'
+        ),
+        "public"
+      )
+      
+      list_of_allow_permissions[[i]] <- c(
+        "all",
+        "read")
+    }
   } else {
-    allow_principals <- c("public")
-    allow_permissions <- c("read")
+    list_of_allow_principals <- list()
+    list_of_allow_permissions <- list()
   }
-
+  
+  list_of_allow_principals[[(length(list_of_allow_principals)+1)]] <- c("public")
+  list_of_allow_permissions[[(length(list_of_allow_permissions)+1)]] <- c("read")
+  
   access_order <- "allowFirst"
   
   access_scope <- "document"
@@ -465,14 +493,14 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
                 scope = access_scope,
                 order = access_order,
                 authSystem = "https://pasta.edirepository.org/authentication")
-
+  
   allow <- list()
-  for (i in 1:length(allow_principals)){
+  for (i in 1:length(list_of_allow_principals)){
     allow[[i]] <- new("allow",
-                      principal = allow_principals[i],
-                      permission = allow_permissions[i])
+                      principal = list_of_allow_principals[[i]][1],
+                      permission = list_of_allow_permissions[[i]][1])
   }
-
+  
   access@allow <- new("ListOfallow",
                       c(allow))
 

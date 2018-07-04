@@ -82,10 +82,18 @@ the bounding_boxes.txt template file. Example: "North America and Europe".}
 \item{maintenance.description}{A character string specifying whether data collection for this dataset 
 is "ongoing" or "completed".}
 
-\item{user.id}{A character string specifying your user ID for the EDI data repository.
-If you do not have one, contact EDI (info@environmentaldatainitiative.org)
-to obtain one. Alternatively, do not use this argument when running
-\code{make_eml}.}
+\item{user.id}{A character string, or list of character strings, specifying your user 
+ID for the EDI data repository. The user.id controls editing access to 
+your data package. If you do not have one, contact EDI 
+(info@environmentaldatainitiative.org) to obtain one. In the meantime 
+do not use this argument when running `make_eml`.}
+
+\item{affiliation}{A character string, or list of character strings, specifying the 
+affiliation of your user ID. In a list, the associations must follow the 
+same order of the corresponding values listed under user.id. This is the 
+affiliation used when logging in to the EDI Data Portal and can be: 
+"LTER" or "EDI". If you don't have a user.id then do not use this 
+argument when running `make_eml`.}
 
 \item{package.id}{A character string specifying the package ID for your data package. 
 A missing package ID defaults to \emph{edi.101.1}. A package ID must
