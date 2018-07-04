@@ -272,8 +272,9 @@ Now you are ready to synthesize your completed metadata templates into EML. This
 8. **geographic.coordinates** A list of character strings specifying the spatial bounding coordinates of your dataset in decimal degrees. The list must follow this order: "North", "East", "South", "West". Longitudes west of the prime meridian and latitudes south of the equator are prefixed with a minus sign (i.e. dash -). If you don't have an area, but rather a point. Repeat the latitude value for North and South, and repeat the longitude value for East and West.
 9. **geographic.description** A character string describing the geographic coverage of your dataset.
 10. **maintenance.description** A character string specifying whether data collection for this dataset is "ongoing" or "completed".
-11. **user.id** A character string specifying your EDI data repository user ID. If you don't have one, contact EDI (info@environmentaldatainitiative.org) to get one, or don't use this argument when running `make_eml`.
-12. **package.id** A character string specifying the package ID for your data package. If you don't have a package ID, then don't use this argument when running `make_eml`. A non-input package ID defaults to "edi.101.1".
+11. **user.id** A character string, or list of character strings, specifying your user ID for the EDI data repository. The user.id controls editing access to the data package. If you do not have one, contact EDI (info@environmentaldatainitiative.org) to obtain one. Otherwise do not use this argument when running 'make_eml'.
+12. **affiliation** A character string, or list of character strings, specifying the affiliation of user.ids. In a list, the affiliations must follow the same order of the corresponding values listed under user.id. This is the affiliation used when logging in to the EDI Data Portal and can be: "LTER" or "EDI". If you don't have a user.id then do not use this argument when running 'make_eml'.
+13. **package.id** A character string specifying the package ID for your data package. If you don't have a package ID, then don't use this argument when running `make_eml`. A non-input package ID defaults to "edi.101.1".
 
 ```
 # View documentation for this function
