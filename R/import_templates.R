@@ -352,28 +352,28 @@ import_templates <- function(path, license, data.files){
                           data_files[i],
                           sep = "")
     
-    if (delim_guess[i] == ','){
-      df_table <- suppressMessages(
-        read_csv(
-          file = data_path,
-          na = c('NA', 'NULL')
-        )
-      )
-    } else if (delim_guess[i] == '\t'){
-      df_table <- suppressMessages(
-        read_tsv(
-          file = data_path,
-          na = c('NA', 'NULL')
-        )
-      )
-    }
+    # if (delim_guess[i] == ','){
+    #   df_table <- suppressMessages(
+    #     read_csv(
+    #       file = data_path,
+    #       na = c('NA', 'NULL')
+    #     )
+    #   )
+    # } else if (delim_guess[i] == '\t'){
+    #   df_table <- suppressMessages(
+    #     read_tsv(
+    #       file = data_path,
+    #       na = c('NA', 'NULL')
+    #     )
+    #   )
+    # }
     
-    # df_table <- read.table(data_path,
-    #                        header = TRUE,
-    #                        sep = delim_guess[i],
-    #                        quote = "\"",
-    #                        as.is = TRUE,
-    #                        comment.char = "")
+    df_table <- read.table(data_path,
+                           header = TRUE,
+                           sep = delim_guess[i],
+                           quote = "\"",
+                           as.is = TRUE,
+                           comment.char = "")
     
     column_names <- colnames(df_table)
     use_i <- str_detect(string = column_names,
