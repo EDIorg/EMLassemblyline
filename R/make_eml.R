@@ -462,17 +462,29 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
     list_of_allow_principals <- list()
     list_of_allow_permissions <- list()
     for (i in 1:length(user.id)){
-      list_of_allow_principals[[i]] <- c(
-        paste0(
-          'uid=',
-          user.id[i],
-          ',o=',
-          affiliation[i],
-          ',dc=ecoinformatics,dc=org'
-        ),
-        "public"
-      )
-      
+      if (affiliation[i] == 'LTER'){
+        list_of_allow_principals[[i]] <- c(
+          paste0(
+            'uid=',
+            user.id[i],
+            ',o=',
+            affiliation[i],
+            ',dc=ecoinformatics,dc=org'
+          ),
+          "public"
+        )
+      } else if (affiliation[i] == 'EDI'){
+        list_of_allow_principals[[i]] <- c(
+          paste0(
+            'uid=',
+            user.id[i],
+            ',o=',
+            affiliation[i],
+            ',dc=edirepository,dc=org'
+          ),
+          "public"
+        )
+      }
       list_of_allow_permissions[[i]] <- c(
         "all",
         "read")
