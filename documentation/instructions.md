@@ -145,8 +145,8 @@ Definitions for columns of this file:
 * **electronicMailAddress** Email address of person.
 * **userId** ORCID of person (not required). A valid entry for userId is the 16 digit ORCID number separated by dashes (i.e. XXXX-XXXX-XXXX-XXXX). An ORCID is like a social security number for scientists and links your dataset with your ORCID. [Create one here](https://orcid.org/).
 * **role** Role of person with respect to this dataset. Valid entries for role are:
-    + **creator** Dataset creator (required; at least 1 creator must be listed for your dataset).
-    + **PI** Principal investigator associated with this dataset (not required).
+    + **creator** The creator is considered to be the author of the dataset, i.e. the person(s_ responsible for intellectual input into its creation (required; at least 1 creator must be listed for your dataset). 
+    + **PI** Principal investigator associated with this dataset (not required). Often the PI should also be listed as the dataset creator.
     + **contact** Dataset contact (required; at least 1 contact must be listed for your dataset). The contact may be a person or a position at an organization. We recommend listing the contact as a person rather than a position. To list a position as a contact (e.g. Data Manager), Enter the position name in the `givenName` column and leave `middleInitial` and `surName` blank.
     + Any other entries into the 'role' column are acceptable and will be defined under the associated party element of this dataset with whatever value is entered under role.
     + If a person serves more than one role, duplicate this persons information in another row but with the additional role.
