@@ -145,8 +145,8 @@ Definitions for columns of this file:
 * **electronicMailAddress** Email address of person.
 * **userId** ORCID of person (not required). A valid entry for userId is the 16 digit ORCID number separated by dashes (i.e. XXXX-XXXX-XXXX-XXXX). An ORCID is like a social security number for scientists and links your dataset with your ORCID. [Create one here](https://orcid.org/).
 * **role** Role of person with respect to this dataset. Valid entries for role are:
-    + **creator** Dataset creator (required; at least 1 creator must be listed for your dataset).
-    + **PI** Principal investigator associated with this dataset (not required).
+    + **creator** The creator is considered to be the author of the dataset, i.e. the person(s_ responsible for intellectual input into its creation (required; at least 1 creator must be listed for your dataset). 
+    + **PI** Principal investigator associated with this dataset (not required). Often the PI should also be listed as the dataset creator.
     + **contact** Dataset contact (required; at least 1 contact must be listed for your dataset). The contact may be a person or a position at an organization. We recommend listing the contact as a person rather than a position. To list a position as a contact (e.g. Data Manager), Enter the position name in the `givenName` column and leave `middleInitial` and `surName` blank.
     + Any other entries into the 'role' column are acceptable and will be defined under the associated party element of this dataset with whatever value is entered under role.
     + If a person serves more than one role, duplicate this persons information in another row but with the additional role.
@@ -266,8 +266,8 @@ Now you are ready to synthesize your completed metadata templates into EML. This
 4. **data.files.description** A list of character strings briefly describing the data files listed in the data.files argument and in the same order as listed in the data.files argument.
 5. **data.files.quote.character** A list of character strings defining the quote characters used in your data files and in the same order as listed in the data.files argument. If the quote character is a quotation, then enter `"\""`. If the quote character is an apostrophe, then enter `"\'"`. If there is no quote character then don't use this argument when running `make_eml`.
 6. **data.files.url** A character string specifying the URL of where your data tables are stored on a publicly accessible server (i.e. does not require user ID or password). The EDI data repository software, PASTA+, will use this to upload your data into the repository. If you will be manually uploading your data tables, then don't use this argument when running `make_eml`. 
-7. **zip.dir** A list of character strings specifying the names of the zip directories of your dataset.
-8. **zip.dir.description** A list of character strings briefly describing the zip directories listed in the zip.dir argument and in the same order as listed in the zip.dir argument.
+7. **zip.dir** A list of character strings specifying the names of the zip directories of your dataset. Only required if documenting a .zip directory.
+8. **zip.dir.description** A list of character strings briefly describing the zip directories listed in the zip.dir argument and in the same order as listed in the zip.dir argument. Only required if documenting a .zip directory.
 7. **temporal.coverage** A list of character strings specifying the beginning and ending dates of your dataset. Use the format `YYYY-MM-DD`.
 8. **geographic.coordinates** A list of character strings specifying the spatial bounding coordinates of your dataset in decimal degrees. The list must follow this order: "North", "East", "South", "West". Longitudes west of the prime meridian and latitudes south of the equator are prefixed with a minus sign (i.e. dash -). If you don't have an area, but rather a point. Repeat the latitude value for North and South, and repeat the longitude value for East and West.
 9. **geographic.description** A character string describing the geographic coverage of your dataset.
