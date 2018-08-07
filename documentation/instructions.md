@@ -1,8 +1,12 @@
-# Instructions for the EML assembly line
+# Instructions for the EMLassemblyline
 
 ### Overview
 
 The EML assembly line will help you create high quality metadata for your dataset. Below is a set of step-by-step instructions for making EML metadata for tabular data. The assembly line will soon be capable of handling other data types including: spatial vector, spatial raster, and images.
+
+### Contents:
+
+[Install EMLassemblyline](Installation-(periodic-reinstallation-is-recommended))
 
 #### Installation (periodic reinstallation is recommended)
 
