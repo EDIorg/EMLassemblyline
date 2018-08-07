@@ -8,7 +8,7 @@ The EML assembly line will help you create high quality metadata for your datase
 
 [Install EMLassemblyline](#installation-(periodic-reinstallation-is-recommended))
 
-[step](#step-3:-select-an-intellectual-rights-license)
+[step](#select-an-intellectual-rights-license)
 
 #### Installation (periodic reinstallation is recommended)
 
@@ -47,7 +47,7 @@ Rename these files following these rules:
 e.g. `name.of.(your) d@t@.file` should be `name_of_your_data_file`
 
 
-### Step 3: Select an intellectual rights license
+### Select an intellectual rights license
 
 There are 2 options for intellectual rights licenses:
 
