@@ -7,6 +7,7 @@ The EML assembly line will help you create high quality metadata for your datase
 ### Contents:
 
 [Install EMLassemblyline](#installation-(periodic-reinstallation-is-recommended))
+[Step 3](#step-3:-select-an-intellectual-rights-license)
 
 #### Installation (periodic reinstallation is recommended)
 
