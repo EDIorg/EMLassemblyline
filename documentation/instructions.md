@@ -19,7 +19,7 @@ Below are instructions for operating the `EMLassemblyline`. We recommend scripti
 * [Attributes](#attributes)
 * [Categorical variables](#categorical-variables)
 * [Geographic coverage](#geographic-coverage)
-* [Make EML](#make-EML)
+* [Make EML](#make-eml)
 * [Upload you data package](#upload-your-data-package)
 
 
