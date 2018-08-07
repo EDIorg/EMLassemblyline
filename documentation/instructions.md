@@ -67,7 +67,7 @@ e.g. `land.cover.use (%)` should be `percent_land_cover_use`
 
 #### .zip directory
 
-A .zip directory containing anything you want to put into it. .zip directory name should follow the same naming rules as for a table.
+A .zip directory containing anything you want to put in it. .zip directory name should follow the same naming rules as for a table.
 
 ### Step 5: Import the core metadata templates
 
