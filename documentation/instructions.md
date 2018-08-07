@@ -2,20 +2,29 @@
 
 ### Overview
 
-The EML assembly line will help you create high quality metadata for your dataset. Below is a set of step-by-step instructions for making EML metadata for tabular data. The assembly line will soon be capable of handling other data types including: spatial vector, spatial raster, and images.
-
-### Script your workflow
-[back to top](#contents)
-
-Open `my_workflow.R` in RStudio. This is a blank script for you to build an assembly line workflow, which can be revisited or modified for future assembly line runs.
-
+Below are instructions for operating the `EMLassemblyline`. We recommend scripting your workflow and re-installing `EMLassemblyline` periodically to expedite revisioning and ensure the latest features are available.
 
 ### Contents:
 
-* [Install EMLassemblyline](#installation-(periodic-reinstallation-is-recommended))
-* [step](#select-an-intellectual-rights-license)
+* [Install](#install)
+* [Create working directory](#-create-working-directory)
+* [Select intellectual rights license](#-select-intellectual-rights-license)
+* [Identify data types](#-identify-data-types)
+* [Import templates](#-import-templates)
+* [Abstract](#-abstract)
+* [Methods](#-methods)
+* [Additional information](#-additional-information)
+* [Keywords](#-keywords)
+* [Personnel](#-personnel)
+* [Attributes](#-attributes)
+* [Categorical variables](#-categorical-variables)
+* [Geographic coverage](#-geographic-coverage)
+* [Make EML](#-make-EML)
+* [Upload you data package](#-upload-your-data-package)
 
-#### Installation (periodic reinstallation is recommended)
+
+
+## Install
 [back to top](#contents)
 
 The assembly line is under constant revision and improvement. Please reinstall the assembly line periodically to ensure a successful experience. Installation from GitHub requires the `devtools` package.
@@ -33,7 +42,7 @@ library(EMLassemblyline)
 ```
 
 
-### Setup the dataset directory
+## Create working directory
 [back to top](#contents)
 
 Create a new directory for your dataset. This is where the metadata parts created in the assembly line process will be stored and available for editing should you need to change the content of your EML.
@@ -52,7 +61,7 @@ Rename these files following these rules:
 e.g. `name.of.(your) d@t@.file` should be `name_of_your_data_file`
 
 
-### Select an intellectual rights license
+## Select intellectual rights license
 [back to top](#contents)
 
 There are 2 options for intellectual rights licenses:
@@ -62,7 +71,7 @@ There are 2 options for intellectual rights licenses:
 2. __CCBY__ requires attribution ... This information is released under the Creative Commons license - Attribution - CC BY (https://creativecommons.org/licenses/by/4.0/). The consumer of these data ("Data User" herein) is required to cite it appropriately in any publication that results from its use. The Data User should realize that these data may be actively used by others for ongoing research and that coordination may be necessary to prevent duplicate publication. The Data User is urged to contact the authors of these data if any questions about methodology or results occur. Where appropriate, the Data User is encouraged to consider collaboration or co-authorship with the authors. The Data User should realize that misinterpretation of data may occur if used out of context of the original study. While substantial efforts are made to ensure the accuracy of data and associated documentation, complete accuracy of data sets cannot be guaranteed. All data are made available "as is." The Data User should be aware, however, that data are updated periodically and it is the responsibility of the Data User to check for new versions of the data. The data authors and the repository where these data were obtained shall not be liable for damages resulting from any use or misinterpretation of the data. Thank you.
 
 
-### Identfy data types
+## Identify data types
 [back to top](#contents)
 
 Currently, the assembly line only works for tabular data and .zip directories.
@@ -82,7 +91,7 @@ e.g. `land.cover.use (%)` should be `percent_land_cover_use`
 
 A .zip directory containing anything you want to put in it. .zip directory name should follow the same naming rules as for a table.
 
-### Import metadata templates
+## Import templates
 [back to top](#contents)
 
 Run the function `import_templates` in the RStudio Console to populate the directory with metadata templates for you to complete. You will need to supply a few arguments to this function:
@@ -106,7 +115,7 @@ import_templates(path = "/Users/csmith/Desktop/gleon_chloride",
 ```
 
 
-### Abstract
+## Abstract
 [back to top](#contents)
 
 Open `my_workflow.R` in RStudio. This is a blank script for you to build an assembly line workflow, which can be revisited or modified for future assembly line runs.
@@ -119,7 +128,7 @@ Do not use special characters, symbols, formatting, or hyperlinks (URLs are acce
 NOTE: You can create your abstract in Microsoft Word and then copy over to `abstract.txt` but first you will need to remove any non-unicode characters. To do this go to [this web service](http://utils.paranoiaworks.org/diacriticsremover/) and paste your abstract into the window. Click the button "Remove Diacritics" to remove these non-compliant characters, then copy the resultant text into `abstract.txt`. You will want to give your abstract one last look over after performing this operation to ensure no information has been lost.
 
 
-### Methods
+## Methods
 [back to top](#contents)
 
 Open `my_workflow.R` in RStudio. This is a blank script for you to build an assembly line workflow, which can be revisited or modified for future assembly line runs.
@@ -132,7 +141,7 @@ Do not use special characters, symbols, formatting, or hyperlinks (URLs are acce
 NOTE: You can create your methods in Microsoft Word and then copy over to `methods.txt` but first you will need to remove any non-unicode characters. To do this go to [this web service](http://utils.paranoiaworks.org/diacriticsremover/) and paste your methods into the window. Click the button "Remove Diacritics" to remove these non-compliant characters, then copy the resultant text into `methods.txt`. You will want to give your methods one last look over after performing this operation to ensure no information has been lost.
 
 
-### Additional information
+## Additional information
 [back to top](#contents)
 
 `additional_info.txt` is a good place for text based information about your dataset that doesn't fall under the scope of the abstract or methods (e.g. a list of research articles or theses derived from this dataset). If you have this information and would like to share it then open `additional_info.txt` in a text editor and add it. You can delete this file if you won't be using it, or you can keep it around in case you change your mind.
@@ -142,7 +151,7 @@ Do not use special characters, symbols, formatting, or hyperlinks (URLs are acce
 NOTE: You can create your additional information in Microsoft Word and then copy over to `additional_info.txt` but first you will need to remove any non-unicode characters. To do this go to [this web service](http://utils.paranoiaworks.org/diacriticsremover/) and paste your additional information into the window. Click the button "Remove Diacritics" to remove these non-compliant characters, then copy the resultant text into `additional_info.txt`. You will want to give your additional information one last look over after performing this operation to ensure no information has been lost.
 
 
-### Keywords
+## Keywords
 [back to top](#contents)
 
 Open the tab delimited file `keywords.txt` in a spreadsheet editor and list the keywords that best describe your dataset. DO NOT edit this file in a text editor. [Consult the LTER controlled vocabulary](http://vocab.lternet.edu/vocab/vocab/index.php) for keywords. In addition to keywords describing the data, you may want to include keywords that describe your lab, station, and project (e.g. OBFS, LTREB, etc.).
@@ -152,7 +161,7 @@ Definitions for columns of this file:
 * **keyword** A keyword describing your dataset.
 * **keywordThesaurus** A keywordThesaurus (i.e. a controlled vocabulary like the resource listed above) corresponding to the keyword listed in the keyword column. If the keyword is not from a thesaurus or controlled vocabulary, leave corresponding entry in the keywordThesaurus column blank.
 
-### Personnel
+## Personnel
 [back to top](#contents)
 
 Open the tab delimited file `personnel.txt` in a spreadsheet editor and enter information about the personnel associated with this dataset.
@@ -177,7 +186,7 @@ Definitions for columns of this file:
 * **fundingNumber** Number of the grant or award that supported creation of this dataset (optional). Only include an entry in this column for rows where role PI.
 
 
-### Attributes
+## Attributes
 [back to top](#contents)
     
 An `attributes_datatablename.txt` file has been created for each of your data tables. Edit each of these tab delimited files in a spreadsheet editor. DO NOT edit this file in a text editor. You will see this file has been partially populated with information detected by the `import_templates` function. You will have to double check values listed in all the columns except `attributeName`. 
@@ -218,13 +227,8 @@ view_unit_dictionary()
 * **missingValueCode** If a code for 'no data' is used, specify it here (e.g. NA, -99999, etc.). Only one missingValueCode is allowed for a single attribute.
 * **missingValueCodeExplanation** Define the missing value code here.
     
-    
-### Close files
-[back to top](#contents)
 
-Make sure all files of your dataset directory are closed. Some functions will error out if these files are open.
-
-### Categorical variables
+## Categorical variables
 [back to top](#contents)
 
 If your data tables contain any attributes with the categorical class, you will need to supply definitions for the categorical codes. Use the function `define_catvars` to do this. `define_catvars` searches through each attribute file looking for attributes with a categorical class. If found, the function extracts unique categorical codes for each attribute and writes them to a file for you to define.
@@ -240,7 +244,7 @@ define_catvars(path = "/Users/csmith/Desktop/gleon_chloride")
 
 A tab delimited __catvars_datatablename.txt__ will be created for each of your data tables containing categorical variables. Open these in a spreadsheet editor and add definitions for each code.
 
-### Geographic coverage
+## Geographic coverage
 [back to top](#contents)
 
 If your dataset contains more than one sampling point or area, then you will want to add this information to your metadata. Often a data user will search for data withing a geographic area.
@@ -281,10 +285,12 @@ The `import_templates` function created a tab delimited table (bounding_boxes.tx
 * **northBoundingCoordinate** Enter the northern most geographic coordinate (in decimal degrees) of the area. Latitudes south of the equator are prefixed with a minus sign (i.e. dash -).
 * **southBoundingCoordinate** Enter the northern most geographic coordinate (in decimal degrees) of the area. Latitudes south of the equator are prefixed with a minus sign (i.e. dash -).
 
-### Make EML
+## Make EML
 [back to top](#contents)
-    
+
 Now you are ready to synthesize your completed metadata templates into EML. This step is relatively simple, but requires several arguments:
+
+**NOTE: Make sure all your metadata templates and associated data files are closed. `make_eml` will fail if these files are open.**
 
 1. **path** A path to the dataset working directory.
 2. **dataset.title** A character string specifying the title for your dataset. Be descriptive (more than 5 words). We recommend the following format: `Project name: Broad description: Time span` (e.g. "GLEON: Long term lake chloride concentrations from North America and Europe: 1940-2016").
@@ -326,9 +332,8 @@ make_eml(path = "/Users/csmith/Desktop/gleon_chloride",
 Your EML file will be written to your data directory with the name `packageID.xml`. If your EML is valid you will receive the message: `EML passed validation!`. If validation fails, open the EML file in an XML editor and look for the invalid section. Often a minor tweak to the EML can be made manually to bring it into compliance with the EML schema.
 
 
-### Upload your data package to the EDI repository
+## Upload your data package
 [back to top](#contents)
 
-Your data and metadata form a package that may be uploaded to the [EDI data repository](https://portal.edirepository.org/nis/home.jsp). [Follow these instructions](https://environmentaldatainitiative.org/resources/assemble-data-and-metadata/step-4-submit-your-data-package/) to upload your data package.
-
+Your data and metadata form a package that may be uploaded to the [EDI data repository](https://portal.edirepository.org/nis/home.jsp). Contact EDI for login credentials (info@environmentaldatainitiative.org).
 
