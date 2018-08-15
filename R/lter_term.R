@@ -1,4 +1,4 @@
-#' LTER term
+#' lter_term
 #'
 #' @description  
 #'     Search for a term in the LTER Controlled Vocabulary (Long Term 
@@ -23,6 +23,10 @@
 
 lter_term <- function(x, messages = FALSE){
   
+  # The LTER controlled vocabulary produces different results for a standard
+  # search and fuzzy (similar) search. Both searches are run and results 
+  # combined, then direct matches sought and if not found then all results
+  # are presented as near misses.
   
   # Check arguments -----------------------------------------------------------
   
@@ -36,63 +40,67 @@ lter_term <- function(x, messages = FALSE){
     stop('Input argument "x" has a length > 1! Only single terms are allowed.')
   }
   
-  # Construct the query and call the API --------------------------------------
+  # Construct the query and search --------------------------------------------
   
-  url <- 'http://vocab.lternet.edu'
-  path <- '/vocab/vocab/services.php/?task=search&arg='
   term <- str_replace_all(
     string = x, 
     pattern = ' ', 
     replacement = '+'
     )
   
-  query <- paste0(
-    url,
-    path,
-    term
+  # Standard search
+  
+  search_output <- xml2::read_xml(
+    paste0(
+      'http://vocab.lternet.edu/vocab/vocab/services.php/?task=search&arg=',
+      term
+      )
     )
   
-  reply <- xml2::read_xml(query)
+  # Fuzzy search
   
-  # Was the term found? -------------------------------------------------------
-  
-  if (length(xml2::xml_find_all(reply, './/result')) == 0){
-    term_found <- FALSE
-  } else {
-    term_found <- TRUE
-  }
-  
-  # Were there any near misses? -----------------------------------------------
-  
-  if (!isTRUE(term_found)){
-    
-    # Construct a query to search for similar terms
-    
-    url <- 'http://vocab.lternet.edu'
-    path <- '/vocab/vocab/services.php/?task=fetchSimilar&arg='
-    query <- paste0(
-      url,
-      path,
+  fuzzy_output <- xml2::read_xml(
+    paste0(
+      'http://vocab.lternet.edu/vocab/vocab/services.php/?task=fetchSimilar&arg=',
       term
     )
-    
-    reply <- xml2::read_xml(query)
-    
-    # Were similar terms found?
-    
-    if (length(xml2::xml_find_all(reply, './/result')) == 0){
-      near_miss <- FALSE
-    } else {
-      nodeset <- xml2::xml_find_all(reply, './/result/string')
-      near_miss_term <- xml2::xml_text(nodeset)
-      near_miss <- TRUE
-    }
-    
+  )
+  
+  # Parse the responses and combine -------------------------------------------
+  
+  term_list <- c()
+  
+  # Get standard terms
+  
+  if (length(xml2::xml_find_all(search_output, './/result')) != 0){
+    nodeset <- xml2::xml_find_all(search_output, './/result/term/string')
+    node_terms <- xml2::xml_text(nodeset)
+    term_list <- c(term_list, node_terms)
+  }
+  
+  # Get fuzzy terms
+  
+  if (length(xml2::xml_find_all(fuzzy_output, './/result')) != 0){
+    nodeset <- xml2::xml_find_all(fuzzy_output, './/result/string')
+    node_terms <- xml2::xml_text(nodeset)
+    term_list <- c(term_list, node_terms)
+  }
+  
+  # Remove duplicates
+  
+  term_list <- unique(term_list)
+  
+  # Is the search term listed? ------------------------------------------------
+  
+  if (sum(term_list == x) == 1){
+    term_found <- T
+  } else {
+    term_found <- F
   }
   
   # Report near misses --------------------------------------------------------
   
-  if (!missing(messages) & isTRUE(messages)){
+  if (!missing(messages) & isTRUE(messages) & (!isTRUE(term_found)) & (length(term_list) != 0)){
     
     msg <- message(
       paste0(
@@ -101,7 +109,7 @@ lter_term <- function(x, messages = FALSE){
         '" could not be found. Possible alternatives:',
         '\n',
         paste0(
-          near_miss_term, 
+          term_list, 
           collapse = '\n'
           )
         )
