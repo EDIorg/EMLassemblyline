@@ -2,7 +2,7 @@
 % Please edit documentation in R/lter_term.R
 \name{lter_term}
 \alias{lter_term}
-\title{LTER term}
+\title{lter_term}
 \usage{
 lter_term(x, messages = FALSE)
 }
