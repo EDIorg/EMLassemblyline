@@ -583,6 +583,22 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
     keywords <- keywords[!use_i, ]
   }
   
+  # Try resolving keywords without a listed thesaurus to the LTER Controlled 
+  # Vocabulary
+  
+  unresolved_terms <- keywords[keywords$keywordThesaurus == '', 'keyword']
+  
+  results <- resolve_terms(
+    x = unresolved_terms,
+    cv = 'lter'
+    )
+  
+  results <- results[results$controlled_vocabulary != '', ]
+  use_i <- match(results$term, keywords$keyword)
+  keywords[use_i, 'keywordThesaurus'] <- results[ , 'controlled_vocabulary']
+
+  # Build keywordSet
+  
   list_keywordSet <- list()
 
   uni_keywordThesaurus <- unique(keywords$keywordThesaurus)
