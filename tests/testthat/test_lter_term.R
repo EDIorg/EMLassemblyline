@@ -1,9 +1,6 @@
 context('Search for a term in the LTER CV')
-library(EMLassemblyline)
 
-# term_found T or F
-# if term_found = F and messages = T, expect a report
-# Validate a random collection of terms ?
+library(EMLassemblyline)
 
 # Expect logical response -----------------------------------------------------
 
@@ -23,16 +20,11 @@ testthat::test_that('Output should be logical.', {
 
 # Expect messages -------------------------------------------------------------
 
-output <- lter_term(
-  x = 'ast',
-  messages = T
-  )
-
 testthat::test_that('Messages should be displayed if terms are not found, and when messages = T.', {
   
   expect_message(
     lter_term(
-      x = 'as',
+      x = 'ast',
       messages = T
     )
   )
