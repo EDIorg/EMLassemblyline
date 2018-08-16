@@ -11,17 +11,24 @@
 #'     (character) A term to search for.
 #' @param messages 
 #'     (logical) Display diagnostic messages, e.g. alternative spelling options.
+#' @param interactive 
+#'     (logical) Query user to select from alternative terms and returns back
+#'     selection.
 #'
 #' @return 
-#'     TRUE - If the searched term is found.
-#'     FALSE- If the searched term was not found.
-#'     messages - Alternative spelling and near misses for searched term.
+#'     Logical value (TRUE/FALSE) indicating whether the searched term could
+#'     be found. 
+#'     
+#'     If messages = TRUE, then alternative spellings and near misses 
+#'     are displayed. 
+#'     
+#'     If interactive mode = TRUE, then a user selected term is returned.
 #'
 #' @export
 #'
 
 
-lter_term <- function(x, messages = FALSE){
+lter_term <- function(x, messages = FALSE, interactive = FALSE){
   
   # The LTER controlled vocabulary produces different results for a standard
   # search and fuzzy (similar) search. Both searches are run and results 
@@ -38,6 +45,9 @@ lter_term <- function(x, messages = FALSE){
   }
   if (length(x) != 1){
     stop('Input argument "x" has a length > 1! Only single terms are allowed.')
+  }
+  if (!missing(messages) & isTRUE(messages) & !missing(interactive) & isTRUE(interactive)){
+    stop('Both arguments "messages" & "interactive" can not be used at the same time. Please select one or the other.')
   }
   
   # Construct the query and search --------------------------------------------
@@ -106,20 +116,51 @@ lter_term <- function(x, messages = FALSE){
       paste0(
         'The term "',
         x,
-        '" could not be found. Possible alternatives:',
+        '" could not be found in the LTER Controlled Vocabulary. Possible alternatives:',
         '\n',
         paste0(
           term_list, 
           collapse = '\n'
-          )
+          ),
+        '\n'
         )
       )
     
   }
   
+  # Interactive mode ----------------------------------------------------------
+  
+  if (!missing(interactive) & isTRUE(interactive) & (!isTRUE(term_found)) & (length(term_list) != 0)){
+    
+    msg <- message(
+      paste0(
+        'The term "',
+        x,
+        '" could not be found in the LTER Controlled Vocabulary. Possible alternatives:',
+        '\n'
+        )
+      )
+    
+    term_list <- c(term_list, 'NONE OF THE ABOVE')
+    
+    print.data.frame(as.data.frame(term_list))
+    answer <- readline('Enter the row number of the term you would like to use: ')
+    alternative_term <- as.character(term_list[as.numeric(answer)])
+    message(paste0('You selected ... ', alternative_term, '\n'))
+    
+  }
+  
   # Output results ------------------------------------------------------------
   
-  term_found
+  if (!missing(interactive) & isTRUE(interactive) & (!isTRUE(term_found)) & (length(term_list) != 0)){
+    
+    alternative_term
+    
+  } else {
+    
+    term_found
+    
+  }
 
 }
   

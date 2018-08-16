@@ -10,11 +10,18 @@ lter_term(x, messages = FALSE)
 \item{x}{(character) A term to search for.}
 
 \item{messages}{(logical) Display diagnostic messages, e.g. alternative spelling options.}
+
+\item{interactive}{(logical) Query user to select from alternative terms and returns back
+selection.}
 }
 \value{
-TRUE - If the searched term is found.
-    FALSE- If the searched term was not found.
-    messages - Alternative spelling and near misses for searched term.
+Logical value (TRUE/FALSE) indicating whether the searched term could
+    be found. 
+    
+    If messages = TRUE, then alternative spellings and near misses 
+    are displayed. 
+    
+    If interactive mode = TRUE, then a user selected term is returned.
 }
 \description{
 Search for a term in the LTER Controlled Vocabulary (Long Term 

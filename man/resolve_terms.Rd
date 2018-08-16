@@ -14,6 +14,8 @@ vector of terms.}
 \itemize{
     \item{lter} - The LTER Controlled Vocabulary (http://vocab.lternet.edu/vocab/vocab/index.php)
 }}
+
+\item{messages}{(logical) Display diagnostic messages, e.g. alternative spelling options.}
 }
 \value{
 (character) Controlled vocabulary names corresponding to successfully
