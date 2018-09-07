@@ -45,11 +45,9 @@ library(EMLassemblyline)
 ## Create working directory
 [back to top](#contents)
 
-Create a new directory for your dataset. This is where the metadata parts created in the assembly line process will be stored and available for editing should you need to change the content of your EML.
+Create a directory for your datasets metadata templates. Name this directory after your dataset. Replace spaces with underscores (e.g. `name of your directory` should be `name_of_your_directory`).
 
-Name this directory after your dataset. Replace spaces with underscores (e.g. `name of your directory` should be `name_of_your_directory`).
-
-Move copies of the final versions of your data tables into this directory. These should be the final versions of the data you are ready to publish.
+Move copies of the final versions of your data tables into this directory or store them in a separate directory. These tables should be the final versions of the data you are ready to publish.
 
 Rename these files following these rules:
 
@@ -94,7 +92,7 @@ A .zip directory containing anything you want to put in it. .zip directory name 
 ## Import templates
 [back to top](#contents)
 
-Run the function `import_templates` in the RStudio Console to populate the directory with metadata templates for you to complete. You will need to supply a few arguments to this function:
+Run the function `import_templates` in the RStudio Console to populate the working directory with metadata templates for you to complete. You will need to supply a few arguments to this function:
 
 1. **path** A path to your dataset working directory.
 2. **license** The license for your dataset ("CC0" or "CCBY").
@@ -255,7 +253,7 @@ Run the function `extract_geocoverage` to get the unique latitude, longitude, an
 
 Arguments required by this function are:
 
-1. **path** A path to the dataset working directory containing the data table with geographic information.
+1. **path** A path to the data table containing geographic information.
 2. **data.file** Name of the input data table containing geographic coverage data.
 3. **lat.col** Name of latitude column. Values of this column must be in decimal degrees. Latitudes south of the equator must be prefixed with a minus sign (i.e. dash, "-").
 4. **lon.col** Name of longitude column. Values of this column must be in decimal degrees. Longitudes west of the prime meridian must be prefixed with a minus sign (i.e. dash, "-"). 
@@ -292,21 +290,23 @@ Now you are ready to synthesize your completed metadata templates into EML. This
 
 **NOTE: Make sure all your metadata templates and associated data files are closed. `make_eml` will fail if these files are open.**
 
-1. **path** A path to the dataset working directory.
-2. **dataset.title** A character string specifying the title for your dataset. Be descriptive (more than 5 words). We recommend the following format: `Project name: Broad description: Time span` (e.g. "GLEON: Long term lake chloride concentrations from North America and Europe: 1940-2016").
-3. **data.files** A list of character strings specifying the names of the data files of your dataset.
-4. **data.files.description** A list of character strings briefly describing the data files listed in the data.files argument and in the same order as listed in the data.files argument.
-5. **data.files.quote.character** A list of character strings defining the quote characters used in your data files and in the same order as listed in the data.files argument. If the quote character is a quotation, then enter `"\""`. If the quote character is an apostrophe, then enter `"\'"`. If there is no quote character then don't use this argument when running `make_eml`.
-6. **data.files.url** A character string specifying the URL of where your data tables are stored on a publicly accessible server (i.e. does not require user ID or password). The EDI data repository software, PASTA+, will use this to upload your data into the repository. If you will be manually uploading your data tables, then don't use this argument when running `make_eml`. 
-7. **zip.dir** A list of character strings specifying the names of the zip directories of your dataset. Only required if documenting a .zip directory.
-8. **zip.dir.description** A list of character strings briefly describing the zip directories listed in the zip.dir argument and in the same order as listed in the zip.dir argument. Only required if documenting a .zip directory.
-7. **temporal.coverage** A list of character strings specifying the beginning and ending dates of your dataset. Use the format `YYYY-MM-DD`.
-8. **geographic.coordinates** A list of character strings specifying the spatial bounding coordinates of your dataset in decimal degrees. The list must follow this order: "North", "East", "South", "West". Longitudes west of the prime meridian and latitudes south of the equator are prefixed with a minus sign (i.e. dash -). If you don't have an area, but rather a point. Repeat the latitude value for North and South, and repeat the longitude value for East and West.
-9. **geographic.description** A character string describing the geographic coverage of your dataset.
-10. **maintenance.description** A character string specifying whether data collection for this dataset is "ongoing" or "completed".
-11. **user.id** A character string, or list of character strings, specifying your user ID for the EDI data repository. The user.id controls editing access to the data package. If you do not have one, contact EDI (info@environmentaldatainitiative.org) to obtain one. Otherwise do not use this argument when running 'make_eml'.
-12. **affiliation** A character string, or list of character strings, specifying the affiliation of user.ids. In a list, the affiliations must follow the same order of the corresponding values listed under user.id. This is the affiliation used when logging in to the EDI Data Portal and can be: "LTER" or "EDI". If you don't have a user.id then do not use this argument when running 'make_eml'.
-13. **package.id** A character string specifying the package ID for your data package. If you don't have a package ID, then don't use this argument when running `make_eml`. A non-input package ID defaults to "edi.101.1".
+1. **path** (character) A path to the directory containing the completed metadata templates. Data files can also be stored at this path.
+2. **data.path** (character) A path to the directory containing the data entities described by the metadata templates. Default is set to path.
+3. **eml.path** (character) A path to the directory where the EML will be writtn. Default is set to path.
+4. **dataset.title** (character) The title for your data package. Be descriptive (more than 5 words). We recommend the following format: Project name: Broad description: Time span (e.g. "GLEON: Long term lake chloride concentrations from North America and Europe: 1940-2016").
+5. **data.files** (character) A vector of character strings specifying the names of your data files (e.g. data.files = c("lake_chloride_concentrations.csv", "lake_characteristics.csv")).
+6. **data.files.description** (character) A vector of character strings briefly describing the data files listed in the data.files argument and in the same order as listed in the data.files argument (e.g. data.files.description = c("Chloride concentration data.", "Climate, road density, and impervious surface data."))
+7. **data.files.quote.character** (character) A vector of character strings defining the quote characters used in your data files and in the same order as listed in the data.files argument. This argument is required only if your data contain quotations.  If the quote character is a quotation, then enter "\\"". If the quote character is an apostrophe, then enter "\\'". Example: data.files.quote.character = c("\\"", "\\"").
+8. **data.files.url** (character) The URL of where your data tables are stored on a publicly accessible server (i.e. does not require user ID or password). This argument is required only if your data are accessible from a publicly accesible URL. The EDI data repository software, PASTA+, will use this to upload your data into the repository. If you will be manually uploading your data tables, then don't use this argument. Example: data.files.url = "https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride". 
+9. **zip.dir** (character) A vector of character strings listing the .zip directories of your dataset.
+10. **zip.dir.description** (character) A vector of character strings briefly describing the contents of any .zip directory present in the working directory.
+11. **temporal.coverage** (character) A vector of character strings specifying the beginning and ending dates of your dataset. Use the format YYYY-MM-DD.
+12. **geographic.coordinates** (character) A vector of character strings specifying the spatial bounding coordinates of your dataset in decimal degrees. This argument is not required if you are supplying bounding coordinates in the bounding_boxes.txt template file. The list must follow this order: North, East, South, West. Longitudes West of the prime meridian and latitudes South of the equator are prefixed with a minus sign (i.e. dash -). If you don't have an area, but rather a point. Repeat the latitude value for North and South, and repeat the longitude value for East and West (e.g. geographic.coordinates = c('28.38', '-119.95', '28.38', '-119.95)).
+13. **geographic.description** (character) A description of the geographic coverage of your dataset. Don't use this argument if you are supplying geographic.coordinates in the bounding_boxes.txt template file. Example: "North America and Europe".
+14. **maintenance.description** (character) A description of whether data collection for this dataset is "ongoing" or "completed".
+15. **user.id** (character) A vector of character strings, specifying your user ID for the EDI data repository. The user.id controls editing access to your data package. If you do not have one, contact EDI (info@@environmentaldatainitiative.org) to obtain one. In the meantime do not use this argument when running `make_eml`.
+16. **affiliation** (character) A vector of character strings, specifying the affiliation of your user ID. In a list, the associations must follow the same order of the corresponding values listed under user.id. This is the affiliation used when logging in to the EDI Data Portal and can be: "LTER" or "EDI". If you don't have a user.id then do not use this argument when running `make_eml`.
+17. **package.id** (character) The ID of your data package. A missing package ID defaults to \emph{edi.101.1}. A package ID must contain the scope, package number, and revision number (e.g. 'edi.101.1').
 
 ```
 # View documentation for this function
