@@ -5,50 +5,56 @@
 #'     EML, and write to file.
 #'     
 #' @usage 
-#'     make_eml(path = "", 
-#'     dataset.title = "", 
-#'     data.files = c("df.1", "df.2", ...), 
-#'     data.files.description = c("df1.desc", "df.2.desc", ...), 
-#'     data.files.quote.character = c("df.1.quote.char", "df.2.quote.char", ...), 
-#'     zip.dir = "",
-#'     zip.dir.description = "",
-#'     data.files.url = "", 
-#'     temporal.coverage = c("begin_date", "end_date"), 
-#'     geographic.description = "", 
-#'     geographic.coordinates = c("North", "East", "South", "West"), 
-#'     maintenance.description = "", 
-#'     user.id = "", 
-#'     package.id = "")
+#'     make_eml(
+#'     path,
+#'     data.path = path,
+#'     eml.path = path, 
+#'     dataset.title, 
+#'     data.files, 
+#'     data.files.description, 
+#'     data.files.quote.character, 
+#'     zip.dir,
+#'     zip.dir.description,
+#'     data.files.url, 
+#'     temporal.coverage, 
+#'     geographic.description, 
+#'     geographic.coordinates, 
+#'     maintenance.description, 
+#'     user.id, 
+#'     package.id)
 #'     
 #' @param path 
-#'     A path to the dataset working directory containing the completed 
-#'     metadata templates, \emph{attributes_datatablename.txt}, 
-#'     \emph{catvars_datatablename.txt} (if categorical variables 
-#'     are present), and \emph{geographic_coverage.txt} (if reporting detailed 
-#'     geographic coverage).
+#'     (character) A path to the directory containing the completed metadata 
+#'     templates.
+#' @param data.path
+#'     (character) A path to the directory containing the data entities 
+#'     described by the metadata templates.
+#' @param eml.path
+#'     (character) A path to the directory where the EML will be writtn.
 #' @param dataset.title
-#'     A character string specifying the title for your dataset. Be descriptive
+#'     (character) The title for your data package. Be descriptive
 #'     (more than 5 words). We recommend the following format: Project name: 
 #'     Broad description: Time span (e.g. "GLEON: Long term lake chloride 
 #'     concentrations from North America and Europe: 1940-2016").
 #' @param data.files
-#'     A list of character strings specifying the names of the data files
-#'     of your dataset (e.g. data.files = c("lake_chloride_concentrations.csv", 
-#'     "lake_characteristics.csv"))
+#'     (character) A vector of character strings specifying the names of your 
+#'     data files (e.g. data.files = c("lake_chloride_concentrations.csv", 
+#'     "lake_characteristics.csv")).
 #' @param data.files.description
-#'     A list of character strings briefly describing the data files listed in the 
-#'     data.files argument and in the same order as listed in the data.files
-#'     argument (e.g. data.files.description = c("Chloride concentration data.", 
+#'     (character) A vector of character strings briefly describing the data 
+#'     files listed in the data.files argument and in the same order as listed 
+#'     in the data.files argument 
+#'     (e.g. data.files.description = c("Chloride concentration data.", 
 #'     "Climate, road density, and impervious surface data."))
 #' @param data.files.quote.character
-#'     A list of character strings defining the quote characters used in your 
-#'     data files and in the same order as listed in the data.files argument.
-#'     This argument is required only if your data contain quotations.  
+#'     (character) A vector of character strings defining the quote characters 
+#'     used in your data files and in the same order as listed in the data.files 
+#'     argument. This argument is required only if your data contain quotations.  
 #'     If the quote character is a quotation, then enter "\\"". If the quote 
 #'     character is an apostrophe, then enter "\\'". Example: 
 #'     data.files.quote.character = c("\\"", "\\"").
 #' @param data.files.url
-#'     A character string specifying the URL of where your data tables are 
+#'     (character) The URL of where your data tables are 
 #'     stored on a publicly accessible server (i.e. does not require user ID 
 #'     or password). This argument is required only if your data are accessible 
 #'     from a publicly accesible URL. The EDI data repository software, PASTA+, 
@@ -56,16 +62,16 @@
 #'     manually uploading your data tables, then don't use this argument.
 #'     Example: data.files.url = "https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride".
 #' @param zip.dir
-#'     A character string specifying the names of .zip directories of your 
+#'     (character) A vector of character strings listing the .zip directories of your 
 #'     dataset.
 #' @param zip.dir.description
-#'     A character string briefly describing the contents of any .zip directory
-#'     present in the working directory.
+#'     (character) A vector of character strings briefly describing the contents of 
+#'     any .zip directory present in the working directory.
 #' @param temporal.coverage
-#'     A list of character strings specifying the beginning and ending dates 
-#'     of your dataset. use the format YYYY-MM-DD.
+#'     (character) A vector of character strings specifying the beginning and ending dates 
+#'     of your dataset. Use the format YYYY-MM-DD.
 #' @param geographic.coordinates
-#'     A list of character strings specifying the spatial bounding
+#'     (character) A vector of character strings specifying the spatial bounding
 #'     coordinates of your dataset in decimal degrees. This argument is not 
 #'     required if you are supplying bounding coordinates in the 
 #'     bounding_boxes.txt template file. The list must follow
@@ -76,27 +82,27 @@
 #'     value for East and West (e.g. geographic.coordinates = c('28.38',
 #'     '-119.95', '28.38', '-119.95)).
 #' @param geographic.description
-#'     A character string describing the geographic coverage of your dataset. 
+#'     (character) A description of the geographic coverage of your dataset. 
 #'     Don't use this argument if you are supplying geographic.coordinates in 
 #'     the bounding_boxes.txt template file. Example: "North America and Europe".
 #' @param maintenance.description
-#'     A character string specifying whether data collection for this dataset 
+#'     (character) A description of whether data collection for this dataset 
 #'     is "ongoing" or "completed".
 #' @param user.id
-#'     A character string, or list of character strings, specifying your user 
+#'     (character) A vector of character strings, specifying your user 
 #'     ID for the EDI data repository. The user.id controls editing access to 
 #'     your data package. If you do not have one, contact EDI 
 #'     (info@@environmentaldatainitiative.org) to obtain one. In the meantime 
 #'     do not use this argument when running `make_eml`.
 #' @param affiliation
-#'     A character string, or list of character strings, specifying the 
+#'     (character) A vector of character strings, specifying the 
 #'     affiliation of your user ID. In a list, the associations must follow the 
 #'     same order of the corresponding values listed under user.id. This is the 
 #'     affiliation used when logging in to the EDI Data Portal and can be: 
 #'     "LTER" or "EDI". If you don't have a user.id then do not use this 
 #'     argument when running `make_eml`.
 #' @param package.id
-#'     A character string specifying the package ID for your data package. 
+#'     (character) The ID of your data package. 
 #'     A missing package ID defaults to \emph{edi.101.1}. A package ID must
 #'     contain the scope, package number, and revision number 
 #'     (e.g. 'edi.101.1').
@@ -116,7 +122,7 @@
 #'
 
 
-make_eml <- function(path, dataset.title, data.files, data.files.description, 
+make_eml <- function(path, data.path = path, eml.path = path, dataset.title, data.files, data.files.description, 
                      data.files.quote.character, data.files.url, zip.dir, zip.dir.description,
                      temporal.coverage, geographic.coordinates, geographic.description, maintenance.description, user.id, 
                      affiliation, package.id) {
@@ -151,17 +157,23 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
     stop('Input argument "user.id" is missing! Add one.')
   }
   
-  # Validate path
+  # Validate paths
   
   validate_path(path)
+  if (!missing(data.path)){
+    validate_path(data.path)  
+  }
+  if (!missing(eml.path)){
+    validate_path(eml.path)  
+  }
   
   # Validate data file names
   
-  table_names <- validate_file_names(path, data.files)
+  table_names <- validate_file_names(path = data.path, data.files = data.files)
   
   # Validate fields of data.files
   
-  validate_fields(path, data.files = table_names)
+  validate_fields(data.path, data.files = table_names)
   
   # Detect operating system
   
@@ -225,7 +237,7 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
   
   # Compile attributes --------------------------------------------------------
   
-  attributes_in <- compile_attributes(path, data.files)
+  attributes_in <- compile_attributes(path, data.path, data.files)
   
   # Set file names
 
@@ -983,12 +995,12 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
     
     # Read data table
     
-    file_path <- paste(path,
+    file_path <- paste(data.path,
                        "/",
                        table_names[i],
                        sep = "")
     
-    delim_guess <- detect_delimeter(path, data.files = table_names[i], os)
+    delim_guess <- detect_delimeter(data.path, data.files = table_names[i], os)
     
     # if (delim_guess == ','){
     #   df_table <- suppressMessages(
@@ -1118,7 +1130,7 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
     # Set physical
     
     eol <- detect_eol(
-      path = path,
+      path = data.path,
       file.name = table_names[i],
       os = os
     )
@@ -1127,7 +1139,7 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
       
       physical_temp <- set_physical(
         paste0(
-          path,
+          data.path,
           '/',
           table_names[i]
           )
@@ -1144,7 +1156,7 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
       
       physical_temp <- set_physical(
         paste0(
-          path,
+          data.path,
           '/',
           table_names[i]
         )
@@ -1164,7 +1176,7 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
                          unit = "byte",
                          as.character(
                            file.size(
-                             paste(path,
+                             paste(data.path,
                                    "/",
                                    table_names[i],
                                    sep = ""))))
@@ -1186,7 +1198,7 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
       
       command_certutil <- paste("md5 ",
                                 "\"",
-                                path,
+                                data.path,
                                 "/",
                                 table_names[i],
                                 "\"",
@@ -1207,7 +1219,7 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
       
       command_certutil <- paste("CertUtil -hashfile ",
                                 "\"",
-                                path,
+                                data.path,
                                 "\\",
                                 table_names[i],
                                 "\"",
@@ -1229,7 +1241,7 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
       
       command_certutil <- paste0("md5sum ",
                                  "\"",
-                                 path,
+                                 data.path,
                                  "/",
                                  table_names[i],
                                  "\"")
@@ -1359,12 +1371,12 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
         entity_type <- "zip directory"
         physical@dataFormat@externallyDefinedFormat@formatName <- format_name
         
-        physical@size <- new("size", unit = "bytes", as(as.character(file.size(paste(path, "/", zip.dir[i], sep = ""))), "size"))
+        physical@size <- new("size", unit = "bytes", as(as.character(file.size(paste(data.path, "/", zip.dir[i], sep = ""))), "size"))
         
         if (os == "mac"){
           
           command_certutil <- paste("md5 ",
-                                    path,
+                                    data.path,
                                     "/",
                                     zip.dir[i],
                                     sep = "")
@@ -1383,7 +1395,7 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
         } else if (os == "win"){
           
           command_certutil <- paste("CertUtil -hashfile ",
-                                    path,
+                                    data.path,
                                     "\\",
                                     zip.dir[i],
                                     " MD5",
@@ -1453,7 +1465,7 @@ make_eml <- function(path, dataset.title, data.files, data.files.description,
 
   message("Writing EML.")
   
-  write_eml(eml, paste(path, "/", data_package_id, ".xml", sep = ""))
+  write_eml(eml, paste(eml.path, "/", data_package_id, ".xml", sep = ""))
   
   # Validate EML
   

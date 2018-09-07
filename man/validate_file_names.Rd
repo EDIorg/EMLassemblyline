@@ -4,7 +4,7 @@
 \alias{validate_file_names}
 \title{Validate file names}
 \usage{
-validate_file_names(path = "", data.files = data.files = c("data.file.1", 
+validate_file_names(path = "", data.files = c("data.file.1", 
     "data.file.2", "etc.")).
 }
 \arguments{

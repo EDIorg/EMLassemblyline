@@ -3,7 +3,7 @@
 #' @description  
 #'     Identify whether input data file names exist in the specified directory.
 #'
-#' @usage validate_file_names(path = "", data.files = data.files = c("data.file.1", 
+#' @usage validate_file_names(path = "", data.files = c("data.file.1", 
 #'     "data.file.2", "etc.")).
 #' 
 #' @param path 

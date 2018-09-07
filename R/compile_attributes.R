@@ -3,7 +3,7 @@
 # and reformats the attributes table.
 
 
-compile_attributes <- function(path, data.files){
+compile_attributes <- function(path, data.path, data.files){
 
   # Detect users operating system
   
@@ -11,7 +11,7 @@ compile_attributes <- function(path, data.files){
   
   # Get names of data files with associated attribute files
   
-  files <- list.files(path)
+  files <- list.files(data.path)
   use_i <- str_detect(string = files,
                       pattern = "^attributes")
   attribute_files <- files[use_i]
@@ -25,7 +25,7 @@ compile_attributes <- function(path, data.files){
   
   # Synchronize ordering of data files and attribute files
   
-  table_names <- validate_file_names(path, data.files)
+  table_names <- validate_file_names(data.path, data.files)
   
   attribute_files_out <- c()
   for (i in 1:length(table_names)){
@@ -45,12 +45,12 @@ compile_attributes <- function(path, data.files){
     message(paste("Compiling", fname_table_attributes[i]))
 
     
-    file_path <- paste(path,
+    file_path <- paste(data.path,
                        "/",
                        table_names[i],
                        sep = "")
     
-    delim_guess <- detect_delimeter(path = path, data.files = table_names[i], os = os)
+    delim_guess <- detect_delimeter(path = data.path, data.files = table_names[i], os = os)
     
     # if (delim_guess == ','){
     #   df_table <- suppressMessages(
