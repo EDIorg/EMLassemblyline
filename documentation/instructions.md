@@ -7,7 +7,7 @@ Below are instructions for operating the `EMLassemblyline`. We recommend scripti
 ### Contents:
 
 * [Install](#install)
-* [Create working directory](#create-working-directory)
+* [Create directories](#create-working-directory)
 * [Select intellectual rights license](#select-intellectual-rights-license)
 * [Identify data types](#identify-data-types)
 * [Import templates](#import-templates)
@@ -27,7 +27,7 @@ Below are instructions for operating the `EMLassemblyline`. We recommend scripti
 ## Install
 [back to top](#contents)
 
-The assembly line is under constant revision and improvement. Please reinstall the assembly line periodically to ensure a successful experience. Installation from GitHub requires the `devtools` package.
+`EMLassemblyline` is under constant revision and improvement. Please reinstall the R package periodically to ensure the latest functionality is available to you. Installation from GitHub requires the `devtools` package.
 
 ```
 # Install devtools
@@ -42,12 +42,12 @@ library(EMLassemblyline)
 ```
 
 
-## Create working directory
+## Create directories
 [back to top](#contents)
 
-Create a directory for your datasets metadata templates. Name this directory after your dataset. Replace spaces with underscores (e.g. `name of your directory` should be `name_of_your_directory`).
+Create directories to store your dataset, metadata templates created and used by `EMLassemblyline`, and for export of EML from `EMLassemblyline`. These files can be co-located in a single directory or organized in their own respective directories. Either way, start by creating a directory for your metadata templates. Name this directory after your dataset. Replace spaces with underscores (e.g. `name of your directory` should be `name_of_your_directory`).
 
-Move copies of the final versions of your data tables into this directory or store them in a separate directory. These tables should be the final versions of the data you are ready to publish.
+Move copies of the final versions of your data tables into this directory or store them in their own separate directory. These tables should be the final versions of the data you are ready to publish.
 
 Rename these files following these rules:
 
@@ -72,7 +72,7 @@ There are 2 options for intellectual rights licenses:
 ## Identify data types
 [back to top](#contents)
 
-Currently, the assembly line only works for tabular data and .zip directories.
+`EMLassemblyline` works for tabular data files and .zip directories. Other formats will be supported in the future.
 
 #### table
 
@@ -92,9 +92,9 @@ A .zip directory containing anything you want to put in it. .zip directory name 
 ## Import templates
 [back to top](#contents)
 
-Run the function `import_templates` in the RStudio Console to populate the working directory with metadata templates for you to complete. You will need to supply a few arguments to this function:
+Run the function `import_templates` in the RStudio Console to populate the metadata directory with template files for you to complete. You will need to supply a few arguments to this function:
 
-1. **path** A path to your dataset working directory.
+1. **path** A path for the directory to which metadata templates will be imported.
 2. **license** The license for your dataset ("CC0" or "CCBY").
 3. **data.files** A list of the data tables of your dataset. File extension is not required. Do not include .zip directories here, they will be added in the `make_eml` step.
 
@@ -116,9 +116,6 @@ import_templates(path = "/Users/csmith/Desktop/gleon_chloride",
 ## Abstract
 [back to top](#contents)
 
-Open `my_workflow.R` in RStudio. This is a blank script for you to build an assembly line workflow, which can be revisited or modified for future assembly line runs.
-
-
 Open the file `abstract.txt` and write an abstract for your dataset. The abstract should cover what, why, when, where, and how for your dataset. Write your abstract in plain text.
 
 Do not use special characters, symbols, formatting, or hyperlinks (URLs are acceptable). The reason for this is that the EML schema only allows characters that are apart of the unicode character set. 
@@ -128,9 +125,6 @@ NOTE: You can create your abstract in Microsoft Word and then copy over to `abst
 
 ## Methods
 [back to top](#contents)
-
-Open `my_workflow.R` in RStudio. This is a blank script for you to build an assembly line workflow, which can be revisited or modified for future assembly line runs.
-
 
 Open the file `methods.txt` and describe the methods for your dataset. Be specific, include instrument descriptions, or point to a protocol online. If this dataset is a synthesis of other datasets please specify dataset origins, preferably their DOI or URL plus general citation information. 
 
@@ -245,7 +239,7 @@ A tab delimited __catvars_datatablename.txt__ will be created for each of your d
 ## Geographic coverage
 [back to top](#contents)
 
-If your dataset contains more than one sampling point or area, then you will want to add this information to your metadata. Often a data user will search for data withing a geographic area.
+If your dataset contains more than one sampling point or area, then you will want to add this information to your metadata. Often a data user will search for data within a geographic area.
 
 #### Geographic points
 
@@ -253,11 +247,12 @@ Run the function `extract_geocoverage` to get the unique latitude, longitude, an
 
 Arguments required by this function are:
 
-1. **path** A path to the data table containing geographic information.
-2. **data.file** Name of the input data table containing geographic coverage data.
-3. **lat.col** Name of latitude column. Values of this column must be in decimal degrees. Latitudes south of the equator must be prefixed with a minus sign (i.e. dash, "-").
-4. **lon.col** Name of longitude column. Values of this column must be in decimal degrees. Longitudes west of the prime meridian must be prefixed with a minus sign (i.e. dash, "-"). 
-5. **site.col** Name of site column. This column lists site specific names to be associated with the geographic coordinates.
+1. **path** A path to the metadata directory.
+2. **data.path** A path to the directory containing the data table with geographic information. Don't use this argument if the data table is located at the path argument listed above.
+3. **data.file** Name of the input data table containing geographic coverage data.
+4. **lat.col** Name of latitude column. Values of this column must be in decimal degrees. Latitudes south of the equator must be prefixed with a minus sign (i.e. dash, "-").
+5. **lon.col** Name of longitude column. Values of this column must be in decimal degrees. Longitudes west of the prime meridian must be prefixed with a minus sign (i.e. dash, "-"). 
+6. **site.col** Name of site column. This column lists site specific names to be associated with the geographic coordinates.
 
 ```
 # View documentation for this function
@@ -271,7 +266,7 @@ extract_geocoverage(path = "/Users/csmith/Desktop/gleon_chloride",
                     site.col = "lake_name")
 ```
 
-This function outputs a tab delimited file named `geographic_coverage.txt` to your dataset directory. You may edit this in a spreadsheet editor if you'd like, but if the data table this information has been extracted from is accurate, then there is no need for editing.
+This function outputs a tab delimited file named `geographic_coverage.txt` to your metadata directory. You may edit this in a spreadsheet editor if you'd like, but if the data table this information has been extracted from is accurate, then there is no need for editing.
 
 #### Geographic areas
 
