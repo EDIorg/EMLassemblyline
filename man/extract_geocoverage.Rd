@@ -7,8 +7,9 @@
 extract_geocoverage(path, data.file, lat.col, lon.col, site.col)
 }
 \arguments{
-\item{path}{A path to the dataset working directory containing the data table with 
-geographic information.}
+\item{path}{A path to the metadata directory.}
+
+\item{data.path}{A path to the directory containing the data table with geographic information. Don't use this argument if the data table is located at the path argument listed above.}
 
 \item{data.file}{Name of the input data table containing geographic coverage data.}
 

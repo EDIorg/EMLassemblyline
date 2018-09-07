@@ -4,14 +4,17 @@
 \alias{define_catvars}
 \title{Define categorical variables}
 \usage{
-define_catvars(path)
+define_catvars(path, data.path = path)
 
     Run this function whenever your data contain attributes of class 
     "categorical" listed in \emph{attributes_datatablename.txt} files.
 }
 \arguments{
-\item{path}{A path to the dataset working directory containing 
-\emph{attributes_datatablename.txt} and the respecive data tables.}
+\item{path}{(character) A path to your metadata templates directory containing 
+\emph{attributes_datatablename.txt}.}
+
+\item{data.path}{(character) A path to your data directory. Don't use this argument
+if your data are co-located with your metadata templates.}
 }
 \value{
 A tab delimited UTF-8 file in the dataset working directory titled 

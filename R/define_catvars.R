@@ -3,14 +3,17 @@
 #' @description  
 #'     Identify and define categorical variables for your data tables.
 #'
-#' @usage define_catvars(path)
+#' @usage define_catvars(path, data.path = path)
 #' 
 #'     Run this function whenever your data contain attributes of class 
 #'     "categorical" listed in \emph{attributes_datatablename.txt} files.
 #'
 #' @param path 
-#'     A path to the dataset working directory containing 
-#'     \emph{attributes_datatablename.txt} and the respecive data tables.
+#'     (character) A path to your metadata templates directory containing 
+#'     \emph{attributes_datatablename.txt}.
+#' @param data.path 
+#'     (character) A path to your data directory. Don't use this argument
+#'     if your data are co-located with your metadata templates.
 #'
 #' @return 
 #'     A tab delimited UTF-8 file in the dataset working directory titled 
@@ -33,7 +36,7 @@
 #' @export
 #'
 
-define_catvars <- function(path) {
+define_catvars <- function(path, data.path = path) {
   
   
   # Check arguments and parameterize ------------------------------------------
@@ -42,9 +45,12 @@ define_catvars <- function(path) {
     stop('Input argument "path" is missing! Specify the path to your dataset working directory.')
   }
   
-  # Validate path
+  # Validate paths
   
   validate_path(path)
+  if (!missing(data.path)){
+    validate_path(data.path)  
+  }
   
   # Detect operating system
   
@@ -64,9 +70,10 @@ define_catvars <- function(path) {
   table_names_base <- str_sub(string = attribute_files,
                               start = 12,
                               end = nchar(attribute_files)-4)
-  use_i <- str_detect(string = files,
+  data_files <- list.files(data.path)
+  use_i <- str_detect(string = data_files,
                       pattern = str_c("^", table_names_base, collapse = "|"))
-  table_names <- files[use_i]
+  table_names <- data_files[use_i]
   data_files <- table_names
   
   # Send warning if data table name is repeated more than once
@@ -77,7 +84,7 @@ define_catvars <- function(path) {
   
   # Validate fields of data.files
   
-  validate_fields(path, data.files = data_files)
+  validate_fields(path = data.path, data.files = data_files)
   
   # Set file names to be written
 
@@ -85,7 +92,7 @@ define_catvars <- function(path) {
 
   # Detect field delimiters of data files
   
-  delim_guess <- detect_delimeter(path, data.files = data_files, os)
+  delim_guess <- detect_delimeter(path = data.path, data.files = data_files, os)
   
   
   # Loop through data tables --------------------------------------------------
@@ -135,7 +142,7 @@ define_catvars <- function(path) {
       
       message(paste("Reading ", table_names[i], ".", sep = ""))
       
-      data_path <- paste(path,
+      data_path <- paste(data.path,
                             "/",
                             data_files[i],
                             sep = "")

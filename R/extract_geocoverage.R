@@ -8,8 +8,9 @@
 #'     extract_geocoverage(path, data.file, lat.col, lon.col, site.col)
 #'
 #' @param path 
-#'     A path to the dataset working directory containing the data table with 
-#'     geographic information.
+#'     A path to the metadata directory.
+#' @param data.path 
+#'     A path to the directory containing the data table with geographic information. Don't use this argument if the data table is located at the path argument listed above.
 #' @param data.file 
 #'     Name of the input data table containing geographic coverage data.
 #' @param lat.col 
@@ -33,7 +34,7 @@
 #'
 
 
-extract_geocoverage <- function(path, data.file, lat.col, lon.col, site.col){
+extract_geocoverage <- function(path, data.path = path, data.file, lat.col, lon.col, site.col){
   
   # Check arguments and parameterize ------------------------------------------
   
@@ -58,18 +59,21 @@ extract_geocoverage <- function(path, data.file, lat.col, lon.col, site.col){
   # Validate path
   
   validate_path(path)
+  if (!missing(data.path)){
+    validate_path(data.path)  
+  }
   
   # Validate file names
 
-  data_file <- validate_file_names(path, data.files = data.file)
+  data_file <- validate_file_names(path = data.path, data.files = data.file)
   
   # Validate fields of data.files
   
-  validate_fields(path, data.files = data_file)
+  validate_fields(path = data.path, data.files = data_file)
   
   # Get file names ------------------------------------------------------------
   
-  files <- list.files(path)
+  files <- list.files(data.path)
   use_i <- str_detect(string = files,
                       pattern = str_c("^", data_file, collapse = "|"))
   data_files <- files[use_i]
@@ -80,16 +84,16 @@ extract_geocoverage <- function(path, data.file, lat.col, lon.col, site.col){
   
   # Detect data file delimeter
   
-  delim_guess <- detect_delimeter(path, data.files = data_file, os)
+  delim_guess <- detect_delimeter(data.path, data.files = data_file, os)
   
   # Read data table -----------------------------------------------------------
   
-  file_path <- paste(path,
+  file_path <- paste(data.path,
                      "/",
                      data_file,
                      sep = "")
   
-  if (file.exists(paste(path, "/geographic_coverage.txt", sep = ""))){
+  if (file.exists(paste(data.path, "/geographic_coverage.txt", sep = ""))){
     
     message("geographic_coverage.txt already exists!")
     
@@ -105,7 +109,7 @@ extract_geocoverage <- function(path, data.file, lat.col, lon.col, site.col){
       )
     } else if (delim_guess == '\t'){
       df_table <- suppressMessages(
-        read_csv(
+        read_tsv(
           file = file_path
         )
       )
