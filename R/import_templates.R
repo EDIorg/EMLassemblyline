@@ -6,18 +6,22 @@
 #'     \code{make_eml} during the last step of the assembly line process.
 #'
 #' @usage 
-#'     import_templates(path = "", license = "", data.files = c("data.file.1", "data.file.2", "etc."))
+#'     import_templates(path, data.path = path, license, data.files)
 #'
 #' @param path 
-#'     A character string specifying a path to the dataset working directory
+#'     (character) A path to the dataset working directory to which the 
+#'     metadata templates will be copied.
 #'     (e.g. "C:/Users/Colin/Documents/data_sets/gleon_chloride").
+#' @param data.path
+#'     (character) A path to the directory containing the data entities.
 #' @param license
-#'     A character string specifying the license for your dataset. Select "CC0" 
+#'     (character) The license for your dataset. Select "CC0" 
 #'     or "CCBY". Additional information about these licenses are listed below 
 #'     under "details".
 #' @param data.files
-#'     A list of character strings specifying the names of the data files
-#'     of your dataset. It is not necessary to include the file extension.
+#'     (character) A vector of character strings specifying the names of the data files
+#'     of your dataset. It is not necessary to include the file extension. E.g 
+#'     data.files = c("data.file.1", "data.file.2", "etc.").
 #'
 #' @return 
 #'     \strong{abstract.txt} A text file for the abstract of your dataset. Edit 
@@ -112,7 +116,7 @@
 #' @export     
 #'     
 
-import_templates <- function(path, license, data.files){
+import_templates <- function(path, data.path = path, license, data.files){
   
   # Check arguments and parameterize ------------------------------------------
   
@@ -131,6 +135,9 @@ import_templates <- function(path, license, data.files){
   # Valdate path
   
   validate_path(path)
+  if (!missing(data.path)){
+    validate_path(data.path)  
+  }
   
   # Validate license
   
@@ -142,11 +149,11 @@ import_templates <- function(path, license, data.files){
   
   # Validate data.files
   
-  data_files <- validate_file_names(path, data.files)
+  data_files <- validate_file_names(data.path, data.files)
   
   # Validate fields of data.files
   
-  validate_fields(path, data.files = data_files)
+  validate_fields(data.path, data.files = data_files)
   
   # Detect operating system
   
@@ -154,7 +161,7 @@ import_templates <- function(path, license, data.files){
   
   # Detect file delimeters
   
-  delim_guess <- detect_delimeter(path, data.files = data_files, os)
+  delim_guess <- detect_delimeter(data.path, data.files = data_files, os)
 
   
   # Copy templates to path if they don't exist --------------------------------
@@ -347,7 +354,7 @@ import_templates <- function(path, license, data.files){
   
   for (i in 1:length(data_files)){
     
-    data_path <- paste(path,
+    data_path <- paste(data.path,
                           "/",
                           data_files[i],
                           sep = "")
@@ -402,7 +409,7 @@ import_templates <- function(path, license, data.files){
     
     # Read data table
     
-    data_path <- paste(path,
+    data_path <- paste(data.path,
                        "/",
                        data_files[i],
                        sep = "")

@@ -4,18 +4,22 @@
 \alias{import_templates}
 \title{Import metadata templates}
 \usage{
-import_templates(path = "", license = "", data.files = c("data.file.1", "data.file.2", "etc."))
+import_templates(path, data.path = path, license, data.files)
 }
 \arguments{
-\item{path}{A character string specifying a path to the dataset working directory
+\item{path}{(character) A path to the dataset working directory to which the 
+metadata templates will be copied.
 (e.g. "C:/Users/Colin/Documents/data_sets/gleon_chloride").}
 
-\item{license}{A character string specifying the license for your dataset. Select "CC0" 
+\item{data.path}{(character) A path to the directory containing the data entities.}
+
+\item{license}{(character) The license for your dataset. Select "CC0" 
 or "CCBY". Additional information about these licenses are listed below 
 under "details".}
 
-\item{data.files}{A list of character strings specifying the names of the data files
-of your dataset. It is not necessary to include the file extension.}
+\item{data.files}{(character) A vector of character strings specifying the names of the data files
+of your dataset. It is not necessary to include the file extension. E.g 
+data.files = c("data.file.1", "data.file.2", "etc.").}
 }
 \value{
 \strong{abstract.txt} A text file for the abstract of your dataset. Edit 
