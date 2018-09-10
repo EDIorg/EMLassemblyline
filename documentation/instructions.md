@@ -95,8 +95,9 @@ A .zip directory containing anything you want to put in it. .zip directory name 
 Run the function `import_templates` in the RStudio Console to populate the metadata directory with template files for you to complete. You will need to supply a few arguments to this function:
 
 1. **path** A path for the directory to which metadata templates will be imported.
-2. **license** The license for your dataset ("CC0" or "CCBY").
-3. **data.files** A list of the data tables of your dataset. File extension is not required. Do not include .zip directories here, they will be added in the `make_eml` step.
+2. **data.path** A path to the directory containing your data entities. The default value is set to "path", i.e. the location to which your metadata templates will be imported.
+3. **license** The license for your dataset ("CC0" or "CCBY").
+4. **data.files** A list of the data tables of your dataset. File extension is not required. Do not include .zip directories here, they will be added in the `make_eml` step.
 
 ```
 # First load the EMLassemblyline package
