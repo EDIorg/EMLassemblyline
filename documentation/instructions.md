@@ -100,17 +100,22 @@ Run the function `import_templates` in the RStudio Console to populate the metad
 4. **data.files** A list of the data tables of your dataset. File extension is not required. Do not include .zip directories here, they will be added in the `make_eml` step.
 
 ```
-# First load the EMLassemblyline package
+# Load EMLassemblyline
 library(EMLassemblyline)
 
-# View documentation for this function
-?import_templates
-
-# Import templates for an example dataset licensed under CC0, with 2 tables.
+# Import templates for an example dataset licensed under CC0, with 2 tables located in at "path"
 import_templates(path = "/Users/csmith/Desktop/gleon_chloride",
                  license = "CC0",
                  data.files = c("lake_chloride_concentrations",
                                 "lake_characteristics"))
+                                
+# Import templates for data stored in a different directory ("data.path") than where the templates will be imported to
+import_templates(path = "/Users/csmith/Desktop/gleon_chloride",
+                 data.path = "/Users/csmith/Desktop/gleon_chloride/data",
+                 license = "CC0",
+                 data.files = c("lake_chloride_concentrations",
+                                "lake_characteristics"))
+                                
 ```
 
 
