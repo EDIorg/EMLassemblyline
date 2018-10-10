@@ -232,11 +232,12 @@ view_unit_dictionary()
 If your data tables contain any attributes with the categorical class, you will need to supply definitions for the categorical codes. Use the function `define_catvars` to do this. `define_catvars` searches through each attribute file looking for attributes with a categorical class. If found, the function extracts unique categorical codes for each attribute and writes them to a file for you to define.
 
 ```
-# View documentation for this function
-?define_catvars
-
-# Run this function for your dataset
+# Define categorical variables when data and metadata templates are co-located at path
 define_catvars(path = "/Users/csmith/Desktop/gleon_chloride")
+
+# Define categorical variables when data and metadata templates are located in different directories
+define_catvars(path = "/Users/csmith/Desktop/gleon_chloride",
+               data.path = "/Users/csmith/Desktop/gleon_chloride/data")
 
 ```
 
@@ -310,11 +311,41 @@ Now you are ready to synthesize your completed metadata templates into EML. This
 17. **package.id** (character) The ID of your data package. A missing package ID defaults to \emph{edi.101.1}. A package ID must contain the scope, package number, and revision number (e.g. 'edi.101.1').
 
 ```
-# View documentation for this function
-?make_eml
-
-# Run this function
+# Make EML for data and metadata templates co-located at path
 make_eml(path = "/Users/csmith/Desktop/gleon_chloride",
+         dataset.title = "GLEON: Long term lake chloride concentrations from North America and Europe: 1940-2016",
+         data.files = c("lake_chloride_concentrations",
+                        "lake_characteristics"),
+         data.files.description = c("Chloride concentration data.", 
+                                    "Climate, road density, and impervious surface data."),
+         data.files.quote.character = c("\"", "\""),
+         temporal.coverage = c("1940-01-31", "2016-01-01"),
+         geographic.description = "North America and Europe",
+         geographic.coordinates = c("69.0", "28.53", "28.38", "-119.95"),
+         maintenance.description = "completed", 
+         user.id = "csmith",
+         package.id = "edi.201.1")
+         
+# Make EML for data and metadata templates located in different paths
+make_eml(path = "/Users/csmith/Desktop/gleon_chloride",
+         data.path = "/Users/csmith/Desktop/gleon_chloride/data",
+         dataset.title = "GLEON: Long term lake chloride concentrations from North America and Europe: 1940-2016",
+         data.files = c("lake_chloride_concentrations",
+                        "lake_characteristics"),
+         data.files.description = c("Chloride concentration data.", 
+                                    "Climate, road density, and impervious surface data."),
+         data.files.quote.character = c("\"", "\""),
+         temporal.coverage = c("1940-01-31", "2016-01-01"),
+         geographic.description = "North America and Europe",
+         geographic.coordinates = c("69.0", "28.53", "28.38", "-119.95"),
+         maintenance.description = "completed", 
+         user.id = "csmith",
+         package.id = "edi.201.1")
+         
+# Make EML for data and metadata templates located in different paths, and EML to be exported to a separate path
+make_eml(path = "/Users/csmith/Desktop/gleon_chloride",
+         data.path = "/Users/csmith/Desktop/gleon_chloride/data",
+         eml.path = "/Users/csmith/Desktop/gleon_chloride/eml",
          dataset.title = "GLEON: Long term lake chloride concentrations from North America and Europe: 1940-2016",
          data.files = c("lake_chloride_concentrations",
                         "lake_characteristics"),
