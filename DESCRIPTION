@@ -27,6 +27,6 @@ Encoding: UTF-8
 LazyData: true
 URL: http://github.com/EDIorg/EMLassemblyline
 BugReports: http://github.com/EDIorg/EMLassemblyline/issues
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 SystemRequirements: 
 VignetteBuilder: knitr

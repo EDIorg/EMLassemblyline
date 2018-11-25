@@ -1152,7 +1152,9 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
                                fieldDelimiter = unlist(eml_get(physical_temp, 'fieldDelimiter')),
                                quoteCharacter = data.files.quote.character[i])
       
-    } else {
+    }
+    
+    if (missing('data.files.quote.character')) {
       
       physical_temp <- set_physical(
         paste0(
