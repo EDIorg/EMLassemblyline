@@ -179,9 +179,12 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   
   os <- detect_os()
   
-  # Set package ID
+  # Validate and set package ID
   
   if (!missing(package.id)){
+    if (!isTRUE(stringr::str_detect(package.id, '[:alpha:]\\.[:digit:]+\\.[:digit:]'))){
+      stop('Input argument "package.id" appears to be malformed. A package ID must consist of a scope, identifier, and revision (e.g. "edi.100.4").')
+    }
     data_package_id <- package.id
   } else {
     data_package_id <- "edi.101.1"
