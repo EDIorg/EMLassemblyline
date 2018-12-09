@@ -21,7 +21,10 @@
 #'     geographic.coordinates, 
 #'     maintenance.description, 
 #'     user.id, 
-#'     package.id)
+#'     affiliation,
+#'     environment,
+#'     package.id,
+#'     provenance)
 #'     
 #' @param path 
 #'     (character) A path to the directory containing the completed metadata 
@@ -850,9 +853,9 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
         )
         # Read provenance file and add to L0 EML
         prov_metadata <- read_eml(paste0(eml.path, '/provenance_metadata.xml'))
-        methods_step <- xml_in@dataset@methods@methodStep
+        methods_step <- dataset@dataset@methods@methodStep
         methods_step[[length(methods_step)+1]] <- prov_metadata
-        xml_in@dataset@methods@methodStep <- methods_step
+        dataset@dataset@methods@methodStep <- methods_step
         # Delete provenance_metadata.xml (a temporary file)
         file.remove(
           paste0(eml.path, '/provenance_metadata.xml')

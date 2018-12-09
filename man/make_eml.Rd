@@ -20,7 +20,10 @@ make_eml(
     geographic.coordinates, 
     maintenance.description, 
     user.id, 
-    package.id)
+    affiliation,
+    environment,
+    package.id,
+    provenance)
 }
 \arguments{
 \item{path}{(character) A path to the directory containing the completed metadata 
