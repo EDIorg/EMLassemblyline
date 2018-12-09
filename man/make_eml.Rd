@@ -101,10 +101,18 @@ affiliation used when logging in to the EDI Data Portal and can be:
 "LTER" or "EDI". If you don't have a user.id then do not use this 
 argument when running `make_eml`.}
 
+\item{environment}{(character) Data repository environment to create the package in.
+Can be: 'development', 'staging', 'production'.}
+
 \item{package.id}{(character) The ID of your data package. 
 A missing package ID defaults to \emph{edi.101.1}. A package ID must
 contain the scope, package number, and revision number 
 (e.g. 'edi.101.1').}
+
+\item{provenance}{(character) A vector of EDI package.ids corresponding to parent data 
+packages from which this data package was created. A package ID must
+contain the scope, package number, and revision number 
+(e.g. 'knb-lter-cap.46.3').}
 }
 \value{
 Validation results printed to the RStudio \emph{Console}.

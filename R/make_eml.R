@@ -101,11 +101,19 @@
 #'     affiliation used when logging in to the EDI Data Portal and can be: 
 #'     "LTER" or "EDI". If you don't have a user.id then do not use this 
 #'     argument when running `make_eml`.
+#' @param environment
+#'     (character) Data repository environment to create the package in.
+#'     Can be: 'development', 'staging', 'production'.
 #' @param package.id
 #'     (character) The ID of your data package. 
 #'     A missing package ID defaults to \emph{edi.101.1}. A package ID must
 #'     contain the scope, package number, and revision number 
 #'     (e.g. 'edi.101.1').
+#' @param provenance
+#'     (character) A vector of EDI package.ids corresponding to parent data 
+#'     packages from which this data package was created. A package ID must
+#'     contain the scope, package number, and revision number 
+#'     (e.g. 'knb-lter-cap.46.3').
 #'     
 #' @return 
 #'     Validation results printed to the RStudio \emph{Console}.
@@ -125,7 +133,7 @@
 make_eml <- function(path, data.path = path, eml.path = path, dataset.title, data.files, data.files.description, 
                      data.files.quote.character, data.files.url, zip.dir, zip.dir.description,
                      temporal.coverage, geographic.coordinates, geographic.description, maintenance.description, user.id, 
-                     affiliation, package.id) {
+                     affiliation, environment, package.id, provenance) {
 
   # Check arguments and parameterize ------------------------------------------
   
@@ -814,6 +822,47 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
 
   }
 
+  # Add provenance metadata -----------------------------------------------
+  
+  if (!missing(provenance)){
+    message('<provenance metadata>')
+    for (p in 1:length(provenance)){
+      prov_pkg_id <- stringr::str_replace_all(provenance[p], '\\.', '/')
+      r <- httr::GET(url = paste0(EDIutils::url_env(environment), 
+                                  '.lternet.edu/package/provenance/eml/', 
+                                  prov_pkg_id))
+      if (r$status_code == 200){
+        prov_metadata <- httr::content(r, encoding = 'UTF-8')
+        # Remove IDs from creator and contact
+        xml2::xml_set_attr(
+          xml2::xml_find_all(prov_metadata, './/dataSource/creator'),
+          'id', NULL
+        )
+        xml2::xml_set_attr(
+          xml2::xml_find_all(prov_metadata, './/dataSource/contact'),
+          'id', NULL
+        )
+        # Write to data.path
+        xml2::write_xml(
+          prov_metadata,
+          paste0(eml.path,
+                 '/provenance_metadata.xml')
+        )
+        # Read provenance file and add to L0 EML
+        prov_metadata <- read_eml(paste0(eml.path, '/provenance_metadata.xml'))
+        methods_step <- xml_in@dataset@methods@methodStep
+        methods_step[[length(methods_step)+1]] <- prov_metadata
+        xml_in@dataset@methods@methodStep <- methods_step
+        # Delete provenance_metadata.xml (a temporary file)
+        file.remove(
+          paste0(eml.path, '/provenance_metadata.xml')
+        )
+      } else {
+        message('Unable to get provenance metadata.')
+      }
+    }
+  }
+  
   # Add project and funding
   
   useI <- which(personinfo$role == "pi")
