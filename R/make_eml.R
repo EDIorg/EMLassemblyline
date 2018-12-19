@@ -146,11 +146,13 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   if (missing(dataset.title)){
     stop('Input argument "dataset.title" is missing! Add a title for your dataset.')
   }
-  if (missing(data.files)){
-    stop('Input argument "data.files" is missing! List the names of your datasets data files.')
-  }
-  if (missing(data.files.description)){
-    stop('Input argument "data.files.description" is missing! Please describe your data files.')
+  # if (missing(data.files)){
+  #   stop('Input argument "data.files" is missing! List the names of your datasets data files.')
+  # }
+  if (!missing(data.files)){
+    if (missing(data.files.description)){
+      stop('Input argument "data.files.description" is missing! Please describe your data files.')
+    }
   }
   if (missing(temporal.coverage)){
     stop('Input argument "temporal.coverage" is missing! Add the temporal coverage of your dataset.')
@@ -180,11 +182,15 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   
   # Validate data file names
   
-  table_names <- validate_file_names(path = data.path, data.files = data.files)
+  if (!missing(data.files)){
+    table_names <- validate_file_names(path = data.path, data.files = data.files) 
+  }
   
   # Validate fields of data.files
   
-  validate_fields(data.path, data.files = table_names)
+  if (!missing(data.files)){
+    validate_fields(data.path, data.files = table_names)
+  }
   
   # Detect operating system
   
@@ -203,15 +209,19 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   
   # Validate data.files.description
   
-  if (length(data.files.description) != length(data.files)){
-    stop('The number of descriptions listed in the argument "data.files.description" does not match the number of files listed in the argument "data.files". These must match.')
+  if (!missing(data.files)){
+    if (length(data.files.description) != length(data.files)){
+      stop('The number of descriptions listed in the argument "data.files.description" does not match the number of files listed in the argument "data.files". These must match.')
+    }
   }
   
   # Validate data.files.quote.character
   
-  if (!missing(data.files.quote.character)){
-    if (length(data.files.quote.character) != length(data.files)){
-      stop('The number of quote characters listed in the argument "data.files.quote.character" does not match the number of files listed in the argument "data.files". These must match.')
+  if (!missing(data.files)){
+    if (!missing(data.files.quote.character)){
+      if (length(data.files.quote.character) != length(data.files)){
+        stop('The number of quote characters listed in the argument "data.files.quote.character" does not match the number of files listed in the argument "data.files". These must match.')
+      }
     }
   }
   
@@ -251,7 +261,9 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   
   # Compile attributes --------------------------------------------------------
   
-  attributes_in <- compile_attributes(path, data.path, data.files)
+  if (!missing(data.files)){
+    attributes_in <- compile_attributes(path, data.path, data.files)
+  }
   
   # Set file names
 
@@ -272,11 +284,14 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   files <- list.files(path)
   
   fname_table_catvars <- c()
-  for (i in 1:length(table_names)){
-    fname_table_catvars[i] <- paste("catvars_",
-      substr(table_names[i], 1, nchar(table_names[i]) - 4),
-      ".txt",
-      sep = "")
+  
+  if (exists('table_names')){
+    for (i in 1:length(table_names)){
+      fname_table_catvars[i] <- paste("catvars_",
+                                      substr(table_names[i], 1, nchar(table_names[i]) - 4),
+                                      ".txt",
+                                      sep = "")
+    }
   }
   
   # Initialize data entity storage (tables)
@@ -607,21 +622,20 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   use_i <- keywords$keyword == ""
   if (sum(use_i) > 0){
     keywords <- keywords[!use_i, ]
-  }
-  
-  # Try resolving keywords without a listed thesaurus to the LTER Controlled 
-  # Vocabulary
-  
-  unresolved_terms <- keywords[keywords$keywordThesaurus == '', 'keyword']
-  
-  results <- resolve_terms(
-    x = unresolved_terms,
-    cv = 'lter'
+    # Try resolving keywords without a listed thesaurus to the LTER Controlled 
+    # Vocabulary
+    
+    unresolved_terms <- keywords[keywords$keywordThesaurus == '', 'keyword']
+    
+    results <- resolve_terms(
+      x = unresolved_terms,
+      cv = 'lter'
     )
-  
-  results <- results[results$controlled_vocabulary != '', ]
-  use_i <- match(results$term, keywords$keyword)
-  keywords[use_i, 'keywordThesaurus'] <- results[ , 'controlled_vocabulary']
+    
+    results <- results[results$controlled_vocabulary != '', ]
+    use_i <- match(results$term, keywords$keyword)
+    keywords[use_i, 'keywordThesaurus'] <- results[ , 'controlled_vocabulary']
+  }
 
   # Build keywordSet
   
@@ -1040,358 +1054,363 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
 
   # Loop through tables -------------------------------------------------------
 
-  for (i in 1:length(table_names)){
-
-    message(paste(
-      "<dataTable> ...",
-      table_names[i]))
-    
-    attributes <- attributes_in[[1]][[i]]
-    
-    # Read data table
-    
-    file_path <- paste(data.path,
-                       "/",
-                       table_names[i],
-                       sep = "")
-    
-    delim_guess <- detect_delimeter(data.path, data.files = table_names[i], os)
-    
-    # if (delim_guess == ','){
-    #   df_table <- suppressMessages(
-    #     read_csv(
-    #       file = file_path
-    #     )
-    #   )
-    # } else if (delim_guess == '\t'){
-    #   df_table <- suppressMessages(
-    #     read_tsv(
-    #       file = file_path
-    #     )
-    #   )
-    # }
-    # 
-    # df_table <- as.data.frame(df_table)
-    
-    df_table <- read.table(file_path,
-                           header = TRUE,
-                           sep = delim_guess,
-                           quote = "\"",
-                           as.is = TRUE,
-                           comment.char = "")
-
-    # Read catvars file
-
-    if (!is.na(match(fname_table_catvars[i], list.files(path)))){
-
-      validate_fields(
-        path = path,
-        data.files = fname_table_catvars[i]
+  if (!missing(data.files)){
+    for (i in 1:length(table_names)){
+      
+      message(paste(
+        "<dataTable> ...",
+        table_names[i]))
+      
+      attributes <- attributes_in[[1]][[i]]
+      
+      # Read data table
+      
+      file_path <- paste(data.path,
+                         "/",
+                         table_names[i],
+                         sep = "")
+      
+      delim_guess <- detect_delimeter(data.path, data.files = table_names[i], os)
+      
+      # if (delim_guess == ','){
+      #   df_table <- suppressMessages(
+      #     read_csv(
+      #       file = file_path
+      #     )
+      #   )
+      # } else if (delim_guess == '\t'){
+      #   df_table <- suppressMessages(
+      #     read_tsv(
+      #       file = file_path
+      #     )
+      #   )
+      # }
+      # 
+      # df_table <- as.data.frame(df_table)
+      
+      df_table <- read.table(file_path,
+                             header = TRUE,
+                             sep = delim_guess,
+                             quote = "\"",
+                             as.is = TRUE,
+                             comment.char = "")
+      
+      # Read catvars file
+      
+      if (!is.na(match(fname_table_catvars[i], list.files(path)))){
+        
+        validate_fields(
+          path = path,
+          data.files = fname_table_catvars[i]
+        )
+        
+        catvars <- read.table(
+          paste(
+            path,
+            "/",
+            fname_table_catvars[i], sep = ""),
+          header = T,
+          sep="\t",
+          quote="\"",
+          as.is=TRUE,
+          comment.char = "",
+          fill = T,
+          colClasses = rep("character", 3))
+        catvars <- catvars[ ,1:3]
+        colnames(catvars) <- c("attributeName",
+                               "code",
+                               "definition")
+        
+        # Validate catvars: Definitions for each code
+        
+        use_i <- sum(catvars$attributeName != "") ==  sum(catvars$definition != "")
+        
+        if (!isTRUE(use_i)){
+          hold <- catvars$code[catvars$definition == ""]
+          stop(paste(fname_table_catvars[i], 
+                     " contains codes without definition. Please add definitions to these codes: ",
+                     paste(hold, collapse = ", ")))
+        }
+        
+        # If content is present
+        
+        if (dim(catvars)[1] > 0){
+          
+          for (j in 1:dim(catvars)[2]){
+            catvars[ ,j] <- as.character(catvars[ ,j])
+          }
+          
+          non_blank_rows <- nrow(catvars) - sum(catvars$attributeName == "")
+          catvars <- catvars[1:non_blank_rows, 1:3]
+          
+          # Clean extraneous white spaces from catvars tables
+          
+          if (dim(catvars)[1] != 0){
+            for (j in 1:ncol(catvars)){
+              if (class(catvars[ ,j]) == "character" ||
+                  (class(catvars[ ,j]) == "factor")){
+                catvars[ ,j] <- trimws(catvars[ ,j])
+              }
+            }
+          }
+          
+        }
+        
+        # Clean extraneous white spaces from attributes
+        
+        for (j in 1:ncol(attributes)){
+          if (class(attributes[ ,j]) == "character" ||
+              (class(attributes[ ,j]) == "factor")){
+            attributes[ ,j] <- trimws(attributes[ ,j])
+          }
+        }
+        
+        # Get the column classes into a vector
+        
+        col_classes <- attributes[ ,"columnClasses"]
+        
+        # Create the attributeList element
+        
+        attributeList <- suppressWarnings(set_attributes(attributes,
+                                                         factors = catvars,
+                                                         col_classes = col_classes))
+        
+      } else {
+        
+        # Clean extraneous white spaces from attributes
+        
+        for (j in 1:ncol(attributes)){
+          if (class(attributes[ ,j]) == "character" ||
+              (class(attributes[ ,j]) == "categorical")){
+            attributes[ ,j] <- trimws(attributes[ ,j])
+          }
+        }
+        
+        # Get the column classes into a vector
+        
+        col_classes <- attributes[ ,"columnClasses"]
+        
+        # Create the attributeList element
+        
+        attributeList <- suppressWarnings(set_attributes(attributes,
+                                                         col_classes = col_classes))
+        
+      }
+      
+      # Set physical
+      
+      eol <- detect_eol(
+        path = data.path,
+        file.name = table_names[i],
+        os = os
       )
       
-      catvars <- read.table(
-        paste(
-          path,
-          "/",
-          fname_table_catvars[i], sep = ""),
+      if (!missing("data.files.quote.character")){
+        
+        physical_temp <- set_physical(
+          paste0(
+            data.path,
+            '/',
+            table_names[i]
+          )
+        )
+        
+        physical <- set_physical(table_names[i],
+                                 numHeaderLines = "1",
+                                 recordDelimiter = eol,
+                                 attributeOrientation = "column",
+                                 fieldDelimiter = unlist(eml_get(physical_temp, 'fieldDelimiter')),
+                                 quoteCharacter = data.files.quote.character[i])
+        
+      }
+      
+      if (missing('data.files.quote.character')) {
+        
+        physical_temp <- set_physical(
+          paste0(
+            data.path,
+            '/',
+            table_names[i]
+          )
+        )
+        
+        physical <- set_physical(table_names[i],
+                                 numHeaderLines = "1",
+                                 recordDelimiter = eol,
+                                 attributeOrientation = "column",
+                                 fieldDelimiter = unlist(eml_get(physical_temp, 'fieldDelimiter')))
+        
+      }
+      
+      
+      
+      physical@size <- new("size",
+                           unit = "byte",
+                           as.character(
+                             file.size(
+                               paste(data.path,
+                                     "/",
+                                     table_names[i],
+                                     sep = ""))))
+      
+      if (!missing(data.files.url)){
+        data_table_url <- paste(data.files.url,
+                                "/",
+                                table_names[i],
+                                sep = "")
+        distribution <- new("distribution",
+                            online = new("online",
+                                         url = data_table_url))
+        physical@distribution <- new("ListOfdistribution",
+                                     c(distribution))
+      }
+      
+      
+      if (os == "mac"){
+        
+        command_certutil <- paste("md5 ",
+                                  "\"",
+                                  data.path,
+                                  "/",
+                                  table_names[i],
+                                  "\"",
+                                  sep = "")
+        
+        certutil_output <- system(command_certutil, intern = T)
+        
+        checksum_md5 <- gsub(".*= ", "", certutil_output)
+        
+        authentication <- new("authentication",
+                              method = "MD5",
+                              checksum_md5)
+        
+        physical@authentication <- as(list(authentication),
+                                      "ListOfauthentication")
+        
+      } else if (os == "win"){
+        
+        command_certutil <- paste("CertUtil -hashfile ",
+                                  "\"",
+                                  data.path,
+                                  "\\",
+                                  table_names[i],
+                                  "\"",
+                                  " MD5",
+                                  sep = "")
+        
+        certutil_output <- system(command_certutil, intern = T)
+        
+        checksum_md5 <- gsub(" ", "", certutil_output[2])
+        
+        authentication <- new("authentication",
+                              method = "MD5",
+                              checksum_md5)
+        
+        physical@authentication <- as(list(authentication),
+                                      "ListOfauthentication")
+        
+      } else if (os == "lin"){
+        
+        command_certutil <- paste0("md5sum ",
+                                   "\"",
+                                   data.path,
+                                   "/",
+                                   table_names[i],
+                                   "\"")
+        
+        certutil_output <- system(command_certutil, intern = T)
+        
+        checksum_md5 <- strsplit(certutil_output, split = " ")[[1]][1]
+        
+        authentication <- new("authentication",
+                              method = "MD5",
+                              checksum_md5)
+        
+        physical@authentication <- as(list(authentication),
+                                      "ListOfauthentication")
+        
+        
+        
+      }
+      
+      # Get number of records
+      
+      number_of_records <- as.character(dim(df_table)[1])
+      
+      # Pull together information for the data table
+      
+      data_table <- new("dataTable",
+                        entityName = table_names[i],
+                        entityDescription = data.files.description[i],
+                        physical = physical,
+                        attributeList = attributeList,
+                        numberOfRecords = number_of_records)
+      
+      data_tables_stored[[i]] <- data_table
+      
+    }
+    
+    # Compile datatables --------------------------------------------------------
+    
+    # Are custom units present in these tables?
+    
+    if (file.exists(fname_custom_units)){
+      
+      custom_units_df <- read.table(
+        fname_custom_units,
         header = T,
         sep="\t",
         quote="\"",
         as.is=TRUE,
         comment.char = "",
         fill = T,
-        colClasses = rep("character", 3))
-      catvars <- catvars[ ,1:3]
-      colnames(catvars) <- c("attributeName",
-                             "code",
-                             "definition")
+        colClasses = rep("character", 5))
+      custom_units_df <- custom_units_df[ ,1:5]
+      colnames(custom_units_df) <- c("id",
+                                     "unitType",
+                                     "parentSI",
+                                     "multiplierToSI",
+                                     "description")
       
-      # Validate catvars: Definitions for each code
-      
-      use_i <- sum(catvars$attributeName != "") ==  sum(catvars$definition != "")
-      
-      if (!isTRUE(use_i)){
-        hold <- catvars$code[catvars$definition == ""]
-        stop(paste(fname_table_catvars[i], 
-                   " contains codes without definition. Please add definitions to these codes: ",
-                   paste(hold, collapse = ", ")))
+      if (nrow(custom_units_df) < 1){
+        custom_units <- "no"
+      } else {
+        custom_units <- "yes"
       }
       
-      # If content is present
+      # Clean white spaces from custom_units and units_types
       
-      if (dim(catvars)[1] > 0){
-
-        for (j in 1:dim(catvars)[2]){
-          catvars[ ,j] <- as.character(catvars[ ,j])
-        }
+      if (custom_units == "yes"){
         
-        non_blank_rows <- nrow(catvars) - sum(catvars$attributeName == "")
-        catvars <- catvars[1:non_blank_rows, 1:3]
-
-        # Clean extraneous white spaces from catvars tables
-
-        if (dim(catvars)[1] != 0){
-          for (j in 1:ncol(catvars)){
-            if (class(catvars[ ,j]) == "character" ||
-                (class(catvars[ ,j]) == "factor")){
-              catvars[ ,j] <- trimws(catvars[ ,j])
-            }
+        message("<additionalMetadata>")
+        
+        for (j in 1:ncol(custom_units_df)){
+          if (class(custom_units_df[ ,j]) == "character" ||
+              (class(custom_units_df[ ,j]) == "factor")){
+            custom_units_df[ ,j] <- trimws(custom_units_df[ ,j])
           }
         }
-
-      }
-
-      # Clean extraneous white spaces from attributes
-      
-      for (j in 1:ncol(attributes)){
-        if (class(attributes[ ,j]) == "character" ||
-            (class(attributes[ ,j]) == "factor")){
-          attributes[ ,j] <- trimws(attributes[ ,j])
-        }
+        
+        unitsList <- set_unitList(custom_units_df)
       }
       
-      # Get the column classes into a vector
-      
-      col_classes <- attributes[ ,"columnClasses"]
-      
-      # Create the attributeList element
-      
-      attributeList <- suppressWarnings(set_attributes(attributes,
-                                      factors = catvars,
-                                      col_classes = col_classes))
       
     } else {
       
-      # Clean extraneous white spaces from attributes
-      
-      for (j in 1:ncol(attributes)){
-        if (class(attributes[ ,j]) == "character" ||
-            (class(attributes[ ,j]) == "categorical")){
-          attributes[ ,j] <- trimws(attributes[ ,j])
-        }
-      }
-      
-      # Get the column classes into a vector
-      
-      col_classes <- attributes[ ,"columnClasses"]
-      
-      # Create the attributeList element
-      
-      attributeList <- suppressWarnings(set_attributes(attributes,
-                                      col_classes = col_classes))
-      
-    }
-
-    # Set physical
-    
-    eol <- detect_eol(
-      path = data.path,
-      file.name = table_names[i],
-      os = os
-    )
-    
-    if (!missing("data.files.quote.character")){
-      
-      physical_temp <- set_physical(
-        paste0(
-          data.path,
-          '/',
-          table_names[i]
-          )
-        )
-
-      physical <- set_physical(table_names[i],
-                               numHeaderLines = "1",
-                               recordDelimiter = eol,
-                               attributeOrientation = "column",
-                               fieldDelimiter = unlist(eml_get(physical_temp, 'fieldDelimiter')),
-                               quoteCharacter = data.files.quote.character[i])
+      custom_units <- "no"
       
     }
     
-    if (missing('data.files.quote.character')) {
-      
-      physical_temp <- set_physical(
-        paste0(
-          data.path,
-          '/',
-          table_names[i]
-        )
-      )
-      
-      physical <- set_physical(table_names[i],
-                               numHeaderLines = "1",
-                               recordDelimiter = eol,
-                               attributeOrientation = "column",
-                               fieldDelimiter = unlist(eml_get(physical_temp, 'fieldDelimiter')))
-      
-    }
-
     
+    # Compile data tables
     
-    physical@size <- new("size",
-                         unit = "byte",
-                         as.character(
-                           file.size(
-                             paste(data.path,
-                                   "/",
-                                   table_names[i],
-                                   sep = ""))))
-
-    if (!missing(data.files.url)){
-      data_table_url <- paste(data.files.url,
-                              "/",
-                              table_names[i],
-                              sep = "")
-      distribution <- new("distribution",
-                          online = new("online",
-                                       url = data_table_url))
-      physical@distribution <- new("ListOfdistribution",
-                                   c(distribution))
-    }
+    dataset@dataTable <- new("ListOfdataTable",
+                             data_tables_stored)
     
-
-    if (os == "mac"){
-      
-      command_certutil <- paste("md5 ",
-                                "\"",
-                                data.path,
-                                "/",
-                                table_names[i],
-                                "\"",
-                                sep = "")
-      
-      certutil_output <- system(command_certutil, intern = T)
-      
-      checksum_md5 <- gsub(".*= ", "", certutil_output)
-      
-      authentication <- new("authentication",
-                            method = "MD5",
-                            checksum_md5)
-      
-      physical@authentication <- as(list(authentication),
-                                    "ListOfauthentication")
-      
-    } else if (os == "win"){
-      
-      command_certutil <- paste("CertUtil -hashfile ",
-                                "\"",
-                                data.path,
-                                "\\",
-                                table_names[i],
-                                "\"",
-                                " MD5",
-                                sep = "")
-      
-      certutil_output <- system(command_certutil, intern = T)
-      
-      checksum_md5 <- gsub(" ", "", certutil_output[2])
-      
-      authentication <- new("authentication",
-                            method = "MD5",
-                            checksum_md5)
-      
-      physical@authentication <- as(list(authentication),
-                                    "ListOfauthentication")
-      
-    } else if (os == "lin"){
-      
-      command_certutil <- paste0("md5sum ",
-                                 "\"",
-                                 data.path,
-                                 "/",
-                                 table_names[i],
-                                 "\"")
-      
-      certutil_output <- system(command_certutil, intern = T)
-      
-      checksum_md5 <- strsplit(certutil_output, split = " ")[[1]][1]
-      
-      authentication <- new("authentication",
-                            method = "MD5",
-                            checksum_md5)
-      
-      physical@authentication <- as(list(authentication),
-                                    "ListOfauthentication")
-      
-      
-      
-    }
-    
-    # Get number of records
-    
-    number_of_records <- as.character(dim(df_table)[1])
-
-    # Pull together information for the data table
-
-    data_table <- new("dataTable",
-                      entityName = table_names[i],
-                      entityDescription = data.files.description[i],
-                      physical = physical,
-                      attributeList = attributeList,
-                      numberOfRecords = number_of_records)
-
-    data_tables_stored[[i]] <- data_table
-
   }
   
 
-  # Compile datatables --------------------------------------------------------
-
-  # Are custom units present in these tables?
-
-  if (file.exists(fname_custom_units)){
-
-    custom_units_df <- read.table(
-      fname_custom_units,
-      header = T,
-      sep="\t",
-      quote="\"",
-      as.is=TRUE,
-      comment.char = "",
-      fill = T,
-      colClasses = rep("character", 5))
-    custom_units_df <- custom_units_df[ ,1:5]
-    colnames(custom_units_df) <- c("id",
-                                   "unitType",
-                                   "parentSI",
-                                   "multiplierToSI",
-                                   "description")
-    
-    if (nrow(custom_units_df) < 1){
-      custom_units <- "no"
-    } else {
-      custom_units <- "yes"
-    }
-    
-    # Clean white spaces from custom_units and units_types
-    
-    if (custom_units == "yes"){
-      
-      message("<additionalMetadata>")
-      
-      for (j in 1:ncol(custom_units_df)){
-        if (class(custom_units_df[ ,j]) == "character" ||
-            (class(custom_units_df[ ,j]) == "factor")){
-          custom_units_df[ ,j] <- trimws(custom_units_df[ ,j])
-        }
-      }
-      
-      unitsList <- set_unitList(custom_units_df)
-    }
-    
-    
-  } else {
-    
-    custom_units <- "no"
-    
-  }
-
-
-  # Compile data tables
-
-  dataset@dataTable <- new("ListOfdataTable",
-                           data_tables_stored)
+  
 
   # Add otherEntity -----------------------------------------------------------
   
@@ -1490,25 +1509,29 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
     
     
   }
-  
-  
-  
-  
-  
+
   
   # Build EML -----------------------------------------------------------------
   
   message("Compiling EML.")
   
-  
-  if (custom_units == "yes"){
-    eml <- new("eml",
-               schemaLocation = "eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd",
-               packageId = data_package_id,
-               system = "edi",
-               access = access,
-               dataset = dataset,
-               additionalMetadata = as(unitsList, "additionalMetadata"))
+  if (exists('custom_units')){
+    if (custom_units == "yes"){
+      eml <- new("eml",
+                 schemaLocation = "eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd",
+                 packageId = data_package_id,
+                 system = "edi",
+                 access = access,
+                 dataset = dataset,
+                 additionalMetadata = as(unitsList, "additionalMetadata"))
+    } else {
+      eml <- new("eml",
+                 schemaLocation = "eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd",
+                 packageId = data_package_id,
+                 system = "edi",
+                 access = access,
+                 dataset = dataset)
+    }
   } else {
     eml <- new("eml",
                schemaLocation = "eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd",
