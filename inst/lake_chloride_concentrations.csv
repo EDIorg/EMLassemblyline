@@ -1,0 +1,1399 @@
+SALT_ID,FileName,Common_Name,Station,Sample_Date,Sample_Depth,Chloride,Decimal_Date,Std_Chloride,Integrated_Depth
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,5/24/1999,NA,17,1999.391781,0.238997001,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,5/24/1999,NA,17,1999.391781,0.238997001,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,8/23/1999,NA,15,1999.641096,0.031329195,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,11/30/1999,NA,15,1999.912329,0.031329195,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,3/28/2000,NA,14,2000.237705,-0.072504708,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,5/22/2000,NA,14,2000.387978,-0.072504708,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,9/5/2000,NA,11,2000.677596,-0.384006418,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,11/29/2000,NA,14,2000.909836,-0.072504708,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,5/2/2001,NA,12,2001.331507,-0.280172515,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,5/2/2001,NA,13,2001.331507,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,9/25/2001,NA,18,2001.731507,0.342830905,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,11/5/2001,NA,12,2001.843836,-0.280172515,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,6/7/2002,NA,12,2002.430137,-0.280172515,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,6/7/2002,NA,12,2002.430137,-0.280172515,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,7/22/2002,NA,14,2002.553425,-0.072504708,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,11/20/2002,NA,11,2002.884932,-0.384006418,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,3/26/2003,NA,13,2003.230137,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,3/26/2003,NA,13,2003.230137,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,5/7/2003,NA,13,2003.345205,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,7/28/2003,NA,12,2003.569863,-0.280172515,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,12/15/2003,NA,12,2003.953425,-0.280172515,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,4/12/2004,NA,11,2004.278689,-0.384006418,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,6/15/2004,NA,13,2004.453552,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,7/26/2004,NA,12,2004.565574,-0.280172515,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,9/1/2004,NA,12,2004.666667,-0.280172515,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,11/16/2004,NA,15,2004.874317,0.031329195,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,4/25/2005,NA,14,2005.312329,-0.072504708,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,4/25/2005,NA,15,2005.312329,0.031329195,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,5/25/2005,NA,12,2005.394521,-0.280172515,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,6/20/2005,NA,25,2005.465753,1.069668227,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,7/5/2005,NA,13,2005.506849,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,9/26/2005,NA,20,2005.734247,0.550498711,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,10/25/2005,NA,14,2005.813699,-0.072504708,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,10/25/2005,NA,14,2005.813699,-0.072504708,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,2/8/2006,NA,13,2006.10411,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,6/20/2006,NA,13,2006.465753,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,7/26/2006,NA,12,2006.564384,-0.280172515,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,8/16/2006,NA,12,2006.621918,-0.280172515,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,9/25/2006,NA,17,2006.731507,0.238997001,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,10/25/2006,NA,17,2006.813699,0.238997001,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,11/15/2006,NA,12,2006.871233,-0.280172515,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,12/13/2006,NA,13,2006.947945,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,1/31/2007,NA,13,2007.082192,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,2/26/2007,NA,13,2007.153425,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,3/26/2007,NA,13,2007.230137,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,4/25/2007,NA,10,2007.312329,-0.487840321,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,5/9/2007,NA,13,2007.350685,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,7/31/2007,NA,11,2007.578082,-0.384006418,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,8/14/2007,NA,12,2007.616438,-0.280172515,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,9/19/2007,NA,13,2007.715068,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,11/6/2007,NA,19,2007.846575,0.446664808,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,11/6/2007,NA,17,2007.846575,0.238997001,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,1/16/2008,NA,32,2008.040984,1.796505549,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,2/13/2008,NA,13,2008.117486,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,3/5/2008,NA,13,2008.174863,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,4/23/2008,NA,14,2008.308743,-0.072504708,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,5/28/2008,NA,12,2008.404372,-0.280172515,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,6/11/2008,NA,14,2008.442623,-0.072504708,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,7/8/2008,NA,13,2008.516393,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,8/12/2008,NA,13,2008.612022,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,9/3/2008,NA,14,2008.672131,-0.072504708,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,10/15/2008,NA,19,2008.786885,0.446664808,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,11/18/2008,NA,13,2008.879781,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,12/17/2008,NA,15,2008.959016,0.031329195,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,2/10/2009,NA,13,2009.109589,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,2/17/2009,NA,14,2009.128767,-0.072504708,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,3/17/2009,NA,12,2009.205479,-0.280172515,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,4/21/2009,NA,15,2009.30137,0.031329195,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,5/26/2009,NA,6,2009.39726,-0.903175934,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,6/17/2009,NA,14,2009.457534,-0.072504708,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,7/29/2009,NA,13,2009.572603,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,9/8/2009,NA,11,2009.684932,-0.384006418,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,11/30/2009,NA,13,2009.912329,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,3/9/2010,NA,14,2010.183562,-0.072504708,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,5/5/2010,NA,10,2010.339726,-0.487840321,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,7/19/2010,NA,11,2010.545205,-0.384006418,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,9/21/2010,NA,16,2010.720548,0.135163098,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,11/10/2010,NA,13,2010.857534,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,1/5/2011,NA,21,2011.010959,0.654332614,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,3/8/2011,NA,13,2011.180822,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,5/31/2011,NA,6,2011.410959,-0.903175934,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,8/2/2011,NA,14,2011.583562,-0.072504708,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,10/5/2011,NA,13,2011.758904,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,12/12/2011,NA,12,2011.945205,-0.280172515,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,2/8/2012,NA,13,2012.103825,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,4/9/2012,NA,15,2012.270492,0.031329195,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,5/8/2012,NA,10,2012.349727,-0.487840321,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,6/13/2012,NA,13,2012.448087,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,7/17/2012,NA,12,2012.540984,-0.280172515,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,8/14/2012,NA,14,2012.617486,-0.072504708,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,9/12/2012,NA,15,2012.696721,0.031329195,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,10/3/2012,NA,20,2012.754098,0.550498711,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,11/14/2012,NA,14,2012.868852,-0.072504708,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,12/10/2012,NA,12,2012.939891,-0.280172515,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,1/9/2013,NA,14,2013.021918,-0.072504708,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,2/12/2013,NA,12,2013.115068,-0.280172515,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,3/12/2013,NA,13,2013.191781,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,4/16/2013,NA,12,2013.287671,-0.280172515,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,5/14/2013,NA,9,2013.364384,-0.591674224,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,6/4/2013,NA,11,2013.421918,-0.384006418,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,7/15/2013,NA,10,2013.534247,-0.487840321,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,8/13/2013,NA,13,2013.613699,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,9/9/2013,NA,12,2013.687671,-0.280172515,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,10/9/2013,NA,13,2013.769863,-0.176338611,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,11/12/2013,NA,12,2013.863014,-0.280172515,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,12/10/2013,NA,14,2013.939726,-0.072504708,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,1/14/2014,NA,11,2014.035616,-0.384006418,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,2/18/2014,NA,20,2014.131507,0.550498711,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,3/20/2014,NA,12,2014.213699,-0.280172515,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,4/14/2014,NA,12,2014.282192,-0.280172515,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,5/28/2014,NA,19,2014.40274,0.446664808,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,6/10/2014,NA,11,2014.438356,-0.384006418,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,7/9/2014,NA,12,2014.517808,-0.280172515,NA
+665,AbbottsPond_Sussex_DE,Abbotts Pond,21DELAWQ_WQX-208181,10/8/2014,NA,13,2014.767123,-0.176338611,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/21/1988,0.5,1.2762,1988.469945,0.115015813,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/21/1988,5,1.2053,1988.469945,0.013459297,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/21/1988,10,1.24075,1988.469945,0.064237555,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/21/1988,13,1.2762,1988.469945,0.115015813,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/14/1988,0.5,0.95715,1988.532787,-0.341988507,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/14/1988,5,0.7799,1988.532787,-0.595879796,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/14/1988,10,0.9217,1988.532787,-0.392766765,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/14/1988,14,0.9926,1988.532787,-0.29121025,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/10/1988,0.5,0.74445,1988.606557,-0.646658054,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/10/1988,5,0.74445,1988.606557,-0.646658054,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/10/1988,10,0.7799,1988.606557,-0.595879796,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/10/1988,14,1.31165,1988.606557,0.165794071,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/25/1988,2,0.7799,1988.647541,-0.595879796,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/12/1988,0.5,0.7799,1988.696721,-0.595879796,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/12/1988,5,0.709,1988.696721,-0.697436312,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/12/1988,10,0.8508,1988.696721,-0.494323281,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/12/1988,12,0.9217,1988.696721,-0.392766765,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/14/1989,0.5,1.2053,1989.19726,0.013459297,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/14/1989,5,1.2762,1989.19726,0.115015813,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/14/1989,10,1.24075,1989.19726,0.064237555,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/14/1989,12,1.09895,1989.19726,-0.138875476,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/14/1989,0.5,2.16245,1989.449315,1.384472258,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/14/1989,5,2.1979,1989.449315,1.435250516,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/14/1989,10,2.127,1989.449315,1.333694,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/14/1989,15,2.16245,1989.449315,1.384472258,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/18/1989,0.5,1.45345,1989.542466,0.368907102,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/18/1989,5,1.38255,1989.542466,0.267350586,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/18/1989,10,1.38255,1989.542466,0.267350586,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/18/1989,14,1.45345,1989.542466,0.368907102,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/23/1989,0.5,0.95715,1989.641096,-0.341988507,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/23/1989,5,0.95715,1989.641096,-0.341988507,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/23/1989,10,0.9926,1989.641096,-0.29121025,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/23/1989,14,1.09895,1989.641096,-0.138875476,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/19/1989,0.5,0.9217,1989.715068,-0.392766765,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/19/1989,5,0.9217,1989.715068,-0.392766765,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/19/1989,10,0.9217,1989.715068,-0.392766765,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/19/1989,16,0.95715,1989.715068,-0.341988507,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,10/11/1989,0.5,1.2762,1989.775342,0.115015813,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,10/11/1989,5,0.95715,1989.775342,-0.341988507,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,10/11/1989,10,0.9217,1989.775342,-0.392766765,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,10/11/1989,15,1.0635,1989.775342,-0.189653734,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,4/17/1990,2,1.3471,1990.290411,0.216572328,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/19/1990,0.5,2.16245,1990.463014,1.384472258,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/19/1990,5,1.94975,1990.463014,1.079802711,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/19/1990,10,2.127,1990.463014,1.333694,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/19/1990,12,2.6233,1990.463014,2.04458961,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/17/1990,0.5,1.5598,1990.539726,0.521241875,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/17/1990,5,1.31165,1990.539726,0.165794071,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/17/1990,10,1.45345,1990.539726,0.368907102,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/17/1990,12,1.4889,1990.539726,0.41968536,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/14/1990,0.5,0.81535,1990.616438,-0.545101539,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/14/1990,5,0.8508,1990.616438,-0.494323281,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/14/1990,10,1.59525,1990.616438,0.572020133,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/14/1990,12,1.2053,1990.616438,0.013459297,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/15/1990,2,0.74445,1990.619178,-0.646658054,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/11/1990,0.5,0.7799,1990.693151,-0.595879796,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/11/1990,5,0.74445,1990.693151,-0.646658054,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/11/1990,10,0.74445,1990.693151,-0.646658054,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/11/1990,13,0.74445,1990.693151,-0.646658054,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/6/1991,0.5,1.1344,1991.175342,-0.088097218,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/6/1991,5,1.0635,1991.175342,-0.189653734,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/6/1991,10,0.95715,1991.175342,-0.341988507,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/6/1991,12,0.95715,1991.175342,-0.341988507,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/10/1991,0.5,2.02065,1991.438356,1.181359227,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/10/1991,5,1.9143,1991.438356,1.029024453,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/10/1991,10,1.7725,1991.438356,0.825911422,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/8/1991,0.5,1.59525,1991.515068,0.572020133,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/8/1991,5,1.6307,1991.515068,0.622798391,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/8/1991,15,1.6307,1991.515068,0.622798391,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/14/1991,0.5,0.88625,1991.616438,-0.443545023,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/14/1991,5,0.88625,1991.616438,-0.443545023,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/14/1991,10,1.02805,1991.616438,-0.240431992,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/14/1991,16,1.2762,1991.616438,0.115015813,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/28/1991,2,0.88625,1991.654795,-0.443545023,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/18/1991,0.5,1.02805,1991.712329,-0.240431992,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/18/1991,5,1.16985,1991.712329,-0.037318961,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/18/1991,15,0.95715,1991.712329,-0.341988507,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,2/25/1992,0.5,1.5598,1992.150273,0.521241875,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,2/25/1992,5,1.24075,1992.150273,0.064237555,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,2/25/1992,22,1.2053,1992.150273,0.013459297,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/24/1992,0.5,2.02065,1992.478142,1.181359227,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/24/1992,5,1.94975,1992.478142,1.079802711,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/24/1992,14,2.02065,1992.478142,1.181359227,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/17/1992,0.5,0.81535,1992.625683,-0.545101539,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/17/1992,5,0.81535,1992.625683,-0.545101539,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/17/1992,13,0.8508,1992.625683,-0.494323281,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/22/1992,0.5,0.81535,1992.724044,-0.545101539,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/22/1992,5,1.0635,1992.724044,-0.189653734,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/22/1992,16,0.88625,1992.724044,-0.443545023,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,2/16/1993,0.5,1.2053,1993.126027,0.013459297,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,2/16/1993,5,0.9926,1993.126027,-0.29121025,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,2/16/1993,8,0.9217,1993.126027,-0.392766765,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/15/1993,0.5,4.85665,1993.452055,5.243619851,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/15/1993,5,5.1757,1993.452055,5.700624172,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/15/1993,11,4.963,1993.452055,5.395954625,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/20/1993,0.5,2.23335,1993.547945,1.486028774,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/20/1993,5,2.127,1993.547945,1.333694,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/20/1993,13,3.08415,1993.547945,2.704706961,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/17/1993,0.5,1.4889,1993.624658,0.41968536,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/17/1993,5,1.38255,1993.624658,0.267350586,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/17/1993,13,1.38255,1993.624658,0.267350586,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/23/1993,0.5,1.31165,1993.726027,0.165794071,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/23/1993,5,1.31165,1993.726027,0.165794071,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/23/1993,12,1.38255,1993.726027,0.267350586,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/9/1994,0.5,1.7725,1994.183562,0.825911422,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/9/1994,5,1.7016,1994.183562,0.724354907,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/9/1994,12,1.52435,1994.183562,0.470463618,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/21/1994,0.5,1.66615,1994.468493,0.673576649,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/21/1994,5,1.59525,1994.468493,0.572020133,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/21/1994,13,1.59525,1994.468493,0.572020133,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/27/1994,0.5,1.02805,1994.567123,-0.240431992,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/27/1994,5,1.02805,1994.567123,-0.240431992,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/27/1994,15,1.2053,1994.567123,0.013459297,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/31/1994,0.5,0.9217,1994.663014,-0.392766765,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/31/1994,5,0.95715,1994.663014,-0.341988507,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/31/1994,17,0.9926,1994.663014,-0.29121025,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/20/1994,0.5,0.88625,1994.717808,-0.443545023,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/20/1994,5,0.88625,1994.717808,-0.443545023,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/20/1994,14,0.9926,1994.717808,-0.29121025,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/1/1995,0.5,1.31165,1995.161644,0.165794071,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/1/1995,5,1.2762,1995.161644,0.115015813,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/1/1995,14,1.2762,1995.161644,0.115015813,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/20/1995,0.5,1.2762,1995.465753,0.115015813,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/20/1995,5,1.2053,1995.465753,0.013459297,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/20/1995,14,1.45345,1995.465753,0.368907102,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/18/1995,0.5,0.8508,1995.542466,-0.494323281,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/18/1995,5,0.9217,1995.542466,-0.392766765,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/18/1995,14,0.9217,1995.542466,-0.392766765,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/16/1995,0.5,0.67355,1995.621918,-0.74821457,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/16/1995,5,0.709,1995.621918,-0.697436312,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/16/1995,13,0.67355,1995.621918,-0.74821457,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/20/1995,0.5,0.7799,1995.717808,-0.595879796,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/20/1995,5,0.6381,1995.717808,-0.798992828,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/20/1995,15,0.67355,1995.717808,-0.74821457,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/8/1996,0.5,1.1344,1996.18306,-0.088097218,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/8/1996,5,1.0635,1996.18306,-0.189653734,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/8/1996,10,0.9926,1996.18306,-0.29121025,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/19/1996,0.5,1.3471,1996.464481,0.216572328,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/19/1996,5,1.418,1996.464481,0.318128844,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/19/1996,15,1.418,1996.464481,0.318128844,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/9/1996,0.5,0.95715,1996.519126,-0.341988507,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/9/1996,5,0.9926,1996.519126,-0.29121025,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/9/1996,13,1.1344,1996.519126,-0.088097218,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/20/1996,0.5,0.60265,1996.63388,-0.849771085,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/20/1996,5,0.6381,1996.63388,-0.798992828,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/20/1996,15,0.6381,1996.63388,-0.798992828,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/17/1996,0.5,0.6381,1996.710383,-0.798992828,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/17/1996,5,0.6381,1996.710383,-0.798992828,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/17/1996,15,0.74445,1996.710383,-0.646658054,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/24/1997,0.5,1.24075,1997.224658,0.064237555,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/24/1997,5,1.09895,1997.224658,-0.138875476,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/24/1997,12,1.24075,1997.224658,0.064237555,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/17/1997,0.5,3.22595,1997.457534,2.907819992,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/17/1997,5,3.3323,1997.457534,3.060154766,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/17/1997,15,3.50955,1997.457534,3.314046055,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/13/1997,0.5,1.09895,1997.613699,-0.138875476,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/13/1997,5,1.09895,1997.613699,-0.138875476,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/13/1997,15,1.1344,1997.613699,-0.088097218,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/16/1997,0.5,1.09895,1997.706849,-0.138875476,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/16/1997,5,1.0635,1997.706849,-0.189653734,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/16/1997,15,1.1344,1997.706849,-0.088097218,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/3/1998,0.5,1.5598,1998.167123,0.521241875,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/3/1998,5,1.5598,1998.167123,0.521241875,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/3/1998,15,1.52435,1998.167123,0.470463618,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/17/1998,0.5,1.38255,1998.457534,0.267350586,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/17/1998,5,1.45345,1998.457534,0.368907102,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/17/1998,15,1.38255,1998.457534,0.267350586,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/12/1998,0.5,0.709,1998.610959,-0.697436312,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/12/1998,5,0.709,1998.610959,-0.697436312,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/12/1998,14,0.88625,1998.610959,-0.443545023,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/25/1998,0.5,0.6381,1998.731507,-0.798992828,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/25/1998,5,0.67355,1998.731507,-0.74821457,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/25/1998,15,0.60265,1998.731507,-0.849771085,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/5/1999,0.5,1.418,1999.172603,0.318128844,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/5/1999,5,1.0635,1999.172603,-0.189653734,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/5/1999,13,0.9217,1999.172603,-0.392766765,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/14/1999,0.5,0.88625,1999.449315,-0.443545023,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/14/1999,5,0.88625,1999.449315,-0.443545023,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/14/1999,15,0.9217,1999.449315,-0.392766765,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/11/1999,0.5,0.5672,1999.608219,-0.900549343,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/11/1999,5,0.53175,1999.608219,-0.951327601,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/11/1999,13,0.60265,1999.608219,-0.849771085,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/14/1999,0.5,0.6381,1999.70137,-0.798992828,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/14/1999,5,0.60265,1999.70137,-0.849771085,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/14/1999,15,0.67355,1999.70137,-0.74821457,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,2/14/2000,0.5,1.1344,2000.120219,-0.088097218,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/21/2000,0.5,1.52435,2000.469945,0.470463618,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/11/2000,0.5,0.81535,2000.52459,-0.545101539,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/17/2000,0.5,0.5672,2000.625683,-0.900549343,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/14/2000,0.5,0.5672,2000.702186,-0.900549343,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/8/2001,0.5,0.81535,2001.180822,-0.545101539,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/11/2001,0.5,1.2762,2001.441096,0.115015813,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/6/2001,0.5,0.67355,2001.509589,-0.74821457,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/6/2001,0.5,0.67355,2001.594521,-0.74821457,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/11/2001,0.5,0.6381,2001.693151,-0.798992828,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,2/22/2002,0.5,1.4889,2002.142466,0.41968536,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,5/29/2002,0.5,1.73705,2002.405479,0.775133164,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/25/2002,0.5,0.8508,2002.561644,-0.494323281,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/27/2002,0.5,0.74445,2002.652055,-0.646658054,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/21/2002,0.5,0.74445,2002.720548,-0.646658054,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,2/19/2003,0.5,3.9704,2003.134247,3.974163406,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/11/2003,0.5,1.9143,2003.441096,1.029024453,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/8/2003,0.5,1.2053,2003.515068,0.013459297,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/12/2003,0.5,0.7799,2003.610959,-0.595879796,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/17/2003,0.5,1.02805,2003.709589,-0.240431992,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,2/23/2004,0.5,4.28945,2004.144809,4.431167726,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/12/2004,0.5,1.31165,2004.445355,0.165794071,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/15/2004,0.5,0.6381,2004.535519,-0.798992828,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/11/2004,0.5,0.5672,2004.60929,-0.900549343,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/25/2004,0.5,0.67355,2004.73224,-0.74821457,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/1/2005,0.5,1.02805,2005.161644,-0.240431992,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/16/2005,0.5,1.1344,2005.454795,-0.088097218,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/27/2005,0.5,0.60265,2005.652055,-0.849771085,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/22/2005,0.5,0.6381,2005.723288,-0.798992828,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/1/2006,0.5,0.67355,2006.161644,-0.74821457,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/10/2006,0.5,1.02805,2006.438356,-0.240431992,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/30/2006,0.5,0.60265,2006.575342,-0.849771085,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,10/2/2006,0.5,0.60265,2006.750685,-0.849771085,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/22/2007,0.5,0.9217,2007.219178,-0.392766765,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/19/2007,0.5,1.16985,2007.463014,-0.037318961,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/13/2007,0.5,0.88625,2007.528767,-0.443545023,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/19/2007,0.5,0.6381,2007.630137,-0.798992828,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/23/2007,0.5,0.60265,2007.726027,-0.849771085,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/10/2008,0.5,0.95715,2008.188525,-0.341988507,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/20/2008,0.5,1.09895,2008.54918,-0.138875476,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/23/2008,0.5,0.9926,2008.642077,-0.29121025,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,10/1/2008,0.5,1.1344,2008.748634,-0.088097218,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,4/3/2009,0.5,1.4889,2009.252055,0.41968536,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/18/2009,0.5,1.418,2009.460274,0.318128844,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/19/2009,0.5,0.95715,2009.545205,-0.341988507,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/27/2009,0.5,0.7799,2009.652055,-0.595879796,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,5/13/2010,0.5,1.1344,2010.361644,-0.088097218,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/26/2010,0.5,0.60265,2010.564384,-0.849771085,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/23/2010,0.5,0.5672,2010.641096,-0.900549343,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,10/4/2010,0.5,0.60265,2010.756164,-0.849771085,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/16/2011,0.5,0.88625,2011.20274,-0.443545023,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/11/2011,0.5,1.2762,2011.441096,0.115015813,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/20/2011,0.5,0.74445,2011.547945,-0.646658054,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/16/2011,0.5,0.709,2011.621918,-0.697436312,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/28/2011,0.5,0.7799,2011.739726,-0.595879796,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,4/3/2012,0.5,1.0635,2012.254098,-0.189653734,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,6/29/2012,0.5,0.9926,2012.491803,-0.29121025,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/30/2012,0.5,0.60265,2012.576503,-0.849771085,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/5/2012,0.5,0.5672,2012.677596,-0.900549343,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,10/10/2012,0.5,0.6381,2012.773224,-0.798992828,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,3/8/2013,0.5,0.8508,2013.180822,-0.494323281,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,7/15/2013,0.5,0.4963,2013.534247,-1.002105859,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,8/20/2013,0.5,0.46085,2013.632877,-1.052884117,NA
+373,Abiskojaure_Sweden,Abiskojaure,Abiskojaure,9/3/2013,0.5,0.53175,2013.671233,-0.951327601,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/13/1993,NA,0.60265,1993.279452,0.120652512,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/19/1993,NA,0.8508,1993.29589,2.472612872,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/26/1993,NA,0.6381,1993.315068,0.456646849,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/30/1993,NA,0.6381,1993.326027,0.456646849,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/21/1993,NA,0.7799,1993.383562,1.800624198,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,7/26/1993,NA,0.6381,1993.564384,0.456646849,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,10/22/1993,NA,0.6381,1993.805479,0.456646849,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/20/1994,NA,0.46085,1994.380822,-1.223324837,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,7/28/1994,NA,0.60265,1994.569863,0.120652512,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,7/28/1994,NA,0.6381,1994.569863,0.456646849,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,10/20/1994,NA,0.67355,1994.8,0.792641186,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/20/1995,NA,0.4254,1995.29863,-1.559319174,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/30/1995,NA,0.4254,1995.326027,-1.559319174,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/4/1995,NA,0.46085,1995.336986,-1.223324837,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/11/1995,NA,0.46085,1995.356164,-1.223324837,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/18/1995,NA,0.5672,1995.375342,-0.215341825,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/18/1995,NA,0.5672,1995.375342,-0.215341825,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/18/1995,NA,0.4963,1995.375342,-0.8873305,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,8/2/1995,NA,0.53175,1995.583562,-0.551336162,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,10/19/1995,NA,0.6381,1995.79726,0.456646849,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,10/19/1995,NA,0.60265,1995.79726,0.120652512,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,8/7/1996,NA,0.67355,1996.598361,0.792641186,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,10/16/1996,NA,0.6381,1996.789617,0.456646849,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,10/16/1996,NA,0.67355,1996.789617,0.792641186,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/17/1997,NA,0.6381,1997.290411,0.456646849,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/24/1997,NA,0.4254,1997.309589,-1.559319174,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/30/1997,NA,0.46085,1997.326027,-1.223324837,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/30/1997,NA,0.46085,1997.326027,-1.223324837,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/11/1997,NA,0.4963,1997.356164,-0.8873305,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/22/1997,NA,0.6381,1997.386301,0.456646849,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/22/1997,NA,0.6381,1997.386301,0.456646849,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/22/1997,NA,0.4963,1997.386301,-0.8873305,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,8/1/1997,NA,0.67355,1997.580822,0.792641186,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,10/2/1997,NA,0.8508,1997.750685,2.472612872,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,3/26/1998,NA,0.677095,1998.230137,0.82624062,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/3/1998,NA,0.48212,1998.252055,-1.021728234,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/3/1998,NA,0.51048,1998.252055,-0.752932765,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/17/1998,NA,0.59556,1998.290411,0.053453645,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/24/1998,NA,0.5672,1998.309589,-0.215341825,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/29/1998,NA,0.592015,1998.323288,0.019854211,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/16/1998,NA,0.6381,1998.369863,0.456646849,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/16/1998,NA,0.65937,1998.369863,0.658243451,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,8/6/1998,NA,0.6381,1998.594521,0.456646849,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,8/6/1998,NA,0.6381,1998.594521,0.456646849,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,10/5/1998,NA,0.67355,1998.758904,0.792641186,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,10/5/1998,NA,0.67355,1998.758904,0.792641186,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/1/1999,NA,0.53175,1999.246575,-0.551336162,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/1/1999,NA,0.53175,1999.246575,-0.551336162,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/17/1999,NA,0.60265,1999.372603,0.120652512,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/17/1999,NA,0.60265,1999.372603,0.120652512,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,8/1/1999,NA,0.6381,1999.580822,0.456646849,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,8/1/1999,NA,0.6381,1999.580822,0.456646849,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,10/15/1999,NA,0.5672,1999.786301,-0.215341825,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,10/15/1999,NA,0.60265,1999.786301,0.120652512,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,3/14/2000,NA,0.592015,2000.199454,0.019854211,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/10/2000,NA,0.64519,2000.273224,0.523845717,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/10/2000,NA,0.63101,2000.273224,0.389447982,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/20/2000,NA,0.691275,2000.300546,0.960638355,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/28/2000,NA,0.56011,2000.322404,-0.282540693,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/1/2000,NA,0.66646,2000.330601,0.725442319,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/16/2000,NA,0.61683,2000.371585,0.255050247,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/16/2000,NA,0.61683,2000.371585,0.255050247,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,8/1/2000,NA,0.577835,2000.581967,-0.114543524,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,8/1/2000,NA,0.634555,2000.581967,0.423047415,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,10/25/2000,NA,0.584925,2000.814208,-0.047344657,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,10/25/2000,NA,0.592015,2000.814208,0.019854211,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,3/8/2001,NA,0.709,2001.180822,1.128635524,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/12/2001,NA,0.67355,2001.276712,0.792641186,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/19/2001,NA,0.53175,2001.29589,-0.551336162,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/19/2001,NA,0.5672,2001.29589,-0.215341825,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/26/2001,NA,0.4254,2001.315068,-1.559319174,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/3/2001,NA,0.5672,2001.334247,-0.215341825,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/16/2001,NA,0.60265,2001.369863,0.120652512,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/16/2001,NA,0.6381,2001.369863,0.456646849,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,7/31/2001,NA,0.74445,2001.578082,1.464629861,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,7/31/2001,NA,0.7799,2001.578082,1.800624198,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,10/23/2001,NA,0.74445,2001.808219,1.464629861,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,10/23/2001,NA,0.67355,2001.808219,0.792641186,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,3/11/2002,NA,0.8508,2002.189041,2.472612872,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/7/2002,NA,0.60265,2002.263014,0.120652512,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/18/2002,NA,0.4254,2002.293151,-1.559319174,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/18/2002,NA,0.4254,2002.293151,-1.559319174,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/21/2002,NA,0.4963,2002.30137,-0.8873305,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/27/2002,NA,0.712545,2002.317808,1.162234957,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/5/2002,NA,0.60265,2002.339726,0.120652512,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/19/2002,NA,0.67355,2002.378082,0.792641186,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/19/2002,NA,0.67355,2002.378082,0.792641186,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,7/31/2002,NA,0.709,2002.578082,1.128635524,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,7/31/2002,NA,0.74445,2002.578082,1.464629861,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,10/15/2002,NA,0.709,2002.786301,1.128635524,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,10/15/2002,NA,0.7799,2002.786301,1.800624198,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/14/2003,NA,0.726725,2003.282192,1.296632692,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/21/2003,NA,0.755085,2003.30137,1.565428162,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/29/2003,NA,0.6381,2003.323288,0.456646849,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/29/2003,NA,0.662915,2003.323288,0.691842885,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/7/2003,NA,0.549475,2003.345205,-0.383338994,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/12/2003,NA,0.50339,2003.358904,-0.820131632,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/19/2003,NA,0.599105,2003.378082,0.087053078,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,6/10/2003,NA,0.641645,2003.438356,0.490246283,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,8/12/2003,NA,0.570745,2003.610959,-0.181742391,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,8/12/2003,NA,0.606195,2003.610959,0.154251946,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,10/20/2003,NA,0.65228,2003.8,0.591044584,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,10/20/2003,NA,0.648735,2003.8,0.55744515,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,6/8/2004,NA,0.684185,2004.434426,0.893439487,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,7/15/2004,NA,0.634555,2004.535519,0.423047415,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,10/21/2004,NA,0.69482,2004.803279,0.994237789,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,11/9/2005,NA,0.648735,2005.854795,0.55744515,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,7/31/2006,NA,0.53175,2006.578082,-0.551336162,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,11/5/2006,NA,0.60974,2006.843836,0.187851379,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/30/2007,NA,0.535295,2007.408219,-0.517736729,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,7/25/2007,NA,0.4963,2007.561644,-0.8873305,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,11/12/2007,NA,0.584925,2007.863014,-0.047344657,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/17/2008,NA,0.386405,2008.29235,-1.928912945,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/24/2008,NA,0.22688,2008.311475,-3.440887462,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/5/2008,NA,0.336775,2008.34153,-2.399305017,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/20/2008,NA,0.478575,2008.382514,-1.055327668,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/20/2008,NA,0.478575,2008.382514,-1.055327668,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,7/28/2008,NA,0.44667,2008.571038,-1.357722572,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,10/5/2008,NA,0.48921,2008.759563,-0.954529367,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,8/2/2009,NA,0.535295,2009.583562,-0.517736729,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,11/1/2009,NA,0.528205,2009.832877,-0.584935596,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/25/2010,NA,0.4963,2010.312329,-0.8873305,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,4/25/2010,NA,0.492755,2010.312329,-0.920929933,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,8/2/2010,NA,0.50339,2010.583562,-0.820131632,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,11/1/2010,NA,0.570745,2010.832877,-0.181742391,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/25/2011,NA,0.436035,2011.394521,-1.458520873,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,8/1/2011,NA,0.53175,2011.580822,-0.551336162,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,10/18/2011,NA,0.464395,2011.794521,-1.189725403,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,10/18/2011,NA,0.443125,2011.794521,-1.391322005,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,5/6/2012,NA,0.46085,2012.344262,-1.223324837,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,8/7/2012,NA,0.41122,2012.598361,-1.693716909,NA
+244,AbolPond_Piscataquis_ME,Abol Pond,ME-2068,10/22/2012,NA,0.54593,2012.806011,-0.416938427,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/16/1983,2,7.9408,1983.621918,1.08856939,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/27/1984,2,9.39425,1984.155738,2.294978715,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/14/1984,1.4,8.2953,1984.617486,1.382815567,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,11/6/1984,1.7,7.799,1984.846995,0.970870919,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/13/1985,2,9.60695,1985.117808,2.471526421,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/13/1985,2,6.91275,1985.613699,0.235255477,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,11/5/1985,2,6.7355,1985.843836,0.088132389,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/17/1986,2,7.1609,1986.128767,0.441227801,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/6/1986,2,6.06195,1986.594521,-0.470935347,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/29/1986,2,5.92015,1986.824658,-0.588633818,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/24/1987,2,7.19635,1987.147945,0.470652418,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/11/1987,2,5.70745,1987.608219,-0.765181524,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/20/1987,2,6.0265,1987.8,-0.500359965,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/27/1988,0.5,4.71485,1988.319672,-1.589070819,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/27/1988,5,4.71485,1988.319672,-1.589070819,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,5/10/1988,0.5,4.71485,1988.355191,-1.589070819,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,5/10/1988,4,4.6085,1988.355191,-1.677344673,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,6/14/1988,0.5,5.1757,1988.45082,-1.20655079,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,6/14/1988,5,4.92755,1988.45082,-1.412523113,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,7/13/1988,0.5,4.8921,1988.530055,-1.441947731,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,7/13/1988,6,4.78575,1988.530055,-1.530221584,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/11/1988,0.5,4.78575,1988.60929,-1.530221584,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/11/1988,2,4.78575,1988.60929,-1.530221584,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/11/1988,5,4.57305,1988.60929,-1.70676929,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,9/14/1988,0.5,4.8212,1988.702186,-1.500796966,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,9/14/1988,5,4.78575,1988.702186,-1.530221584,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/19/1988,0.5,4.92755,1988.797814,-1.412523113,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/19/1988,6,4.99845,1988.797814,-1.353673878,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/21/1989,0.5,5.42385,1989.139726,-1.000578466,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/21/1989,4,5.21115,1989.139726,-1.177126172,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/25/1989,0.5,5.70745,1989.312329,-0.765181524,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/25/1989,5,6.0265,1989.312329,-0.500359965,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,5/10/1989,0.5,5.77835,1989.353425,-0.706332289,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,5/10/1989,5,5.77835,1989.353425,-0.706332289,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,6/14/1989,0.5,5.92015,1989.449315,-0.588633818,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,6/14/1989,5,5.84925,1989.449315,-0.647483054,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,7/19/1989,0.5,6.7355,1989.545205,0.088132389,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,7/19/1989,5,6.41645,1989.545205,-0.176689171,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/10/1989,0.5,6.34555,1989.605479,-0.235538406,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/10/1989,4,6.381,1989.605479,-0.206113788,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,9/11/1989,0.5,6.381,1989.693151,-0.206113788,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,9/11/1989,5,6.381,1989.693151,-0.206113788,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/17/1989,0.5,6.27465,1989.791781,-0.294387641,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/17/1989,5,6.41645,1989.791781,-0.176689171,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/20/1990,2,7.2318,1990.136986,0.500077036,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/17/1990,0.5,7.26725,1990.290411,0.529501654,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/17/1990,5,7.19635,1990.290411,0.470652418,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,5/7/1990,0.5,7.83445,1990.345205,1.000295537,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,5/7/1990,5,7.55085,1990.345205,0.764898595,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,6/14/1990,0.5,7.4445,1990.449315,0.676624742,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,6/14/1990,5,7.5863,1990.449315,0.794323213,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,7/9/1990,0.5,8.04715,1990.517808,1.176843243,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,7/9/1990,6,8.04715,1990.517808,1.176843243,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/8/1990,0.5,8.04715,1990.6,1.176843243,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/8/1990,5,8.0117,1990.6,1.147418625,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,9/10/1990,0.5,7.83445,1990.690411,1.000295537,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,9/10/1990,6,7.83445,1990.690411,1.000295537,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/15/1990,0.5,7.47995,1990.786301,0.70604936,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/15/1990,2,7.5863,1990.786301,0.794323213,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/15/1990,5,7.62175,1990.786301,0.823747831,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/26/1991,0.5,8.0826,1991.153425,1.206267861,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/26/1991,5,8.68525,1991.153425,1.706486361,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/15/1991,0.5,7.799,1991.284932,0.970870919,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/15/1991,5,7.83445,1991.284932,1.000295537,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,5/13/1991,0.5,7.76355,1991.361644,0.941446301,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,5/13/1991,5,7.76355,1991.361644,0.941446301,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,6/17/1991,0.5,6.8773,1991.457534,0.205830859,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,6/17/1991,6,6.84185,1991.457534,0.176406242,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,7/15/1991,0.5,7.5863,1991.534247,0.794323213,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,7/15/1991,5,7.26725,1991.534247,0.529501654,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/6/1991,0.5,7.5863,1991.594521,0.794323213,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/6/1991,5,6.98365,1991.594521,0.294104712,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,9/10/1991,0.5,7.40905,1991.690411,0.647200125,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,9/10/1991,4,7.47995,1991.690411,0.70604936,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/15/1991,0.5,7.3027,1991.786301,0.558926272,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/15/1991,5,7.40905,1991.786301,0.647200125,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/24/1992,0.5,7.90535,1992.147541,1.059144772,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/24/1992,4,7.8699,1992.147541,1.029720154,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/6/1992,0.5,7.2318,1992.262295,0.500077036,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/6/1992,5,7.33815,1992.262295,0.588350889,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,5/12/1992,0.5,6.98365,1992.360656,0.294104712,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,5/12/1992,5,6.98365,1992.360656,0.294104712,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,6/15/1992,0.5,7.7281,1992.453552,0.912021684,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,6/15/1992,5,7.7281,1992.453552,0.912021684,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,7/13/1992,0.5,8.25985,1992.530055,1.353390949,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,7/13/1992,5,7.90535,1992.530055,1.059144772,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/4/1992,0.5,8.2953,1992.590164,1.382815567,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/4/1992,4,7.7281,1992.590164,0.912021684,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,9/15/1992,0.5,8.0826,1992.704918,1.206267861,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,9/15/1992,5,7.9408,1992.704918,1.08856939,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/19/1992,0.5,7.76355,1992.797814,0.941446301,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/19/1992,4,7.90535,1992.797814,1.059144772,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/23/1993,0.5,8.89795,1993.145205,1.883034067,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/23/1993,5,9.18155,1993.145205,2.118431009,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/26/1993,0.5,8.11805,1993.315068,1.235692478,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/26/1993,4,8.61435,1993.315068,1.647637126,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,5/24/1993,0.5,8.3662,1993.391781,1.441664802,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,5/24/1993,5,8.0826,1993.391781,1.206267861,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,6/15/1993,0.5,8.82705,1993.452055,1.824184832,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,6/15/1993,5,8.7207,1993.452055,1.735910979,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,7/18/1993,0.5,8.7207,1993.542466,1.735910979,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,7/18/1993,5,8.7207,1993.542466,1.735910979,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/10/1993,0.5,8.2953,1993.605479,1.382815567,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/10/1993,5,8.2953,1993.605479,1.382815567,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,9/14/1993,0.5,8.47255,1993.70137,1.529938655,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,9/14/1993,5,8.2953,1993.70137,1.382815567,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/22/1993,0.5,8.40165,1993.805479,1.47108942,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/22/1993,5,8.18895,1993.805479,1.294541714,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/1/1994,0.5,7.97625,1994.084932,1.117994008,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/1/1994,5,8.18895,1994.084932,1.294541714,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/27/1994,0.5,6.20375,1994.317808,-0.353236877,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/27/1994,5,6.27465,1994.317808,-0.294387641,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,5/9/1994,0.5,6.55825,1994.350685,-0.0589907,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,5/9/1994,5,6.5228,1994.350685,-0.088415318,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,6/20/1994,0.5,6.84185,1994.465753,0.176406242,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,6/20/1994,5,7.05455,1994.465753,0.352953948,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,7/11/1994,0.5,7.2318,1994.523288,0.500077036,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,7/11/1994,5,6.9482,1994.523288,0.264680095,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/15/1994,0.5,7.7281,1994.619178,0.912021684,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/15/1994,5,7.19635,1994.619178,0.470652418,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,9/20/1994,0.5,7.5154,1994.717808,0.735473978,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,9/20/1994,6,7.5863,1994.717808,0.794323213,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/18/1994,0.5,7.5154,1994.794521,0.735473978,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/18/1994,5,7.5154,1994.794521,0.735473978,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/28/1995,0.5,5.0339,1995.158904,-1.32424926,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/28/1995,6,7.26725,1995.158904,0.529501654,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,5/2/1995,0.5,6.27465,1995.331507,-0.294387641,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,5/2/1995,6,6.27465,1995.331507,-0.294387641,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,5/22/1995,0.5,6.48735,1995.386301,-0.117839935,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,5/22/1995,6,6.381,1995.386301,-0.206113788,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,6/19/1995,0.5,6.8773,1995.463014,0.205830859,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,6/19/1995,5,6.48735,1995.463014,-0.117839935,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/16/1995,2,7.05455,1995.621918,0.352953948,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/17/1995,2,7.09,1995.791781,0.382378565,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/7/1996,2,8.25985,1996.101093,1.353390949,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,5/7/1996,0.5,6.41645,1996.346995,-0.176689171,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/14/1996,0.5,6.5228,1996.617486,-0.088415318,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/16/1996,0.5,6.55825,1996.789617,-0.0589907,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/17/1997,2,7.76355,1997.128767,0.941446301,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/14/1997,0.5,7.0191,1997.282192,0.32352933,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/13/1997,0.5,6.91275,1997.613699,0.235255477,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/13/1997,0.5,7.6572,1997.780822,0.853172448,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/24/1998,0.5,6.5228,1998.147945,-0.088415318,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/20/1998,0.5,6.381,1998.29863,-0.206113788,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/13/1998,0.5,6.5937,1998.613699,-0.029566082,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/14/1998,0.5,6.4519,1998.783562,-0.147264553,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,3/3/1999,0.5,5.84925,1999.167123,-0.647483054,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/21/1999,0.5,5.2466,1999.30137,-1.147701554,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/10/1999,0.5,5.70745,1999.605479,-0.765181524,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/25/1999,0.5,6.381,1999.813699,-0.206113788,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/22/2000,0.5,6.0974,2000.142077,-0.44151073,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,5/16/2000,0.5,6.6646,2000.371585,0.029283153,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/16/2000,0.5,5.99105,2000.622951,-0.529784583,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/16/2000,0.5,5.7429,2000.789617,-0.735756907,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/6/2001,0.5,6.0265,2001.09863,-0.500359965,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/25/2001,0.5,4.8212,2001.312329,-1.500796966,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/8/2001,0.5,5.3884,2001.6,-1.030003083,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/17/2001,0.5,5.42385,2001.791781,-1.000578466,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,3/13/2002,0.5,5.6011,2002.194521,-0.853455377,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/23/2002,0.5,5.70745,2002.306849,-0.765181524,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/20/2002,0.5,5.92015,2002.632877,-0.588633818,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/24/2002,0.5,5.7429,2002.810959,-0.735756907,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/5/2003,0.5,6.4519,2003.09589,-0.147264553,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/23/2003,0.5,5.77835,2003.306849,-0.706332289,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/14/2003,0.5,5.99105,2003.616438,-0.529784583,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/8/2003,0.5,5.77835,2003.767123,-0.706332289,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,1/28/2004,0.5,6.381,2004.07377,-0.206113788,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/21/2004,0.5,5.63655,2004.303279,-0.82403076,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/10/2004,0.5,4.57305,2004.606557,-1.70676929,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/7/2004,0.5,4.99845,2004.765027,-1.353673878,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/22/2005,0.5,5.92015,2005.142466,-0.588633818,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,5/12/2005,0.5,5.84925,2005.358904,-0.647483054,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/17/2005,0.5,5.28205,2005.624658,-1.118276937,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/17/2005,0.5,6.34555,2005.791781,-0.235538406,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/9/2006,0.5,5.7429,2006.106849,-0.735756907,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/3/2006,0.5,5.4593,2006.252055,-0.971153848,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/3/2006,2,6.48735,2006.252055,-0.117839935,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,5/4/2006,0.5,4.85665,2006.336986,-1.471372349,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/16/2006,0.5,5.5302,2006.621918,-0.912304613,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/23/2006,0.5,5.77835,2006.808219,-0.706332289,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/27/2007,0.5,6.8064,2007.156164,0.146981624,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/25/2007,0.5,6.27465,2007.312329,-0.294387641,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/16/2007,0.5,5.70745,2007.621918,-0.765181524,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/17/2007,0.5,5.92015,2007.791781,-0.588633818,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,3/19/2008,0.5,5.8847,2008.213115,-0.618058436,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/23/2008,0.5,5.84925,2008.308743,-0.647483054,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/12/2008,0.5,5.8847,2008.612022,-0.618058436,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/8/2008,0.5,5.56565,2008.76776,-0.882879995,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,1/15/2009,0.5,5.672,2009.038356,-0.794606142,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/21/2009,0.5,4.8212,2009.30137,-1.500796966,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/13/2009,0.5,5.35295,2009.613699,-1.059427701,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/6/2009,0.5,5.672,2009.761644,-0.794606142,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/10/2010,0.5,6.20375,2010.109589,-0.353236877,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/20/2010,0.5,4.99845,2010.29863,-1.353673878,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/24/2010,0.5,4.71485,2010.643836,-1.589070819,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/7/2010,0.5,4.7503,2010.764384,-1.559646202,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/9/2011,0.5,4.99845,2011.106849,-1.353673878,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,5/5/2011,0.5,4.21855,2011.339726,-2.001015467,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/23/2011,0.5,4.28945,2011.641096,-1.942166232,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/19/2011,0.5,4.3958,2011.79726,-1.853892379,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/14/2012,0.5,6.7355,2012.120219,0.088132389,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,4/17/2012,0.5,5.92015,2012.29235,-0.588633818,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/16/2012,0.5,5.56565,2012.622951,-0.882879995,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/17/2012,0.5,5.42385,2012.79235,-1.000578466,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,2/4/2013,0.5,5.7429,2013.093151,-0.735756907,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,5/15/2013,0.5,5.06935,2013.367123,-1.294824643,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,8/8/2013,0.5,5.4593,2013.6,-0.971153848,NA
+293,?älgarydssj??n_Sweden,?älgarydssj??n,?älgarydssj??n,10/22/2013,0.5,5.56565,2013.805479,-0.882879995,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/17/1983,2,3.43865,1983.624658,0.771205926,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,2/13/1984,2,3.545,1984.117486,0.98163445,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/16/1984,0.2,2.16245,1984.289617,-1.753936358,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/13/1984,2,3.4741,1984.614754,0.841348768,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,3/7/1985,2,4.85665,1985.178082,3.576919576,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,5/21/1985,1.2,3.15505,1985.383562,0.210063196,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/7/1985,2,3.15505,1985.59726,0.210063196,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,3/12/1986,2,3.50955,1986.191781,0.911491609,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/20/1986,2,2.9069,1986.632877,-0.280936692,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,2/17/1987,2,3.36775,1987.128767,0.630920244,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/29/1987,2,2.94235,1987.323288,-0.210793851,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/24/1987,2,2.65875,1987.643836,-0.771936581,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,2/16/1988,2.1,3.1905,1988.125683,0.280206038,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,5/3/1988,2,2.6233,1988.336066,-0.842079422,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/29/1988,2,3.01325,1988.65847,-0.070508169,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/24/1989,2,2.6233,1989.309589,-0.842079422,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/22/1989,2,2.9778,1989.638356,-0.14065101,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,1/10/1990,2.2,2.94235,1990.024658,-0.210793851,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/24/1990,2,3.36775,1990.309589,0.630920244,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/15/1990,2,3.36775,1990.619178,0.630920244,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,2/20/1991,2,3.9704,1991.136986,1.823348545,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/16/1991,2,3.8995,1991.287671,1.683062862,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,9/11/1991,2,3.6159,1991.693151,1.121920132,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,2/11/1992,2,3.8995,1992.112022,1.683062862,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/28/1992,2,3.4741,1992.322404,0.841348768,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/11/1992,2,3.79315,1992.60929,1.472634339,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,2/9/1993,2,3.79315,1993.106849,1.472634339,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/20/1993,2,3.6868,1993.29863,1.262205815,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/18/1993,2,6.3101,1993.627397,6.452776066,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,2/21/1994,2,3.8995,1994.139726,1.683062862,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,3/28/1994,2,3.8995,1994.235616,1.683062862,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,7/13/1994,2,3.79315,1994.528767,1.472634339,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,3/1/1995,2,3.43865,1995.161644,0.771205926,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/15/1995,2,3.4741,1995.619178,0.841348768,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,2/21/1996,2,3.86405,1996.139344,1.612920021,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,6/11/1996,0.5,3.545,1996.442623,0.98163445,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/7/1996,0.5,3.8995,1996.598361,1.683062862,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,10/23/1996,0.5,3.545,1996.808743,0.98163445,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,2/17/1997,0.5,4.07675,1997.128767,2.033777068,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/6/1997,0.5,3.72225,1997.260274,1.332348656,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,6/16/1997,0.5,3.545,1997.454795,0.98163445,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,6/16/1997,7,3.43865,1997.454795,0.771205926,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,7/16/1997,0.5,3.58045,1997.536986,1.051777291,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,7/16/1997,5,3.43865,1997.536986,0.771205926,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/14/1997,0.5,3.36775,1997.616438,0.630920244,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/14/1997,7,3.29685,1997.616438,0.490634561,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,9/18/1997,0.5,3.43865,1997.712329,0.771205926,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,9/18/1997,6,3.3323,1997.712329,0.560777403,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,10/20/1997,0.5,3.72225,1997.8,1.332348656,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,10/20/1997,6,3.58045,1997.8,1.051777291,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,2/17/1998,0.5,2.6233,1998.128767,-0.842079422,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,2/17/1998,7,3.86405,1998.128767,1.612920021,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/21/1998,0.5,3.3323,1998.30137,0.560777403,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/21/1998,7,3.1905,1998.30137,0.280206038,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,5/14/1998,0.5,3.15505,1998.364384,0.210063196,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,5/14/1998,7,3.1196,1998.364384,0.139920355,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,6/10/1998,0.5,2.9778,1998.438356,-0.14065101,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,6/10/1998,7,2.87145,1998.438356,-0.351079533,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,7/14/1998,0.5,2.87145,1998.531507,-0.351079533,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,7/14/1998,6,2.9069,1998.531507,-0.280936692,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/12/1998,0.5,2.94235,1998.610959,-0.210793851,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/12/1998,7,3.01325,1998.610959,-0.070508169,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,9/14/1998,0.5,3.01325,1998.70137,-0.070508169,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,9/14/1998,6,2.94235,1998.70137,-0.210793851,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,10/15/1998,0.5,3.0487,1998.786301,-0.000365327,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,10/15/1998,6,3.15505,1998.786301,0.210063196,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,3/3/1999,0.5,2.836,1999.167123,-0.421222375,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,3/3/1999,7,3.1196,1999.167123,0.139920355,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/13/1999,0.5,3.08415,1999.279452,0.069777514,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/13/1999,7,3.0487,1999.279452,-0.000365327,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,5/10/1999,0.5,2.94235,1999.353425,-0.210793851,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,5/10/1999,6,2.9778,1999.353425,-0.14065101,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,6/15/1999,0.5,2.58785,1999.452055,-0.912222263,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,6/15/1999,7,2.44605,1999.452055,-1.192793628,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,7/20/1999,0.5,3.15505,1999.547945,0.210063196,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,7/20/1999,7,3.1905,1999.547945,0.280206038,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/11/1999,0.5,2.94235,1999.608219,-0.210793851,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/11/1999,7,2.80055,1999.608219,-0.491365216,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,9/15/1999,0.5,3.1196,1999.70411,0.139920355,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,9/15/1999,6,2.87145,1999.70411,-0.351079533,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,10/13/1999,0.5,3.1905,1999.780822,0.280206038,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,10/13/1999,7,3.22595,1999.780822,0.350348879,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,2/15/2000,0.5,3.01325,2000.122951,-0.070508169,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/12/2000,0.5,2.9778,2000.278689,-0.14065101,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,5/18/2000,0.5,3.0487,2000.377049,-0.000365327,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,6/14/2000,0.5,3.43865,2000.45082,0.771205926,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,7/12/2000,0.5,3.1196,2000.527322,0.139920355,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/17/2000,0.5,2.9778,2000.625683,-0.14065101,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,9/17/2000,0.5,2.9778,2000.710383,-0.14065101,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,10/11/2000,0.5,2.9069,2000.775956,-0.280936692,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,2/21/2001,0.5,3.50955,2001.139726,0.911491609,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/18/2001,0.5,2.9069,2001.293151,-0.280936692,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,5/15/2001,0.5,2.80055,2001.367123,-0.491365216,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,6/12/2001,0.5,2.9778,2001.443836,-0.14065101,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,7/16/2001,0.5,3.0487,2001.536986,-0.000365327,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/14/2001,0.5,2.80055,2001.616438,-0.491365216,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,9/10/2001,0.5,2.9778,2001.690411,-0.14065101,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,10/15/2001,0.5,2.9069,2001.786301,-0.280936692,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,2/20/2002,0.5,2.02065,2002.136986,-2.034507723,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/14/2002,0.5,2.65875,2002.282192,-0.771936581,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,5/15/2002,0.5,3.29685,2002.367123,0.490634561,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,6/12/2002,0.5,2.836,2002.443836,-0.421222375,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,7/17/2002,0.5,2.87145,2002.539726,-0.351079533,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/14/2002,0.5,2.51695,2002.616438,-1.052507946,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,9/10/2002,0.5,2.5524,2002.690411,-0.982365105,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,10/10/2002,0.5,2.65875,2002.772603,-0.771936581,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,2/25/2003,0.5,3.1905,2003.150685,0.280206038,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/14/2003,0.5,2.6233,2003.282192,-0.842079422,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,5/14/2003,0.5,2.9778,2003.364384,-0.14065101,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,6/9/2003,0.5,3.15505,2003.435616,0.210063196,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,7/5/2003,0.5,2.836,2003.506849,-0.421222375,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/13/2003,0.5,2.4815,2003.613699,-1.122650787,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,9/9/2003,0.5,2.836,2003.687671,-0.421222375,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,10/14/2003,0.5,2.65875,2003.783562,-0.771936581,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,2/18/2004,0.5,3.22595,2004.131148,0.350348879,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/13/2004,0.5,3.01325,2004.281421,-0.070508169,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,5/11/2004,0.5,3.08415,2004.357923,0.069777514,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,6/16/2004,0.5,2.7651,2004.456284,-0.561508057,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,7/7/2004,0.5,2.51695,2004.513661,-1.052507946,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/8/2004,0.5,2.94235,2004.601093,-0.210793851,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,9/5/2004,0.5,2.5524,2004.677596,-0.982365105,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,10/5/2004,0.5,2.58785,2004.759563,-0.912222263,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,2/23/2005,0.5,3.08415,2005.145205,0.069777514,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/19/2005,0.5,3.1905,2005.29589,0.280206038,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,5/16/2005,0.5,2.7651,2005.369863,-0.561508057,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,6/21/2005,0.5,2.94235,2005.468493,-0.210793851,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,7/9/2005,0.5,2.94235,2005.517808,-0.210793851,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/17/2005,0.5,2.58785,2005.624658,-0.912222263,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,9/13/2005,0.5,2.65875,2005.69863,-0.771936581,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,10/13/2005,0.5,2.51695,2005.780822,-1.052507946,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,3/7/2006,0.5,2.58785,2006.178082,-0.912222263,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/5/2006,0.5,2.9778,2006.257534,-0.14065101,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/5/2006,2,3.08415,2006.257534,0.069777514,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/17/2006,0.5,0.3545,2006.290411,-5.331221261,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,5/23/2006,0.5,2.72965,2006.389041,-0.631650898,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,6/15/2006,0.5,2.65875,2006.452055,-0.771936581,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,7/23/2006,0.5,2.4815,2006.556164,-1.122650787,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/12/2006,0.5,2.44605,2006.610959,-1.192793628,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,9/13/2006,0.5,2.6233,2006.69863,-0.842079422,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,10/12/2006,0.5,2.6233,2006.778082,-0.842079422,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,2/28/2007,0.5,3.2614,2007.158904,0.42049172,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/19/2007,0.5,2.94235,2007.29589,-0.210793851,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,5/15/2007,0.5,2.9069,2007.367123,-0.280936692,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,6/12/2007,0.5,2.94235,2007.443836,-0.210793851,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,7/18/2007,0.5,2.80055,2007.542466,-0.491365216,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/15/2007,0.5,2.94235,2007.619178,-0.210793851,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,9/10/2007,0.5,2.72965,2007.690411,-0.631650898,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,10/17/2007,0.5,3.01325,2007.791781,-0.070508169,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,2/12/2008,0.5,2.87145,2008.114754,-0.351079533,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/15/2008,0.5,3.15505,2008.286885,0.210063196,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,5/13/2008,0.5,3.01325,2008.363388,-0.070508169,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,6/8/2008,0.5,3.29685,2008.434426,0.490634561,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,7/17/2008,0.5,3.36775,2008.540984,0.630920244,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/12/2008,0.5,3.1196,2008.612022,0.139920355,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,9/4/2008,0.5,3.15505,2008.674863,0.210063196,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,10/15/2008,0.5,3.01325,2008.786885,-0.070508169,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,1/27/2009,0.5,3.3323,2009.071233,0.560777403,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/22/2009,0.5,3.0487,2009.30411,-0.000365327,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,5/19/2009,0.5,3.22595,2009.378082,0.350348879,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,6/8/2009,0.5,3.15505,2009.432877,0.210063196,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,7/15/2009,0.5,3.1196,2009.534247,0.139920355,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/18/2009,0.5,3.1196,2009.627397,0.139920355,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,9/10/2009,0.5,3.01325,2009.690411,-0.070508169,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,10/8/2009,0.5,3.15505,2009.767123,0.210063196,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,2/18/2010,0.5,3.29685,2010.131507,0.490634561,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/21/2010,0.5,2.94235,2010.30137,-0.210793851,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,5/19/2010,0.5,2.836,2010.378082,-0.421222375,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,6/16/2010,0.5,2.7651,2010.454795,-0.561508057,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,7/20/2010,0.5,2.87145,2010.547945,-0.351079533,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/12/2010,0.5,2.72965,2010.610959,-0.631650898,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,9/16/2010,0.5,2.72965,2010.706849,-0.631650898,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,10/7/2010,0.5,2.836,2010.764384,-0.421222375,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,2/21/2011,0.5,3.50955,2011.139726,0.911491609,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/14/2011,0.5,2.58785,2011.282192,-0.912222263,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,5/18/2011,0.5,2.72965,2011.375342,-0.631650898,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,6/14/2011,0.5,2.80055,2011.449315,-0.491365216,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,7/10/2011,0.5,2.6942,2011.520548,-0.70179374,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/7/2011,0.5,2.6942,2011.59726,-0.70179374,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,9/8/2011,0.5,2.65875,2011.684932,-0.771936581,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,10/17/2011,0.5,2.65875,2011.791781,-0.771936581,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,2/22/2012,0.5,3.1196,2012.142077,0.139920355,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/11/2012,0.5,2.72965,2012.275956,-0.631650898,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,5/15/2012,0.5,2.6942,2012.368852,-0.70179374,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,6/19/2012,0.5,2.58785,2012.464481,-0.912222263,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,7/17/2012,0.5,2.4815,2012.540984,-1.122650787,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/8/2012,0.5,2.51695,2012.601093,-1.052507946,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,9/18/2012,0.5,2.5524,2012.713115,-0.982365105,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,10/18/2012,0.5,2.5524,2012.795082,-0.982365105,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,2/6/2013,0.5,2.836,2013.09863,-0.421222375,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,4/25/2013,0.5,2.51695,2013.312329,-1.052507946,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,8/14/2013,0.5,2.51695,2013.616438,-1.052507946,NA
+285,?älgsj??n_Sweden,?älgsj??n,?älgsj??n,10/17/2013,0.5,2.5524,2013.791781,-0.982365105,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/11/1982,0,0.28,1982.356164,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/11/1982,5,0.34,1982.356164,-0.064642726,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/11/1982,6,0.29,1982.356164,-0.449043794,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/11/1982,7,0.32,1982.356164,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/16/1982,3,0.2,1982.621918,-1.140965716,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/16/1982,5,0.31,1982.621918,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/16/1982,7,0.39,1982.621918,0.319758341,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/8/1982,0,0.28,1982.852055,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/8/1982,4,0.4,1982.852055,0.396638555,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/8/1982,7,0.33,1982.852055,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/18/1983,1,0.3,1983.131507,-0.372163581,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/18/1983,1,0.32,1983.131507,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/18/1983,4,0.34,1983.131507,-0.064642726,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/18/1983,7,0.43,1983.131507,0.627279196,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/10/1983,1,0.3,1983.353425,-0.372163581,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/10/1983,1,0.34,1983.353425,-0.064642726,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/10/1983,4,0.29,1983.353425,-0.449043794,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/10/1983,7,0.29,1983.353425,-0.449043794,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/15/1983,0,0.32,1983.619178,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/15/1983,2,0.27,1983.619178,-0.602804221,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/15/1983,2,0.27,1983.619178,-0.602804221,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/15/1983,6,0.41,1983.619178,0.473518769,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/15/1983,7,0.34,1983.619178,-0.064642726,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/16/1983,0,0.31,1983.873973,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/16/1983,0,0.32,1983.873973,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/16/1983,4,0.33,1983.873973,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/16/1983,7,0.33,1983.873973,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/29/1984,0,0.35,1984.161202,0.012237487,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/29/1984,0,0.34,1984.161202,-0.064642726,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/29/1984,4,0.35,1984.161202,0.012237487,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/29/1984,7,0.37,1984.161202,0.165997914,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/9/1984,0,0.32,1984.352459,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/9/1984,4,0.32,1984.352459,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/9/1984,7,0.33,1984.352459,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/9/1984,7,0.32,1984.352459,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/14/1984,0,0.33,1984.617486,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/14/1984,0,0.3,1984.617486,-0.372163581,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/14/1984,4,0.3,1984.617486,-0.372163581,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/14/1984,6,0.33,1984.617486,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/14/1984,7,0.54,1984.617486,1.472961545,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/8/1984,0,0.34,1984.852459,-0.064642726,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/8/1984,4,0.35,1984.852459,0.012237487,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/8/1984,4,0.34,1984.852459,-0.064642726,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/8/1984,7,0.35,1984.852459,0.012237487,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/25/1985,0.5,0.36,1985.150685,0.089117701,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/25/1985,4,0.36,1985.150685,0.089117701,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/25/1985,4,0.36,1985.150685,0.089117701,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/25/1985,7,0.38,1985.150685,0.242878128,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/30/1985,0,0.33,1985.326027,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/30/1985,3,0.32,1985.326027,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/30/1985,5,0.32,1985.326027,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/30/1985,5,0.33,1985.326027,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/30/1985,7,0.33,1985.326027,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/19/1985,0,0.27,1985.630137,-0.602804221,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/19/1985,0,0.28,1985.630137,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/19/1985,4,0.26,1985.630137,-0.679684435,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/19/1985,7,0.26,1985.630137,-0.679684435,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/11/1985,0,0.31,1985.860274,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/11/1985,4,0.31,1985.860274,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/11/1985,7,0.32,1985.860274,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/11/1985,7,0.3,1985.860274,-0.372163581,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/3/1986,0.5,0.35,1986.167123,0.012237487,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/3/1986,4,0.39,1986.167123,0.319758341,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/3/1986,7,0.39,1986.167123,0.319758341,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/3/1986,7,0.36,1986.167123,0.089117701,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/24/1986,0,0.31,1986.309589,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/24/1986,4,0.33,1986.309589,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/24/1986,4,0.32,1986.309589,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/24/1986,7,0.32,1986.309589,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/13/1986,0,0.29,1986.613699,-0.449043794,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/13/1986,0,0.56,1986.613699,1.626721972,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/13/1986,4,0.29,1986.613699,-0.449043794,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/13/1986,6,0.34,1986.613699,-0.064642726,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/13/1986,7,0.43,1986.613699,0.627279196,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/3/1986,0,0.29,1986.838356,-0.449043794,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/3/1986,4,0.29,1986.838356,-0.449043794,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/3/1986,4,0.26,1986.838356,-0.679684435,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/3/1986,7,0.33,1986.838356,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/24/1987,0,1.15,1987.147945,6.162654572,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/15/1987,0,0.39,1987.284932,0.319758341,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/15/1987,4,0.37,1987.284932,0.165997914,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/15/1987,7,0.38,1987.284932,0.242878128,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/15/1987,7,0.44,1987.284932,0.704159409,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/13/1987,0,0.32,1987.613699,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/13/1987,0,0.27,1987.613699,-0.602804221,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/13/1987,4,0.28,1987.613699,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/13/1987,6,0.37,1987.613699,0.165997914,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/13/1987,7,0.44,1987.613699,0.704159409,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/5/1987,0,0.28,1987.843836,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/5/1987,4,0.28,1987.843836,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/5/1987,7,0.29,1987.843836,-0.449043794,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/5/1987,7,0.52,1987.843836,1.319201118,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/2/1988,0,0.39,1988.166667,0.319758341,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/2/1988,4,0.37,1988.166667,0.165997914,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/2/1988,4,0.34,1988.166667,-0.064642726,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/2/1988,6,0.35,1988.166667,0.012237487,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/2/1988,7,0.37,1988.166667,0.165997914,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/26/1988,0,0.33,1988.31694,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/26/1988,4,0.33,1988.31694,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/26/1988,4,0.33,1988.31694,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/26/1988,7,0.39,1988.31694,0.319758341,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/18/1988,0,0.25,1988.628415,-0.756564648,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/18/1988,4,0.28,1988.628415,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/18/1988,4,0.28,1988.628415,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/18/1988,6,0.31,1988.628415,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/18/1988,7,0.4,1988.628415,0.396638555,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/2/1988,0,0.28,1988.836066,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/2/1988,4,0.28,1988.836066,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/2/1988,7,0.27,1988.836066,-0.602804221,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/6/1989,0,0.39,1989.175342,0.319758341,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/6/1989,4,0.44,1989.175342,0.704159409,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/6/1989,4,0.39,1989.175342,0.319758341,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/6/1989,7,0.39,1989.175342,0.319758341,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/1/1989,0,0.36,1989.328767,0.089117701,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/1/1989,4,0.34,1989.328767,-0.064642726,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/1/1989,7,0.36,1989.328767,0.089117701,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/1/1989,7,0.37,1989.328767,0.165997914,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/22/1989,0,0.16,1989.638356,-1.448486571,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/22/1989,4,0.16,1989.638356,-1.448486571,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/22/1989,4,0.16,1989.638356,-1.448486571,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/22/1989,6,0.3,1989.638356,-0.372163581,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/22/1989,7,0.32,1989.638356,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/9/1989,0,0.26,1989.854795,-0.679684435,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/9/1989,0,0.28,1989.854795,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/9/1989,4,0.27,1989.854795,-0.602804221,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/9/1989,7,0.25,1989.854795,-0.756564648,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/27/1990,0,0.34,1990.156164,-0.064642726,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/27/1990,4,0.32,1990.156164,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/27/1990,7,0.33,1990.156164,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/27/1990,7,0.33,1990.156164,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/30/1990,0,0.3,1990.326027,-0.372163581,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/30/1990,4,0.29,1990.326027,-0.449043794,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/30/1990,4,0.3,1990.326027,-0.372163581,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/30/1990,7,0.32,1990.326027,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/22/1990,0,0.27,1990.638356,-0.602804221,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/22/1990,4,0.28,1990.638356,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/22/1990,6,0.4,1990.638356,0.396638555,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/22/1990,6,0.31,1990.638356,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/22/1990,7,0.37,1990.638356,0.165997914,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/9/1990,0,0.3,1990.854795,-0.372163581,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/9/1990,4,0.29,1990.854795,-0.449043794,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/9/1990,7,0.29,1990.854795,-0.449043794,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/9/1990,7,0.29,1990.854795,-0.449043794,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/19/1991,0,0.33,1991.134247,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/19/1991,4,0.31,1991.134247,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/19/1991,7,0.34,1991.134247,-0.064642726,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/19/1991,7,0.33,1991.134247,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/7/1991,0,0.32,1991.345205,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/7/1991,0,0.31,1991.345205,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/7/1991,4,0.31,1991.345205,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/7/1991,7,0.31,1991.345205,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/27/1991,0,0.25,1991.652055,-0.756564648,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/27/1991,0,0.28,1991.652055,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/27/1991,4,0.24,1991.652055,-0.833444862,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/27/1991,6,0.36,1991.652055,0.089117701,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/27/1991,7,0.43,1991.652055,0.627279196,NA
+385,Allaquash_Vilas_WI,Allequash,AL,10/28/1991,0,0.24,1991.821918,-0.833444862,NA
+385,Allaquash_Vilas_WI,Allequash,AL,10/28/1991,4,0.24,1991.821918,-0.833444862,NA
+385,Allaquash_Vilas_WI,Allequash,AL,10/28/1991,7,0.26,1991.821918,-0.679684435,NA
+385,Allaquash_Vilas_WI,Allequash,AL,10/28/1991,7,0.24,1991.821918,-0.833444862,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/4/1992,0,0.34,1992.172131,-0.064642726,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/4/1992,4,0.29,1992.172131,-0.449043794,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/4/1992,4,0.37,1992.172131,0.165997914,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/4/1992,7,0.48,1992.172131,1.011680264,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/5/1992,0,0.38,1992.34153,0.242878128,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/5/1992,4,0.33,1992.34153,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/5/1992,7,0.43,1992.34153,0.627279196,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/26/1992,0,0.31,1992.650273,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/26/1992,4,0.31,1992.650273,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/26/1992,6,0.29,1992.650273,-0.449043794,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/26/1992,7,0.36,1992.650273,0.089117701,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/26/1992,7,0.34,1992.650273,-0.064642726,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/6/1992,0,0.38,1992.846995,0.242878128,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/6/1992,0,0.35,1992.846995,0.012237487,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/6/1992,4,0.36,1992.846995,0.089117701,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/6/1992,7,0.35,1992.846995,0.012237487,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/23/1993,0,0.36,1993.145205,0.089117701,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/23/1993,4,0.36,1993.145205,0.089117701,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/23/1993,4,0.36,1993.145205,0.089117701,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/23/1993,7,0.4,1993.145205,0.396638555,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/3/1993,0,0.4,1993.334247,0.396638555,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/3/1993,4,0.45,1993.334247,0.781039623,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/3/1993,7,0.41,1993.334247,0.473518769,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/3/1993,7,0.74,1993.334247,3.010565816,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/26/1993,0,0.3,1993.649315,-0.372163581,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/26/1993,0,0.43,1993.649315,0.627279196,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/26/1993,4,0.31,1993.649315,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/26/1993,6,0.32,1993.649315,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/26/1993,7,0.37,1993.649315,0.165997914,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/3/1993,0,0.52,1993.838356,1.319201118,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/3/1993,4,0.4,1993.838356,0.396638555,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/3/1993,7,0.54,1993.838356,1.472961545,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/3/1993,7,0.41,1993.838356,0.473518769,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/22/1994,0,0.58,1994.142466,1.780482399,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/22/1994,4,0.48,1994.142466,1.011680264,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/22/1994,7,0.65,1994.142466,2.318643894,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/22/1994,7,0.6,1994.142466,1.934242826,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/3/1994,0,0.37,1994.334247,0.165997914,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/3/1994,4,0.37,1994.334247,0.165997914,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/3/1994,7,0.38,1994.334247,0.242878128,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/3/1994,7,0.37,1994.334247,0.165997914,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/25/1994,0,0.31,1994.646575,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/25/1994,4,0.3,1994.646575,-0.372163581,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/25/1994,6,0.33,1994.646575,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/25/1994,6,0.36,1994.646575,0.089117701,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/25/1994,7,0.43,1994.646575,0.627279196,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/17/1994,0,0.34,1994.876712,-0.064642726,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/17/1994,4,0.39,1994.876712,0.319758341,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/17/1994,7,0.38,1994.876712,0.242878128,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/17/1994,7,0.35,1994.876712,0.012237487,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/21/1995,0,0.42,1995.139726,0.550398982,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/21/1995,0,0.47,1995.139726,0.93480005,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/21/1995,4,0.44,1995.139726,0.704159409,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/21/1995,6,0.46,1995.139726,0.857919836,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/1/1995,0,0.38,1995.328767,0.242878128,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/1/1995,4,0.52,1995.328767,1.319201118,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/1/1995,7,0.45,1995.328767,0.781039623,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/1/1995,7,0.38,1995.328767,0.242878128,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/21/1995,0,0.35,1995.635616,0.012237487,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/21/1995,4,0.3,1995.635616,-0.372163581,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/21/1995,4,0.3,1995.635616,-0.372163581,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/21/1995,6,0.36,1995.635616,0.089117701,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/21/1995,7,0.47,1995.635616,0.93480005,NA
+385,Allaquash_Vilas_WI,Allequash,AL,12/14/1995,0,0.43,1995.950685,0.627279196,NA
+385,Allaquash_Vilas_WI,Allequash,AL,12/14/1995,4,0.34,1995.950685,-0.064642726,NA
+385,Allaquash_Vilas_WI,Allequash,AL,12/14/1995,4,0.33,1995.950685,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,12/14/1995,7,0.4,1995.950685,0.396638555,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/20/1996,0,0.39,1996.136612,0.319758341,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/20/1996,0,0.41,1996.136612,0.473518769,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/20/1996,4,0.37,1996.136612,0.165997914,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/20/1996,7,0.38,1996.136612,0.242878128,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/14/1996,0,0.32,1996.36612,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/14/1996,4,0.35,1996.36612,0.012237487,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/14/1996,7,0.49,1996.36612,1.088560477,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/14/1996,7,0.49,1996.36612,1.088560477,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/8/1996,0,0.26,1996.601093,-0.679684435,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/8/1996,2,0.27,1996.601093,-0.602804221,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/8/1996,4,0.26,1996.601093,-0.679684435,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/8/1996,4,0.29,1996.601093,-0.449043794,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/8/1996,7,0.43,1996.601093,0.627279196,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/4/1996,0,0.32,1996.84153,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/4/1996,4,0.34,1996.84153,-0.064642726,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/4/1996,4,0.33,1996.84153,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/4/1996,7,0.33,1996.84153,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/26/1997,0,0.42,1997.153425,0.550398982,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/26/1997,4,0.37,1997.153425,0.165997914,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/26/1997,4,0.51,1997.153425,1.242320904,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/26/1997,7,0.41,1997.153425,0.473518769,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/13/1997,0,0.34,1997.361644,-0.064642726,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/13/1997,4,0.32,1997.361644,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/13/1997,7,0.31,1997.361644,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/13/1997,7,0.32,1997.361644,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/27/1997,0,0.32,1997.652055,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/27/1997,4,0.32,1997.652055,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/27/1997,6,0.38,1997.652055,0.242878128,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/27/1997,6,0.39,1997.652055,0.319758341,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/27/1997,7,0.4,1997.652055,0.396638555,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/7/1997,0,0.31,1997.849315,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/7/1997,0,0.32,1997.849315,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/7/1997,4,0.32,1997.849315,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/7/1997,7,0.32,1997.849315,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/24/1998,0,0.36,1998.147945,0.089117701,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/24/1998,4,0.39,1998.147945,0.319758341,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/24/1998,7,0.45,1998.147945,0.781039623,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/24/1998,7,0.36,1998.147945,0.089117701,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/22/1998,0,0.39,1998.30411,0.319758341,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/22/1998,4,0.39,1998.30411,0.319758341,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/22/1998,4,0.37,1998.30411,0.165997914,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/22/1998,7,0.36,1998.30411,0.089117701,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/11/1998,0,0.33,1998.608219,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/11/1998,0,0.31,1998.608219,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/11/1998,2,0.32,1998.608219,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/11/1998,4,0.31,1998.608219,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/11/1998,7,0.38,1998.608219,0.242878128,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/4/1998,0,0.35,1998.841096,0.012237487,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/4/1998,0,0.35,1998.841096,0.012237487,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/4/1998,4,0.35,1998.841096,0.012237487,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/4/1998,7,0.36,1998.841096,0.089117701,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/25/1999,0,0.03,1999.150685,-2.447929347,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/25/1999,0,0.03,1999.150685,-2.447929347,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/25/1999,4,0.33,1999.150685,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/25/1999,6,0.11,1999.150685,-1.832887638,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/6/1999,0,0.36,1999.342466,0.089117701,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/6/1999,2,0.4,1999.342466,0.396638555,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/6/1999,4,0.42,1999.342466,0.550398982,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/6/1999,7,0.43,1999.342466,0.627279196,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/6/1999,7,0.49,1999.342466,1.088560477,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/26/1999,0,0.2,1999.649315,-1.140965716,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/26/1999,2,0.21,1999.649315,-1.064085503,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/26/1999,4,0.22,1999.649315,-0.987205289,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/26/1999,7,0.38,1999.649315,0.242878128,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/26/1999,7,0.44,1999.649315,0.704159409,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/5/1999,0,0.35,1999.843836,0.012237487,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/5/1999,0,0.35,1999.843836,0.012237487,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/5/1999,4,0.35,1999.843836,0.012237487,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/5/1999,7,0.34,1999.843836,-0.064642726,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/24/2000,0,0.42,2000.147541,0.550398982,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/24/2000,4,0.46,2000.147541,0.857919836,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/24/2000,7,0.51,2000.147541,1.242320904,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/24/2000,7,0.56,2000.147541,1.626721972,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/3/2000,0,0.43,2000.254098,0.627279196,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/3/2000,4,0.4,2000.254098,0.396638555,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/3/2000,4,0.38,2000.254098,0.242878128,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/3/2000,7,0.41,2000.254098,0.473518769,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/23/2000,0,0.34,2000.642077,-0.064642726,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/23/2000,0,0.61,2000.642077,2.01112304,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/23/2000,4,0.34,2000.642077,-0.064642726,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/23/2000,6,0.66,2000.642077,2.395524108,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/23/2000,7,0.61,2000.642077,2.01112304,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/15/2000,0,0.49,2000.871585,1.088560477,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/15/2000,4,0.46,2000.871585,0.857919836,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/15/2000,7,0.4,2000.871585,0.396638555,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/15/2000,7,0.38,2000.871585,0.242878128,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/2/2001,0,0.36,2001.164384,0.089117701,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/2/2001,4,0.4,2001.164384,0.396638555,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/2/2001,6,0.72,2001.164384,2.856805389,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/2/2001,6,0.37,2001.164384,0.165997914,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/1/2001,0,0.34,2001.328767,-0.064642726,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/1/2001,4,0.37,2001.328767,0.165997914,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/1/2001,4,0.28,2001.328767,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/1/2001,7,0.32,2001.328767,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/23/2001,0,0.17,2001.641096,-1.371606357,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/23/2001,4,0.25,2001.641096,-0.756564648,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/23/2001,4,0.18,2001.641096,-1.294726143,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/23/2001,6,0.23,2001.641096,-0.910325076,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/23/2001,7,0.32,2001.641096,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/14/2001,0,0.21,2001.868493,-1.064085503,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/14/2001,4,0.22,2001.868493,-0.987205289,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/14/2001,7,0.24,2001.868493,-0.833444862,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/14/2001,7,0.22,2001.868493,-0.987205289,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/5/2002,0,0.38,2002.172603,0.242878128,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/5/2002,0,0.3,2002.172603,-0.372163581,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/5/2002,4,0.34,2002.172603,-0.064642726,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/5/2002,7,0.36,2002.172603,0.089117701,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/23/2002,0,0.32,2002.306849,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/23/2002,4,0.32,2002.306849,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/23/2002,7,0.33,2002.306849,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/23/2002,7,0.33,2002.306849,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/14/2002,0,0.23,2002.616438,-0.910325076,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/14/2002,4,0.24,2002.616438,-0.833444862,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/14/2002,6,0.36,2002.616438,0.089117701,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/14/2002,6,0.34,2002.616438,-0.064642726,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/14/2002,7,0.38,2002.616438,0.242878128,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/4/2002,0,0.28,2002.841096,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/4/2002,4,0.26,2002.841096,-0.679684435,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/4/2002,4,0.29,2002.841096,-0.449043794,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/4/2002,7,0.31,2002.841096,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/26/2003,0,0.37,2003.153425,0.165997914,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/26/2003,4,0.32,2003.153425,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/26/2003,7,0.49,2003.153425,1.088560477,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/26/2003,7,0.44,2003.153425,0.704159409,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/30/2003,0,0.3,2003.326027,-0.372163581,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/30/2003,0,0.34,2003.326027,-0.064642726,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/30/2003,4,0.31,2003.326027,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/30/2003,6.5,0.31,2003.326027,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/18/2003,0,0.28,2003.627397,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/18/2003,2,0.29,2003.627397,-0.449043794,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/18/2003,4,0.28,2003.627397,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/18/2003,4,0.38,2003.627397,0.242878128,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/18/2003,7,0.46,2003.627397,0.857919836,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/19/2003,0,0.3,2003.882192,-0.372163581,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/19/2003,4,0.35,2003.882192,0.012237487,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/19/2003,4,0.32,2003.882192,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/19/2003,7,0.32,2003.882192,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/19/2004,0,0.22,2004.13388,-0.987205289,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/19/2004,4,0.23,2004.13388,-0.910325076,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/19/2004,7,0.29,2004.13388,-0.449043794,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/19/2004,7,0.28,2004.13388,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/27/2004,0,0.25,2004.319672,-0.756564648,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/27/2004,4,0.22,2004.319672,-0.987205289,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/27/2004,7,0.2,2004.319672,-1.140965716,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/27/2004,7,0.21,2004.319672,-1.064085503,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/16/2004,0,0.23,2004.622951,-0.910325076,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/16/2004,0,0.24,2004.622951,-0.833444862,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/16/2004,4,0.23,2004.622951,-0.910325076,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/16/2004,6,0.25,2004.622951,-0.756564648,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/16/2004,7,0.28,2004.622951,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/9/2004,0,0.06,2004.855191,-2.217288706,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/9/2004,4,0.02,2004.855191,-2.52480956,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/9/2004,7,0.09,2004.855191,-1.986648066,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/23/2005,0,0.31,2005.145205,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/23/2005,4,0.27,2005.145205,-0.602804221,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/23/2005,7,0.34,2005.145205,-0.064642726,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/23/2005,7,0.31,2005.145205,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/19/2005,0,0.28,2005.29589,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/19/2005,4,0.28,2005.29589,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/19/2005,4,0.28,2005.29589,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/19/2005,7,0.32,2005.29589,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/8/2005,0,0.2,2005.6,-1.140965716,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/8/2005,2,0.18,2005.6,-1.294726143,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/8/2005,4,0.2,2005.6,-1.140965716,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/8/2005,4,0.18,2005.6,-1.294726143,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/8/2005,7,0.28,2005.6,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/8/2005,0,0.23,2005.852055,-0.910325076,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/8/2005,0,0.22,2005.852055,-0.987205289,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/8/2005,4,0.23,2005.852055,-0.910325076,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/8/2005,7,0.21,2005.852055,-1.064085503,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/27/2006,0,0.27,2006.156164,-0.602804221,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/27/2006,4,0.31,2006.156164,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/27/2006,4,0.33,2006.156164,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/27/2006,7,0.33,2006.156164,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/20/2006,0,0.28,2006.29863,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/20/2006,0,0.3,2006.29863,-0.372163581,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/20/2006,4,0.28,2006.29863,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/20/2006,7,0.31,2006.29863,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/9/2006,0,0.25,2006.60274,-0.756564648,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/9/2006,4,0.25,2006.60274,-0.756564648,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/9/2006,6,0.3,2006.60274,-0.372163581,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/9/2006,6,0.31,2006.60274,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/9/2006,7,0.36,2006.60274,0.089117701,NA
+385,Allaquash_Vilas_WI,Allequash,AL,10/31/2006,0,0.25,2006.830137,-0.756564648,NA
+385,Allaquash_Vilas_WI,Allequash,AL,10/31/2006,0,0.25,2006.830137,-0.756564648,NA
+385,Allaquash_Vilas_WI,Allequash,AL,10/31/2006,4,0.26,2006.830137,-0.679684435,NA
+385,Allaquash_Vilas_WI,Allequash,AL,10/31/2006,7,0.25,2006.830137,-0.756564648,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/23/2007,0,0.29,2007.145205,-0.449043794,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/23/2007,4,0.29,2007.145205,-0.449043794,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/23/2007,7,0.32,2007.145205,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/23/2007,7,0.31,2007.145205,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/23/2007,0,0.32,2007.306849,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/23/2007,4,0.32,2007.306849,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/23/2007,4,0.32,2007.306849,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/23/2007,7,0.31,2007.306849,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/15/2007,0,0.23,2007.619178,-0.910325076,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/15/2007,4,0.26,2007.619178,-0.679684435,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/15/2007,6,0.28,2007.619178,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/15/2007,7,0.38,2007.619178,0.242878128,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/15/2007,7,0.55,2007.619178,1.549841758,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/8/2007,0,0.27,2007.852055,-0.602804221,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/8/2007,4,0.26,2007.852055,-0.679684435,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/8/2007,6.5,0.28,2007.852055,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/8/2007,6.5,0.25,2007.852055,-0.756564648,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/3/2008,0,0.41,2008.169399,0.473518769,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/3/2008,4,0.32,2008.169399,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/3/2008,4,0.32,2008.169399,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,3/3/2008,6,0.33,2008.169399,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/8/2008,0,0.31,2008.349727,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/8/2008,4,0.32,2008.349727,-0.218403154,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/8/2008,4,0.35,2008.349727,0.012237487,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/8/2008,6,0.3,2008.349727,-0.372163581,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/25/2008,0,0.02,2008.647541,-2.52480956,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/25/2008,0,0.03,2008.647541,-2.447929347,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/25/2008,4,0.02,2008.647541,-2.52480956,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/25/2008,6,0.02,2008.647541,-2.52480956,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/25/2008,7,0.05,2008.647541,-2.29416892,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/6/2008,0,0.01,2008.846995,-2.601689774,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/6/2008,4,0.23,2008.846995,-0.910325076,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/6/2008,4,0.25,2008.846995,-0.756564648,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/6/2008,7,0.03,2008.846995,-2.447929347,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/23/2009,0,0.3,2009.145205,-0.372163581,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/23/2009,4,0.29,2009.145205,-0.449043794,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/23/2009,7,0.33,2009.145205,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/23/2009,7,0.36,2009.145205,0.089117701,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/27/2009,0,0.27,2009.317808,-0.602804221,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/27/2009,0,0.26,2009.317808,-0.679684435,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/27/2009,4,0.27,2009.317808,-0.602804221,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/27/2009,7,0.34,2009.317808,-0.064642726,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/19/2009,0,0.27,2009.630137,-0.602804221,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/19/2009,2,0.31,2009.630137,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/19/2009,4,0.25,2009.630137,-0.756564648,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/19/2009,4,0.26,2009.630137,-0.679684435,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/19/2009,6,0.27,2009.630137,-0.602804221,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/9/2009,0,0.27,2009.854795,-0.602804221,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/9/2009,4,0.3,2009.854795,-0.372163581,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/9/2009,4,0.3,2009.854795,-0.372163581,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/9/2009,7,0.3,2009.854795,-0.372163581,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/16/2010,0,0.41,2010.126027,0.473518769,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/16/2010,0,0.42,2010.126027,0.550398982,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/16/2010,4,0.35,2010.126027,0.012237487,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/16/2010,7,0.37,2010.126027,0.165997914,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/12/2010,0,0.29,2010.276712,-0.449043794,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/12/2010,0,0.29,2010.276712,-0.449043794,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/12/2010,4,0.4,2010.276712,0.396638555,NA
+385,Allaquash_Vilas_WI,Allequash,AL,4/12/2010,7,0.33,2010.276712,-0.14152294,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/2/2010,0,0.31,2010.583562,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/2/2010,0,0.31,2010.583562,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/2/2010,4,0.31,2010.583562,-0.295283367,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/2/2010,6,0.4,2010.583562,0.396638555,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/2/2010,7,0.52,2010.583562,1.319201118,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/10/2010,0,0.65,2010.857534,2.318643894,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/10/2010,4,0.65,2010.857534,2.318643894,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/10/2010,7,0.68,2010.857534,2.549284535,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/10/2010,7,0.65,2010.857534,2.318643894,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/15/2011,0,0.49,2011.123288,1.088560477,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/15/2011,4,0.52,2011.123288,1.319201118,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/15/2011,7,0.57,2011.123288,1.703602186,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/15/2011,7,0.58,2011.123288,1.780482399,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/2/2011,0,0.67,2011.331507,2.472404321,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/2/2011,4,0.68,2011.331507,2.549284535,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/2/2011,7,0.49,2011.331507,1.088560477,NA
+385,Allaquash_Vilas_WI,Allequash,AL,5/2/2011,7,0.68,2011.331507,2.549284535,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/22/2011,0,0.86,2011.638356,3.933128379,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/22/2011,0,0.9,2011.638356,4.240649233,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/22/2011,4,0.88,2011.638356,4.086888806,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/22/2011,6,0.91,2011.638356,4.317529447,NA
+385,Allaquash_Vilas_WI,Allequash,AL,8/22/2011,7,0.99,2011.638356,4.932571155,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/11/2011,0,0.39,2011.860274,0.319758341,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/11/2011,0,0.39,2011.860274,0.319758341,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/11/2011,4,0.39,2011.860274,0.319758341,NA
+385,Allaquash_Vilas_WI,Allequash,AL,11/11/2011,7,0.38,2011.860274,0.242878128,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/23/2012,0,0.28,2012.144809,-0.525924008,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/23/2012,4,0.3,2012.144809,-0.372163581,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/23/2012,4,0.29,2012.144809,-0.449043794,NA
+385,Allaquash_Vilas_WI,Allequash,AL,2/23/2012,6,0.31,2012.144809,-0.295283367,NA
