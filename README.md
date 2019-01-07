@@ -1,3 +1,6 @@
+[![Travis-CI Build Status](https://travis-ci.com/clnsmth/EMLassemblyline.svg?branch=master)](https://travis-ci.org/clnsmth/EMLassemblyline)
+[![codecov.io](https://codecov.io/github/clnsmth/EMLassemblyline/coverage.svg?branch=master)](https://codecov.io/github/clnsmth/EMLassemblyline?branch=master)
+
 # The EML Assembly Line
 
 The Ecological Metadata Language (EML) is a metadata standard developed by the ecological community for persistence, discoverability, and reuse of ecological data. While the highly detailed structure of the EML schema is necessary to meet these ends, it confronts the inexperienced data provider with a steep learning curve that few have time to tackle. To lower the bar for data documentation, while still maintaining metadata detail and quality, we've created the `EMLassemblyline` R code package. A user-friendly workflow to help craft high quality EML metadata yourself. The assembly line is useful for publishing one-off data packages or to provide a foundation for a data package factory.
