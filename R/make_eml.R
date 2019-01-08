@@ -194,7 +194,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   
   # Detect operating system
   
-  os <- detect_os()
+  EDIutils::os <- detect_os()
   
   # Validate and set package ID
   
@@ -1582,7 +1582,7 @@ compile_attributes <- function(path, data.path, data.files){
   
   # Detect users operating system
   
-  os <- detect_os()
+  EDIutils::os <- detect_os()
   
   # Get names of data files with associated attribute files
   

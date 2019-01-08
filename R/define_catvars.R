@@ -54,7 +54,7 @@ define_catvars <- function(path, data.path = path) {
   
   # Detect operating system
   
-  os <- detect_os()
+  EDIutils::os <- detect_os()
   
   # Get attribute file names and data file names
   

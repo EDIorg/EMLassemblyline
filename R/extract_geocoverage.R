@@ -80,7 +80,7 @@ extract_geocoverage <- function(path, data.path = path, data.file, lat.col, lon.
   
   # Detect operating system
   
-  os <- detect_os()
+  EDIutils::os <- detect_os()
   
   # Detect data file delimeter
   
