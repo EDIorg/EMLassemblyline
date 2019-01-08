@@ -157,7 +157,7 @@ import_templates <- function(path, data.path = path, license, data.files){
   
   # Detect operating system
   
-  EDIutils::os <- detect_os()
+  os <- EDIutils::detect_os()
   
   # Detect file delimeters
   
