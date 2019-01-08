@@ -1070,7 +1070,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
                          table_names[i],
                          sep = "")
       
-      delim_guess <- detect_delimeter(data.path, data.files = table_names[i], os)
+      delim_guess <- EDIutils::detect_delimeter(data.path, data.files = table_names[i], os)
       
       # if (delim_guess == ','){
       #   df_table <- suppressMessages(
@@ -1625,7 +1625,7 @@ compile_attributes <- function(path, data.path, data.files){
                        table_names[i],
                        sep = "")
     
-    delim_guess <- detect_delimeter(path = data.path, data.files = table_names[i], os = os)
+    delim_guess <- EDIutils::detect_delimeter(path = data.path, data.files = table_names[i], os = os)
     
     # if (delim_guess == ','){
     #   df_table <- suppressMessages(

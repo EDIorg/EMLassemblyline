@@ -92,7 +92,7 @@ define_catvars <- function(path, data.path = path) {
 
   # Detect field delimiters of data files
   
-  delim_guess <- detect_delimeter(path = data.path, data.files = data_files, os)
+  delim_guess <- EDIutils::detect_delimeter(path = data.path, data.files = data_files, os)
   
   
   # Loop through data tables --------------------------------------------------
@@ -105,6 +105,8 @@ define_catvars <- function(path, data.path = path) {
     if (sum(use_i) > 0){
       
       message(paste(files[use_i], "already exists! Skipping this one."))
+      
+      catvars <- NULL
       
     } else {
       
@@ -244,14 +246,12 @@ define_catvars <- function(path, data.path = path) {
                                        quote = F,
                                        fileEncoding = "UTF-8"))
         }
-        
-        # Return data frame
-        
-        catvars
 
       } else {
         
         message("No categorical variables found.")
+        
+        catvars <- NULL
         
       }
       
@@ -260,6 +260,10 @@ define_catvars <- function(path, data.path = path) {
   }
   
   message("Done.")
+  
+  # Return data frame
+  
+  catvars
 
 }
 

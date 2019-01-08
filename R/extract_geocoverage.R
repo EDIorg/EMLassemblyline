@@ -84,7 +84,7 @@ extract_geocoverage <- function(path, data.path = path, data.file, lat.col, lon.
   
   # Detect data file delimeter
   
-  delim_guess <- detect_delimeter(data.path, data.files = data_file, os)
+  delim_guess <- EDIutils::detect_delimeter(data.path, data.files = data_file, os)
   
   # Read data table -----------------------------------------------------------
   
