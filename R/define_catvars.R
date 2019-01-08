@@ -84,7 +84,7 @@ define_catvars <- function(path, data.path = path) {
   
   # Validate fields of data.files
   
-  validate_fields(path = data.path, data.files = data_files)
+  EDIutils::validate_fields(path = data.path, data.files = data_files)
   
   # Set file names to be written
 
@@ -227,17 +227,27 @@ define_catvars <- function(path, data.path = path) {
 
         # Write catvar table
         
-        message(paste("Writing", fname_table_catvars[i]))
+        lib_path <- system.file(
+          '/example_dataset/metadata_templates/abstract.txt',
+          package = 'EMLassemblyline')
+        lib_path <- substr(lib_path, 1, nchar(lib_path) - 48)
         
-        suppressWarnings(write.table(catvars,
-                    paste(path,
-                          "/",
-                          fname_table_catvars[i],
-                          sep = ""),
-                    sep = "\t",
-                    row.names = F,
-                    quote = F,
-                    fileEncoding = "UTF-8"))
+        if (!stringr::str_detect(path, lib_path)){
+          message(paste("Writing", fname_table_catvars[i]))
+          suppressWarnings(write.table(catvars,
+                                       paste(path,
+                                             "/",
+                                             fname_table_catvars[i],
+                                             sep = ""),
+                                       sep = "\t",
+                                       row.names = F,
+                                       quote = F,
+                                       fileEncoding = "UTF-8"))
+        }
+        
+        # Return data frame
+        
+        catvars
 
       } else {
         

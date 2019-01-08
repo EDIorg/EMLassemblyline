@@ -69,7 +69,7 @@ extract_geocoverage <- function(path, data.path = path, data.file, lat.col, lon.
   
   # Validate fields of data.files
   
-  validate_fields(path = data.path, data.files = data_file)
+  EDIutils::validate_fields(path = data.path, data.files = data_file)
   
   # Get file names ------------------------------------------------------------
   

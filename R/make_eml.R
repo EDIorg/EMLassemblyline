@@ -189,7 +189,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   # Validate fields of data.files
   
   if (!missing(data.files)){
-    validate_fields(data.path, data.files = table_names)
+    EDIutils::validate_fields(data.path, data.files = table_names)
   }
   
   # Detect operating system
@@ -1099,7 +1099,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
       
       if (!is.na(match(fname_table_catvars[i], list.files(path)))){
         
-        validate_fields(
+        EDIutils::validate_fields(
           path = path,
           data.files = fname_table_catvars[i]
         )

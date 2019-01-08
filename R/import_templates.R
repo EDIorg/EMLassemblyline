@@ -153,7 +153,7 @@ import_templates <- function(path, data.path = path, license, data.files){
   
   # Validate fields of data.files
   
-  validate_fields(data.path, data.files = data_files)
+  EDIutils::validate_fields(data.path, data.files = data_files)
   
   # Detect operating system
   
