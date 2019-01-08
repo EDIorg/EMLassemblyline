@@ -134,9 +134,9 @@ import_templates <- function(path, data.path = path, license, data.files){
 
   # Valdate path
   
-  validate_path(path)
+  EDIutils::validate_path(path)
   if (!missing(data.path)){
-    validate_path(data.path)  
+    EDIutils::validate_path(data.path)  
   }
   
   # Validate license

@@ -172,12 +172,12 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   
   # Validate paths
   
-  validate_path(path)
+  EDIutils::validate_path(path)
   if (!missing(data.path)){
-    validate_path(data.path)  
+    EDIutils::validate_path(data.path)  
   }
   if (!missing(eml.path)){
-    validate_path(eml.path)  
+    EDIutils::validate_path(eml.path)  
   }
   
   # Validate data file names

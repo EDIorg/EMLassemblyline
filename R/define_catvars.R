@@ -47,9 +47,9 @@ define_catvars <- function(path, data.path = path) {
   
   # Validate paths
   
-  validate_path(path)
+  EDIutils::validate_path(path)
   if (!missing(data.path)){
-    validate_path(data.path)  
+    EDIutils::validate_path(data.path)  
   }
   
   # Detect operating system

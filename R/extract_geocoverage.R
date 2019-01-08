@@ -58,9 +58,9 @@ extract_geocoverage <- function(path, data.path = path, data.file, lat.col, lon.
   
   # Validate path
   
-  validate_path(path)
+  EDIutils::validate_path(path)
   if (!missing(data.path)){
-    validate_path(data.path)  
+    EDIutils::validate_path(data.path)  
   }
   
   # Validate file names
