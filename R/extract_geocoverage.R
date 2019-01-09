@@ -5,12 +5,15 @@
 #'     name) to be included in the EML.
 #'
 #' @usage 
-#'     extract_geocoverage(path, data.file, lat.col, lon.col, site.col)
+#'     extract_geocoverage(path, data.path = path, data.file, lat.col, 
+#'     lon.col, site.col)
 #'
 #' @param path 
 #'     A path to the metadata directory.
 #' @param data.path 
-#'     A path to the directory containing the data table with geographic information. Don't use this argument if the data table is located at the path argument listed above.
+#'     A path to the directory containing the data table with geographic 
+#'     information. Don't use this argument if the data table is located at 
+#'     the path argument listed above.
 #' @param data.file 
 #'     Name of the input data table containing geographic coverage data.
 #' @param lat.col 
@@ -65,7 +68,7 @@ extract_geocoverage <- function(path, data.path = path, data.file, lat.col, lon.
   
   # Validate file names
 
-  data_file <- validate_file_names(path = data.path, data.files = data.file)
+  data_file <- EDIutils::validate_file_names(path = data.path, data.files = data.file)
   
   # Validate fields of data.files
   
@@ -74,8 +77,8 @@ extract_geocoverage <- function(path, data.path = path, data.file, lat.col, lon.
   # Get file names ------------------------------------------------------------
   
   files <- list.files(data.path)
-  use_i <- str_detect(string = files,
-                      pattern = str_c("^", data_file, collapse = "|"))
+  use_i <- stringr::str_detect(string = files,
+                      pattern = stringr::str_c("^", data_file, collapse = "|"))
   data_files <- files[use_i]
   
   # Detect operating system
@@ -103,13 +106,13 @@ extract_geocoverage <- function(path, data.path = path, data.file, lat.col, lon.
     
     if (delim_guess == ','){
       df_table <- suppressMessages(
-        read_csv(
+        readr::read_csv(
           file = file_path
         )
       )
     } else if (delim_guess == '\t'){
       df_table <- suppressMessages(
-        read_tsv(
+        readr::read_tsv(
           file = file_path
         )
       )
@@ -117,7 +120,7 @@ extract_geocoverage <- function(path, data.path = path, data.file, lat.col, lon.
     
     df_table <- as.data.frame(df_table)
     
-    # df_table <- read.table(file_path,
+    # df_table <- utils::read.table(file_path,
     #                        header = TRUE,
     #                        sep = delim_guess,
     #                        quote = "\"",
@@ -128,8 +131,8 @@ extract_geocoverage <- function(path, data.path = path, data.file, lat.col, lon.
     
     columns <- colnames(df_table)
     columns_in <- c(lat.col, lon.col, site.col)
-    use_i <- str_detect(string = columns,
-                        pattern = str_c("^", columns_in, "$", collapse = "|"))
+    use_i <- stringr::str_detect(string = columns,
+                        pattern = stringr::str_c("^", columns_in, "$", collapse = "|"))
     if (sum(use_i) > 0){
       use_i2 <- columns[use_i]
       use_i3 <- columns_in %in% use_i2

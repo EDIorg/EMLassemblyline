@@ -5,9 +5,6 @@
 \title{Define categorical variables}
 \usage{
 define_catvars(path, data.path = path)
-
-    Run this function whenever your data contain attributes of class 
-    "categorical" listed in \emph{attributes_datatablename.txt} files.
 }
 \arguments{
 \item{path}{(character) A path to your metadata templates directory containing 
@@ -23,7 +20,9 @@ A tab delimited UTF-8 file in the dataset working directory titled
     supply definitions for listed codes.
 }
 \description{
-Identify and define categorical variables for your data tables.
+Identify and define categorical variables for your data tables. Run this 
+    function whenever your data contain attributes of class "categorical" 
+    listed in \emph{attributes_datatablename.txt} files.
 }
 \details{
 This function will not overwrite any 

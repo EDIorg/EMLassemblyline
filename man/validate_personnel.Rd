@@ -4,7 +4,7 @@
 \alias{validate_personnel}
 \title{Validate personnel}
 \usage{
-validate_personnel(x = personinfo)
+validate_personnel(x)
 }
 \arguments{
 \item{x}{The data frame created from reading personnel.txt.}

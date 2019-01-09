@@ -6,7 +6,7 @@
 #'     functions.
 #'
 #' @usage 
-#'     validate_personnel(x = personinfo)
+#'     validate_personnel(x)
 #'
 #' @param x
 #'     The data frame created from reading personnel.txt.

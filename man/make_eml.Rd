@@ -12,9 +12,9 @@ make_eml(
     data.files, 
     data.files.description, 
     data.files.quote.character, 
+    data.files.url, 
     zip.dir,
     zip.dir.description,
-    data.files.url, 
     temporal.coverage, 
     geographic.description, 
     geographic.coordinates, 
@@ -73,6 +73,10 @@ any .zip directory present in the working directory.}
 \item{temporal.coverage}{(character) A vector of character strings specifying the beginning and ending dates 
 of your dataset. Use the format YYYY-MM-DD.}
 
+\item{geographic.description}{(character) A description of the geographic coverage of your dataset. 
+Don't use this argument if you are supplying geographic.coordinates in 
+the bounding_boxes.txt template file. Example: "North America and Europe".}
+
 \item{geographic.coordinates}{(character) A vector of character strings specifying the spatial bounding
 coordinates of your dataset in decimal degrees. This argument is not 
 required if you are supplying bounding coordinates in the 
@@ -83,10 +87,6 @@ minus sign (i.e. dash -). If you don't have an area, but rather a point,
 Repeat the latitude value for North and South, and repeat the longitude
 value for East and West (e.g. geographic.coordinates = c('28.38',
 '-119.95', '28.38', '-119.95)).}
-
-\item{geographic.description}{(character) A description of the geographic coverage of your dataset. 
-Don't use this argument if you are supplying geographic.coordinates in 
-the bounding_boxes.txt template file. Example: "North America and Europe".}
 
 \item{maintenance.description}{(character) A description of whether data collection for this dataset 
 is "ongoing" or "completed".}

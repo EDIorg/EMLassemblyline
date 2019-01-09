@@ -143,13 +143,13 @@ import_templates <- function(path, data.path = path, license, data.files){
   
   license.low <- tolower(license)
   
-  if (!str_detect(license.low, "^cc0$|^ccby$")){
+  if (!stringr::str_detect(license.low, "^cc0$|^ccby$")){
     stop('Invalid value entered for the "license" argument. Please choose "CC0" or "CCBY".')
   }
   
   # Validate data.files
   
-  data_files <- validate_file_names(data.path, data.files)
+  data_files <- EDIutils::validate_file_names(data.path, data.files)
   
   # Validate fields of data.files
   
@@ -361,21 +361,21 @@ import_templates <- function(path, data.path = path, license, data.files){
     
     # if (delim_guess[i] == ','){
     #   df_table <- suppressMessages(
-    #     read_csv(
+    #     readr::read_csv(
     #       file = data_path,
     #       na = c('NA', 'NULL')
     #     )
     #   )
     # } else if (delim_guess[i] == '\t'){
     #   df_table <- suppressMessages(
-    #     read_tsv(
+    #     readr::read_tsv(
     #       file = data_path,
     #       na = c('NA', 'NULL')
     #     )
     #   )
     # }
     
-    df_table <- read.table(data_path,
+    df_table <- utils::read.table(data_path,
                            header = TRUE,
                            sep = delim_guess[i],
                            quote = "\"",
@@ -383,7 +383,7 @@ import_templates <- function(path, data.path = path, license, data.files){
                            comment.char = "")
     
     column_names <- colnames(df_table)
-    use_i <- str_detect(string = column_names,
+    use_i <- stringr::str_detect(string = column_names,
                         pattern = "\\.")
     
     if (sum(use_i) > 0){
@@ -416,13 +416,13 @@ import_templates <- function(path, data.path = path, license, data.files){
     
     # if (delim_guess[i] == ','){
     #   df_table <- suppressMessages(
-    #     read_csv(
+    #     readr::read_csv(
     #       file = data_path
     #     )
     #   )
     # } else if (delim_guess[i] == '\t'){
     #   df_table <- suppressMessages(
-    #     read_tsv(
+    #     readr::read_tsv(
     #       file = data_path
     #     )
     #   )
@@ -430,7 +430,7 @@ import_templates <- function(path, data.path = path, license, data.files){
     # 
     # df_table <- as.data.frame(df_table)
 
-    df_table <- read.table(data_path,
+    df_table <- utils::read.table(data_path,
                            header = TRUE,
                            sep = delim_guess[i],
                            quote = "\"",
@@ -469,7 +469,7 @@ import_templates <- function(path, data.path = path, license, data.files){
     use_i <- guess == "character"
     if (sum(use_i) > 0){
       potential_date_cols <- colnames(df_table)[use_i]
-      potential_date_i <- str_detect(tolower(potential_date_cols), "date|time|day")
+      potential_date_i <- stringr::str_detect(tolower(potential_date_cols), "date|time|day")
       guess_datetime <- potential_date_cols[potential_date_i]
       use_i <- match(guess_datetime, attributes[[i]]$attributeName)
       guess[use_i] <- "Date"

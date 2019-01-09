@@ -8,7 +8,7 @@ Description: A set of functions facilitating a workflow to create metadata
     information. The user selects from a collection of functions to extract
     information from the data entities, and finally executes a fancy wrapper
     function to build, validate, and write the EML metadata to file.
-Depends:
+Imports:
     EML (== 1.0.3),
     stringr (>= 1.2.0),
     stringi (>= 1.1.5),
@@ -16,14 +16,11 @@ Depends:
     readr (>= 1.1.1),
     xml2 (>= 1.1.1),
     httr (>= 1.3.1),
-    R (>= 3.2.5)
+    knitr (>= 1.20),
+    rmarkdown (>= 1.11),
+    testthat (>= 2.0.0)
 Remotes:
     EDIorg/EDIutils    
-Imports: 
-Suggests:
-    knitr,
-    rmarkdown,
-    testthat
 License: Creative Commons license CC0 1.0 Universal
 Encoding: UTF-8
 LazyData: true

@@ -13,9 +13,9 @@
 #'     data.files, 
 #'     data.files.description, 
 #'     data.files.quote.character, 
+#'     data.files.url, 
 #'     zip.dir,
 #'     zip.dir.description,
-#'     data.files.url, 
 #'     temporal.coverage, 
 #'     geographic.description, 
 #'     geographic.coordinates, 
@@ -73,6 +73,10 @@
 #' @param temporal.coverage
 #'     (character) A vector of character strings specifying the beginning and ending dates 
 #'     of your dataset. Use the format YYYY-MM-DD.
+#' @param geographic.description
+#'     (character) A description of the geographic coverage of your dataset. 
+#'     Don't use this argument if you are supplying geographic.coordinates in 
+#'     the bounding_boxes.txt template file. Example: "North America and Europe".
 #' @param geographic.coordinates
 #'     (character) A vector of character strings specifying the spatial bounding
 #'     coordinates of your dataset in decimal degrees. This argument is not 
@@ -84,10 +88,6 @@
 #'     Repeat the latitude value for North and South, and repeat the longitude
 #'     value for East and West (e.g. geographic.coordinates = c('28.38',
 #'     '-119.95', '28.38', '-119.95)).
-#' @param geographic.description
-#'     (character) A description of the geographic coverage of your dataset. 
-#'     Don't use this argument if you are supplying geographic.coordinates in 
-#'     the bounding_boxes.txt template file. Example: "North America and Europe".
 #' @param maintenance.description
 #'     (character) A description of whether data collection for this dataset 
 #'     is "ongoing" or "completed".
@@ -135,8 +135,8 @@
 
 make_eml <- function(path, data.path = path, eml.path = path, dataset.title, data.files, data.files.description, 
                      data.files.quote.character, data.files.url, zip.dir, zip.dir.description,
-                     temporal.coverage, geographic.coordinates, geographic.description, maintenance.description, user.id, 
-                     affiliation, environment, package.id, provenance) {
+                     temporal.coverage, geographic.description, geographic.coordinates, maintenance.description, 
+                     user.id, affiliation, environment, package.id, provenance) {
 
   # Check arguments and parameterize ------------------------------------------
   
@@ -183,7 +183,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   # Validate data file names
   
   if (!missing(data.files)){
-    table_names <- validate_file_names(path = data.path, data.files = data.files) 
+    table_names <- EDIutils::validate_file_names(path = data.path, data.files = data.files) 
   }
   
   # Validate fields of data.files
@@ -461,7 +461,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
 
   message("Reading personnel file.")
 
-  personinfo <- read.table(
+  personinfo <- utils::read.table(
     fname_personnel,
     header = T,
     sep="\t",
@@ -602,7 +602,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
     stop('keywords.txt does not exist! Run import_templates.txt to regenerate this template.')
   }
 
-  keywords <- suppressWarnings(read.table(
+  keywords <- suppressWarnings(utils::read.table(
     paste(substr(fname_keywords, 1, nchar(fname_keywords) - 4),
           ".txt",
           sep = ""),
@@ -701,7 +701,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
     
     bounding_boxes <- suppressMessages(
       as.data.frame(
-        read_tsv(
+        readr::read_tsv(
           paste0(
             path,
             '/',
@@ -781,7 +781,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
     
     message("<geographicDescription>")
     
-    df_geographic_coverage <- read.table(paste(path,
+    df_geographic_coverage <- utils::read.table(paste(path,
                                                "/",
                                                "geographic_coverage.txt",
                                                sep = ""),
@@ -1074,13 +1074,13 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
       
       # if (delim_guess == ','){
       #   df_table <- suppressMessages(
-      #     read_csv(
+      #     readr::read_csv(
       #       file = file_path
       #     )
       #   )
       # } else if (delim_guess == '\t'){
       #   df_table <- suppressMessages(
-      #     read_tsv(
+      #     readr::read_tsv(
       #       file = file_path
       #     )
       #   )
@@ -1088,7 +1088,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
       # 
       # df_table <- as.data.frame(df_table)
       
-      df_table <- read.table(file_path,
+      df_table <- utils::read.table(file_path,
                              header = TRUE,
                              sep = delim_guess,
                              quote = "\"",
@@ -1104,7 +1104,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
           data.files = fname_table_catvars[i]
         )
         
-        catvars <- read.table(
+        catvars <- utils::read.table(
           paste(
             path,
             "/",
@@ -1356,7 +1356,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
     
     if (file.exists(fname_custom_units)){
       
-      custom_units_df <- read.table(
+      custom_units_df <- utils::read.table(
         fname_custom_units,
         header = T,
         sep="\t",
@@ -1587,25 +1587,25 @@ compile_attributes <- function(path, data.path, data.files){
   # Get names of data files with associated attribute files
   
   files <- list.files(data.path)
-  use_i <- str_detect(string = files,
+  use_i <- stringr::str_detect(string = files,
                       pattern = "^attributes")
   attribute_files <- files[use_i]
   fname_table_attributes <- attribute_files
-  table_names_base <- str_sub(string = attribute_files,
+  table_names_base <- stringr::str_sub(string = attribute_files,
                               start = 12,
                               end = nchar(attribute_files)-4)
-  use_i <- str_detect(string = files,
-                      pattern = str_c("^", table_names_base, collapse = "|"))
+  use_i <- stringr::str_detect(string = files,
+                      pattern = stringr::str_c("^", table_names_base, collapse = "|"))
   table_names <- files[use_i]
   
   # Synchronize ordering of data files and attribute files
   
-  table_names <- validate_file_names(data.path, data.files)
+  table_names <- EDIutils::validate_file_names(data.path, data.files)
   
   attribute_files_out <- c()
   for (i in 1:length(table_names)){
     attribute_files_out[i] <- paste0('attributes_',
-                                     str_c(str_sub(table_names[i], 1, nchar(table_names[i])-4), collapse = "|"),
+                                     stringr::str_c(stringr::str_sub(table_names[i], 1, nchar(table_names[i])-4), collapse = "|"),
                                      '.txt')
   }
   fname_table_attributes <- attribute_files_out
@@ -1629,14 +1629,14 @@ compile_attributes <- function(path, data.path, data.files){
     
     # if (delim_guess == ','){
     #   df_table <- suppressMessages(
-    #     read_csv(
+    #     readr::read_csv(
     #       file = file_path,
     #       quote = "\""
     #     )
     #   )
     # } else if (delim_guess == '\t'){
     #   df_table <- suppressMessages(
-    #     read_tsv(
+    #     readr::read_tsv(
     #       file = file_path
     #     )
     #   )
@@ -1644,7 +1644,7 @@ compile_attributes <- function(path, data.path, data.files){
     # 
     # df_table <- as.data.frame(df_table)
     
-    df_table <- read.table(file_path,
+    df_table <- utils::read.table(file_path,
                            header = TRUE,
                            sep = delim_guess,
                            quote = "\"",
@@ -1653,7 +1653,7 @@ compile_attributes <- function(path, data.path, data.files){
     
     # Read attributes_datatablename
     
-    field_count <- count.fields(file = paste0(path,
+    field_count <- utils::count.fields(file = paste0(path,
                                               "/",
                                               fname_table_attributes[i]),
                                 sep = "\t")
@@ -1665,7 +1665,7 @@ compile_attributes <- function(path, data.path, data.files){
                   "Please double check the organization of content in this file."))
     }
     
-    df_attributes <- read.table(paste(path,
+    df_attributes <- utils::read.table(paste(path,
                                       "/",
                                       fname_table_attributes[i],
                                       sep = ""),
@@ -1697,7 +1697,7 @@ compile_attributes <- function(path, data.path, data.files){
     
     df_attributes$unit[is.na(df_attributes$unit)] <- ""
     
-    use_i <- str_detect(string = df_attributes$unit,
+    use_i <- stringr::str_detect(string = df_attributes$unit,
                         pattern = "^!.*!$")
     
     if (sum(use_i) > 0){
@@ -1711,7 +1711,7 @@ compile_attributes <- function(path, data.path, data.files){
     
     df_attributes$dateTimeFormatString[is.na(df_attributes$dateTimeFormatString)] <- ""
     
-    use_i <- str_detect(string = df_attributes$dateTimeFormatString,
+    use_i <- stringr::str_detect(string = df_attributes$dateTimeFormatString,
                         pattern = "^!.*!$")
     
     if (sum(use_i) > 0){
@@ -1805,7 +1805,7 @@ compile_attributes <- function(path, data.path, data.files){
     
     vec <- df_attributes$missingValueCode
     vec[is.na(df_attributes$missingValueCode)] <- "NA"
-    use_i <- str_count(vec, '[,]|[\\s]') > 0
+    use_i <- stringr::str_count(vec, '[,]|[\\s]') > 0
     if (sum(use_i) > 0){
       hold <- df_attributes$attributeName[use_i]
       stop(paste0(fname_table_attributes[i], 

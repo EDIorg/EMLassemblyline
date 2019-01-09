@@ -1,12 +1,11 @@
 #' Define categorical variables
 #'
 #' @description  
-#'     Identify and define categorical variables for your data tables.
+#'     Identify and define categorical variables for your data tables. Run this 
+#'     function whenever your data contain attributes of class "categorical" 
+#'     listed in \emph{attributes_datatablename.txt} files.
 #'
 #' @usage define_catvars(path, data.path = path)
-#' 
-#'     Run this function whenever your data contain attributes of class 
-#'     "categorical" listed in \emph{attributes_datatablename.txt} files.
 #'
 #' @param path 
 #'     (character) A path to your metadata templates directory containing 
@@ -61,18 +60,18 @@ define_catvars <- function(path, data.path = path) {
   message("Identifying data table names.")
   
   files <- list.files(path)
-  use_i <- str_detect(string = files,
+  use_i <- stringr::str_detect(string = files,
                       pattern = "^attributes")
   if (sum(use_i) == 0){
     stop('There are no attributes.txt files in your dataset working directory. Please fix this.')
   }
   attribute_files <- files[use_i]
-  table_names_base <- str_sub(string = attribute_files,
+  table_names_base <- stringr::str_sub(string = attribute_files,
                               start = 12,
                               end = nchar(attribute_files)-4)
   data_files <- list.files(data.path)
-  use_i <- str_detect(string = data_files,
-                      pattern = str_c("^", table_names_base, collapse = "|"))
+  use_i <- stringr::str_detect(string = data_files,
+                      pattern = stringr::str_c("^", table_names_base, collapse = "|"))
   table_names <- data_files[use_i]
   data_files <- table_names
   
@@ -88,7 +87,7 @@ define_catvars <- function(path, data.path = path) {
   
   # Set file names to be written
 
-  fname_table_catvars <- str_c("catvars_", table_names_base, ".txt")
+  fname_table_catvars <- stringr::str_c("catvars_", table_names_base, ".txt")
 
   # Detect field delimiters of data files
   
@@ -99,7 +98,7 @@ define_catvars <- function(path, data.path = path) {
   
   for (i in 1:length(attribute_files)){
     
-    use_i <- str_detect(string = files,
+    use_i <- stringr::str_detect(string = files,
                         pattern = fname_table_catvars[i])
     
     if (sum(use_i) > 0){
@@ -114,7 +113,7 @@ define_catvars <- function(path, data.path = path) {
       
       message(paste("Reading ", attribute_files[i], ".", sep = ""))
       
-      df_attributes <- read.table(
+      df_attributes <- utils::read.table(
         paste(path,
               "/",
               attribute_files[i],
@@ -151,19 +150,19 @@ define_catvars <- function(path, data.path = path) {
       
       if (delim_guess[i] == ','){
         df_table <- suppressMessages(
-          read_csv(
+          readr::read_csv(
             file = data_path
             )
           )
       } else if (delim_guess[i] == '\t'){
         df_table <- suppressMessages(
-          read_tsv(
+          readr::read_tsv(
             file = data_path
           )
         )
       }
       
-      # df_table <- read.table(data_path,
+      # df_table <- utils::read.table(data_path,
       #                        header=TRUE,
       #                        sep=delim_guess[i],
       #                        quote="\"",
