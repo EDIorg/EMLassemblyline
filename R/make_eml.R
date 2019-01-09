@@ -687,13 +687,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
     
     bounding_boxes <- suppressMessages(
       as.data.frame(
-        read_tsv(
-          paste0(
-            path,
-            '/',
-            'bounding_boxes.txt'
-          )
-        )
+        utils::read.table(data_path, header = T, sep = '\t', quote = "\"", as.is = T, comment.char = '')
       )
     )
     
@@ -1056,22 +1050,6 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
                        sep = "")
     
     delim_guess <- detect_delimeter(data.path, data.files = table_names[i], os)
-    
-    # if (delim_guess == ','){
-    #   df_table <- suppressMessages(
-    #     read_csv(
-    #       file = file_path
-    #     )
-    #   )
-    # } else if (delim_guess == '\t'){
-    #   df_table <- suppressMessages(
-    #     read_tsv(
-    #       file = file_path
-    #     )
-    #   )
-    # }
-    # 
-    # df_table <- as.data.frame(df_table)
     
     df_table <- read.table(file_path,
                            header = TRUE,

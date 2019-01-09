@@ -52,23 +52,6 @@ compile_attributes <- function(path, data.path, data.files){
     
     delim_guess <- detect_delimeter(path = data.path, data.files = table_names[i], os = os)
     
-    # if (delim_guess == ','){
-    #   df_table <- suppressMessages(
-    #     read_csv(
-    #       file = file_path,
-    #       quote = "\""
-    #     )
-    #   )
-    # } else if (delim_guess == '\t'){
-    #   df_table <- suppressMessages(
-    #     read_tsv(
-    #       file = file_path
-    #     )
-    #   )
-    # }
-    # 
-    # df_table <- as.data.frame(df_table)
-    
     df_table <- read.table(file_path,
                            header = TRUE,
                            sep = delim_guess,

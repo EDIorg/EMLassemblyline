@@ -148,25 +148,10 @@ define_catvars <- function(path, data.path = path) {
                             sep = "")
       
       if (delim_guess[i] == ','){
-        df_table <- suppressMessages(
-          read_csv(
-            file = data_path
-            )
-          )
+          df_table <- utils::read.csv(file = data_path, header = T, quote = '\"', as.is = T, comment.char = '')
       } else if (delim_guess[i] == '\t'){
-        df_table <- suppressMessages(
-          read_tsv(
-            file = data_path
-          )
-        )
+        df_table <- utils::read.table(data_path, header = T, sep = '\t', quote = "\"", as.is = T, comment.char = '')
       }
-      
-      # df_table <- read.table(data_path,
-      #                        header=TRUE,
-      #                        sep=delim_guess[i],
-      #                        quote="\"",
-      #                        as.is=TRUE,
-      #                        comment.char = "")
 
       # If there are no catvars then skip to the next file
       

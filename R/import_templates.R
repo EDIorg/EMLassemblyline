@@ -359,22 +359,6 @@ import_templates <- function(path, data.path = path, license, data.files){
                           data_files[i],
                           sep = "")
     
-    # if (delim_guess[i] == ','){
-    #   df_table <- suppressMessages(
-    #     read_csv(
-    #       file = data_path,
-    #       na = c('NA', 'NULL')
-    #     )
-    #   )
-    # } else if (delim_guess[i] == '\t'){
-    #   df_table <- suppressMessages(
-    #     read_tsv(
-    #       file = data_path,
-    #       na = c('NA', 'NULL')
-    #     )
-    #   )
-    # }
-    
     df_table <- read.table(data_path,
                            header = TRUE,
                            sep = delim_guess[i],
@@ -413,22 +397,6 @@ import_templates <- function(path, data.path = path, license, data.files){
                        "/",
                        data_files[i],
                        sep = "")
-    
-    # if (delim_guess[i] == ','){
-    #   df_table <- suppressMessages(
-    #     read_csv(
-    #       file = data_path
-    #     )
-    #   )
-    # } else if (delim_guess[i] == '\t'){
-    #   df_table <- suppressMessages(
-    #     read_tsv(
-    #       file = data_path
-    #     )
-    #   )
-    # }
-    # 
-    # df_table <- as.data.frame(df_table)
 
     df_table <- read.table(data_path,
                            header = TRUE,
