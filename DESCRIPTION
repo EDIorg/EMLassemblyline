@@ -21,7 +21,7 @@ Imports:
     testthat (>= 2.0.0)
 Remotes:
     EDIorg/EDIutils    
-License: Creative Commons license CC0 1.0 Universal
+License: MIT
 Encoding: UTF-8
 LazyData: true
 URL: http://github.com/EDIorg/EMLassemblyline
