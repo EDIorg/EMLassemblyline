@@ -16,6 +16,6 @@
 view_unit_dictionary <- function(){
   
   standardUnits <- get_unitList()
-  View(standardUnits$units)
+  utils::View(standardUnits$units)
 
 }

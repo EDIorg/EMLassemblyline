@@ -495,7 +495,7 @@ import_templates <- function(path, data.path = path, license, data.files){
                   ".txt.",
                   sep = ""))
       
-      write.table(attributes[[i]],
+      utils::write.table(attributes[[i]],
                   paste(path,
                         "/",
                         "attributes_",

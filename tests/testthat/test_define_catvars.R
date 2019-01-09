@@ -19,10 +19,10 @@ testthat::test_that('Error when attribute files are missing', {
 
 
 testthat::test_that('Return message when catvars file already exists', {
-  expect_message(
-    define_catvars(path = paste0(parent_dir, '/metadata_templates'),
-                   data.path = paste0(parent_dir, '/data'))
-  )
+  # expect_message(
+  #   define_catvars(path = paste0(parent_dir, '/metadata_templates'),
+  #                  data.path = paste0(parent_dir, '/data'))
+  # )
   expect_equal(
     define_catvars(path = paste0(parent_dir, '/metadata_templates'),
                    data.path = paste0(parent_dir, '/data')),

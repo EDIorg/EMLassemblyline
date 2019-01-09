@@ -227,7 +227,7 @@ define_catvars <- function(path, data.path = path) {
         
         if (!stringr::str_detect(path, lib_path)){
           message(paste("Writing", fname_table_catvars[i]))
-          suppressWarnings(write.table(catvars,
+          suppressWarnings(utils::write.table(catvars,
                                        paste(path,
                                              "/",
                                              fname_table_catvars[i],

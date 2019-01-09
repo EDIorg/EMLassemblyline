@@ -85,7 +85,7 @@ order_pi_list <- function(x){
                  primary_pi,
                  aux_funding,
                  no_funding)
-      x <- x[complete.cases(x), ]
+      x <- x[stats::complete.cases(x), ]
     } else if (nrow(pis) == 1){
       x <- rbind(others,
                  pis)

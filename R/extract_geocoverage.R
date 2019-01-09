@@ -141,7 +141,7 @@ extract_geocoverage <- function(path, data.path = path, data.file, lat.col, lon.
     
     use_i <- df_table[site.col] == ""
     df_table[use_i, site.col] <- NA
-    df_table <- df_table[complete.cases(df_table), ]
+    df_table <- df_table[stats::complete.cases(df_table), ]
     
     # Get vectors of latitude, longitude, and site
     
@@ -187,7 +187,7 @@ extract_geocoverage <- function(path, data.path = path, data.file, lat.col, lon.
     
     message("Writing geographic_coverage.txt.")
     
-    suppressWarnings(write.table(geocoverage_out,
+    suppressWarnings(utils::write.table(geocoverage_out,
                 paste(path,
                       "/",
                       "geographic_coverage.txt", sep = ""),
