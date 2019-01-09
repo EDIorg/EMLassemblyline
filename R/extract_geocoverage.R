@@ -105,17 +105,9 @@ extract_geocoverage <- function(path, data.path = path, data.file, lat.col, lon.
     message(paste("Reading ", data_file, ".", sep = ""))
     
     if (delim_guess == ','){
-      df_table <- suppressMessages(
-        readr::read_csv(
-          file = file_path
-        )
-      )
+      df_table <- utils::read.csv(file = data_path, header = T, quote = '\"', as.is = T, comment.char = '')
     } else if (delim_guess == '\t'){
-      df_table <- suppressMessages(
-        readr::read_tsv(
-          file = file_path
-        )
-      )
+      df_table <- utils::read.table(data_path, header = T, sep = '\t', quote = "\"", as.is = T, comment.char = '')
     }
     
     df_table <- as.data.frame(df_table)

@@ -701,13 +701,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
     
     bounding_boxes <- suppressMessages(
       as.data.frame(
-        readr::read_tsv(
-          paste0(
-            path,
-            '/',
-            'bounding_boxes.txt'
-          )
-        )
+        utils::read.table(data_path, header = T, sep = '\t', quote = "\"", as.is = T, comment.char = '')
       )
     )
     
@@ -1071,22 +1065,6 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
                          sep = "")
       
       delim_guess <- EDIutils::detect_delimeter(data.path, data.files = table_names[i], os)
-      
-      # if (delim_guess == ','){
-      #   df_table <- suppressMessages(
-      #     readr::read_csv(
-      #       file = file_path
-      #     )
-      #   )
-      # } else if (delim_guess == '\t'){
-      #   df_table <- suppressMessages(
-      #     readr::read_tsv(
-      #       file = file_path
-      #     )
-      #   )
-      # }
-      # 
-      # df_table <- as.data.frame(df_table)
       
       df_table <- utils::read.table(file_path,
                              header = TRUE,
@@ -1626,23 +1604,6 @@ compile_attributes <- function(path, data.path, data.files){
                        sep = "")
     
     delim_guess <- EDIutils::detect_delimeter(path = data.path, data.files = table_names[i], os = os)
-    
-    # if (delim_guess == ','){
-    #   df_table <- suppressMessages(
-    #     readr::read_csv(
-    #       file = file_path,
-    #       quote = "\""
-    #     )
-    #   )
-    # } else if (delim_guess == '\t'){
-    #   df_table <- suppressMessages(
-    #     readr::read_tsv(
-    #       file = file_path
-    #     )
-    #   )
-    # }
-    # 
-    # df_table <- as.data.frame(df_table)
     
     df_table <- utils::read.table(file_path,
                            header = TRUE,
