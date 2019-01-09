@@ -324,6 +324,7 @@ make_eml(path = "/Users/csmith/Desktop/gleon_chloride",
          geographic.coordinates = c("69.0", "28.53", "28.38", "-119.95"),
          maintenance.description = "completed", 
          user.id = "csmith",
+         affiliation = "EDI",
          package.id = "edi.201.1")
          
 # Make EML for data and metadata templates located in different paths
@@ -340,6 +341,7 @@ make_eml(path = "/Users/csmith/Desktop/gleon_chloride",
          geographic.coordinates = c("69.0", "28.53", "28.38", "-119.95"),
          maintenance.description = "completed", 
          user.id = "csmith",
+         affiliation = "EDI",
          package.id = "edi.201.1")
          
 # Make EML for data and metadata templates located in different paths, and EML to be exported to a separate path
@@ -357,6 +359,7 @@ make_eml(path = "/Users/csmith/Desktop/gleon_chloride",
          geographic.coordinates = c("69.0", "28.53", "28.38", "-119.95"),
          maintenance.description = "completed", 
          user.id = "csmith",
+         affiliation = "EDI",
          package.id = "edi.201.1")
 
 ```
