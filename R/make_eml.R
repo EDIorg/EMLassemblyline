@@ -618,14 +618,14 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
                           "keywordThesaurus")
   
   # Edit keywords: Remove blank keyword entries
-  
   use_i <- keywords$keyword == ""
+  keywords <- keywords[!use_i, c('keyword', 'keywordThesaurus')]
+  
+  # Try resolving keywords without a listed thesaurus to the LTER Controlled 
+  # Vocabulary
+  use_i <- keywords$keywordThesaurus == ''
   if (sum(use_i) > 0){
-    keywords <- keywords[!use_i, ]
-    # Try resolving keywords without a listed thesaurus to the LTER Controlled 
-    # Vocabulary
-    
-    unresolved_terms <- keywords[keywords$keywordThesaurus == '', 'keyword']
+    unresolved_terms <- keywords$keyword[use_i]
     
     results <- resolve_terms(
       x = unresolved_terms,
