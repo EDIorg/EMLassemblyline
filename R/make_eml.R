@@ -701,7 +701,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
     
     bounding_boxes <- suppressMessages(
       as.data.frame(
-        utils::read.table(data_path, header = T, sep = '\t', quote = "\"", as.is = T, comment.char = '')
+        utils::read.table(paste0(path, '/', 'bounding_boxes.txt'), header = T, sep = '\t', quote = "\"", as.is = T, comment.char = '')
       )
     )
     
