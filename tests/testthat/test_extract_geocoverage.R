@@ -65,32 +65,16 @@ testthat::test_that('Expect errors', {
 # Expect equal ----------------------------------------------------------------
 
 testthat::test_that('Expect data frame', {
-  
-  expect_equal(
-    class(
-      extract_geocoverage(path = paste0(parent_dir, '/metadata_templates'), 
-                          data.path = paste0(parent_dir, '/data'), 
-                          data.file = 'Sphagnum_fuscum_growth_and_N_data.csv', 
-                          site.col = 'site_name',
-                          lat.col = 'site_lat',
-                          lon.col = 'site_lon')
-    ),
-    'data.frame'
-  )
-  
-  expect_equal(
-    colnames(
-      extract_geocoverage(path = paste0(parent_dir, '/metadata_templates'), 
-                          data.path = paste0(parent_dir, '/data'), 
-                          data.file = 'Sphagnum_fuscum_growth_and_N_data.csv', 
-                          site.col = 'site_name',
-                          lat.col = 'site_lat',
-                          lon.col = 'site_lon')
-    ),
-    c('latitude', 'longitude', 'site')
-  )
-  
-  
-  
+  output <- suppressMessages(
+    extract_geocoverage(
+      path = paste0(parent_dir, '/metadata_templates'), 
+      data.path = paste0(parent_dir, '/data'), 
+      data.file = 'Sphagnum_fuscum_growth_and_N_data.csv', 
+      site.col = 'site_name',
+      lat.col = 'site_lat',
+      lon.col = 'site_lon')
+    )
+  expect_equal(class(output), 'data.frame')
+  expect_equal(colnames(output), c('latitude', 'longitude', 'site'))
 })
 
