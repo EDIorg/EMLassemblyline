@@ -10,6 +10,7 @@ r_packages:
   - httr
   - knitr
   - rmarkdown
+  - methods
   - covr
 r_github_packages:
   - clnsmth/EDIutils

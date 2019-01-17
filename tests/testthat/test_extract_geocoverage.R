@@ -4,7 +4,7 @@ library(EMLassemblyline)
 
 # Parameterize ----------------------------------------------------------------
 
-path <- system.file('/example_dataset/metadata_templates/abstract.txt', 
+path <- system.file('/examples/templates/abstract.txt', 
                     package = 'EMLassemblyline')
 parent_dir <- substr(path, 1, nchar(path)-32)
 
@@ -14,7 +14,7 @@ testthat::test_that('Expect errors', {
   
   expect_error(
     extract_geocoverage(data.path = paste0(parent_dir, '/data'), 
-                        data.file = 'Sphagnum_fuscum_growth_and_N_data.csv', 
+                        data.file = 'nitrogen.csv', 
                         site.col = 'site_name',
                         lat.col = 'site_lat', 
                         lon.col = 'site_lon')
@@ -22,15 +22,7 @@ testthat::test_that('Expect errors', {
   
   expect_error(
     extract_geocoverage(path = paste0(parent_dir, '/metadata_templates'), 
-                        data.file = 'Sphagnum_fuscum_growth_and_N_data.csv', 
-                        site.col = 'site_name',
-                        lat.col = 'site_lat', 
-                        lon.col = 'site_lon')
-  )
-  
-  expect_error(
-    extract_geocoverage(path = paste0(parent_dir, '/metadata_templates'), 
-                        data.path = paste0(parent_dir, '/data'), 
+                        data.file = 'nitrogen.csv', 
                         site.col = 'site_name',
                         lat.col = 'site_lat', 
                         lon.col = 'site_lon')
@@ -39,7 +31,7 @@ testthat::test_that('Expect errors', {
   expect_error(
     extract_geocoverage(path = paste0(parent_dir, '/metadata_templates'), 
                         data.path = paste0(parent_dir, '/data'), 
-                        data.file = 'Sphagnum_fuscum_growth_and_N_data.csv', 
+                        site.col = 'site_name',
                         lat.col = 'site_lat', 
                         lon.col = 'site_lon')
   )
@@ -47,7 +39,15 @@ testthat::test_that('Expect errors', {
   expect_error(
     extract_geocoverage(path = paste0(parent_dir, '/metadata_templates'), 
                         data.path = paste0(parent_dir, '/data'), 
-                        data.file = 'Sphagnum_fuscum_growth_and_N_data.csv', 
+                        data.file = 'nitrogen.csv', 
+                        lat.col = 'site_lat', 
+                        lon.col = 'site_lon')
+  )
+  
+  expect_error(
+    extract_geocoverage(path = paste0(parent_dir, '/metadata_templates'), 
+                        data.path = paste0(parent_dir, '/data'), 
+                        data.file = 'nitrogen.csv', 
                         site.col = 'site_name',
                         lon.col = 'site_lon')
   )
@@ -55,7 +55,7 @@ testthat::test_that('Expect errors', {
   expect_error(
     extract_geocoverage(path = paste0(parent_dir, '/metadata_templates'), 
                         data.path = paste0(parent_dir, '/data'), 
-                        data.file = 'Sphagnum_fuscum_growth_and_N_data.csv', 
+                        data.file = 'nitrogen.csv', 
                         site.col = 'site_name',
                         lat.col = 'site_lat')
   )
@@ -67,9 +67,9 @@ testthat::test_that('Expect errors', {
 testthat::test_that('Expect data frame', {
   output <- suppressMessages(
     extract_geocoverage(
-      path = paste0(parent_dir, '/metadata_templates'), 
-      data.path = paste0(parent_dir, '/data'), 
-      data.file = 'Sphagnum_fuscum_growth_and_N_data.csv', 
+      path = paste0(parent_dir, '/examples/templates'), 
+      data.path = paste0(parent_dir, '/examples/data'), 
+      data.file = 'nitrogen', 
       site.col = 'site_name',
       lat.col = 'site_lat',
       lon.col = 'site_lon')
