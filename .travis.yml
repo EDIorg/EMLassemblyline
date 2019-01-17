@@ -11,6 +11,8 @@ r_packages:
   - knitr
   - rmarkdown
   - covr
+r_github_packages:
+  - clnsmth/EDIutils
 warnings_are_errors: false
 after_success:
   - Rscript -e 'library(covr); codecov()'

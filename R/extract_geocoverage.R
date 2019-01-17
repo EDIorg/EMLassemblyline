@@ -59,13 +59,6 @@ extract_geocoverage <- function(path, data.path = path, data.file, lat.col, lon.
     stop('Input argument "site.col" is missing! Specify site column name.')
   }
   
-  # Validate path
-  
-  EDIutils::validate_path(path)
-  if (!missing(data.path)){
-    EDIutils::validate_path(data.path)  
-  }
-  
   # Validate file names
 
   data_file <- EDIutils::validate_file_names(path = data.path, data.files = data.file)
@@ -180,15 +173,13 @@ extract_geocoverage <- function(path, data.path = path, data.file, lat.col, lon.
     
     # Write data to file ------------------------------------------------------
     
-    message("Writing geographic_coverage.txt.")
-    
     lib_path <- system.file(
       '/example_dataset/metadata_templates/abstract.txt',
       package = 'EMLassemblyline')
     lib_path <- substr(lib_path, 1, nchar(lib_path) - 48)
     
     if (!stringr::str_detect(path, lib_path)){
-      message(paste("Writing", fname_table_catvars[i]))
+      message("Writing geographic_coverage.txt.")
       suppressWarnings(utils::write.table(geocoverage_out,
                                           paste(path,
                                                 "/",
