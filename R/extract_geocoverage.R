@@ -100,24 +100,19 @@ extract_geocoverage <- function(path, data.path = path, data.file, lat.col, lon.
     
     message("geographic_coverage.txt already exists!")
     
+    geocoverage_out <- NULL
+    
   } else {
     
     message(paste("Reading ", data_file, ".", sep = ""))
     
     if (delim_guess == ','){
-      df_table <- utils::read.csv(file = data_path, header = T, quote = '\"', as.is = T, comment.char = '')
+      df_table <- utils::read.csv(file = file_path, header = T, quote = '\"', as.is = T, comment.char = '')
     } else if (delim_guess == '\t'){
-      df_table <- utils::read.table(data_path, header = T, sep = '\t', quote = "\"", as.is = T, comment.char = '')
+      df_table <- utils::read.table(file_path, header = T, sep = '\t', quote = "\"", as.is = T, comment.char = '')
     }
     
     df_table <- as.data.frame(df_table)
-    
-    # df_table <- utils::read.table(file_path,
-    #                        header = TRUE,
-    #                        sep = delim_guess,
-    #                        quote = "\"",
-    #                        as.is = TRUE,
-    #                        comment.char = "")
     
     # Validate column names
     
@@ -183,21 +178,33 @@ extract_geocoverage <- function(path, data.path = path, data.file, lat.col, lon.
                                   site = site_out,
                                   stringsAsFactors = F)
     
-    # Write data to file
+    # Write data to file ------------------------------------------------------
     
     message("Writing geographic_coverage.txt.")
     
-    suppressWarnings(utils::write.table(geocoverage_out,
-                paste(path,
-                      "/",
-                      "geographic_coverage.txt", sep = ""),
-                sep = "\t",
-                row.names = F,
-                quote = F,
-                fileEncoding = "UTF-8"))
+    lib_path <- system.file(
+      '/example_dataset/metadata_templates/abstract.txt',
+      package = 'EMLassemblyline')
+    lib_path <- substr(lib_path, 1, nchar(lib_path) - 48)
+    
+    if (!stringr::str_detect(path, lib_path)){
+      message(paste("Writing", fname_table_catvars[i]))
+      suppressWarnings(utils::write.table(geocoverage_out,
+                                          paste(path,
+                                                "/",
+                                                "geographic_coverage.txt", sep = ""),
+                                          sep = "\t",
+                                          row.names = F,
+                                          quote = F,
+                                          fileEncoding = "UTF-8"))
+    }
 
   }
 
   message("Done.")
+  
+  # Return values -------------------------------------------------------------
+  
+  geocoverage_out
 
 }

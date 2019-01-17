@@ -44,13 +44,6 @@ define_catvars <- function(path, data.path = path) {
     stop('Input argument "path" is missing! Specify the path to your dataset working directory.')
   }
   
-  # Validate paths
-  
-  EDIutils::validate_path(path)
-  if (!missing(data.path)){
-    EDIutils::validate_path(data.path)  
-  }
-  
   # Detect operating system
   
   os <- EDIutils::detect_os()

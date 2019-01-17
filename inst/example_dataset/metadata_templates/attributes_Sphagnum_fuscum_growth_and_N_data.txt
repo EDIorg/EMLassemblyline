@@ -7,3 +7,6 @@ STEM_MASS_DENSITY	Mass of 1-cm lengths of Sphagnum stems beneath the capitula pe
 PLANT_DENSITY	Number of plants/area	numeric	numberPerMeterSquared		-99999	Missing value
 STEM_N_CONCENTRATION	N concentration in the 0-2 cm stem sections	numeric	milligramsPerGram		-99999	Missing value
 N_ASSIMILATED	Amount of N used and stored per area of moss cover per year	numeric	gramsPerMeterSquaredPerYear		-99999	Missing value
+site_name	Name of site	character			-99999	Missing value
+site_lat	Latitude in decimal degrees	numeric	degree		-99999	Missing value
+site_lon	Longitude in decimal degrees	numeric	degree		-99999	Missing value

@@ -1,5 +1,5 @@
 
-context('Define categorical variables')
+context('Extract geographical coverage')
 library(EMLassemblyline)
 
 # Parameterize ----------------------------------------------------------------
@@ -10,6 +10,15 @@ parent_dir <- substr(path, 1, nchar(path)-32)
 
 # Tests -----------------------------------------------------------------------
 
+extract_geocoverage(path = paste0(parent_dir, '/metadata_templates'), 
+                    data.path = paste0(parent_dir, '/data'), 
+                    data.file = 'Sphagnum_fuscum_growth_and_N_data.csv', 
+                    site.col = 'site_name',
+                    lat.col = 'site_lat', 
+                    lon.col = 'site_lon')
+
+#
+
 testthat::test_that('Error when attribute files are missing', {
   expect_error(
     define_catvars(path = paste0(parent_dir, '/data'),
@@ -19,11 +28,16 @@ testthat::test_that('Error when attribute files are missing', {
 
 
 testthat::test_that('Return message when catvars file already exists', {
+  # expect_message(
+  #   define_catvars(path = paste0(parent_dir, '/metadata_templates'),
+  #                  data.path = paste0(parent_dir, '/data'))
+  # )
   expect_equal(
     define_catvars(path = paste0(parent_dir, '/metadata_templates'),
                    data.path = paste0(parent_dir, '/data')),
     NULL
   )
+
 })
 
 
