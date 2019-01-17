@@ -1,6 +1,7 @@
 
 context('Define categorical variables')
 library(EMLassemblyline)
+library(EDIutils)
 
 # Parameterize ----------------------------------------------------------------
 
