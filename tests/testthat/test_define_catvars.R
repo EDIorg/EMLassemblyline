@@ -4,7 +4,7 @@ library(EMLassemblyline)
 
 # Parameterize ----------------------------------------------------------------
 
-path <- system.file('/example_dataset/metadata_templates/abstract.txt', 
+path <- system.file('/example_dataset/templates/abstract.txt', 
                     package = 'EMLassemblyline')
 parent_dir <- substr(path, 1, nchar(path)-32)
 
