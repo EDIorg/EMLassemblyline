@@ -118,63 +118,54 @@
 
 import_templates <- function(path, data.path = path, license, data.files){
   
-  # Check arguments and parameterize ------------------------------------------
+  message('Importing metadata templates')
   
-  message("Checking input arguments.")
+  # Validate arguments and parameterize ---------------------------------------
   
   if (missing(path)){
     stop('Input argument "path" is missing! Specify the path to your dataset working directory.')
-  }
-  if (missing(license)){
+  } else if (missing(license)){
     stop('Input argument "license" is missing! Specify a license for your dataset.')
-  }
-  if (missing(data.files)){
+  } else if (missing(data.files)){
     stop('Input argument "data.files" is missing! Specify the names of all the data files in your dataset.')
   }
-
-  # Valdate path
-  
-  EDIutils::validate_path(path)
-  if (!missing(data.path)){
-    EDIutils::validate_path(data.path)  
-  }
-  
-  # Validate license
   
   license.low <- tolower(license)
-  
   if (!stringr::str_detect(license.low, "^cc0$|^ccby$")){
     stop('Invalid value entered for the "license" argument. Please choose "CC0" or "CCBY".')
   }
+
+  data_files <- EDIutils::validate_file_names(
+    data.path, 
+    data.files
+  )
   
-  # Validate data.files
+  EDIutils::validate_fields(
+    data.path, 
+    data.files = data_files
+  )
   
-  data_files <- EDIutils::validate_file_names(data.path, data.files)
-  
-  # Validate fields of data.files
-  
-  EDIutils::validate_fields(data.path, data.files = data_files)
-  
-  # Detect operating system
-  
-  os <- EDIutils::detect_os()
-  
-  # Detect file delimeters
-  
-  delim_guess <- EDIutils::detect_delimeter(data.path, data.files = data_files, os)
+  delim_guess <- EDIutils::detect_delimeter(
+    data.path, 
+    data.files = data_files, 
+    EDIutils::detect_os()
+  )
 
   
-  # Copy templates to path if they don't exist --------------------------------
+  # Import templates ----------------------------------------------------------
   
-  # Abstract
+  # abstract.txt
   
-  value <- file.copy(from = paste(path.package("EMLassemblyline"),
-                                  "/templates/abstract.txt",
-                                  sep = ""),
-                     to = paste(path,
-                                "/",
-                                "abstract.txt",
-                                sep = ""))
+  value <- file.copy(
+    from = paste0(
+      path.package("EMLassemblyline"),
+      "/templates/abstract.txt"
+    ),
+    to = paste0(
+      path,
+      "/abstract.txt"
+    )
+  )
   
   if (isTRUE(value)){
     message("Importing abstract.txt.")
@@ -182,15 +173,18 @@ import_templates <- function(path, data.path = path, license, data.files){
     message("abstract.txt already exists!")
   }
   
-  # Additional info
+  # additional_info.txt
   
-  value <- file.copy(from = paste(path.package("EMLassemblyline"),
-                                  "/templates/additional_info.txt",
-                                  sep = ""),
-                     to = paste(path,
-                                "/",
-                                "additional_info.txt",
-                                sep = ""))
+  value <- file.copy(
+    from = paste0(
+      path.package("EMLassemblyline"),
+      "/templates/additional_info.txt"
+    ),
+    to = paste0(
+      path,
+      "/additional_info.txt"
+    )
+  )
   
   if (isTRUE(value)){
     message("Importing additional_info.txt.")
@@ -198,15 +192,18 @@ import_templates <- function(path, data.path = path, license, data.files){
     message("additional_info.txt already exists!")
   }
   
-  # Bounding boxes (geographic coverage)
+  # bounding_boxes.txt
   
-  value <- file.copy(from = paste(path.package("EMLassemblyline"),
-                                  "/templates/bounding_boxes.txt",
-                                  sep = ""),
-                     to = paste(path,
-                                "/",
-                                "bounding_boxes.txt",
-                                sep = ""))
+  value <- file.copy(
+    from = paste0(
+      path.package("EMLassemblyline"),
+      "/templates/bounding_boxes.txt"
+    ),
+    to = paste0(
+      path,
+      "/bounding_boxes.txt"
+    )
+  )
   
   if (isTRUE(value)){
     message("Importing bounding_boxes.txt.")
@@ -214,49 +211,39 @@ import_templates <- function(path, data.path = path, license, data.files){
     message("bounding_boxes.txt already exists!")
   }
   
-  # Custom units
+  # custom_units.txt
   
-  value <- file.copy(from = paste(path.package("EMLassemblyline"),
-                                  "/templates/custom_units.txt",
-                                  sep = ""),
-                     to = paste(path,
-                                "/",
-                                "custom_units.txt",
-                                sep = ""))
+  value <- file.copy(
+    from = paste0(
+      path.package("EMLassemblyline"),
+      "/templates/custom_units.txt"
+    ),
+    to = paste0(
+      path,
+      "/custom_units.txt"
+    )
+  )
   
   if (isTRUE(value)){
     message("Importing custom_units.txt.")
   } else {
     message("custom_units.txt already exists!")
   }
-  
-  # Instructions
-  
-  value <- file.copy(from = paste(path.package("EMLassemblyline"),
-                                  "/templates/instructions.html",
-                                  sep = ""),
-                     to = paste(path,
-                                "/",
-                                "instructions.html",
-                                sep = ""))
-  
-  if (isTRUE(value)){
-    message("Importing instructions.html.")
-  } else {
-    message("instructions.html already exists!")
-  }
-  
-  # Intellectual rights license
+
+  # intellectual_rights.txt
   
   if (license.low == "cc0"){
     
-    value <- file.copy(from = paste(path.package("EMLassemblyline"),
-                                    "/templates/intellectual_rights_cc0.txt",
-                                    sep = ""),
-                       to = paste(path,
-                                  "/",
-                                  "intellectual_rights.txt",
-                                  sep = ""))
+    value <- file.copy(
+      from = paste0(
+        path.package("EMLassemblyline"),
+        "/templates/intellectual_rights_cc0.txt"
+      ),
+      to = paste0(
+        path,
+        "/intellectual_rights.txt"
+      )
+    )
     
     if (isTRUE(value)){
       message("Importing intellectual_rights.txt.")
@@ -266,13 +253,16 @@ import_templates <- function(path, data.path = path, license, data.files){
     
   } else if (license.low == "ccby"){
     
-    value <- file.copy(from = paste(path.package("EMLassemblyline"),
-                                    "/templates/intellectual_rights_ccby4.0.txt",
-                                    sep = ""),
-                       to = paste(path,
-                                  "/",
-                                  "intellectual_rights.txt",
-                                  sep = ""))
+    value <- file.copy(
+      from = paste0(
+        path.package("EMLassemblyline"),
+        "/templates/intellectual_rights_ccby4.0.txt"
+      ),
+      to = paste0(
+        path,
+        "/intellectual_rights.txt"
+      )
+    )
     
     if (isTRUE(value)){
       message("Importing intellectual_rights.txt.")
@@ -282,15 +272,18 @@ import_templates <- function(path, data.path = path, license, data.files){
     
   }
   
-  # Keywords
+  # keywords.txt
 
-  value <- file.copy(from = paste(path.package("EMLassemblyline"),
-                                  "/templates/keywords.txt",
-                                  sep = ""),
-                     to = paste(path,
-                                "/",
-                                "keywords.txt",
-                                sep = ""))
+  value <- file.copy(
+    from = paste0(
+      path.package("EMLassemblyline"),
+      "/templates/keywords.txt"
+    ),
+    to = paste0(
+      path,
+      "/keywords.txt"
+    )
+  )
   
   if (isTRUE(value)){
     message("Importing keywords.txt.")
@@ -298,15 +291,18 @@ import_templates <- function(path, data.path = path, license, data.files){
     message("keywords.txt already exists!")
   }
   
-  # Methods
+  # methods.txt
   
-  value <- file.copy(from = paste(path.package("EMLassemblyline"),
-                                  "/templates/methods.txt",
-                                  sep = ""),
-                     to = paste(path,
-                                "/",
-                                "methods.txt",
-                                sep = ""))
+  value <- file.copy(
+    from = paste0(
+      path.package("EMLassemblyline"),
+      "/templates/methods.txt"
+    ),
+    to = paste0(
+      path,
+      "/methods.txt"
+    )
+  )
   
   if (isTRUE(value)){
     message("Importing methods.txt.")
@@ -314,31 +310,18 @@ import_templates <- function(path, data.path = path, license, data.files){
     message("methods.txt already exists!")
   }
   
-  # Blank script (my_workflow.R)
+  # personnel.txt
   
-  value <- file.copy(from = paste(path.package("EMLassemblyline"),
-                                  "/templates/my_workflow.R",
-                                  sep = ""),
-                     to = paste(path,
-                                "/",
-                                "my_workflow.R",
-                                sep = ""))
-  
-  if (isTRUE(value)){
-    message("Importing my_workflow.R.")
-  } else {
-    message("my_workflow.R already exists!")
-  }
-  
-  # Personnel
-  
-  value <- file.copy(from = paste(path.package("EMLassemblyline"),
-                                  "/templates/personnel.txt",
-                                  sep = ""),
-                     to = paste(path,
-                                "/",
-                                "personnel.txt",
-                                sep = ""))
+  value <- file.copy(
+    from = paste0(
+      path.package("EMLassemblyline"),
+      "/templates/personnel.txt"
+    ),
+    to = paste0(
+      path,
+      "/personnel.txt"
+    )
+  )
   
   if (isTRUE(value)){
     message("Importing personnel.txt.")
@@ -346,77 +329,101 @@ import_templates <- function(path, data.path = path, license, data.files){
     message("personnel.txt already exists!")
   }
   
-  # Copy attributes files to working directory --------------------------------
+  # Import attributes templates -----------------------------------------------
   
-  # Check for valid column names
+  # Check column names
   
   message("Checking data.files for valid column names.")
   
   for (i in 1:length(data_files)){
     
-    data_path <- paste(data.path,
-                          "/",
-                          data_files[i],
-                          sep = "")
+    data_path <- paste0(
+      data.path,
+      "/",
+      data_files[i]
+    )
     
-    df_table <- utils::read.table(data_path,
-                           header = TRUE,
-                           sep = delim_guess[i],
-                           quote = "\"",
-                           as.is = TRUE,
-                           comment.char = "")
+    df_table <- utils::read.table(
+      data_path,
+      header = TRUE,
+      sep = delim_guess[i],
+      quote = "\"",
+      as.is = TRUE,
+      comment.char = ""
+    )
     
     column_names <- colnames(df_table)
-    use_i <- stringr::str_detect(string = column_names,
-                        pattern = "\\.")
+    
+    use_i <- stringr::str_detect(
+      string = column_names,
+      pattern = "\\."
+    )
     
     if (sum(use_i) > 0){
-      stop(paste("Invalid column names detected in ", 
-                 data_files[i],
-                 ":  ",
-                 paste(column_names[use_i], collapse = ", "), 
-                 '  Replace characters located at periods "." in the above listed column names with underscores "_"',
-                 sep = "")
-           )
+      stop(
+        paste(
+          "Invalid column names detected in ", 
+          data_files[i],
+          ":  ",
+          paste(
+            column_names[use_i], 
+            collapse = ", "
+          ), 
+          '  Replace characters located at periods "." in the above listed column names with underscores "_"',
+          sep = ""
+        )
+      )
     }
+    
   }
   
-  # Extract attributes for each data file -------------------------------------
+  # Extract attributes of each data file
   
   attributes <- list()
+  
   for (i in 1:length(data_files)){
     
-    message(paste("Detecting attributes of ",
-                data_files[i],
-                ".",
-                sep = ""))
+    message(
+      paste(
+        "Detecting attributes of ",
+        data_files[i],
+        ".",
+        sep = ""
+      )
+    )
     
     # Read data table
     
-    data_path <- paste(data.path,
-                       "/",
-                       data_files[i],
-                       sep = "")
+    data_path <- paste0(
+      data.path,
+      "/",
+      data_files[i]
+    )
 
-    df_table <- utils::read.table(data_path,
-                           header = TRUE,
-                           sep = delim_guess[i],
-                           quote = "\"",
-                           as.is = TRUE,
-                           comment.char = "",
-                           na.strings = c('NA','NULL'))
+    df_table <- utils::read.table(
+      data_path,
+      header = TRUE,
+      sep = delim_guess[i],
+      quote = "\"",
+      as.is = TRUE,
+      comment.char = "",
+      na.strings = c('NA','NULL')
+    )
     
     # Initialize attribute table
     
     rows <- ncol(df_table)
-    attributes[[i]] <- data.frame(attributeName = character(rows),
-                             attributeDefinition = character(rows),
-                             class = character(rows),
-                             unit = character(rows),
-                             dateTimeFormatString = character(rows),
-                             missingValueCode = character(rows),
-                             missingValueCodeExplanation = character(rows),
-                             stringsAsFactors = FALSE)
+    
+    attributes[[i]] <- data.frame(
+      attributeName = character(rows),
+      attributeDefinition = character(rows),
+      class = character(rows),
+      unit = character(rows),
+      dateTimeFormatString = character(rows),
+      missingValueCode = character(rows),
+      missingValueCodeExplanation = character(rows),
+      stringsAsFactors = FALSE
+    )
 
     # Get names
     
@@ -425,16 +432,21 @@ import_templates <- function(path, data.path = path, license, data.files){
     # Guess character and numeric classes
     
     guess <- unname(unlist(lapply(df_table, class)))
-    guess_map <- c(character = "character", 
-                   logical = "character", 
-                   factor = "character",
-                   integer = "numeric",
-                   numeric = "numeric")
+    
+    guess_map <- c(
+      character = "character", 
+      logical = "character", 
+      factor = "character",
+      integer = "numeric",
+      numeric = "numeric"
+    )
+    
     guess <- unname(guess_map[guess])
     
     # Guess Date class
     
     use_i <- guess == "character"
+    
     if (sum(use_i) > 0){
       potential_date_cols <- colnames(df_table)[use_i]
       potential_date_i <- stringr::str_detect(tolower(potential_date_cols), "date|time|day")
@@ -469,6 +481,7 @@ import_templates <- function(path, data.path = path, license, data.files){
     # Add unit for numeric data
     
     use_i <- attributes[[i]]$class == "numeric"
+    
     if (sum(use_i) > 0){
       attributes[[i]]$unit[use_i] <- "!Add units here!"
     }
@@ -476,42 +489,58 @@ import_templates <- function(path, data.path = path, license, data.files){
     # Add date time format strings for Date data
     
     use_i <- attributes[[i]]$class == "Date"
+    
     if (sum(use_i) > 0){
       attributes[[i]]$dateTimeFormatString[use_i] <- "!Add datetime specifier here!"
     }
     
     # Write table to file
     
-    value <- file.exists(paste(path,
-                                 "/",
-                                 "attributes_",
-                                 substr(data_files[i], 1, nchar(data_files[i]) - 4),
-                                 ".txt",
-                                 sep = ""))
+    value <- file.exists(
+      paste0(
+        path,
+        "/",
+        "attributes_",
+        substr(data_files[i], 1, nchar(data_files[i]) - 4),
+        ".txt"
+      )
+    )
+    
     if (!isTRUE(value)){
       
-      message(paste("Importing attributes_",
-                  substr(data_files[i], 1, nchar(data_files[i]) - 4),
-                  ".txt.",
-                  sep = ""))
+      message(
+        paste0(
+          "Importing attributes_",
+          substr(data_files[i], 1, nchar(data_files[i]) - 4),
+          ".txt."
+        )
+      )
       
-      utils::write.table(attributes[[i]],
-                  paste(path,
-                        "/",
-                        "attributes_",
-                        substr(data_files[i], 1, nchar(data_files[i]) - 4),
-                        ".txt",
-                        sep = ""),
-                  sep = "\t",
-                  row.names = F,
-                  quote = F,
-                  fileEncoding = "UTF-8")
+      utils::write.table(
+        attributes[[i]],
+        paste0(
+          path,
+          "/",
+          "attributes_",
+          substr(data_files[i], 1, nchar(data_files[i]) - 4),
+          ".txt"
+        ),
+        sep = "\t",
+        row.names = F,
+        quote = F,
+        fileEncoding = "UTF-8"
+      )
       
     } else {
-      message(paste("attributes_",
-            substr(data_files[i], 1, nchar(data_files[i]) - 4),
-            ".txt already exists!",
-            sep = ""))
+      
+      message(
+        paste0(
+          "attributes_",
+          substr(data_files[i], 1, nchar(data_files[i]) - 4),
+          ".txt already exists!"
+        )
+      )
+      
     }
 
   }
