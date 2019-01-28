@@ -1557,11 +1557,11 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
     
   }
   
+  message("Done.")
+  
   if (isTRUE(return.obj)){
     eml
   }
-  
-  message("Done.")
   
 }
 
