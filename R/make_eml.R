@@ -24,7 +24,9 @@
 #'     affiliation,
 #'     environment,
 #'     package.id,
-#'     provenance)
+#'     provenance,
+#'     return.obj = FALSE,
+#'     write.file = TRUE)
 #'     
 #' @param path 
 #'     (character) A path to the directory containing the completed metadata 
@@ -117,6 +119,11 @@
 #'     packages from which this data package was created. A package ID must
 #'     contain the scope, package number, and revision number 
 #'     (e.g. 'knb-lter-cap.46.3').
+#' @param return.obj
+#'     (logical) Return the EML as an EML object for further use in the R 
+#'     environment.
+#' @param write.file
+#'     (logical)
 #'     
 #' @return 
 #'     Validation results printed to the RStudio \emph{Console}.
@@ -136,7 +143,7 @@
 make_eml <- function(path, data.path = path, eml.path = path, dataset.title, data.files, data.files.description, 
                      data.files.quote.character, data.files.url, zip.dir, zip.dir.description,
                      temporal.coverage, geographic.description, geographic.coordinates, maintenance.description, 
-                     user.id, affiliation, environment, package.id, provenance) {
+                     user.id, affiliation, environment, package.id, provenance, return.obj = FALSE, write.file = TRUE) {
 
   # Check arguments and parameterize ------------------------------------------
   
@@ -160,6 +167,15 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   if (missing(geographic.coordinates) & !file.exists(paste0(path, '/', 'bounding_boxes.txt'))){
     stop('Input argument "geographic.coordinates" is missing and the "bounding_boxes.txt" template is missing! Add geographic bounding coordinates for your dataset.')
   }
+  if (!missing(geographic.coordinates)){
+    if (missing(geographic.description)){
+      stop('Input argument "geographic.description is missing.')
+    }
+  }
+  if (missing(geographic.coordinates) & !missing(geographic.description)){
+    stop('Remove input argument "geographic.description". Only use this argument when the "geographic.coordinates" argument is present')
+  }
+  
   if (missing(maintenance.description)){
     stop('Input argument "maintenance.description" is missing! Indicate whether data collection is "ongoing" or "completed" for your dataset.')
   }
@@ -257,7 +273,6 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
       stop('Input argument "affiliation" is not "EDI" or "LTER"! Only "EDI" and "LTER" are acceptable values.')
     }
   }
-  
   
   # Compile attributes --------------------------------------------------------
   
@@ -1520,10 +1535,11 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   }
 
   # Write EML
-
-  message("Writing EML.")
   
-  EML::write_eml(eml, paste(eml.path, "/", data_package_id, ".xml", sep = ""))
+  if (isTRUE(write.file)){
+    message("Writing EML.")
+    EML::write_eml(eml, paste(eml.path, "/", data_package_id, ".xml", sep = ""))
+  }
   
   # Validate EML
   
@@ -1539,6 +1555,10 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
     
     message("EML validaton failed. See warnings for details.")
     
+  }
+  
+  if (isTRUE(return.obj)){
+    eml
   }
   
   message("Done.")

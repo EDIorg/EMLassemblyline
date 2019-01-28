@@ -23,7 +23,9 @@ make_eml(
     affiliation,
     environment,
     package.id,
-    provenance)
+    provenance,
+    return.obj = FALSE,
+    write.file = TRUE)
 }
 \arguments{
 \item{path}{(character) A path to the directory containing the completed metadata 
@@ -116,6 +118,11 @@ contain the scope, package number, and revision number
 packages from which this data package was created. A package ID must
 contain the scope, package number, and revision number 
 (e.g. 'knb-lter-cap.46.3').}
+
+\item{return.obj}{(logical) Return the EML as an EML object for further use in the R 
+environment.}
+
+\item{write.file}{(logical)}
 }
 \value{
 Validation results printed to the RStudio \emph{Console}.
