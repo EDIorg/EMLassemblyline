@@ -102,7 +102,6 @@ testthat::test_that('Error out when required arguments are missing', {
       user.id = user.id,
       affiliation = affiliation,
       package.id = 'edi.141.1',
-      return.obj = TRUE,
       write.file = FALSE
     )
   )
@@ -221,7 +220,6 @@ testthat::test_that('Error out when required arguments are missing', {
       user.id = user.id,
       affiliation = affiliation,
       package.id = 'edi.141.1',
-      return.obj = TRUE,
       write.file = FALSE
     )
   )
@@ -243,7 +241,6 @@ testthat::test_that('Error out when required arguments are missing', {
       user.id = user.id,
       affiliation = affiliation,
       package.id = 'edi.141',
-      return.obj = TRUE,
       write.file = FALSE
     )
   )
@@ -265,7 +262,6 @@ testthat::test_that('Error out when required arguments are missing', {
       user.id = user.id,
       affiliation = affiliation,
       package.id = 'edi.141.1',
-      return.obj = TRUE,
       write.file = FALSE
     )
   )
@@ -288,7 +284,6 @@ testthat::test_that('Error out when required arguments are missing', {
       user.id = user.id,
       affiliation = affiliation,
       package.id = 'edi.141.1',
-      return.obj = TRUE,
       write.file = FALSE
     )
   )
@@ -311,7 +306,6 @@ testthat::test_that('Error out when required arguments are missing', {
       user.id = user.id,
       affiliation = affiliation,
       package.id = 'edi.141.1',
-      return.obj = TRUE,
       write.file = FALSE
     )
   )
@@ -334,7 +328,6 @@ testthat::test_that('Error out when required arguments are missing', {
       user.id = user.id,
       affiliation = affiliation,
       package.id = 'edi.141.1',
-      return.obj = TRUE,
       write.file = FALSE
     )
   )
