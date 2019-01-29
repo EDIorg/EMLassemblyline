@@ -637,6 +637,9 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   use_i <- keywords$keyword == ""
   if (sum(use_i) > 0){
     keywords <- keywords[!use_i, ]
+  } 
+  
+  if (sum(keywords$keywordThesaurus == '') > 0){
     # Try resolving keywords without a listed thesaurus to the LTER Controlled 
     # Vocabulary
     
