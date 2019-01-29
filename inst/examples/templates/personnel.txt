@@ -1,1 +1,23 @@
-givenName	middleInitial	surName	organizationName	electronicMailAddress	userId	role	projectTitle	fundingAgency	fundingNumberKelman	R	Wieder	Villanova University	kelman.wieder@villanova.edu	0000-0001-5856-8473	PI	Nitrogen Addition Experiments in Boreal Ecosystems: Understanding the Fate of Atmospherically Deposited Nitrogen in order to Determine Nitrogen Critical Loads	Cumulative Environmental Management Association (CEMA)	2011-0003Melanie	A	Vile	Villanova University	mvile@villanova.edu		PI	Decomposition in the real world	NSF	111001Kelman	R	Wieder	Villanova University	kelman.wieder@villanova.edu	0000-0001-5856-8473	contact			Information manager			Villanova University	info@villanova.edu		contact			Kelman	R	Wieder	Villanova University	kelman.wieder@villanova.edu	0000-0001-5856-8473	creator			Dale	H	Vitt	Southern Illinois University			creator			Melanie	A	Vile	Villanova University	mvile@villanova.edu		creator			Jeremy	A	Graham	Southern Illinois University	jeremyg@mtu.edu		creator			Jeremy	A	Hartsock	Southern Illinois University	hartsock@siu.edu		creator			Hope		Fillingim	Villanova University	fillingimhope@gmail.com		creator			Melissa		House	Southern Illinois University	mhouse@siu.edu		creator			James	C	Quinn	Villanova University	jcqui03@gmail.com		creator			Kimberli	D	Scott	Villanova University	kscott@villanova.edu		creator			Meaghan		Petix	Southern Illinois University	meaghan.petix@wsu.edu		creator			Kelly	J	McMillen	Villanova University	Kelly.Mcmillen@ttu.edu		creator						Center for Limnology	cfl@wisc.edu		collaborator			James	C	Quinn	Villanova University	jcqui03@gmail.com		instrument technician			
+givenName	middleInitial	surName	organizationName	electronicMailAddress	userId	role	projectTitle	fundingAgency	fundingNumber
+Kelman	R	Wieder	Villanova University	kelman.wieder@villanova.edu	0000-0001-5856-8473	PI	Nitrogen Addition Experiments in Boreal Ecosystems: Understanding the Fate of Atmospherically Deposited Nitrogen in order to Determine Nitrogen Critical Loads	Cumulative Environmental Management Association (CEMA)	2011-0003
+Melanie	A	Vile	Villanova University	mvile@villanova.edu		PI	Decomposition in the real world	NSF	111001
+Joe		Smith	Villanova University			PI		NSF	101
+Joe		Smith	Villanova University			PI			111001
+Kelman	R	Wieder	Villanova University	kelman.wieder@villanova.edu	0000-0001-5856-8473	contact			
+Information manager			Villanova University	info@villanova.edu	0000-0001-5856-8473	contact			
+Organization lead			Villanova University	info@villanova.edu		contact			
+Kelman	R	Wieder	Villanova University	kelman.wieder@villanova.edu	0000-0001-5856-8473	creator			
+Dale	H	Vitt	Southern Illinois University			creator			
+Melanie	A	Vile	Villanova University	mvile@villanova.edu		creator			
+Jeremy	A	Graham	Southern Illinois University	jeremyg@mtu.edu		creator			
+Jeremy	A	Hartsock	Southern Illinois University	hartsock@siu.edu		creator			
+Hope		Fillingim	Villanova University	fillingimhope@gmail.com		creator			
+Melissa		House	Southern Illinois University	mhouse@siu.edu		creator			
+James	C	Quinn	Villanova University	jcqui03@gmail.com		creator			
+Kimberli	D	Scott	Villanova University	kscott@villanova.edu		creator			
+Meaghan		Petix	Southern Illinois University	meaghan.petix@wsu.edu		creator			
+Kelly	J	McMillen	Villanova University	Kelly.Mcmillen@ttu.edu		creator			
+			Center for Limnology	cfl@wisc.edu	0000-0001-5856-8473	primary collaborator			
+			Trout Lake Station	tls@wisc.edu		secondary collaborator			
+James	C	Quinn	Villanova University	jcqui03@gmail.com		instrument technician			
+Jane		Doe	Center for Limnology	jdoe@email.com	0000-0001-5856-8473	Equipment lead			
