@@ -12,9 +12,9 @@ path <- substr(path, 1, nchar(path) - 23)
 
 # Possible arguments to make_eml.R
 
-path <- paste0(path, '/templates')
 data.path <- paste0(path, '/data')
 eml.path <- paste0(path, '/eml')
+path <- paste0(path, '/templates')
 dataset.title <- 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015'
 data.files <- c('decomp.csv', 'nitrogen.csv')
 data.files.description <- c('Decomposition data', 'Nitrogen data')
@@ -159,40 +159,31 @@ testthat::test_that('Error out when required arguments are missing', {
 
 # Expect equal ----------------------------------------------------------------
 
-# testthat::test_that('Expect equal', {
-# 
-#   # Outputs of example dataset
-#   
-#   eml_expected <- EML::read_eml(
-#     paste0(
-#       path.inst,
-#       '/eml/edi.141.1.xml'
-#     )
-#   )
-#   
-#   eml_attempted <- make_eml(
-#     path = path,
-#     data.path = data.path,
-#     eml.path = eml.path,
-#     dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-#     data.files = data.files,
-#     data.files.description = c('Decomposition data', 'Nitrogen data'),
-#     temporal.coverage = c('2014-05-01', '2015-10-31'),
-#     geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
-#     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
-#     maintenance.description = 'completed',
-#     user.id = 'csmith',
-#     affiliation = 'LTER',
-#     package.id = 'edi.141.1',
-#     return.obj = TRUE
-#   )
-#   
-#   expect_equal(
-#     import_templates(
-#       path = path,
-#       license = 'CC0',
-#       data.path = data.path,
-#       data.files = c('decomp.csv', 'nitrogen.csv')
-#     )
-#   )
-# })
+testthat::test_that('Expect equal', {
+
+  # class = 'eml'
+
+  expect_equal(
+    class(
+      make_eml(
+        path = path,
+        data.path = data.path,
+        eml.path = eml.path,
+        dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+        data.files = data.files,
+        data.files.description = c('Decomposition data', 'Nitrogen data'),
+        temporal.coverage = c('2014-05-01', '2015-10-31'),
+        geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+        geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+        maintenance.description = 'completed',
+        user.id = 'csmith',
+        affiliation = 'LTER',
+        package.id = 'edi.141.1',
+        return.obj = TRUE,
+        write.file = FALSE
+      )
+    ) == 'eml',
+    TRUE
+  )
+  
+})
