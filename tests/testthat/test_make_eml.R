@@ -421,5 +421,35 @@ testthat::test_that('Expect equal', {
     TRUE
   )
   
+  # Using data.files.url
+  # class = 'eml'
+  
+  output <- make_eml(
+    path = path,
+    data.path = data.path,
+    eml.path = eml.path,
+    dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+    data.files = data.files,
+    data.files.description = c('Decomposition data', 'Nitrogen data'),
+    data.files.quote.character = c("\'", "\'"),
+    zip.dir = 'ancillary_data.zip',
+    zip.dir.description = 'Ancillary data',
+    data.files.url = 'https://lter.limnology.wisc.edu/sites/default/files/data',
+    temporal.coverage = c('2014-05-01', '2015-10-31'),
+    geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+    geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+    maintenance.description = 'completed',
+    user.id = user.id,
+    affiliation = affiliation,
+    package.id = 'edi.141.1',
+    return.obj = TRUE,
+    write.file = FALSE
+  )
+  
+  expect_equal(
+    class(output) == 'eml',
+    TRUE
+  )
+  
   
 })
