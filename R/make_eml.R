@@ -136,7 +136,7 @@
 make_eml <- function(path, data.path = path, eml.path = path, dataset.title, data.files, data.files.description, 
                      data.files.quote.character, data.files.url, zip.dir, zip.dir.description,
                      temporal.coverage, geographic.coordinates, geographic.description, maintenance.description, user.id, 
-                     affiliation, environment, package.id, provenance) {
+                     affiliation, environment = 'production', package.id, provenance) {
 
   # Check arguments and parameterize ------------------------------------------
   
