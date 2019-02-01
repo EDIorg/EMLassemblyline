@@ -901,6 +901,109 @@ testthat::test_that('Expect equal', {
     TRUE
   )
   
+  # personnel.txt (first project funding agency is present but all other fields blank)
+  # class = 'eml'
+  
+  output <- make_eml(
+    path = paste0(path_parent, '/templates_pfab'),
+    data.path = data.path,
+    eml.path = eml.path,
+    dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+    data.files = data.files,
+    data.files.description = c('Decomposition data', 'Nitrogen data'),
+    data.files.quote.character = c("\'", "\'"),
+    temporal.coverage = c('2014-05-01', '2015-10-31'),
+    geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+    geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+    maintenance.description = 'completed',
+    user.id = user.id,
+    affiliation = affiliation,
+    package.id = 'edi.141.1',
+    return.obj = TRUE,
+    write.file = FALSE
+  )
+  
+  # personnel.txt (agency and number are listed in overall project)
+  # class = 'eml'
+  
+  output <- make_eml(
+    path = paste0(path_parent, '/templates_pfan'),
+    data.path = data.path,
+    eml.path = eml.path,
+    dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+    data.files = data.files,
+    data.files.description = c('Decomposition data', 'Nitrogen data'),
+    data.files.quote.character = c("\'", "\'"),
+    temporal.coverage = c('2014-05-01', '2015-10-31'),
+    geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+    geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+    maintenance.description = 'completed',
+    user.id = user.id,
+    affiliation = affiliation,
+    package.id = 'edi.141.1',
+    return.obj = TRUE,
+    write.file = FALSE
+  )
+  
+  expect_equal(
+    class(output) == 'eml',
+    TRUE
+  )
+  
+  # personnel.txt (funding title is present, and all else is absent)
+  # class = 'eml'
+  
+  output <- make_eml(
+    path = paste0(path_parent, '/templates_pft'),
+    data.path = data.path,
+    eml.path = eml.path,
+    dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+    data.files = data.files,
+    data.files.description = c('Decomposition data', 'Nitrogen data'),
+    data.files.quote.character = c("\'", "\'"),
+    temporal.coverage = c('2014-05-01', '2015-10-31'),
+    geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+    geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+    maintenance.description = 'completed',
+    user.id = user.id,
+    affiliation = affiliation,
+    package.id = 'edi.141.1',
+    return.obj = TRUE,
+    write.file = FALSE
+  )
+  
+  expect_equal(
+    class(output) == 'eml',
+    TRUE
+  )
+  
+  # personnel.txt (funding title and number are present, agency is absent)
+  # class = 'eml'
+  
+  output <- make_eml(
+    path = paste0(path_parent, '/templates_pftn'),
+    data.path = data.path,
+    eml.path = eml.path,
+    dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+    data.files = data.files,
+    data.files.description = c('Decomposition data', 'Nitrogen data'),
+    data.files.quote.character = c("\'", "\'"),
+    temporal.coverage = c('2014-05-01', '2015-10-31'),
+    geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+    geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+    maintenance.description = 'completed',
+    user.id = user.id,
+    affiliation = affiliation,
+    package.id = 'edi.141.1',
+    return.obj = TRUE,
+    write.file = FALSE
+  )
+  
+  expect_equal(
+    class(output) == 'eml',
+    TRUE
+  )
+  
   # custom_units.txt, file is missing
   # class = 'eml'
   

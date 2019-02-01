@@ -1,0 +1,7 @@
+attributeName	attributeDefinition	class	unit	dateTimeFormatString	missingValueCode	missingValueCodeExplanation
+TYPE	Vegetation type: Sphagnum fuscum or vascular plant tissue	categorical			-99999	Missing value
+YEAR_PLACED_IN_FIELD	Year of growth: 2011-2015	Date		YYYY	-99999	Missing value
+ARM	Experimental plots were located along 3 arms; each arm had one replicate each of 8 N treatments	categorical			-99999	Missing value
+NTRT	Field experimental N treatments were made with 8 applications per plot per year between mid-May and mid-August of each year	categorical			-99999	Missing value
+YEAR	Year collected	Date		YYYY	-99999	Missing value
+PERCENT_LOSS	Amount of mass lost expressed as a percent of original mass	numeric	dimensionless		-99999	Missing value
