@@ -51,7 +51,7 @@ required_roles <- function(x){
 # Check project info is associated with first listed PI
 
 project_match <- function(x){
-  use_i <- x$role == "pi"
+  use_i <- tolower(x$role) == "pi"
   if (sum(use_i) > 0){
     pis <- x[use_i, ]
     pi_proj <- pis[ , c("projectTitle", "fundingAgency", "fundingNumber")]
