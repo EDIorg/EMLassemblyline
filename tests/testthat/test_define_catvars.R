@@ -9,6 +9,12 @@ parent_dir <- substr(path, 1, nchar(path)-23)
 
 # Tests -----------------------------------------------------------------------
 
+testthat::test_that('Expect errors', {
+  expect_error(
+    define_catvars(data.path = paste0(parent_dir, '/data'))
+  )
+})
+
 testthat::test_that('Error when attribute files are missing', {
   expect_error(
     define_catvars(path = paste0(parent_dir, '/data'),

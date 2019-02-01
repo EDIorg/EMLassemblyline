@@ -60,6 +60,19 @@ testthat::test_that('Expect errors', {
                         lat.col = 'site_lat')
   )
   
+  expect_error(
+    extract_geocoverage(
+      path = paste0(parent_dir, '/examples/templates'), 
+      data.path = paste0(parent_dir, '/examples/data'), 
+      data.file = 'nitrogen', 
+      site.col = 'site_nameeeee',
+      lat.col = 'site_lat',
+      lon.col = 'site_lon'
+    )
+  )
+  
+
+  
 })
 
 # Expect equal ----------------------------------------------------------------
