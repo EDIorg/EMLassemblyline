@@ -645,7 +645,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
     
     unresolved_terms <- keywords[keywords$keywordThesaurus == '', 'keyword']
     
-    results <- EDIutils::resolve_terms(
+    results <- EDIutils::vocab_resolve_terms(
       x = unresolved_terms,
       cv = 'lter'
     )

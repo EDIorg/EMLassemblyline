@@ -12,8 +12,9 @@ r_packages:
   - rmarkdown
   - methods
   - covr
+  - EDIutils
 r_github_packages:
-  - clnsmth/EDIutils
+  - EDIorg/EDIutils
 warnings_are_errors: false
 after_success:
   - Rscript -e 'library(covr); codecov()'
