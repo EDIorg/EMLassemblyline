@@ -58,6 +58,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="articles/instructions.html">Instructions</a>
+    </li>
+    <li>
       <a href="articles/my-vignette.html">Vignette Title</a>
     </li>
   </ul>
@@ -83,39 +86,24 @@
   <div class="contents col-md-9">
 
 
-<div id="the-eml-assembly-line" class="section level1">
+<div id="emlassemblyline" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#the-eml-assembly-line" class="anchor"></a>The EML Assembly Line</h1></div>
-<p>The Ecological Metadata Language (EML) is a metadata standard developed by the ecological community for persistence, discoverability, and reuse of ecological data. While the highly detailed structure of the EML schema is necessary to meet these ends, it confronts the inexperienced data provider with a steep learning curve that few have time to tackle. To lower the bar for data documentation, while still maintaining metadata detail and quality, we’ve created the <code>EMLassemblyline</code> R code package. A user-friendly workflow to help craft high quality EML metadata yourself. The assembly line is useful for publishing one-off data packages or to provide a foundation for a data package factory.</p>
-<p>The assembly line requires little operational knowledge of the R programming language or technical understanding of the EML schema. All you need is to know your dataset and how it was made, a little patience for following our step by step instructions, and how to operate a spread sheet editor. If this is your first time on the assembly line, it may take the better part of a day to become oriented and to produce your first EML metadata file.</p>
-<div id="getting-started" class="section level2">
+<a href="#emlassemblyline" class="anchor"></a>EMLassemblyline</h1></div>
+<p>The Ecological Metadata Language (EML) is a metadata standard developed by the ecological community for persistence, discoverability, and reuse of ecological data. While the highly detailed structure of the EML schema is necessary to meet these ends, it confronts the inexperienced data provider with a steep learning curve that few have time to tackle. To lower the bar for data documentation, while still maintaining metadata detail and quality, we’ve created the <code>EMLassemblyline</code>. A user-friendly workflow to make high quality EML metadata yourself. <code>EMLassemblyline</code> is useful for publishing one-off data packages or to provide a foundation for a data package factory.</p>
+<div id="install" class="section level2">
 <h2 class="hasAnchor">
-<a href="#getting-started" class="anchor"></a>Getting started</h2>
-<div id="contents" class="section level3">
-<h3 class="hasAnchor">
-<a href="#contents" class="anchor"></a>Contents</h3>
-<div id="documenation" class="section level4">
-<h4 class="hasAnchor">
-<a href="#documenation" class="anchor"></a>Documenation</h4>
-<p><a href="https://github.com/EDIorg/EMLassemblyline/blob/master/documentation/schematic.md">A schematic representation of the assembly line process.</a></p>
-<p><a href="https://github.com/EDIorg/EMLassemblyline/blob/master/documentation/schema_use.md">A list of the EML schema elements that are populated by the assembly line with some notes on the level of detail supplied to these elements.</a></p>
-<p><a href="https://github.com/EDIorg/EMLassemblyline/blob/master/documentation/instructions.md">Instructions for operating the EML assembly line</a></p>
+<a href="#install" class="anchor"></a>Install</h2>
+<pre><code><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports"># Install from GitHub
+devtools::install_github("EDIorg/EMLassemblyline")</a></code></pre>
 </div>
-<div id="r-package" class="section level4">
-<h4 class="hasAnchor">
-<a href="#r-package" class="anchor"></a>R package</h4>
-<p><code>EMLassemblyline</code> is a collection of wrapper functions to the <code>EML</code> R package developed by <a href="https://github.com/ropensci/EML">Boettiger et al. (2017)</a>. For an understanding of what is going on under the hood of the assembly line, we recommend you first take a look at the <code>EML</code> R package. Once you understand this you will be able to customize the assembly line for your own workflows or become a developer of this project.</p>
-<p>The <code>EMLassemblyline</code> R package is available here on GitHub. To install, go to your RStudio Console window and enter these lines of code:</p>
-<pre><code># Install and load devtools
-install.packages("devtools")
-library(devtools)
-
-# Install and load EMLassemblyline
-install_github("EDIorg/EMLassemblyline")
-library(EMLassemblyline)</code></pre>
-<p>Now reference the documentation listed above to start operating the assembly line.</p>
+<div id="usage" class="section level2">
+<h2 class="hasAnchor">
+<a href="#usage" class="anchor"></a>Usage</h2>
+<p><a href="https://clnsmth.github.io/EMLassemblyline/">Check out available functions and use cases at the EMLassemblyline website</a></p>
 </div>
-</div>
+<div id="roadmap" class="section level2">
+<h2 class="hasAnchor">
+<a href="#roadmap" class="anchor"></a>Roadmap</h2>
 </div>
 <div id="contributing" class="section level2">
 <h2 class="hasAnchor">
@@ -135,8 +123,7 @@ library(EMLassemblyline)</code></pre>
 <div id="related-materials" class="section level2">
 <h2 class="hasAnchor">
 <a href="#related-materials" class="anchor"></a>Related materials</h2>
-<p><a href="https://knb.ecoinformatics.org/#external//emlparser/docs/index.html">Learn everything you wanted to know about the Ecological Metadata Language standard.</a></p>
-<p><a href="https://environmentaldatainitiative.org/resources/assemble-data-and-metadata/step-3-create-eml-metadata/best-practices-for-dataset-metadata-in-ecological-metadata-language-eml/">Reference the community developed best practices for EML content.</a></p>
+<p><a href="https://knb.ecoinformatics.org/#external//emlparser/docs/index.html">The Ecological Metadata Language.</a></p>
 </div>
 </div>
 
