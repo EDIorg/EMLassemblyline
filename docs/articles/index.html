@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Define categorical variables — define_catvars • EMLassemblyline</title>
+<title>Articles • EMLassemblyline</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,12 +30,7 @@
 
 
 
-<meta property="og:title" content="Define categorical variables — define_catvars" />
-
-<meta property="og:description" content="Identify and define categorical variables for your data tables. Run this 
-    function whenever your data contain attributes of class &quot;categorical&quot; 
-    listed in attributes_datatablename.txt files." />
-<meta name="twitter:card" content="summary" />
+<meta property="og:title" content="Articles" />
 
 
 
@@ -52,7 +47,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-topic">
+    <div class="container template-article-index">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -113,66 +108,17 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Define categorical variables</h1>
-    <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/define_catvars.R'><code>R/define_catvars.R</code></a></small>
-    <div class="hidden name"><code>define_catvars.Rd</code></div>
+      <h1>Articles</h1>
     </div>
 
-    <div class="ref-description">
-    
-    <p>Identify and define categorical variables for your data tables. Run this 
-    function whenever your data contain attributes of class "categorical" 
-    listed in <em>attributes_datatablename.txt</em> files.</p>
-    
+    <div class="section ">
+      <h3>All vignettes</h3>
+      <p class="section-desc"></p>
+
+      <ul>
+        <li><a href="my-vignette.html">Vignette Title</a></li>
+      </ul>
     </div>
-
-    <pre class="usage"><span class='fu'>define_catvars</span>(<span class='no'>path</span>, <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='no'>path</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>path</th>
-      <td><p>(character) A path to your metadata templates directory containing 
-<em>attributes_datatablename.txt</em>.</p></td>
-    </tr>
-    <tr>
-      <th>data.path</th>
-      <td><p>(character) A path to your data directory. Don't use this argument
-if your data are co-located with your metadata templates.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A tab delimited UTF-8 file in the dataset working directory titled 
-    <em>catvars_datatablename.txt</em> containing unique codes of attributes 
-    of class "categorical". Open this file in a spreadsheet editor to 
-    supply definitions for listed codes.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>This function will not overwrite any 
-    <em>catvars_datatablename.txt</em> files you have created in 
-    the dataset working directory.</p>    
-<p>This function identifies "categorical" class attributes from the file 
-    <em>attributes_datatablename.txt</em> and extracts unique 
-    values of these attributes to the table for you to define.</p>    
-<p>Duplicate data file names are not allowed, even if they are different 
-    file types.</p>
-    
-
-  </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-          </ul>
-
   </div>
 </div>
 

@@ -1,9 +1,12 @@
 {
-  "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+  "@context": [
+    "https://doi.org/10.5063/schema/codemeta-2.0",
+    "http://schema.org"
+  ],
   "@type": "SoftwareSourceCode",
   "identifier": "EMLassemblyline",
   "description": "A set of functions facilitating a workflow to create metadata\n    for a user supplied data entity. Templates are copied to the working\n    directory and instructions prompt the user to provide requisite \n    information. The user selects from a collection of functions to extract\n    information from the data entities, and finally executes a fancy wrapper\n    function to build, validate, and write the EML metadata to file.",
-  "name": "EMLassemblyline: A workflow and set of functions to make EML.",
+  "name": "EMLassemblyline: A workflow for creating EML",
   "license": "https://spdx.org/licenses/MIT",
   "version": "2.4.6",
   "programmingLanguage": {
@@ -18,7 +21,8 @@
       "@type": "Person",
       "givenName": "Colin",
       "familyName": "Smith",
-      "email": "colin.smith@wisc.edu"
+      "email": "colin.smith@wisc.edu",
+      "@id": "https://orcid.org/0000-0003-2261-9931"
     }
   ],
   "contributor": {},
@@ -29,7 +33,8 @@
       "@type": "Person",
       "givenName": "Colin",
       "familyName": "Smith",
-      "email": "colin.smith@wisc.edu"
+      "email": "colin.smith@wisc.edu",
+      "@id": "https://orcid.org/0000-0003-2261-9931"
     }
   ],
   "softwareSuggestions": [
@@ -176,8 +181,12 @@
       "name": "methods"
     }
   ],
-  "codeRepository": "https://github.com/clnsmth/EMLassemblyline",
+  "codeRepository": "https://github.com/EDIorg/EMLassemblyline",
   "readme": "https://github.com/clnsmth/EMLassemblyline/blob/master/README.md",
-  "fileSize": "102.433KB",
-  "contIntegration": ["https://travis-ci.org/clnsmth/EMLassemblyline", "https://codecov.io/github/clnsmth/EMLassemblyline?branch=master"]
+  "fileSize": "116.794KB",
+  "contIntegration": [
+    "https://travis-ci.org/clnsmth/EMLassemblyline",
+    "https://codecov.io/github/clnsmth/EMLassemblyline?branch=master"
+  ],
+  "issueTracker": "https://github.com/EDIorg/EMLassemblyline/issues"
 }
