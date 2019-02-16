@@ -645,14 +645,20 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
     
     unresolved_terms <- keywords[keywords$keywordThesaurus == '', 'keyword']
     
-    results <- EDIutils::vocab_resolve_terms(
-      x = unresolved_terms,
-      cv = 'lter'
+    results <- try(
+      resolve_terms(
+        x = 'peat',
+        cv = 'lter'
+      ),
+      silent = T
     )
     
-    results <- results[results$controlled_vocabulary != '', ]
-    use_i <- match(results$term, keywords$keyword)
-    keywords[use_i, 'keywordThesaurus'] <- results[ , 'controlled_vocabulary']
+    if (is.data.frame(results)){
+      results <- results[results$controlled_vocabulary != '', ]
+      use_i <- match(results$term, keywords$keyword)
+      keywords[use_i, 'keywordThesaurus'] <- results[ , 'controlled_vocabulary']
+    }
+    
   }
 
   # Build keywordSet
