@@ -18,6 +18,8 @@ devtools::install_github("EDIorg/EMLassemblyline")
 
 ## Roadmap
 
+User friendly high-level functions for creating EML. Automated metadata extraction from data entities. Supports specification to create EML from metadata system exports.
+
 ## Contributing
 
 We welcome contributions of all forms including code, bug reports, and requests for development. Please reference our [code conduct](https://github.com/EDIorg/EMLassemblyline/blob/master/CODE_OF_CONDUCT.md) and [contributing guidelines](https://github.com/EDIorg/EMLassemblyline/blob/master/CONTRIBUTING.md) for submitting pull requrests.
