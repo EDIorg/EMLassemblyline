@@ -1,4 +1,4 @@
-#' Validate personnel
+#' Check the content and structure of personnel.txt
 #'
 #' @description  
 #'     This function checks the personnel table for required information and 
@@ -15,7 +15,6 @@
 #'     If incongruence is found an error is returned, else a valid data frame
 #'     for inputs to the personnel EML making functions.
 #'     
-#' @export     
 #'   
 
 validate_personnel <- function(x){

@@ -1,7 +1,9 @@
-#' Define categorical variables
+#' Import template file(s) for defining the categorical variables of a dataset
 #'
 #' @description  
-#'     Identify and define categorical variables for your data tables. Run this 
+#'     Data tables containing categorical variables should report 
+#'     code-definition pairs in the EML. To do this, make sure the  Run this function(defined in 
+#'     attributes_*.txt files) Data tables containing cIdentify and define categorical variables for your data tables. Run this 
 #'     function whenever your data contain attributes of class "categorical" 
 #'     listed in \emph{attributes_datatablename.txt} files.
 #'

@@ -1,4 +1,4 @@
-#' Extract geographic coverage
+#' Import template file for reporting the geographic coverage of a dataset
 #'
 #' @description  
 #'     Extract detailed geographic coverage (latitude, longitude, and site 

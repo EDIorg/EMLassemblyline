@@ -2,7 +2,7 @@
 % Please edit documentation in R/import_templates.R
 \name{import_templates}
 \alias{import_templates}
-\title{Import files for storing metadata content}
+\title{Import template files for metadata storage}
 \usage{
 import_templates(path, data.path = path, license, data.files)
 }

@@ -1,4 +1,4 @@
-#' View the standard unit dictionary
+#' Open the standard unit dictionary for EML
 #'
 #' @description  
 #'     View the standard unit dictionary of the Ecological Metadata Language

@@ -2,7 +2,7 @@
 % Please edit documentation in R/define_catvars.R
 \name{define_catvars}
 \alias{define_catvars}
-\title{Define categorical variables}
+\title{Import template file(s) for defining the categorical variables of a dataset}
 \usage{
 define_catvars(path, data.path = path)
 }
@@ -20,7 +20,9 @@ A tab delimited UTF-8 file in the dataset working directory titled
     supply definitions for listed codes.
 }
 \description{
-Identify and define categorical variables for your data tables. Run this 
+Data tables containing categorical variables should report 
+    code-definition pairs in the EML. To do this, make sure the  Run this function(defined in 
+    attributes_*.txt files) Data tables containing cIdentify and define categorical variables for your data tables. Run this 
     function whenever your data contain attributes of class "categorical" 
     listed in \emph{attributes_datatablename.txt} files.
 }
