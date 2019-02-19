@@ -1,4 +1,4 @@
-#' Make an EML metadata file
+#' Render templates into EML metadata
 #'
 #' @description  
 #'     Translate user supplied metadata templates into the EML, validate the 

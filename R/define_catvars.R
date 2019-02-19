@@ -1,4 +1,4 @@
-#' Import template file(s) for defining the categorical variables of a dataset
+#' Import templates for categorical variable definitions
 #'
 #' @description  
 #'     Data tables containing categorical variables should report 

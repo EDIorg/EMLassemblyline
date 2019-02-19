@@ -2,7 +2,7 @@
 % Please edit documentation in R/make_eml.R
 \name{make_eml}
 \alias{make_eml}
-\title{Make an EML metadata file}
+\title{Render templates into EML metadata}
 \usage{
 make_eml(
     path,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/validate_personnel.R
 \name{validate_personnel}
 \alias{validate_personnel}
-\title{Check the content and structure of personnel.txt}
+\title{Validate the content and structure of personnel.txt}
 \usage{
 validate_personnel(x)
 }

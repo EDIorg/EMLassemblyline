@@ -1,4 +1,4 @@
-#' Check the content and structure of personnel.txt
+#' Validate the content and structure of personnel.txt
 #'
 #' @description  
 #'     This function checks the personnel table for required information and 

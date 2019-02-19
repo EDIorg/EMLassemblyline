@@ -2,7 +2,7 @@
 % Please edit documentation in R/define_catvars.R
 \name{define_catvars}
 \alias{define_catvars}
-\title{Import template file(s) for defining the categorical variables of a dataset}
+\title{Import templates for categorical variable definitions}
 \usage{
 define_catvars(path, data.path = path)
 }

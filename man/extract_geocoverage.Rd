@@ -2,7 +2,7 @@
 % Please edit documentation in R/extract_geocoverage.R
 \name{extract_geocoverage}
 \alias{extract_geocoverage}
-\title{Import template file for reporting the geographic coverage of a dataset}
+\title{Import templates for geographic coverage}
 \usage{
 extract_geocoverage(path, data.path = path, data.file, lat.col, 
     lon.col, site.col)

@@ -1,4 +1,4 @@
-#' Import template files for metadata storage
+#' Import templates for core metadata
 #'
 #' @description  
 #'     The template files contain the content that will be rendered into EML.
