@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Import templates for geographic coverage — extract_geocoverage • EMLassemblyline</title>
+<title>Import template for geographic coverage — extract_geocoverage • EMLassemblyline</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,10 +30,11 @@
 
 
 
-<meta property="og:title" content="Import templates for geographic coverage — extract_geocoverage" />
+<meta property="og:title" content="Import template for geographic coverage — extract_geocoverage" />
 
-<meta property="og:description" content="Extract detailed geographic coverage (latitude, longitude, and site 
-    name) to be included in the EML." />
+<meta property="og:description" content="Import template for describing the geographic coverage of a dataset.
+    The content of this template is automatically extracted from a data 
+    table containing geographical coordinates." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -115,15 +116,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Import templates for geographic coverage</h1>
+    <h1>Import template for geographic coverage</h1>
     <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/extract_geocoverage.R'><code>R/extract_geocoverage.R</code></a></small>
     <div class="hidden name"><code>extract_geocoverage.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Extract detailed geographic coverage (latitude, longitude, and site 
-    name) to be included in the EML.</p>
+    <p>Import template for describing the geographic coverage of a dataset.
+    The content of this template is automatically extracted from a data 
+    table containing geographical coordinates.</p>
     
     </div>
 
@@ -135,42 +137,42 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>path</th>
-      <td><p>A path to the metadata directory.</p></td>
+      <td><p>(character) Path to where the template(s) will be imported.</p></td>
     </tr>
     <tr>
       <th>data.path</th>
-      <td><p>A path to the directory containing the data table with geographic 
-information. Don't use this argument if the data table is located at 
-the path argument listed above.</p></td>
+      <td><p>(character) Path to where the data files are stored.</p></td>
     </tr>
     <tr>
       <th>data.file</th>
-      <td><p>Name of the input data table containing geographic coverage data.</p></td>
+      <td><p>(character) File containing geographic coordinates represented in 
+decimal degrees, where latitudes south of the equator and longitudes 
+west of the prime meridian are negative.</p></td>
     </tr>
     <tr>
       <th>lat.col</th>
-      <td><p>Name of latitude column. Values of this column must be in decimal 
-degrees. Latitudes south of the equator must be prefixed with a minus 
-sign (i.e. dash, "-").</p></td>
+      <td><p>(character) Name of latitude column.</p></td>
     </tr>
     <tr>
       <th>lon.col</th>
-      <td><p>Name of longitude column. Values of this column must be in decimal 
-degrees. Longitudes west of the prime meridian must be prefixed with a 
-minus sign (i.e. dash, "-").</p></td>
+      <td><p>(character) Name of longitude column.</p></td>
     </tr>
     <tr>
       <th>site.col</th>
-      <td><p>Name of site column. This column lists site specific names to be 
-associated with the geographic coordinates.</p></td>
+      <td><p>(character) Name of site column, where site is the name of the location
+specified by `lat.col` and `lon.col`.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A tab delimited file in the dataset working directory 
-    titled <em>geographic_coverage.txt</em> and containing decimal degree 
-    latitude, decimal degree longitude, and site name.</p>
+    <p>`geographic_coverage.txt` A tab delimited file containing geographic
+    coordinates and corresponding site names.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Existing template will not be overwritten by subsequent calls to 
+    `extract_geocoverage`.</p>
     
 
   </div>
@@ -180,6 +182,8 @@ associated with the geographic coordinates.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
           </ul>
 
   </div>

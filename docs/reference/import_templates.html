@@ -32,9 +32,11 @@
 
 <meta property="og:title" content="Import templates for core metadata — import_templates" />
 
-<meta property="og:description" content="The template files contain the content that will be rendered into EML.
-    They contain a mix of automatically extracted 
-    content, boiler plate content, and manually entered human content." />
+<meta property="og:description" content="Import template files for storage of core metadata. Some templates are 
+    populated with content detected by automated metadata extraction 
+    methods. The remainder will have to be manually entered by a human. 
+    Instructions for filling out the templates are at
+    https://clnsmth.github.io/EMLassemblyline/articles/instructions.html." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -123,9 +125,11 @@
 
     <div class="ref-description">
     
-    <p>The template files contain the content that will be rendered into EML.
-    They contain a mix of automatically extracted 
-    content, boiler plate content, and manually entered human content.</p>
+    <p>Import template files for storage of core metadata. Some templates are 
+    populated with content detected by automated metadata extraction 
+    methods. The remainder will have to be manually entered by a human. 
+    Instructions for filling out the templates are at
+    <a href='https://clnsmth.github.io/EMLassemblyline/articles/instructions.html'>https://clnsmth.github.io/EMLassemblyline/articles/instructions.html</a>.</p>
     
     </div>
 
@@ -136,23 +140,22 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>path</th>
-      <td><p>(character) Path to where the templates will be copied.</p></td>
+      <td><p>(character) Path to where the templates will be imported.</p></td>
     </tr>
     <tr>
       <th>data.path</th>
-      <td><p>(character) Path to where the data files reside.</p></td>
+      <td><p>(character) Path to where the data files are stored.</p></td>
     </tr>
     <tr>
       <th>license</th>
-      <td><p>(character) The license under which your dataset is publicly released. Use "CC0" 
+      <td><p>(character) License under which the data will be released. Use "CC0" 
 (<a href='https://creativecommons.org/publicdomain/zero/1.0/'>https://creativecommons.org/publicdomain/zero/1.0/</a>), 
 or "CCBY" (<a href='https://creativecommons.org/licenses/by/4.0/'>https://creativecommons.org/licenses/by/4.0/</a>).</p></td>
     </tr>
     <tr>
       <th>data.files</th>
-      <td><p>(character) A vector of character strings specifying the names of the data files
-of your dataset. It is not necessary to include the file extension. E.g 
-data.files = c("data.file.1", "data.file.2", "etc.").</p></td>
+      <td><p>(character) Names of tabular data files. Names of non-tabular data are
+entered as arguments to `make_eml`.</p></td>
     </tr>
     </table>
     
@@ -160,30 +163,29 @@ data.files = c("data.file.1", "data.file.2", "etc.").</p></td>
 
     
 <ul>
-<li><p>abstract.txt A file for the abstract of your dataset.</p></li>
-<li><p>additional_info.txt A file for information about 
-        your dataset, that doesn't fit in anywhere else.</p></li>
-<li><p>attributes_*.txt A tab delimited table for information 
-        about your data tables. NOTE: each of your data files will have a 
-        corresponding attributes.txt file. `import_templates` makes a 
-        series of informed guesses about the attributes of your data files and 
-        writes them in these files. A human needs to verify the content.</p></li>
-<li><p>bounding_boxes.txt A tab delimited table for geographic bounding boxes of the
-        dataset.</p></li>
-<li><p>custom_units.txt A tab delimited table for non-standard units used in 
-        your dataset.</p></li>
-<li><p>intellectual_rights.txt Contains the intellectual rights license.</p></li>
-<li><p>keywords.txt A tab delimited table for keywords.</p></li>
-<li><p>methods.txt A text file for the dataset methods</p></li>
-<li><p>personnel.txt A tab delimited table for information about 
-        personnel associated with the dataset.</p></li>
+<li><p>`abstract.txt` Template for the dataset abstract.</p></li>
+<li><p>`additional_info.txt` Template for miscellaneous dataset
+        information.</p></li>
+<li><p>`attributes_*.txt` Template(s) for data table attribute 
+        metadata, populated with some automatically extracted metadata 
+        content from the data files.</p></li>
+<li><p>`bounding_boxes.txt` Template for the dataset geographic 
+        bounding coordinates.</p></li>
+<li><p>`custom_units.txt` Template for defining non-standard units 
+        used in the dataset.</p></li>
+<li><p>`intellectual_rights.txt` The selected intellectual rights 
+        license.</p></li>
+<li><p>`keywords.txt` Template for dataset keywords.</p></li>
+<li><p>`methods.txt` Template for dataset methods.</p></li>
+<li><p>`personnel.txt` Template for dataset personnel and funding 
+        metadata.</p></li>
 </ul>
 
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>New templates will not be imported if template files already exist in 
-    the directory.</p>
+    <p>Existing templates will not be overwritten by subsequent calls to 
+    `import_templates`.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

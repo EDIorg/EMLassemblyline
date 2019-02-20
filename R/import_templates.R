@@ -1,50 +1,50 @@
 #' Import templates for core metadata
 #'
 #' @description  
-#'     The template files contain the content that will be rendered into EML.
-#'     They contain a mix of automatically extracted 
-#'     content, boiler plate content, and manually entered human content.
+#'     Import template files for storage of core metadata. Some templates are 
+#'     populated with content detected by automated metadata extraction 
+#'     methods. The remainder will have to be manually entered by a human. 
+#'     Instructions for filling out the templates are at
+#'     \url{https://clnsmth.github.io/EMLassemblyline/articles/instructions.html}.
 #'
 #' @usage 
 #'     import_templates(path, data.path = path, license, data.files)
 #'
 #' @param path 
-#'     (character) Path to where the templates will be copied.
+#'     (character) Path to where the templates will be imported.
 #' @param data.path
-#'     (character) Path to where the data files reside.
+#'     (character) Path to where the data files are stored.
 #' @param license
-#'     (character) The license under which your dataset is publicly released. Use "CC0" 
+#'     (character) License under which the data will be released. Use "CC0" 
 #'     (\url{https://creativecommons.org/publicdomain/zero/1.0/}), 
 #'     or "CCBY" (\url{https://creativecommons.org/licenses/by/4.0/}).
 #' @param data.files
-#'     (character) A vector of character strings specifying the names of the data files
-#'     of your dataset. It is not necessary to include the file extension. E.g 
-#'     data.files = c("data.file.1", "data.file.2", "etc.").
+#'     (character) Names of tabular data files. Names of non-tabular data are
+#'     entered as arguments to `make_eml`.
 #'
 #' @return 
 #'     \itemize{
-#'         \item{abstract.txt} A file for the abstract of your dataset.
-#'         \item{additional_info.txt} A file for information about 
-#'         your dataset, that doesn't fit in anywhere else.
-#'         \item{attributes_*.txt} A tab delimited table for information 
-#'         about your data tables. NOTE: each of your data files will have a 
-#'         corresponding attributes.txt file. `import_templates` makes a 
-#'         series of informed guesses about the attributes of your data files and 
-#'         writes them in these files. A human needs to verify the content.
-#'         \item{bounding_boxes.txt} A tab delimited table for geographic bounding boxes of the
-#'         dataset.
-#'         \item{custom_units.txt} A tab delimited table for non-standard units used in 
-#'         your dataset.
-#'         \item{intellectual_rights.txt} Contains the intellectual rights license.
-#'         \item{keywords.txt} A tab delimited table for keywords.
-#'         \item{methods.txt} A text file for the dataset methods
-#'         \item{personnel.txt} A tab delimited table for information about 
-#'         personnel associated with the dataset.
+#'         \item{`abstract.txt`} Template for the dataset abstract.
+#'         \item{`additional_info.txt`} Template for miscellaneous dataset
+#'         information.
+#'         \item{`attributes_*.txt`} Template(s) for data table attribute 
+#'         metadata, populated with some automatically extracted metadata 
+#'         content from the data files.
+#'         \item{`bounding_boxes.txt`} Template for the dataset geographic 
+#'         bounding coordinates.
+#'         \item{`custom_units.txt`} Template for defining non-standard units 
+#'         used in the dataset.
+#'         \item{`intellectual_rights.txt`} The selected intellectual rights 
+#'         license.
+#'         \item{`keywords.txt`} Template for dataset keywords.
+#'         \item{`methods.txt`} Template for dataset methods.
+#'         \item{`personnel.txt`} Template for dataset personnel and funding 
+#'         metadata.
 #'     }
 #'     
 #' @details 
-#'     New templates will not be imported if template files already exist in 
-#'     the directory.
+#'     Existing templates will not be overwritten by subsequent calls to 
+#'     `import_templates`.
 #'
 #' @examples
 #'     # Create a directory structure for an example dataset

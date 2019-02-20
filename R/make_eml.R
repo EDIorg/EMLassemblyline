@@ -1,8 +1,8 @@
 #' Render templates into EML metadata
 #'
 #' @description  
-#'     Translate user supplied metadata templates into the EML, validate the 
-#'     EML, and write to file.
+#'     Render the content of metadata templates into the EML, then validate the
+#'     EML and write to file.
 #'     
 #' @usage 
 #'     make_eml(
@@ -29,112 +29,98 @@
 #'     write.file = TRUE)
 #'     
 #' @param path 
-#'     (character) A path to the directory containing the completed metadata 
-#'     templates.
+#'     (character) Path to where the template(s) will be imported.
 #' @param data.path
-#'     (character) A path to the directory containing the data entities 
-#'     described by the metadata templates.
+#'     (character) Path to where the data files are stored.
 #' @param eml.path
-#'     (character) A path to the directory where the EML will be writtn.
+#'     (character) Path to where the EML will be writtn.
 #' @param dataset.title
-#'     (character) The title for your data package. Be descriptive
-#'     (more than 5 words). We recommend the following format: Project name: 
-#'     Broad description: Time span (e.g. "GLEON: Long term lake chloride 
-#'     concentrations from North America and Europe: 1940-2016").
+#'     (character) Dataset title. Be descriptive (more than 5 words) and 
+#'     consider including the temporal coverage (e.g. "GLEON: Long term lake 
+#'     chloride concentrations from North America and Europe: 1940-2016").
 #' @param data.files
-#'     (character) A vector of character strings specifying the names of your 
-#'     data files (e.g. data.files = c("lake_chloride_concentrations.csv", 
-#'     "lake_characteristics.csv")).
+#'     (character) Data file name(s). If more than one, then supply as a 
+#'     vector of character strings (e.g. 
+#'     `data.files = c("concentrations.csv", "characteristics.csv")`).
 #' @param data.files.description
-#'     (character) A vector of character strings briefly describing the data 
-#'     files listed in the data.files argument and in the same order as listed 
-#'     in the data.files argument 
-#'     (e.g. data.files.description = c("Chloride concentration data.", 
-#'     "Climate, road density, and impervious surface data."))
+#'     (character) Data file description(s). Brief description of `data.files`.
+#'     If more than one, then supply as a vector of character strings in the 
+#'     same order as listed in `data.files`.
 #' @param data.files.quote.character
-#'     (character) A vector of character strings defining the quote characters 
-#'     used in your data files and in the same order as listed in the data.files 
-#'     argument. This argument is required only if your data contain quotations.  
-#'     If the quote character is a quotation, then enter "\\"". If the quote 
-#'     character is an apostrophe, then enter "\\'". Example: 
-#'     data.files.quote.character = c("\\"", "\\"").
+#'     (character) Quote character(s) used in `data.files`. If more than one, 
+#'     then supply as a vector of character strings in the same order as 
+#'     listed in `data.files`. This argument is required only if your data 
+#'     contain quotations. If the quote character is a quotation, then enter 
+#'     `"\\""`. If the quote character is an apostrophe, then enter `"\\'"`.
 #' @param data.files.url
-#'     (character) The URL of where your data tables are 
-#'     stored on a publicly accessible server (i.e. does not require user ID 
-#'     or password). This argument is required only if your data are accessible 
-#'     from a publicly accesible URL. The EDI data repository software, PASTA+, 
-#'     will use this to upload your data into the repository. If you will be 
-#'     manually uploading your data tables, then don't use this argument.
-#'     Example: data.files.url = "https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride".
+#'     (character) The URL of where your data tables can be downloaded by a
+#'     data repository. This argument is not required, if the data will be 
+#'     manually uploaded to a data repository.
 #' @param zip.dir
-#'     (character) A vector of character strings listing the .zip directories of your 
-#'     dataset.
+#'     (character) The name of .zip file(s). If more than one, then supply as a
+#'     vector of character strings. The .zip file(s) must be located at 
+#'     `data.path`.
 #' @param zip.dir.description
-#'     (character) A vector of character strings briefly describing the contents of 
-#'     any .zip directory present in the working directory.
+#'     (character) The description(s) of `zip.dir`. If more than one, then 
+#'     supply as a vector of character strings in the same order as listed in 
+#'     `zip.dir`.
 #' @param temporal.coverage
-#'     (character) A vector of character strings specifying the beginning and ending dates 
-#'     of your dataset. Use the format YYYY-MM-DD.
+#'     (character) Beginning and ending dates of the dataset as a vector of 
+#'     character strings in the format `YYYY-MM-DD`.
 #' @param geographic.description
-#'     (character) A description of the geographic coverage of your dataset. 
-#'     Don't use this argument if you are supplying geographic.coordinates in 
-#'     the bounding_boxes.txt template file. Example: "North America and Europe".
+#'     (character) Geographic description. Don't use this argument if geographic
+#'     coordinates in the `bounding_boxes.txt` template.
 #' @param geographic.coordinates
-#'     (character) A vector of character strings specifying the spatial bounding
-#'     coordinates of your dataset in decimal degrees. This argument is not 
-#'     required if you are supplying bounding coordinates in the 
-#'     bounding_boxes.txt template file. The list must follow
-#'     this order: North, East, South, West. Longitudes West of the 
-#'     prime meridian and latitudes South of the equator are prefixed with a
-#'     minus sign (i.e. dash -). If you don't have an area, but rather a point,
-#'     Repeat the latitude value for North and South, and repeat the longitude
-#'     value for East and West (e.g. geographic.coordinates = c('28.38',
-#'     '-119.95', '28.38', '-119.95)).
+#'     (character) Geographic coordinates delineating the bounding area or 
+#'     point of a dataset, in decimal degrees. This argument is not required 
+#'     if using `bounding_boxes.txt`. Values must be listed in this order:
+#'     North, East, South, West. Longitudes West of the 
+#'     prime meridian and latitudes South of the equator are negative. If 
+#'     representing a point, repeat the latitude for North and South, and 
+#'     repeat the longitude for East and West (e.g. 
+#'     `geographic.coordinates = c('28.38', '-119.95', '28.38', '-119.95)`).
 #' @param maintenance.description
-#'     (character) A description of whether data collection for this dataset 
-#'     is "ongoing" or "completed".
+#'     (character) Indicator of whether data collection is `ongoing` or 
+#'     `completed`.
 #' @param user.id
-#'     (character) A vector of character strings, specifying your user 
-#'     ID for the EDI data repository. The user.id controls editing access to 
-#'     your data package. If you do not have one, contact EDI 
-#'     (info@@environmentaldatainitiative.org) to obtain one. In the meantime 
-#'     do not use this argument when running `make_eml`.
+#'     (character) ID(s) of data repository user account(s). If more than one,
+#'     supply as a vector of character strings. Contact EDI 
+#'     (info@@environmentaldatainitiative.org) to obtain one. This argument is
+#'     not required.
 #' @param affiliation
-#'     (character) A vector of character strings, specifying the 
-#'     affiliation of your user ID. In a list, the associations must follow the 
-#'     same order of the corresponding values listed under user.id. This is the 
-#'     affiliation used when logging in to the EDI Data Portal and can be: 
-#'     "LTER" or "EDI". If you don't have a user.id then do not use this 
-#'     argument when running `make_eml`.
+#'     (character) Affiliations of the `user.id`(s). Valid options for EDI are
+#'     `LTER` and `EDI`. If more than one, supply as a vector of character 
+#'     strings in the same order as corresponding `user.id`(s). This argument
+#'     is not required.
 #' @param environment
-#'     (character) Data repository environment to create the package in.
-#'     Can be: 'development', 'staging', 'production'.
+#'     (character) EDI Data Repository environment in which data provenance is
+#'     being derived from. Can be: `development`, `staging`, `production`. 
+#'     This argument is not required.
 #' @param package.id
-#'     (character) The ID of your data package. 
-#'     A missing package ID defaults to \emph{edi.101.1}. A package ID must
-#'     contain the scope, package number, and revision number 
-#'     (e.g. 'edi.101.1').
+#'     (character) EDI Data Repository Data package ID for this dataset. A 
+#'     missing package ID defaults to `edi.101.1`.
 #' @param provenance
-#'     (character) A vector of EDI package.ids corresponding to parent data 
-#'     packages from which this data package was created. A package ID must
-#'     contain the scope, package number, and revision number 
-#'     (e.g. 'knb-lter-cap.46.3').
+#'     (character) EDI Data Repository Data package ID(s) corresponding to 
+#'     parent datasets from which this dataset was created (e.g. 
+#'     `knb-lter-cap.46.3`).
 #' @param return.obj
-#'     (logical) Return the EML as an EML object for further use in the R 
-#'     environment.
+#'     (logical) Return the EML as an R object of class `EML object`.
 #' @param write.file
-#'     (logical)
+#'     (logical) Write file to `path`. Defaults to TRUE.
 #'     
 #' @return 
-#'     Validation results printed to the RStudio \emph{Console}.
-#'     
-#'     An EML file written to the dataset working directory titled 
-#'     \emph{packageID.xml}.
+#'     \itemize{
+#'         \item{`Status messages` describing the EML creation status}
+#'         \item{`Validation result` indicating whether the EML is schema valid}
+#'         \item{`EML file` written to `path` and in the form `package.id.xml`}
+#'     }
 #'     
 #' @details 
 #'     If validation fails, open the EML document in a .xml editor to identify 
 #'     the source of error. Often the error is small and quickly resolved with 
-#'     the aid of an editors schema validator.
+#'     the aid of an editors schema validator. If the issue can't be resolved
+#'     then forward the `EML` to info@@environmentaldatainitiative.org for 
+#'     support.
 #'
 #' @export
 #'

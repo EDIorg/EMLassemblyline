@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Import templates for categorical variable definitions — define_catvars • EMLassemblyline</title>
+<title>Import template(s) for categorical variable definitions — define_catvars • EMLassemblyline</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,13 +30,13 @@
 
 
 
-<meta property="og:title" content="Import templates for categorical variable definitions — define_catvars" />
+<meta property="og:title" content="Import template(s) for categorical variable definitions — define_catvars" />
 
-<meta property="og:description" content="Data tables containing categorical variables should report 
-    code-definition pairs in the EML. To do this, make sure the  Run this function(defined in 
-    attributes_*.txt files) Data tables containing cIdentify and define categorical variables for your data tables. Run this 
-    function whenever your data contain attributes of class &quot;categorical&quot; 
-    listed in attributes_datatablename.txt files." />
+<meta property="og:description" content="Import template(s) for defining categorical variable codes used in data
+    tables. This function automatically extracts and returns categorical 
+    codes, the definitions of which must be supplied by a human. 
+    Instructions for filling out the template are at
+    https://clnsmth.github.io/EMLassemblyline/articles/instructions.html." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -118,18 +118,18 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Import templates for categorical variable definitions</h1>
+    <h1>Import template(s) for categorical variable definitions</h1>
     <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/define_catvars.R'><code>R/define_catvars.R</code></a></small>
     <div class="hidden name"><code>define_catvars.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Data tables containing categorical variables should report 
-    code-definition pairs in the EML. To do this, make sure the  Run this function(defined in 
-    attributes_*.txt files) Data tables containing cIdentify and define categorical variables for your data tables. Run this 
-    function whenever your data contain attributes of class "categorical" 
-    listed in <em>attributes_datatablename.txt</em> files.</p>
+    <p>Import template(s) for defining categorical variable codes used in data
+    tables. This function automatically extracts and returns categorical 
+    codes, the definitions of which must be supplied by a human. 
+    Instructions for filling out the template are at
+    <a href='https://clnsmth.github.io/EMLassemblyline/articles/instructions.html'>https://clnsmth.github.io/EMLassemblyline/articles/instructions.html</a>.</p>
     
     </div>
 
@@ -140,33 +140,26 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>path</th>
-      <td><p>(character) A path to your metadata templates directory containing 
-<em>attributes_datatablename.txt</em>.</p></td>
+      <td><p>(character) Path to where the template(s) will be imported.</p></td>
     </tr>
     <tr>
       <th>data.path</th>
-      <td><p>(character) A path to your data directory. Don't use this argument
-if your data are co-located with your metadata templates.</p></td>
+      <td><p>(character) Path to where the data files are stored.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A tab delimited UTF-8 file in the dataset working directory titled 
-    <em>catvars_datatablename.txt</em> containing unique codes of attributes 
-    of class "categorical". Open this file in a spreadsheet editor to 
-    supply definitions for listed codes.</p>
+    <p>`catvars_*.txt` A tab delimited file containing codes to be defined.
+    Each template is appended with the name of the data table from which 
+    the codes were extracted.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function will not overwrite any 
-    <em>catvars_datatablename.txt</em> files you have created in 
-    the dataset working directory.</p>    
-<p>This function identifies "categorical" class attributes from the file 
-    <em>attributes_datatablename.txt</em> and extracts unique 
-    values of these attributes to the table for you to define.</p>    
-<p>Duplicate data file names are not allowed, even if they are different 
-    file types.</p>
+    <p>`define_catvars` knows which variables are `categorical` based on their 
+    listing under the `class` column in the `attributes_*.txt` file(s).</p>    
+<p>Existing template(s) will not be overwritten by subsequent calls to 
+    `define_catvars`.</p>
     
 
   </div>

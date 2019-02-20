@@ -2,39 +2,31 @@
 % Please edit documentation in R/define_catvars.R
 \name{define_catvars}
 \alias{define_catvars}
-\title{Import templates for categorical variable definitions}
+\title{Import template(s) for categorical variable definitions}
 \usage{
 define_catvars(path, data.path = path)
 }
 \arguments{
-\item{path}{(character) A path to your metadata templates directory containing 
-\emph{attributes_datatablename.txt}.}
+\item{path}{(character) Path to where the template(s) will be imported.}
 
-\item{data.path}{(character) A path to your data directory. Don't use this argument
-if your data are co-located with your metadata templates.}
+\item{data.path}{(character) Path to where the data files are stored.}
 }
 \value{
-A tab delimited UTF-8 file in the dataset working directory titled 
-    \emph{catvars_datatablename.txt} containing unique codes of attributes 
-    of class "categorical". Open this file in a spreadsheet editor to 
-    supply definitions for listed codes.
+`catvars_*.txt` A tab delimited file containing codes to be defined.
+    Each template is appended with the name of the data table from which 
+    the codes were extracted.
 }
 \description{
-Data tables containing categorical variables should report 
-    code-definition pairs in the EML. To do this, make sure the  Run this function(defined in 
-    attributes_*.txt files) Data tables containing cIdentify and define categorical variables for your data tables. Run this 
-    function whenever your data contain attributes of class "categorical" 
-    listed in \emph{attributes_datatablename.txt} files.
+Import template(s) for defining categorical variable codes used in data
+    tables. This function automatically extracts and returns categorical 
+    codes, the definitions of which must be supplied by a human. 
+    Instructions for filling out the template are at
+    \url{https://clnsmth.github.io/EMLassemblyline/articles/instructions.html}.
 }
 \details{
-This function will not overwrite any 
-    \emph{catvars_datatablename.txt} files you have created in 
-    the dataset working directory.
+`define_catvars` knows which variables are `categorical` based on their 
+    listing under the `class` column in the `attributes_*.txt` file(s). 
     
-    This function identifies "categorical" class attributes from the file 
-    \emph{attributes_datatablename.txt} and extracts unique 
-    values of these attributes to the table for you to define.
-    
-    Duplicate data file names are not allowed, even if they are different 
-    file types.
+    Existing template(s) will not be overwritten by subsequent calls to 
+    `define_catvars`.
 }

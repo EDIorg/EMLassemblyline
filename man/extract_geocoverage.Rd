@@ -2,37 +2,37 @@
 % Please edit documentation in R/extract_geocoverage.R
 \name{extract_geocoverage}
 \alias{extract_geocoverage}
-\title{Import templates for geographic coverage}
+\title{Import template for geographic coverage}
 \usage{
 extract_geocoverage(path, data.path = path, data.file, lat.col, 
     lon.col, site.col)
 }
 \arguments{
-\item{path}{A path to the metadata directory.}
+\item{path}{(character) Path to where the template(s) will be imported.}
 
-\item{data.path}{A path to the directory containing the data table with geographic 
-information. Don't use this argument if the data table is located at 
-the path argument listed above.}
+\item{data.path}{(character) Path to where the data files are stored.}
 
-\item{data.file}{Name of the input data table containing geographic coverage data.}
+\item{data.file}{(character) File containing geographic coordinates represented in 
+decimal degrees, where latitudes south of the equator and longitudes 
+west of the prime meridian are negative.}
 
-\item{lat.col}{Name of latitude column. Values of this column must be in decimal 
-degrees. Latitudes south of the equator must be prefixed with a minus 
-sign (i.e. dash, "-").}
+\item{lat.col}{(character) Name of latitude column.}
 
-\item{lon.col}{Name of longitude column. Values of this column must be in decimal 
-degrees. Longitudes west of the prime meridian must be prefixed with a 
-minus sign (i.e. dash, "-").}
+\item{lon.col}{(character) Name of longitude column.}
 
-\item{site.col}{Name of site column. This column lists site specific names to be 
-associated with the geographic coordinates.}
+\item{site.col}{(character) Name of site column, where site is the name of the location
+specified by `lat.col` and `lon.col`.}
 }
 \value{
-A tab delimited file in the dataset working directory 
-    titled \emph{geographic_coverage.txt} and containing decimal degree 
-    latitude, decimal degree longitude, and site name.
+`geographic_coverage.txt` A tab delimited file containing geographic
+    coordinates and corresponding site names.
 }
 \description{
-Extract detailed geographic coverage (latitude, longitude, and site 
-    name) to be included in the EML.
+Import template for describing the geographic coverage of a dataset.
+    The content of this template is automatically extracted from a data 
+    table containing geographical coordinates.
+}
+\details{
+Existing template will not be overwritten by subsequent calls to 
+    `extract_geocoverage`.
 }
