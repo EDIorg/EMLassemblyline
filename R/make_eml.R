@@ -1451,28 +1451,32 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
         if (os == "mac"){
           
           command_certutil <- paste("md5 ",
+                                    "\"",
                                     data.path,
                                     "/",
                                     zip.dir[i],
+                                    "\"",
                                     sep = "")
           
           certutil_output <- system(command_certutil, intern = T)
           
           checksum_md5 <- gsub(".*= ", "", certutil_output)
           
-          authentication <- methods::new("authentication",
+          authentication <- new("authentication",
                                 method = "MD5",
                                 checksum_md5)
           
-          physical@authentication <- methods::as(list(authentication),
+          physical@authentication <- as(list(authentication),
                                         "ListOfauthentication")
           
         } else if (os == "win"){
           
           command_certutil <- paste("CertUtil -hashfile ",
+                                    "\"",
                                     data.path,
                                     "\\",
                                     zip.dir[i],
+                                    "\"",
                                     " MD5",
                                     sep = "")
           
@@ -1480,12 +1484,34 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
           
           checksum_md5 <- gsub(" ", "", certutil_output[2])
           
-          authentication <- methods::new("authentication",
+          authentication <- new("authentication",
                                 method = "MD5",
                                 checksum_md5)
           
-          physical@authentication <- methods::as(list(authentication),
+          physical@authentication <- as(list(authentication),
                                         "ListOfauthentication")
+          
+        } else if (os == "lin"){
+          
+          command_certutil <- paste0("md5sum ",
+                                     "\"",
+                                     data.path,
+                                     "/",
+                                     zip.dir[i],
+                                     "\"")
+          
+          certutil_output <- system(command_certutil, intern = T)
+          
+          checksum_md5 <- strsplit(certutil_output, split = " ")[[1]][1]
+          
+          authentication <- new("authentication",
+                                method = "MD5",
+                                checksum_md5)
+          
+          physical@authentication <- as(list(authentication),
+                                        "ListOfauthentication")
+          
+          
           
         }
         
