@@ -3,6 +3,7 @@
 
 # EMLassemblyline
 
+
 The Ecological Metadata Language (EML) is a metadata standard developed by the ecological community for persistence, discoverability, and reuse of ecological data. While the highly detailed structure of the EML schema is necessary to meet these ends, it confronts the inexperienced data provider with a steep learning curve that few have time to tackle. To lower the bar for data documentation, while still maintaining metadata detail and quality, we've created the `EMLassemblyline`. A user-friendly workflow to make high quality EML metadata yourself. `EMLassemblyline` is useful for publishing one-off data packages or to provide a foundation for a data package factory.
 
 ## Install
