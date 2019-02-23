@@ -1,12 +1,33 @@
-# Instructions for the EML assembly line
+# Instructions for the EMLassemblyline
 
 ### Overview
 
-The EML assembly line will help you create high quality metadata for your dataset. Below is a set of step-by-step instructions for making EML metadata for tabular data. The assembly line will soon be capable of handling other data types including: spatial vector, spatial raster, and images.
+Below are instructions for operating the `EMLassemblyline`. We recommend scripting your workflow and re-installing `EMLassemblyline` periodically to expedite revisioning and ensure the latest features are available.
 
-#### Installation (periodic reinstallation is recommended)
+### Contents:
 
-The assembly line is under constant revision and improvement. Please reinstall the assembly line periodically to ensure a successful experience. Installation from GitHub requires the `devtools` package.
+* [Install](#install)
+* [Create directories](#create-working-directory)
+* [Select intellectual rights license](#select-intellectual-rights-license)
+* [Identify data types](#identify-data-types)
+* [Import templates](#import-templates)
+* [Abstract](#abstract)
+* [Methods](#methods)
+* [Additional information](#additional-information)
+* [Keywords](#keywords)
+* [Personnel](#personnel)
+* [Attributes](#attributes)
+* [Categorical variables](#categorical-variables)
+* [Geographic coverage](#geographic-coverage)
+* [Make EML](#make-eml)
+* [Upload you data package](#upload-your-data-package)
+
+
+
+## Install
+[back to top](#contents)
+
+`EMLassemblyline` is under constant revision and improvement. Please reinstall the R package periodically to ensure the latest functionality is available to you. Installation from GitHub requires the `devtools` package.
 
 ```
 # Install devtools
@@ -21,15 +42,12 @@ library(EMLassemblyline)
 ```
 
 
-### Step 1: Create a directory for your dataset
+## Create directories
+[back to top](#contents)
 
-Create a new directory for your dataset. This is where the metadata parts created in the assembly line process will be stored and available for editing should you need to change the content of your EML.
+Create directories to store your dataset, metadata templates created and used by `EMLassemblyline`, and for export of EML from `EMLassemblyline`. These files can be co-located in a single directory or organized in their own respective directories. Either way, start by creating a directory for your metadata templates. Name this directory after your dataset. Replace spaces with underscores (e.g. `name of your directory` should be `name_of_your_directory`).
 
-Name this directory after your dataset. Replace spaces with underscores (e.g. `name of your directory` should be `name_of_your_directory`).
-
-### Step 2: Move your dataset to the directory
-
-Move copies of the final versions of your data tables into this directory. These should be the final versions of the data you are ready to publish.
+Move copies of the final versions of your data tables into this directory or store them in their own separate directory. These tables should be the final versions of the data you are ready to publish.
 
 Rename these files following these rules:
 
@@ -41,7 +59,8 @@ Rename these files following these rules:
 e.g. `name.of.(your) d@t@.file` should be `name_of_your_data_file`
 
 
-### Step 3: Select an intellectual rights license
+## Select intellectual rights license
+[back to top](#contents)
 
 There are 2 options for intellectual rights licenses:
 
@@ -50,9 +69,10 @@ There are 2 options for intellectual rights licenses:
 2. __CCBY__ requires attribution ... This information is released under the Creative Commons license - Attribution - CC BY (https://creativecommons.org/licenses/by/4.0/). The consumer of these data ("Data User" herein) is required to cite it appropriately in any publication that results from its use. The Data User should realize that these data may be actively used by others for ongoing research and that coordination may be necessary to prevent duplicate publication. The Data User is urged to contact the authors of these data if any questions about methodology or results occur. Where appropriate, the Data User is encouraged to consider collaboration or co-authorship with the authors. The Data User should realize that misinterpretation of data may occur if used out of context of the original study. While substantial efforts are made to ensure the accuracy of data and associated documentation, complete accuracy of data sets cannot be guaranteed. All data are made available "as is." The Data User should be aware, however, that data are updated periodically and it is the responsibility of the Data User to check for new versions of the data. The data authors and the repository where these data were obtained shall not be liable for damages resulting from any use or misinterpretation of the data. Thank you.
 
 
-### Step 4: Identfy the types of data in your dataset
+## Identify data types
+[back to top](#contents)
 
-Currently, the assembly line only works for tabular data and is the default option.
+`EMLassemblyline` works for tabular data files and .zip directories. Other formats will be supported in the future.
 
 #### table
 
@@ -65,35 +85,42 @@ A flat file composed of columns containing variables and rows containing observa
 
 e.g. `land.cover.use (%)` should be `percent_land_cover_use`
 
+#### .zip directory
 
-### Step 5: Import the core metadata templates
+A .zip directory containing anything you want to put in it. .zip directory name should follow the same naming rules as for a table.
 
-Run the function `import_templates` in the RStudio Console to populate the directory with metadata templates for you to complete. You will need to supply a few arguments to this function:
+## Import templates
+[back to top](#contents)
 
-1. **path** A path to your dataset working directory.
-2. **license** The license for your dataset ("CC0" or "CCBY").
-3. **data.files** A list of the data files of your dataset. File extension is not required.
+Run the function `import_templates` in the RStudio Console to populate the metadata directory with template files for you to complete. You will need to supply a few arguments to this function:
+
+1. **path** A path for the directory to which metadata templates will be imported.
+2. **data.path** A path to the directory containing your data entities. The default value is set to "path", i.e. the location to which your metadata templates will be imported.
+3. **license** The license for your dataset ("CC0" or "CCBY").
+4. **data.files** A list of the data tables of your dataset. File extension is not required. Do not include .zip directories here, they will be added in the `make_eml` step.
 
 ```
-# First load the EMLassemblyline package
+# Load EMLassemblyline
 library(EMLassemblyline)
 
-# View documentation for this function
-?import_templates
-
-# Import templates for an example dataset licensed under CC0, with 2 tables.
+# Import templates for an example dataset licensed under CC0, with 2 tables located in at "path"
 import_templates(path = "/Users/csmith/Desktop/gleon_chloride",
                  license = "CC0",
                  data.files = c("lake_chloride_concentrations",
                                 "lake_characteristics"))
+                                
+# Import templates for data stored in a different directory ("data.path") than where the templates will be imported to
+import_templates(path = "/Users/csmith/Desktop/gleon_chloride",
+                 data.path = "/Users/csmith/Desktop/gleon_chloride/data",
+                 license = "CC0",
+                 data.files = c("lake_chloride_concentrations",
+                                "lake_characteristics"))
+                                
 ```
 
-### Step 6: Script your workflow
 
-Open `my_workflow.R` in RStudio. This is a blank script for you to build an assembly line workflow, which can be revisited or modified for future assembly line runs.
-
-
-### Step 7: Abstract
+## Abstract
+[back to top](#contents)
 
 Open the file `abstract.txt` and write an abstract for your dataset. The abstract should cover what, why, when, where, and how for your dataset. Write your abstract in plain text.
 
@@ -102,7 +129,8 @@ Do not use special characters, symbols, formatting, or hyperlinks (URLs are acce
 NOTE: You can create your abstract in Microsoft Word and then copy over to `abstract.txt` but first you will need to remove any non-unicode characters. To do this go to [this web service](http://utils.paranoiaworks.org/diacriticsremover/) and paste your abstract into the window. Click the button "Remove Diacritics" to remove these non-compliant characters, then copy the resultant text into `abstract.txt`. You will want to give your abstract one last look over after performing this operation to ensure no information has been lost.
 
 
-### Step 8: Methods
+## Methods
+[back to top](#contents)
 
 Open the file `methods.txt` and describe the methods for your dataset. Be specific, include instrument descriptions, or point to a protocol online. If this dataset is a synthesis of other datasets please specify dataset origins, preferably their DOI or URL plus general citation information. 
 
@@ -111,7 +139,8 @@ Do not use special characters, symbols, formatting, or hyperlinks (URLs are acce
 NOTE: You can create your methods in Microsoft Word and then copy over to `methods.txt` but first you will need to remove any non-unicode characters. To do this go to [this web service](http://utils.paranoiaworks.org/diacriticsremover/) and paste your methods into the window. Click the button "Remove Diacritics" to remove these non-compliant characters, then copy the resultant text into `methods.txt`. You will want to give your methods one last look over after performing this operation to ensure no information has been lost.
 
 
-### Step 9: Additional information
+## Additional information
+[back to top](#contents)
 
 `additional_info.txt` is a good place for text based information about your dataset that doesn't fall under the scope of the abstract or methods (e.g. a list of research articles or theses derived from this dataset). If you have this information and would like to share it then open `additional_info.txt` in a text editor and add it. You can delete this file if you won't be using it, or you can keep it around in case you change your mind.
 
@@ -120,16 +149,18 @@ Do not use special characters, symbols, formatting, or hyperlinks (URLs are acce
 NOTE: You can create your additional information in Microsoft Word and then copy over to `additional_info.txt` but first you will need to remove any non-unicode characters. To do this go to [this web service](http://utils.paranoiaworks.org/diacriticsremover/) and paste your additional information into the window. Click the button "Remove Diacritics" to remove these non-compliant characters, then copy the resultant text into `additional_info.txt`. You will want to give your additional information one last look over after performing this operation to ensure no information has been lost.
 
 
-### Step 10: Keywords
+## Keywords
+[back to top](#contents)
 
-Open the tab delimited file `keywords.txt` in a spreadsheet editor and list the keywords that best describe your dataset. DO NOT edit this file in a text editor. [Consult the LTER controlled vocabulary](http://vocab.lternet.edu/vocab/vocab/index.php) for keywords. In addition to keywords describing the data, you may want to include keywords that describe your lab, station, and project (e.g. OBFS, LTREB, etc.).
+Open the tab delimited file `keywords.txt` in a spreadsheet editor and list the keywords that best describe your dataset. DO NOT edit this file in a text editor. [Consult the LTER controlled vocabulary](http://vocab.lternet.edu/vocab/vocab/index.php) for keywords and/or the associated [keywords distiller](http://vocab.lternet.edu/keywordDistiller/) to mine your abstract or methods for keywords. If you already have a list of keywords, [use the `validate_keywords` function](https://github.com/EDIorg/EMLassemblyline/blob/master/documentation/validate_keywords.md) to validate against a controlled vocabulary. In addition to keywords describing the data, you may want to include keywords that describe your lab, station, and project (e.g. OBFS, LTREB, etc.).
 
 Definitions for columns of this file:
 
 * **keyword** A keyword describing your dataset.
 * **keywordThesaurus** A keywordThesaurus (i.e. a controlled vocabulary like the resource listed above) corresponding to the keyword listed in the keyword column. If the keyword is not from a thesaurus or controlled vocabulary, leave corresponding entry in the keywordThesaurus column blank.
 
-### Step 11: Personnel
+## Personnel
+[back to top](#contents)
 
 Open the tab delimited file `personnel.txt` in a spreadsheet editor and enter information about the personnel associated with this dataset.
 
@@ -142,8 +173,8 @@ Definitions for columns of this file:
 * **electronicMailAddress** Email address of person.
 * **userId** ORCID of person (not required). A valid entry for userId is the 16 digit ORCID number separated by dashes (i.e. XXXX-XXXX-XXXX-XXXX). An ORCID is like a social security number for scientists and links your dataset with your ORCID. [Create one here](https://orcid.org/).
 * **role** Role of person with respect to this dataset. Valid entries for role are:
-    + **creator** Dataset creator (required; at least 1 creator must be listed for your dataset).
-    + **PI** Principal investigator associated with this dataset (not required).
+    + **creator** The creator is considered to be the author of the dataset, i.e. the person(s_ responsible for intellectual input into its creation (required; at least 1 creator must be listed for your dataset). 
+    + **PI** Principal investigator associated with this dataset (not required). Often the PI should also be listed as the dataset creator.
     + **contact** Dataset contact (required; at least 1 contact must be listed for your dataset). The contact may be a person or a position at an organization. We recommend listing the contact as a person rather than a position. To list a position as a contact (e.g. Data Manager), Enter the position name in the `givenName` column and leave `middleInitial` and `surName` blank.
     + Any other entries into the 'role' column are acceptable and will be defined under the associated party element of this dataset with whatever value is entered under role.
     + If a person serves more than one role, duplicate this persons information in another row but with the additional role.
@@ -153,7 +184,8 @@ Definitions for columns of this file:
 * **fundingNumber** Number of the grant or award that supported creation of this dataset (optional). Only include an entry in this column for rows where role PI.
 
 
-### Step 12: Attributes
+## Attributes
+[back to top](#contents)
     
 An `attributes_datatablename.txt` file has been created for each of your data tables. Edit each of these tab delimited files in a spreadsheet editor. DO NOT edit this file in a text editor. You will see this file has been partially populated with information detected by the `import_templates` function. You will have to double check values listed in all the columns except `attributeName`. 
 
@@ -193,39 +225,41 @@ view_unit_dictionary()
 * **missingValueCode** If a code for 'no data' is used, specify it here (e.g. NA, -99999, etc.). Only one missingValueCode is allowed for a single attribute.
 * **missingValueCodeExplanation** Define the missing value code here.
     
-    
-### Step 13: Close files
 
-Make sure all files of your dataset directory are closed. Some functions will error out if these files are open.
-
-### Step 14: Categorical variables
+## Categorical variables
+[back to top](#contents)
 
 If your data tables contain any attributes with the categorical class, you will need to supply definitions for the categorical codes. Use the function `define_catvars` to do this. `define_catvars` searches through each attribute file looking for attributes with a categorical class. If found, the function extracts unique categorical codes for each attribute and writes them to a file for you to define.
 
 ```
-# View documentation for this function
-?define_catvars
-
-# Run this function for your dataset
+# Define categorical variables when data and metadata templates are co-located at path
 define_catvars(path = "/Users/csmith/Desktop/gleon_chloride")
+
+# Define categorical variables when data and metadata templates are located in different directories
+define_catvars(path = "/Users/csmith/Desktop/gleon_chloride",
+               data.path = "/Users/csmith/Desktop/gleon_chloride/data")
 
 ```
 
 A tab delimited __catvars_datatablename.txt__ will be created for each of your data tables containing categorical variables. Open these in a spreadsheet editor and add definitions for each code.
 
-### Step 15: Geographic coverage
+## Geographic coverage
+[back to top](#contents)
 
-If your dataset contains more than one sampling location, then you will want to add this information to your metadata. Often a data user will search for data withing a geographic area. As of now the assembly line only supports point locations, multiple areas are not yet supported.
+If your dataset contains more than one sampling point or area, then you will want to add this information to your metadata. Often a data user will search for data within a geographic area.
+
+#### Geographic points
 
 Run the function `extract_geocoverage` to get the unique latitude, longitude, and site name combinations from your data and write to file. `extract_geocoverage` requires specific inputs that may require altering the latitude and longitude formate of your data. See documenation for details.
 
 Arguments required by this function are:
 
-1. **path** A path to the dataset working directory containing the data table with geographic information.
-2. **data.file** Name of the input data table containing geographic coverage data.
-3. **lat.col** Name of latitude column. Values of this column must be in decimal degrees. Latitudes south of the equator must be prefixed with a minus sign (i.e. dash, "-").
-4. **lon.col** Name of longitude column. Values of this column must be in decimal degrees. Longitudes west of the prime meridian must be prefixed with a minus sign (i.e. dash, "-"). 
-5. **site.col** Name of site column. This column lists site specific names to be associated with the geographic coordinates.
+1. **path** A path to the metadata directory.
+2. **data.path** A path to the directory containing the data table with geographic information. Don't use this argument if the data table is located at the path argument listed above.
+3. **data.file** Name of the input data table containing geographic coverage data.
+4. **lat.col** Name of latitude column. Values of this column must be in decimal degrees. Latitudes south of the equator must be prefixed with a minus sign (i.e. dash, "-").
+5. **lon.col** Name of longitude column. Values of this column must be in decimal degrees. Longitudes west of the prime meridian must be prefixed with a minus sign (i.e. dash, "-"). 
+6. **site.col** Name of site column. This column lists site specific names to be associated with the geographic coordinates.
 
 ```
 # View documentation for this function
@@ -239,30 +273,45 @@ extract_geocoverage(path = "/Users/csmith/Desktop/gleon_chloride",
                     site.col = "lake_name")
 ```
 
-This function outputs a tab delimited file named `geographic_coverage.txt` to your dataset directory. You may edit this in a spreadsheet editor if you'd like, but if the data table this information has been extracted from is accurate, then there is no need for editing.
+This function outputs a tab delimited file named `geographic_coverage.txt` to your metadata directory. You may edit this in a spreadsheet editor if you'd like, but if the data table this information has been extracted from is accurate, then there is no need for editing.
 
-### Step 16: Make EML
-    
+#### Geographic areas
+
+The `import_templates` function created a tab delimited table (bounding_boxes.txt) in your working directory. Instructions for completing this file:
+
+* **geographicDescription** Enter a brief description for each geographic area.
+* **westBoundingCoordinate** Enter the western most geographic coordinate (in decimal degrees) of the area. Longitudes west of the prime meridian are prefixed with a minus sign (i.e. dash -). 
+* **eastBoundingCoordinate** Enter the eastern most geographic coordinate (in decimal degrees) of the area. Longitudes west of the prime meridian are prefixed with a minus sign (i.e. dash -). 
+* **northBoundingCoordinate** Enter the northern most geographic coordinate (in decimal degrees) of the area. Latitudes south of the equator are prefixed with a minus sign (i.e. dash -).
+* **southBoundingCoordinate** Enter the northern most geographic coordinate (in decimal degrees) of the area. Latitudes south of the equator are prefixed with a minus sign (i.e. dash -).
+
+## Make EML
+[back to top](#contents)
+
 Now you are ready to synthesize your completed metadata templates into EML. This step is relatively simple, but requires several arguments:
 
-1. **path** A path to the dataset working directory.
-2. **dataset.title** A character string specifying the title for your dataset. Be descriptive (more than 5 words). We recommend the following format: `Project name: Broad description: Time span` (e.g. "GLEON: Long term lake chloride concentrations from North America and Europe: 1940-2016").
-3. **data.files** A list of character strings specifying the names of the data files of your dataset.
-4. **data.files.description** A list of character strings briefly describing the data files listed in the data.files argument and in the same order as listed in the data.files argument.
-5. **data.files.quote.character** A list of character strings defining the quote characters used in your data files and in the same order as listed in the data.files argument. If the quote character is a quotation, then enter `"\""`. If the quote character is an apostrophe, then enter `"\'"`. If there is no quote character then don't use this argument when running `make_eml`.
-6. **data.files.url** A character string specifying the URL of where your data tables are stored on a publicly accessible server (i.e. does not require user ID or password). The EDI data repository software, PASTA+, will use this to upload your data into the repository. If you will be manually uploading your data tables, then don't use this argument when running `make_eml`. 
-7. **temporal.coverage** A list of character strings specifying the beginning and ending dates of your dataset. Use the format `YYYY-MM-DD`.
-8. **geographic.description** A character string describing the geographic coverage of your dataset.
-9. **geographic.coordinates** A list of character strings specifying the spatial bounding coordinates of your dataset in decimal degrees. The list must follow this order: "North", "East", "South", "West". Longitudes west of the prime meridian and latitudes south of the equator are prefixed with a minus sign (i.e. dash -). If you don't have an area, but rather a point. Repeat the latitude value for North and South, and repeat the longitude value for East and West.
-10. **maintenance.description** A character string specifying whether data collection for this dataset is "ongoing" or "completed".
-11. **user.id** A character string specifying your EDI data repository user ID. If you don't have one, contact EDI (info@environmentaldatainitiative.org) to get one, or don't use this argument when running `make_eml`.
-12. **package.id** A character string specifying the package ID for your data package. If you don't have a package ID, then don't use this argument when running `make_eml`. A non-input package ID defaults to "edi.101.1".
+**NOTE: Make sure all your metadata templates and associated data files are closed. `make_eml` will fail if these files are open.**
+
+1. **path** (character) A path to the directory containing the completed metadata templates. Data files can also be stored at this path.
+2. **data.path** (character) A path to the directory containing the data entities described by the metadata templates. Default is set to path.
+3. **eml.path** (character) A path to the directory where the EML will be writtn. Default is set to path.
+4. **dataset.title** (character) The title for your data package. Be descriptive (more than 5 words). We recommend the following format: Project name: Broad description: Time span (e.g. "GLEON: Long term lake chloride concentrations from North America and Europe: 1940-2016").
+5. **data.files** (character) A vector of character strings specifying the names of your data files (e.g. data.files = c("lake_chloride_concentrations.csv", "lake_characteristics.csv")).
+6. **data.files.description** (character) A vector of character strings briefly describing the data files listed in the data.files argument and in the same order as listed in the data.files argument (e.g. data.files.description = c("Chloride concentration data.", "Climate, road density, and impervious surface data."))
+7. **data.files.quote.character** (character) A vector of character strings defining the quote characters used in your data files and in the same order as listed in the data.files argument. This argument is required only if your data contain quotations.  If the quote character is a quotation, then enter "\\"". If the quote character is an apostrophe, then enter "\\'". Example: data.files.quote.character = c("\\"", "\\"").
+8. **data.files.url** (character) The URL of where your data tables are stored on a publicly accessible server (i.e. does not require user ID or password). This argument is required only if your data are accessible from a publicly accesible URL. The EDI data repository software, PASTA+, will use this to upload your data into the repository. If you will be manually uploading your data tables, then don't use this argument. Example: data.files.url = "https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride". 
+9. **zip.dir** (character) A vector of character strings listing the .zip directories of your dataset.
+10. **zip.dir.description** (character) A vector of character strings briefly describing the contents of any .zip directory present in the working directory.
+11. **temporal.coverage** (character) A vector of character strings specifying the beginning and ending dates of your dataset. Use the format YYYY-MM-DD.
+12. **geographic.coordinates** (character) A vector of character strings specifying the spatial bounding coordinates of your dataset in decimal degrees. This argument is not required if you are supplying bounding coordinates in the bounding_boxes.txt template file. The list must follow this order: North, East, South, West. Longitudes West of the prime meridian and latitudes South of the equator are prefixed with a minus sign (i.e. dash -). If you don't have an area, but rather a point. Repeat the latitude value for North and South, and repeat the longitude value for East and West (e.g. geographic.coordinates = c('28.38', '-119.95', '28.38', '-119.95)).
+13. **geographic.description** (character) A description of the geographic coverage of your dataset. Don't use this argument if you are supplying geographic.coordinates in the bounding_boxes.txt template file. Example: "North America and Europe".
+14. **maintenance.description** (character) A description of whether data collection for this dataset is "ongoing" or "completed".
+15. **user.id** (character) A vector of character strings, specifying your user ID for the EDI data repository. The user.id controls editing access to your data package. If you do not have one, contact EDI (info@@environmentaldatainitiative.org) to obtain one. In the meantime do not use this argument when running `make_eml`.
+16. **affiliation** (character) A vector of character strings, specifying the affiliation of your user ID. In a list, the associations must follow the same order of the corresponding values listed under user.id. This is the affiliation used when logging in to the EDI Data Portal and can be: "LTER" or "EDI". If you don't have a user.id then do not use this argument when running `make_eml`.
+17. **package.id** (character) The ID of your data package. A missing package ID defaults to \emph{edi.101.1}. A package ID must contain the scope, package number, and revision number (e.g. 'edi.101.1').
 
 ```
-# View documentation for this function
-?make_eml
-
-# Run this function
+# Make EML for data and metadata templates co-located at path
 make_eml(path = "/Users/csmith/Desktop/gleon_chloride",
          dataset.title = "GLEON: Long term lake chloride concentrations from North America and Europe: 1940-2016",
          data.files = c("lake_chloride_concentrations",
@@ -275,6 +324,42 @@ make_eml(path = "/Users/csmith/Desktop/gleon_chloride",
          geographic.coordinates = c("69.0", "28.53", "28.38", "-119.95"),
          maintenance.description = "completed", 
          user.id = "csmith",
+         affiliation = "EDI",
+         package.id = "edi.201.1")
+         
+# Make EML for data and metadata templates located in different paths
+make_eml(path = "/Users/csmith/Desktop/gleon_chloride",
+         data.path = "/Users/csmith/Desktop/gleon_chloride/data",
+         dataset.title = "GLEON: Long term lake chloride concentrations from North America and Europe: 1940-2016",
+         data.files = c("lake_chloride_concentrations",
+                        "lake_characteristics"),
+         data.files.description = c("Chloride concentration data.", 
+                                    "Climate, road density, and impervious surface data."),
+         data.files.quote.character = c("\"", "\""),
+         temporal.coverage = c("1940-01-31", "2016-01-01"),
+         geographic.description = "North America and Europe",
+         geographic.coordinates = c("69.0", "28.53", "28.38", "-119.95"),
+         maintenance.description = "completed", 
+         user.id = "csmith",
+         affiliation = "EDI",
+         package.id = "edi.201.1")
+         
+# Make EML for data and metadata templates located in different paths, and EML to be exported to a separate path
+make_eml(path = "/Users/csmith/Desktop/gleon_chloride",
+         data.path = "/Users/csmith/Desktop/gleon_chloride/data",
+         eml.path = "/Users/csmith/Desktop/gleon_chloride/eml",
+         dataset.title = "GLEON: Long term lake chloride concentrations from North America and Europe: 1940-2016",
+         data.files = c("lake_chloride_concentrations",
+                        "lake_characteristics"),
+         data.files.description = c("Chloride concentration data.", 
+                                    "Climate, road density, and impervious surface data."),
+         data.files.quote.character = c("\"", "\""),
+         temporal.coverage = c("1940-01-31", "2016-01-01"),
+         geographic.description = "North America and Europe",
+         geographic.coordinates = c("69.0", "28.53", "28.38", "-119.95"),
+         maintenance.description = "completed", 
+         user.id = "csmith",
+         affiliation = "EDI",
          package.id = "edi.201.1")
 
 ```
@@ -282,8 +367,8 @@ make_eml(path = "/Users/csmith/Desktop/gleon_chloride",
 Your EML file will be written to your data directory with the name `packageID.xml`. If your EML is valid you will receive the message: `EML passed validation!`. If validation fails, open the EML file in an XML editor and look for the invalid section. Often a minor tweak to the EML can be made manually to bring it into compliance with the EML schema.
 
 
-### Step 17: Upload your data package to the EDI repository
+## Upload your data package
+[back to top](#contents)
 
-Your data and metadata form a package that may be uploaded to the [EDI data repository](https://portal.edirepository.org/nis/home.jsp). [Follow these instructions](https://environmentaldatainitiative.org/resources/assemble-data-and-metadata/step-4-submit-your-data-package/) to upload your data package.
-
+Your data and metadata form a package that may be uploaded to the [EDI data repository](https://portal.edirepository.org/nis/home.jsp). Contact EDI for login credentials (info@environmentaldatainitiative.org).
 

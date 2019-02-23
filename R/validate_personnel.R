@@ -1,4 +1,4 @@
-#' Validate personnel
+#' Validate the content and structure of personnel.txt
 #'
 #' @description  
 #'     This function checks the personnel table for required information and 
@@ -6,7 +6,7 @@
 #'     functions.
 #'
 #' @usage 
-#'     validate_personnel(x = personinfo)
+#'     validate_personnel(x)
 #'
 #' @param x
 #'     The data frame created from reading personnel.txt.
@@ -15,7 +15,6 @@
 #'     If incongruence is found an error is returned, else a valid data frame
 #'     for inputs to the personnel EML making functions.
 #'     
-#' @export     
 #'   
 
 validate_personnel <- function(x){
@@ -51,7 +50,7 @@ required_roles <- function(x){
 # Check project info is associated with first listed PI
 
 project_match <- function(x){
-  use_i <- x$role == "pi"
+  use_i <- tolower(x$role) == "pi"
   if (sum(use_i) > 0){
     pis <- x[use_i, ]
     pi_proj <- pis[ , c("projectTitle", "fundingAgency", "fundingNumber")]
@@ -85,7 +84,7 @@ order_pi_list <- function(x){
                  primary_pi,
                  aux_funding,
                  no_funding)
-      x <- x[complete.cases(x), ]
+      x <- x[stats::complete.cases(x), ]
     } else if (nrow(pis) == 1){
       x <- rbind(others,
                  pis)

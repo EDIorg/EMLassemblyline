@@ -1,0 +1,3 @@
+geographicDescription	westBoundingCoordinate	eastBoundingCoordinate	northBoundingCoordinate	southBoundingCoordinate
+Bounding box 1	-123	-120	45	43
+Bounding box 2	-123	-120	46	43

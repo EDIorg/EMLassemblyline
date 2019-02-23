@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<methodStep>
+  <description>
+    <para>This method step describes provenance-based metadata as specified in the LTER EML Best Practices.</para>
+    <para>This provenance metadata does not contain entity specific information.</para>
+  </description>
+  <dataSource>
+    <title>LAGOS-NE-LOCUS v1.01: A module for LAGOS-NE, a multi-scaled geospatial and temporal database of lake ecological context and water quality for thousands of U.S. Lakes: 1925-2013</title>
+    <creator>
+      <individualName>
+        <givenName>Patricia A</givenName>
+        <surName>Soranno</surName>
+      </individualName>
+      <organizationName>Michigan State University</organizationName>
+      <electronicMailAddress>soranno@msu.edu</electronicMailAddress>
+      <userId directory="http://orcid.org">0000-0003-1668-9271</userId>
+    </creator>
+    <creator>
+      <individualName>
+        <givenName>Kendra S</givenName>
+        <surName>Cheruvelil</surName>
+      </individualName>
+      <organizationName>Michigan State University</organizationName>
+      <electronicMailAddress>ksc@msu.edu</electronicMailAddress>
+      <userId directory="http://orcid.org">0000-0003-1880-2880</userId>
+    </creator>
+    <distribution>
+      <online>
+        <onlineDescription>This online link references an EML document that describes data used in the creation of this derivative data package.</onlineDescription>
+        <url function="information">https://pasta.lternet.edu/package/metadata/eml/edi/100/1</url>
+      </online>
+    </distribution>
+    <contact>
+      <individualName>
+        <givenName>Patricia A</givenName>
+        <surName>Soranno</surName>
+      </individualName>
+      <organizationName>Michigan State University</organizationName>
+      <electronicMailAddress>soranno@msu.edu</electronicMailAddress>
+    </contact>
+  </dataSource>
+</methodStep>

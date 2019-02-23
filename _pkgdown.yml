@@ -1,0 +1,16 @@
+reference:
+  - title: Import metadata templates
+    desc: Functions for creating metadata templates, using automated metadata extraction when possible.
+    contents:
+    - import_templates
+    - define_catvars
+    - extract_geocoverage
+  - title: Make EML metdata
+    desc: Function for creating EML from metadata templates and automated metadata extraction methods.
+    contents:
+    - make_eml
+  - title: Helpers
+    desc: Helper functions for creating metadata
+    contents:
+    - view_unit_dictionary
+    

@@ -2,104 +2,126 @@
 % Please edit documentation in R/make_eml.R
 \name{make_eml}
 \alias{make_eml}
-\title{Make EML}
+\title{Render templates into EML metadata}
 \usage{
-make_eml(path = "", 
-    dataset.title = "", 
-    data.files = c("df.1", "df.2", ...), 
-    data.files.description = c("df1.desc", "df.2.desc", ...), 
-    zip.dir.description = "",
-    data.files.quote.character = c("df.1.quote.char", "df.2.quote.char", ...), 
-    data.files.url = "", 
-    temporal.coverage = c("begin_date", "end_date"), 
-    geographic.description = "", 
-    geographic.coordinates = c("North", "East", "South", "West"), 
-    maintenance.description = "", 
-    user.id = "", 
-    package.id = "")
+make_eml(
+    path,
+    data.path = path,
+    eml.path = path, 
+    dataset.title, 
+    data.files, 
+    data.files.description, 
+    data.files.quote.character, 
+    data.files.url, 
+    zip.dir,
+    zip.dir.description,
+    temporal.coverage, 
+    geographic.description, 
+    geographic.coordinates, 
+    maintenance.description, 
+    user.id, 
+    affiliation,
+    environment,
+    package.id,
+    provenance,
+    return.obj = FALSE,
+    write.file = TRUE)
 }
 \arguments{
-\item{path}{A path to the dataset working directory containing the completed 
-metadata templates, \emph{attributes_datatablename.txt}, 
-\emph{catvars_datatablename.txt} (if categorical variables 
-are present), and \emph{geographic_coverage.txt} (if reporting detailed 
-geographic coverage).}
+\item{path}{(character) Path to where the template(s) will be imported.}
 
-\item{dataset.title}{A character string specifying the title for your dataset. Be descriptive
-(more than 5 words). We recommend the following format: Project name: 
-Broad description: Time span (e.g. "GLEON: Long term lake chloride 
-concentrations from North America and Europe: 1940-2016").}
+\item{data.path}{(character) Path to where the data files are stored.}
 
-\item{data.files}{A list of character strings specifying the names of the data files
-of your dataset (e.g. data.files = c("lake_chloride_concentrations.csv", 
-"lake_characteristics.csv"))}
+\item{eml.path}{(character) Path to where the EML will be writtn.}
 
-\item{data.files.description}{A list of character strings briefly describing the data files listed in the 
-data.files argument and in the same order as listed in the data.files
-argument (e.g. data.files.description = c("Chloride concentration data.", 
-"Climate, road density, and impervious surface data."))}
+\item{dataset.title}{(character) Dataset title. Be descriptive (more than 5 words) and 
+consider including the temporal coverage (e.g. "GLEON: Long term lake 
+chloride concentrations from North America and Europe: 1940-2016").}
 
-\item{data.files.quote.character}{A list of character strings defining the quote characters used in your 
-data files and in the same order as listed in the data.files argument.
-This argument is required only if your data contain quotations.  
-If the quote character is a quotation, then enter "\\"". If the quote 
-character is an apostrophe, then enter "\\'". Example: 
-data.files.quote.character = c("\\"", "\\"").}
+\item{data.files}{(character) Data file name(s). If more than one, then supply as a 
+vector of character strings (e.g. 
+`data.files = c("concentrations.csv", "characteristics.csv")`).}
 
-\item{data.files.url}{A character string specifying the URL of where your data tables are 
-stored on a publicly accessible server (i.e. does not require user ID 
-or password). This argument is required only if your data are accessible 
-from a publicly accesible URL. The EDI data repository software, PASTA+, 
-will use this to upload your data into the repository. If you will be 
-manually uploading your data tables, then don't use this argument.
-Example: data.files.url = "https://lter.limnology.wisc.edu/sites/default/files/data/gleon_chloride".}
+\item{data.files.description}{(character) Data file description(s). Brief description of `data.files`.
+If more than one, then supply as a vector of character strings in the 
+same order as listed in `data.files`.}
 
-\item{zip.dir.description}{A character string briefly describing the contents of any .zip directory
-present in the working directory.}
+\item{data.files.quote.character}{(character) Quote character(s) used in `data.files`. If more than one, 
+then supply as a vector of character strings in the same order as 
+listed in `data.files`. This argument is required only if your data 
+contain quotations. If the quote character is a quotation, then enter 
+`"\\""`. If the quote character is an apostrophe, then enter `"\\'"`.}
 
-\item{temporal.coverage}{A list of character strings specifying the beginning and ending dates 
-of your dataset. use the format YYYY-MM-DD.}
+\item{data.files.url}{(character) The URL of where your data tables can be downloaded by a
+data repository. This argument is not required, if the data will be 
+manually uploaded to a data repository.}
 
-\item{geographic.coordinates}{A list of character strings specifying the spatial bounding
-coordinates of your dataset in decimal degrees. This argument is not 
-required if you are supplying bounding coordinates in the 
-bounding_boxes.txt template file. The list must follow
-this order: North, East, South, West. Longitudes West of the 
-prime meridian and latitudes South of the equator are prefixed with a
-minus sign (i.e. dash -). If you don't have an area, but rather a point,
-Repeat the latitude value for North and South, and repeat the longitude
-value for East and West (e.g. geographic.coordinates = c('28.38',
-'-119.95', '28.38', '-119.95)).}
+\item{zip.dir}{(character) The name of .zip file(s). If more than one, then supply as a
+vector of character strings. The .zip file(s) must be located at 
+`data.path`.}
 
-\item{geographic.description}{A character string describing the geographic coverage of your dataset. 
-Don't use this argument if you are supplying geographic.coordinates in 
-the bounding_boxes.txt template file. Example: "North America and Europe".}
+\item{zip.dir.description}{(character) The description(s) of `zip.dir`. If more than one, then 
+supply as a vector of character strings in the same order as listed in 
+`zip.dir`.}
 
-\item{maintenance.description}{A character string specifying whether data collection for this dataset 
-is "ongoing" or "completed".}
+\item{temporal.coverage}{(character) Beginning and ending dates of the dataset as a vector of 
+character strings in the format `YYYY-MM-DD`.}
 
-\item{user.id}{A character string specifying your user ID for the EDI data repository.
-If you do not have one, contact EDI (info@environmentaldatainitiative.org)
-to obtain one. Alternatively, do not use this argument when running
-\code{make_eml}.}
+\item{geographic.description}{(character) Geographic description. Don't use this argument if geographic
+coordinates in the `bounding_boxes.txt` template.}
 
-\item{package.id}{A character string specifying the package ID for your data package. 
-A missing package ID defaults to \emph{edi.101.1}. A package ID must
-contain the scope, package number, and revision number 
-(e.g. 'edi.101.1').}
+\item{geographic.coordinates}{(character) Geographic coordinates delineating the bounding area or 
+point of a dataset, in decimal degrees. This argument is not required 
+if using `bounding_boxes.txt`. Values must be listed in this order:
+North, East, South, West. Longitudes West of the 
+prime meridian and latitudes South of the equator are negative. If 
+representing a point, repeat the latitude for North and South, and 
+repeat the longitude for East and West (e.g. 
+`geographic.coordinates = c('28.38', '-119.95', '28.38', '-119.95)`).}
+
+\item{maintenance.description}{(character) Indicator of whether data collection is `ongoing` or 
+`completed`.}
+
+\item{user.id}{(character) ID(s) of data repository user account(s). If more than one,
+supply as a vector of character strings. Contact EDI 
+(info@environmentaldatainitiative.org) to obtain one. This argument is
+not required.}
+
+\item{affiliation}{(character) Affiliations of the `user.id`(s). Valid options for EDI are
+`LTER` and `EDI`. If more than one, supply as a vector of character 
+strings in the same order as corresponding `user.id`(s). This argument
+is not required.}
+
+\item{environment}{(character) EDI Data Repository environment in which data provenance is
+being derived from. Can be: `development`, `staging`, `production`. 
+This argument is not required.}
+
+\item{package.id}{(character) EDI Data Repository Data package ID for this dataset. A 
+missing package ID defaults to `edi.101.1`.}
+
+\item{provenance}{(character) EDI Data Repository Data package ID(s) corresponding to 
+parent datasets from which this dataset was created (e.g. 
+`knb-lter-cap.46.3`).}
+
+\item{return.obj}{(logical) Return the EML as an R object of class `EML object`.}
+
+\item{write.file}{(logical) Write file to `path`. Defaults to TRUE.}
 }
 \value{
-Validation results printed to the RStudio \emph{Console}.
-    
-    An EML file written to the dataset working directory titled 
-    \emph{packageID.xml}.
+\itemize{
+        \item{`Status messages` describing the EML creation status}
+        \item{`Validation result` indicating whether the EML is schema valid}
+        \item{`EML file` written to `path` and in the form `package.id.xml`}
+    }
 }
 \description{
-Translate user supplied metadata templates into the EML, validate the 
-    EML, and write to file.
+Render the content of metadata templates into the EML, then validate the
+    EML and write to file.
 }
 \details{
 If validation fails, open the EML document in a .xml editor to identify 
     the source of error. Often the error is small and quickly resolved with 
-    the aid of an editors schema validator.
+    the aid of an editors schema validator. If the issue can't be resolved
+    then forward the `EML` to info@environmentaldatainitiative.org for 
+    support.
 }

@@ -1,0 +1,11 @@
+attributeName	code	definition
+NTRT	C	"Control, no water, no N added"
+NTRT	0	0 kg N/ha/yr added as NH4NO3
+NTRT	5	5 kg N/ha/yr added as NH4NO3
+NTRT	10	10 kg N/ha/yr added as NH4NO3
+NTRT	15	15 kg N/ha/yr added as NH4NO3
+NTRT	20	20 kg N/ha/yr added as NH4NO3
+NTRT	25	25 kg N/ha/yr added as NH4NO3
+ARM	1	Arm 1
+ARM	2	Arm 2
+ARM	3	Arm3

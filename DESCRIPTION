@@ -1,30 +1,32 @@
 Package: EMLassemblyline
-Title: A workflow and set of functions to make EML.
+Title: A workflow for creating EML
 Version: 2.4.6
-Authors@R: person("Colin", "Smith", email = "colin.smith@wisc.edu", role = c("aut", "cre"))
+Authors@R: person("Colin", "Smith", email = "colin.smith@wisc.edu", role = c("aut", "cre"), comment = "https://orcid.org/0000-0003-2261-9931")
 Description: A set of functions facilitating a workflow to create metadata
     for a user supplied data entity. Templates are copied to the working
     directory and instructions prompt the user to provide requisite 
     information. The user selects from a collection of functions to extract
     information from the data entities, and finally executes a fancy wrapper
     function to build, validate, and write the EML metadata to file.
-Depends:
-    EML (>= 1.0.3),
+Imports:
+    EML (== 1.0.3),
     stringr (>= 1.2.0),
     stringi (>= 1.1.5),
     reader (>= 1.0.6),
     readr (>= 1.1.1),
-    R (>= 3.2.5)
-Imports: 
-Suggests:
-    knitr,
-    rmarkdown,
-    testthat
-License: Creative Commons license CC0 1.0 Universal
+    xml2 (>= 1.1.1),
+    httr (>= 1.3.1),
+    knitr (>= 1.20),
+    rmarkdown (>= 1.11),
+    EDIutils,
+    methods
+Suggests: testthat
+License: MIT
 Encoding: UTF-8
 LazyData: true
-URL: http://github.com/EDIorg/EMLassemblyline
-BugReports: http://github.com/EDIorg/EMLassemblyline/issues
-RoxygenNote: 6.0.1
-SystemRequirements: 
+RoxygenNote: 6.1.1
+Remotes:
+    EDIorg/EDIutils
+URL: https://github.com/EDIorg/EMLassemblyline
+BugReports: https://github.com/EDIorg/EMLassemblyline/issues
 VignetteBuilder: knitr

@@ -1,39 +1,43 @@
-#' Extract geographic coverage
+#' Import template for geographic coverage
 #'
 #' @description  
-#'     Extract detailed geographic coverage (latitude, longitude, and site 
-#'     name) to be included in the EML.
+#'     Import template for describing the geographic coverage of a dataset.
+#'     The content of this template is automatically extracted from a data 
+#'     table containing geographical coordinates.
 #'
 #' @usage 
-#'     extract_geocoverage(path, data.file, lat.col, lon.col, site.col)
+#'     extract_geocoverage(path, data.path = path, data.file, lat.col, 
+#'     lon.col, site.col)
 #'
 #' @param path 
-#'     A path to the dataset working directory containing the data table with 
-#'     geographic information.
+#'     (character) Path to where the template(s) will be imported.
+#' @param data.path
+#'     (character) Path to where the data files are stored.
 #' @param data.file 
-#'     Name of the input data table containing geographic coverage data.
+#'     (character) File containing geographic coordinates represented in 
+#'     decimal degrees, where latitudes south of the equator and longitudes 
+#'     west of the prime meridian are negative.
 #' @param lat.col 
-#'     Name of latitude column. Values of this column must be in decimal 
-#'     degrees. Latitudes south of the equator must be prefixed with a minus 
-#'     sign (i.e. dash, "-").
+#'     (character) Name of latitude column.
 #' @param lon.col 
-#'     Name of longitude column. Values of this column must be in decimal 
-#'     degrees. Longitudes west of the prime meridian must be prefixed with a 
-#'     minus sign (i.e. dash, "-"). 
+#'     (character) Name of longitude column.
 #' @param site.col
-#'     Name of site column. This column lists site specific names to be 
-#'     associated with the geographic coordinates.
+#'     (character) Name of site column, where site is the name of the location
+#'     specified by `lat.col` and `lon.col`.
 #'
 #' @return 
-#'     A tab delimited file in the dataset working directory 
-#'     titled \emph{geographic_coverage.txt} and containing decimal degree 
-#'     latitude, decimal degree longitude, and site name.
+#'     `geographic_coverage.txt` A tab delimited file containing geographic
+#'     coordinates and corresponding site names.
+#'     
+#' @details 
+#'     Existing template will not be overwritten by subsequent calls to 
+#'     `extract_geocoverage`.     
 #'
 #' @export
 #'
 
 
-extract_geocoverage <- function(path, data.file, lat.col, lon.col, site.col){
+extract_geocoverage <- function(path, data.path = path, data.file, lat.col, lon.col, site.col){
   
   # Check arguments and parameterize ------------------------------------------
   
@@ -55,77 +59,60 @@ extract_geocoverage <- function(path, data.file, lat.col, lon.col, site.col){
     stop('Input argument "site.col" is missing! Specify site column name.')
   }
   
-  # Validate path
-  
-  validate_path(path)
-  
   # Validate file names
 
-  data_file <- validate_file_names(path, data.files = data.file)
+  data_file <- EDIutils::validate_file_names(path = data.path, data.files = data.file)
   
   # Validate fields of data.files
   
-  validate_fields(path, data.files = data_file)
+  EDIutils::validate_fields(path = data.path, data.files = data_file)
   
   # Get file names ------------------------------------------------------------
   
-  files <- list.files(path)
-  use_i <- str_detect(string = files,
-                      pattern = str_c("^", data_file, collapse = "|"))
+  files <- list.files(data.path)
+  use_i <- stringr::str_detect(string = files,
+                      pattern = stringr::str_c("^", data_file, collapse = "|"))
   data_files <- files[use_i]
   
   # Detect operating system
   
-  os <- detect_os()
+  os <- EDIutils::detect_os()
   
   # Detect data file delimeter
   
-  delim_guess <- detect_delimeter(path, data.files = data_file, os)
+  delim_guess <- EDIutils::detect_delimeter(data.path, data.files = data_file, os)
   
   # Read data table -----------------------------------------------------------
   
-  file_path <- paste(path,
+  file_path <- paste(data.path,
                      "/",
                      data_file,
                      sep = "")
   
-  if (file.exists(paste(path, "/geographic_coverage.txt", sep = ""))){
+  if (file.exists(paste(data.path, "/geographic_coverage.txt", sep = ""))){
     
     message("geographic_coverage.txt already exists!")
+    
+    geocoverage_out <- NULL
     
   } else {
     
     message(paste("Reading ", data_file, ".", sep = ""))
     
     if (delim_guess == ','){
-      df_table <- suppressMessages(
-        read_csv(
-          file = file_path
-        )
-      )
+      df_table <- utils::read.csv(file = file_path, header = T, quote = '\"', as.is = T, comment.char = '')
     } else if (delim_guess == '\t'){
-      df_table <- suppressMessages(
-        read_csv(
-          file = file_path
-        )
-      )
+      df_table <- utils::read.table(file_path, header = T, sep = '\t', quote = "\"", as.is = T, comment.char = '')
     }
     
     df_table <- as.data.frame(df_table)
-    
-    # df_table <- read.table(file_path,
-    #                        header = TRUE,
-    #                        sep = delim_guess,
-    #                        quote = "\"",
-    #                        as.is = TRUE,
-    #                        comment.char = "")
     
     # Validate column names
     
     columns <- colnames(df_table)
     columns_in <- c(lat.col, lon.col, site.col)
-    use_i <- str_detect(string = columns,
-                        pattern = str_c("^", columns_in, "$", collapse = "|"))
+    use_i <- stringr::str_detect(string = columns,
+                        pattern = stringr::str_c("^", columns_in, "$", collapse = "|"))
     if (sum(use_i) > 0){
       use_i2 <- columns[use_i]
       use_i3 <- columns_in %in% use_i2
@@ -142,7 +129,7 @@ extract_geocoverage <- function(path, data.file, lat.col, lon.col, site.col){
     
     use_i <- df_table[site.col] == ""
     df_table[use_i, site.col] <- NA
-    df_table <- df_table[complete.cases(df_table), ]
+    df_table <- df_table[stats::complete.cases(df_table), ]
     
     # Get vectors of latitude, longitude, and site
     
@@ -184,21 +171,31 @@ extract_geocoverage <- function(path, data.file, lat.col, lon.col, site.col){
                                   site = site_out,
                                   stringsAsFactors = F)
     
-    # Write data to file
+    # Write data to file ------------------------------------------------------
     
-    message("Writing geographic_coverage.txt.")
+    lib_path <- system.file(
+      '/example_dataset/metadata_templates/abstract.txt',
+      package = 'EMLassemblyline')
+    lib_path <- substr(lib_path, 1, nchar(lib_path) - 48)
     
-    suppressWarnings(write.table(geocoverage_out,
-                paste(path,
-                      "/",
-                      "geographic_coverage.txt", sep = ""),
-                sep = "\t",
-                row.names = F,
-                quote = F,
-                fileEncoding = "UTF-8"))
+    if (!stringr::str_detect(path, lib_path)){
+      message("Writing geographic_coverage.txt.")
+      suppressWarnings(utils::write.table(geocoverage_out,
+                                          paste(path,
+                                                "/",
+                                                "geographic_coverage.txt", sep = ""),
+                                          sep = "\t",
+                                          row.names = F,
+                                          quote = F,
+                                          fileEncoding = "UTF-8"))
+    }
 
   }
 
   message("Done.")
+  
+  # Return values -------------------------------------------------------------
+  
+  geocoverage_out
 
 }

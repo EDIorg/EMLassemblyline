@@ -1,0 +1,20 @@
+language: r
+cache: packages
+r_packages:
+  - EML
+  - stringr
+  - stringi
+  - reader
+  - readr
+  - xml2
+  - httr
+  - knitr
+  - rmarkdown
+  - methods
+  - covr
+  - EDIutils
+r_github_packages:
+  - EDIorg/EDIutils
+warnings_are_errors: false
+after_success:
+  - Rscript -e 'library(covr); codecov()'
