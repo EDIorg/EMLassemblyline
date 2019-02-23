@@ -14,7 +14,6 @@ Imports:
     stringi (>= 1.1.5),
     reader (>= 1.0.6),
     readr (>= 1.1.1),
-<<<<<<< HEAD
     xml2 (>= 1.1.1),
     httr (>= 1.3.1),
     knitr (>= 1.20),
@@ -23,15 +22,6 @@ Imports:
     methods
 Suggests: testthat
 License: MIT
-=======
-    R (>= 3.2.5)
-Imports: 
-Suggests:
-    knitr,
-    rmarkdown,
-    testthat
-License: Creative Commons license CC0 1.0 Universal
->>>>>>> 464f8988875fa714b521c66bcae2993692b68b21
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
