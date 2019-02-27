@@ -153,7 +153,7 @@ import_templates <- function(path, data.path = path, license, data.files){
   
   # Validate fields of data.files
   
-  validate_fields(data.path, data.files = data_files)
+  EDIutils::validate_fields(path = data.path, data.files = data_files)
   
   # Detect operating system
   
@@ -161,8 +161,7 @@ import_templates <- function(path, data.path = path, license, data.files){
   
   # Detect file delimeters
   
-  delim_guess <- detect_delimeter(data.path, data.files = data_files, os)
-
+  delim_guess <- EDIutils::detect_delimeter(data.path, data.files = data_files, os)
   
   # Copy templates to path if they don't exist --------------------------------
   
