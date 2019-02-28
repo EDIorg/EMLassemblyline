@@ -50,7 +50,7 @@ compile_attributes <- function(path, data.path, data.files){
                        table_names[i],
                        sep = "")
     
-    delim_guess <- detect_delimeter(path = data.path, data.files = table_names[i], os = os)
+    delim_guess <- EDIutils::detect_delimeter(path = data.path, data.files = table_names[i], os = os)
     
     df_table <- read.table(file_path,
                            header = TRUE,

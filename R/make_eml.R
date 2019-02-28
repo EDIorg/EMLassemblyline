@@ -189,7 +189,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   # Validate fields of data.files
   
   if (!missing(data.files)){
-    validate_fields(data.path, data.files = table_names)
+    EDIutils::validate_fields(data.path, data.files = table_names)
   }
   
   # Detect operating system
@@ -1073,7 +1073,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
                          table_names[i],
                          sep = "")
       
-      delim_guess <- detect_delimeter(data.path, data.files = table_names[i], os)
+      delim_guess <- EDIutils::detect_delimeter(data.path, data.files = table_names[i], os)
       
       # if (delim_guess == ','){
       #   df_table <- suppressMessages(
@@ -1343,7 +1343,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
       # Pull together information for the data table
       
       data_table <- new("dataTable",
-                        entityName = table_names[i],
+                        entityName = data.files.description[i],
                         entityDescription = data.files.description[i],
                         physical = physical,
                         attributeList = attributeList,
@@ -1433,7 +1433,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
         
         # Add code file names
         
-        other_entity@entityName <- zip.dir[i]
+        other_entity@entityName <- zip.dir.description[i]
         
         # Add description
         

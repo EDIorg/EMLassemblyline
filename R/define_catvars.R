@@ -84,7 +84,7 @@ define_catvars <- function(path, data.path = path) {
   
   # Validate fields of data.files
   
-  validate_fields(path = data.path, data.files = data_files)
+  EDIutils::validate_fields(path = data.path, data.files = data_files)
   
   # Set file names to be written
 
@@ -92,7 +92,7 @@ define_catvars <- function(path, data.path = path) {
 
   # Detect field delimiters of data files
   
-  delim_guess <- detect_delimeter(path = data.path, data.files = data_files, os)
+  delim_guess <- EDIutils::detect_delimeter(path = data.path, data.files = data_files, os)
   
   
   # Loop through data tables --------------------------------------------------
