@@ -11,6 +11,13 @@ path <- system.file(
 path <- substr(path, 1, nchar(path) - 23)
 path_parent <- path
 
+# Is EDI's API accessible?
+
+edi_api <- try(
+  EDIutils::api_get_provenance_metadata('edi.100.1'), 
+  silent = TRUE
+)
+
 # Possible arguments to make_eml.R
 
 data.path <- paste0(path, '/data')
@@ -792,29 +799,33 @@ testthat::test_that('Expect equal', {
   # Using provenance
   # class = 'eml'
   
-  output <- make_eml(
-    path = path,
-    data.path = data.path,
-    eml.path = eml.path,
-    dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-    data.files = data.files,
-    data.files.description = c('Decomposition data', 'Nitrogen data'),
-    data.files.quote.character = c("\'", "\'"),
-    zip.dir = 'ancillary_data.zip',
-    zip.dir.description = 'Ancillary data',
-    data.files.url = 'https://lter.limnology.wisc.edu/sites/default/files/data',
-    temporal.coverage = c('2014-05-01', '2015-10-31'),
-    geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
-    geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
-    maintenance.description = 'completed',
-    user.id = user.id,
-    affiliation = affiliation,
-    package.id = 'edi.141.1',
-    provenance = c('edi.100.1', 'edi.7.1'),
-    return.obj = TRUE,
-    write.file = FALSE
-  )
-  
+  if (class(edi_api) != 'try-error'){
+    
+    output <- make_eml(
+      path = path,
+      data.path = data.path,
+      eml.path = eml.path,
+      dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+      data.files = data.files,
+      data.files.description = c('Decomposition data', 'Nitrogen data'),
+      data.files.quote.character = c("\'", "\'"),
+      zip.dir = 'ancillary_data.zip',
+      zip.dir.description = 'Ancillary data',
+      data.files.url = 'https://lter.limnology.wisc.edu/sites/default/files/data',
+      temporal.coverage = c('2014-05-01', '2015-10-31'),
+      geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+      geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+      maintenance.description = 'completed',
+      user.id = user.id,
+      affiliation = affiliation,
+      package.id = 'edi.141.1',
+      provenance = c('edi.100.1', 'edi.7.1'),
+      return.obj = TRUE,
+      write.file = FALSE
+    )
+    
+  }
+
   expect_equal(
     class(output) == 'eml',
     TRUE
