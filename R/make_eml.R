@@ -14,6 +14,8 @@
 #'     data.files.description, 
 #'     data.files.quote.character, 
 #'     data.files.url, 
+#'     other.entity,
+#'     other.entity.description,
 #'     zip.dir,
 #'     zip.dir.description,
 #'     temporal.coverage, 
@@ -56,6 +58,14 @@
 #'     (character) The URL of where your data tables can be downloaded by a
 #'     data repository. This argument is not required, if the data will be 
 #'     manually uploaded to a data repository.
+#' @param other.entity
+#'     (character) Name(s) of `other.entity`(s) in this dataset. Use
+#'     `other.entity` for all non-`data.table` files. `other.entity`(s) should 
+#'     be stored at `data.path`.
+#' @param other.entity.description
+#'     (character) Description(s) of `other.entity`(s). If more than one, then 
+#'     supply as a vector of descriptions in the same order as listed in 
+#'     `other.entity`.
 #' @param zip.dir
 #'     (character) The name of .zip file(s). If more than one, then supply as a
 #'     vector of character strings. The .zip file(s) must be located at 
@@ -128,7 +138,8 @@
 
 
 make_eml <- function(path, data.path = path, eml.path = path, dataset.title, data.files, data.files.description, 
-                     data.files.quote.character, data.files.url, zip.dir, zip.dir.description,
+                     data.files.quote.character, data.files.url, zip.dir, zip.dir.description, other.entity = NULL,
+                     other.entity.description = NULL,
                      temporal.coverage, geographic.description, geographic.coordinates, maintenance.description, 
                      user.id, affiliation, environment = 'production', package.id, provenance, return.obj = FALSE, write.file = TRUE) {
 
@@ -249,6 +260,12 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
     if ((length(zip.dir)) != (length(zip.dir.description))){
       stop('The number of zip.dir and zip.dir.descriptions must match!')
     }
+  }
+  
+  # Only zip.dir or other.entity may be used
+  
+  if (!missing(zip.dir) & !is.null(other.entity)){
+    stop('Use input argument "other.entity" to describe "zip.dir"')
   }
   
   # Validate user.id and association
@@ -1412,7 +1429,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
 
   
 
-  # Add otherEntity -----------------------------------------------------------
+  # Add zip.dir -----------------------------------------------------------
   
   if (!missing(zip.dir)){
     
@@ -1530,6 +1547,130 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
       
       dataset@otherEntity <- methods::new("ListOfotherEntity",
                                  list_of_other_entity)
+      
+    }
+    
+    
+  }
+  
+  # Add other.entity ----------------------------------------------------------
+  
+  if (!is.null(other.entity)){
+    
+    if (length(other.entity) > 0){
+      
+      list_of_other_entity <- list()
+      
+      for (i in 1:length(other.entity)){
+        
+        message(paste0("<otherEntity> ... ", other.entity[i]))
+        
+        # Create new other entity element
+        
+        other_entity <- methods::new("otherEntity")
+        
+        # Add code file names
+        
+        other_entity@entityName <- other.entity[i]
+        
+        # Add description
+        
+        description <- other.entity.description[i]
+        
+        other_entity@entityDescription <- description
+        
+        #  Build physical
+        
+        physical <- methods::new("physical",
+                                 objectName = other.entity[i])
+        
+        format_name <- "unknown"
+        entity_type <- "unknown"
+        physical@dataFormat@externallyDefinedFormat@formatName <- format_name
+        
+        physical@size <- methods::new("size", unit = "bytes", methods::as(as.character(file.size(paste(data.path, "/", other.entity[i], sep = ""))), "size"))
+        
+        if (os == "mac"){
+          
+          command_certutil <- paste("md5 ",
+                                    "\"",
+                                    data.path,
+                                    "/",
+                                    other.entity[i],
+                                    "\"",
+                                    sep = "")
+          
+          certutil_output <- system(command_certutil, intern = T)
+          
+          checksum_md5 <- gsub(".*= ", "", certutil_output)
+          
+          authentication <- new("authentication",
+                                method = "MD5",
+                                checksum_md5)
+          
+          physical@authentication <- as(list(authentication),
+                                        "ListOfauthentication")
+          
+        } else if (os == "win"){
+          
+          command_certutil <- paste("CertUtil -hashfile ",
+                                    "\"",
+                                    data.path,
+                                    "\\",
+                                    other.entity[i],
+                                    "\"",
+                                    " MD5",
+                                    sep = "")
+          
+          certutil_output <- system(command_certutil, intern = T)
+          
+          checksum_md5 <- gsub(" ", "", certutil_output[2])
+          
+          authentication <- new("authentication",
+                                method = "MD5",
+                                checksum_md5)
+          
+          physical@authentication <- as(list(authentication),
+                                        "ListOfauthentication")
+          
+        } else if (os == "lin"){
+          
+          command_certutil <- paste0("md5sum ",
+                                     "\"",
+                                     data.path,
+                                     "/",
+                                     other.entity[i],
+                                     "\"")
+          
+          certutil_output <- system(command_certutil, intern = T)
+          
+          checksum_md5 <- strsplit(certutil_output, split = " ")[[1]][1]
+          
+          authentication <- new("authentication",
+                                method = "MD5",
+                                checksum_md5)
+          
+          physical@authentication <- as(list(authentication),
+                                        "ListOfauthentication")
+          
+          
+          
+        }
+        
+        other_entity@physical <- methods::as(c(physical), "ListOfphysical")
+        
+        # Add entity type
+        
+        other_entity@entityType <- entity_type
+        
+        # Add other entity to list
+        
+        list_of_other_entity[[i]] <- other_entity
+        
+      }
+      
+      dataset@otherEntity <- methods::new("ListOfotherEntity",
+                                          list_of_other_entity)
       
     }
     
