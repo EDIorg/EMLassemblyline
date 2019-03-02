@@ -1357,7 +1357,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
       # Pull together information for the data table
       
       data_table <- methods::new("dataTable",
-                        entityName = table_names[i],
+                        entityName = data.files.description[i],
                         entityDescription = data.files.description[i],
                         physical = physical,
                         attributeList = attributeList,
@@ -1447,7 +1447,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
         
         # Add code file names
         
-        other_entity@entityName <- zip.dir[i]
+        other_entity@entityName <- zip.dir.description[i]
         
         # Add description
         
@@ -1571,7 +1571,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
         
         # Add code file names
         
-        other_entity@entityName <- other.entity[i]
+        other_entity@entityName <- other.entity.description[i]
         
         # Add description
         
