@@ -85,7 +85,8 @@ testthat::test_that('Expect data frame', {
       data.file = 'nitrogen', 
       site.col = 'site_name',
       lat.col = 'site_lat',
-      lon.col = 'site_lon')
+      lon.col = 'site_lon', 
+      return.obj = TRUE)
     )
   expect_equal(class(output), 'data.frame')
   expect_equal(colnames(output), c('latitude', 'longitude', 'site'))

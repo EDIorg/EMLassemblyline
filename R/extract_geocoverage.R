@@ -7,7 +7,7 @@
 #'
 #' @usage 
 #'     extract_geocoverage(path, data.path = path, data.file, lat.col, 
-#'     lon.col, site.col)
+#'     lon.col, site.col, return.obj = FALSE, write.file = TRUE)
 #'
 #' @param path 
 #'     (character) Path to where the template(s) will be imported.
@@ -24,10 +24,19 @@
 #' @param site.col
 #'     (character) Name of site column, where site is the name of the location
 #'     specified by `lat.col` and `lon.col`.
+#' @param return.obj
+#'     (logical) Return the `geocoverage` data.frame.
+#' @param write.file
+#'     (logical) Write `geocoverage` file to `path`.
 #'
 #' @return 
-#'     `geographic_coverage.txt` A tab delimited file containing geographic
-#'     coordinates and corresponding site names.
+#'     \itemize{
+#'         \item{`Status messages` describing the geocoverage creation status}
+#'         \item{`geographic_coverage.txt` A tab delimited file written to 
+#'         `path` containing geographic coordinates and corresponding site 
+#'         names.}
+#'         \item{`geocoverage data.frame` when `return.obj = TRUE`}
+#'     }
 #'     
 #' @details 
 #'     Existing template will not be overwritten by subsequent calls to 
@@ -37,7 +46,9 @@
 #'
 
 
-extract_geocoverage <- function(path, data.path = path, data.file, lat.col, lon.col, site.col){
+extract_geocoverage <- function(path, data.path = path, data.file, lat.col, 
+                                lon.col, site.col, return.obj = FALSE,
+                                write.file = TRUE){
   
   # Check arguments and parameterize ------------------------------------------
   
@@ -173,21 +184,24 @@ extract_geocoverage <- function(path, data.path = path, data.file, lat.col, lon.
     
     # Write data to file ------------------------------------------------------
     
-    lib_path <- system.file(
-      '/example_dataset/metadata_templates/abstract.txt',
-      package = 'EMLassemblyline')
-    lib_path <- substr(lib_path, 1, nchar(lib_path) - 48)
+    if (isTRUE(write.file)){
     
-    if (!stringr::str_detect(path, lib_path)){
-      message("Writing geographic_coverage.txt.")
-      suppressWarnings(utils::write.table(geocoverage_out,
-                                          paste(path,
-                                                "/",
-                                                "geographic_coverage.txt", sep = ""),
-                                          sep = "\t",
-                                          row.names = F,
-                                          quote = F,
-                                          fileEncoding = "UTF-8"))
+      lib_path <- system.file(
+        '/example_dataset/metadata_templates/abstract.txt',
+        package = 'EMLassemblyline')
+      lib_path <- substr(lib_path, 1, nchar(lib_path) - 48)
+      
+      if (!stringr::str_detect(path, lib_path)){
+        message("Writing geographic_coverage.txt.")
+        suppressWarnings(utils::write.table(geocoverage_out,
+                                            paste(path,
+                                                  "/",
+                                                  "geographic_coverage.txt", sep = ""),
+                                            sep = "\t",
+                                            row.names = F,
+                                            quote = F,
+                                            fileEncoding = "UTF-8"))
+      }
     }
 
   }
@@ -196,6 +210,8 @@ extract_geocoverage <- function(path, data.path = path, data.file, lat.col, lon.
   
   # Return values -------------------------------------------------------------
   
-  geocoverage_out
+  if (isTRUE(return.obj)){
+    geocoverage_out
+  }
 
 }

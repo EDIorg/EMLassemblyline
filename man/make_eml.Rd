@@ -105,13 +105,14 @@ parent datasets from which this dataset was created (e.g.
 
 \item{return.obj}{(logical) Return the EML as an R object of class `EML object`.}
 
-\item{write.file}{(logical) Write file to `path`. Defaults to TRUE.}
+\item{write.file}{(logical) Write file to `path`.}
 }
 \value{
 \itemize{
         \item{`Status messages` describing the EML creation status}
         \item{`Validation result` indicating whether the EML is schema valid}
         \item{`EML file` written to `path` and in the form `package.id.xml`}
+        \item{`EML object` when `return.obj = TRUE`}
     }
 }
 \description{

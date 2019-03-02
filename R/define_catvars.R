@@ -7,17 +7,27 @@
 #'     Instructions for filling out the template are at
 #'     \url{https://clnsmth.github.io/EMLassemblyline/articles/instructions.html}.
 #'
-#' @usage define_catvars(path, data.path = path)
+#' @usage define_catvars(path, data.path = path, return.obj = FALSE, 
+#'     write.file = TRUE)
 #'
 #' @param path 
 #'     (character) Path to where the template(s) will be imported.
 #' @param data.path
 #'     (character) Path to where the data files are stored.
+#' @param return.obj
+#'     (logical) Return the `catvars` data.frame.
+#' @param write.file
+#'     (logical) Write `catvars` file to `path`.
 #'
 #' @return 
-#'     `catvars_*.txt` A tab delimited file containing codes to be defined.
-#'     Each template is appended with the name of the data table from which 
-#'     the codes were extracted.
+#'     \itemize{
+#'         \item{`Status messages` describing the catvars creation status}
+#'         \item{`catvars file` A tab delimited file written to `path`
+#'         containing codes to be defined. Each template is appended with the 
+#'         name of the data table from which the codes were extracted 
+#'         (`catvars_*.txt`)}
+#'         \item{`catvars data.frame` when `return.obj = TRUE`}
+#'     }
 #'     
 #' @details 
 #'     `define_catvars` knows which variables are `categorical` based on their 
@@ -29,7 +39,8 @@
 #' @export
 #'
 
-define_catvars <- function(path, data.path = path) {
+define_catvars <- function(path, data.path = path, return.obj = FALSE, 
+                           write.file = TRUE) {
   
   
   # Check arguments and parameterize ------------------------------------------
@@ -213,16 +224,21 @@ define_catvars <- function(path, data.path = path) {
         lib_path <- substr(lib_path, 1, nchar(lib_path) - 48)
         
         if (!stringr::str_detect(path, lib_path)){
-          message(paste("Writing", fname_table_catvars[i]))
-          suppressWarnings(utils::write.table(catvars,
-                                       paste(path,
-                                             "/",
-                                             fname_table_catvars[i],
-                                             sep = ""),
-                                       sep = "\t",
-                                       row.names = F,
-                                       quote = F,
-                                       fileEncoding = "UTF-8"))
+          
+          if (isTRUE(write.file)){
+            
+            message(paste("Writing", fname_table_catvars[i]))
+            suppressWarnings(utils::write.table(catvars,
+                                                paste(path,
+                                                      "/",
+                                                      fname_table_catvars[i],
+                                                      sep = ""),
+                                                sep = "\t",
+                                                row.names = F,
+                                                quote = F,
+                                                fileEncoding = "UTF-8"))
+          }
+          
         }
 
       } else {
@@ -236,12 +252,14 @@ define_catvars <- function(path, data.path = path) {
     }
 
   }
-  
+
   message("Done.")
   
-  # Return data frame
+  # Return
   
-  catvars
+  if (isTRUE(return.obj)){
+    catvars
+  }
 
 }
 

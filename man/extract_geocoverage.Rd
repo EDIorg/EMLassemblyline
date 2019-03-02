@@ -5,7 +5,7 @@
 \title{Import template for geographic coverage}
 \usage{
 extract_geocoverage(path, data.path = path, data.file, lat.col, 
-    lon.col, site.col)
+    lon.col, site.col, return.obj = FALSE, write.file = TRUE)
 }
 \arguments{
 \item{path}{(character) Path to where the template(s) will be imported.}
@@ -22,10 +22,19 @@ west of the prime meridian are negative.}
 
 \item{site.col}{(character) Name of site column, where site is the name of the location
 specified by `lat.col` and `lon.col`.}
+
+\item{return.obj}{(logical) Return the `geocoverage` data.frame.}
+
+\item{write.file}{(logical) Write `geocoverage` file to `path`.}
 }
 \value{
-`geographic_coverage.txt` A tab delimited file containing geographic
-    coordinates and corresponding site names.
+\itemize{
+        \item{`Status messages` describing the geocoverage creation status}
+        \item{`geographic_coverage.txt` A tab delimited file written to 
+        `path` containing geographic coordinates and corresponding site 
+        names.}
+        \item{`geocoverage data.frame` when `return.obj = TRUE`}
+    }
 }
 \description{
 Import template for describing the geographic coverage of a dataset.

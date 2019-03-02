@@ -130,7 +130,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>extract_geocoverage</span>(<span class='no'>path</span>, <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='no'>path</span>, <span class='no'>data.file</span>, <span class='no'>lat.col</span>,
-    <span class='no'>lon.col</span>, <span class='no'>site.col</span>)</pre>
+    <span class='no'>lon.col</span>, <span class='no'>site.col</span>, <span class='kw'>return.obj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>write.file</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -162,12 +162,27 @@ west of the prime meridian are negative.</p></td>
       <td><p>(character) Name of site column, where site is the name of the location
 specified by `lat.col` and `lon.col`.</p></td>
     </tr>
+    <tr>
+      <th>return.obj</th>
+      <td><p>(logical) Return the `geocoverage` data.frame.</p></td>
+    </tr>
+    <tr>
+      <th>write.file</th>
+      <td><p>(logical) Write `geocoverage` file to `path`.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>`geographic_coverage.txt` A tab delimited file containing geographic
-    coordinates and corresponding site names.</p>
+    
+<ul>
+<li><p>`Status messages` describing the geocoverage creation status</p></li>
+<li><p>`geographic_coverage.txt` A tab delimited file written to 
+        `path` containing geographic coordinates and corresponding site 
+        names.</p></li>
+<li><p>`geocoverage data.frame` when `return.obj = TRUE`</p></li>
+</ul>
+
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 

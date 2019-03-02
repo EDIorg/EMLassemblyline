@@ -106,13 +106,14 @@
 #' @param return.obj
 #'     (logical) Return the EML as an R object of class `EML object`.
 #' @param write.file
-#'     (logical) Write file to `path`. Defaults to TRUE.
+#'     (logical) Write file to `path`.
 #'     
 #' @return 
 #'     \itemize{
 #'         \item{`Status messages` describing the EML creation status}
 #'         \item{`Validation result` indicating whether the EML is schema valid}
 #'         \item{`EML file` written to `path` and in the form `package.id.xml`}
+#'         \item{`EML object` when `return.obj = TRUE`}
 #'     }
 #'     
 #' @details 
@@ -1840,9 +1841,7 @@ compile_attributes <- function(path, data.path, data.files){
     if (sum(use_i3) > 0){
       df_attributes$unit[use_i3] <- ""
     }
-    
-    # ------------------------------------------------
-    
+
     # Initialize outgoing attribute table 
     
     rows <- ncol(df_table)

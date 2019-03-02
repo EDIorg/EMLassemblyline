@@ -36,7 +36,8 @@ testthat::test_that('Return data frame when files have not yet been created', {
   output <- suppressMessages(
     define_catvars(
       path = paste0(parent_dir, '/templates_cv'),
-      data.path = paste0(parent_dir, '/data')
+      data.path = paste0(parent_dir, '/data'),
+      return.obj = TRUE
       )
     )
   expect_equal(colnames(output), c('attributeName', 'code', 'definition'))
