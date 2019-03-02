@@ -13,6 +13,8 @@ make_eml(
     data.files.description, 
     data.files.quote.character, 
     data.files.url, 
+    other.entity,
+    other.entity.description,
     zip.dir,
     zip.dir.description,
     temporal.coverage, 
@@ -63,6 +65,14 @@ vector of character strings. The .zip file(s) must be located at
 \item{zip.dir.description}{(character) The description(s) of `zip.dir`. If more than one, then 
 supply as a vector of character strings in the same order as listed in 
 `zip.dir`.}
+
+\item{other.entity}{(character) Name(s) of `other.entity`(s) in this dataset. Use
+`other.entity` for all non-`data.table` files. `other.entity`(s) should 
+be stored at `data.path`.}
+
+\item{other.entity.description}{(character) Description(s) of `other.entity`(s). If more than one, then 
+supply as a vector of descriptions in the same order as listed in 
+`other.entity`.}
 
 \item{temporal.coverage}{(character) Beginning and ending dates of the dataset as a vector of 
 character strings in the format `YYYY-MM-DD`.}
