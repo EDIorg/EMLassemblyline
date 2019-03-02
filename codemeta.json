@@ -180,10 +180,11 @@
   ],
   "codeRepository": "https://github.com/EDIorg/EMLassemblyline",
   "readme": "https://github.com/clnsmth/EMLassemblyline/blob/master/README.md",
-  "fileSize": "173.54KB",
+  "fileSize": "173.808KB",
   "contIntegration": [
     "https://travis-ci.org/clnsmth/EMLassemblyline",
     "https://codecov.io/github/clnsmth/EMLassemblyline?branch=master"
   ],
-  "issueTracker": "https://github.com/EDIorg/EMLassemblyline/issues"
+  "issueTracker": "https://github.com/EDIorg/EMLassemblyline/issues",
+  "releaseNotes": "https://github.com/clnsmth/EMLassemblyline/blob/master/NEWS.md"
 }
