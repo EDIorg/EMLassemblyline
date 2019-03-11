@@ -32,7 +32,8 @@
 #'     Salient details of this function
 #'
 
-read_files <- function(path){
+read_files <- function(path, data.path = path, data.table = NULL, 
+                       other.entity = NULL){
   
   if (!is.null(data.path)){
     
