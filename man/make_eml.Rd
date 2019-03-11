@@ -9,12 +9,12 @@ make_eml(
     data.path = path,
     eml.path = path, 
     dataset.title, 
-    data.files, 
-    data.files.description, 
-    data.files.quote.character, 
-    data.files.url, 
+    data.table, 
+    data.table.description, 
+    data.table.quote.character, 
     other.entity,
     other.entity.description,
+    data.url, 
     zip.dir,
     zip.dir.description,
     temporal.coverage, 
@@ -27,7 +27,11 @@ make_eml(
     package.id,
     provenance,
     return.obj = FALSE,
-    write.file = TRUE)
+    write.file = TRUE,
+    data.files = 'deprecated',
+    data.files.description = 'deprecated',
+    data.files.quote.character = 'deprecated',
+    data.files.url = 'deprecated')
 }
 \arguments{
 \item{path}{(character) Path to where the template(s) will be imported.}
@@ -40,21 +44,21 @@ make_eml(
 consider including the temporal coverage (e.g. "GLEON: Long term lake 
 chloride concentrations from North America and Europe: 1940-2016").}
 
-\item{data.files}{(character) Data file name(s). If more than one, then supply as a 
+\item{data.table}{(character) Data table name(s). If more than one, then supply as a 
 vector of character strings (e.g. 
-`data.files = c("concentrations.csv", "characteristics.csv")`).}
+`data.table = c("concentrations.csv", "characteristics.csv")`).}
 
-\item{data.files.description}{(character) Data file description(s). Brief description of `data.files`.
+\item{data.table.description}{(character) Data table description(s). Brief description of `data.table`.
 If more than one, then supply as a vector of character strings in the 
-same order as listed in `data.files`.}
+same order as listed in `data.table`.}
 
-\item{data.files.quote.character}{(character) Quote character(s) used in `data.files`. If more than one, 
+\item{data.table.quote.character}{(character) Quote character(s) used in `data.table`. If more than one, 
 then supply as a vector of character strings in the same order as 
-listed in `data.files`. This argument is required only if your data 
+listed in `data.table`. This argument is required only if your data 
 contain quotations. If the quote character is a quotation, then enter 
 `"\\""`. If the quote character is an apostrophe, then enter `"\\'"`.}
 
-\item{data.files.url}{(character) The URL of where your data tables can be downloaded by a
+\item{data.url}{(character) The URL of where your data can be downloaded by a
 data repository. This argument is not required, if the data will be 
 manually uploaded to a data repository.}
 
@@ -116,6 +120,15 @@ parent datasets from which this dataset was created (e.g.
 \item{return.obj}{(logical) Return the EML as an R object of class `EML object`.}
 
 \item{write.file}{(logical) Write file to `path`.}
+
+\item{data.files}{This argument has been deprecated. Use `data.table` instead.}
+
+\item{data.files.description}{This argument has been deprecated. Use `data.table.description` instead.}
+
+\item{data.files.quote.character}{This argument has been deprecated. Use `data.table.quote.character` 
+instead.}
+
+\item{data.files.url}{This argument has been deprecated. Use `data.url` instead.}
 }
 \value{
 \itemize{

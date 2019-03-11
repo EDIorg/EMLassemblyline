@@ -10,12 +10,12 @@
 #'     data.path = path,
 #'     eml.path = path, 
 #'     dataset.title, 
-#'     data.files, 
-#'     data.files.description, 
-#'     data.files.quote.character, 
-#'     data.files.url, 
+#'     data.table, 
+#'     data.table.description, 
+#'     data.table.quote.character, 
 #'     other.entity,
 #'     other.entity.description,
+#'     data.url, 
 #'     zip.dir,
 #'     zip.dir.description,
 #'     temporal.coverage, 
@@ -28,7 +28,11 @@
 #'     package.id,
 #'     provenance,
 #'     return.obj = FALSE,
-#'     write.file = TRUE)
+#'     write.file = TRUE,
+#'     data.files = 'deprecated',
+#'     data.files.description = 'deprecated',
+#'     data.files.quote.character = 'deprecated',
+#'     data.files.url = 'deprecated')
 #'     
 #' @param path 
 #'     (character) Path to where the template(s) will be imported.
@@ -40,22 +44,22 @@
 #'     (character) Dataset title. Be descriptive (more than 5 words) and 
 #'     consider including the temporal coverage (e.g. "GLEON: Long term lake 
 #'     chloride concentrations from North America and Europe: 1940-2016").
-#' @param data.files
-#'     (character) Data file name(s). If more than one, then supply as a 
+#' @param data.table
+#'     (character) Data table name(s). If more than one, then supply as a 
 #'     vector of character strings (e.g. 
-#'     `data.files = c("concentrations.csv", "characteristics.csv")`).
-#' @param data.files.description
-#'     (character) Data file description(s). Brief description of `data.files`.
+#'     `data.table = c("concentrations.csv", "characteristics.csv")`).
+#' @param data.table.description
+#'     (character) Data table description(s). Brief description of `data.table`.
 #'     If more than one, then supply as a vector of character strings in the 
-#'     same order as listed in `data.files`.
-#' @param data.files.quote.character
-#'     (character) Quote character(s) used in `data.files`. If more than one, 
+#'     same order as listed in `data.table`.
+#' @param data.table.quote.character
+#'     (character) Quote character(s) used in `data.table`. If more than one, 
 #'     then supply as a vector of character strings in the same order as 
-#'     listed in `data.files`. This argument is required only if your data 
+#'     listed in `data.table`. This argument is required only if your data 
 #'     contain quotations. If the quote character is a quotation, then enter 
 #'     `"\\""`. If the quote character is an apostrophe, then enter `"\\'"`.
-#' @param data.files.url
-#'     (character) The URL of where your data tables can be downloaded by a
+#' @param data.url
+#'     (character) The URL of where your data can be downloaded by a
 #'     data repository. This argument is not required, if the data will be 
 #'     manually uploaded to a data repository.
 #' @param other.entity
@@ -117,6 +121,15 @@
 #'     (logical) Return the EML as an R object of class `EML object`.
 #' @param write.file
 #'     (logical) Write file to `path`.
+#' @param data.files
+#'     This argument has been deprecated. Use `data.table` instead.
+#' @param data.files.description
+#'     This argument has been deprecated. Use `data.table.description` instead.
+#' @param data.files.quote.character
+#'     This argument has been deprecated. Use `data.table.quote.character` 
+#'     instead.
+#' @param data.files.url
+#'     This argument has been deprecated. Use `data.url` instead.
 #'     
 #' @return 
 #'     \itemize{
@@ -137,11 +150,13 @@
 #'
 
 
-make_eml <- function(path, data.path = path, eml.path = path, dataset.title, data.files, data.files.description, 
-                     data.files.quote.character, data.files.url, zip.dir, zip.dir.description, other.entity = NULL,
+make_eml <- function(path, data.path = path, eml.path = path, dataset.title, data.table, data.table.description, 
+                     data.table.quote.character, data.url, zip.dir, zip.dir.description, other.entity = NULL,
                      other.entity.description = NULL,
                      temporal.coverage, geographic.description, geographic.coordinates, maintenance.description, 
-                     user.id, affiliation, environment = 'production', package.id, provenance, return.obj = FALSE, write.file = TRUE) {
+                     user.id, affiliation, environment = 'production', package.id, provenance, return.obj = FALSE, 
+                     write.file = TRUE, data.files = 'deprecated', data.files.description = 'deprecated', 
+                     data.files.quote.character = 'deprecated', data.files.url = 'deprecated') {
 
   # Check arguments and parameterize ------------------------------------------
   
@@ -151,12 +166,15 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   if (missing(dataset.title)){
     stop('Input argument "dataset.title" is missing! Add a title for your dataset.')
   }
-  # if (missing(data.files)){
-  #   stop('Input argument "data.files" is missing! List the names of your datasets data files.')
-  # }
-  if (!missing(data.files)){
-    if (missing(data.files.description)){
-      stop('Input argument "data.files.description" is missing! Please describe your data files.')
+  if (data.files != 'deprecated'){
+    stop('Input argument "data.files" has been deprecated. Use "data.table" instead.')
+  }
+  if (!missing(data.table)){
+    if (data.files.description != 'deprecated'){
+      stop('Input argument "data.files.description" has been deprecated. Use "data.table.description" instead.')
+    }
+    if (missing(data.table.description)){
+      stop('Input argument "data.table.description" is missing! Please describe your data files.')
     }
   }
   if (missing(temporal.coverage)){
@@ -183,6 +201,9 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   if (!missing(affiliation) & missing(user.id)){
     stop('Input argument "user.id" is missing! Add one.')
   }
+  if (data.files.url != 'deprecated'){
+    stop('Input argument "data.files.url" has been deprecated. Use "data.url" instead.')
+  }
   
   # Validate paths
   
@@ -196,13 +217,13 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   
   # Validate data file names
   
-  if (!missing(data.files)){
-    table_names <- EDIutils::validate_file_names(path = data.path, data.files = data.files) 
+  if (!missing(data.table)){
+    table_names <- EDIutils::validate_file_names(path = data.path, data.files = data.table) 
   }
   
-  # Validate fields of data.files
+  # Validate fields of data.table
   
-  if (!missing(data.files)){
+  if (!missing(data.table)){
     EDIutils::validate_fields(data.path, data.files = table_names)
   }
   
@@ -221,20 +242,23 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
     data_package_id <- "edi.101.1"
   }
   
-  # Validate data.files.description
+  # Validate data.table.description
   
-  if (!missing(data.files)){
-    if (length(data.files.description) != length(data.files)){
-      stop('The number of descriptions listed in the argument "data.files.description" does not match the number of files listed in the argument "data.files". These must match.')
+  if (!missing(data.table)){
+    if (length(data.table.description) != length(data.table)){
+      stop('The number of descriptions listed in the argument "data.table.description" does not match the number of files listed in the argument "data.table". These must match.')
     }
   }
   
-  # Validate data.files.quote.character
+  # Validate data.table.quote.character
   
-  if (!missing(data.files)){
-    if (!missing(data.files.quote.character)){
-      if (length(data.files.quote.character) != length(data.files)){
-        stop('The number of quote characters listed in the argument "data.files.quote.character" does not match the number of files listed in the argument "data.files". These must match.')
+  if (!missing(data.table)){
+    if (data.files.quote.character != 'deprecated'){
+      stop('Input argument "data.files.quote.character" has been deprecated. Use "data.table.quote.character" instead.')
+    }
+    if (!missing(data.table.quote.character)){
+      if (length(data.table.quote.character) != length(data.table)){
+        stop('The number of quote characters listed in the argument "data.table.quote.character" does not match the number of files listed in the argument "data.table". These must match.')
       }
     }
   }
@@ -280,8 +304,8 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   
   # Compile attributes --------------------------------------------------------
   
-  if (!missing(data.files)){
-    attributes_in <- compile_attributes(path, data.path, data.files)
+  if (!missing(data.table)){
+    attributes_in <- compile_attributes(path, data.path, data.table)
   }
   
   # Set file names
@@ -1087,7 +1111,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
 
   # Loop through tables -------------------------------------------------------
 
-  if (!missing(data.files)){
+  if (!missing(data.table)){
     for (i in 1:length(table_names)){
       
       message(paste(
@@ -1222,7 +1246,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
         os = os
       )
       
-      if (!missing("data.files.quote.character")){
+      if (!missing("data.table.quote.character")){
         
         physical_temp <- EML::set_physical(
           paste0(
@@ -1237,11 +1261,11 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
                                  recordDelimiter = eol,
                                  attributeOrientation = "column",
                                  fieldDelimiter = unlist(EML::eml_get(physical_temp, 'fieldDelimiter')),
-                                 quoteCharacter = data.files.quote.character[i])
+                                 quoteCharacter = data.table.quote.character[i])
         
       }
       
-      if (missing('data.files.quote.character')) {
+      if (missing('data.table.quote.character')) {
         
         physical_temp <- EML::set_physical(
           paste0(
@@ -1270,8 +1294,8 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
                                      table_names[i],
                                      sep = ""))))
       
-      if (!missing(data.files.url)){
-        data_table_url <- paste(data.files.url,
+      if (!missing(data.url)){
+        data_table_url <- paste(data.url,
                                 "/",
                                 table_names[i],
                                 sep = "")
@@ -1357,8 +1381,8 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
       # Pull together information for the data table
       
       data_table <- methods::new("dataTable",
-                        entityName = data.files.description[i],
-                        entityDescription = data.files.description[i],
+                        entityName = data.table.description[i],
+                        entityDescription = data.table.description[i],
                         physical = physical,
                         attributeList = attributeList,
                         numberOfRecords = number_of_records)
@@ -1750,7 +1774,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
 # and reformats the attributes table.
 
 
-compile_attributes <- function(path, data.path, data.files){
+compile_attributes <- function(path, data.path, data.table){
   
   # Detect users operating system
   
@@ -1772,7 +1796,7 @@ compile_attributes <- function(path, data.path, data.files){
   
   # Synchronize ordering of data files and attribute files
   
-  table_names <- EDIutils::validate_file_names(data.path, data.files)
+  table_names <- EDIutils::validate_file_names(data.path, data.table)
   
   attribute_files_out <- c()
   for (i in 1:length(table_names)){

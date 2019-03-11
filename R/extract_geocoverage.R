@@ -6,15 +6,16 @@
 #'     table containing geographical coordinates.
 #'
 #' @usage 
-#'     extract_geocoverage(path, data.path = path, data.file, lat.col, 
-#'     lon.col, site.col, return.obj = FALSE, write.file = TRUE)
+#'     extract_geocoverage(path, data.path = path, data.table, lat.col, 
+#'     lon.col, site.col, return.obj = FALSE, write.file = TRUE, 
+#'     data.file = NULL)
 #'
 #' @param path 
 #'     (character) Path to where the template(s) will be imported.
 #' @param data.path
 #'     (character) Path to where the data files are stored.
-#' @param data.file 
-#'     (character) File containing geographic coordinates represented in 
+#' @param data.table 
+#'     (character) Data table containing geographic coordinates represented in 
 #'     decimal degrees, where latitudes south of the equator and longitudes 
 #'     west of the prime meridian are negative.
 #' @param lat.col 
@@ -28,6 +29,8 @@
 #'     (logical) Return the `geocoverage` data.frame.
 #' @param write.file
 #'     (logical) Write `geocoverage` file to `path`.
+#' @param data.file
+#'     NOTE: `data.file` has been deprecated. Use `data.table` instead.
 #'
 #' @return 
 #'     \itemize{
@@ -46,9 +49,9 @@
 #'
 
 
-extract_geocoverage <- function(path, data.path = path, data.file, lat.col, 
+extract_geocoverage <- function(path, data.path = path, data.table, lat.col, 
                                 lon.col, site.col, return.obj = FALSE,
-                                write.file = TRUE){
+                                write.file = TRUE, data.file = NULL){
   
   # Check arguments and parameterize ------------------------------------------
   
@@ -57,8 +60,11 @@ extract_geocoverage <- function(path, data.path = path, data.file, lat.col,
   if (missing(path)){
     stop('Input argument "path" is missing! Specify the path to dataset working directory.')
   }
-  if (missing(data.file)){
-    stop('Input argument "data.file" is missing! Specify the data file containing the geographic coordinates.')
+  if (!is.null(data.file)){
+    stop('Input argument "data.file" has been deprecated. Use "data.table" instead.')
+  }
+  if (missing(data.table)){
+    stop('Input argument "data.table" is missing! Specify the data file containing the geographic coordinates.')
   }
   if (missing(lat.col)){
     stop('Input argument "lat.col" is missing! Specify latitude column name.')
@@ -72,9 +78,9 @@ extract_geocoverage <- function(path, data.path = path, data.file, lat.col,
   
   # Validate file names
 
-  data_file <- EDIutils::validate_file_names(path = data.path, data.files = data.file)
+  data_file <- EDIutils::validate_file_names(path = data.path, data.files = data.table)
   
-  # Validate fields of data.files
+  # Validate fields of data.tables
   
   EDIutils::validate_fields(path = data.path, data.files = data_file)
   

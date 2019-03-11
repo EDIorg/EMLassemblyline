@@ -14,7 +14,7 @@ testthat::test_that('Expect errors', {
   
   expect_error(
     extract_geocoverage(data.path = paste0(parent_dir, '/data'), 
-                        data.file = 'nitrogen.csv', 
+                        data.table = 'nitrogen.csv', 
                         site.col = 'site_name',
                         lat.col = 'site_lat', 
                         lon.col = 'site_lon')
@@ -22,15 +22,7 @@ testthat::test_that('Expect errors', {
   
   expect_error(
     extract_geocoverage(path = paste0(parent_dir, '/metadata_templates'), 
-                        data.file = 'nitrogen.csv', 
-                        site.col = 'site_name',
-                        lat.col = 'site_lat', 
-                        lon.col = 'site_lon')
-  )
-  
-  expect_error(
-    extract_geocoverage(path = paste0(parent_dir, '/metadata_templates'), 
-                        data.path = paste0(parent_dir, '/data'), 
+                        data.table = 'nitrogen.csv', 
                         site.col = 'site_name',
                         lat.col = 'site_lat', 
                         lon.col = 'site_lon')
@@ -39,7 +31,7 @@ testthat::test_that('Expect errors', {
   expect_error(
     extract_geocoverage(path = paste0(parent_dir, '/metadata_templates'), 
                         data.path = paste0(parent_dir, '/data'), 
-                        data.file = 'nitrogen.csv', 
+                        site.col = 'site_name',
                         lat.col = 'site_lat', 
                         lon.col = 'site_lon')
   )
@@ -47,7 +39,15 @@ testthat::test_that('Expect errors', {
   expect_error(
     extract_geocoverage(path = paste0(parent_dir, '/metadata_templates'), 
                         data.path = paste0(parent_dir, '/data'), 
-                        data.file = 'nitrogen.csv', 
+                        data.table = 'nitrogen.csv', 
+                        lat.col = 'site_lat', 
+                        lon.col = 'site_lon')
+  )
+  
+  expect_error(
+    extract_geocoverage(path = paste0(parent_dir, '/metadata_templates'), 
+                        data.path = paste0(parent_dir, '/data'), 
+                        data.table = 'nitrogen.csv', 
                         site.col = 'site_name',
                         lon.col = 'site_lon')
   )
@@ -55,7 +55,7 @@ testthat::test_that('Expect errors', {
   expect_error(
     extract_geocoverage(path = paste0(parent_dir, '/metadata_templates'), 
                         data.path = paste0(parent_dir, '/data'), 
-                        data.file = 'nitrogen.csv', 
+                        data.table = 'nitrogen.csv', 
                         site.col = 'site_name',
                         lat.col = 'site_lat')
   )
@@ -64,7 +64,7 @@ testthat::test_that('Expect errors', {
     extract_geocoverage(
       path = paste0(parent_dir, '/examples/templates'), 
       data.path = paste0(parent_dir, '/examples/data'), 
-      data.file = 'nitrogen', 
+      data.table = 'nitrogen', 
       site.col = 'site_nameeeee',
       lat.col = 'site_lat',
       lon.col = 'site_lon'
@@ -82,7 +82,7 @@ testthat::test_that('Expect data frame', {
     extract_geocoverage(
       path = paste0(parent_dir, '/examples/templates'), 
       data.path = paste0(parent_dir, '/examples/data'), 
-      data.file = 'nitrogen', 
+      data.table = 'nitrogen', 
       site.col = 'site_name',
       lat.col = 'site_lat',
       lon.col = 'site_lon', 

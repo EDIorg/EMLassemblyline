@@ -8,7 +8,8 @@
 #'     \url{https://clnsmth.github.io/EMLassemblyline/articles/instructions.html}.
 #'
 #' @usage 
-#'     import_templates(path, data.path = path, license, data.files)
+#'     import_templates(path, data.path = path, license, data.table, 
+#'     data.files = NULL)
 #'
 #' @param path 
 #'     (character) Path to where the templates will be imported.
@@ -18,9 +19,11 @@
 #'     (character) License under which the data will be released. Use "CC0" 
 #'     (\url{https://creativecommons.org/publicdomain/zero/1.0/}), 
 #'     or "CCBY" (\url{https://creativecommons.org/licenses/by/4.0/}).
-#' @param data.files
-#'     (character) Names of tabular data files. Names of non-tabular data are
+#' @param data.table
+#'     (character) Names of tabular data. Names of non-tabular data are
 #'     entered as arguments to `make_eml`.
+#' @param data.files
+#'     NOTE: `data.files` has been deprecated. Use `data.table` instead.
 #'
 #' @return 
 #'     \itemize{
@@ -56,7 +59,8 @@
 #' @export     
 #'     
 
-import_templates <- function(path, data.path = path, license, data.files){
+import_templates <- function(path, data.path = path, license, data.table, 
+                             data.files = NULL){
   
   message('Importing metadata templates')
   
@@ -66,8 +70,10 @@ import_templates <- function(path, data.path = path, license, data.files){
     stop('Input argument "path" is missing! Specify the path to your dataset working directory.')
   } else if (missing(license)){
     stop('Input argument "license" is missing! Specify a license for your dataset.')
-  } else if (missing(data.files)){
-    stop('Input argument "data.files" is missing! Specify the names of all the data files in your dataset.')
+  } else if (!is.null(data.files)){
+    stop('Input argument "data.files" has been deprecated. Use "data.table" instead.')
+  } else if (missing(data.table)){
+    stop('Input argument "data.table" is missing! Specify the names of all the data files in your dataset.')
   }
   
   license.low <- tolower(license)
@@ -77,7 +83,7 @@ import_templates <- function(path, data.path = path, license, data.files){
 
   data_files <- EDIutils::validate_file_names(
     data.path, 
-    data.files
+    data.table
   )
   
   EDIutils::validate_fields(
@@ -270,7 +276,7 @@ import_templates <- function(path, data.path = path, license, data.files){
   
   # Check column names
   
-  message("Checking data.files for valid column names.")
+  message("Checking data.table for valid column names.")
   
   for (i in 1:length(data_files)){
     

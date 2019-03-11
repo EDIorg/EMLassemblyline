@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • EMLassemblyline</title>
+<title>Read templates and data files into list (alternative input to 
+`EMLassemblyline` functions) — read_files • EMLassemblyline</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +31,11 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Read templates and data files into list (alternative input to 
+`EMLassemblyline` functions) — read_files" />
+
+<meta property="og:description" content="This function is under development." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -47,7 +52,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -112,84 +117,73 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Read templates and data files into list (alternative input to 
+`EMLassemblyline` functions)</h1>
+    <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/read_files.R'><code>R/read_files.R</code></a></small>
+    <div class="hidden name"><code>read_files.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    
+    <p>This function is under development.</p>
+    
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
-
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-import-metadata-templates" class="hasAnchor"><a href="#section-import-metadata-templates" class="anchor"></a>Import metadata templates</h2>
-          <p class="section-desc"><p>Functions for creating metadata templates, using automated metadata extraction when possible.</p></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="import_templates.html">import_templates()</a></code> </p>
-        </td>
-        <td><p>Import templates for core metadata</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="define_catvars.html">define_catvars()</a></code> </p>
-        </td>
-        <td><p>Import template(s) for categorical variable definitions</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="extract_geocoverage.html">extract_geocoverage()</a></code> </p>
-        </td>
-        <td><p>Import template for geographic coverage</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-make-eml-metdata" class="hasAnchor"><a href="#section-make-eml-metdata" class="anchor"></a>Make EML metdata</h2>
-          <p class="section-desc"><p>Function for creating EML from metadata templates and automated metadata extraction methods.</p></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="make_eml.html">make_eml()</a></code> </p>
-        </td>
-        <td><p>Render templates into EML metadata</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-helpers" class="hasAnchor"><a href="#section-helpers" class="anchor"></a>Helpers</h2>
-          <p class="section-desc"><p>Helper functions for creating metadata</p></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="view_unit_dictionary.html">view_unit_dictionary()</a></code> </p>
-        </td>
-        <td><p>View EML's standard unit dictionary</p></td>
-      </tr>
-    </tbody>
+    <pre class="usage"><span class='fu'>read_file_list</span>(<span class='no'>path</span>, <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='no'>path</span>, <span class='kw'>data.table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+<span class='kw'>other.entity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>path</th>
+      <td><p>(character) Path to where the template(s) will be imported.</p></td>
+    </tr>
+    <tr>
+      <th>data.path</th>
+      <td><p>(character) Path to where the data tables are stored.</p></td>
+    </tr>
+    <tr>
+      <th>data.table</th>
+      <td><p>(character) Data table name(s). If more than one, then supply as a 
+vector of character strings (e.g. 
+`data.table = c("concentrations.csv", "characteristics.csv")`).</p></td>
+    </tr>
+    <tr>
+      <th>other.entity</th>
+      <td><p>(character) Name(s) of `other.entity`(s) in this dataset. Use
+`other.entity` for all non-`data.table` files. `other.entity`(s) should 
+be stored at `data.path`.</p></td>
+    </tr>
     </table>
-  </div>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>(named list) Named list containing these elements</p><ul>
+<li><p>`name` Name of file</p></li>
+<li><p>`path` Where the file was read from</p></li>
+<li><p>`contents` Contents of the file (e.g. data.frame, XML, etc.)</p></li>
+</ul>
+
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Salient details of this function</p>
+    
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-import-metadata-templates">Import metadata templates</a></li>
-      <li><a href="#section-make-eml-metdata">Make EML metdata</a></li>
-      <li><a href="#section-helpers">Helpers</a></li>
-    </ul>
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+          </ul>
+
   </div>
 </div>
 

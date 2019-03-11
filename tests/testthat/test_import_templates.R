@@ -23,7 +23,7 @@ testthat::test_that('Error out when required arguments are missing', {
     import_templates(
       license = 'CC0',
       data.path = data.path,
-      data.files = c('decomp.csv', 'nitrogen.csv')
+      data.table = c('decomp.csv', 'nitrogen.csv')
     )
   )
   
@@ -31,7 +31,7 @@ testthat::test_that('Error out when required arguments are missing', {
     import_templates(
       path = path,
       data.path = data.path,
-      data.files = c('decomp.csv', 'nitrogen.csv')
+      data.table = c('decomp.csv', 'nitrogen.csv')
     )
   )
   
@@ -39,7 +39,7 @@ testthat::test_that('Error out when required arguments are missing', {
     import_templates(
       path = path,
       license = 'CC0',
-      data.files = c('decomp.csv', 'nitrogen.csv')
+      data.table = c('decomp.csv', 'nitrogen.csv')
     )
   )
   
@@ -62,7 +62,7 @@ testthat::test_that('Return messages when templates already exist', {
       path = path,
       license = 'CC0',
       data.path = data.path,
-      data.files = c('decomp.csv', 'nitrogen.csv')
+      data.table = c('decomp.csv', 'nitrogen.csv')
     )
   )
 })

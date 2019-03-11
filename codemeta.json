@@ -12,10 +12,10 @@
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.4.0",
+    "version": "3.5.2",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.4.0 (2017-04-21)",
+  "runtimePlatform": "R version 3.5.2 (2018-12-20)",
   "author": [
     {
       "@type": "Person",
@@ -180,11 +180,14 @@
   ],
   "codeRepository": "https://github.com/EDIorg/EMLassemblyline",
   "readme": "https://github.com/clnsmth/EMLassemblyline/blob/master/README.md",
-  "fileSize": "173.808KB",
+  "fileSize": "135.107KB",
   "contIntegration": [
     "https://travis-ci.org/clnsmth/EMLassemblyline",
     "https://codecov.io/github/clnsmth/EMLassemblyline?branch=master"
   ],
   "issueTracker": "https://github.com/EDIorg/EMLassemblyline/issues",
-  "releaseNotes": "https://github.com/clnsmth/EMLassemblyline/blob/master/NEWS.md"
+  "releaseNotes": "https://github.com/clnsmth/EMLassemblyline/blob/master/NEWS.md",
+  "contributor": {},
+  "copyrightHolder": {},
+  "funder": {}
 }

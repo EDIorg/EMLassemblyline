@@ -4,15 +4,16 @@
 \alias{extract_geocoverage}
 \title{Import template for geographic coverage}
 \usage{
-extract_geocoverage(path, data.path = path, data.file, lat.col, 
-    lon.col, site.col, return.obj = FALSE, write.file = TRUE)
+extract_geocoverage(path, data.path = path, data.table, lat.col, 
+    lon.col, site.col, return.obj = FALSE, write.file = TRUE, 
+    data.file = NULL)
 }
 \arguments{
 \item{path}{(character) Path to where the template(s) will be imported.}
 
 \item{data.path}{(character) Path to where the data files are stored.}
 
-\item{data.file}{(character) File containing geographic coordinates represented in 
+\item{data.table}{(character) Data table containing geographic coordinates represented in 
 decimal degrees, where latitudes south of the equator and longitudes 
 west of the prime meridian are negative.}
 
@@ -26,6 +27,8 @@ specified by `lat.col` and `lon.col`.}
 \item{return.obj}{(logical) Return the `geocoverage` data.frame.}
 
 \item{write.file}{(logical) Write `geocoverage` file to `path`.}
+
+\item{data.file}{NOTE: `data.file` has been deprecated. Use `data.table` instead.}
 }
 \value{
 \itemize{

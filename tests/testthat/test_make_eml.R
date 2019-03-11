@@ -24,8 +24,8 @@ data.path <- paste0(path, '/data')
 eml.path <- paste0(path, '/eml')
 path <- paste0(path, '/templates')
 dataset.title <- 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015'
-data.files <- c('decomp.csv', 'nitrogen.csv')
-data.files.description <- c('Decomposition data', 'Nitrogen data')
+data.table <- c('decomp.csv', 'nitrogen.csv')
+data.table.description <- c('Decomposition data', 'Nitrogen data')
 temporal.coverage <- c('2014-05-01', '2015-10-31')
 geographic.description <- 'Alberta, Canada, 100 km south of Fort McMurray, Canada'
 geographic.coordinates <- c('55.895', '112.094','55.895', '112.094')
@@ -33,8 +33,8 @@ maintenance.description <- 'completed'
 user.id <- c('csmith', 'someusername')
 affiliation <- c('LTER', 'EDI')
 package.id <- 'edi.141.1'
-data.files.quote.character <- c("\\'", "\\'")
-data.files.url <- 'https://lter.limnology.wisc.edu/sites/default/files/data/edi_141/data'
+data.table.quote.character <- c("\\'", "\\'")
+data.url <- 'https://lter.limnology.wisc.edu/sites/default/files/data/edi_141/data'
 zip.dir <- 'protocols.zip'
 zip.dir.description <- 'Collection of sampling and analytical protocols'
 provenance <- 'edi.100.1'
@@ -101,8 +101,8 @@ testthat::test_that('Error out when required arguments are missing', {
       data.path = data.path,
       eml.path = eml.path,
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.files = data.files,
-      data.files.description = c('Decomposition data', 'Nitrogen data'),
+      data.table = data.table,
+      data.table.description = c('Decomposition data', 'Nitrogen data'),
       temporal.coverage = '2015-10-31',
       geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -241,7 +241,7 @@ testthat::test_that('Error out when required arguments are missing', {
     )
   )
   
-  # data.files.description
+  # data.table.description
   
   expect_error(
     make_eml(
@@ -249,7 +249,7 @@ testthat::test_that('Error out when required arguments are missing', {
       data.path = data.path,
       eml.path = eml.path,
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.files = data.files,
+      data.table = data.table,
       temporal.coverage = c('2014-05-01', '2015-10-31'),
       geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -269,8 +269,8 @@ testthat::test_that('Error out when required arguments are missing', {
       data.path = data.path,
       eml.path = eml.path,
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.files = data.files,
-      data.files.description = c('Decomposition data', 'Nitrogen data'),
+      data.table = data.table,
+      data.table.description = c('Decomposition data', 'Nitrogen data'),
       temporal.coverage = c('2014-05-01', '2015-10-31'),
       geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -282,7 +282,7 @@ testthat::test_that('Error out when required arguments are missing', {
     )
   )
   
-  # Missing one of two data.files.description
+  # Missing one of two data.table.description
   
   expect_error(
     make_eml(
@@ -290,8 +290,8 @@ testthat::test_that('Error out when required arguments are missing', {
       data.path = data.path,
       eml.path = eml.path,
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.files = data.files,
-      data.files.description = 'Decomposition data',
+      data.table = data.table,
+      data.table.description = 'Decomposition data',
       temporal.coverage = c('2014-05-01', '2015-10-31'),
       geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -303,7 +303,7 @@ testthat::test_that('Error out when required arguments are missing', {
     )
   )
   
-  # Missing one of two data.files.quote.character
+  # Missing one of two data.table.quote.character
   
   expect_error(
     make_eml(
@@ -311,9 +311,9 @@ testthat::test_that('Error out when required arguments are missing', {
       data.path = data.path,
       eml.path = eml.path,
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.files = data.files,
-      data.files.description = c('Decomposition data', 'Nitrogen data'),
-      data.files.quote.character = "\'",
+      data.table = data.table,
+      data.table.description = c('Decomposition data', 'Nitrogen data'),
+      data.table.quote.character = "\'",
       temporal.coverage = c('2014-05-01', '2015-10-31'),
       geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -333,8 +333,8 @@ testthat::test_that('Error out when required arguments are missing', {
       data.path = data.path,
       eml.path = eml.path,
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.files = data.files,
-      data.files.description = c('Decomposition data', 'Nitrogen data'),
+      data.table = data.table,
+      data.table.description = c('Decomposition data', 'Nitrogen data'),
       zip.dir = 'ancillary_data.zip',
       temporal.coverage = c('2014-05-01', '2015-10-31'),
       geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
@@ -355,8 +355,8 @@ testthat::test_that('Error out when required arguments are missing', {
       data.path = data.path,
       eml.path = eml.path,
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.files = data.files,
-      data.files.description = c('Decomposition data', 'Nitrogen data'),
+      data.table = data.table,
+      data.table.description = c('Decomposition data', 'Nitrogen data'),
       zip.dir.description = 'Ancillary data',
       temporal.coverage = c('2014-05-01', '2015-10-31'),
       geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
@@ -377,8 +377,8 @@ testthat::test_that('Error out when required arguments are missing', {
       data.path = data.path,
       eml.path = eml.path,
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.files = data.files,
-      data.files.description = c('Decomposition data', 'Nitrogen data'),
+      data.table = data.table,
+      data.table.description = c('Decomposition data', 'Nitrogen data'),
       zip.dir = 'ancillary_data.zip',
       zip.dir.description = c('Ancillary data', 'Additional ancillary data'),
       temporal.coverage = c('2014-05-01', '2015-10-31'),
@@ -400,8 +400,8 @@ testthat::test_that('Error out when required arguments are missing', {
       data.path = data.path,
       eml.path = eml.path,
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.files = data.files,
-      data.files.description = c('Decomposition data', 'Nitrogen data'),
+      data.table = data.table,
+      data.table.description = c('Decomposition data', 'Nitrogen data'),
       temporal.coverage = c('2014-05-01', '2015-10-31'),
       geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -421,8 +421,8 @@ testthat::test_that('Error out when required arguments are missing', {
       data.path = data.path,
       eml.path = eml.path,
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.files = data.files,
-      data.files.description = c('Decomposition data', 'Nitrogen data'),
+      data.table = data.table,
+      data.table.description = c('Decomposition data', 'Nitrogen data'),
       temporal.coverage = c('2014-05-01', '2015-10-31'),
       geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -442,8 +442,8 @@ testthat::test_that('Error out when required arguments are missing', {
       data.path = data.path,
       eml.path = eml.path,
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.files = data.files,
-      data.files.description = c('Decomposition data', 'Nitrogen data'),
+      data.table = data.table,
+      data.table.description = c('Decomposition data', 'Nitrogen data'),
       temporal.coverage = c('2014-05-01', '2015-10-31'),
       geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -463,8 +463,8 @@ testthat::test_that('Error out when required arguments are missing', {
       data.path = data.path,
       eml.path = eml.path,
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.files = data.files,
-      data.files.description = c('Decomposition data', 'Nitrogen data'),
+      data.table = data.table,
+      data.table.description = c('Decomposition data', 'Nitrogen data'),
       temporal.coverage = c('2014-05-01', '2015-10-31'),
       geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -484,8 +484,8 @@ testthat::test_that('Error out when required arguments are missing', {
       data.path = data.path,
       eml.path = eml.path,
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.files = data.files,
-      data.files.description = c('Decomposition data', 'Nitrogen data'),
+      data.table = data.table,
+      data.table.description = c('Decomposition data', 'Nitrogen data'),
       temporal.coverage = c('2014-05-01', '2015-10-31'),
       geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -505,8 +505,8 @@ testthat::test_that('Error out when required arguments are missing', {
       data.path = data.path,
       eml.path = eml.path,
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.files = data.files,
-      data.files.description = c('Decomposition data', 'Nitrogen data'),
+      data.table = data.table,
+      data.table.description = c('Decomposition data', 'Nitrogen data'),
       temporal.coverage = c('2014-05-01', '2015-10-31'),
       geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -526,8 +526,8 @@ testthat::test_that('Error out when required arguments are missing', {
       data.path = data.path,
       eml.path = eml.path,
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.files = data.files,
-      data.files.description = c('Decomposition data', 'Nitrogen data'),
+      data.table = data.table,
+      data.table.description = c('Decomposition data', 'Nitrogen data'),
       temporal.coverage = c('2014-05-01', '2015-10-31'),
       geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -547,8 +547,8 @@ testthat::test_that('Error out when required arguments are missing', {
       data.path = data.path,
       eml.path = eml.path,
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.files = data.files,
-      data.files.description = c('Decomposition data', 'Nitrogen data'),
+      data.table = data.table,
+      data.table.description = c('Decomposition data', 'Nitrogen data'),
       temporal.coverage = c('2014-05-01', '2015-10-31'),
       geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -568,8 +568,8 @@ testthat::test_that('Error out when required arguments are missing', {
       data.path = data.path,
       eml.path = eml.path,
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.files = data.files,
-      data.files.description = c('Decomposition data', 'Nitrogen data'),
+      data.table = data.table,
+      data.table.description = c('Decomposition data', 'Nitrogen data'),
       temporal.coverage = c('2014-05-01', '2015-10-31'),
       geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -589,8 +589,8 @@ testthat::test_that('Error out when required arguments are missing', {
       data.path = data.path,
       eml.path = eml.path,
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.files = data.files,
-      data.files.description = c('Decomposition data', 'Nitrogen data'),
+      data.table = data.table,
+      data.table.description = c('Decomposition data', 'Nitrogen data'),
       temporal.coverage = c('2014-05-01', '2015-10-31'),
       geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -610,8 +610,8 @@ testthat::test_that('Error out when required arguments are missing', {
       data.path = data.path,
       eml.path = eml.path,
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.files = data.files,
-      data.files.description = c('Decomposition data', 'Nitrogen data'),
+      data.table = data.table,
+      data.table.description = c('Decomposition data', 'Nitrogen data'),
       temporal.coverage = c('2014-05-01', '2015-10-31'),
       geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -631,8 +631,8 @@ testthat::test_that('Error out when required arguments are missing', {
       data.path = data.path,
       eml.path = eml.path,
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.files = data.files,
-      data.files.description = c('Decomposition data', 'Nitrogen data'),
+      data.table = data.table,
+      data.table.description = c('Decomposition data', 'Nitrogen data'),
       temporal.coverage = c('2014-05-01', '2015-10-31'),
       geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -652,8 +652,8 @@ testthat::test_that('Error out when required arguments are missing', {
       data.path = data.path,
       eml.path = eml.path,
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.files = data.files,
-      data.files.description = c('Decomposition data', 'Nitrogen data'),
+      data.table = data.table,
+      data.table.description = c('Decomposition data', 'Nitrogen data'),
       temporal.coverage = c('2014-05-01', '2015-10-31'),
       geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -679,8 +679,8 @@ testthat::test_that('Expect equal', {
     data.path = data.path,
     eml.path = eml.path,
     dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-    data.files = data.files,
-    data.files.description = c('Decomposition data', 'Nitrogen data'),
+    data.table = data.table,
+    data.table.description = c('Decomposition data', 'Nitrogen data'),
     temporal.coverage = c('2014-05-01', '2015-10-31'),
     geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -697,16 +697,16 @@ testthat::test_that('Expect equal', {
     TRUE
   )
   
-  # data.files.quote.character (is present)
+  # data.table.quote.character (is present)
   
   output <- make_eml(
     path = path,
     data.path = data.path,
     eml.path = eml.path,
     dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-    data.files = data.files,
-    data.files.description = c('Decomposition data', 'Nitrogen data'),
-    data.files.quote.character = c("\'", "\'"),
+    data.table = data.table,
+    data.table.description = c('Decomposition data', 'Nitrogen data'),
+    data.table.quote.character = c("\'", "\'"),
     temporal.coverage = c('2014-05-01', '2015-10-31'),
     geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -735,9 +735,9 @@ testthat::test_that('Expect equal', {
     data.path = data.path,
     eml.path = eml.path,
     dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-    data.files = data.files,
-    data.files.description = c('Decomposition data', 'Nitrogen data'),
-    data.files.quote.character = c("\'", "\'"),
+    data.table = data.table,
+    data.table.description = c('Decomposition data', 'Nitrogen data'),
+    data.table.quote.character = c("\'", "\'"),
     zip.dir = 'ancillary_data.zip',
     zip.dir.description = 'Ancillary data',
     temporal.coverage = c('2014-05-01', '2015-10-31'),
@@ -766,7 +766,7 @@ testthat::test_that('Expect equal', {
     'ancillary_data.zip'
   )
   
-  # Using data.files.url
+  # Using data.url
   # class = 'eml'
   
   output <- make_eml(
@@ -774,12 +774,12 @@ testthat::test_that('Expect equal', {
     data.path = data.path,
     eml.path = eml.path,
     dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-    data.files = data.files,
-    data.files.description = c('Decomposition data', 'Nitrogen data'),
-    data.files.quote.character = c("\'", "\'"),
+    data.table = data.table,
+    data.table.description = c('Decomposition data', 'Nitrogen data'),
+    data.table.quote.character = c("\'", "\'"),
     zip.dir = 'ancillary_data.zip',
     zip.dir.description = 'Ancillary data',
-    data.files.url = 'https://lter.limnology.wisc.edu/sites/default/files/data',
+    data.url = 'https://lter.limnology.wisc.edu/sites/default/files/data',
     temporal.coverage = c('2014-05-01', '2015-10-31'),
     geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -806,12 +806,12 @@ testthat::test_that('Expect equal', {
       data.path = data.path,
       eml.path = eml.path,
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.files = data.files,
-      data.files.description = c('Decomposition data', 'Nitrogen data'),
-      data.files.quote.character = c("\'", "\'"),
+      data.table = data.table,
+      data.table.description = c('Decomposition data', 'Nitrogen data'),
+      data.table.quote.character = c("\'", "\'"),
       zip.dir = 'ancillary_data.zip',
       zip.dir.description = 'Ancillary data',
-      data.files.url = 'https://lter.limnology.wisc.edu/sites/default/files/data',
+      data.url = 'https://lter.limnology.wisc.edu/sites/default/files/data',
       temporal.coverage = c('2014-05-01', '2015-10-31'),
       geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -839,9 +839,9 @@ testthat::test_that('Expect equal', {
     data.path = data.path,
     eml.path = eml.path,
     dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-    data.files = data.files,
-    data.files.description = c('Decomposition data', 'Nitrogen data'),
-    data.files.quote.character = c("\'", "\'"),
+    data.table = data.table,
+    data.table.description = c('Decomposition data', 'Nitrogen data'),
+    data.table.quote.character = c("\'", "\'"),
     temporal.coverage = c('2014-05-01', '2015-10-31'),
     geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -866,9 +866,9 @@ testthat::test_that('Expect equal', {
     data.path = data.path,
     eml.path = eml.path,
     dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-    data.files = data.files,
-    data.files.description = c('Decomposition data', 'Nitrogen data'),
-    data.files.quote.character = c("\'", "\'"),
+    data.table = data.table,
+    data.table.description = c('Decomposition data', 'Nitrogen data'),
+    data.table.quote.character = c("\'", "\'"),
     temporal.coverage = c('2014-05-01', '2015-10-31'),
     geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -893,9 +893,9 @@ testthat::test_that('Expect equal', {
     data.path = data.path,
     eml.path = eml.path,
     dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-    data.files = data.files,
-    data.files.description = c('Decomposition data', 'Nitrogen data'),
-    data.files.quote.character = c("\'", "\'"),
+    data.table = data.table,
+    data.table.description = c('Decomposition data', 'Nitrogen data'),
+    data.table.quote.character = c("\'", "\'"),
     temporal.coverage = c('2014-05-01', '2015-10-31'),
     geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -920,9 +920,9 @@ testthat::test_that('Expect equal', {
     data.path = data.path,
     eml.path = eml.path,
     dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-    data.files = data.files,
-    data.files.description = c('Decomposition data', 'Nitrogen data'),
-    data.files.quote.character = c("\'", "\'"),
+    data.table = data.table,
+    data.table.description = c('Decomposition data', 'Nitrogen data'),
+    data.table.quote.character = c("\'", "\'"),
     temporal.coverage = c('2014-05-01', '2015-10-31'),
     geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -942,9 +942,9 @@ testthat::test_that('Expect equal', {
     data.path = data.path,
     eml.path = eml.path,
     dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-    data.files = data.files,
-    data.files.description = c('Decomposition data', 'Nitrogen data'),
-    data.files.quote.character = c("\'", "\'"),
+    data.table = data.table,
+    data.table.description = c('Decomposition data', 'Nitrogen data'),
+    data.table.quote.character = c("\'", "\'"),
     temporal.coverage = c('2014-05-01', '2015-10-31'),
     geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -969,9 +969,9 @@ testthat::test_that('Expect equal', {
     data.path = data.path,
     eml.path = eml.path,
     dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-    data.files = data.files,
-    data.files.description = c('Decomposition data', 'Nitrogen data'),
-    data.files.quote.character = c("\'", "\'"),
+    data.table = data.table,
+    data.table.description = c('Decomposition data', 'Nitrogen data'),
+    data.table.quote.character = c("\'", "\'"),
     temporal.coverage = c('2014-05-01', '2015-10-31'),
     geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -996,9 +996,9 @@ testthat::test_that('Expect equal', {
     data.path = data.path,
     eml.path = eml.path,
     dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-    data.files = data.files,
-    data.files.description = c('Decomposition data', 'Nitrogen data'),
-    data.files.quote.character = c("\'", "\'"),
+    data.table = data.table,
+    data.table.description = c('Decomposition data', 'Nitrogen data'),
+    data.table.quote.character = c("\'", "\'"),
     temporal.coverage = c('2014-05-01', '2015-10-31'),
     geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -1023,9 +1023,9 @@ testthat::test_that('Expect equal', {
     data.path = data.path,
     eml.path = eml.path,
     dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-    data.files = data.files,
-    data.files.description = c('Decomposition data', 'Nitrogen data'),
-    data.files.quote.character = c("\'", "\'"),
+    data.table = data.table,
+    data.table.description = c('Decomposition data', 'Nitrogen data'),
+    data.table.quote.character = c("\'", "\'"),
     temporal.coverage = c('2014-05-01', '2015-10-31'),
     geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),

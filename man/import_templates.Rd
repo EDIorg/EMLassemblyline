@@ -4,7 +4,8 @@
 \alias{import_templates}
 \title{Import templates for core metadata}
 \usage{
-import_templates(path, data.path = path, license, data.files)
+import_templates(path, data.path = path, license, data.table, 
+    data.files = NULL)
 }
 \arguments{
 \item{path}{(character) Path to where the templates will be imported.}
@@ -15,8 +16,10 @@ import_templates(path, data.path = path, license, data.files)
 (\url{https://creativecommons.org/publicdomain/zero/1.0/}), 
 or "CCBY" (\url{https://creativecommons.org/licenses/by/4.0/}).}
 
-\item{data.files}{(character) Names of tabular data files. Names of non-tabular data are
+\item{data.table}{(character) Names of tabular data. Names of non-tabular data are
 entered as arguments to `make_eml`.}
+
+\item{data.files}{NOTE: `data.files` has been deprecated. Use `data.table` instead.}
 }
 \value{
 \itemize{
