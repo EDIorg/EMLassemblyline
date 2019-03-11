@@ -16,8 +16,6 @@
 #'     other.entity,
 #'     other.entity.description,
 #'     data.url, 
-#'     zip.dir,
-#'     zip.dir.description,
 #'     temporal.coverage, 
 #'     geographic.description, 
 #'     geographic.coordinates, 
@@ -32,7 +30,9 @@
 #'     data.files = 'deprecated',
 #'     data.files.description = 'deprecated',
 #'     data.files.quote.character = 'deprecated',
-#'     data.files.url = 'deprecated')
+#'     data.files.url = 'deprecated',
+#'     zip.dir = 'deprecated',
+#'     zip.dir.description = 'deprecated')
 #'     
 #' @param path 
 #'     (character) Path to where the template(s) will be imported.
@@ -70,14 +70,6 @@
 #'     (character) Description(s) of `other.entity`(s). If more than one, then 
 #'     supply as a vector of descriptions in the same order as listed in 
 #'     `other.entity`.
-#' @param zip.dir
-#'     (character) The name of .zip file(s). If more than one, then supply as a
-#'     vector of character strings. The .zip file(s) must be located at 
-#'     `data.path`.
-#' @param zip.dir.description
-#'     (character) The description(s) of `zip.dir`. If more than one, then 
-#'     supply as a vector of character strings in the same order as listed in 
-#'     `zip.dir`.
 #' @param temporal.coverage
 #'     (character) Beginning and ending dates of the dataset as a vector of 
 #'     character strings in the format `YYYY-MM-DD`.
@@ -130,6 +122,11 @@
 #'     instead.
 #' @param data.files.url
 #'     This argument has been deprecated. Use `data.url` instead.
+#' @param zip.dir
+#'     This argument has been deprecated. Use `other.entity` instead.
+#' @param zip.dir.description
+#'     This argument has been deprecated. Use `other.entity.description` 
+#'     instead.
 #'     
 #' @return 
 #'     \itemize{
@@ -151,12 +148,13 @@
 
 
 make_eml <- function(path, data.path = path, eml.path = path, dataset.title, data.table, data.table.description, 
-                     data.table.quote.character, data.url, zip.dir, zip.dir.description, other.entity = NULL,
+                     data.table.quote.character, data.url, other.entity = NULL,
                      other.entity.description = NULL,
                      temporal.coverage, geographic.description, geographic.coordinates, maintenance.description, 
                      user.id, affiliation, environment = 'production', package.id, provenance, return.obj = FALSE, 
                      write.file = TRUE, data.files = 'deprecated', data.files.description = 'deprecated', 
-                     data.files.quote.character = 'deprecated', data.files.url = 'deprecated') {
+                     data.files.quote.character = 'deprecated', data.files.url = 'deprecated', zip.dir = 'deprecated',
+                     zip.dir.description = 'deprecated') {
 
   # Check arguments and parameterize ------------------------------------------
   
@@ -272,24 +270,25 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
     stop('The argument "temporal.coverage" requires both a begin date and end date. Please fix this.')
   }
   
-  # Validate zip.dir and zip.dir.description
+  # Validate other.entity and other.entity.description
   
-  if ((!missing(zip.dir)) & (missing(zip.dir.description))){
-    stop('The argument "zip.dir.description" is missing and "zip.dir" is present. Add a description for your zip directory.')
+  if (zip.dir != 'deprecated'){
+    stop('The argument "zip.dir" has been deprecated. Use "other.entity" instead.')
   }
-  if ((!missing(zip.dir.description)) & (missing(zip.dir))){
-    stop('The argument "zip.dir" is missing and "zip.dir.description" is present. Add the zip directories you are describing.')
+  if (zip.dir.description != 'deprecated'){
+    stop('The argument "zip.dir.description" has been deprecated. Use "other.entity.description" instead.')
   }
-  if ((!missing(zip.dir.description)) & (!missing(zip.dir))){
-    if ((length(zip.dir)) != (length(zip.dir.description))){
-      stop('The number of zip.dir and zip.dir.descriptions must match!')
+  
+  if ((!missing(other.entity)) & (missing(other.entity.description))){
+    stop('The argument "other.entity.description" is missing and "other.entity" is present. Add a description for your zip directory.')
+  }
+  if ((!missing(other.entity.description)) & (missing(other.entity))){
+    stop('The argument "other.entity" is missing and "other.entity.description" is present. Add the zip directories you are describing.')
+  }
+  if ((!missing(other.entity.description)) & (!missing(other.entity))){
+    if ((length(other.entity)) != (length(other.entity.description))){
+      stop('The number of other.entity and other.entity.descriptions must match!')
     }
-  }
-  
-  # Only zip.dir or other.entity may be used
-  
-  if (!missing(zip.dir) & !is.null(other.entity)){
-    stop('Use input argument "other.entity" to describe "zip.dir"')
   }
   
   # Validate user.id and association
@@ -1447,133 +1446,6 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
     
     dataset@dataTable <- methods::new("ListOfdataTable",
                              data_tables_stored)
-    
-  }
-  
-
-  
-
-  # Add zip.dir -----------------------------------------------------------
-  
-  if (!missing(zip.dir)){
-    
-    if (length(zip.dir) > 0){
-
-      list_of_other_entity <- list()
-      
-      for (i in 1:length(zip.dir)){
-        
-        message(paste0("<otherEntity> ... ", zip.dir[i]))
-        
-        # Create new other entity element
-        
-        other_entity <- methods::new("otherEntity")
-        
-        # Add code file names
-        
-        other_entity@entityName <- zip.dir.description[i]
-        
-        # Add description
-        
-        description <- zip.dir.description[i]
-        
-        other_entity@entityDescription <- description
-        
-        #  Build physical
-        
-        physical <- methods::new("physical",
-                        objectName = zip.dir[i])
-        
-        format_name <- "zip directory"
-        entity_type <- "zip directory"
-        physical@dataFormat@externallyDefinedFormat@formatName <- format_name
-        
-        physical@size <- methods::new("size", unit = "bytes", methods::as(as.character(file.size(paste(data.path, "/", zip.dir[i], sep = ""))), "size"))
-        
-        if (os == "mac"){
-          
-          command_certutil <- paste("md5 ",
-                                    "\"",
-                                    data.path,
-                                    "/",
-                                    zip.dir[i],
-                                    "\"",
-                                    sep = "")
-          
-          certutil_output <- system(command_certutil, intern = T)
-          
-          checksum_md5 <- gsub(".*= ", "", certutil_output)
-          
-          authentication <- new("authentication",
-                                method = "MD5",
-                                checksum_md5)
-          
-          physical@authentication <- as(list(authentication),
-                                        "ListOfauthentication")
-          
-        } else if (os == "win"){
-          
-          command_certutil <- paste("CertUtil -hashfile ",
-                                    "\"",
-                                    data.path,
-                                    "\\",
-                                    zip.dir[i],
-                                    "\"",
-                                    " MD5",
-                                    sep = "")
-          
-          certutil_output <- system(command_certutil, intern = T)
-          
-          checksum_md5 <- gsub(" ", "", certutil_output[2])
-          
-          authentication <- new("authentication",
-                                method = "MD5",
-                                checksum_md5)
-          
-          physical@authentication <- as(list(authentication),
-                                        "ListOfauthentication")
-          
-        } else if (os == "lin"){
-          
-          command_certutil <- paste0("md5sum ",
-                                     "\"",
-                                     data.path,
-                                     "/",
-                                     zip.dir[i],
-                                     "\"")
-          
-          certutil_output <- system(command_certutil, intern = T)
-          
-          checksum_md5 <- strsplit(certutil_output, split = " ")[[1]][1]
-          
-          authentication <- new("authentication",
-                                method = "MD5",
-                                checksum_md5)
-          
-          physical@authentication <- as(list(authentication),
-                                        "ListOfauthentication")
-          
-          
-          
-        }
-        
-        other_entity@physical <- methods::as(c(physical), "ListOfphysical")
-        
-        # Add entity type
-        
-        other_entity@entityType <- entity_type
-        
-        # Add other entity to list
-        
-        list_of_other_entity[[i]] <- other_entity
-        
-      }
-      
-      dataset@otherEntity <- methods::new("ListOfotherEntity",
-                                 list_of_other_entity)
-      
-    }
-    
     
   }
   

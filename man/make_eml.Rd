@@ -15,8 +15,6 @@ make_eml(
     other.entity,
     other.entity.description,
     data.url, 
-    zip.dir,
-    zip.dir.description,
     temporal.coverage, 
     geographic.description, 
     geographic.coordinates, 
@@ -31,7 +29,9 @@ make_eml(
     data.files = 'deprecated',
     data.files.description = 'deprecated',
     data.files.quote.character = 'deprecated',
-    data.files.url = 'deprecated')
+    data.files.url = 'deprecated',
+    zip.dir = 'deprecated',
+    zip.dir.description = 'deprecated')
 }
 \arguments{
 \item{path}{(character) Path to where the template(s) will be imported.}
@@ -61,14 +61,6 @@ contain quotations. If the quote character is a quotation, then enter
 \item{data.url}{(character) The URL of where your data can be downloaded by a
 data repository. This argument is not required, if the data will be 
 manually uploaded to a data repository.}
-
-\item{zip.dir}{(character) The name of .zip file(s). If more than one, then supply as a
-vector of character strings. The .zip file(s) must be located at 
-`data.path`.}
-
-\item{zip.dir.description}{(character) The description(s) of `zip.dir`. If more than one, then 
-supply as a vector of character strings in the same order as listed in 
-`zip.dir`.}
 
 \item{other.entity}{(character) Name(s) of `other.entity`(s) in this dataset. Use
 `other.entity` for all non-`data.table` files. `other.entity`(s) should 
@@ -129,6 +121,11 @@ parent datasets from which this dataset was created (e.g.
 instead.}
 
 \item{data.files.url}{This argument has been deprecated. Use `data.url` instead.}
+
+\item{zip.dir}{This argument has been deprecated. Use `other.entity` instead.}
+
+\item{zip.dir.description}{This argument has been deprecated. Use `other.entity.description` 
+instead.}
 }
 \value{
 \itemize{

@@ -35,8 +35,8 @@ affiliation <- c('LTER', 'EDI')
 package.id <- 'edi.141.1'
 data.table.quote.character <- c("\\'", "\\'")
 data.url <- 'https://lter.limnology.wisc.edu/sites/default/files/data/edi_141/data'
-zip.dir <- 'protocols.zip'
-zip.dir.description <- 'Collection of sampling and analytical protocols'
+other.entity <- 'protocols.zip'
+other.entity.description <- 'Collection of sampling and analytical protocols'
 provenance <- 'edi.100.1'
 
 # File paths within R library
@@ -325,7 +325,7 @@ testthat::test_that('Error out when required arguments are missing', {
     )
   )
   
-  # zip.dir.description
+  # other.entity.description
   
   expect_error(
     make_eml(
@@ -335,7 +335,7 @@ testthat::test_that('Error out when required arguments are missing', {
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
       data.table = data.table,
       data.table.description = c('Decomposition data', 'Nitrogen data'),
-      zip.dir = 'ancillary_data.zip',
+      other.entity = 'ancillary_data.zip',
       temporal.coverage = c('2014-05-01', '2015-10-31'),
       geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -347,7 +347,7 @@ testthat::test_that('Error out when required arguments are missing', {
     )
   )
   
-  # zip.dir
+  # other.entity
   
   expect_error(
     make_eml(
@@ -357,7 +357,7 @@ testthat::test_that('Error out when required arguments are missing', {
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
       data.table = data.table,
       data.table.description = c('Decomposition data', 'Nitrogen data'),
-      zip.dir.description = 'Ancillary data',
+      other.entity.description = 'Ancillary data',
       temporal.coverage = c('2014-05-01', '2015-10-31'),
       geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -369,7 +369,7 @@ testthat::test_that('Error out when required arguments are missing', {
     )
   )
   
-  # zip.dir and zip.dir.description mismatch
+  # other.entity and other.entity.description mismatch
   
   expect_error(
     make_eml(
@@ -379,8 +379,8 @@ testthat::test_that('Error out when required arguments are missing', {
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
       data.table = data.table,
       data.table.description = c('Decomposition data', 'Nitrogen data'),
-      zip.dir = 'ancillary_data.zip',
-      zip.dir.description = c('Ancillary data', 'Additional ancillary data'),
+      other.entity = 'ancillary_data.zip',
+      other.entity.description = c('Ancillary data', 'Additional ancillary data'),
       temporal.coverage = c('2014-05-01', '2015-10-31'),
       geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -728,7 +728,7 @@ testthat::test_that('Expect equal', {
     "'"
   )
   
-  # zip.dir
+  # other.entity
   
   output <- make_eml(
     path = path,
@@ -738,8 +738,8 @@ testthat::test_that('Expect equal', {
     data.table = data.table,
     data.table.description = c('Decomposition data', 'Nitrogen data'),
     data.table.quote.character = c("\'", "\'"),
-    zip.dir = 'ancillary_data.zip',
-    zip.dir.description = 'Ancillary data',
+    other.entity = 'ancillary_data.zip',
+    other.entity.description = 'Ancillary data',
     temporal.coverage = c('2014-05-01', '2015-10-31'),
     geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
@@ -777,8 +777,8 @@ testthat::test_that('Expect equal', {
     data.table = data.table,
     data.table.description = c('Decomposition data', 'Nitrogen data'),
     data.table.quote.character = c("\'", "\'"),
-    zip.dir = 'ancillary_data.zip',
-    zip.dir.description = 'Ancillary data',
+    other.entity = 'ancillary_data.zip',
+    other.entity.description = 'Ancillary data',
     data.url = 'https://lter.limnology.wisc.edu/sites/default/files/data',
     temporal.coverage = c('2014-05-01', '2015-10-31'),
     geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
@@ -809,8 +809,8 @@ testthat::test_that('Expect equal', {
       data.table = data.table,
       data.table.description = c('Decomposition data', 'Nitrogen data'),
       data.table.quote.character = c("\'", "\'"),
-      zip.dir = 'ancillary_data.zip',
-      zip.dir.description = 'Ancillary data',
+      other.entity = 'ancillary_data.zip',
+      other.entity.description = 'Ancillary data',
       data.url = 'https://lter.limnology.wisc.edu/sites/default/files/data',
       temporal.coverage = c('2014-05-01', '2015-10-31'),
       geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',

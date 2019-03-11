@@ -141,8 +141,6 @@
     <span class='no'>other.entity</span>,
     <span class='no'>other.entity.description</span>,
     <span class='no'>data.url</span>,
-    <span class='no'>zip.dir</span>,
-    <span class='no'>zip.dir.description</span>,
     <span class='no'>temporal.coverage</span>,
     <span class='no'>geographic.description</span>,
     <span class='no'>geographic.coordinates</span>,
@@ -157,7 +155,9 @@
     <span class='kw'>data.files</span> <span class='kw'>=</span> <span class='st'>'deprecated'</span>,
     <span class='kw'>data.files.description</span> <span class='kw'>=</span> <span class='st'>'deprecated'</span>,
     <span class='kw'>data.files.quote.character</span> <span class='kw'>=</span> <span class='st'>'deprecated'</span>,
-    <span class='kw'>data.files.url</span> <span class='kw'>=</span> <span class='st'>'deprecated'</span>)</pre>
+    <span class='kw'>data.files.url</span> <span class='kw'>=</span> <span class='st'>'deprecated'</span>,
+    <span class='kw'>zip.dir</span> <span class='kw'>=</span> <span class='st'>'deprecated'</span>,
+    <span class='kw'>zip.dir.description</span> <span class='kw'>=</span> <span class='st'>'deprecated'</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -205,18 +205,6 @@ contain quotations. If the quote character is a quotation, then enter
       <td><p>(character) The URL of where your data can be downloaded by a
 data repository. This argument is not required, if the data will be 
 manually uploaded to a data repository.</p></td>
-    </tr>
-    <tr>
-      <th>zip.dir</th>
-      <td><p>(character) The name of .zip file(s). If more than one, then supply as a
-vector of character strings. The .zip file(s) must be located at 
-`data.path`.</p></td>
-    </tr>
-    <tr>
-      <th>zip.dir.description</th>
-      <td><p>(character) The description(s) of `zip.dir`. If more than one, then 
-supply as a vector of character strings in the same order as listed in 
-`zip.dir`.</p></td>
     </tr>
     <tr>
       <th>other.entity</th>
@@ -311,6 +299,15 @@ instead.</p></td>
     <tr>
       <th>data.files.url</th>
       <td><p>This argument has been deprecated. Use `data.url` instead.</p></td>
+    </tr>
+    <tr>
+      <th>zip.dir</th>
+      <td><p>This argument has been deprecated. Use `other.entity` instead.</p></td>
+    </tr>
+    <tr>
+      <th>zip.dir.description</th>
+      <td><p>This argument has been deprecated. Use `other.entity.description` 
+instead.</p></td>
     </tr>
     </table>
     
