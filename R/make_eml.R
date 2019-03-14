@@ -1497,6 +1497,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
                   "online",
                   url = paste0(
                     data.url,
+                    '/',
                     other.entity[i]
                   )
                 )
