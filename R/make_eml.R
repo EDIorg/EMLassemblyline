@@ -1486,6 +1486,26 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
         
         physical@size <- methods::new("size", unit = "bytes", methods::as(as.character(file.size(paste(data.path, "/", other.entity[i], sep = ""))), "size"))
         
+        if (!missing(data.url)){
+          
+          physical@distribution <- methods::new(
+            'ListOfdistribution',
+            c(
+              methods::new(
+                "distribution",
+                online = methods::new(
+                  "online",
+                  url = paste0(
+                    data.url,
+                    other.entity[i]
+                  )
+                )
+              )
+            )
+          )
+          
+        }
+
         if (os == "mac"){
           
           command_certutil <- paste("md5 ",
