@@ -1,0 +1,13 @@
+template_name	regexpr	delimiter
+abstract	abstract.txt	NA
+additional_info	additional_info.txt	NA
+attributes	attributes_[:graph:]*.txt	\t
+bounding_boxes	bounding_boxes.txt	\t
+catvars	catvars_[:graph:]*.txt	\t
+custom_units	custom_units.txt	\t
+geographic_coverage	geographic_coverage.txt	\t
+intellectual_rights	intellectual_rights.txt	NA
+keywords	keywords.txt	\t
+methods	methods.txt	NA
+personnel	personnel.txt	\t
+taxonomicCoverage	taxonomicCoverage.xml	NA
