@@ -6,8 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read templates and data files into list (alternative input to 
-`EMLassemblyline` functions) — read_files • EMLassemblyline</title>
+<title>Read templates and data files into a list structure as an alternative input 
+to `EMLassemblyline` functions — read_files • EMLassemblyline</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -31,10 +31,16 @@
 
 
 
-<meta property="og:title" content="Read templates and data files into list (alternative input to 
-`EMLassemblyline` functions) — read_files" />
+<meta property="og:title" content="Read templates and data files into a list structure as an alternative input 
+to `EMLassemblyline` functions — read_files" />
 
-<meta property="og:description" content="This function is under development." />
+<meta property="og:description" content="Use this function to read metadata templates and data into an R list
+    object for input to `EMLassemblyline` functions, rather than supplying
+    the files themselves.    
+This function is primarily used for testing and demonstration purposes
+    however, this approach is generally useful for inputing metadata and 
+    data from a meta- or data-base and other upstream sources. See below for
+    list object structure." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -119,31 +125,37 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read templates and data files into list (alternative input to 
-`EMLassemblyline` functions)</h1>
+    <h1>Read templates and data files into a list structure as an alternative input 
+to `EMLassemblyline` functions</h1>
     <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/read_files.R'><code>R/read_files.R</code></a></small>
     <div class="hidden name"><code>read_files.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This function is under development.</p>
+    <p>Use this function to read metadata templates and data into an R list
+    object for input to `EMLassemblyline` functions, rather than supplying
+    the files themselves.</p>    
+<p>This function is primarily used for testing and demonstration purposes
+    however, this approach is generally useful for inputing metadata and 
+    data from a meta- or data-base and other upstream sources. See below for
+    list object structure.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>read_file_list</span>(<span class='no'>path</span>, <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='no'>path</span>, <span class='kw'>data.table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-<span class='kw'>other.entity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>read_files</span>(<span class='no'>path</span>, <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='no'>path</span>, <span class='kw'>data.table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+<span class='kw'>other.entity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>path</th>
-      <td><p>(character) Path to where the template(s) will be imported.</p></td>
+      <td><p>(character) Path to metadata templates.</p></td>
     </tr>
     <tr>
       <th>data.path</th>
-      <td><p>(character) Path to where the data tables are stored.</p></td>
+      <td><p>(character) Path to data tables and other entities.</p></td>
     </tr>
     <tr>
       <th>data.table</th>
@@ -157,20 +169,86 @@ vector of character strings (e.g.
 `other.entity` for all non-`data.table` files. `other.entity`(s) should 
 be stored at `data.path`.</p></td>
     </tr>
+    <tr>
+      <th>sep</th>
+      <td><p>(character) Delimiter of `data.table`. Use this argument if `read_files`
+fails to automatically identify `data.table` field delimiters.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(named list) Named list containing these elements</p><ul>
-<li><p>`name` Name of file</p></li>
-<li><p>`path` Where the file was read from</p></li>
-<li><p>`contents` Contents of the file (e.g. data.frame, XML, etc.)</p></li>
+    <p>(named list) Named list with this internal structure (NOTE: use `NA` for
+    non-existant content):</p><ul>
+<li><p>`template` Metadata template files</p><ul>
+<li><p>`abstract.txt` Abstract template</p><ul>
+<li><p>`content` EML::TextType containing abstract</p></li>
+<li><p>`path` Path to file</p></li>
+</ul></li>
+<li><p>`additional_info.txt` Additional information template</p><ul>
+<li><p>`content` EML::TextType containing additional info</p></li>
+<li><p>`path` Path to file</p></li>
+</ul></li>
+<li><p>`attributes_*.txt` Attributes template where * is name of `data.table` described by the attributes</p><ul>
+<li><p>`content` Data frame of attributes template</p></li>
+<li><p>`path` Path to file</p></li>
+</ul></li>
+<li><p>`bounding_boxes.txt` Bounding boxes template</p><ul>
+<li><p>`content` Data frame of bounding boxes template</p></li>
+<li><p>`path` Path to file</p></li>
+</ul></li>
+<li><p>`catvars_*.txt` Categorical variables template where * is name of `data.table` described by the catvars</p><ul>
+<li><p>`content` Data frame of categorical variables template</p></li>
+<li><p>`path` Path to file</p></li>
+</ul></li>
+<li><p>`custom_units.txt` Custom units template</p><ul>
+<li><p>`content` Data frame of custom units template</p></li>
+<li><p>`path` Path to file</p></li>
+</ul></li>
+<li><p>`geographic_coverage.txt` Geographic coverage template</p><ul>
+<li><p>`content` Data frame of geographic coverage template</p></li>
+<li><p>`path` Path to file</p></li>
+</ul></li>
+<li><p>`intellectual_rights.txt` Intellectual rights template</p><ul>
+<li><p>`content` EML::TextType containing intellectual rights</p></li>
+<li><p>`path` Path to file</p></li>
+</ul></li>
+<li><p>`keywords.txt` Keywords template</p><ul>
+<li><p>`content` Data frame of keywords template</p></li>
+<li><p>`path` Path to file</p></li>
+</ul></li>
+<li><p>`methods.txt` Methods template</p><ul>
+<li><p>`content` EML::Methods containing methods</p></li>
+<li><p>`path` Path to file</p></li>
+</ul></li>
+<li><p>`personnel.txt` Personnel template</p><ul>
+<li><p>`content` Data frame of personnel template</p></li>
+<li><p>`path` Path to file</p></li>
+</ul></li>
+<li><p>`taxonomicCoverage.xml` Taxonomic coverage EML element</p><ul>
+<li><p>`content` EML::taxonomicCoverage</p></li>
+<li><p>`path` Path to file</p></li>
+</ul></li>
+</ul></li>
+<li><p>`data.table`</p><ul>
+<li><p>`data.table.name.ext` Name of data table including file extension</p><ul>
+<li><p>`content` Data frame of data table</p></li>
+<li><p>`path` Path to data table (required)</p></li>
+</ul></li>
+</ul></li>
+<li><p>`other.entity`</p><ul>
+<li><p>`other.entity.name.ext` Name of other entity including file extension</p><ul>
+<li><p>`content` Set to `NA`</p></li>
+<li><p>`path` Path to other entity (required)</p></li>
+</ul></li>
+</ul></li>
 </ul>
 
     
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Salient details of this function</p>
+    <p>Paths to data tables and other entities must be present for 
+    auto-generated metadata content.</p>
     
 
   </div>
@@ -181,7 +259,7 @@ be stored at `data.path`.</p></td>
       
       <li><a href="#value">Value</a></li>
 
-      <li><a href="#details">Details</a></li>
+      <li><a href="#note">Note</a></li>
           </ul>
 
   </div>

@@ -2,16 +2,16 @@
 % Please edit documentation in R/read_files.R
 \name{read_files}
 \alias{read_files}
-\title{Read templates and data files into list (alternative input to 
-`EMLassemblyline` functions)}
+\title{Read templates and data files into a list structure as an alternative input 
+to `EMLassemblyline` functions}
 \usage{
-read_file_list(path, data.path = path, data.table = NULL, 
-other.entity = NULL)
+read_files(path, data.path = path, data.table = NULL, 
+other.entity = NULL, sep = NULL)
 }
 \arguments{
-\item{path}{(character) Path to where the template(s) will be imported.}
+\item{path}{(character) Path to metadata templates.}
 
-\item{data.path}{(character) Path to where the data tables are stored.}
+\item{data.path}{(character) Path to data tables and other entities.}
 
 \item{data.table}{(character) Data table name(s). If more than one, then supply as a 
 vector of character strings (e.g. 
@@ -20,18 +20,108 @@ vector of character strings (e.g.
 \item{other.entity}{(character) Name(s) of `other.entity`(s) in this dataset. Use
 `other.entity` for all non-`data.table` files. `other.entity`(s) should 
 be stored at `data.path`.}
+
+\item{sep}{(character) Delimiter of `data.table`. Use this argument if `read_files`
+fails to automatically identify `data.table` field delimiters.}
 }
 \value{
-(named list) Named list containing these elements
+(named list) Named list with this internal structure (NOTE: use `NA` for
+    non-existant content):
     \itemize{
-        \item{`name` Name of file}
-        \item{`path` Where the file was read from}
-        \item{`contents` Contents of the file (e.g. data.frame, XML, etc.)}
+        \item `template` Metadata template files
+        \itemize{
+            \item{`abstract.txt` Abstract template}
+            \itemize{
+                \item{`content` EML::TextType containing abstract}
+                \item{`path` Path to file}
+             }
+             \item{`additional_info.txt` Additional information template}
+             \itemize{
+                 \item{`content` EML::TextType containing additional info}
+                 \item{`path` Path to file}
+             }
+             \item{`attributes_*.txt` Attributes template where * is name of `data.table` described by the attributes}
+             \itemize{
+                 \item{`content` Data frame of attributes template}
+                 \item{`path` Path to file}
+             }
+             \item{`bounding_boxes.txt` Bounding boxes template}
+             \itemize{
+                \item{`content` Data frame of bounding boxes template}
+                \item{`path` Path to file}
+             }
+             \item{`catvars_*.txt` Categorical variables template where * is name of `data.table` described by the catvars}
+             \itemize{
+                \item{`content` Data frame of categorical variables template}
+                \item{`path` Path to file}
+             }
+             \item{`custom_units.txt` Custom units template}
+             \itemize{
+                \item{`content` Data frame of custom units template}
+                \item{`path` Path to file}
+             }
+             \item{`geographic_coverage.txt` Geographic coverage template}
+             \itemize{
+                \item{`content` Data frame of geographic coverage template}
+                \item{`path` Path to file}
+             }
+             \item{`intellectual_rights.txt` Intellectual rights template}
+             \itemize{
+                \item{`content` EML::TextType containing intellectual rights}
+                \item{`path` Path to file}
+             }
+             \item{`keywords.txt` Keywords template}
+             \itemize{
+                \item{`content` Data frame of keywords template}
+                \item{`path` Path to file}
+             }
+             \item{`methods.txt` Methods template}
+             \itemize{
+                \item{`content` EML::Methods containing methods}
+                \item{`path` Path to file}
+             }
+             \item{`personnel.txt` Personnel template}
+             \itemize{
+                \item{`content` Data frame of personnel template}
+                \item{`path` Path to file}
+             }
+             \item{`taxonomicCoverage.xml` Taxonomic coverage EML element}
+             \itemize{
+                \item{`content` EML::taxonomicCoverage}
+                \item{`path` Path to file}
+             }                    
+            }
+       \item{`data.table`}
+       \itemize{
+           \item{`data.table.name.ext` Name of data table including file extension}
+           \itemize{
+                \item{`content` Data frame of data table}
+                \item{`path` Path to data table (required)}
+           }
+         }
+       \item{`other.entity`}
+       \itemize{
+           \item{`other.entity.name.ext` Name of other entity including file extension}
+           \itemize{
+                \item{`content` Set to `NA`}
+                \item{`path` Path to other entity (required)}
+           }
+       
+       }
+    
     }
 }
 \description{
-This function is under development.
+Use this function to read metadata templates and data into an R list
+    object for input to `EMLassemblyline` functions, rather than supplying
+    the files themselves.
+    
+    This function is primarily used for testing and demonstration purposes
+    however, this approach is generally useful for inputing metadata and 
+    data from a meta- or data-base and other upstream sources. See below for
+    list object structure.
 }
-\details{
-Salient details of this function
+\note{
+Paths to data tables and other entities must be present for 
+    auto-generated metadata content.
 }

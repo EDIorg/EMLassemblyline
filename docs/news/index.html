@@ -123,13 +123,55 @@
 <a href="#emlassemblyline-2-99-0" class="anchor"></a>EMLassemblyline 2.99.0</h1>
 <div id="section" class="section level4">
 <h4 class="hasAnchor">
-<a href="#section" class="anchor"></a>2019-03-02</h4>
+<a href="#section" class="anchor"></a>2019-03-14</h4>
 <ul>
-<li>Reuse <code>&lt;entityDescription&gt;</code> for <code>&lt;entityName&gt;</code>
+<li>
+<strong>Bug fix:</strong> Add <code>//otherEntity/physical/distribution/online/url</code>
 </li>
-<li>Add <code>other.entity</code> and <code>other.entity.description</code> arguments to <code>make_eml</code>
+</ul>
+</div>
+<div id="section-1" class="section level4">
+<h4 class="hasAnchor">
+<a href="#section-1" class="anchor"></a>2019-03-11</h4>
+<ul>
+<li>
+<strong>Refactor:</strong> Rename arguments
+<ul>
+<li>
+<code>data.files</code> -&gt; <code>data.table</code>
 </li>
-<li>Add change log</li>
+<li>
+<code>data.files.description</code> -&gt; <code>data.table.description</code>
+</li>
+<li>
+<code>data.files.quote.character</code> -&gt; <code>data.table.quote.character</code>
+</li>
+<li>
+<code>data.files.url</code> -&gt; <code>data.url</code>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="section-2" class="section level4">
+<h4 class="hasAnchor">
+<a href="#section-2" class="anchor"></a>2019-03-02</h4>
+<ul>
+<li>
+<strong>Bug fix:</strong> Use arguments <code>data.table.description</code> and <code>other.entity.description</code> for <code>//dataTable/entityName</code> and <code>//otherEntity/entityName</code>, respectively.</li>
+<li>
+<strong>Refactor:</strong> Rename arguments
+<ul>
+<li>
+<code>zip.dir</code> -&gt; <code>other.entity</code>
+</li>
+<li>
+<code>zip.dir.description</code> -&gt; <code>other.entity.description</code>
+</li>
+</ul>
+</li>
+<li>
+<strong>Enhancement:</strong> Add change log</li>
 </ul>
 </div>
 </div>
