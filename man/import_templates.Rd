@@ -4,7 +4,7 @@
 \alias{import_templates}
 \title{Import templates for core metadata}
 \usage{
-import_templates(path, data.path = path, license, data.table, 
+import_templates(path, data.path = path, license, data.table = NULL, 
     data.files = NULL)
 }
 \arguments{

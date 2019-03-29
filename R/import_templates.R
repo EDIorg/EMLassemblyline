@@ -8,7 +8,7 @@
 #'     \url{https://clnsmth.github.io/EMLassemblyline/articles/instructions.html}.
 #'
 #' @usage 
-#'     import_templates(path, data.path = path, license, data.table, 
+#'     import_templates(path, data.path = path, license, data.table = NULL, 
 #'     data.files = NULL)
 #'
 #' @param path 
@@ -59,7 +59,7 @@
 #' @export     
 #'     
 
-import_templates <- function(path, data.path = path, license, data.table, 
+import_templates <- function(path, data.path = path, license, data.table = NULL, 
                              data.files = NULL){
   
   message('Importing metadata templates')
@@ -72,8 +72,6 @@ import_templates <- function(path, data.path = path, license, data.table,
     stop('Input argument "license" is missing! Specify a license for your dataset.')
   } else if (!is.null(data.files)){
     stop('Input argument "data.files" has been deprecated. Use "data.table" instead.')
-  } else if (missing(data.table)){
-    stop('Input argument "data.table" is missing! Specify the names of all the data files in your dataset.')
   }
   
   license.low <- tolower(license)
@@ -81,21 +79,33 @@ import_templates <- function(path, data.path = path, license, data.table,
     stop('Invalid value entered for the "license" argument. Please choose "CC0" or "CCBY".')
   }
 
-  data_files <- EDIutils::validate_file_names(
-    data.path, 
-    data.table
-  )
+  # If data tables are present ...
   
-  EDIutils::validate_fields(
-    data.path, 
-    data.files = data_files
-  )
-  
-  delim_guess <- EDIutils::detect_delimeter(
-    data.path, 
-    data.files = data_files, 
-    EDIutils::detect_os()
-  )
+  if (!is.null(data.table)){
+    
+    # Validate table names
+    
+    data_files <- EDIutils::validate_file_names(
+      data.path, 
+      data.table
+    )
+    
+    # Validate table fields
+    
+    EDIutils::validate_fields(
+      data.path, 
+      data.files = data_files
+    )
+    
+    # Guess field delimiter
+    
+    delim_guess <- EDIutils::detect_delimeter(
+      data.path, 
+      data.files = data_files, 
+      EDIutils::detect_os()
+    )
+    
+  }
 
   # Import abstract.txt -------------------------------------------------------
   
@@ -274,207 +284,211 @@ import_templates <- function(path, data.path = path, license, data.table,
   
   # Import attributes templates -----------------------------------------------
   
-  # Check column names
-  
-  for (i in 1:length(data_files)){
+  if (!is.null(data.table)){
     
-    data_path <- paste0(
-      data.path,
-      "/",
-      data_files[i]
-    )
+    # Check column names
     
-    df_table <- utils::read.table(
-      data_path,
-      header = TRUE,
-      sep = delim_guess[i],
-      quote = "\"",
-      as.is = TRUE,
-      comment.char = ""
-    )
-    
-    column_names <- colnames(df_table)
-    
-    use_i <- stringr::str_detect(
-      string = column_names,
-      pattern = "\\."
-    )
-    
-    if (sum(use_i) > 0){
-      stop(
-        paste(
-          "Invalid column names detected in ", 
-          data_files[i],
-          ":  ",
-          paste(
-            column_names[use_i], 
-            collapse = ", "
-          ), 
-          '  Replace characters located at periods "." in the above listed column names with underscores "_"',
-          sep = ""
-        )
-      )
-    }
-    
-  }
-  
-  # Extract attributes of each data file
-  
-  attributes <- list()
-  
-  for (i in 1:length(data_files)){
-
-    # Read data table
-    
-    data_path <- paste0(
-      data.path,
-      "/",
-      data_files[i]
-    )
-
-    df_table <- utils::read.table(
-      data_path,
-      header = TRUE,
-      sep = delim_guess[i],
-      quote = "\"",
-      as.is = TRUE,
-      comment.char = "",
-      na.strings = c('NA','NULL')
-    )
-    
-    # Initialize attribute table
-    
-    rows <- ncol(df_table)
-    
-    attributes[[i]] <- data.frame(
-      attributeName = character(rows),
-      attributeDefinition = character(rows),
-      class = character(rows),
-      unit = character(rows),
-      dateTimeFormatString = character(rows),
-      missingValueCode = character(rows),
-      missingValueCodeExplanation = character(rows),
-      stringsAsFactors = FALSE
-    )
-
-    # Get names
-    
-    attributes[[i]]$attributeName <- colnames(df_table)
-    
-    # Guess character and numeric classes
-    
-    guess <- unname(unlist(lapply(df_table, class)))
-    
-    guess_map <- c(
-      character = "character", 
-      logical = "character", 
-      factor = "character",
-      integer = "numeric",
-      numeric = "numeric"
-    )
-    
-    guess <- unname(guess_map[guess])
-    
-    # Guess Date class
-    
-    use_i <- guess == "character"
-    
-    if (sum(use_i) > 0){
-      potential_date_cols <- colnames(df_table)[use_i]
-      potential_date_i <- stringr::str_detect(tolower(potential_date_cols), "date|time|day")
-      guess_datetime <- potential_date_cols[potential_date_i]
-      use_i <- match(guess_datetime, attributes[[i]]$attributeName)
-      guess[use_i] <- "Date"
-    }
-    
-    # Guess factor class
-    
-    use_i <- guess == "character"
-    if (sum(use_i) > 0){
-      potential_fact_cols <- colnames(df_table)[use_i]
-      use_i2 <- match(potential_fact_cols, colnames(df_table))
-      if (length(use_i2) == 1){
-        unique_lengths <- length(unique(df_table[ ,use_i2]))
-      } else {
-        unique_lengths <- apply(df_table[ ,use_i2], 2, function(x)length(unique(x)))
-      }
-      potential_facts <- unique_lengths <= dim(df_table)[1]*0.3
-      if (sum(potential_facts) > 0){
-        potential_facts <- names(potential_facts[potential_facts == TRUE])
-        use_i <- match(potential_facts, attributes[[i]]$attributeName)
-        guess[use_i] <- "categorical"
-      }
-    }
-    
-    # Update attributes class
-    
-    attributes[[i]]$class <- guess
-    
-    # Add unit for numeric data
-    
-    use_i <- attributes[[i]]$class == "numeric"
-    
-    if (sum(use_i) > 0){
-      attributes[[i]]$unit[use_i] <- "!Add units here!"
-    }
-    
-    # Add date time format strings for Date data
-    
-    use_i <- attributes[[i]]$class == "Date"
-    
-    if (sum(use_i) > 0){
-      attributes[[i]]$dateTimeFormatString[use_i] <- "!Add datetime specifier here!"
-    }
-    
-    # Write table to file
-    
-    value <- file.exists(
-      paste0(
-        path,
+    for (i in 1:length(data_files)){
+      
+      data_path <- paste0(
+        data.path,
         "/",
-        "attributes_",
-        substr(data_files[i], 1, nchar(data_files[i]) - 4),
-        ".txt"
+        data_files[i]
       )
-    )
-    
-    if (!isTRUE(value)){
       
-      message(
-        paste0(
-          "Importing attributes_",
-          substr(data_files[i], 1, nchar(data_files[i]) - 4),
-          ".txt."
+      df_table <- utils::read.table(
+        data_path,
+        header = TRUE,
+        sep = delim_guess[i],
+        quote = "\"",
+        as.is = TRUE,
+        comment.char = ""
+      )
+      
+      column_names <- colnames(df_table)
+      
+      use_i <- stringr::str_detect(
+        string = column_names,
+        pattern = "\\."
+      )
+      
+      if (sum(use_i) > 0){
+        stop(
+          paste(
+            "Invalid column names detected in ", 
+            data_files[i],
+            ":  ",
+            paste(
+              column_names[use_i], 
+              collapse = ", "
+            ), 
+            '  Replace characters located at periods "." in the above listed column names with underscores "_"',
+            sep = ""
+          )
         )
+      }
+      
+    }
+    
+    # Extract attributes of each data file
+    
+    attributes <- list()
+    
+    for (i in 1:length(data_files)){
+      
+      # Read data table
+      
+      data_path <- paste0(
+        data.path,
+        "/",
+        data_files[i]
       )
       
-      utils::write.table(
-        attributes[[i]],
+      df_table <- utils::read.table(
+        data_path,
+        header = TRUE,
+        sep = delim_guess[i],
+        quote = "\"",
+        as.is = TRUE,
+        comment.char = "",
+        na.strings = c('NA','NULL')
+      )
+      
+      # Initialize attribute table
+      
+      rows <- ncol(df_table)
+      
+      attributes[[i]] <- data.frame(
+        attributeName = character(rows),
+        attributeDefinition = character(rows),
+        class = character(rows),
+        unit = character(rows),
+        dateTimeFormatString = character(rows),
+        missingValueCode = character(rows),
+        missingValueCodeExplanation = character(rows),
+        stringsAsFactors = FALSE
+      )
+      
+      # Get names
+      
+      attributes[[i]]$attributeName <- colnames(df_table)
+      
+      # Guess character and numeric classes
+      
+      guess <- unname(unlist(lapply(df_table, class)))
+      
+      guess_map <- c(
+        character = "character", 
+        logical = "character", 
+        factor = "character",
+        integer = "numeric",
+        numeric = "numeric"
+      )
+      
+      guess <- unname(guess_map[guess])
+      
+      # Guess Date class
+      
+      use_i <- guess == "character"
+      
+      if (sum(use_i) > 0){
+        potential_date_cols <- colnames(df_table)[use_i]
+        potential_date_i <- stringr::str_detect(tolower(potential_date_cols), "date|time|day")
+        guess_datetime <- potential_date_cols[potential_date_i]
+        use_i <- match(guess_datetime, attributes[[i]]$attributeName)
+        guess[use_i] <- "Date"
+      }
+      
+      # Guess factor class
+      
+      use_i <- guess == "character"
+      if (sum(use_i) > 0){
+        potential_fact_cols <- colnames(df_table)[use_i]
+        use_i2 <- match(potential_fact_cols, colnames(df_table))
+        if (length(use_i2) == 1){
+          unique_lengths <- length(unique(df_table[ ,use_i2]))
+        } else {
+          unique_lengths <- apply(df_table[ ,use_i2], 2, function(x)length(unique(x)))
+        }
+        potential_facts <- unique_lengths <= dim(df_table)[1]*0.3
+        if (sum(potential_facts) > 0){
+          potential_facts <- names(potential_facts[potential_facts == TRUE])
+          use_i <- match(potential_facts, attributes[[i]]$attributeName)
+          guess[use_i] <- "categorical"
+        }
+      }
+      
+      # Update attributes class
+      
+      attributes[[i]]$class <- guess
+      
+      # Add unit for numeric data
+      
+      use_i <- attributes[[i]]$class == "numeric"
+      
+      if (sum(use_i) > 0){
+        attributes[[i]]$unit[use_i] <- "!Add units here!"
+      }
+      
+      # Add date time format strings for Date data
+      
+      use_i <- attributes[[i]]$class == "Date"
+      
+      if (sum(use_i) > 0){
+        attributes[[i]]$dateTimeFormatString[use_i] <- "!Add datetime specifier here!"
+      }
+      
+      # Write table to file
+      
+      value <- file.exists(
         paste0(
           path,
           "/",
           "attributes_",
           substr(data_files[i], 1, nchar(data_files[i]) - 4),
           ".txt"
-        ),
-        sep = "\t",
-        row.names = F,
-        quote = F,
-        fileEncoding = "UTF-8"
-      )
-      
-    } else {
-      
-      message(
-        paste0(
-          "attributes_",
-          substr(data_files[i], 1, nchar(data_files[i]) - 4),
-          ".txt already exists!"
         )
       )
       
+      if (!isTRUE(value)){
+        
+        message(
+          paste0(
+            "Importing attributes_",
+            substr(data_files[i], 1, nchar(data_files[i]) - 4),
+            ".txt."
+          )
+        )
+        
+        utils::write.table(
+          attributes[[i]],
+          paste0(
+            path,
+            "/",
+            "attributes_",
+            substr(data_files[i], 1, nchar(data_files[i]) - 4),
+            ".txt"
+          ),
+          sep = "\t",
+          row.names = F,
+          quote = F,
+          fileEncoding = "UTF-8"
+        )
+        
+      } else {
+        
+        message(
+          paste0(
+            "attributes_",
+            substr(data_files[i], 1, nchar(data_files[i]) - 4),
+            ".txt already exists!"
+          )
+        )
+        
+      }
+      
     }
-
+    
   }
   
   message("Done.")
