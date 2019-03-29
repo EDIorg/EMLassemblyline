@@ -100,9 +100,9 @@ import_templates <- function(path, data.path = path, license, data.table,
   # Import abstract.txt -------------------------------------------------------
   
   value <- file.copy(
-    from = paste0(
-      path.package("EMLassemblyline"),
-      "/templates/abstract.txt"
+    from = system.file(
+      '/templates/abstract.txt',
+      package = 'EMLassemblyline'
     ),
     to = paste0(
       path,
@@ -119,9 +119,9 @@ import_templates <- function(path, data.path = path, license, data.table,
   # Import additional_info.txt ------------------------------------------------
   
   value <- file.copy(
-    from = paste0(
-      path.package("EMLassemblyline"),
-      "/templates/additional_info.txt"
+    from = system.file(
+      '/templates/additional_info.txt',
+      package = 'EMLassemblyline'
     ),
     to = paste0(
       path,
@@ -138,9 +138,9 @@ import_templates <- function(path, data.path = path, license, data.table,
   # Import bounding_boxes.txt -------------------------------------------------
   
   value <- file.copy(
-    from = paste0(
-      path.package("EMLassemblyline"),
-      "/templates/bounding_boxes.txt"
+    from = system.file(
+      '/templates/bounding_boxes.txt',
+      package = 'EMLassemblyline'
     ),
     to = paste0(
       path,
@@ -157,9 +157,9 @@ import_templates <- function(path, data.path = path, license, data.table,
   # Import custom_units.txt ---------------------------------------------------
   
   value <- file.copy(
-    from = paste0(
-      path.package("EMLassemblyline"),
-      "/templates/custom_units.txt"
+    from = system.file(
+      '/templates/custom_units.txt',
+      package = 'EMLassemblyline'
     ),
     to = paste0(
       path,
@@ -178,9 +178,9 @@ import_templates <- function(path, data.path = path, license, data.table,
   if (license.low == "cc0"){
     
     value <- file.copy(
-      from = paste0(
-        path.package("EMLassemblyline"),
-        "/templates/intellectual_rights_cc0.txt"
+      from = system.file(
+        '/templates/intellectual_rights_cc0.txt',
+        package = 'EMLassemblyline'
       ),
       to = paste0(
         path,
@@ -197,9 +197,9 @@ import_templates <- function(path, data.path = path, license, data.table,
   } else if (license.low == "ccby"){
     
     value <- file.copy(
-      from = paste0(
-        path.package("EMLassemblyline"),
-        "/templates/intellectual_rights_ccby4.0.txt"
+      from = system.file(
+        '/templates/intellectual_rights_ccby4.0.txt',
+        package = 'EMLassemblyline'
       ),
       to = paste0(
         path,
@@ -218,9 +218,9 @@ import_templates <- function(path, data.path = path, license, data.table,
   # Import keywords.txt -------------------------------------------------------
 
   value <- file.copy(
-    from = paste0(
-      path.package("EMLassemblyline"),
-      "/templates/keywords.txt"
+    from = system.file(
+      '/templates/keywords.txt',
+      package = 'EMLassemblyline'
     ),
     to = paste0(
       path,
@@ -237,9 +237,9 @@ import_templates <- function(path, data.path = path, license, data.table,
   # Import methods.txt --------------------------------------------------------
   
   value <- file.copy(
-    from = paste0(
-      path.package("EMLassemblyline"),
-      "/templates/methods.txt"
+    from = system.file(
+      '/templates/methods.txt',
+      package = 'EMLassemblyline'
     ),
     to = paste0(
       path,
@@ -256,9 +256,9 @@ import_templates <- function(path, data.path = path, license, data.table,
   # Import personnel.txt ------------------------------------------------------
   
   value <- file.copy(
-    from = paste0(
-      path.package("EMLassemblyline"),
-      "/templates/personnel.txt"
+    from = system.file(
+      '/templates/personnel.txt',
+      package = 'EMLassemblyline'
     ),
     to = paste0(
       path,
@@ -275,8 +275,6 @@ import_templates <- function(path, data.path = path, license, data.table,
   # Import attributes templates -----------------------------------------------
   
   # Check column names
-  
-  message("Checking data.table for valid column names.")
   
   for (i in 1:length(data_files)){
     
@@ -325,16 +323,7 @@ import_templates <- function(path, data.path = path, license, data.table,
   attributes <- list()
   
   for (i in 1:length(data_files)){
-    
-    message(
-      paste(
-        "Detecting attributes of ",
-        data_files[i],
-        ".",
-        sep = ""
-      )
-    )
-    
+
     # Read data table
     
     data_path <- paste0(
