@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Changelog • EMLassemblyline</title>
+<title>Validate arguments of `EMLassemblyline` functions — validate_arguments • EMLassemblyline</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +30,10 @@
 
 
 
-<meta property="og:title" content="Changelog" />
+<meta property="og:title" content="Validate arguments of `EMLassemblyline` functions — validate_arguments" />
+
+<meta property="og:description" content="Validate input arguments to `EMLassemblyline` functions." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -47,7 +50,7 @@
   </head>
 
   <body>
-    <div class="container template-news">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -114,78 +117,39 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+    <h1>Validate arguments of `EMLassemblyline` functions</h1>
+    <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/validate_arguments.R'><code>R/validate_arguments.R</code></a></small>
+    <div class="hidden name"><code>validate_arguments.Rd</code></div>
     </div>
 
-    <div id="emlassemblyline-2-99-0" class="section level1">
-<h1 class="page-header">
-<a href="#emlassemblyline-2-99-0" class="anchor"></a>EMLassemblyline 2.99.0</h1>
-<div id="section" class="section level4">
-<h4 class="hasAnchor">
-<a href="#section" class="anchor"></a>2019-03-14</h4>
-<ul>
-<li>
-<strong>Bug fix:</strong> Add <code>//otherEntity/physical/distribution/online/url</code>
-</li>
-</ul>
-</div>
-<div id="section-1" class="section level4">
-<h4 class="hasAnchor">
-<a href="#section-1" class="anchor"></a>2019-03-11</h4>
-<ul>
-<li>
-<strong>Refactor:</strong> Rename arguments
-<ul>
-<li>
-<code>data.files</code> -&gt; <code>data.table</code>
-</li>
-<li>
-<code>data.files.description</code> -&gt; <code>data.table.description</code>
-</li>
-<li>
-<code>data.files.quote.character</code> -&gt; <code>data.table.quote.character</code>
-</li>
-<li>
-<code>data.files.url</code> -&gt; <code>data.url</code>
-</li>
-</ul>
-</li>
-</ul>
-</div>
-<div id="section-2" class="section level4">
-<h4 class="hasAnchor">
-<a href="#section-2" class="anchor"></a>2019-03-02</h4>
-<ul>
-<li>
-<strong>Bug fix:</strong> Use arguments <code>data.table.description</code> and <code>other.entity.description</code> for <code>//dataTable/entityName</code> and <code>//otherEntity/entityName</code>, respectively.</li>
-<li>
-<strong>Refactor:</strong> Rename arguments
-<ul>
-<li>
-<code>zip.dir</code> -&gt; <code>other.entity</code>
-</li>
-<li>
-<code>zip.dir.description</code> -&gt; <code>other.entity.description</code>
-</li>
-</ul>
-</li>
-<li>
-<strong>Enhancement:</strong> Add change log</li>
-</ul>
-</div>
-</div>
-  </div>
+    <div class="ref-description">
+    
+    <p>Validate input arguments to `EMLassemblyline` functions.</p>
+    
+    </div>
 
+    <pre class="usage"><span class='fu'>validate_arguments</span>(<span class='no'>x</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>(list) A named list of arguments and corresponding values created by a
+call to `as.list(environment())` within the function whos arguments are
+being validated.</p></td>
+    </tr>
+    </table>
+    
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div id="tocnav">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#emlassemblyline-2-99-0">2.99.0</a></li>
-      </ul>
-    </div>
-  </div>
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+                </ul>
 
+  </div>
 </div>
 
       <footer>

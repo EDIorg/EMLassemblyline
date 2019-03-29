@@ -12,6 +12,7 @@ reference:
   - title: Helpers
     desc: Helper functions for creating metadata
     contents:
+    - create_directory
     - read_files
     - view_unit_dictionary
     
