@@ -22,31 +22,13 @@ testthat::test_that('Error out when required arguments are missing', {
   expect_error(
     import_templates(
       license = 'CC0',
-      data.path = data.path,
-      data.table = c('decomp.csv', 'nitrogen.csv')
+      data.path = data.path
     )
   )
   
   expect_error(
     import_templates(
       path = path,
-      data.path = data.path,
-      data.table = c('decomp.csv', 'nitrogen.csv')
-    )
-  )
-  
-  expect_error(
-    import_templates(
-      path = path,
-      license = 'CC0',
-      data.table = c('decomp.csv', 'nitrogen.csv')
-    )
-  )
-  
-  expect_error(
-    import_templates(
-      path = path,
-      license = 'CC0',
       data.path = data.path
     )
   )

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Import templates for core metadata — import_templates • EMLassemblyline</title>
+<title>Create directory for `EMLassemblyline` inputs and outputs — create_directory • EMLassemblyline</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,13 +30,11 @@
 
 
 
-<meta property="og:title" content="Import templates for core metadata — import_templates" />
+<meta property="og:title" content="Create directory for `EMLassemblyline` inputs and outputs — create_directory" />
 
-<meta property="og:description" content="Import template files for storage of core metadata. Some templates are 
-    populated with content detected by automated metadata extraction 
-    methods. The remainder will have to be manually entered by a human. 
-    Instructions for filling out the templates are at
-    https://clnsmth.github.io/EMLassemblyline/articles/instructions.html." />
+<meta property="og:description" content="Create a commonly used directory structure for `EMLassemblyline` inputs 
+    and outputs. You're welcome to organize content in any way you choose,
+    this is just one approach." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -121,89 +119,55 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Import templates for core metadata</h1>
-    <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/import_templates.R'><code>R/import_templates.R</code></a></small>
-    <div class="hidden name"><code>import_templates.Rd</code></div>
+    <h1>Create directory for `EMLassemblyline` inputs and outputs</h1>
+    <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/create_directory.R'><code>R/create_directory.R</code></a></small>
+    <div class="hidden name"><code>create_directory.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Import template files for storage of core metadata. Some templates are 
-    populated with content detected by automated metadata extraction 
-    methods. The remainder will have to be manually entered by a human. 
-    Instructions for filling out the templates are at
-    <a href='https://clnsmth.github.io/EMLassemblyline/articles/instructions.html'>https://clnsmth.github.io/EMLassemblyline/articles/instructions.html</a>.</p>
+    <p>Create a commonly used directory structure for `EMLassemblyline` inputs 
+    and outputs. You're welcome to organize content in any way you choose,
+    this is just one approach.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>import_templates</span>(<span class='no'>path</span>, <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='no'>path</span>, <span class='no'>license</span>, <span class='kw'>data.table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-    <span class='kw'>data.files</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>create_directories</span>(<span class='no'>path</span>, <span class='no'>name</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>path</th>
-      <td><p>(character) Path to where the templates will be imported.</p></td>
+      <td><p>(character) Path to where the directory structure will be created.</p></td>
     </tr>
     <tr>
-      <th>data.path</th>
-      <td><p>(character) Path to where the data files are stored.</p></td>
-    </tr>
-    <tr>
-      <th>license</th>
-      <td><p>(character) License under which the data will be released. Use "CC0" 
-(<a href='https://creativecommons.org/publicdomain/zero/1.0/'>https://creativecommons.org/publicdomain/zero/1.0/</a>), 
-or "CCBY" (<a href='https://creativecommons.org/licenses/by/4.0/'>https://creativecommons.org/licenses/by/4.0/</a>).</p></td>
-    </tr>
-    <tr>
-      <th>data.table</th>
-      <td><p>(character) Names of tabular data. Names of non-tabular data are
-entered as arguments to `make_eml`.</p></td>
-    </tr>
-    <tr>
-      <th>data.files</th>
-      <td><p>NOTE: `data.files` has been deprecated. Use `data.table` instead.</p></td>
+      <th>dir.name</th>
+      <td><p>(character) Name of parent directory. Subdirectories have predefined 
+names.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
-<ul>
-<li><p>`abstract.txt` Template for the dataset abstract.</p></li>
-<li><p>`additional_info.txt` Template for miscellaneous dataset
-        information.</p></li>
-<li><p>`attributes_*.txt` Template(s) for data table attribute 
-        metadata, populated with some automatically extracted metadata 
-        content from the data files.</p></li>
-<li><p>`bounding_boxes.txt` Template for the dataset geographic 
-        bounding coordinates.</p></li>
-<li><p>`custom_units.txt` Template for defining non-standard units 
-        used in the dataset.</p></li>
-<li><p>`intellectual_rights.txt` The selected intellectual rights 
-        license.</p></li>
-<li><p>`keywords.txt` Template for dataset keywords.</p></li>
-<li><p>`methods.txt` Template for dataset methods.</p></li>
-<li><p>`personnel.txt` Template for dataset personnel and funding 
-        metadata.</p></li>
+    <p>A directory with the following structure:</p><ul>
+<li><p>`name` Parent directory with given name</p><ul>
+<li><p>`data` Where data and other entities are stored</p></li>
+<li><p>`scripts` Where data processing and packaging scripts are
+            kept.</p></li>
+<li><p>`metadata_templates` Where `EMLassemblyline` template 
+            files are imported and edited</p></li>
+<li><p>`eml` Where EML files are exported to by the 
+            `EMLassemblyline`</p></li>
+</ul></li>
 </ul>
 
     
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Existing templates will not be overwritten by subsequent calls to 
-    `import_templates`.</p>
+    <p>Existing `dir.name`s at `path` will not be overwritten.</p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>    # Create a directory structure for an example dataset
-    
-    # Copy example data tables to /dataset/data
-    
-    # Import templates to /dataset/metadata_templates
-    
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -212,10 +176,8 @@ entered as arguments to `make_eml`.</p></td>
       
       <li><a href="#value">Value</a></li>
 
-      <li><a href="#details">Details</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+      <li><a href="#note">Note</a></li>
+          </ul>
 
   </div>
 </div>
