@@ -123,10 +123,16 @@
 <a href="#emlassemblyline-2-99-0" class="anchor"></a>EMLassemblyline 2.99.0</h1>
 <div id="section" class="section level4">
 <h4 class="hasAnchor">
-<a href="#section" class="anchor"></a>2019-03-28</h4>
+<a href="#section" class="anchor"></a>2019-03-31</h4>
 <ul>
 <li>
 <strong>Enhancement:</strong> Release <code>read_files.R</code>, a function to read metadata templates and data files into an R list structure as an alternative input to <code>EMLassemblyline</code> functions (i.e. rather than supplying the files themselves). This function is primarily used for testing and demonstration purposes however, this approach is generally useful for interfacing upstream sources with <code>EMLassemblyline</code> (e.g. a metabase or database).</li>
+<li>
+<strong>Enhancement:</strong> Release <code>create_directory.R</code>, a function to create a commonly used directory structure for EMLassemblyline inputs and outputs.</li>
+<li>
+<strong>Bug fix:</strong> <code>import_templates.R</code> no longer fails to import template to empty directories.</li>
+<li>
+<strong>Bug fix:</strong> <code>import_templates.R</code> can now be run on datasets that don’t have data tables.</li>
 </ul>
 </div>
 <div id="section-1" class="section level4">
