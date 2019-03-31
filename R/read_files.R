@@ -1,15 +1,14 @@
-#' Read templates and data files into a list structure as an alternative input 
-#' to `EMLassemblyline` functions
+#' Read template and data files into a list structure
 #'
 #' @description  
-#'     Use this function to read metadata templates and data into an R list
-#'     object for input to `EMLassemblyline` functions, rather than supplying
-#'     the files themselves.
+#'     Read metadata templates and data files into an R list structure as an 
+#'     alternative input to `EMLassemblyline` functions (i.e. rather than 
+#'     supplying the files themselves).
 #'     
 #'     This function is primarily used for testing and demonstration purposes
-#'     however, this approach is generally useful for inputing metadata and 
-#'     data from a meta- or data-base and other upstream sources. See below for
-#'     list object structure.
+#'     however, this approach is generally useful for interfacing upstream 
+#'     sources with `EMLassemblyline` (e.g. a metabase or database). See below 
+#'     for list object structure.
 #'
 #' @usage read_files(path, data.path = path, data.table = NULL, 
 #' other.entity = NULL, sep = NULL)
@@ -196,7 +195,7 @@ read_files <- function(path, data.path = path, data.table = NULL,
     
   } else {
     
-    other_entities <- NA_character_
+    other_entities <- NULL
     
   }
   
@@ -288,67 +287,79 @@ read_files <- function(path, data.path = path, data.table = NULL,
   
   # Add data tables to outgoing list ------------------------------------------
   
-  # For all data tables ...
+  # If data tables exist ...
   
-  for (i in 1:length(output$data.table)){
+  if (!is.null(data.table)){
     
-    # If delimiter is undefined ...
+    # For all data tables ...
     
-    if (is.null(sep)){
+    for (i in 1:length(output$data.table)){
       
-      delim_guess <- EDIutils::detect_delimeter(
-        path = data.path, 
-        data.files = names(output$data.table[i]), 
-        os = EDIutils::detect_os()
-      )
+      # If delimiter is undefined ...
       
-      output$data.table[[i]]$content <- utils::read.table(
-        file = paste0(
-          data.path,
-          '/',
-          names(output$data.table[i])
-        ),
-        header = T,
-        sep = delim_guess,
-        quote = "\"",
-        as.is = TRUE,
-        comment.char = ""
-      )
-      
-      output$data.table[[i]]$path <- data.path
-      
-    # If delimiter is defined ...
-      
-    } else {
-      
-      output$data.table[[i]]$content <- utils::read.table(
-        file = paste0(
-          data.path,
-          '/',
-          names(output$data.table[i])
-        ),
-        header = T,
-        sep = sep,
-        quote = "\"",
-        as.is = TRUE,
-        comment.char = ""
-      )
-      
-      output$data.table[[i]]$path <- data.path
+      if (is.null(sep)){
+        
+        delim_guess <- EDIutils::detect_delimeter(
+          path = data.path, 
+          data.files = names(output$data.table[i]), 
+          os = EDIutils::detect_os()
+        )
+        
+        output$data.table[[i]]$content <- utils::read.table(
+          file = paste0(
+            data.path,
+            '/',
+            names(output$data.table[i])
+          ),
+          header = T,
+          sep = delim_guess,
+          quote = "\"",
+          as.is = TRUE,
+          comment.char = ""
+        )
+        
+        output$data.table[[i]]$path <- data.path
+        
+        # If delimiter is defined ...
+        
+      } else {
+        
+        output$data.table[[i]]$content <- utils::read.table(
+          file = paste0(
+            data.path,
+            '/',
+            names(output$data.table[i])
+          ),
+          header = T,
+          sep = sep,
+          quote = "\"",
+          as.is = TRUE,
+          comment.char = ""
+        )
+        
+        output$data.table[[i]]$path <- data.path
+        
+      }
       
     }
-    
+
   }
   
   # Add other entities to outgoing list ---------------------------------------
   
-  # For all other entities ...
+  # If other entities exist ...
   
-  for (i in 1:length(output$other.entity)){
+  if (!is.null(other.entity)){
     
-    output$other.entity[[i]]$content <- NA
+    # For all other entities ...
     
-    output$other.entity[[i]]$path <- data.path
+    for (i in 1:length(output$other.entity)){
+      
+      output$other.entity[[i]]$content <- NA
+      
+      output$other.entity[[i]]$path <- data.path
+      
+    }
     
   }
   

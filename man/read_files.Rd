@@ -2,8 +2,7 @@
 % Please edit documentation in R/read_files.R
 \name{read_files}
 \alias{read_files}
-\title{Read templates and data files into a list structure as an alternative input 
-to `EMLassemblyline` functions}
+\title{Read template and data files into a list structure}
 \usage{
 read_files(path, data.path = path, data.table = NULL, 
 other.entity = NULL, sep = NULL)
@@ -112,14 +111,14 @@ fails to automatically identify `data.table` field delimiters.}
     }
 }
 \description{
-Use this function to read metadata templates and data into an R list
-    object for input to `EMLassemblyline` functions, rather than supplying
-    the files themselves.
+Read metadata templates and data files into an R list structure as an 
+    alternative input to `EMLassemblyline` functions (i.e. rather than 
+    supplying the files themselves).
     
     This function is primarily used for testing and demonstration purposes
-    however, this approach is generally useful for inputing metadata and 
-    data from a meta- or data-base and other upstream sources. See below for
-    list object structure.
+    however, this approach is generally useful for interfacing upstream 
+    sources with `EMLassemblyline` (e.g. a metabase or database). See below 
+    for list object structure.
 }
 \note{
 Paths to data tables and other entities must be present for 

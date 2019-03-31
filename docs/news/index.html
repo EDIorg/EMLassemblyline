@@ -123,19 +123,26 @@
 <a href="#emlassemblyline-2-99-0" class="anchor"></a>EMLassemblyline 2.99.0</h1>
 <div id="section" class="section level4">
 <h4 class="hasAnchor">
-<a href="#section" class="anchor"></a>2019-03-14</h4>
+<a href="#section" class="anchor"></a>2019-03-28</h4>
 <ul>
 <li>
-<strong>Bug fix:</strong> Add <code>//otherEntity/physical/distribution/online/url</code>
-</li>
+<strong>Enhancement:</strong> Release <code>read_files.R</code>, a function to read metadata templates and data files into an R list structure as an alternative input to <code>EMLassemblyline</code> functions (i.e. rather than supplying the files themselves). This function is primarily used for testing and demonstration purposes however, this approach is generally useful for interfacing upstream sources with <code>EMLassemblyline</code> (e.g. a metabase or database).</li>
 </ul>
 </div>
 <div id="section-1" class="section level4">
 <h4 class="hasAnchor">
-<a href="#section-1" class="anchor"></a>2019-03-11</h4>
+<a href="#section-1" class="anchor"></a>2019-03-14</h4>
 <ul>
 <li>
-<strong>Refactor:</strong> Rename arguments
+<strong>Bug fix:</strong> Add <code>//otherEntity/physical/distribution/online/url</code>. This element was missing though documentation implied it existed.</li>
+</ul>
+</div>
+<div id="section-2" class="section level4">
+<h4 class="hasAnchor">
+<a href="#section-2" class="anchor"></a>2019-03-11</h4>
+<ul>
+<li>
+<strong>Refactor:</strong> Rename arguments to align with EML element names.
 <ul>
 <li>
 <code>data.files</code> -&gt; <code>data.table</code>
@@ -153,14 +160,14 @@
 </li>
 </ul>
 </div>
-<div id="section-2" class="section level4">
+<div id="section-3" class="section level4">
 <h4 class="hasAnchor">
-<a href="#section-2" class="anchor"></a>2019-03-02</h4>
+<a href="#section-3" class="anchor"></a>2019-03-02</h4>
 <ul>
 <li>
-<strong>Bug fix:</strong> Use arguments <code>data.table.description</code> and <code>other.entity.description</code> for <code>//dataTable/entityName</code> and <code>//otherEntity/entityName</code>, respectively.</li>
+<strong>Enhancement:</strong> Use arguments <code>data.table.description</code> and <code>other.entity.description</code> for <code>//dataTable/entityName</code> and <code>//otherEntity/entityName</code>, respectively. This provides a more meaningful file description than the file name it self.</li>
 <li>
-<strong>Refactor:</strong> Rename arguments
+<strong>Refactor:</strong> Rename arguments to align with EML element names.
 <ul>
 <li>
 <code>zip.dir</code> -&gt; <code>other.entity</code>
@@ -171,7 +178,7 @@
 </ul>
 </li>
 <li>
-<strong>Enhancement:</strong> Add change log</li>
+<strong>Enhancement:</strong> Add change log!</li>
 </ul>
 </div>
 </div>
