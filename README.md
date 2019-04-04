@@ -33,19 +33,7 @@ install_github("EDIorg/EMLassemblyline")
 library(EMLassemblyline)
 ```
 
-__NOTE: EML Version 1.99.0 breaks EMLassemblyline__ We are upgrading `EMLassemblyline` to work with the newly refurbished `EML` library. If you receive an error when installing `EMLassemblyline`, reinstall `EML` version 1.0.3 following these instructions:
-
-```
-# For MacOS
-package_url <- 'https://cran.r-project.org/bin/macosx/el-capitan/contrib/3.5/EML_1.0.3.tgz'
-install.packages(package_url, repos = NULL, type = 'source')
-
-# For Windows
-package_url <- 'https://cran.r-project.org/bin/windows/contrib/3.5/EML_1.0.3.zip'
-install.packages(package_url, repos = NULL, type = 'source')
-```
-
-Now reference the documentation listed above to start operating the assembly line.
+__NOTE: Developoment version of EML (Version 1.99.0) is incompatible with EMLassemblyline__ `EMLassemblyline` only works with CRAN releases. A compatible version of `EMLassemblyline` will be released when the newly refurbished `EML` library is released on CRAN.
 
 ## Contributing
 
