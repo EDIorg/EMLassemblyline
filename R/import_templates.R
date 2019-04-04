@@ -9,7 +9,7 @@
 #'
 #' @usage 
 #'     import_templates(path, data.path = path, license, data.table = NULL, 
-#'     data.files = NULL)
+#'     x = NULL, data.files = NULL)
 #'
 #' @param path 
 #'     (character) Path to where the templates will be imported.
@@ -22,6 +22,10 @@
 #' @param data.table
 #'     (character) Names of tabular data. Names of non-tabular data are
 #'     entered as arguments to `make_eml`.
+#' @param x
+#'     (named list) Alternative input to all `EMLassemblyline` functions (i.e. 
+#'     rather than supplying the files themselves). Use 
+#'     `EMLassemblyline::read_files` to create this list.
 #' @param data.files
 #'     NOTE: `data.files` has been deprecated. Use `data.table` instead.
 #'
@@ -46,8 +50,7 @@
 #'     }
 #'     
 #' @details 
-#'     Existing templates will not be overwritten by subsequent calls to 
-#'     `import_templates`.
+#'     Existing templates will not be overwritten by `import_templates`.
 #'
 #' @examples
 #'     # Create a directory structure for an example dataset
@@ -60,7 +63,7 @@
 #'     
 
 import_templates <- function(path, data.path = path, license, data.table = NULL, 
-                             data.files = NULL){
+                             x = NULL, data.files = NULL){
   
   message('Importing metadata templates')
   

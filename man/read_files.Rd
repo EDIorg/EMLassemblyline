@@ -24,86 +24,85 @@ be stored at `data.path`.}
 fails to automatically identify `data.table` field delimiters.}
 }
 \value{
-(named list) Named list with this internal structure (NOTE: use `NA` for
-    non-existant content):
+(named list) Named list with this internal structure.:
     \itemize{
         \item `template` Metadata template files
         \itemize{
             \item{`abstract.txt` Abstract template}
             \itemize{
-                \item{`content` EML::TextType containing abstract}
-                \item{`path` Path to file}
+                \item{`content` EML::TextType containing abstract, `NA` otherwise}
+                \item{`path` Path to file, `NA` otherwise}
              }
              \item{`additional_info.txt` Additional information template}
              \itemize{
-                 \item{`content` EML::TextType containing additional info}
-                 \item{`path` Path to file}
+                 \item{`content` EML::TextType containing additional info, `NA` otherwise}
+                 \item{`path` Path to file, `NA` otherwise}
              }
-             \item{`attributes_*.txt` Attributes template where * is name of `data.table` described by the attributes}
+             \item{`attributes_*.txt` Attributes template where * is name of `data.table` described by the attributes. Don't include if missing.}
              \itemize{
-                 \item{`content` Data frame of attributes template}
-                 \item{`path` Path to file}
+                 \item{`content` Data frame of attributes template, `NA` otherwise}
+                 \item{`path` Path to file, `NA` otherwise}
              }
              \item{`bounding_boxes.txt` Bounding boxes template}
              \itemize{
-                \item{`content` Data frame of bounding boxes template}
-                \item{`path` Path to file}
+                \item{`content` Data frame of bounding boxes template, `NA` otherwise}
+                \item{`path` Path to file, `NA` otherwise}
              }
-             \item{`catvars_*.txt` Categorical variables template where * is name of `data.table` described by the catvars}
+             \item{`catvars_*.txt` Categorical variables template where * is name of `data.table` described by the catvars. Don't include if missing.}
              \itemize{
-                \item{`content` Data frame of categorical variables template}
-                \item{`path` Path to file}
+                \item{`content` Data frame of categorical variables template, `NA` otherwise}
+                \item{`path` Path to file, `NA` otherwise}
              }
              \item{`custom_units.txt` Custom units template}
              \itemize{
-                \item{`content` Data frame of custom units template}
-                \item{`path` Path to file}
+                \item{`content` Data frame of custom units template, `NA` otherwise}
+                \item{`path` Path to file, `NA` otherwise}
              }
              \item{`geographic_coverage.txt` Geographic coverage template}
              \itemize{
-                \item{`content` Data frame of geographic coverage template}
-                \item{`path` Path to file}
+                \item{`content` Data frame of geographic coverage template, `NA` otherwise}
+                \item{`path` Path to file, `NA` otherwise}
              }
              \item{`intellectual_rights.txt` Intellectual rights template}
              \itemize{
-                \item{`content` EML::TextType containing intellectual rights}
-                \item{`path` Path to file}
+                \item{`content` EML::TextType containing intellectual rights, `NA` otherwise}
+                \item{`path` Path to file, `NA` otherwise}
              }
              \item{`keywords.txt` Keywords template}
              \itemize{
-                \item{`content` Data frame of keywords template}
-                \item{`path` Path to file}
+                \item{`content` Data frame of keywords template, `NA` otherwise}
+                \item{`path` Path to file, `NA` otherwise}
              }
              \item{`methods.txt` Methods template}
              \itemize{
-                \item{`content` EML::Methods containing methods}
-                \item{`path` Path to file}
+                \item{`content` EML::Methods containing methods, `NA` otherwise}
+                \item{`path` Path to file, `NA` otherwise}
              }
              \item{`personnel.txt` Personnel template}
              \itemize{
-                \item{`content` Data frame of personnel template}
-                \item{`path` Path to file}
+                \item{`content` Data frame of personnel template, `NA` otherwise}
+                \item{`path` Path to file, `NA` otherwise}
              }
              \item{`taxonomicCoverage.xml` Taxonomic coverage EML element}
              \itemize{
-                \item{`content` EML::taxonomicCoverage}
-                \item{`path` Path to file}
+                \item{`content` EML::taxonomicCoverage, `NA` otherwise}
+                \item{`path` Path to file, `NA` otherwise}
              }                    
             }
        \item{`data.table`}
        \itemize{
-           \item{`data.table.name.ext` Name of data table including file extension}
+           \item{`data.table.name.ext` Name of data table including file extension, `NULL` otherwise}
            \itemize{
                 \item{`content` Data frame of data table}
-                \item{`path` Path to data table (required)}
+                \item{`path` Path to data table (required if `data.table` exists)}
            }
          }
        \item{`other.entity`}
        \itemize{
-           \item{`other.entity.name.ext` Name of other entity including file extension}
+           \item{`other.entity.name.ext` Name of other entity including file extension, `NULL` otherwise}
            \itemize{
                 \item{`content` Set to `NA`}
-                \item{`path` Path to other entity (required)}
+                \item{`path` Path to other entity (required if `data.table` exists)}
            }
        
        }
@@ -118,7 +117,7 @@ Read metadata templates and data files into an R list structure as an
     This function is primarily used for testing and demonstration purposes
     however, this approach is generally useful for interfacing upstream 
     sources with `EMLassemblyline` (e.g. a metabase or database). See below 
-    for list object structure.
+    for list structure.
 }
 \note{
 Paths to data tables and other entities must be present for 

@@ -137,7 +137,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>import_templates</span>(<span class='no'>path</span>, <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='no'>path</span>, <span class='no'>license</span>, <span class='kw'>data.table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-    <span class='kw'>data.files</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data.files</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -160,6 +160,12 @@ or "CCBY" (<a href='https://creativecommons.org/licenses/by/4.0/'>https://creati
       <th>data.table</th>
       <td><p>(character) Names of tabular data. Names of non-tabular data are
 entered as arguments to `make_eml`.</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>(named list) Alternative input to all `EMLassemblyline` functions (i.e. 
+rather than supplying the files themselves). Use 
+`EMLassemblyline::read_files` to create this list.</p></td>
     </tr>
     <tr>
       <th>data.files</th>
@@ -192,8 +198,7 @@ entered as arguments to `make_eml`.</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Existing templates will not be overwritten by subsequent calls to 
-    `import_templates`.</p>
+    <p>Existing templates will not be overwritten by `import_templates`.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

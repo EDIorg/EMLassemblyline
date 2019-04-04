@@ -8,7 +8,7 @@
 #'     This function is primarily used for testing and demonstration purposes
 #'     however, this approach is generally useful for interfacing upstream 
 #'     sources with `EMLassemblyline` (e.g. a metabase or database). See below 
-#'     for list object structure.
+#'     for list structure.
 #'
 #' @usage read_files(path, data.path = path, data.table = NULL, 
 #' other.entity = NULL, sep = NULL)
@@ -34,86 +34,85 @@
 #'     auto-generated metadata content.
 #'
 #' @return 
-#'     (named list) Named list with this internal structure (NOTE: use `NA` for
-#'     non-existant content):
+#'     (named list) Named list with this internal structure.:
 #'     \itemize{
 #'         \item `template` Metadata template files
 #'         \itemize{
 #'             \item{`abstract.txt` Abstract template}
 #'             \itemize{
-#'                 \item{`content` EML::TextType containing abstract}
-#'                 \item{`path` Path to file}
+#'                 \item{`content` EML::TextType containing abstract, `NA` otherwise}
+#'                 \item{`path` Path to file, `NA` otherwise}
 #'              }
 #'              \item{`additional_info.txt` Additional information template}
 #'              \itemize{
-#'                  \item{`content` EML::TextType containing additional info}
-#'                  \item{`path` Path to file}
+#'                  \item{`content` EML::TextType containing additional info, `NA` otherwise}
+#'                  \item{`path` Path to file, `NA` otherwise}
 #'              }
-#'              \item{`attributes_*.txt` Attributes template where * is name of `data.table` described by the attributes}
+#'              \item{`attributes_*.txt` Attributes template where * is name of `data.table` described by the attributes. Don't include if missing.}
 #'              \itemize{
-#'                  \item{`content` Data frame of attributes template}
-#'                  \item{`path` Path to file}
+#'                  \item{`content` Data frame of attributes template, `NA` otherwise}
+#'                  \item{`path` Path to file, `NA` otherwise}
 #'              }
 #'              \item{`bounding_boxes.txt` Bounding boxes template}
 #'              \itemize{
-#'                 \item{`content` Data frame of bounding boxes template}
-#'                 \item{`path` Path to file}
+#'                 \item{`content` Data frame of bounding boxes template, `NA` otherwise}
+#'                 \item{`path` Path to file, `NA` otherwise}
 #'              }
-#'              \item{`catvars_*.txt` Categorical variables template where * is name of `data.table` described by the catvars}
+#'              \item{`catvars_*.txt` Categorical variables template where * is name of `data.table` described by the catvars. Don't include if missing.}
 #'              \itemize{
-#'                 \item{`content` Data frame of categorical variables template}
-#'                 \item{`path` Path to file}
+#'                 \item{`content` Data frame of categorical variables template, `NA` otherwise}
+#'                 \item{`path` Path to file, `NA` otherwise}
 #'              }
 #'              \item{`custom_units.txt` Custom units template}
 #'              \itemize{
-#'                 \item{`content` Data frame of custom units template}
-#'                 \item{`path` Path to file}
+#'                 \item{`content` Data frame of custom units template, `NA` otherwise}
+#'                 \item{`path` Path to file, `NA` otherwise}
 #'              }
 #'              \item{`geographic_coverage.txt` Geographic coverage template}
 #'              \itemize{
-#'                 \item{`content` Data frame of geographic coverage template}
-#'                 \item{`path` Path to file}
+#'                 \item{`content` Data frame of geographic coverage template, `NA` otherwise}
+#'                 \item{`path` Path to file, `NA` otherwise}
 #'              }
 #'              \item{`intellectual_rights.txt` Intellectual rights template}
 #'              \itemize{
-#'                 \item{`content` EML::TextType containing intellectual rights}
-#'                 \item{`path` Path to file}
+#'                 \item{`content` EML::TextType containing intellectual rights, `NA` otherwise}
+#'                 \item{`path` Path to file, `NA` otherwise}
 #'              }
 #'              \item{`keywords.txt` Keywords template}
 #'              \itemize{
-#'                 \item{`content` Data frame of keywords template}
-#'                 \item{`path` Path to file}
+#'                 \item{`content` Data frame of keywords template, `NA` otherwise}
+#'                 \item{`path` Path to file, `NA` otherwise}
 #'              }
 #'              \item{`methods.txt` Methods template}
 #'              \itemize{
-#'                 \item{`content` EML::Methods containing methods}
-#'                 \item{`path` Path to file}
+#'                 \item{`content` EML::Methods containing methods, `NA` otherwise}
+#'                 \item{`path` Path to file, `NA` otherwise}
 #'              }
 #'              \item{`personnel.txt` Personnel template}
 #'              \itemize{
-#'                 \item{`content` Data frame of personnel template}
-#'                 \item{`path` Path to file}
+#'                 \item{`content` Data frame of personnel template, `NA` otherwise}
+#'                 \item{`path` Path to file, `NA` otherwise}
 #'              }
 #'              \item{`taxonomicCoverage.xml` Taxonomic coverage EML element}
 #'              \itemize{
-#'                 \item{`content` EML::taxonomicCoverage}
-#'                 \item{`path` Path to file}
+#'                 \item{`content` EML::taxonomicCoverage, `NA` otherwise}
+#'                 \item{`path` Path to file, `NA` otherwise}
 #'              }                    
 #'             }
 #'        \item{`data.table`}
 #'        \itemize{
-#'            \item{`data.table.name.ext` Name of data table including file extension}
+#'            \item{`data.table.name.ext` Name of data table including file extension, `NULL` otherwise}
 #'            \itemize{
 #'                 \item{`content` Data frame of data table}
-#'                 \item{`path` Path to data table (required)}
+#'                 \item{`path` Path to data table (required if `data.table` exists)}
 #'            }
 #'          }
 #'        \item{`other.entity`}
 #'        \itemize{
-#'            \item{`other.entity.name.ext` Name of other entity including file extension}
+#'            \item{`other.entity.name.ext` Name of other entity including file extension, `NULL` otherwise}
 #'            \itemize{
 #'                 \item{`content` Set to `NA`}
-#'                 \item{`path` Path to other entity (required)}
+#'                 \item{`path` Path to other entity (required if `data.table` exists)}
 #'            }
 #'        
 #'        }
@@ -140,27 +139,81 @@ read_files <- function(path, data.path = path, data.table = NULL,
     as.is = T
   )
   
-  # List template files
+  # Initialize list of template files
   
   path_files <- list.files(path)
   
-  is_template <- rep(FALSE, length(path_files))
+  # If template files exist ...
   
-  for (i in 1:length(path_files)){
+  if (!length(path_files) == 0){
     
-    is_template[i] <- any(
-      stringr::str_detect(
-        path_files[i], 
-        attr.templates$regexpr
+    is_template <- rep(FALSE, length(path_files))
+    
+    for (i in 1:length(path_files)){
+      
+      is_template[i] <- any(
+        stringr::str_detect(
+          path_files[i], 
+          attr.templates$regexpr
+        )
       )
+      
+    }
+    
+    templates <- vector(
+      'list', 
+      length(path_files[is_template])
     )
+    
+    names(templates) <- path_files[is_template]
     
   }
   
-  templates <- vector('list', length(path_files[is_template]))
+  # Add any missing core template files as NULL
   
-  names(templates) <- path_files[is_template]
+  missing_core_templates <- c()
   
+  i_core <- seq(nrow(attr.templates))[
+    attr.templates$core_template == TRUE
+  ]
+  
+  # For each core template file ...
+  
+  for (i in 1:length(i_core)){
+    
+    use_i <- stringr::str_detect(
+      path_files,
+      attr.templates$regexpr[i_core[i]]
+    )
+    
+    # If missing then add it
+    
+    if (!any(use_i)){
+      
+      missing_template <- vector('list', 1)
+      
+      names(missing_template) <- attr.templates$regexpr[i_core[i]]
+      
+      missing_core_templates <- c(missing_core_templates, missing_template)
+      
+    }
+    
+  }
+  
+  if (length(missing_core_templates) > 0){
+    
+    if (exists('templates')){
+      
+      templates <- c(templates, missing_core_templates)
+      
+    } else {
+      
+      templates <- missing_core_templates
+      
+    }
+    
+  }
+
   # List data.table
   
   if (!is.null(data.table)){
@@ -213,7 +266,10 @@ read_files <- function(path, data.path = path, data.table = NULL,
   
   for (i in 1:length(output$template)){
       
-    use_i <- stringr::str_detect(names(output$template[i]), attr.templates$regexpr)
+    use_i <- stringr::str_detect(
+      names(output$template[i]), 
+      attr.templates$regexpr
+    )
     
     # For non-delimited templates ...
     
@@ -226,39 +282,75 @@ read_files <- function(path, data.path = path, data.table = NULL,
           (attr.templates$template_name[use_i] == 'additional_info') |
           (attr.templates$template_name[use_i] == 'intellectual_rights')){
         
-        output$template[[i]]$content <- EML::set_TextType(
-          file = paste0(
-            path, 
-            '/', 
-            names(output$template[i])
-          )
-        )
+        # If the file exists then add content, otherwise set as NA
         
-        output$template[[i]]$path <- path
+        if (file.exists(paste0(path, '/', attr.templates$regexpr[use_i]))){
+          
+          output$template[[i]]$content <- EML::set_TextType(
+            file = paste0(
+              path, 
+              '/', 
+              names(output$template[i])
+            )
+          )
+          
+          output$template[[i]]$path <- path
+          
+        } else {
+          
+          output$template[[i]]$content <- NA_character_
+          
+          output$template[[i]]$path <- NA_character_
+          
+        }
         
       } else if (attr.templates$template_name[use_i] == 'methods'){
         
-        output$template[[i]]$content <- EML::set_methods(
-          methods_file = paste0(
-            path, 
-            '/', 
-            path_files[i]
-          )
-        )
+        # If the file exists then add content, otherwise set as NA
         
-        output$template[[i]]$path <- path
+        if (file.exists(paste0(path, '/', attr.templates$regexpr[use_i]))){
+          
+          output$template[[i]]$content <- EML::set_methods(
+            methods_file = paste0(
+              path, 
+              '/', 
+              path_files[i]
+            )
+          )
+          
+          output$template[[i]]$path <- path
+          
+        } else {
+          
+          output$template[[i]]$content <- NA_character_
+          
+          output$template[[i]]$path <- NA_character_
+          
+        }
         
       } else if (attr.templates$template_name[use_i] == 'taxonomicCoverage'){
         
-        output$template[[i]]$content <- EML::read_eml(
-          paste0(
-            path, 
-            '/',
-            path_files[i]
-          )
-        )
+        # If the file exists then add content, otherwise set as NA
         
-        output$template[[i]]$path <- path
+        if (file.exists(paste0(path, '/', attr.templates$regexpr[use_i]))){
+          
+          output$template[[i]]$content <- EML::read_eml(
+            paste0(
+              path, 
+              '/',
+              path_files[i]
+            )
+          )
+          
+          output$template[[i]]$path <- path
+          
+        } else {
+          
+          output$template[[i]]$content <- NA_character_
+          
+          output$template[[i]]$path <- NA_character_
+          
+        }
         
       }
       
@@ -266,20 +358,30 @@ read_files <- function(path, data.path = path, data.table = NULL,
       
     } else if (attr.templates$delimiter[use_i] == '\\t'){
       
-      # Read tab delimited table
+      # If the file exists then add content, otherwise set as NA
       
-      output$template[[i]]$content <- utils::read.table(
-        file = paste0(
-          path,
-          '/',
-          path_files[i]
-        ), 
-        header = T,
-        sep = '\t',
-        as.is = T
-      )
-      
-      output$template[[i]]$path <- path
+      if (file.exists(paste0(path, '/', attr.templates$regexpr[use_i]))){
+        
+        output$template[[i]]$content <- utils::read.table(
+          file = paste0(
+            path,
+            '/',
+            path_files[i]
+          ), 
+          header = T,
+          sep = '\t',
+          as.is = T
+        )
+        
+        output$template[[i]]$path <- path
+        
+      } else {
+        
+        output$template[[i]]$content <- NA_character_
+        
+        output$template[[i]]$path <- NA_character_
+        
+      }
       
     }
 

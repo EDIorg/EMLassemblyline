@@ -5,7 +5,7 @@
 \title{Import templates for core metadata}
 \usage{
 import_templates(path, data.path = path, license, data.table = NULL, 
-    data.files = NULL)
+    x = NULL, data.files = NULL)
 }
 \arguments{
 \item{path}{(character) Path to where the templates will be imported.}
@@ -18,6 +18,10 @@ or "CCBY" (\url{https://creativecommons.org/licenses/by/4.0/}).}
 
 \item{data.table}{(character) Names of tabular data. Names of non-tabular data are
 entered as arguments to `make_eml`.}
+
+\item{x}{(named list) Alternative input to all `EMLassemblyline` functions (i.e. 
+rather than supplying the files themselves). Use 
+`EMLassemblyline::read_files` to create this list.}
 
 \item{data.files}{NOTE: `data.files` has been deprecated. Use `data.table` instead.}
 }
@@ -49,8 +53,7 @@ Import template files for storage of core metadata. Some templates are
     \url{https://clnsmth.github.io/EMLassemblyline/articles/instructions.html}.
 }
 \details{
-Existing templates will not be overwritten by subsequent calls to 
-    `import_templates`.
+Existing templates will not be overwritten by `import_templates`.
 }
 \examples{
     # Create a directory structure for an example dataset

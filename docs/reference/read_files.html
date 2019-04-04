@@ -38,7 +38,7 @@
 This function is primarily used for testing and demonstration purposes
     however, this approach is generally useful for interfacing upstream 
     sources with `EMLassemblyline` (e.g. a metabase or database). See below 
-    for list object structure." />
+    for list structure." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -136,7 +136,7 @@ This function is primarily used for testing and demonstration purposes
 <p>This function is primarily used for testing and demonstration purposes
     however, this approach is generally useful for interfacing upstream 
     sources with `EMLassemblyline` (e.g. a metabase or database). See below 
-    for list object structure.</p>
+    for list structure.</p>
     
     </div>
 
@@ -175,68 +175,67 @@ fails to automatically identify `data.table` field delimiters.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(named list) Named list with this internal structure (NOTE: use `NA` for
-    non-existant content):</p><ul>
+    <p>(named list) Named list with this internal structure.:</p><ul>
 <li><p>`template` Metadata template files</p><ul>
 <li><p>`abstract.txt` Abstract template</p><ul>
-<li><p>`content` EML::TextType containing abstract</p></li>
-<li><p>`path` Path to file</p></li>
+<li><p>`content` EML::TextType containing abstract, `NA` otherwise</p></li>
+<li><p>`path` Path to file, `NA` otherwise</p></li>
 </ul></li>
 <li><p>`additional_info.txt` Additional information template</p><ul>
-<li><p>`content` EML::TextType containing additional info</p></li>
-<li><p>`path` Path to file</p></li>
+<li><p>`content` EML::TextType containing additional info, `NA` otherwise</p></li>
+<li><p>`path` Path to file, `NA` otherwise</p></li>
 </ul></li>
-<li><p>`attributes_*.txt` Attributes template where * is name of `data.table` described by the attributes</p><ul>
-<li><p>`content` Data frame of attributes template</p></li>
-<li><p>`path` Path to file</p></li>
+<li><p>`attributes_*.txt` Attributes template where * is name of `data.table` described by the attributes. Don't include if missing.</p><ul>
+<li><p>`content` Data frame of attributes template, `NA` otherwise</p></li>
+<li><p>`path` Path to file, `NA` otherwise</p></li>
 </ul></li>
 <li><p>`bounding_boxes.txt` Bounding boxes template</p><ul>
-<li><p>`content` Data frame of bounding boxes template</p></li>
-<li><p>`path` Path to file</p></li>
+<li><p>`content` Data frame of bounding boxes template, `NA` otherwise</p></li>
+<li><p>`path` Path to file, `NA` otherwise</p></li>
 </ul></li>
-<li><p>`catvars_*.txt` Categorical variables template where * is name of `data.table` described by the catvars</p><ul>
-<li><p>`content` Data frame of categorical variables template</p></li>
-<li><p>`path` Path to file</p></li>
+<li><p>`catvars_*.txt` Categorical variables template where * is name of `data.table` described by the catvars. Don't include if missing.</p><ul>
+<li><p>`content` Data frame of categorical variables template, `NA` otherwise</p></li>
+<li><p>`path` Path to file, `NA` otherwise</p></li>
 </ul></li>
 <li><p>`custom_units.txt` Custom units template</p><ul>
-<li><p>`content` Data frame of custom units template</p></li>
-<li><p>`path` Path to file</p></li>
+<li><p>`content` Data frame of custom units template, `NA` otherwise</p></li>
+<li><p>`path` Path to file, `NA` otherwise</p></li>
 </ul></li>
 <li><p>`geographic_coverage.txt` Geographic coverage template</p><ul>
-<li><p>`content` Data frame of geographic coverage template</p></li>
-<li><p>`path` Path to file</p></li>
+<li><p>`content` Data frame of geographic coverage template, `NA` otherwise</p></li>
+<li><p>`path` Path to file, `NA` otherwise</p></li>
 </ul></li>
 <li><p>`intellectual_rights.txt` Intellectual rights template</p><ul>
-<li><p>`content` EML::TextType containing intellectual rights</p></li>
-<li><p>`path` Path to file</p></li>
+<li><p>`content` EML::TextType containing intellectual rights, `NA` otherwise</p></li>
+<li><p>`path` Path to file, `NA` otherwise</p></li>
 </ul></li>
 <li><p>`keywords.txt` Keywords template</p><ul>
-<li><p>`content` Data frame of keywords template</p></li>
-<li><p>`path` Path to file</p></li>
+<li><p>`content` Data frame of keywords template, `NA` otherwise</p></li>
+<li><p>`path` Path to file, `NA` otherwise</p></li>
 </ul></li>
 <li><p>`methods.txt` Methods template</p><ul>
-<li><p>`content` EML::Methods containing methods</p></li>
-<li><p>`path` Path to file</p></li>
+<li><p>`content` EML::Methods containing methods, `NA` otherwise</p></li>
+<li><p>`path` Path to file, `NA` otherwise</p></li>
 </ul></li>
 <li><p>`personnel.txt` Personnel template</p><ul>
-<li><p>`content` Data frame of personnel template</p></li>
-<li><p>`path` Path to file</p></li>
+<li><p>`content` Data frame of personnel template, `NA` otherwise</p></li>
+<li><p>`path` Path to file, `NA` otherwise</p></li>
 </ul></li>
 <li><p>`taxonomicCoverage.xml` Taxonomic coverage EML element</p><ul>
-<li><p>`content` EML::taxonomicCoverage</p></li>
-<li><p>`path` Path to file</p></li>
+<li><p>`content` EML::taxonomicCoverage, `NA` otherwise</p></li>
+<li><p>`path` Path to file, `NA` otherwise</p></li>
 </ul></li>
 </ul></li>
 <li><p>`data.table`</p><ul>
-<li><p>`data.table.name.ext` Name of data table including file extension</p><ul>
+<li><p>`data.table.name.ext` Name of data table including file extension, `NULL` otherwise</p><ul>
 <li><p>`content` Data frame of data table</p></li>
-<li><p>`path` Path to data table (required)</p></li>
+<li><p>`path` Path to data table (required if `data.table` exists)</p></li>
 </ul></li>
 </ul></li>
 <li><p>`other.entity`</p><ul>
-<li><p>`other.entity.name.ext` Name of other entity including file extension</p><ul>
+<li><p>`other.entity.name.ext` Name of other entity including file extension, `NULL` otherwise</p><ul>
 <li><p>`content` Set to `NA`</p></li>
-<li><p>`path` Path to other entity (required)</p></li>
+<li><p>`path` Path to other entity (required if `data.table` exists)</p></li>
 </ul></li>
 </ul></li>
 </ul>

@@ -2,6 +2,101 @@
 context('Read files into list')
 library(EMLassemblyline)
 
+# When no templates or files are present --------------------------------------
+
+testthat::test_that('Expect standard structure', {
+  
+  # Parameterize
+  
+  output <- read_files(
+    path = system.file(
+      '/inst',
+      package = 'EMLassemblyline'
+    )
+  )
+  
+  core_templates <- utils::read.table(
+    file = system.file(
+      '/templates/template_characteristics.txt',
+      package = 'EMLassemblyline'
+    ), 
+    header = T,
+    sep = '\t',
+    as.is = T
+  )
+  
+  core_templates <- core_templates[core_templates$core_template == TRUE, ]
+  
+  # Is list
+  
+  expect_equal(
+    class(output), 
+    'list'
+  )
+  
+  # Has level-1 names
+  
+  expect_equal(
+    all(
+      c('template', 'data.table', 'other.entity') %in% names(output)
+    ),
+    TRUE
+  )
+  
+  # Has level-2 names
+  
+  expect_equal(
+    all(
+      names(output$template) %in% 
+        core_templates$regexpr),
+    TRUE
+  )
+  
+  expect_equal(
+    output$data.table,
+    NULL
+  )
+  
+  expect_equal(
+    output$other.entity,
+    NULL
+  )
+  
+  # Has level-3 names
+  
+  for (i in 1:length(output$template)){
+    
+    expect_equal(
+      all(
+        names(output$template[[i]]) %in% 
+          c('content', 'path')
+      ),
+      TRUE
+    )
+    
+  }
+  
+  # Has level-3 values
+  
+  for (i in 1:length(output$template)){
+    
+    expect_equal(
+      all(
+        is.na(
+          unname(
+            unlist(
+              output$template[[i]]
+            )
+          )
+        )
+      ),
+      TRUE
+    )
+    
+  }
+  
+})
+
 # When only templates are present ---------------------------------------------
 
 testthat::test_that('Expect standard structure', {
@@ -33,7 +128,8 @@ testthat::test_that('Expect standard structure', {
   
   expect_equal(
     all(
-      c('template', 'data.table', 'other.entity') %in% names(output)
+      c('template', 'data.table', 'other.entity') %in% 
+        names(output)
     ),
     TRUE
   )
@@ -41,7 +137,10 @@ testthat::test_that('Expect standard structure', {
   # Has level-2 names
   
   expect_equal(
-    all(names(output$template) %in% path_files),
+    all(
+      names(output$template) %in% 
+        path_files
+    ),
     TRUE
   )
   
@@ -103,7 +202,8 @@ testthat::test_that('Expect standard structure', {
   
   expect_equal(
     all(
-      c('template', 'data.table', 'other.entity') %in% names(output)
+      c('template', 'data.table', 'other.entity') %in% 
+        names(output)
     ),
     TRUE
   )

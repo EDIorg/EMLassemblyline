@@ -3,6 +3,8 @@ library(EMLassemblyline)
 
 # Parameterize ----------------------------------------------------------------
 
+# Set paths
+
 path <- system.file(
   '/examples/templates/abstract.txt', 
   package = 'EMLassemblyline'
@@ -13,9 +15,19 @@ data.path <- paste0(path, '/data')
 
 path <- paste0(path, '/templates')
 
-# Tests -----------------------------------------------------------------------
+# Read example files into list and remove templates
 
-# Errors
+x_list <- EMLassemblyline::read_files(
+  path = path,
+  data.path = data.path
+)
+
+x_list$template$abstract.txt <- NULL
+
+
+
+
+# Errors ----------------------------------------------------------------------
 
 testthat::test_that('Error out when required arguments are missing', {
   
@@ -35,7 +47,7 @@ testthat::test_that('Error out when required arguments are missing', {
   
 })
 
-# Messages
+# Messages --------------------------------------------------------------------
 
 testthat::test_that('Return messages when templates already exist', {
 
@@ -47,4 +59,5 @@ testthat::test_that('Return messages when templates already exist', {
       data.table = c('decomp.csv', 'nitrogen.csv')
     )
   )
+  
 })
