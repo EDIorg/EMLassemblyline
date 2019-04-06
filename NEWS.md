@@ -1,9 +1,5 @@
 # EMLassemblyline 2.99.0
 
-#### 2019-04-05
-* __Enhancement:__ Intellectual rights license of `import_templates()` now defaults to `CC0`.
-
-
 #### 2019-03-31
 * __Enhancement:__ Release `read_files()`, a function to read metadata templates and data files into an R list structure as an alternative input to `EMLassemblyline` functions (i.e. rather than supplying the files themselves). This function is primarily used for testing and demonstration purposes however, this approach is generally useful for interfacing upstream sources with `EMLassemblyline` (e.g. a metabase or database).
 * __Enhancement:__ Release `create_directory()`, a function to create a commonly used directory structure for EMLassemblyline inputs and outputs.

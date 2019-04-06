@@ -8,8 +8,8 @@
 #'     \url{https://clnsmth.github.io/EMLassemblyline/articles/instructions.html}.
 #'
 #' @usage 
-#'     import_templates(path = NULL, data.path = path, license = 'CC0', 
-#'     data.table = NULL, x = NULL, data.files = NULL)
+#'     import_templates(path, data.path = path, data.table = NULL, 
+#'     x = NULL, data.files = NULL)
 #'
 #' @param path 
 #'     (character) Path to where the templates will be imported.
@@ -62,7 +62,7 @@
 #' @export     
 #'     
 
-import_templates <- function(path = NULL, data.path = path, license = 'CC0', 
+import_templates <- function(path, data.path = path, license, 
                              data.table = NULL, x = NULL, data.files = NULL){
   
   message('Importing metadata templates')
@@ -81,14 +81,14 @@ import_templates <- function(path = NULL, data.path = path, license = 'CC0',
     
     if (!is.null(x$data.table)){
       
-      data.path <- NULL
+      data.path <- x$data.table[[1]]$path
       
-      data.table <- NULL
+      data.table <- names(x$data.table)
       
     }
     
   }
-  
+
   # Validate arguments and parameterize ---------------------------------------
     
   if (is.null(path)){
@@ -124,12 +124,16 @@ import_templates <- function(path = NULL, data.path = path, license = 'CC0',
     
     # Guess field delimiter
     
-    delim_guess <- EDIutils::detect_delimeter(
-      data.path, 
-      data.files = data_files, 
-      EDIutils::detect_os()
-    )
-    
+    if (is.null(x)){
+      
+      delim_guess <- EDIutils::detect_delimeter(
+        data.path, 
+        data.files = data_files, 
+        EDIutils::detect_os()
+      )
+      
+    }
+
   }
 
   # Import abstract.txt -------------------------------------------------------
@@ -639,31 +643,30 @@ import_templates <- function(path = NULL, data.path = path, license = 'CC0',
     }
     
   }
-  
+
   # Import attributes templates -----------------------------------------------
   
   if (!is.null(data.table)){
     
-    # Check column names
+    # Read data.tables into x structure if not already done
     
-    for (i in 1:length(data_files)){
+    if (is.null(x)){
       
-      data_path <- paste0(
-        data.path,
-        "/",
-        data_files[i]
+      x <- read_files(
+        path = path,
+        data.path = data.path,
+        data.table = data.table
       )
       
-      df_table <- utils::read.table(
-        data_path,
-        header = TRUE,
-        sep = delim_guess[i],
-        quote = "\"",
-        as.is = TRUE,
-        comment.char = ""
-      )
+      data_read_2_x <- TRUE
       
-      column_names <- colnames(df_table)
+    }
+
+    # Validate column names
+    
+    for (i in 1:length(data.table)){
+
+      column_names <- colnames(x$data.table[[i]]$content)
       
       use_i <- stringr::str_detect(
         string = column_names,
@@ -674,7 +677,7 @@ import_templates <- function(path = NULL, data.path = path, license = 'CC0',
         stop(
           paste(
             "Invalid column names detected in ", 
-            data_files[i],
+            names(x$data.table)[i],
             ":  ",
             paste(
               column_names[use_i], 
@@ -687,34 +690,16 @@ import_templates <- function(path = NULL, data.path = path, license = 'CC0',
       }
       
     }
-    
+
     # Extract attributes of each data file
     
     attributes <- list()
     
-    for (i in 1:length(data_files)){
-      
-      # Read data table
-      
-      data_path <- paste0(
-        data.path,
-        "/",
-        data_files[i]
-      )
-      
-      df_table <- utils::read.table(
-        data_path,
-        header = TRUE,
-        sep = delim_guess[i],
-        quote = "\"",
-        as.is = TRUE,
-        comment.char = "",
-        na.strings = c('NA','NULL')
-      )
-      
+    for (i in 1:length(data.table)){
+
       # Initialize attribute table
       
-      rows <- ncol(df_table)
+      rows <- ncol(x$data.table[[i]]$content)
       
       attributes[[i]] <- data.frame(
         attributeName = character(rows),
@@ -729,11 +714,11 @@ import_templates <- function(path = NULL, data.path = path, license = 'CC0',
       
       # Get names
       
-      attributes[[i]]$attributeName <- colnames(df_table)
+      attributes[[i]]$attributeName <- colnames(x$data.table[[i]]$content)
       
       # Guess character and numeric classes
       
-      guess <- unname(unlist(lapply(df_table, class)))
+      guess <- unname(unlist(lapply(x$data.table[[i]]$content, class)))
       
       guess_map <- c(
         character = "character", 
@@ -750,7 +735,7 @@ import_templates <- function(path = NULL, data.path = path, license = 'CC0',
       use_i <- guess == "character"
       
       if (sum(use_i) > 0){
-        potential_date_cols <- colnames(df_table)[use_i]
+        potential_date_cols <- colnames(x$data.table[[i]]$content)[use_i]
         potential_date_i <- stringr::str_detect(tolower(potential_date_cols), "date|time|day")
         guess_datetime <- potential_date_cols[potential_date_i]
         use_i <- match(guess_datetime, attributes[[i]]$attributeName)
@@ -761,14 +746,14 @@ import_templates <- function(path = NULL, data.path = path, license = 'CC0',
       
       use_i <- guess == "character"
       if (sum(use_i) > 0){
-        potential_fact_cols <- colnames(df_table)[use_i]
-        use_i2 <- match(potential_fact_cols, colnames(df_table))
+        potential_fact_cols <- colnames(x$data.table[[i]]$content)[use_i]
+        use_i2 <- match(potential_fact_cols, colnames(x$data.table[[i]]$content))
         if (length(use_i2) == 1){
-          unique_lengths <- length(unique(df_table[ ,use_i2]))
+          unique_lengths <- length(unique(x$data.table[[i]]$content[ ,use_i2]))
         } else {
-          unique_lengths <- apply(df_table[ ,use_i2], 2, function(x)length(unique(x)))
+          unique_lengths <- apply(x$data.table[[i]]$content[ ,use_i2], 2, function(x)length(unique(x)))
         }
-        potential_facts <- unique_lengths <= dim(df_table)[1]*0.3
+        potential_facts <- unique_lengths <= dim(x$data.table[[i]]$content)[1]*0.3
         if (sum(potential_facts) > 0){
           potential_facts <- names(potential_facts[potential_facts == TRUE])
           use_i <- match(potential_facts, attributes[[i]]$attributeName)
@@ -796,62 +781,123 @@ import_templates <- function(path = NULL, data.path = path, license = 'CC0',
         attributes[[i]]$dateTimeFormatString[use_i] <- "!Add datetime specifier here!"
       }
       
-      # Write table to file
+      # Write table to file or add to list x
       
-      value <- file.exists(
-        paste0(
-          path,
-          "/",
-          "attributes_",
-          substr(data_files[i], 1, nchar(data_files[i]) - 4),
-          ".txt"
-        )
-      )
+      # If writing to file ...
       
-      if (!isTRUE(value)){
+      if (exists('data_read_2_x')){
         
-        message(
-          paste0(
-            "Importing attributes_",
-            substr(data_files[i], 1, nchar(data_files[i]) - 4),
-            ".txt."
-          )
-        )
-        
-        utils::write.table(
-          attributes[[i]],
+        value <- file.exists(
           paste0(
             path,
             "/",
             "attributes_",
-            substr(data_files[i], 1, nchar(data_files[i]) - 4),
+            substr(data.table[i], 1, nchar(data.table[i]) - 4),
             ".txt"
-          ),
-          sep = "\t",
-          row.names = F,
-          quote = F,
-          fileEncoding = "UTF-8"
-        )
-        
-      } else {
-        
-        message(
-          paste0(
-            "attributes_",
-            substr(data_files[i], 1, nchar(data_files[i]) - 4),
-            ".txt already exists!"
           )
         )
         
+        if (!isTRUE(value)){
+          
+          message(
+            paste0(
+              "Importing attributes_",
+              substr(data.table[i], 1, nchar(data.table[i]) - 4),
+              ".txt."
+            )
+          )
+          
+          utils::write.table(
+            attributes[[i]],
+            paste0(
+              path,
+              "/",
+              "attributes_",
+              substr(data.table[i], 1, nchar(data.table[i]) - 4),
+              ".txt"
+            ),
+            sep = "\t",
+            row.names = F,
+            quote = F,
+            fileEncoding = "UTF-8"
+          )
+          
+        } else {
+          
+          message(
+            paste0(
+              "attributes_",
+              substr(data.table[i], 1, nchar(data.table[i]) - 4),
+              ".txt already exists!"
+            )
+          )
+          
+        }
+        
+        # Otherwise if adding to x ...
+        
+      } else if (!exists('data_read_2_x')){
+
+        value <- stringr::str_detect(
+          paste0(
+            "attributes_",
+            substr(data.table[i], 1, nchar(data.table[i]) - 4),
+            ".txt"
+          ),
+          names(x$template)
+        )
+
+        if (!any(value)){
+          
+          message(
+            paste0(
+              "Importing attributes_",
+              substr(data.table[i], 1, nchar(data.table[i]) - 4),
+              ".txt."
+            )
+          )
+          
+          missing_template <- list(
+            content = attributes[[i]],
+            path = NA_character_
+          )
+
+          missing_template <- list(
+            missing_template
+          )
+
+          names(missing_template) <- paste0(
+            'attributes_',
+            data.table[i],
+            '.txt'
+          )
+          
+          x$template <- c(
+            x$template, 
+            missing_template
+          )
+          
+        } else {
+          
+          message(
+            paste0(
+              "attributes_",
+              substr(data.table[i], 1, nchar(data.table[i]) - 4),
+              ".txt already exists!"
+            )
+          )
+          
+        }
+
       }
-      
+
     }
     
   }
   
   # Return --------------------------------------------------------------------
   
-  if (!is.null(x)){
+  if (!exists('data_read_2_x')){
     
     return(x)
     

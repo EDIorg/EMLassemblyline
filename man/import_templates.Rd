@@ -4,8 +4,8 @@
 \alias{import_templates}
 \title{Import templates for core metadata}
 \usage{
-import_templates(path = NULL, data.path = path, license = 'CC0', 
-    data.table = NULL, x = NULL, data.files = NULL)
+import_templates(path, data.path = path, data.table = NULL, 
+    x = NULL, data.files = NULL)
 }
 \arguments{
 \item{path}{(character) Path to where the templates will be imported.}
