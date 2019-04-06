@@ -4,15 +4,16 @@
 \alias{define_catvars}
 \title{Import template(s) for categorical variable definitions}
 \usage{
-define_catvars(path, data.path = path, return.obj = FALSE, 
-    write.file = TRUE)
+define_catvars(path, data.path = path, x = NULL, write.file = TRUE)
 }
 \arguments{
 \item{path}{(character) Path to where the template(s) will be imported.}
 
 \item{data.path}{(character) Path to where the data files are stored.}
 
-\item{return.obj}{(logical) Return the `catvars` data.frame.}
+\item{x}{(named list) Alternative input to all `EMLassemblyline` functions (i.e. 
+rather than supplying the files themselves). Use 
+`EMLassemblyline::read_files` to create this list.}
 
 \item{write.file}{(logical) Write `catvars` file to `path`.}
 }
@@ -23,7 +24,6 @@ define_catvars(path, data.path = path, return.obj = FALSE,
         containing codes to be defined. Each template is appended with the 
         name of the data table from which the codes were extracted 
         (`catvars_*.txt`)}
-        \item{`catvars data.frame` when `return.obj = TRUE`}
     }
 }
 \description{

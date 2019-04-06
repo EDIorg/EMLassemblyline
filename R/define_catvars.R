@@ -7,15 +7,16 @@
 #'     Instructions for filling out the template are at
 #'     \url{https://clnsmth.github.io/EMLassemblyline/articles/instructions.html}.
 #'
-#' @usage define_catvars(path, data.path = path, return.obj = FALSE, 
-#'     write.file = TRUE)
+#' @usage define_catvars(path, data.path = path, x = NULL, write.file = TRUE)
 #'
 #' @param path 
 #'     (character) Path to where the template(s) will be imported.
 #' @param data.path
 #'     (character) Path to where the data files are stored.
-#' @param return.obj
-#'     (logical) Return the `catvars` data.frame.
+#' @param x
+#'     (named list) Alternative input to all `EMLassemblyline` functions (i.e. 
+#'     rather than supplying the files themselves). Use 
+#'     `EMLassemblyline::read_files` to create this list.
 #' @param write.file
 #'     (logical) Write `catvars` file to `path`.
 #'
@@ -26,7 +27,6 @@
 #'         containing codes to be defined. Each template is appended with the 
 #'         name of the data table from which the codes were extracted 
 #'         (`catvars_*.txt`)}
-#'         \item{`catvars data.frame` when `return.obj = TRUE`}
 #'     }
 #'     
 #' @details 
@@ -39,9 +39,36 @@
 #' @export
 #'
 
-define_catvars <- function(path, data.path = path, return.obj = FALSE, 
+define_catvars <- function(path, data.path = path, x = NULL, 
                            write.file = TRUE) {
   
+  # # Import content from x -----------------------------------------------------
+  # 
+  # # If x exists ...
+  # 
+  # if (!is.null(x)){
+  #   
+  #   # If path is not defined ...
+  #   
+  #   if (missing(path)){
+  #     
+  #     # Set path to arbitrary value
+  #     
+  #     path <- 'x'
+  #     
+  #   }
+  #   
+  #   # Get data.path and data.table
+  #   
+  #   if (!is.null(x$data.table)){
+  #     
+  #     data.path <- x$data.table[[1]]$path
+  #     
+  #     data.table <- names(x$data.table)
+  #     
+  #   }
+  #   
+  # }
   
   # Check arguments and parameterize ------------------------------------------
   

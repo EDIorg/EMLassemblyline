@@ -240,7 +240,7 @@ testthat::test_that('Argument x has 2 data.tables and no other.entity', {
       package = 'EMLassemblyline'
     ),
     data.path = system.file(
-      '/inst/examples/data',
+      '/examples/data',
       package = 'EMLassemblyline'
     ),
     data.table = c(
