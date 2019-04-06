@@ -24,9 +24,6 @@ x_list <- EMLassemblyline::read_files(
 
 x_list$template$abstract.txt <- NULL
 
-
-
-
 # Errors ----------------------------------------------------------------------
 
 testthat::test_that('Error out when required arguments are missing', {
@@ -61,3 +58,37 @@ testthat::test_that('Return messages when templates already exist', {
   )
   
 })
+
+# Input x ---------------------------------------------------------------------
+
+# No data
+
+testthat::test_that('Use x as an input/output structure', {
+  
+  output <- read_files(
+    path = system.file(
+      '/inst', 
+      package = 'EMLassemblyline'
+    )
+  )
+  
+  output <- import_templates(
+    x = output
+  )
+  
+  x <- test
+  
+  expect_message(
+    import_templates(
+      x = output
+    )
+  )
+  
+})
+
+
+
+
+
+
+

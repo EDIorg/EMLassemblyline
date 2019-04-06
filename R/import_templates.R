@@ -8,8 +8,8 @@
 #'     \url{https://clnsmth.github.io/EMLassemblyline/articles/instructions.html}.
 #'
 #' @usage 
-#'     import_templates(path, data.path = path, license, data.table = NULL, 
-#'     x = NULL, data.files = NULL)
+#'     import_templates(path = NULL, data.path = path, license = 'CC0', 
+#'     data.table = NULL, x = NULL, data.files = NULL)
 #'
 #' @param path 
 #'     (character) Path to where the templates will be imported.
@@ -62,18 +62,40 @@
 #' @export     
 #'     
 
-import_templates <- function(path, data.path = path, license, data.table = NULL, 
-                             x = NULL, data.files = NULL){
+import_templates <- function(path = NULL, data.path = path, license = 'CC0', 
+                             data.table = NULL, x = NULL, data.files = NULL){
   
   message('Importing metadata templates')
   
-  # Validate arguments and parameterize ---------------------------------------
+  # Import content from x -----------------------------------------------------
   
-  if (missing(path)){
+  # If x exists ...
+  
+  if (!is.null(x)){
+    
+    # Set path to arbitrary value
+    
+    path <- 'x'
+    
+    # Get data.path and data.table
+    
+    if (!is.null(x$data.table)){
+      
+      data.path <- NULL
+      
+      data.table <- NULL
+      
+    }
+    
+  }
+  
+  # Validate arguments and parameterize ---------------------------------------
+    
+  if (is.null(path)){
     stop('Input argument "path" is missing! Specify the path to your dataset working directory.')
-  } else if (missing(license)){
-    stop('Input argument "license" is missing! Specify a license for your dataset.')
-  } else if (!is.null(data.files)){
+  }
+
+  if (!is.null(data.files)){
     stop('Input argument "data.files" has been deprecated. Use "data.table" instead.')
   }
   
@@ -112,177 +134,510 @@ import_templates <- function(path, data.path = path, license, data.table = NULL,
 
   # Import abstract.txt -------------------------------------------------------
   
-  value <- file.copy(
-    from = system.file(
-      '/templates/abstract.txt',
-      package = 'EMLassemblyline'
-    ),
-    to = paste0(
-      path,
-      "/abstract.txt"
-    )
-  )
+  # If not using x ... 
   
-  if (isTRUE(value)){
-    message("Importing abstract.txt.")
-  } else {
-    message("abstract.txt already exists!")
+  if (is.null(x)){
+    
+    # Write to path
+    
+    value <- file.copy(
+      from = system.file(
+        '/templates/abstract.txt',
+        package = 'EMLassemblyline'
+      ),
+      to = paste0(
+        path,
+        "/abstract.txt"
+      )
+    )
+    
+    if (isTRUE(value)){
+      message("Importing abstract.txt.")
+    } else {
+      message("abstract.txt already exists!")
+    }
+    
+    # If using x ...
+    
+  } else if (!is.null(x)){
+    
+    # If content is NA ...
+    
+    if (any(is.na(x$template$abstract.txt$content))){
+      
+      # Add to x
+      
+      message("Importing abstract.txt.")
+      
+      x$template$abstract.txt$content <- EML::set_TextType(
+        file = system.file(
+          '/templates/abstract.txt',
+          package = 'EMLassemblyline'
+        )
+      )
+      
+      # Otherwise ...
+      
+    } else {
+      
+      message("abstract.txt already exists!")
+      
+    }
+    
   }
   
   # Import additional_info.txt ------------------------------------------------
   
-  value <- file.copy(
-    from = system.file(
-      '/templates/additional_info.txt',
-      package = 'EMLassemblyline'
-    ),
-    to = paste0(
-      path,
-      "/additional_info.txt"
-    )
-  )
+  # If not using x ... 
   
-  if (isTRUE(value)){
-    message("Importing additional_info.txt.")
-  } else {
-    message("additional_info.txt already exists!")
+  if (is.null(x)){
+    
+    # Write to path
+    
+    value <- file.copy(
+      from = system.file(
+        '/templates/additional_info.txt',
+        package = 'EMLassemblyline'
+      ),
+      to = paste0(
+        path,
+        "/additional_info.txt"
+      )
+    )
+    
+    if (isTRUE(value)){
+      message("Importing additional_info.txt.")
+    } else {
+      message("additional_info.txt already exists!")
+    }
+    
+    # If using x ...
+    
+  } else if (!is.null(x)){
+    
+    # If content is NA ...
+    
+    if (any(is.na(x$template$additional_info.txt$content))){
+      
+      # Add to x
+      
+      message("Importing additional_info.txt")
+      
+      x$template$additional_info.txt$content <- EML::set_TextType(
+        file = system.file(
+          '/templates/additional_info.txt',
+          package = 'EMLassemblyline'
+        )
+      )
+      
+      # Otherwise ...
+      
+    } else {
+      
+      message("additional_info.txt already exists!")
+      
+    }
+    
   }
   
   # Import bounding_boxes.txt -------------------------------------------------
   
-  value <- file.copy(
-    from = system.file(
-      '/templates/bounding_boxes.txt',
-      package = 'EMLassemblyline'
-    ),
-    to = paste0(
-      path,
-      "/bounding_boxes.txt"
-    )
-  )
+  # If not using x ... 
   
-  if (isTRUE(value)){
-    message("Importing bounding_boxes.txt.")
-  } else {
-    message("bounding_boxes.txt already exists!")
+  if (is.null(x)){
+    
+    # Write to path
+    
+    value <- file.copy(
+      from = system.file(
+        '/templates/bounding_boxes.txt',
+        package = 'EMLassemblyline'
+      ),
+      to = paste0(
+        path,
+        "/bounding_boxes.txt"
+      )
+    )
+    
+    if (isTRUE(value)){
+      message("Importing bounding_boxes.txt.")
+    } else {
+      message("bounding_boxes.txt already exists!")
+    }
+    
+    # If using x ...
+    
+  } else if (!is.null(x)){
+
+    # If content is NA ...
+    
+    if (any(is.na(x$template$bounding_boxes.txt$content))){
+      
+      # Add to x
+      
+      message("Importing bounding_boxes.txt.")
+      
+      x$template$bounding_boxes.txt$content <- utils::read.table(
+        file = system.file(
+          '/templates/bounding_boxes.txt',
+          package = 'EMLassemblyline'
+        ), 
+        header = T,
+        sep = '\t',
+        as.is = T
+      )
+      
+      # Otherwise ...
+      
+    } else {
+      
+      message("bounding_boxes.txt already exists!")
+      
+    }
+    
   }
   
   # Import custom_units.txt ---------------------------------------------------
   
-  value <- file.copy(
-    from = system.file(
-      '/templates/custom_units.txt',
-      package = 'EMLassemblyline'
-    ),
-    to = paste0(
-      path,
-      "/custom_units.txt"
-    )
-  )
+  # If not using x ... 
   
-  if (isTRUE(value)){
-    message("Importing custom_units.txt.")
-  } else {
-    message("custom_units.txt already exists!")
+  if (is.null(x)){
+    
+    # Write to path
+    
+    value <- file.copy(
+      from = system.file(
+        '/templates/custom_units.txt',
+        package = 'EMLassemblyline'
+      ),
+      to = paste0(
+        path,
+        "/custom_units.txt"
+      )
+    )
+    
+    if (isTRUE(value)){
+      message("Importing custom_units.txt.")
+    } else {
+      message("custom_units.txt already exists!")
+    }
+    
+    # If using x ...
+    
+  } else if (!is.null(x)){
+    
+    # If content is NA ...
+    
+    if (any(is.na(x$template$custom_units.txt$content))){
+      
+      # Add to x
+      
+      message("Importing custom_units.txt.")
+      
+      x$template$custom_units.txt$content <- utils::read.table(
+        file = system.file(
+          '/templates/custom_units.txt',
+          package = 'EMLassemblyline'
+        ), 
+        header = T,
+        sep = '\t',
+        as.is = T
+      )
+     
+      # Otherwise ...
+       
+    } else {
+      
+      message("custom_units.txt already exists!")
+      
+    }
+    
   }
 
   # Import intellectual_rights.txt --------------------------------------------
   
+  # If license is CC0 ...
+  
   if (license.low == "cc0"){
     
-    value <- file.copy(
-      from = system.file(
-        '/templates/intellectual_rights_cc0.txt',
-        package = 'EMLassemblyline'
-      ),
-      to = paste0(
-        path,
-        "/intellectual_rights.txt"
-      )
-    )
+    # If not using x ... 
     
-    if (isTRUE(value)){
-      message("Importing intellectual_rights.txt.")
-    } else {
-      message("intellectual_rights.txt already exists!")
+    if (is.null(x)){
+      
+      # Write to path
+      
+      value <- file.copy(
+        from = system.file(
+          '/templates/intellectual_rights_cc0.txt',
+          package = 'EMLassemblyline'
+        ),
+        to = paste0(
+          path,
+          "/intellectual_rights.txt"
+        )
+      )
+      
+      if (isTRUE(value)){
+        message("Importing intellectual_rights.txt.")
+      } else {
+        message("intellectual_rights.txt already exists!")
+      }
+      
+      # If using x ...
+      
+    } else if (!is.null(x)){
+      
+      # If content is not logical ...
+      
+      # If content is NA ...
+      
+      if (any(is.na(x$template$intellectual_rights.txt$content))){
+        
+        # Add to x
+        
+        message("Importing intellectual_rights.txt.")
+        
+        x$template$intellectual_rights.txt$content <- EML::set_TextType(
+          file = system.file(
+            '/templates/intellectual_rights_cc0.txt',
+            package = 'EMLassemblyline'
+          )
+        )
+        
+        # Otherwise ...
+        
+      } else {
+        
+        message("intellectual_rights.txt. already exists!")
+        
+      }
+      
     }
     
+    # If license is CCBY
+
   } else if (license.low == "ccby"){
     
-    value <- file.copy(
-      from = system.file(
-        '/templates/intellectual_rights_ccby4.0.txt',
-        package = 'EMLassemblyline'
-      ),
-      to = paste0(
-        path,
-        "/intellectual_rights.txt"
-      )
-    )
+    # If not using x ... 
     
-    if (isTRUE(value)){
-      message("Importing intellectual_rights.txt.")
-    } else {
-      message("intellectual_rights.txt already exists!")
+    if (is.null(x)){
+      
+      # Write to path
+      
+      value <- file.copy(
+        from = system.file(
+          '/templates/intellectual_rights_ccby4.0.txt',
+          package = 'EMLassemblyline'
+        ),
+        to = paste0(
+          path,
+          "/intellectual_rights.txt"
+        )
+      )
+      
+      if (isTRUE(value)){
+        message("Importing intellectual_rights.txt.")
+      } else {
+        message("intellectual_rights.txt already exists!")
+      }
+      
+      # If using x ...
+      
+    } else if (!is.null(x)){
+      
+      # If content is NA ...
+      
+      if (any(is.na(x$template$intellectual_rights.txt$content))){
+        
+        # Add to x
+        
+        message("Importing intellectual_rights.txt.")
+        
+        x$template$intellectual_rights.txt$content <- EML::set_TextType(
+          file = system.file(
+            '/templates/intellectual_rights_ccby4.0.txt',
+            package = 'EMLassemblyline'
+          )
+        )
+        
+       # Otherwise ...
+         
+      } else {
+        
+        message("intellectual_rights.txt already exists!")
+        
+      }
+      
     }
     
   }
   
   # Import keywords.txt -------------------------------------------------------
 
-  value <- file.copy(
-    from = system.file(
-      '/templates/keywords.txt',
-      package = 'EMLassemblyline'
-    ),
-    to = paste0(
-      path,
-      "/keywords.txt"
-    )
-  )
+  # If not using x ... 
   
-  if (isTRUE(value)){
-    message("Importing keywords.txt.")
-  } else {
-    message("keywords.txt already exists!")
+  if (is.null(x)){
+    
+    # Write to path
+    
+    value <- file.copy(
+      from = system.file(
+        '/templates/keywords.txt',
+        package = 'EMLassemblyline'
+      ),
+      to = paste0(
+        path,
+        "/keywords.txt"
+      )
+    )
+    
+    if (isTRUE(value)){
+      message("Importing keywords.txt.")
+    } else {
+      message("keywords.txt already exists!")
+    }
+    
+    # If using x ...
+    
+  } else if (!is.null(x)){
+    
+    # If content is NA ...
+    
+    if (any(is.na(x$template$keywords.txt$content))){
+      
+      # Add to x
+      
+      message("Importing keywords.txt.")
+      
+      x$template$keywords.txt$content <- utils::read.table(
+        file = system.file(
+          '/templates/keywords.txt',
+          package = 'EMLassemblyline'
+        ), 
+        header = T,
+        sep = '\t',
+        as.is = T
+      )
+     
+      # Otherwise ...
+       
+    } else {
+      
+      message("keywords.txt already exists!")
+      
+    }
+    
   }
   
   # Import methods.txt --------------------------------------------------------
   
-  value <- file.copy(
-    from = system.file(
-      '/templates/methods.txt',
-      package = 'EMLassemblyline'
-    ),
-    to = paste0(
-      path,
-      "/methods.txt"
+  # If not using x ... 
+  
+  if (is.null(x)){
+    
+    # Write to path
+    
+    value <- file.copy(
+      from = system.file(
+        '/templates/methods.txt',
+        package = 'EMLassemblyline'
+      ),
+      to = paste0(
+        path,
+        "/methods.txt"
+      )
     )
-  )
-  
-  if (isTRUE(value)){
-    message("Importing methods.txt.")
-  } else {
-    message("methods.txt already exists!")
+    
+    if (isTRUE(value)){
+      message("Importing methods.txt.")
+    } else {
+      message("methods.txt already exists!")
+    }
+    
+    # If using x ...
+    
+  } else if (!is.null(x)){
+    
+    # If content is NA ...
+    
+    if (any(is.na(x$template$methods.txt$content))){
+      
+      # Add to x
+      
+      message("Importing methods.txt.")
+      
+      x$template$methods.txt$content <- EML::set_methods(
+        methods_file = system.file(
+          '/templates/methods.txt',
+          package = 'EMLassemblyline'
+        )
+      )
+      
+      # Otherwise ...
+      
+    } else {
+      
+      message("methods.txt already exists!")
+      
+    }
+    
   }
-  
+
   # Import personnel.txt ------------------------------------------------------
   
-  value <- file.copy(
-    from = system.file(
-      '/templates/personnel.txt',
-      package = 'EMLassemblyline'
-    ),
-    to = paste0(
-      path,
-      "/personnel.txt"
-    )
-  )
+  # If not using x ... 
   
-  if (isTRUE(value)){
-    message("Importing personnel.txt.")
-  } else {
-    message("personnel.txt already exists!")
+  if (is.null(x)){
+    
+    # Write to path
+    
+    value <- file.copy(
+      from = system.file(
+        '/templates/personnel.txt',
+        package = 'EMLassemblyline'
+      ),
+      to = paste0(
+        path,
+        "/personnel.txt"
+      )
+    )
+    
+    if (isTRUE(value)){
+      message("Importing personnel.txt.")
+    } else {
+      message("personnel.txt already exists!")
+    }
+    
+    # If using x ...
+    
+  } else if (!is.null(x)){
+    
+    # If content is NA ...
+    
+    if (any(is.na(x$template$personnel.txt$content))){
+      
+      # Add to x
+      
+      message("Importing personnel.txt.")
+      
+      x$template$personnel.txt$content <- utils::read.table(
+        file = system.file(
+          '/templates/personnel.txt',
+          package = 'EMLassemblyline'
+        ), 
+        header = T,
+        sep = '\t',
+        as.is = T
+      )
+      
+      # Otherwise ...
+      
+    } else {
+      
+      message("personnel.txt already exists!")
+      
+    }
+    
   }
   
   # Import attributes templates -----------------------------------------------
@@ -494,6 +849,16 @@ import_templates <- function(path, data.path = path, license, data.table = NULL,
     
   }
   
+  # Return --------------------------------------------------------------------
+  
+  if (!is.null(x)){
+    
+    return(x)
+    
+  }
+  
   message("Done.")
 
 }
+
+
