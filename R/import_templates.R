@@ -63,7 +63,8 @@
 #'     
 
 import_templates <- function(path, data.path = path, license, 
-                             data.table = NULL, x = NULL, data.files = NULL){
+                             data.table = NULL, x = NULL, write.file = TRUE,
+                             data.files = NULL){
   
   message('Importing metadata templates')
   
@@ -73,10 +74,16 @@ import_templates <- function(path, data.path = path, license,
   
   if (!is.null(x)){
     
-    # Set path to arbitrary value
+    # If path is not defined ...
     
-    path <- 'x'
-    
+    if (missing(path)){
+      
+      # Set path to arbitrary value
+      
+      path <- 'x'
+
+    }
+
     # Get data.path and data.table
     
     if (!is.null(x$data.table)){
@@ -90,13 +97,21 @@ import_templates <- function(path, data.path = path, license,
   }
 
   # Validate arguments and parameterize ---------------------------------------
-    
+
   if (is.null(path)){
     stop('Input argument "path" is missing! Specify the path to your dataset working directory.')
+  }
+  
+  if ((path == 'x') && isTRUE(write.file)){
+    stop('Input argument "write.file" is TRUE, but path is missing. No templates written to file.') 
   }
 
   if (!is.null(data.files)){
     stop('Input argument "data.files" has been deprecated. Use "data.table" instead.')
+  }
+  
+  if (missing(license)){
+    stop('Input argument "license" is missing!')
   }
   
   license.low <- tolower(license)
@@ -138,9 +153,9 @@ import_templates <- function(path, data.path = path, license,
 
   # Import abstract.txt -------------------------------------------------------
   
-  # If not using x ... 
+  # If writing to file ...
   
-  if (is.null(x)){
+  if (isTRUE(write.file)){
     
     # Write to path
     
@@ -155,17 +170,19 @@ import_templates <- function(path, data.path = path, license,
       )
     )
     
+    # Send status
+    
     if (isTRUE(value)){
       message("Importing abstract.txt.")
     } else {
       message("abstract.txt already exists!")
     }
-    
-    # If using x ...
+
+  # If adding to x ...
     
   } else if (!is.null(x)){
     
-    # If content is NA ...
+    # If template doesn't exist ...
     
     if (any(is.na(x$template$abstract.txt$content))){
       
@@ -180,7 +197,17 @@ import_templates <- function(path, data.path = path, license,
         )
       )
       
-      # Otherwise ...
+      # If path is not NULL ...
+      
+      if (path != 'x'){
+        
+        # Add path
+        
+        x$template$abstract.txt$path <- path
+        
+      }
+      
+    # If template does exist ...
       
     } else {
       
@@ -192,9 +219,9 @@ import_templates <- function(path, data.path = path, license,
   
   # Import additional_info.txt ------------------------------------------------
   
-  # If not using x ... 
+  # If writing to file ... 
   
-  if (is.null(x)){
+if (isTRUE(write.file)){
     
     # Write to path
     
@@ -209,21 +236,23 @@ import_templates <- function(path, data.path = path, license,
       )
     )
     
+    # Send status
+    
     if (isTRUE(value)){
       message("Importing additional_info.txt.")
     } else {
       message("additional_info.txt already exists!")
     }
     
-    # If using x ...
+    # If adding to x ...
     
   } else if (!is.null(x)){
     
-    # If content is NA ...
+    # If template doesn't exist ...
     
     if (any(is.na(x$template$additional_info.txt$content))){
       
-      # Add to x
+      # Add template to x
       
       message("Importing additional_info.txt")
       
@@ -234,7 +263,17 @@ import_templates <- function(path, data.path = path, license,
         )
       )
       
-      # Otherwise ...
+      # If path is not NULL ...
+      
+      if (path != 'x'){
+        
+        # Add path to x
+        
+        x$template$additional_info.txt$path <- path
+        
+      }
+      
+    # If template exist ...
       
     } else {
       
@@ -246,9 +285,9 @@ import_templates <- function(path, data.path = path, license,
   
   # Import bounding_boxes.txt -------------------------------------------------
   
-  # If not using x ... 
+  # If writing to file ...
   
-  if (is.null(x)){
+  if (isTRUE(write.file)){
     
     # Write to path
     
@@ -263,21 +302,23 @@ import_templates <- function(path, data.path = path, license,
       )
     )
     
+    # Send status
+    
     if (isTRUE(value)){
       message("Importing bounding_boxes.txt.")
     } else {
       message("bounding_boxes.txt already exists!")
     }
     
-    # If using x ...
+    # If adding to x ...
     
   } else if (!is.null(x)){
 
-    # If content is NA ...
+    # If template doesn't exist ...
     
     if (any(is.na(x$template$bounding_boxes.txt$content))){
       
-      # Add to x
+      # Add template to x
       
       message("Importing bounding_boxes.txt.")
       
@@ -291,8 +332,18 @@ import_templates <- function(path, data.path = path, license,
         as.is = T
       )
       
-      # Otherwise ...
+      # If path is not NULL ...
       
+      if (path != 'x'){
+        
+        # Add path to x
+        
+        x$template$bounding_boxes.txt$path <- path
+        
+      }
+      
+    # If template exists ...
+
     } else {
       
       message("bounding_boxes.txt already exists!")
@@ -303,9 +354,9 @@ import_templates <- function(path, data.path = path, license,
   
   # Import custom_units.txt ---------------------------------------------------
   
-  # If not using x ... 
+  # If writing to file ...
   
-  if (is.null(x)){
+  if (isTRUE(write.file)){
     
     # Write to path
     
@@ -320,21 +371,23 @@ import_templates <- function(path, data.path = path, license,
       )
     )
     
+    # Send status
+    
     if (isTRUE(value)){
       message("Importing custom_units.txt.")
     } else {
       message("custom_units.txt already exists!")
     }
     
-    # If using x ...
+    # If adding to x ...
     
   } else if (!is.null(x)){
     
-    # If content is NA ...
+    # If template doesn't exist ...
     
     if (any(is.na(x$template$custom_units.txt$content))){
       
-      # Add to x
+      # Add template to x
       
       message("Importing custom_units.txt.")
       
@@ -347,8 +400,18 @@ import_templates <- function(path, data.path = path, license,
         sep = '\t',
         as.is = T
       )
-     
-      # Otherwise ...
+      
+      # If path is not NULL ...
+      
+      if (path != 'x'){
+        
+        # Add path to x
+        
+        x$template$custom_units.txt$path <- path
+        
+      }
+      
+    # If template exists ...
        
     } else {
       
@@ -364,9 +427,9 @@ import_templates <- function(path, data.path = path, license,
   
   if (license.low == "cc0"){
     
-    # If not using x ... 
+    # If writing to file ...
     
-    if (is.null(x)){
+    if (isTRUE(write.file)){
       
       # Write to path
       
@@ -381,23 +444,23 @@ import_templates <- function(path, data.path = path, license,
         )
       )
       
+      # Send status
+      
       if (isTRUE(value)){
         message("Importing intellectual_rights.txt.")
       } else {
         message("intellectual_rights.txt already exists!")
       }
       
-      # If using x ...
+      # If adding x ...
       
     } else if (!is.null(x)){
-      
-      # If content is not logical ...
-      
-      # If content is NA ...
+
+      # If template doesn't exist ...
       
       if (any(is.na(x$template$intellectual_rights.txt$content))){
         
-        # Add to x
+        # Add template to x
         
         message("Importing intellectual_rights.txt.")
         
@@ -408,7 +471,17 @@ import_templates <- function(path, data.path = path, license,
           )
         )
         
-        # Otherwise ...
+        # If path is not NULL ...
+        
+        if (path != 'x'){
+          
+          # Add path to x
+          
+          x$template$intellectual_rights.txt$path <- path
+          
+        }
+        
+      # If template exists ...
         
       } else {
         
@@ -422,9 +495,9 @@ import_templates <- function(path, data.path = path, license,
 
   } else if (license.low == "ccby"){
     
-    # If not using x ... 
+    # If writing to file ...
     
-    if (is.null(x)){
+    if (isTRUE(write.file)){
       
       # Write to path
       
@@ -439,21 +512,23 @@ import_templates <- function(path, data.path = path, license,
         )
       )
       
+      # Send status
+      
       if (isTRUE(value)){
         message("Importing intellectual_rights.txt.")
       } else {
         message("intellectual_rights.txt already exists!")
       }
       
-      # If using x ...
+      # If adding to x ...
       
     } else if (!is.null(x)){
       
-      # If content is NA ...
+      # If template doesn't exist ...
       
       if (any(is.na(x$template$intellectual_rights.txt$content))){
         
-        # Add to x
+        # Add template to x
         
         message("Importing intellectual_rights.txt.")
         
@@ -464,7 +539,17 @@ import_templates <- function(path, data.path = path, license,
           )
         )
         
-       # Otherwise ...
+        # If path is not NULL ...
+        
+        if (path != 'x'){
+          
+          # Add path to x
+          
+          x$template$intellectual_rights.txt$path <- path
+          
+        }
+        
+      # If template exists ...
          
       } else {
         
@@ -478,9 +563,9 @@ import_templates <- function(path, data.path = path, license,
   
   # Import keywords.txt -------------------------------------------------------
 
-  # If not using x ... 
+  # If writing to file ...
   
-  if (is.null(x)){
+  if (isTRUE(write.file)){
     
     # Write to path
     
@@ -495,21 +580,23 @@ import_templates <- function(path, data.path = path, license,
       )
     )
     
+    # Send status
+    
     if (isTRUE(value)){
       message("Importing keywords.txt.")
     } else {
       message("keywords.txt already exists!")
     }
     
-    # If using x ...
+    # If adding to x ...
     
   } else if (!is.null(x)){
     
-    # If content is NA ...
+    # If template doesn't exist ...
     
     if (any(is.na(x$template$keywords.txt$content))){
       
-      # Add to x
+      # Add template to x
       
       message("Importing keywords.txt.")
       
@@ -523,7 +610,17 @@ import_templates <- function(path, data.path = path, license,
         as.is = T
       )
      
-      # Otherwise ...
+      # If path is not NULL ...
+      
+      if (path != 'x'){
+        
+        # Add path to x
+        
+        x$template$keywords.txt$path <- path
+        
+      }
+      
+    # If template exists ...
        
     } else {
       
@@ -535,9 +632,9 @@ import_templates <- function(path, data.path = path, license,
   
   # Import methods.txt --------------------------------------------------------
   
-  # If not using x ... 
+  # If writing to file ...
   
-  if (is.null(x)){
+  if (isTRUE(write.file)){
     
     # Write to path
     
@@ -552,21 +649,23 @@ import_templates <- function(path, data.path = path, license,
       )
     )
     
+    # Send status
+    
     if (isTRUE(value)){
       message("Importing methods.txt.")
     } else {
       message("methods.txt already exists!")
     }
     
-    # If using x ...
+    # If adding to x ...
     
   } else if (!is.null(x)){
     
-    # If content is NA ...
+    # If template doesn't exist ...
     
     if (any(is.na(x$template$methods.txt$content))){
       
-      # Add to x
+      # Add template to x
       
       message("Importing methods.txt.")
       
@@ -577,7 +676,17 @@ import_templates <- function(path, data.path = path, license,
         )
       )
       
-      # Otherwise ...
+      # If path is not NULL ...
+      
+      if (path != 'x'){
+        
+        # Add path to x
+        
+        x$template$methods.txt$path <- path
+        
+      }
+      
+    # If template exists ...
       
     } else {
       
@@ -589,9 +698,9 @@ import_templates <- function(path, data.path = path, license,
 
   # Import personnel.txt ------------------------------------------------------
   
-  # If not using x ... 
+  # If writing to file ...
   
-  if (is.null(x)){
+  if (isTRUE(write.file)){
     
     # Write to path
     
@@ -606,21 +715,23 @@ import_templates <- function(path, data.path = path, license,
       )
     )
     
+    # Send status
+    
     if (isTRUE(value)){
       message("Importing personnel.txt.")
     } else {
       message("personnel.txt already exists!")
     }
     
-    # If using x ...
+    # If adding to x ...
     
   } else if (!is.null(x)){
     
-    # If content is NA ...
+    # If template doesn't exist ...
     
     if (any(is.na(x$template$personnel.txt$content))){
       
-      # Add to x
+      # Add template to x
       
       message("Importing personnel.txt.")
       
@@ -634,7 +745,17 @@ import_templates <- function(path, data.path = path, license,
         as.is = T
       )
       
-      # Otherwise ...
+      # If path is not NULL ...
+      
+      if (path != 'x'){
+        
+        # Add path to x
+        
+        x$template$personnel.txt$path <- path
+        
+      }
+      
+    # If template exists ...
       
     } else {
       
@@ -648,7 +769,8 @@ import_templates <- function(path, data.path = path, license,
   
   if (!is.null(data.table)){
     
-    # Read data.tables into x structure if not already done
+    # Read data.tables into x structure for additional processing if not 
+    # already done
     
     if (is.null(x)){
       
@@ -781,11 +903,11 @@ import_templates <- function(path, data.path = path, license,
         attributes[[i]]$dateTimeFormatString[use_i] <- "!Add datetime specifier here!"
       }
       
-      # Write table to file or add to list x
+      # Write template to file or add template to list x
       
       # If writing to file ...
       
-      if (exists('data_read_2_x')){
+      if (isTRUE(write.file)){
         
         value <- file.exists(
           paste0(
@@ -833,8 +955,8 @@ import_templates <- function(path, data.path = path, license,
           )
           
         }
-        
-        # Otherwise if adding to x ...
+
+      # If adding template to x ...
         
       } else if (!exists('data_read_2_x')){
 
@@ -867,8 +989,8 @@ import_templates <- function(path, data.path = path, license,
           )
 
           names(missing_template) <- paste0(
-            'attributes_',
-            data.table[i],
+            'attributes_', 
+            substr(data.table[i], 1, nchar(data.table[i]) - 4), 
             '.txt'
           )
           
@@ -876,6 +998,16 @@ import_templates <- function(path, data.path = path, license,
             x$template, 
             missing_template
           )
+          
+          # If path is not NULL ...
+          
+          if (path != 'x'){
+            
+            # Add path to x
+            
+            x$template[[paste0('attributes_', substr(data.table[i], 1, nchar(data.table[i]) - 4), '.txt')]]$path <- path
+            
+          }
           
         } else {
           
@@ -900,6 +1032,12 @@ import_templates <- function(path, data.path = path, license,
   if (!exists('data_read_2_x')){
     
     return(x)
+    
+  }
+  
+  if (!isTRUE(write.file)){
+    
+    message('write.file = FALSE, no templates will be written')
     
   }
   

@@ -378,4 +378,34 @@ testthat::test_that('Expect standard structure', {
 
   }
   
+  # data.table has data.path
+  
+  # For each data.table ...
+  
+  for (i in 1:length(names(output$data.table))){
+    
+    # path exists
+    
+    expect_equal(
+      !is.na(output$data.table[[i]]$path),
+      TRUE
+    )
+
+  }
+  
+  # other.entity has data.path
+  
+  # For each other.entity ...
+  
+  for (i in 1:length(names(output$other.entity))){
+    
+    # path exists
+    
+    expect_equal(
+      !is.na(output$other.entity[[i]]$path),
+      TRUE
+    )
+    
+  }
+
 })
