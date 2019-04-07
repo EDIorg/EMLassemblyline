@@ -13,7 +13,8 @@ define_catvars(path, data.path = path, x = NULL, write.file = TRUE)
 
 \item{x}{(named list) Alternative input to all `EMLassemblyline` functions (i.e. 
 rather than supplying the files themselves). Use 
-`EMLassemblyline::read_files` to create this list.}
+`read_files()` to create this list, then use `import_templates()` to 
+populate additional content.}
 
 \item{write.file}{(logical) Write `catvars` file to `path`.}
 }

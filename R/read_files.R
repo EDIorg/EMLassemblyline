@@ -360,7 +360,7 @@ read_files <- function(path, data.path = path, data.table = NULL,
       
       # If the file exists then add content, otherwise set as NA
       
-      if (file.exists(paste0(path, '/', attr.templates$regexpr[use_i]))){
+      if (file.exists(paste0(path, '/', path_files[i]))){
         
         output$template[[i]]$content <- utils::read.table(
           file = paste0(

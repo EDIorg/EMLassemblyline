@@ -16,7 +16,8 @@
 #' @param x
 #'     (named list) Alternative input to all `EMLassemblyline` functions (i.e. 
 #'     rather than supplying the files themselves). Use 
-#'     `EMLassemblyline::read_files` to create this list.
+#'     `read_files()` to create this list, then use `import_templates()` to 
+#'     populate additional content.
 #' @param write.file
 #'     (logical) Write `catvars` file to `path`.
 #'
@@ -42,89 +43,125 @@
 define_catvars <- function(path, data.path = path, x = NULL, 
                            write.file = TRUE) {
   
-  # # Import content from x -----------------------------------------------------
-  # 
-  # # If x exists ...
-  # 
-  # if (!is.null(x)){
-  #   
-  #   # If path is not defined ...
-  #   
-  #   if (missing(path)){
-  #     
-  #     # Set path to arbitrary value
-  #     
-  #     path <- 'x'
-  #     
-  #   }
-  #   
-  #   # Get data.path and data.table
-  #   
-  #   if (!is.null(x$data.table)){
-  #     
-  #     data.path <- x$data.table[[1]]$path
-  #     
-  #     data.table <- names(x$data.table)
-  #     
-  #   }
-  #   
-  # }
+  message('Creating templates for categorical variables')
   
-  # Check arguments and parameterize ------------------------------------------
-  
-  if (missing(path)){
-    stop('Input argument "path" is missing! Specify the path to your dataset working directory.')
-  }
-  
-  # Detect operating system
-  
-  os <- EDIutils::detect_os()
-  
-  # Get attribute file names and data file names
-  
-  message("Identifying data table names.")
-  
-  files <- list.files(path)
-  use_i <- stringr::str_detect(string = files,
-                      pattern = "^attributes")
-  if (sum(use_i) == 0){
-    stop('There are no attributes.txt files in your dataset working directory. Please fix this.')
-  }
-  attribute_files <- files[use_i]
-  table_names_base <- stringr::str_sub(string = attribute_files,
-                              start = 12,
-                              end = nchar(attribute_files)-4)
-  data_files <- list.files(data.path)
-  use_i <- stringr::str_detect(string = data_files,
-                      pattern = stringr::str_c("^", table_names_base, collapse = "|"))
-  table_names <- data_files[use_i]
-  data_files <- table_names
-  
-  # Send warning if data table name is repeated more than once
-  
-  if (length(unique(tools::file_path_sans_ext(data_files))) != length(data_files)){
-    stop('Duplicate data file names exist in this directory. Please remove duplicates, even if they are a different file type.')
-  }
-  
-  # Validate fields of data.files
-  
-  EDIutils::validate_fields(path = data.path, data.files = data_files)
-  
-  # Set file names to be written
+  # Import content from x -----------------------------------------------------
 
-  fname_table_catvars <- stringr::str_c("catvars_", table_names_base, ".txt")
+  # If x exists ...
 
-  # Detect field delimiters of data files
+  if (!is.null(x)){
+    
+    # Validate input arguments
+    
+    if (!missing(path)){
+      stop('Input argument "path" is not allowed when using "x".')
+    }
+    
+    if (!missing(data.path)){
+      stop('Input argument "data.path" is not allowed when using "x".')
+    }
+    
+    if (isTRUE(write.file)){
+      stop('Input argument "write.file" must be FALSE when using "x".')
+    }
+    
+    # Add arguments
+    
+    path <- x$template[[1]]$path
+    
+    # Validate x content ...
+
+  }
   
-  delim_guess <- EDIutils::detect_delimeter(path = data.path, data.files = data_files, os)
+  # Import content from path and data.path ------------------------------------
   
+  # If x doesn't exist ...
+  
+  if (is.null(x)){
+    
+    # Validate input arguments ...
+    
+    if (missing(path)){
+      stop('Input argument "path" is missing! Specify the path to your dataset working directory.')
+    }
+    
+    # Detect operating system
+    
+    os <- EDIutils::detect_os()
+    
+    # Get attribute file names and data file names
+
+    files <- list.files(path)
+    use_i <- stringr::str_detect(string = files,
+                                 pattern = "^attributes")
+    if (sum(use_i) == 0){
+      stop('There are no attributes.txt files in your dataset working directory. Please fix this.')
+    }
+    attribute_files <- files[use_i]
+    table_names_base <- stringr::str_sub(string = attribute_files,
+                                         start = 12,
+                                         end = nchar(attribute_files)-4)
+    data_files <- list.files(data.path)
+    use_i <- stringr::str_detect(string = data_files,
+                                 pattern = stringr::str_c("^", table_names_base, collapse = "|"))
+    table_names <- data_files[use_i]
+    data_files <- table_names
+    
+    # Send warning if data table name is repeated more than once
+    
+    if (length(unique(tools::file_path_sans_ext(data_files))) != length(data_files)){
+      stop('Duplicate data file names exist in this directory. Please remove duplicates, even if they are a different file type.')
+    }
+    
+    # Validate fields of data.files
+    
+    EDIutils::validate_fields(path = data.path, data.files = data_files)
+    
+    # Set file names to be written
+    
+    fname_table_catvars <- stringr::str_c("catvars_", table_names_base, ".txt")
+    
+    # Detect field delimiters of data files
+    
+    delim_guess <- EDIutils::detect_delimeter(path = data.path, data.files = data_files, os)
+    
+    # Read templates and data.table into list
+    
+    x <- read_files(
+      path = path,
+      data.path = data.path,
+      data.table = data_files
+    )
+    
+    data_read_2_x <- TRUE
+    
+  }
   
   # Loop through data tables --------------------------------------------------
   
+  table_names <- names(x$data.table)
+  
+  fname_table_catvars <- paste0(
+    'catvars_',
+    substr(names(x$data.table), 1, (nchar(names(x$data.table))-4)),
+    '.txt'
+  )
+  
+  attribute_files <- names(x$template)[
+    stringr::str_detect(
+      names(x$template),
+      'attributes_[:graph:]*.txt$'
+    )
+  ]
+  
+  files <- names(x$template)
+  
   for (i in 1:length(attribute_files)){
     
-    use_i <- stringr::str_detect(string = files,
-                        pattern = fname_table_catvars[i])
+    use_i <- stringr::str_detect(
+      string = files,
+      pattern = fname_table_catvars[i]
+    )
     
     if (sum(use_i) > 0){
       
@@ -135,30 +172,8 @@ define_catvars <- function(path, data.path = path, x = NULL,
     } else {
       
       # Read attributes_datatablename.txt
-      
-      message(paste("Reading ", attribute_files[i], ".", sep = ""))
-      
-      df_attributes <- utils::read.table(
-        paste(path,
-              "/",
-              attribute_files[i],
-              sep = ""),
-        header = T,
-        sep="\t",
-        quote="\"",
-        as.is=TRUE,
-        comment.char = "",
-        fill = T,
-        colClasses = rep("character", 7))
-      df_attributes <- df_attributes[ ,1:7]
-      colnames(df_attributes) <- c("attributeName",
-                                   "attributeDefinition",
-                                   "class",
-                                   "unit",
-                                   "dateTimeFormatString",
-                                   "missingValueCode",
-                                   "missingValueCodeExplanation")
-      
+
+      df_attributes <- x$template[[attribute_files[i]]]$content
       
       # Build catvars table
       
@@ -166,32 +181,12 @@ define_catvars <- function(path, data.path = path, x = NULL,
       
       # Read data table
       
-      message(paste("Reading ", table_names[i], ".", sep = ""))
-      
-      data_path <- paste(data.path,
-                            "/",
-                            data_files[i],
-                            sep = "")
-      
-      if (delim_guess[i] == ','){
-          df_table <- utils::read.csv(file = data_path, header = T, quote = '\"', as.is = T, comment.char = '')
-      } else if (delim_guess[i] == '\t'){
-          df_table <- utils::read.table(data_path, header = T, sep = '\t', quote = "\"", as.is = T, comment.char = '')
-      }
-      
-      # df_table <- utils::read.table(data_path,
-      #                        header=TRUE,
-      #                        sep=delim_guess[i],
-      #                        quote="\"",
-      #                        as.is=TRUE,
-      #                        comment.char = "")
+      df_table <- x$data.table[[table_names[i]]]$content
 
       # If there are no catvars then skip to the next file
       
       if (length(catvars_I) > 0){
-        
-        message("Identifying categorical variables.")
-        
+
         rows <- 0
         for (j in 1:length(catvars_I)){
           factor_names <- unique(
@@ -243,27 +238,65 @@ define_catvars <- function(path, data.path = path, x = NULL,
           catvars <- catvars[!use_i, ]
         }
 
-        # Write catvar table
-        
-        lib_path <- system.file(
-          '/example_dataset/metadata_templates/abstract.txt',
-          package = 'EMLassemblyline')
-        lib_path <- substr(lib_path, 1, nchar(lib_path) - 48)
-        
-        if (!stringr::str_detect(path, lib_path)){
+        # Write template to file
+
+        if (isTRUE(write.file)){
           
-          if (isTRUE(write.file)){
+          message(paste("Writing", fname_table_catvars[i]))
+          suppressWarnings(utils::write.table(catvars,
+                                              paste(path,
+                                                    "/",
+                                                    fname_table_catvars[i],
+                                                    sep = ""),
+                                              sep = "\t",
+                                              row.names = F,
+                                              quote = F,
+                                              fileEncoding = "UTF-8"))
+        
+        # Add template to x
+          
+        } else if (!exists('data_read_2_x')){
+          
+          value <- stringr::str_detect(
+            names(x$template),
+            fname_table_catvars[i]
+          )
+          
+          if (!any(value)){
             
-            message(paste("Writing", fname_table_catvars[i]))
-            suppressWarnings(utils::write.table(catvars,
-                                                paste(path,
-                                                      "/",
-                                                      fname_table_catvars[i],
-                                                      sep = ""),
-                                                sep = "\t",
-                                                row.names = F,
-                                                quote = F,
-                                                fileEncoding = "UTF-8"))
+            message(
+              paste0(
+                "Adding ",
+                fname_table_catvars[i],
+                ' to x'
+              )
+            )
+            
+            missing_template <- list(
+              content = catvars,
+              path = path
+            )
+            
+            missing_template <- list(
+              missing_template
+            )
+            
+            names(missing_template) <- fname_table_catvars[i]
+            
+            x$template <- c(
+              x$template, 
+              missing_template
+            )
+
+          } else {
+            
+            message(
+              paste0(
+                fname_table_catvars[i],
+                " already exists!"
+              )
+            )
+            
           }
           
         }
@@ -279,13 +312,19 @@ define_catvars <- function(path, data.path = path, x = NULL,
     }
 
   }
+  
+  if (!isTRUE(write.file) & exists('data_read_2_x')){
+    
+    message('write.file = FALSE, no templates were written')
+    
+  }
 
   message("Done.")
   
   # Return
   
-  if (isTRUE(return.obj)){
-    catvars
+  if (!exists('data_read_2_x')){
+    x
   }
 
 }

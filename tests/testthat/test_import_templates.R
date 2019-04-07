@@ -68,7 +68,7 @@ testthat::test_that('Default usage (write files to path)', {
   expect_message(
     import_templates(
       path = system.file(
-        '/examples',
+        '/examples/templates',
         package = 'EMLassemblyline'
       ),
       license = 'CC0',
