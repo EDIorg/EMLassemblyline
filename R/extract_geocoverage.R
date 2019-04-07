@@ -7,8 +7,7 @@
 #'
 #' @usage 
 #'     extract_geocoverage(path, data.path = path, data.table, lat.col, 
-#'     lon.col, site.col, return.obj = FALSE, write.file = TRUE, 
-#'     data.file = NULL)
+#'     lon.col, site.col, write.file = TRUE, data.file = NULL)
 #'
 #' @param path 
 #'     (character) Path to where the template(s) will be imported.
@@ -25,104 +24,201 @@
 #' @param site.col
 #'     (character) Name of site column, where site is the name of the location
 #'     specified by `lat.col` and `lon.col`.
-#' @param return.obj
-#'     (logical) Return the `geocoverage` data.frame.
+#' @param x
+#'     (named list) Alternative input/output to `EMLassemblyline` functions. 
+#'     Use `read_files()` to create `x`.
 #' @param write.file
-#'     (logical) Write `geocoverage` file to `path`.
+#'     (logical) Write `geographic_coverage.txt` to `path`.
 #' @param data.file
 #'     NOTE: `data.file` has been deprecated. Use `data.table` instead.
 #'
 #' @return 
 #'     \itemize{
-#'         \item{`Status messages` describing the geocoverage creation status}
 #'         \item{`geographic_coverage.txt` A tab delimited file written to 
 #'         `path` containing geographic coordinates and corresponding site 
 #'         names.}
-#'         \item{`geocoverage data.frame` when `return.obj = TRUE`}
+#'         \item{If using `x`, then content of `geographic_coverage.txt` is 
+#'         added to `x` under `/x/templates`}
 #'     }
 #'     
 #' @details 
-#'     Existing template will not be overwritten by subsequent calls to 
-#'     `extract_geocoverage`.     
+#'     Existing templates will not be overwritten by subsequent calls to 
+#'     `extract_geocoverage`.
 #'
 #' @export
 #'
 
-
 extract_geocoverage <- function(path, data.path = path, data.table, lat.col, 
-                                lon.col, site.col, return.obj = FALSE,
-                                write.file = TRUE, data.file = NULL){
+                                lon.col, site.col, x = NULL, write.file = TRUE, 
+                                data.file = NULL){
   
-  # Check arguments and parameterize ------------------------------------------
+  message('Creating geographic coverage template.')
   
-  message("Checking input arguments.")
+  # Validate arguments and import data ------------------------------------------
   
-  if (missing(path)){
-    stop('Input argument "path" is missing! Specify the path to dataset working directory.')
-  }
-  if (!is.null(data.file)){
-    stop('Input argument "data.file" has been deprecated. Use "data.table" instead.')
-  }
-  if (missing(data.table)){
-    stop('Input argument "data.table" is missing! Specify the data file containing the geographic coordinates.')
-  }
-  if (missing(lat.col)){
-    stop('Input argument "lat.col" is missing! Specify latitude column name.')
-  }
-  if (missing(lon.col)){
-    stop('Input argument "lon.col" is missing! Specify longitude column name.')
-  }
-  if (missing(site.col)){
-    stop('Input argument "site.col" is missing! Specify site column name.')
+  # If not using x ...
+  
+  if (is.null(x)){
+    
+    # path
+    
+    if (missing(path)){
+      
+      stop('Input argument "path" is missing! Specify the path to your dataset working directory.')
+      
+    }
+    
+    # data.file
+    
+    if (!is.null(data.file)){
+      
+      stop('Input argument "data.file" has been deprecated. Use "data.table" instead.')
+      
+    }
+    
+    # data.table
+    
+    if (missing(data.table)){
+      
+      stop('Input argument "data.table" is missing! Specify the data file containing the geographic coordinates.')
+      
+    }
+    
+    # lat.col
+    
+    if (missing(lat.col)){
+      
+      stop('Input argument "lat.col" is missing! Specify latitude column name.')
+      
+    }
+    
+    # lon.col
+    
+    if (missing(lon.col)){
+      
+      stop('Input argument "lon.col" is missing! Specify longitude column name.')
+      
+    }
+    
+    # site.col
+    
+    if (missing(site.col)){
+      
+      stop('Input argument "site.col" is missing! Specify site column name.')
+      
+    }
+    
+    # Validate file name
+    
+    data_file <- EDIutils::validate_file_names(
+      path = data.path, 
+      data.files = data.table
+    )
+    
+    # Validate fields of data.tables
+    
+    EDIutils::validate_fields(
+      path = data.path, 
+      data.files = data_file
+    )
+    
+    # Read data table
+    
+    x <- read_files(
+      path = path,
+      data.path = data.path,
+      data.table = data_file
+    )
+    
+    data_read_2_x <- NA_character_
+    
   }
   
-  # Validate file names
+  # Validate arguments and import data from x -----------------------------------
+  
+  # If using x ...
+  
+  if (!is.null(x)){
+    
+    # path
+    
+    if (missing(path)){
+      
+      path <- NA_character_
 
-  data_file <- EDIutils::validate_file_names(path = data.path, data.files = data.table)
+    }
+    
+    # data.file
+    
+    if (!is.null(data.file)){
+      
+      stop('Input argument "data.file" has been deprecated. Use "data.table" instead.')
+      
+    }
+    
+    # data.table
+    
+    if (missing(data.table)){
+      
+      stop('Input argument "data.table" is missing.')
+      
+    } else {
+      
+      if (!any(data.table %in% names(x$data.table))){
+        
+        stop('Input argument "x" does not contain "data.table".')
+        
+      } else {
+        
+        data_file <- data.table
+        
+      }
+
+    }
+    
+    # lat.col
+    
+    if (missing(lat.col)){
+      
+      stop('Input argument "lat.col" is missing! Specify latitude column name.')
+      
+    }
+    
+    # lon.col
+    
+    if (missing(lon.col)){
+      
+      stop('Input argument "lon.col" is missing! Specify longitude column name.')
+      
+    }
+    
+    # site.col
+    
+    if (missing(site.col)){
+      
+      stop('Input argument "site.col" is missing! Specify site column name.')
+      
+    }
+    
+    # write.file
+    
+    if (isTRUE(write.file)){
+      
+      stop('Input argument "write.file" is not supported when using "x".')
+      
+    }
+    
+  }
   
-  # Validate fields of data.tables
+  # Extract geographic coverage -----------------------------------------------
   
-  EDIutils::validate_fields(path = data.path, data.files = data_file)
-  
-  # Get file names ------------------------------------------------------------
-  
-  files <- list.files(data.path)
-  use_i <- stringr::str_detect(string = files,
-                      pattern = stringr::str_c("^", data_file, collapse = "|"))
-  data_files <- files[use_i]
-  
-  # Detect operating system
-  
-  os <- EDIutils::detect_os()
-  
-  # Detect data file delimeter
-  
-  delim_guess <- EDIutils::detect_delimeter(data.path, data.files = data_file, os)
-  
-  # Read data table -----------------------------------------------------------
-  
-  file_path <- paste(data.path,
-                     "/",
-                     data_file,
-                     sep = "")
-  
-  if (file.exists(paste(data.path, "/geographic_coverage.txt", sep = ""))){
+  if (is.data.frame(x$template[['geographic_coverage.txt']]$content)){
     
     message("geographic_coverage.txt already exists!")
     
-    geocoverage_out <- NULL
-    
   } else {
-    
-    message(paste("Reading ", data_file, ".", sep = ""))
-    
-    if (delim_guess == ','){
-      df_table <- utils::read.csv(file = file_path, header = T, quote = '\"', as.is = T, comment.char = '')
-    } else if (delim_guess == '\t'){
-      df_table <- utils::read.table(file_path, header = T, sep = '\t', quote = "\"", as.is = T, comment.char = '')
-    }
-    
-    df_table <- as.data.frame(df_table)
+
+    df_table <- x$data.table[[data_file]]$content
     
     # Validate column names
     
@@ -158,8 +254,6 @@ extract_geocoverage <- function(path, data.path = path, data.table, lat.col,
     
     # Output lat and long corresponding to sites
     
-    message("Extracting coordinates and site names.")
-    
     latitude_out = c()
     longitude_out = c() 
     site_out = c()
@@ -188,36 +282,72 @@ extract_geocoverage <- function(path, data.path = path, data.table, lat.col,
                                   site = site_out,
                                   stringsAsFactors = F)
     
-    # Write data to file ------------------------------------------------------
+    # Write geographic_coverage.txt -------------------------------------------
     
     if (isTRUE(write.file)){
-    
-      lib_path <- system.file(
-        '/example_dataset/metadata_templates/abstract.txt',
-        package = 'EMLassemblyline')
-      lib_path <- substr(lib_path, 1, nchar(lib_path) - 48)
       
-      if (!stringr::str_detect(path, lib_path)){
-        message("Writing geographic_coverage.txt.")
-        suppressWarnings(utils::write.table(geocoverage_out,
-                                            paste(path,
-                                                  "/",
-                                                  "geographic_coverage.txt", sep = ""),
-                                            sep = "\t",
-                                            row.names = F,
-                                            quote = F,
-                                            fileEncoding = "UTF-8"))
+      message('Writing geographic_coverage.txt to path')
+      
+      suppressWarnings(
+        utils::write.table(
+          geocoverage_out,
+          paste0(
+            path,
+            "/",
+            "geographic_coverage.txt"
+          ),
+          sep = "\t",
+          row.names = F,
+          quote = F,
+          fileEncoding = "UTF-8"
+        )
+      )
+      
+    } else if (!is.null(x)){
+      
+      value <- stringr::str_detect(
+        names(x$template),
+        'geographic_coverage.txt'
+      )
+      
+      if (!any(value)){
+        
+        message('Adding geographic_coverage.txt to x.')
+        
+        missing_template <- list(
+          content = geocoverage_out,
+          path = path
+        )
+        
+        missing_template <- list(
+          missing_template
+        )
+        
+        names(missing_template) <- 'geographic_coverage.txt'
+        
+        x$template <- c(
+          x$template, 
+          missing_template
+        )
+        
+      } else {
+        
+        message('geographic_coverage.txt already exists.')
+        
       }
+      
     }
 
   }
-
-  message("Done.")
   
   # Return values -------------------------------------------------------------
   
-  if (isTRUE(return.obj)){
-    geocoverage_out
+  message("Done.")
+  
+  if (!exists('data_read_2_x')){
+    
+    return(x)
+    
   }
 
 }

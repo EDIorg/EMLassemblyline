@@ -1,94 +1,424 @@
-
 context('Extract geographical coverage')
 library(EMLassemblyline)
 
-# Parameterize ----------------------------------------------------------------
+# Test usage with file inputs -------------------------------------------------
 
-path <- system.file('/examples/templates/abstract.txt', 
-                    package = 'EMLassemblyline')
-parent_dir <- substr(path, 1, nchar(path)-32)
-
-# Expect errors ---------------------------------------------------------------
-
-testthat::test_that('Expect errors', {
+testthat::test_that('Test usage with file inputs', {
   
-  expect_error(
-    extract_geocoverage(data.path = paste0(parent_dir, '/data'), 
-                        data.table = 'nitrogen.csv', 
-                        site.col = 'site_name',
-                        lat.col = 'site_lat', 
-                        lon.col = 'site_lon')
-  )
-  
-  expect_error(
-    extract_geocoverage(path = paste0(parent_dir, '/metadata_templates'), 
-                        data.table = 'nitrogen.csv', 
-                        site.col = 'site_name',
-                        lat.col = 'site_lat', 
-                        lon.col = 'site_lon')
-  )
-  
-  expect_error(
-    extract_geocoverage(path = paste0(parent_dir, '/metadata_templates'), 
-                        data.path = paste0(parent_dir, '/data'), 
-                        site.col = 'site_name',
-                        lat.col = 'site_lat', 
-                        lon.col = 'site_lon')
-  )
-  
-  expect_error(
-    extract_geocoverage(path = paste0(parent_dir, '/metadata_templates'), 
-                        data.path = paste0(parent_dir, '/data'), 
-                        data.table = 'nitrogen.csv', 
-                        lat.col = 'site_lat', 
-                        lon.col = 'site_lon')
-  )
-  
-  expect_error(
-    extract_geocoverage(path = paste0(parent_dir, '/metadata_templates'), 
-                        data.path = paste0(parent_dir, '/data'), 
-                        data.table = 'nitrogen.csv', 
-                        site.col = 'site_name',
-                        lon.col = 'site_lon')
-  )
-  
-  expect_error(
-    extract_geocoverage(path = paste0(parent_dir, '/metadata_templates'), 
-                        data.path = paste0(parent_dir, '/data'), 
-                        data.table = 'nitrogen.csv', 
-                        site.col = 'site_name',
-                        lat.col = 'site_lat')
-  )
+  # Missing path results in error
   
   expect_error(
     extract_geocoverage(
-      path = paste0(parent_dir, '/examples/templates'), 
-      data.path = paste0(parent_dir, '/examples/data'), 
-      data.table = 'nitrogen', 
-      site.col = 'site_nameeeee',
-      lat.col = 'site_lat',
-      lon.col = 'site_lon'
+      data.path = system.file(
+        '/examples/data',
+        package = 'EMLassemblyline'
+      ), 
+      data.table = 'nitrogen.csv', 
+      site.col = 'site_name',
+      lat.col = 'site_lat', 
+      lon.col = 'site_lon',
+      write.file = FALSE
     )
   )
   
-
+  # Missing data.path results in error
   
+  expect_error(
+    extract_geocoverage(
+      path = system.file(
+        '/examples/templates'
+      ), 
+      data.table = 'nitrogen.csv', 
+      site.col = 'site_name',
+      lat.col = 'site_lat', 
+      lon.col = 'site_lon',
+      write.file = FALSE
+    )
+  )
+  
+  # Missing data.table results in error
+  
+  expect_error(
+    extract_geocoverage(
+      path = system.file(
+        '/examples/templates',
+        package = 'EMLassemblyline'
+      ), 
+      data.path = system.file(
+        '/examples/data',
+        package = 'EMLassemblyline'
+      ), 
+      site.col = 'site_name',
+      lat.col = 'site_lat', 
+      lon.col = 'site_lon',
+      write.file = FALSE
+    )
+  )
+  
+  # Missing site.col results in error
+  
+  expect_error(
+    extract_geocoverage(
+      path = system.file(
+        '/examples/templates',
+        package = 'EMLassemblyline'
+      ), 
+      data.path = system.file(
+        '/examples/data',
+        package = 'EMLassemblyline'
+      ), 
+      data.table = 'nitrogen.csv', 
+      lat.col = 'site_lat', 
+      lon.col = 'site_lon',
+      write.file = FALSE)
+  )
+  
+  # Missing lat.col results in error
+  
+  expect_error(
+    extract_geocoverage(
+      path = system.file(
+        '/examples/templates',
+        package = 'EMLassemblyline'
+      ), 
+      data.path = system.file(
+        '/examples/data',
+        package = 'EMLassemblyline'
+      ), 
+      data.table = 'nitrogen.csv', 
+      site.col = 'site_name', 
+      lon.col = 'site_lon',
+      write.file = FALSE)
+  )
+  
+  # Missing lon.col results in error
+  
+  expect_error(
+    extract_geocoverage(
+      path = system.file(
+        '/examples/templates',
+        package = 'EMLassemblyline'
+      ), 
+      data.path = system.file(
+        '/examples/data',
+        package = 'EMLassemblyline'
+      ), 
+      data.table = 'nitrogen.csv', 
+      site.col = 'site_name', 
+      lat.col = 'site_lat',
+      write.file = FALSE)
+  )
+  
+  # Misspelled site.col results in error
+  
+  expect_error(
+    suppressMessages(
+      extract_geocoverage(
+        path = system.file(
+          '/examples',
+          package = 'EMLassemblyline'
+        ), 
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ), 
+        data.table = 'nitrogen.csv', 
+        site.col = 'site_nameeee', 
+        lat.col = 'site_lat',
+        lon.col = 'site_lon',
+        write.file = FALSE
+      )
+    )
+  )
+  
+  # Misspelled lat.col results in error
+  
+  expect_error(
+    suppressMessages(
+      extract_geocoverage(
+        path = system.file(
+          '/examples',
+          package = 'EMLassemblyline'
+        ), 
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ), 
+        data.table = 'nitrogen.csv', 
+        site.col = 'site_name', 
+        lat.col = 'site_latt',
+        lon.col = 'site_lon',
+        write.file = FALSE
+      ) 
+    )
+  )
+  
+  # Misspelled lon.col results in error
+  
+  expect_error(
+    suppressMessages(
+      extract_geocoverage(
+        path = system.file(
+          '/examples',
+          package = 'EMLassemblyline'
+        ), 
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ), 
+        data.table = 'nitrogen.csv', 
+        site.col = 'site_name', 
+        lat.col = 'site_lat',
+        lon.col = 'site_lonnnnn',
+        write.file = FALSE
+      )
+    )
+  )
+
 })
 
-# Expect equal ----------------------------------------------------------------
+# Test usage with x inputs ----------------------------------------------------
 
-testthat::test_that('Expect data frame', {
+testthat::test_that('Test usage with x inputs', {
+  
+  # Create x_list and x_no_coverage with and without geographic_coverage.txt, 
+  # respectivly
+  
+  x_list <- read_files(
+    path = system.file(
+      '/examples/templates', 
+      package = 'EMLassemblyline'
+    ),
+    data.path = system.file(
+      '/examples/data',
+      package = 'EMLassemblyline'
+    ),
+    data.table = c(
+      'decomp.csv',
+      'nitrogen.csv'
+    )
+  )
+  
+  x_no_coverage <- x_list
+  
+  x_no_coverage$template$geographic_coverage.txt <- NULL
+
+  # All arguments are supported:
+  # - /x/templates/geographic_coverage.txt is created with expected content
+  # - path is added to /x/templates/geographic_coverage.txt/path
+  # - data.path is not added to x
+  
+  expect_message(
+    extract_geocoverage(
+      path = '/some/path',
+      data.path = '/some/data.path', 
+      data.table = 'nitrogen.csv', 
+      site.col = 'site_name',
+      lat.col = 'site_lat', 
+      lon.col = 'site_lon',
+      x = x_no_coverage,
+      write.file = FALSE
+    )
+  )
+  
   output <- suppressMessages(
     extract_geocoverage(
-      path = paste0(parent_dir, '/examples/templates'), 
-      data.path = paste0(parent_dir, '/examples/data'), 
-      data.table = 'nitrogen', 
+      path = '/some/path',
+      data.path = '/some/data.path', 
+      data.table = 'nitrogen.csv', 
       site.col = 'site_name',
-      lat.col = 'site_lat',
-      lon.col = 'site_lon', 
-      return.obj = TRUE)
+      lat.col = 'site_lat', 
+      lon.col = 'site_lon',
+      x = x_no_coverage,
+      write.file = FALSE
     )
-  expect_equal(class(output), 'data.frame')
-  expect_equal(colnames(output), c('latitude', 'longitude', 'site'))
+  )
+  
+  expect_equal(
+    class(output$template$geographic_coverage.txt$content),
+    'data.frame'
+  )
+  
+  expect_equal(
+    all(
+      colnames(output$template$geographic_coverage.txt$content) %in%
+      c('latitude', 'longitude', 'site')
+    ),
+    TRUE
+  )
+  
+  expect_equal(
+    output$template$geographic_coverage.txt$path,
+    '/some/path'
+  )
+  
+  expect_equal(
+    (output$data.table$nitrogen.csv$path != '/some/data.path'),
+    TRUE
+  )
+  
+  # Missing path adds NA to /x/templates/geographic_coverage.txt/path
+  
+  expect_message(
+    extract_geocoverage(
+      data.path = system.file(
+        '/examples/data',
+        package = 'EMLassemblyline'
+      ), 
+      data.table = 'nitrogen.csv', 
+      site.col = 'site_name',
+      lat.col = 'site_lat', 
+      lon.col = 'site_lon',
+      x = x_no_coverage,
+      write.file = FALSE
+    )
+  )
+  
+  output <- extract_geocoverage(
+    data.path = system.file(
+      '/examples/data',
+      package = 'EMLassemblyline'
+    ), 
+    data.table = 'nitrogen.csv', 
+    site.col = 'site_name',
+    lat.col = 'site_lat', 
+    lon.col = 'site_lon',
+    x = x_no_coverage,
+    write.file = FALSE
+  )
+  
+  expect_equal(
+    output$template$geographic_coverage.txt$path,
+    NA_character_
+  )
+  
+  # Missing data.path has no effect
+  
+  expect_message(
+    extract_geocoverage(
+      data.table = 'nitrogen.csv', 
+      site.col = 'site_name',
+      lat.col = 'site_lat', 
+      lon.col = 'site_lon',
+      x = x_no_coverage,
+      write.file = FALSE
+    )
+  )
+  
+  # Missing data.table results in error
+  
+  expect_error(
+    suppressMessages(
+      extract_geocoverage(
+        site.col = 'site_name',
+        lat.col = 'site_lat', 
+        lon.col = 'site_lon',
+        x = x_no_coverage,
+        write.file = FALSE
+      )
+    )
+  )
+  
+  # Missing site.col results in error
+  
+  expect_error(
+    suppressMessages(
+      extract_geocoverage(
+        data.table = 'nitrogen.csv', 
+        lat.col = 'site_lat', 
+        lon.col = 'site_lon',
+        x = x_no_coverage,
+        write.file = FALSE
+      )
+    )
+  )
+  
+  # Missing lat.col results in error
+  
+  expect_error(
+    suppressMessages(
+      extract_geocoverage(
+        data.table = 'nitrogen.csv', 
+        site.col = 'site_name', 
+        lon.col = 'site_lon',
+        x = x_no_coverage,
+        write.file = FALSE
+      )
+    )
+  )
+  
+  # Missing lon.col results in error
+  
+  expect_error(
+    suppressMessages(
+      extract_geocoverage(
+        data.table = 'nitrogen.csv', 
+        site.col = 'site_name', 
+        lat.col = 'site_lat',
+        x = x_no_coverage,
+        write.file = FALSE
+      )
+    )
+  )
+  
+  # Misspelled site.col results in error
+  
+  expect_error(
+    suppressMessages(
+      extract_geocoverage(
+        data.table = 'nitrogen.csv', 
+        site.col = 'site_nameeee', 
+        lat.col = 'site_lat',
+        lon.col = 'site_lon',
+        x = x_no_coverage,
+        write.file = FALSE
+      )
+    )
+  )
+  
+  # Misspelled lat.col results in error
+  
+  expect_error(
+    suppressMessages(
+      extract_geocoverage(
+        data.table = 'nitrogen.csv', 
+        site.col = 'site_name', 
+        lat.col = 'site_lattt',
+        lon.col = 'site_lon',
+        x = x_no_coverage,
+        write.file = FALSE
+      )
+    )
+  )
+  
+  # Misspelled lon.col results in error
+  
+  expect_error(
+    suppressMessages(
+      extract_geocoverage(
+        data.table = 'nitrogen.csv', 
+        site.col = 'site_name', 
+        lat.col = 'site_lat',
+        lon.col = 'site_lonnn',
+        x = x_no_coverage,
+        write.file = FALSE
+      )
+    )
+  )
+  
+  # write.file = TRUE result in error
+  
+  expect_error(
+    suppressMessages(
+      extract_geocoverage(
+        data.table = 'nitrogen.csv', 
+        site.col = 'site_name', 
+        lat.col = 'site_lat',
+        lon.col = 'site_lon',
+        x = x_no_coverage,
+        write.file = TRUE
+      )
+    )
+  )
+  
 })
-

@@ -5,8 +5,7 @@
 \title{Import template for geographic coverage}
 \usage{
 extract_geocoverage(path, data.path = path, data.table, lat.col, 
-    lon.col, site.col, return.obj = FALSE, write.file = TRUE, 
-    data.file = NULL)
+    lon.col, site.col, write.file = TRUE, data.file = NULL)
 }
 \arguments{
 \item{path}{(character) Path to where the template(s) will be imported.}
@@ -24,19 +23,20 @@ west of the prime meridian are negative.}
 \item{site.col}{(character) Name of site column, where site is the name of the location
 specified by `lat.col` and `lon.col`.}
 
-\item{return.obj}{(logical) Return the `geocoverage` data.frame.}
+\item{x}{(named list) Alternative input/output to `EMLassemblyline` functions. 
+Use `read_files()` to create `x`.}
 
-\item{write.file}{(logical) Write `geocoverage` file to `path`.}
+\item{write.file}{(logical) Write `geographic_coverage.txt` to `path`.}
 
 \item{data.file}{NOTE: `data.file` has been deprecated. Use `data.table` instead.}
 }
 \value{
 \itemize{
-        \item{`Status messages` describing the geocoverage creation status}
         \item{`geographic_coverage.txt` A tab delimited file written to 
         `path` containing geographic coordinates and corresponding site 
         names.}
-        \item{`geocoverage data.frame` when `return.obj = TRUE`}
+        \item{If using `x`, then content of `geographic_coverage.txt` is 
+        added to `x` under `/x/templates`}
     }
 }
 \description{
@@ -45,6 +45,6 @@ Import template for describing the geographic coverage of a dataset.
     table containing geographical coordinates.
 }
 \details{
-Existing template will not be overwritten by subsequent calls to 
+Existing templates will not be overwritten by subsequent calls to 
     `extract_geocoverage`.
 }
