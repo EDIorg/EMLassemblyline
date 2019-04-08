@@ -19,9 +19,8 @@ or "CCBY" (\url{https://creativecommons.org/licenses/by/4.0/}).}
 \item{data.table}{(character) Names of tabular data. Names of non-tabular data are
 entered as arguments to `make_eml`.}
 
-\item{x}{(named list) Alternative input to all `EMLassemblyline` functions (i.e. 
-rather than supplying the files themselves). Use 
-`EMLassemblyline::read_files` to create this list.}
+\item{x}{(named list) Alternative input/output to `EMLassemblyline` functions. 
+Use `read_files()` to create `x`.}
 
 \item{data.files}{NOTE: `data.files` has been deprecated. Use `data.table` instead.}
 }
@@ -43,6 +42,8 @@ rather than supplying the files themselves). Use
         \item{`methods.txt`} Template for dataset methods.
         \item{`personnel.txt`} Template for dataset personnel and funding 
         metadata.
+        \item{If using `x`, then content of each above listed template file 
+        is added to `x` under `/x/templates/`}
     }
 }
 \description{

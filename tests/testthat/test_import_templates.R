@@ -1,87 +1,46 @@
 context('Import templates')
 library(EMLassemblyline)
 
-# Errors ----------------------------------------------------------------------
+# Parameterize ----------------------------------------------------------------
 
-testthat::test_that('Error when required arguments are missing', {
-  
-  # Path is missing
-  
-  expect_error(
-    suppressMessages(
-      import_templates(
-        license = 'CC0',
-        data.path = data.path
-      )
-    )
-  )
-  
-  # License is missing
-  
-  expect_error(
-    suppressMessages(
-      import_templates(
-        path = path,
-        data.path = data.path
-      )
-    )
-  )
-  
-  # Deprecated argument is in use
-  
-  expect_error(
-    suppressMessages(
-      import_templates(
-        path = path,
-        data.path = data.path,
-        license = 'CC0',
-        data.files = 'file1.csv'
-      )
-    )
-  )
-  
-  # path is missing but x != NULL and write.file = T
-  
-  expect_error(
-    suppressMessages(
-      import_templates(
-        x = read_files(
-          path = system.file(
-            '/inst',
-            package = 'EMLassemblyline'
-          )
-        ),
-        license = 'CC0',
-        write.file = TRUE
-      )
-    )
-  )
-  
-})
+# Get template file attributes
 
-# Default usage (write files to path) -----------------------------------------
+attr.templates <- utils::read.table(
+  file = system.file(
+    '/templates/template_characteristics.txt',
+    package = 'EMLassemblyline'
+  ), 
+  header = T,
+  sep = '\t',
+  as.is = T
+)
 
-testthat::test_that('Default usage (write files to path)', {
+# Test usage with file inputs -------------------------------------------------
 
-  # Receive messages when write.file = FALSE
+testthat::test_that('Test usage with file inputs', {
+  
+  # Correct usage results in messages (templates don't yet exist)
   
   expect_message(
     import_templates(
       path = system.file(
-        '/examples/templates',
+        '/examples',
         package = 'EMLassemblyline'
       ),
-      license = 'CC0',
       data.path = system.file(
         '/examples/data',
         package = 'EMLassemblyline'
       ),
-      data.table = c('decomp.csv', 'nitrogen.csv'),
+      license = 'CC0',
+      data.table = c(
+        'nitrogen.csv',
+        'decomp.csv'
+      ),
       write.file = FALSE
     )
   )
   
-  # Receive messages when templates already exist
+  # Correct usage results in messages (templates already exist)
   
   expect_message(
     import_templates(
@@ -89,78 +48,206 @@ testthat::test_that('Default usage (write files to path)', {
         '/examples/templates',
         package = 'EMLassemblyline'
       ),
-      license = 'CC0',
       data.path = system.file(
         '/examples/data',
         package = 'EMLassemblyline'
       ),
-      data.table = c('decomp.csv', 'nitrogen.csv')
+      license = 'CC0',
+      data.table = c(
+        'nitrogen.csv',
+        'decomp.csv'
+      ),
+      write.file = FALSE
     )
   )
   
-})
-
-# Input x (No data.table or other.entity) -------------------------------------
-
-testthat::test_that('x with no data, no path, and write.file = T', {
-  
-  # Expect error
+  # Missing path results in error
   
   expect_error(
     suppressMessages(
       import_templates(
-        x = read_files(
-          path = system.file(
-            '/inst', 
-            package = 'EMLassemblyline'
-          )
-        ),
-        license = 'CC0',
-        write.file = TRUE
-      )
-    )
-  )
-
-})
-
-testthat::test_that('x with no data, no path, and write.file = F', {
-  
-  # x with added templates and path = NA (already tested in test_read_files)
-
-  expect_message(
-    import_templates(
-      x = read_files(
-        path = system.file(
-          '/inst', 
+        data.path = system.file(
+          '/examples/data',
           package = 'EMLassemblyline'
-        )
+        ),
+        license = 'CC0',
+        data.table = c(
+          'nitrogen.csv',
+          'decomp.csv'
+        ),
+        write.file = FALSE
+      )
+    )
+  )
+  
+  # Missing data.path with data.table results in error
+  
+  expect_error(
+    suppressMessages(
+      import_templates(
+        path = system.file(
+          '/examples',
+          package = 'EMLassemblyline'
+        ),
+        license = 'CC0',
+        data.table = c(
+          'nitrogen.csv',
+          'decomp.csv'
+        ),
+        write.file = FALSE
+      )
+    )
+  )
+  
+  # Missing data.path and data.table result in message
+  
+  expect_message(
+    import_templates(
+      path = system.file(
+        '/examples',
+        package = 'EMLassemblyline'
       ),
       license = 'CC0',
       write.file = FALSE
     )
   )
   
+  # Missing license results in error
+  
+  expect_error(
+    suppressMessages(
+      import_templates(
+        path = system.file(
+          '/examples',
+          package = 'EMLassemblyline'
+        ),
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        data.table = c(
+          'nitrogen.csv',
+          'decomp.csv'
+        ),
+        write.file = FALSE
+      )
+    )
+  )
+  
 })
 
-testthat::test_that('x with path, no data, and write.file = F', {
+# Test usage with x inputs (empty x) ------------------------------------------
+
+testthat::test_that('Test usage with x inputs (empty x)', {
   
-  # path is added to x but not written to file
-  
-  output <- import_templates(
+  # Create x with no templates or data
+
+  x_empty <- read_files(
     path = system.file(
-      '/inst', 
+      '/examples', 
+      package = 'EMLassemblyline'
+    )
+  )
+
+  # First import results in messages
+  
+  expect_message(
+    import_templates(
+      license = 'CC0',
+      x = x_empty,
+      write.file = FALSE
+    )
+  )
+  
+  # All arguments are supported:
+  # - /x/template/* is populated with template
+  # - content and paths are present
+  # - data.table and other.entity are NULL
+  
+  x_empty <- suppressMessages(
+    expect_message(
+      import_templates(
+        license = 'CC0',
+        x = x_empty,
+        write.file = FALSE
+      )
+    )
+  )
+  
+  for (i in 1:length(x_empty$template)){
+    
+    expect_equal(
+      any(names(x_empty$template[i]) %in% attr.templates$regexpr),
+      TRUE
+    )
+    
+    if (!names(x_empty$template[i]) %in% 
+        c('taxonomicCoverage.xml',
+          'geographic_coverage.txt')){
+      
+      expect_equal(
+        all(!is.na(x_empty$template[[i]]$content)),
+        TRUE
+      )
+      
+    }
+    
+    expect_equal(
+      is.na(x_empty$template[[i]]$path),
+      TRUE
+    )
+
+  }
+  
+  # Second import notifies of existing content
+
+})
+
+# Test usage with x inputs (half empty x, no templates but 2 data.table) ------
+
+testthat::test_that('Test usage with x inputs (half empty x, no templates but 2 data.table)', {
+  
+  # Create x with no template but 2 data.table
+
+  x_half_empty <- read_files(
+    path = system.file(
+      '/examples', 
       package = 'EMLassemblyline'
     ),
-    x = read_files(
-      path = system.file(
-        '/inst', 
-        package = 'EMLassemblyline'
-      )
+    data.path = system.file(
+      '/examples/data',
+      package = 'EMLassemblyline'
     ),
-    license = 'CC0',
-    write.file = FALSE
+    data.table = c(
+      'decomp.csv',
+      'nitrogen.csv'
+    )
   )
+
   
+})
+
+# Test usage with x inputs (full x, all templates and 2 data.table) -----------
+
+testthat::test_that('Test usage with x inputs (full x, all templates and 2 data.table)', {
+  
+  # Create x with full templates and 2 data.table
+  
+  x_full <- read_files(
+    path = system.file(
+      '/examples/templates', 
+      package = 'EMLassemblyline'
+    ),
+    data.path = system.file(
+      '/examples/data',
+      package = 'EMLassemblyline'
+    ),
+    data.table = c(
+      'decomp.csv',
+      'nitrogen.csv'
+    )
+  )
+
   # For each template ...
   
   for (i in 1:length(output$template)){
@@ -184,6 +271,9 @@ testthat::test_that('x with path, no data, and write.file = F', {
   }
   
 })
+
+
+# -------------------------------------
 
 testthat::test_that('Argument x does not have data.table or other.entity', {
   

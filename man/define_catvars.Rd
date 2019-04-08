@@ -11,20 +11,18 @@ define_catvars(path, data.path = path, x = NULL, write.file = TRUE)
 
 \item{data.path}{(character) Path to where the data files are stored.}
 
-\item{x}{(named list) Alternative input to all `EMLassemblyline` functions (i.e. 
-rather than supplying the files themselves). Use 
-`read_files()` to create this list, then use `import_templates()` to 
-populate additional content.}
+\item{x}{(named list) Alternative input/output to `EMLassemblyline` functions. 
+Use `read_files()` to create `x`.}
 
 \item{write.file}{(logical) Write `catvars` file to `path`.}
 }
 \value{
 \itemize{
-        \item{`Status messages` describing the catvars creation status}
-        \item{`catvars file` A tab delimited file written to `path`
+        \item{`catvars_*.txt` A tab delimited file written to `path`
         containing codes to be defined. Each template is appended with the 
-        name of the data table from which the codes were extracted 
-        (`catvars_*.txt`)}
+        name of the data table from which the codes were extracted.}
+        \item{If using `x`, then content of `catvars_*.txt` is added to `x` 
+        under `/x/templates`.}
     }
 }
 \description{
@@ -39,5 +37,5 @@ Import template(s) for defining categorical variable codes used in data
     listing under the `class` column in the `attributes_*.txt` file(s). 
     
     Existing template(s) will not be overwritten by subsequent calls to 
-    `define_catvars`.
+    `define_catvars()`.
 }

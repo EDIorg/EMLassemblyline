@@ -23,9 +23,8 @@
 #'     (character) Names of tabular data. Names of non-tabular data are
 #'     entered as arguments to `make_eml`.
 #' @param x
-#'     (named list) Alternative input to all `EMLassemblyline` functions (i.e. 
-#'     rather than supplying the files themselves). Use 
-#'     `EMLassemblyline::read_files` to create this list.
+#'     (named list) Alternative input/output to `EMLassemblyline` functions. 
+#'     Use `read_files()` to create `x`.
 #' @param data.files
 #'     NOTE: `data.files` has been deprecated. Use `data.table` instead.
 #'
@@ -47,6 +46,8 @@
 #'         \item{`methods.txt`} Template for dataset methods.
 #'         \item{`personnel.txt`} Template for dataset personnel and funding 
 #'         metadata.
+#'         \item{If using `x`, then content of each above listed template file 
+#'         is added to `x` under `/x/templates/`}
 #'     }
 #'     
 #' @details 
@@ -67,23 +68,99 @@ import_templates <- function(path, data.path = path, license,
                              data.files = NULL){
   
   message('Importing metadata templates')
+
+  # Validate arguments and import data ------------------------------------------
   
-  # Import content from x -----------------------------------------------------
+  # If not using x ...
   
-  # If x exists ...
+  if (is.null(x)){
+    
+    # path
+    
+    if (is.null(path)){
+      stop('Input argument "path" is missing! Specify the path to your dataset working directory.')
+    }
+    
+    # data.files
+    
+    if (!is.null(data.files)){
+      stop('Input argument "data.files" has been deprecated. Use "data.table" instead.')
+    }
+    
+    # license
+    
+    if (missing(license)){
+      stop('Input argument "license" is missing!')
+    }
+    
+    license.low <- tolower(license)
+    
+    if (!stringr::str_detect(license.low, "^cc0$|^ccby$")){
+      stop('Invalid value entered for the "license" argument. Please choose "CC0" or "CCBY".')
+    }
+    
+    # data.table
+    
+    if (!is.null(data.table)){
+      
+      # Validate table names
+      
+      data_files <- EDIutils::validate_file_names(
+        data.path, 
+        data.table
+      )
+      
+      # Validate table fields
+      
+      EDIutils::validate_fields(
+        data.path, 
+        data.files = data_files
+      )
+      
+      # Create x
+
+      x <- read_files(
+        path = path,
+        data.path = data.path,
+        data.table = data.table
+      )
+      
+      data_read_2_x <- TRUE
+
+    }
+    
+  }
+  
+  # Validate arguments and import data from x ---------------------------------
+  
+  # If using x ...
   
   if (!is.null(x)){
     
-    # If path is not defined ...
+    # path
     
     if (missing(path)){
-      
-      # Set path to arbitrary value
-      
-      path <- 'x'
-
+      path <- NA_character_
     }
-
+    
+    # data.files
+    
+    if (!is.null(data.files)){
+      stop('Input argument "data.files" has been deprecated. Use "data.table" instead.')
+    }
+    
+    # license
+    
+    if (missing(license)){
+      stop('Input argument "license" is missing!')
+    }
+    
+    license.low <- tolower(license)
+      
+    if (!stringr::str_detect(license.low, "^cc0$|^ccby$")){
+      stop('Invalid value entered for the "license" argument. Please choose "CC0" or "CCBY".')
+    }
+    
     # Get data.path and data.table
     
     if (!is.null(x$data.table)){
@@ -94,61 +171,14 @@ import_templates <- function(path, data.path = path, license,
       
     }
     
-  }
-
-  # Validate arguments and parameterize ---------------------------------------
-
-  if (is.null(path)){
-    stop('Input argument "path" is missing! Specify the path to your dataset working directory.')
-  }
-  
-  if ((path == 'x') && isTRUE(write.file)){
-    stop('Input argument "write.file" is TRUE, but path is missing. No templates written to file.') 
-  }
-
-  if (!is.null(data.files)){
-    stop('Input argument "data.files" has been deprecated. Use "data.table" instead.')
-  }
-  
-  if (missing(license)){
-    stop('Input argument "license" is missing!')
-  }
-  
-  license.low <- tolower(license)
-  if (!stringr::str_detect(license.low, "^cc0$|^ccby$")){
-    stop('Invalid value entered for the "license" argument. Please choose "CC0" or "CCBY".')
-  }
-
-  # If data tables are present ...
-  
-  if (!is.null(data.table)){
+    # write.file
     
-    # Validate table names
-    
-    data_files <- EDIutils::validate_file_names(
-      data.path, 
-      data.table
-    )
-    
-    # Validate table fields
-    
-    EDIutils::validate_fields(
-      data.path, 
-      data.files = data_files
-    )
-    
-    # Guess field delimiter
-    
-    if (is.null(x)){
+    if (isTRUE(write.file)){
       
-      delim_guess <- EDIutils::detect_delimeter(
-        data.path, 
-        data.files = data_files, 
-        EDIutils::detect_os()
-      )
+      stop('Input argument "write.file" is not supported when using "x".')
       
     }
-
+    
   }
 
   # Import abstract.txt -------------------------------------------------------
@@ -180,7 +210,7 @@ import_templates <- function(path, data.path = path, license,
 
   # If adding to x ...
     
-  } else if (!is.null(x)){
+  } else if (!is.null(x) & !exists('data_read_2_x')){
     
     # If template doesn't exist ...
     
@@ -199,7 +229,7 @@ import_templates <- function(path, data.path = path, license,
       
       # If path is not NULL ...
       
-      if (path != 'x'){
+      if (!is.na(path)){
         
         # Add path
         
@@ -246,7 +276,7 @@ if (isTRUE(write.file)){
     
     # If adding to x ...
     
-  } else if (!is.null(x)){
+  } else if (!is.null(x) & !exists('data_read_2_x')){
     
     # If template doesn't exist ...
     
@@ -265,7 +295,7 @@ if (isTRUE(write.file)){
       
       # If path is not NULL ...
       
-      if (path != 'x'){
+      if (!is.na(path)){
         
         # Add path to x
         
@@ -312,7 +342,7 @@ if (isTRUE(write.file)){
     
     # If adding to x ...
     
-  } else if (!is.null(x)){
+  } else if (!is.null(x) & !exists('data_read_2_x')){
 
     # If template doesn't exist ...
     
@@ -334,7 +364,7 @@ if (isTRUE(write.file)){
       
       # If path is not NULL ...
       
-      if (path != 'x'){
+      if (!is.na(path)){
         
         # Add path to x
         
@@ -381,7 +411,7 @@ if (isTRUE(write.file)){
     
     # If adding to x ...
     
-  } else if (!is.null(x)){
+  } else if (!is.null(x) & !exists('data_read_2_x')){
     
     # If template doesn't exist ...
     
@@ -403,7 +433,7 @@ if (isTRUE(write.file)){
       
       # If path is not NULL ...
       
-      if (path != 'x'){
+      if (!is.na(path)){
         
         # Add path to x
         
@@ -454,7 +484,7 @@ if (isTRUE(write.file)){
       
       # If adding x ...
       
-    } else if (!is.null(x)){
+    } else if (!is.null(x) & !exists('data_read_2_x')){
 
       # If template doesn't exist ...
       
@@ -473,7 +503,7 @@ if (isTRUE(write.file)){
         
         # If path is not NULL ...
         
-        if (path != 'x'){
+        if (!is.na(path)){
           
           # Add path to x
           
@@ -522,7 +552,7 @@ if (isTRUE(write.file)){
       
       # If adding to x ...
       
-    } else if (!is.null(x)){
+    } else if (!is.null(x) & !exists('data_read_2_x')){
       
       # If template doesn't exist ...
       
@@ -541,7 +571,7 @@ if (isTRUE(write.file)){
         
         # If path is not NULL ...
         
-        if (path != 'x'){
+        if (!is.na(path)){
           
           # Add path to x
           
@@ -590,7 +620,7 @@ if (isTRUE(write.file)){
     
     # If adding to x ...
     
-  } else if (!is.null(x)){
+  } else if (!is.null(x) & !exists('data_read_2_x')){
     
     # If template doesn't exist ...
     
@@ -612,7 +642,7 @@ if (isTRUE(write.file)){
      
       # If path is not NULL ...
       
-      if (path != 'x'){
+      if (!is.na(path)){
         
         # Add path to x
         
@@ -659,7 +689,7 @@ if (isTRUE(write.file)){
     
     # If adding to x ...
     
-  } else if (!is.null(x)){
+  } else if (!is.null(x) & !exists('data_read_2_x')){
     
     # If template doesn't exist ...
     
@@ -678,7 +708,7 @@ if (isTRUE(write.file)){
       
       # If path is not NULL ...
       
-      if (path != 'x'){
+      if (!is.na(path)){
         
         # Add path to x
         
@@ -725,7 +755,7 @@ if (isTRUE(write.file)){
     
     # If adding to x ...
     
-  } else if (!is.null(x)){
+  } else if (!is.null(x) & !exists('data_read_2_x')){
     
     # If template doesn't exist ...
     
@@ -747,7 +777,7 @@ if (isTRUE(write.file)){
       
       # If path is not NULL ...
       
-      if (path != 'x'){
+      if (!is.na(path)){
         
         # Add path to x
         
@@ -768,21 +798,6 @@ if (isTRUE(write.file)){
   # Import attributes templates -----------------------------------------------
   
   if (!is.null(data.table)){
-    
-    # Read data.tables into x structure for additional processing if not 
-    # already done
-    
-    if (is.null(x)){
-      
-      x <- read_files(
-        path = path,
-        data.path = data.path,
-        data.table = data.table
-      )
-      
-      data_read_2_x <- TRUE
-      
-    }
 
     # Validate column names
     
@@ -1001,7 +1016,7 @@ if (isTRUE(write.file)){
           
           # If path is not NULL ...
           
-          if (path != 'x'){
+          if (!is.na(path)){
             
             # Add path to x
             
@@ -1030,17 +1045,9 @@ if (isTRUE(write.file)){
   # Return --------------------------------------------------------------------
   
   if (!exists('data_read_2_x')){
-    
     return(x)
-    
   }
-  
-  if (!isTRUE(write.file)){
-    
-    message('write.file = FALSE, no templates will be written')
-    
-  }
-  
+
   message("Done.")
 
 }

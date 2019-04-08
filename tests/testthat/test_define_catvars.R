@@ -2,27 +2,41 @@
 context('Define categorical variables')
 library(EMLassemblyline)
 
-# Parameterize ----------------------------------------------------------------
+# Test usage with file inputs -------------------------------------------------
 
-path <- system.file('/examples/templates/abstract.txt', package = 'EMLassemblyline')
-parent_dir <- substr(path, 1, nchar(path)-23)
-
-# Arguments -------------------------------------------------------------------
-
-testthat::test_that('Test arguments', {
+testthat::test_that('Test usage with file inputs', {
   
-  # Error: path is missing
+  # Correct argument use results in messages
   
-  expect_error(
+  expect_message(
     define_catvars(
+      path = system.file(
+        '/examples/templates',
+        package = 'EMLassemblyline'
+      ), 
       data.path = system.file(
         '/examples/data',
         package = 'EMLassemblyline'
+      ),
+      write.file = FALSE
+    )
+  )
+  
+  # Missing path results in error
+
+  expect_error(
+    suppressMessages(
+      define_catvars(
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        write.file = FALSE
       )
     )
   )
 
-  # Error: Attribute files are missing
+  # Missing attribute files from path
   
   expect_error(
     suppressMessages(
@@ -34,12 +48,19 @@ testthat::test_that('Test arguments', {
         data.path = system.file(
           '/examples/data',
           package = 'EMLassemblyline'
-        )
+        ),
+        write.file = FALSE
       )
     )
   )
-  
-  # Initialize x
+
+})
+
+# Test usage with x inputs ----------------------------------------------------
+
+testthat::test_that('Test usage with x inputs',{
+
+  # Create x_list and x_no_catvars with and without catvars_*.txt, respectivly.
   
   x_list <- read_files(
     path = system.file(
@@ -56,59 +77,16 @@ testthat::test_that('Test arguments', {
     )
   )
   
-  # Error: path is present when using x
+  x_no_catvars <- x_list
   
-  expect_error(
-    suppressMessages(
-      define_catvars(
-        path = system.file(
-          '/examples/templates',
-          package = 'EMLassemblyline'
-        ),
-        data.path = system.file(
-          '/examples/data',
-          package = 'EMLassemblyline'
-        ),
-        x = x_list,
-        write.file = FALSE
-      )
-    )
-  )
+  x_no_catvars$template$catvars_decomp.txt <- NULL
   
-  # Error: data.path is present when using x
+  x_no_catvars$template$catvars_nitrogen.txt <- NULL
   
-  expect_error(
-    suppressMessages(
-      define_catvars(
-        data.path = system.file(
-          '/examples/data',
-          package = 'EMLassemblyline'
-        ),
-        x = x_list,
-        write.file = FALSE
-      )
-    )
-  )
-  
-  # Error: write.file is TRUE when using x
-  
-  expect_error(
-    suppressMessages(
-      define_catvars(
-        x = x_list,
-        write.file = TRUE
-      )
-    )
-  )
-  
-  
-})
-
-# Default usage (file inputs) -------------------------------------------------
-
-testthat::test_that('Test standard usage', {
-  
-  # catvars templates exist
+  # All arguments are supported:
+  # - /x/templates/catvars_*.txt is created with expected content
+  # - path is added to /x/templates/catvars_*.txt/path
+  # - data.path is not added to x
   
   expect_message(
     define_catvars(
@@ -120,96 +98,147 @@ testthat::test_that('Test standard usage', {
         '/examples/data',
         package = 'EMLassemblyline'
       ),
-      write.file = FALSE
-    )
-  )
-
-})
-
-# Input x (2 data.tables with categorical variables) --------------------------
-
-testthat::test_that('Argument x has 2 data.tables with categorical variables',{
-  
-  # Initialize x
-  
-  x_list <- read_files(
-    path = system.file(
-      '/examples/templates', 
-      package = 'EMLassemblyline'
-    ),
-    data.path = system.file(
-      '/examples/data',
-      package = 'EMLassemblyline'
-    ),
-    data.table = c(
-      'decomp.csv',
-      'nitrogen.csv'
-    )
-  )
-  
-  x_list$template$catvars_decomp.txt <- NULL
-  
-  x_list$template$catvars_nitrogen.txt <- NULL
-  
-  # Expect messages
-  
-  expect_message(
-    define_catvars(
       x = x_list,
       write.file = FALSE
     )
   )
-  
-  # Expect addition of catvar templates
   
   output <- suppressMessages(
     define_catvars(
+      path = '/some/path',
+      data.path = system.file(
+        '/examples/data',
+        package = 'EMLassemblyline'
+      ),
+      x = x_no_catvars,
+      write.file = FALSE
+    )
+  )
+  
+  expect_equal(
+    sum(
+      stringr::str_detect(
+        string = names(output$template),
+        pattern = 'catvars_[:graph:]*.txt'
+      )
+    ),
+    2
+  )
+  
+  expect_equal(
+    class(output$template$catvars_decomp.txt$content),
+    'data.frame'
+  )
+  
+  expect_equal(
+    all(
+      colnames(output$template$catvars_decomp.txt$content) %in%
+        c('attributeName', 'code', 'definition')
+    ),
+    TRUE
+  )
+  
+  expect_equal(
+    output$template$catvars_decomp.txt$path,
+    '/some/path'
+  )
+  
+  # Missing path adds NA to /x/templates/catvars_*.txt/path
+  
+  expect_message(
+    define_catvars(
+      data.path = system.file(
+        '/examples/data',
+        package = 'EMLassemblyline'
+      ),
       x = x_list,
       write.file = FALSE
     )
   )
   
-  catvars_files <- names(output$template)[stringr::str_detect(
-    string = names(output$template),
-    pattern = '^catvars_'
-  )]
+  output <- suppressMessages(
+    define_catvars(
+      data.path = system.file(
+        '/examples/data',
+        package = 'EMLassemblyline'
+      ),
+      x = x_no_catvars,
+      write.file = FALSE
+    )
+  )
   
   expect_equal(
-    length(catvars_files),
+    output$template$catvars_decomp.txt$path,
+    NA_character_
+  )
+  
+  # Missing path has no effect
+  
+  expect_message(
+    define_catvars(
+      data.path = system.file(
+        '/examples/data',
+        package = 'EMLassemblyline'
+      ),
+      x = x_no_catvars,
+      write.file = FALSE
+    )
+  )
+  
+  # Missing path and data.path has no effect
+  # - /x/templates/catvars_*.txt is created with expected content
+  
+  expect_message(
+    define_catvars(
+      x = x_no_catvars,
+      write.file = FALSE
+    )
+  )
+  
+  output <- suppressMessages(
+    define_catvars(
+      x = x_no_catvars,
+      write.file = FALSE
+    )
+  )
+  
+  expect_equal(
+    sum(
+      stringr::str_detect(
+        string = names(output$template),
+        pattern = 'catvars_[:graph:]*.txt'
+      )
+    ),
     2
   )
   
-  for (i in 1:length(catvars_files)){
-    
-    expect_equal(
-      class(output$template[[catvars_files[i]]]$content),
-      'data.frame'
-    )
-    
-    expect_equal(
-      all(
-        colnames(output$template[[catvars_files[i]]]$content) %in%
-          c('attributeName', 'code', 'definition')
-      ),
-      TRUE
-    )
-    
-  }
-
+  expect_equal(
+    class(output$template$catvars_decomp.txt$content),
+    'data.frame'
+  )
   
   expect_equal(
     all(
-      paste0(
-        'attributes_',
-        stringr::str_replace_all(
-          names(output$data.table),
-          '\\.[:alpha:]*$',
-          '.txt'
-        )
-      ) %in% 
-        names(output$template)),
+      colnames(output$template$catvars_decomp.txt$content) %in%
+        c('attributeName', 'code', 'definition')
+    ),
     TRUE
   )
   
+  expect_equal(
+    output$template$catvars_decomp.txt$path,
+    NA_character_
+  )
+  
+  # write.file = TRUE and x != NULL results in error
+  
+  expect_error(
+    suppressMessages(
+      define_catvars(
+        x = x_no_catvars,
+        write.file = TRUE
+      )
+    )
+  )
+  
 })
-

@@ -14,20 +14,18 @@
 #' @param data.path
 #'     (character) Path to where the data files are stored.
 #' @param x
-#'     (named list) Alternative input to all `EMLassemblyline` functions (i.e. 
-#'     rather than supplying the files themselves). Use 
-#'     `read_files()` to create this list, then use `import_templates()` to 
-#'     populate additional content.
+#'     (named list) Alternative input/output to `EMLassemblyline` functions. 
+#'     Use `read_files()` to create `x`.
 #' @param write.file
 #'     (logical) Write `catvars` file to `path`.
 #'
 #' @return 
 #'     \itemize{
-#'         \item{`Status messages` describing the catvars creation status}
-#'         \item{`catvars file` A tab delimited file written to `path`
+#'         \item{`catvars_*.txt` A tab delimited file written to `path`
 #'         containing codes to be defined. Each template is appended with the 
-#'         name of the data table from which the codes were extracted 
-#'         (`catvars_*.txt`)}
+#'         name of the data table from which the codes were extracted.}
+#'         \item{If using `x`, then content of `catvars_*.txt` is added to `x` 
+#'         under `/x/templates`.}
 #'     }
 #'     
 #' @details 
@@ -35,7 +33,7 @@
 #'     listing under the `class` column in the `attributes_*.txt` file(s). 
 #'     
 #'     Existing template(s) will not be overwritten by subsequent calls to 
-#'     `define_catvars`.
+#'     `define_catvars()`.
 #'
 #' @export
 #'
@@ -43,39 +41,11 @@
 define_catvars <- function(path, data.path = path, x = NULL, 
                            write.file = TRUE) {
   
-  message('Creating templates for categorical variables')
+  message('Creating categorical variable template.')
   
-  # Import content from x -----------------------------------------------------
-
-  # If x exists ...
-
-  if (!is.null(x)){
-    
-    # Validate input arguments
-    
-    if (!missing(path)){
-      stop('Input argument "path" is not allowed when using "x".')
-    }
-    
-    if (!missing(data.path)){
-      stop('Input argument "data.path" is not allowed when using "x".')
-    }
-    
-    if (isTRUE(write.file)){
-      stop('Input argument "write.file" must be FALSE when using "x".')
-    }
-    
-    # Add arguments
-    
-    path <- x$template[[1]]$path
-    
-    # Validate x content ...
-
-  }
+  # Validate arguments and import data ------------------------------------------
   
-  # Import content from path and data.path ------------------------------------
-  
-  # If x doesn't exist ...
+  # If not using x ...
   
   if (is.null(x)){
     
@@ -90,7 +60,7 @@ define_catvars <- function(path, data.path = path, x = NULL,
     os <- EDIutils::detect_os()
     
     # Get attribute file names and data file names
-
+    
     files <- list.files(path)
     use_i <- stringr::str_detect(string = files,
                                  pattern = "^attributes")
@@ -137,7 +107,31 @@ define_catvars <- function(path, data.path = path, x = NULL,
     
   }
   
-  # Loop through data tables --------------------------------------------------
+  # Validate arguments and import data from x ---------------------------------
+  
+  # If using x ...
+
+  if (!is.null(x)){
+    
+    # path
+    
+    if (missing(path)){
+      
+      path <- NA_character_
+      
+    }
+    
+    # write.file
+    
+    if (isTRUE(write.file)){
+      
+      stop('Input argument "write.file" is not supported when using "x".')
+      
+    }
+
+  }
+
+  # Extract categorical variables and write to file ---------------------------
   
   table_names <- names(x$data.table)
   
@@ -312,20 +306,15 @@ define_catvars <- function(path, data.path = path, x = NULL,
     }
 
   }
-  
-  if (!isTRUE(write.file) & exists('data_read_2_x')){
-    
-    message('write.file = FALSE, no templates were written')
-    
-  }
 
   message("Done.")
   
   # Return
   
   if (!exists('data_read_2_x')){
+    
     x
+    
   }
 
 }
-

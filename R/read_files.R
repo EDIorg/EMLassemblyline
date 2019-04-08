@@ -359,8 +359,14 @@ read_files <- function(path, data.path = path, data.table = NULL,
     } else if (attr.templates$delimiter[use_i] == '\\t'){
       
       # If the file exists then add content, otherwise set as NA
+
+      if (stringr::str_detect(attr.templates$regexpr[use_i], 'attributes|catvars')){
+        fname <- path_files[i]
+      } else {
+        fname <- attr.templates$regexpr[use_i]
+      }
       
-      if (file.exists(paste0(path, '/', path_files[i]))){
+      if (file.exists(paste0(path, '/', fname))){
         
         output$template[[i]]$content <- utils::read.table(
           file = paste0(
