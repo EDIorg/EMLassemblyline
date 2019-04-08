@@ -261,122 +261,449 @@ read_files <- function(path, data.path = path, data.table = NULL,
   )
   
   # Add template files to outgoing list ---------------------------------------
+  # Most templates have unique read settings therefore requiring unique calls
+  
+  templates <- names(output$template)
   
   # For all templates ...
   
   for (i in 1:length(output$template)){
-      
-    use_i <- stringr::str_detect(
-      names(output$template[i]), 
-      attr.templates$regexpr
-    )
     
-    # For non-delimited templates ...
+    # If abstract ...
     
-    if (is.na(attr.templates$delimiter[use_i])){
+    if (stringr::str_detect(string = templates[i], pattern = 'abstract.txt')){
       
-      # Read file as abstract, additional information, intellectual rights,
-      # methods, or taxonomicCoverage
-      
-      if ((attr.templates$template_name[use_i] == 'abstract') | 
-          (attr.templates$template_name[use_i] == 'additional_info') |
-          (attr.templates$template_name[use_i] == 'intellectual_rights')){
+      if (file.exists(paste0(path, '/', templates[i]))){
         
-        # If the file exists then add content, otherwise set as NA
-        
-        if (file.exists(paste0(path, '/', attr.templates$regexpr[use_i]))){
-          
-          output$template[[i]]$content <- EML::set_TextType(
+        output$template[[i]]$content <- methods::as(
+          EML::set_TextType(
             file = paste0(
               path, 
               '/', 
-              names(output$template[i])
+              templates[i]
             )
-          )
-          
-          output$template[[i]]$path <- path
-          
-        } else {
-          
-          output$template[[i]]$content <- NA_character_
-          
-          output$template[[i]]$path <- NA_character_
-          
-        }
+          ),
+          'abstract'
+        )
         
-      } else if (attr.templates$template_name[use_i] == 'methods'){
+        output$template[[i]]$path <- path
         
-        # If the file exists then add content, otherwise set as NA
+      } else {
         
-        if (file.exists(paste0(path, '/', attr.templates$regexpr[use_i]))){
-          
-          output$template[[i]]$content <- EML::set_methods(
-            methods_file = paste0(
+        output$template[[i]]$content <- NA_character_
+        
+        output$template[[i]]$path <- NA_character_
+        
+      }
+
+    }
+    
+    # If additional_info ...
+    
+    if (stringr::str_detect(string = templates[i], pattern = 'additional_info.txt')){
+      
+      if (file.exists(paste0(path, '/', templates[i]))){
+        
+        output$template[[i]]$content <- methods::as(
+          EML::set_TextType(
+            file = paste0(
               path, 
               '/', 
-              path_files[i]
+              templates[i]
             )
-          )
-          
-          output$template[[i]]$path <- path
-          
-        } else {
-          
-          output$template[[i]]$content <- NA_character_
-          
-          output$template[[i]]$path <- NA_character_
-          
-        }
+          ),
+          'additionalInfo'
+        )
         
-      } else if (attr.templates$template_name[use_i] == 'taxonomicCoverage'){
+        output$template[[i]]$path <- path
         
-        # If the file exists then add content, otherwise set as NA
-        
-        if (file.exists(paste0(path, '/', attr.templates$regexpr[use_i]))){
-          
-          output$template[[i]]$content <- EML::read_eml(
-            paste0(
-              path, 
-              '/',
-              path_files[i]
-            )
-          )
-          
-          output$template[[i]]$path <- path
-          
-        } else {
-          
-          output$template[[i]]$content <- NA_character_
-          
-          output$template[[i]]$path <- NA_character_
-          
-        }
-        
-      }
-      
-    # For delimited templates ...
-      
-    } else if (attr.templates$delimiter[use_i] == '\\t'){
-      
-      # If the file exists then add content, otherwise set as NA
-
-      if (stringr::str_detect(attr.templates$regexpr[use_i], 'attributes|catvars')){
-        fname <- path_files[i]
       } else {
-        fname <- attr.templates$regexpr[use_i]
+        
+        output$template[[i]]$content <- NA_character_
+        
+        output$template[[i]]$path <- NA_character_
+        
       }
       
-      if (file.exists(paste0(path, '/', fname))){
+    }
+    
+    # If attributes_*.txt ...
+    
+    if (stringr::str_detect(string = templates[i], pattern = 'attributes_[:graph:]*.txt')){
+      
+      if (file.exists(paste0(path, '/', templates[i]))){
         
         output$template[[i]]$content <- utils::read.table(
           file = paste0(
-            path,
-            '/',
-            path_files[i]
+            path, 
+            '/', 
+            templates[i]
+          ), 
+          header = TRUE,
+          sep = '\t',
+          quote = "\"",
+          as.is = TRUE,
+          comment.char = "",
+          fill = T,
+          colClasses = rep("character", 7)
+        )
+        
+        output$template[[i]]$content <- output$template[[i]]$content[ ,1:7]
+        
+        colnames(output$template[[i]]$content) <- c(
+          "attributeName",
+          "attributeDefinition",
+          "class",
+          "unit",
+          "dateTimeFormatString",
+          "missingValueCode",
+          "missingValueCodeExplanation"
+        )
+        
+        output$template[[i]]$path <- path
+        
+      } else {
+        
+        output$template[[i]]$content <- NA_character_
+        
+        output$template[[i]]$path <- NA_character_
+        
+      }
+      
+    }
+    
+    # If bounding_boxes.txt ...
+    
+    if (stringr::str_detect(string = templates[i], pattern = 'bounding_boxes.txt')){
+      
+      if (file.exists(paste0(path, '/', templates[i]))){
+        
+        output$template[[i]]$content <- suppressMessages(
+          as.data.frame(
+            utils::read.table(
+              paste0(
+                path, 
+                '/', 
+                templates[i]
+              ), 
+              header = T, 
+              sep = '\t', 
+              quote = "\"", 
+              as.is = T, 
+              comment.char = ''
+            )
+          )
+        )
+        
+        output$template[[i]]$path <- path
+        
+      } else {
+        
+        output$template[[i]]$content <- NA_character_
+        
+        output$template[[i]]$path <- NA_character_
+        
+      }
+      
+    }
+    
+    # If catvars_*.txt ...
+    
+    if (stringr::str_detect(string = templates[i], pattern = 'catvars_[:graph:]*.txt')){
+      
+      if (file.exists(paste0(path, '/', templates[i]))){
+        
+        output$template[[i]]$content <- utils::read.table(
+          paste0(
+            path, 
+            '/', 
+            templates[i]
+          ),
+          header = T,
+          sep="\t",
+          quote="\"",
+          as.is=TRUE,
+          comment.char = "",
+          fill = T,
+          colClasses = rep("character", 3)
+        )
+        
+        output$template[[i]]$content <- output$template[[i]]$content[ ,1:3]
+        
+        colnames(output$template[[i]]$content) <- c(
+          "attributeName",
+          "code",
+          "definition"
+        )
+        
+        output$template[[i]]$path <- path
+        
+      } else {
+        
+        output$template[[i]]$content <- NA_character_
+        
+        output$template[[i]]$path <- NA_character_
+        
+      }
+      
+    }
+    
+    # If custom_units.txt ...
+    
+    if (stringr::str_detect(string = templates[i], pattern = 'custom_units.txt')){
+      
+      if (file.exists(paste0(path, '/', templates[i]))){
+        
+        output$template[[i]]$content <- utils::read.table(
+          paste0(
+            path, 
+            '/', 
+            templates[i]
+          ),
+          header = T,
+          sep="\t",
+          quote="\"",
+          as.is=TRUE,
+          comment.char = "",
+          fill = T,
+          colClasses = rep("character", 5)
+        )
+        
+        output$template[[i]]$content <- output$template[[i]]$content[ ,1:5]
+        
+        colnames(output$template[[i]]$content) <- c(
+          "id",
+          "unitType",
+          "parentSI",
+          "multiplierToSI",
+          "description"
+        )
+        
+        output$template[[i]]$path <- path
+        
+      } else {
+        
+        output$template[[i]]$content <- NA_character_
+        
+        output$template[[i]]$path <- NA_character_
+        
+      }
+      
+    }
+    
+    # If geographic_coverage.txt ...
+    
+    if (stringr::str_detect(string = templates[i], pattern = 'geographic_coverage.txt')){
+      
+      if (file.exists(paste0(path, '/', templates[i]))){
+        
+        output$template[[i]]$content <- utils::read.table(
+          paste0(
+            path, 
+            '/', 
+            templates[i]
+          ),
+          header = T,
+          sep="\t",
+          quote="\"",
+          as.is=TRUE,
+          comment.char = "",
+          fill = T,
+          na.strings = "NA",
+          colClasses = c("numeric","numeric","character"),
+          fileEncoding = "UTF-8"
+        )
+        
+        output$template[[i]]$content <- output$template[[i]]$content[ ,1:3]
+        
+        colnames(output$template[[i]]$content) <- c(
+          "latitude",
+          "longitude",
+          "site"
+        )
+        
+        output$template[[i]]$content$latitude <- as.character(
+          output$template[[i]]$content$latitude
+        )
+        
+        output$template[[i]]$content$longitude <- as.character(
+          output$template[[i]]$content$longitude
+        )
+        
+        output$template[[i]]$content$site <- as.character(
+          output$template[[i]]$content$site
+        )
+        
+        output$template[[i]]$path <- path
+        
+      } else {
+        
+        output$template[[i]]$content <- NA_character_
+        
+        output$template[[i]]$path <- NA_character_
+        
+      }
+      
+    }
+    
+    # If intellectual_rights ...
+    
+    if (stringr::str_detect(string = templates[i], pattern = 'intellectual_rights.txt')){
+      
+      if (file.exists(paste0(path, '/', templates[i]))){
+        
+        output$template[[i]]$content <- methods::as(
+          EML::set_TextType(
+            file = paste0(
+              path, 
+              '/', 
+              templates[i]
+            )
+          ),
+          'intellectualRights'
+        )
+        
+        output$template[[i]]$path <- path
+        
+      } else {
+        
+        output$template[[i]]$content <- NA_character_
+        
+        output$template[[i]]$path <- NA_character_
+        
+      }
+      
+    }
+    
+    # If keywords.txt ...
+    
+    if (stringr::str_detect(string = templates[i], pattern = 'keywords.txt')){
+      
+      if (file.exists(paste0(path, '/', templates[i]))){
+        
+        output$template[[i]]$content <- utils::read.table(
+          file = paste0(
+            path, 
+            '/', 
+            templates[i]
           ), 
           header = T,
-          sep = '\t',
-          as.is = T
+          sep="\t",
+          quote="\"",
+          as.is=TRUE,
+          comment.char = "",
+          fill = T,
+          colClasses = rep("character", 2)
+        )
+        
+        output$template[[i]]$content <- output$template[[i]]$content[ ,1:2]
+        
+        colnames(output$template[[i]]$content) <- c(
+          "keyword", 
+          "keywordThesaurus"
+        )
+        
+        output$template[[i]]$path <- path
+        
+      } else {
+        
+        output$template[[i]]$content <- NA_character_
+        
+        output$template[[i]]$path <- NA_character_
+        
+      }
+      
+    }
+    
+    # If methods ...
+    
+    if (stringr::str_detect(string = templates[i], pattern = 'methods.txt')){
+      
+      if (file.exists(paste0(path, '/', templates[i]))){
+        
+        output$template[[i]]$content <- EML::set_methods(
+          methods_file = paste0(
+            path, 
+            '/', 
+            templates[i]
+          )
+        )
+        
+        output$template[[i]]$path <- path
+        
+      } else {
+        
+        output$template[[i]]$content <- NA_character_
+        
+        output$template[[i]]$path <- NA_character_
+        
+      }
+      
+    }
+    
+    # If personnel.txt ...
+    
+    if (stringr::str_detect(string = templates[i], pattern = 'personnel.txt')){
+      
+      if (file.exists(paste0(path, '/', templates[i]))){
+        
+        output$template[[i]]$content <- utils::read.table(
+          paste0(
+            path, 
+            '/', 
+            templates[i]
+          ),
+          header = T,
+          sep="\t",
+          quote="\"",
+          as.is=TRUE,
+          comment.char = "",
+          fill = T,
+          colClasses = rep("character", 10)
+        )
+        
+        output$template[[i]]$content <- output$template[[i]]$content[ ,1:10]
+        
+        colnames(output$template[[i]]$content) <- c(
+          "givenName",
+          "middleInitial",
+          "surName",
+          "organizationName",
+          "electronicMailAddress",
+          "userId",
+          "role",
+          "projectTitle",
+          "fundingAgency",
+          "fundingNumber"
+        )
+        
+        output$template[[i]]$path <- path
+        
+      } else {
+        
+        output$template[[i]]$content <- NA_character_
+        
+        output$template[[i]]$path <- NA_character_
+        
+      }
+      
+    }
+    
+    # If taxonomicCoverage ...
+    
+    if (stringr::str_detect(string = templates[i], pattern = 'taxonomicCoverage.xml')){
+      
+      if (file.exists(paste0(path, '/', templates[i]))){
+        
+        output$template[[i]]$content <- methods::as(
+          EML::read_eml(
+            paste0(
+              path, 
+              '/', 
+              templates[i]
+            )
+          ),
+          'taxonomicCoverage'
         )
         
         output$template[[i]]$path <- path
