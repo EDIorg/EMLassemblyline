@@ -165,12 +165,10 @@ testthat::test_that('Test usage with x inputs (empty x)', {
   # - data.table and other.entity are NULL
   
   x_empty <- suppressMessages(
-    expect_message(
-      import_templates(
-        license = 'CC0',
-        x = x_empty,
-        write.file = FALSE
-      )
+    import_templates(
+      license = 'CC0',
+      x = x_empty,
+      write.file = FALSE
     )
   )
   
@@ -200,6 +198,14 @@ testthat::test_that('Test usage with x inputs (empty x)', {
   }
   
   # Second import notifies of existing content
+  
+  expect_message(
+    import_templates(
+      license = 'CC0',
+      x = x_empty,
+      write.file = FALSE
+    )
+  )
 
 })
 
@@ -224,7 +230,132 @@ testthat::test_that('Test usage with x inputs (half empty x, no templates but 2 
     )
   )
 
+  # First import results in messages
   
+  expect_message(
+    import_templates(
+      license = 'CC0',
+      x = x_half_empty,
+      write.file = FALSE
+    )
+  )
+  
+  x_half_empty <- suppressMessages(
+    import_templates(
+      path = system.file(
+        '/examples',
+        package = 'EMLassemblyline'
+      ),
+      license = 'CC0',
+      x = x_half_empty,
+      write.file = FALSE
+    )
+  )
+  
+  # All arguments are supported:
+  # - /x/template/* is populated with template
+  # - content and paths are present
+  # - data.table is present with content and path completed
+  
+  # For each template ...
+  
+  for (i in 1:length(x_half_empty$template)){
+    
+    use_i <- c(
+      stringr::str_detect(
+        string = names(x_half_empty$template[i]), 
+        pattern = 'attributes_[:graph:]*.txt'
+      ),
+      stringr::str_detect(
+        string = names(x_half_empty$template[i]), 
+        pattern = 'catvars_[:graph:]*.txt'
+      ),
+      (names(x_half_empty$template[i]) %in% 
+         c('taxonomicCoverage.xml',
+           'geographic_coverage.txt'))
+    )
+    
+    # If template is not attribute, catvars, taxonomicCoverage, or 
+    # geographic_coverage ...
+    
+    if (!any(use_i)){
+      
+      expect_equal(
+        any(names(x_half_empty$template[i]) %in% attr.templates$regexpr),
+        TRUE
+      )
+      
+      expect_equal(
+        all(!is.na(x_half_empty$template[[i]]$content)),
+        TRUE
+      )
+      
+      expect_equal(
+        any(!is.na(x_half_empty$template[[i]]$path)),
+        TRUE
+      )
+      
+    # If template is attributes ...  
+    
+    } else if (stringr::str_detect(
+      string = names(x_half_empty$template[i]), 
+      pattern = 'attributes_[:graph:]*.txt'
+    )){
+      
+      fregexpr <- stringr::str_extract(
+        string = names(x_half_empty$template[i]),
+        pattern = '(?<=^attributes_)[:graph:]*(?=.txt$)'
+      )
+      
+      expect_equal(
+        any(
+          stringr::str_detect(
+            string = names(x_half_empty$data.table),
+            pattern = fregexpr
+          )
+        ),
+        TRUE
+      )
+      
+      expect_equal(
+        all(!is.na(x_half_empty$template[[i]]$content)),
+        TRUE
+      )
+      
+      expect_equal(
+        any(!is.na(x_half_empty$template[[i]]$path)),
+        TRUE
+      )
+      
+    # If template is taxonomicCoverage or geographic coverage ...
+      
+    } else {
+      
+      expect_equal(
+        is.na(x_half_empty$template[[i]]$content),
+        TRUE
+      )
+      
+      expect_equal(
+        is.na(x_half_empty$template[[i]]$path),
+        TRUE
+      )
+      
+    }
+
+    
+  }
+  
+  # Second import notifies of existing content
+  
+  expect_message(
+    import_templates(
+      license = 'CC0',
+      x = x_half_empty,
+      write.file = FALSE
+    )
+  )
+
 })
 
 # Test usage with x inputs (full x, all templates and 2 data.table) -----------
@@ -247,180 +378,124 @@ testthat::test_that('Test usage with x inputs (full x, all templates and 2 data.
       'nitrogen.csv'
     )
   )
-
-  # For each template ...
   
-  for (i in 1:length(output$template)){
-    
-    template_name <- names(output$template[i])
-    
-    # Exclude templates not created by import_templates() ...
-    
-    if ((template_name != 'taxonomicCoverage.xml') & 
-        (template_name != 'geographic_coverage.txt')){
-      
-      # Path should have been added
-      
-      expect_equal(
-        !is.na(output$template[[i]]$path),
-        TRUE
-      )
-      
-    }
-
-  }
-  
-})
-
-
-# -------------------------------------
-
-testthat::test_that('Argument x does not have data.table or other.entity', {
-  
-  # Initialize list
-  
-  x_list <- read_files(
-    path = system.file(
-      '/inst', 
-      package = 'EMLassemblyline'
-    )
-  )
-  
-  # Expect new content notifications
+  # First import results in messages
   
   expect_message(
     import_templates(
-      x = x_list,
       license = 'CC0',
-      write.file = FALSE
-    )
-  )
-
-  output <- suppressMessages(
-    import_templates(
-      x = x_list,
-      license = 'CC0',
+      x = x_full,
       write.file = FALSE
     )
   )
   
-  # Expect old content notifications
-  
-  expect_message(
-    import_templates(
-      x = output,
-      license = 'CC0',
-      write.file = FALSE
-    )
-  )
-  
-})
-
-# Input x (2 data.tables) -----------------------------------------------------
-
-# Two data.tables
-
-testthat::test_that('Argument x has 2 data.tables and no other.entity', {
-  
-  # Initialize list
-  
-  x_list <- read_files(
-    path = system.file(
-      '/inst', 
-      package = 'EMLassemblyline'
-    ),
-    data.path = system.file(
-      '/examples/data',
-      package = 'EMLassemblyline'
-    ),
-    data.table = c(
-      'decomp.csv',
-      'nitrogen.csv'
-    )
-  )
-
-  # Expect new content notifications
-
-  expect_message(
-    import_templates(
-      x = x_list,
-      license = 'CC0',
-      write.file = FALSE
-    )
-  )
-  
-  output <- suppressMessages(
+  x_full <- suppressMessages(
     import_templates(
       path = system.file(
-        '/inst',
+        '/examples/templates',
         package = 'EMLassemblyline'
       ),
-      x = x_list,
       license = 'CC0',
+      x = x_full,
       write.file = FALSE
     )
   )
   
-  # Expect old content notifications
+  # All arguments are supported:
+  # - /x/template/* is populated with template
+  # - content and paths are present
+  # - data.table is present with content and path completed
   
-  expect_message(
-    import_templates(
-      x = output,
-      license = 'CC0',
-      write.file = FALSE
-    )
-  )
-  
-  # Expect addition of attributes
-  
-  # Has level-1 names
-  
-  expect_equal(
-    all(
-      c('template', 'data.table', 'other.entity') %in% 
-        names(output)
-    ),
-    TRUE
-  )
-  
-  # Level-2 has attribute files for each data.table
-  
-  expect_equal(
-    all(
-      paste0(
-        'attributes_',
-        stringr::str_replace_all(
-          names(output$data.table),
-          '\\.[:alpha:]*$',
-          '.txt'
-        )
-      ) %in% 
-        names(output$template)),
-    TRUE
-  )
-  
-  # path is added to x but not written to file
-
   # For each template ...
   
-  for (i in 1:length(output$template)){
+  for (i in 1:length(x_full$template)){
     
-    template_name <- names(output$template[i])
+    # use_i <- c(
+    #   stringr::str_detect(
+    #     string = names(x_full$template[i]), 
+    #     pattern = 'attributes_[:graph:]*.txt'
+    #   ),
+    #   stringr::str_detect(
+    #     string = names(x_full$template[i]), 
+    #     pattern = 'catvars_[:graph:]*.txt'
+    #   )
+    # )
     
-    # Exclude templates not created by import_templates() ...
+    # Content is not NA
     
-    if ((template_name != 'taxonomicCoverage.xml') & 
-        (template_name != 'geographic_coverage.txt')){
+    expect_equal(
+      all(!is.na(x_full$template[[i]]$content)),
+      TRUE
+    )
+    
+    # Path is not NA
+    
+    expect_equal(
+      any(!is.na(x_full$template[[i]]$path)),
+      TRUE
+    )
+    
+    # If template is attributes_*.txt ...
+    
+    if (stringr::str_detect(
+      string = names(x_full$template[i]), 
+      pattern = 'attributes_[:graph:]*.txt'
+    )){
       
-      # Path should have been added
+      # Template name should have a matching data.table
+      
+      fregexpr <- stringr::str_extract(
+        string = names(x_full$template[i]),
+        pattern = '(?<=^attributes_)[:graph:]*(?=.txt$)'
+      )
       
       expect_equal(
-        !is.na(output$template[[i]]$path),
+        any(
+          stringr::str_detect(
+            string = names(x_full$data.table),
+            pattern = fregexpr
+          )
+        ),
         TRUE
       )
       
+    # If template is catvars_*.txt
+      
+    } else if (stringr::str_detect(
+      string = names(x_full$template[i]), 
+      pattern = 'catvars_[:graph:]*.txt'
+    )){
+      
+      # Template name should have a matching data.table
+      
+      fregexpr <- stringr::str_extract(
+        string = names(x_full$template[i]),
+        pattern = '(?<=^catvars_)[:graph:]*(?=.txt$)'
+      )
+      
+      expect_equal(
+        any(
+          stringr::str_detect(
+            string = names(x_full$data.table),
+            pattern = fregexpr
+          )
+        ),
+        TRUE
+      )
+
     }
     
+    
   }
+  
+  # Second import notifies of existing content
+  
+  expect_message(
+    import_templates(
+      license = 'CC0',
+      x = x_full,
+      write.file = FALSE
+    )
+  )
   
 })
