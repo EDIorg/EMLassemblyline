@@ -1,11 +1,11 @@
-#' Create directory for `EMLassemblyline` inputs and outputs
+#' Create directories for `EMLassemblyline` inputs and outputs
 #'
 #' @description  
 #'     Create a commonly used directory structure for `EMLassemblyline` inputs 
 #'     and outputs. You're welcome to organize content in any way you choose,
 #'     this is just one approach.
 #'
-#' @usage create_directories(path, name)
+#' @usage create_directories(path, dir.name)
 #'
 #' @param path 
 #'     (character) Path to where the directory structure will be created.
@@ -34,7 +34,7 @@
 #' @export
 #'
 
-create_directory <- function(path, dir.name){
+create_directories <- function(path, dir.name){
   
   # Stop if directory exists
   

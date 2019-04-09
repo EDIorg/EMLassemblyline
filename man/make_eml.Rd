@@ -5,34 +5,34 @@
 \title{Render templates into EML metadata}
 \usage{
 make_eml(
-    path,
-    data.path = path,
-    eml.path = path, 
-    dataset.title, 
-    data.table, 
-    data.table.description, 
-    data.table.quote.character, 
-    other.entity,
-    other.entity.description,
-    data.url, 
-    temporal.coverage, 
-    geographic.description, 
-    geographic.coordinates, 
-    maintenance.description, 
-    user.id, 
-    affiliation,
-    environment,
-    package.id,
-    provenance,
-    return.obj = FALSE,
-    write.file = TRUE,
-    x = NULL,
-    data.files = 'deprecated',
-    data.files.description = 'deprecated',
-    data.files.quote.character = 'deprecated',
-    data.files.url = 'deprecated',
-    zip.dir = 'deprecated',
-    zip.dir.description = 'deprecated')
+      path,
+      data.path = path,
+      eml.path = path, 
+      user.id,
+      affiliation,
+      package.id,
+      dataset.title,
+      temporal.coverage,
+      geographic.description, 
+      geographic.coordinates, 
+      maintenance.description, 
+      data.table = NULL, 
+      data.table.description = NULL, 
+      data.table.quote.character = NULL, 
+      other.entity = NULL,
+      other.entity.description = NULL,
+      data.url = NULL,
+      provenance = NULL,
+      write.file = TRUE,
+      return.obj = FALSE,
+      x = NULL,
+      data.files = 'deprecated',
+      data.files.description = 'deprecated',
+      data.files.quote.character = 'deprecated',
+      data.files.url = 'deprecated',
+      zip.dir = 'deprecated',
+      zip.dir.description = 'deprecated'
+    )
 }
 \arguments{
 \item{path}{(character) Path to where the template(s) will be imported.}
@@ -41,35 +41,22 @@ make_eml(
 
 \item{eml.path}{(character) Path to where the EML will be writtn.}
 
+\item{user.id}{(character) ID(s) of data repository user account(s). If more than one,
+supply as a vector of character strings. Contact EDI 
+(info@environmentaldatainitiative.org) to obtain one. This argument is
+not required.}
+
+\item{affiliation}{(character) Affiliations of the `user.id`(s). Valid options for EDI are
+`LTER` and `EDI`. If more than one, supply as a vector of character 
+strings in the same order as corresponding `user.id`(s). This argument
+is not required.}
+
+\item{package.id}{(character) EDI Data Repository Data package ID for this dataset. A 
+missing package ID defaults to `edi.101.1`.}
+
 \item{dataset.title}{(character) Dataset title. Be descriptive (more than 5 words) and 
 consider including the temporal coverage (e.g. "GLEON: Long term lake 
 chloride concentrations from North America and Europe: 1940-2016").}
-
-\item{data.table}{(character) Data table name(s). If more than one, then supply as a 
-vector of character strings (e.g. 
-`data.table = c("concentrations.csv", "characteristics.csv")`).}
-
-\item{data.table.description}{(character) Data table description(s). Brief description of `data.table`.
-If more than one, then supply as a vector of character strings in the 
-same order as listed in `data.table`.}
-
-\item{data.table.quote.character}{(character) Quote character(s) used in `data.table`. If more than one, 
-then supply as a vector of character strings in the same order as 
-listed in `data.table`. This argument is required only if your data 
-contain quotations. If the quote character is a quotation, then enter 
-`"\\""`. If the quote character is an apostrophe, then enter `"\\'"`.}
-
-\item{data.url}{(character) The URL of where your data can be downloaded by a
-data repository. This argument is not required, if the data will be 
-manually uploaded to a data repository.}
-
-\item{other.entity}{(character) Name(s) of `other.entity`(s) in this dataset. Use
-`other.entity` for all non-`data.table` files. `other.entity`(s) should 
-be stored at `data.path`.}
-
-\item{other.entity.description}{(character) Description(s) of `other.entity`(s). If more than one, then 
-supply as a vector of descriptions in the same order as listed in 
-`other.entity`.}
 
 \item{temporal.coverage}{(character) Beginning and ending dates of the dataset as a vector of 
 character strings in the format `YYYY-MM-DD`.}
@@ -89,30 +76,39 @@ repeat the longitude for East and West (e.g.
 \item{maintenance.description}{(character) Indicator of whether data collection is `ongoing` or 
 `completed`.}
 
-\item{user.id}{(character) ID(s) of data repository user account(s). If more than one,
-supply as a vector of character strings. Contact EDI 
-(info@environmentaldatainitiative.org) to obtain one. This argument is
-not required.}
+\item{data.table}{(character) Data table name(s). If more than one, then supply as a 
+vector of character strings (e.g. 
+`data.table = c("concentrations.csv", "characteristics.csv")`).}
 
-\item{affiliation}{(character) Affiliations of the `user.id`(s). Valid options for EDI are
-`LTER` and `EDI`. If more than one, supply as a vector of character 
-strings in the same order as corresponding `user.id`(s). This argument
-is not required.}
+\item{data.table.description}{(character) Data table description(s). Brief description of `data.table`.
+If more than one, then supply as a vector of character strings in the 
+same order as listed in `data.table`.}
 
-\item{environment}{(character) EDI Data Repository environment in which data provenance is
-being derived from. Can be: `development`, `staging`, `production`. 
-This argument is not required.}
+\item{data.table.quote.character}{(character) Quote character(s) used in `data.table`. If more than one, 
+then supply as a vector of character strings in the same order as 
+listed in `data.table`. This argument is required only if your data 
+contain quotations. If the quote character is a quotation, then enter 
+`"\\""`. If the quote character is an apostrophe, then enter `"\\'"`.}
 
-\item{package.id}{(character) EDI Data Repository Data package ID for this dataset. A 
-missing package ID defaults to `edi.101.1`.}
+\item{other.entity}{(character) Name(s) of `other.entity`(s) in this dataset. Use
+`other.entity` for all non-`data.table` files. `other.entity`(s) should 
+be stored at `data.path`.}
+
+\item{other.entity.description}{(character) Description(s) of `other.entity`(s). If more than one, then 
+supply as a vector of descriptions in the same order as listed in 
+`other.entity`.}
+
+\item{data.url}{(character) The URL of where your data can be downloaded by a
+data repository. This argument is not required, if the data will be 
+manually uploaded to a data repository.}
 
 \item{provenance}{(character) EDI Data Repository Data package ID(s) corresponding to 
 parent datasets from which this dataset was created (e.g. 
 `knb-lter-cap.46.3`).}
 
-\item{return.obj}{(logical) Return the EML as an R object of class `EML object`.}
-
 \item{write.file}{(logical) Write file to `path`.}
+
+\item{return.obj}{(logical) Return the EML as an R object of class `EML object`.}
 
 \item{x}{(named list) Alternative input/output to `EMLassemblyline` functions. 
 Use `read_files()` to create `x`.}

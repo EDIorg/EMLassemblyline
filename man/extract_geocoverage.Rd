@@ -4,8 +4,17 @@
 \alias{extract_geocoverage}
 \title{Import template for geographic coverage}
 \usage{
-extract_geocoverage(path, data.path = path, data.table, lat.col, 
-    lon.col, site.col, write.file = TRUE, data.file = NULL)
+extract_geocoverage(
+      path, 
+      data.path = path, 
+      data.table, 
+      lat.col, 
+      lon.col, 
+      site.col, 
+      x = NULL, 
+      write.file = TRUE, 
+      data.file = 'deprecated'
+    )
 }
 \arguments{
 \item{path}{(character) Path to where the template(s) will be imported.}

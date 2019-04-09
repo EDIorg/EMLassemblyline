@@ -1,6 +1,6 @@
 context('Make EML')
 library(EMLassemblyline)
-library(EML)
+suppressWarnings(library(EML))
 
 # Parameterize ----------------------------------------------------------------
 
@@ -799,7 +799,7 @@ testthat::test_that('Expect equal', {
   # Using provenance
   # class = 'eml'
   
-  if (class(edi_api) != 'try-error'){
+  if (all(class(edi_api) != 'try-error')){
     
     output <- make_eml(
       path = path,
@@ -1041,6 +1041,26 @@ testthat::test_that('Expect equal', {
     class(output) == 'eml',
     TRUE
   )
+  
+})
+
+# Test usage with x (all templates and 2 data tables) -------------------------
+
+testthat::test_that('Test usage with x (all templates and 2 data tables)', {
+  
+  
+})
+
+# Test usage with x (all templates, 2 data tables, and 1 other entity) --------
+
+testthat::test_that('Test usage with x (all templates, 2 data tables, and 1 other entity)', {
+  
+  
+})
+
+# Test usage with x (all templates and 1 other entity) ------------------------
+
+testthat::test_that('Test usage with x (all templates and 1 other entity)', {
   
   
 })

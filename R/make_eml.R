@@ -6,34 +6,34 @@
 #'     
 #' @usage 
 #'     make_eml(
-#'     path,
-#'     data.path = path,
-#'     eml.path = path, 
-#'     dataset.title, 
-#'     data.table, 
-#'     data.table.description, 
-#'     data.table.quote.character, 
-#'     other.entity,
-#'     other.entity.description,
-#'     data.url, 
-#'     temporal.coverage, 
-#'     geographic.description, 
-#'     geographic.coordinates, 
-#'     maintenance.description, 
-#'     user.id, 
-#'     affiliation,
-#'     environment,
-#'     package.id,
-#'     provenance,
-#'     return.obj = FALSE,
-#'     write.file = TRUE,
-#'     x = NULL,
-#'     data.files = 'deprecated',
-#'     data.files.description = 'deprecated',
-#'     data.files.quote.character = 'deprecated',
-#'     data.files.url = 'deprecated',
-#'     zip.dir = 'deprecated',
-#'     zip.dir.description = 'deprecated')
+#'       path,
+#'       data.path = path,
+#'       eml.path = path, 
+#'       user.id,
+#'       affiliation,
+#'       package.id,
+#'       dataset.title,
+#'       temporal.coverage,
+#'       geographic.description, 
+#'       geographic.coordinates, 
+#'       maintenance.description, 
+#'       data.table = NULL, 
+#'       data.table.description = NULL, 
+#'       data.table.quote.character = NULL, 
+#'       other.entity = NULL,
+#'       other.entity.description = NULL,
+#'       data.url = NULL,
+#'       provenance = NULL,
+#'       write.file = TRUE,
+#'       return.obj = FALSE,
+#'       x = NULL,
+#'       data.files = 'deprecated',
+#'       data.files.description = 'deprecated',
+#'       data.files.quote.character = 'deprecated',
+#'       data.files.url = 'deprecated',
+#'       zip.dir = 'deprecated',
+#'       zip.dir.description = 'deprecated'
+#'     )
 #'     
 #' @param path 
 #'     (character) Path to where the template(s) will be imported.
@@ -99,10 +99,6 @@
 #'     `LTER` and `EDI`. If more than one, supply as a vector of character 
 #'     strings in the same order as corresponding `user.id`(s). This argument
 #'     is not required.
-#' @param environment
-#'     (character) EDI Data Repository environment in which data provenance is
-#'     being derived from. Can be: `development`, `staging`, `production`. 
-#'     This argument is not required.
 #' @param package.id
 #'     (character) EDI Data Repository Data package ID for this dataset. A 
 #'     missing package ID defaults to `edi.101.1`.
@@ -151,14 +147,34 @@
 #'
 
 
-make_eml <- function(path, data.path = path, eml.path = path, dataset.title, data.table, data.table.description, 
-                     data.table.quote.character, data.url, other.entity = NULL,
-                     other.entity.description = NULL,
-                     temporal.coverage, geographic.description, geographic.coordinates, maintenance.description, 
-                     user.id, affiliation, environment = 'production', package.id, provenance, return.obj = FALSE, 
-                     write.file = TRUE, x = NULL, data.files = 'deprecated', data.files.description = 'deprecated', 
-                     data.files.quote.character = 'deprecated', data.files.url = 'deprecated', zip.dir = 'deprecated',
-                     zip.dir.description = 'deprecated') {
+make_eml <- function(
+  path,
+  data.path = path,
+  eml.path = path, 
+  user.id,
+  affiliation,
+  package.id,
+  dataset.title,
+  temporal.coverage,
+  geographic.description, 
+  geographic.coordinates, 
+  maintenance.description, 
+  data.table = NULL, 
+  data.table.description = NULL, 
+  data.table.quote.character = NULL, 
+  other.entity = NULL,
+  other.entity.description = NULL,
+  data.url = NULL,
+  provenance = NULL,
+  write.file = TRUE,
+  return.obj = FALSE,
+  x = NULL,
+  data.files = 'deprecated',
+  data.files.description = 'deprecated',
+  data.files.quote.character = 'deprecated',
+  data.files.url = 'deprecated',
+  zip.dir = 'deprecated',
+  zip.dir.description = 'deprecated') {
 
   # Validate arguments and import data ----------------------------------------
   
@@ -171,11 +187,11 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   if (data.files != 'deprecated'){
     stop('Input argument "data.files" has been deprecated. Use "data.table" instead.')
   }
-  if (!missing(data.table)){
+  if (!is.null(data.table)){
     if (data.files.description != 'deprecated'){
       stop('Input argument "data.files.description" has been deprecated. Use "data.table.description" instead.')
     }
-    if (missing(data.table.description)){
+    if (is.null(data.table.description)){
       stop('Input argument "data.table.description" is missing! Please describe your data files.')
     }
   }
@@ -219,13 +235,13 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   
   # Validate data file names
   
-  if (!missing(data.table)){
+  if (!is.null(data.table)){
     table_names <- EDIutils::validate_file_names(path = data.path, data.files = data.table) 
   }
   
   # Validate fields of data.table
   
-  if (!missing(data.table)){
+  if (!is.null(data.table)){
     EDIutils::validate_fields(data.path, data.files = table_names)
   }
   
@@ -246,7 +262,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   
   # Validate data.table.description
   
-  if (!missing(data.table)){
+  if (!is.null(data.table)){
     if (length(data.table.description) != length(data.table)){
       stop('The number of descriptions listed in the argument "data.table.description" does not match the number of files listed in the argument "data.table". These must match.')
     }
@@ -254,11 +270,11 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   
   # Validate data.table.quote.character
   
-  if (!missing(data.table)){
+  if (!is.null(data.table)){
     if (data.files.quote.character != 'deprecated'){
       stop('Input argument "data.files.quote.character" has been deprecated. Use "data.table.quote.character" instead.')
     }
-    if (!missing(data.table.quote.character)){
+    if (!is.null(data.table.quote.character)){
       if (length(data.table.quote.character) != length(data.table)){
         stop('The number of quote characters listed in the argument "data.table.quote.character" does not match the number of files listed in the argument "data.table". These must match.')
       }
@@ -283,13 +299,13 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
     stop('The argument "zip.dir.description" has been deprecated. Use "other.entity.description" instead.')
   }
   
-  if ((!missing(other.entity)) & (missing(other.entity.description))){
+  if ((!is.null(other.entity)) & (is.null(other.entity.description))){
     stop('The argument "other.entity.description" is missing and "other.entity" is present. Add a description for your zip directory.')
   }
-  if ((!missing(other.entity.description)) & (missing(other.entity))){
+  if ((!is.null(other.entity.description)) & (is.null(other.entity))){
     stop('The argument "other.entity" is missing and "other.entity.description" is present. Add the zip directories you are describing.')
   }
-  if ((!missing(other.entity.description)) & (!missing(other.entity))){
+  if ((!is.null(other.entity.description)) & (!is.null(other.entity))){
     if ((length(other.entity)) != (length(other.entity.description))){
       stop('The number of other.entity and other.entity.descriptions must match!')
     }
@@ -311,14 +327,14 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
     
     # Read templates and data into x
     
-    if (missing(data.table) & is.null(other.entity)){
+    if (is.null(data.table) & is.null(other.entity)){
       
       x <- read_files(
         path = path,
         data.path = data.path
       )
       
-    } else if (!missing(data.table) & is.null(other.entity)){
+    } else if (!is.null(data.table) & is.null(other.entity)){
       
       x <- read_files(
         path = path,
@@ -326,7 +342,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
         data.table = table_names
       )
       
-    } else if (!missing(data.table) & !is.null(other.entity)){
+    } else if (!is.null(data.table) & !is.null(other.entity)){
       
       x <- read_files(
         path = path,
@@ -335,7 +351,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
         other.entity = other.entity
       )
       
-    } else if (missing(data.table) & !is.null(other.entity)){
+    } else if (is.null(data.table) & !is.null(other.entity)){
       
       x <- read_files(
         path = path,
@@ -351,7 +367,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
 
   # Compile attributes --------------------------------------------------------
   
-  if (!missing(data.table)){
+  if (!is.null(data.table)){
     attributes_in <- compile_attributes(x = x)
   }
   
@@ -684,7 +700,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
     unresolved_terms <- keywords[keywords$keywordThesaurus == '', 'keyword']
     
     results <- try(
-      resolve_terms(
+      EDIutils::vocab_resolve_terms(
         x = 'peat',
         cv = 'lter'
       ),
@@ -882,7 +898,8 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
 
   # Add provenance metadata -----------------------------------------------
   
-  if (!missing(provenance)){
+  if (!is.null(provenance)){
+    environment <- 'production'
     message('<provenance metadata>')
     for (p in 1:length(provenance)){
       prov_pkg_id <- stringr::str_replace_all(provenance[p], '\\.', '/')
@@ -1214,7 +1231,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
         os = os
       )
       
-      if (!missing("data.table.quote.character")){
+      if (!is.null(data.table.quote.character)){
         
         physical_temp <- EML::set_physical(
           paste0(
@@ -1233,7 +1250,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
         
       }
       
-      if (missing('data.table.quote.character')) {
+      if (is.null(data.table.quote.character)) {
         
         physical_temp <- EML::set_physical(
           paste0(
@@ -1262,7 +1279,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
                                      names(x$data.table)[i],
                                      sep = ""))))
       
-      if (!missing(data.url)){
+      if (!is.null(data.url)){
         data_table_url <- paste(data.url,
                                 "/",
                                 names(x$data.table)[i],
@@ -1442,7 +1459,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
         
         physical@size <- methods::new("size", unit = "bytes", methods::as(as.character(file.size(paste(x$other.entity[[i]]$path, "/", names(x$other.entity)[i], sep = ""))), "size"))
         
-        if (!missing(data.url)){
+        if (!is.null(data.url)){
           
           physical@distribution <- methods::new(
             'ListOfdistribution',
@@ -1477,11 +1494,11 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
           
           checksum_md5 <- gsub(".*= ", "", certutil_output)
           
-          authentication <- new("authentication",
+          authentication <- methods::new("authentication",
                                 method = "MD5",
                                 checksum_md5)
           
-          physical@authentication <- as(list(authentication),
+          physical@authentication <- methods::as(list(authentication),
                                         "ListOfauthentication")
           
         } else if (os == "win"){
@@ -1499,11 +1516,11 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
           
           checksum_md5 <- gsub(" ", "", certutil_output[2])
           
-          authentication <- new("authentication",
+          authentication <- methods::new("authentication",
                                 method = "MD5",
                                 checksum_md5)
           
-          physical@authentication <- as(list(authentication),
+          physical@authentication <- methods::as(list(authentication),
                                         "ListOfauthentication")
           
         } else if (os == "lin"){
@@ -1519,11 +1536,11 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
           
           checksum_md5 <- strsplit(certutil_output, split = " ")[[1]][1]
           
-          authentication <- new("authentication",
+          authentication <- methods::new("authentication",
                                 method = "MD5",
                                 checksum_md5)
           
-          physical@authentication <- as(list(authentication),
+          physical@authentication <- methods::as(list(authentication),
                                         "ListOfauthentication")
           
           

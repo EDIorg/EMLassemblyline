@@ -6,8 +6,17 @@
 #'     table containing geographical coordinates.
 #'
 #' @usage 
-#'     extract_geocoverage(path, data.path = path, data.table, lat.col, 
-#'     lon.col, site.col, write.file = TRUE, data.file = NULL)
+#'     extract_geocoverage(
+#'       path, 
+#'       data.path = path, 
+#'       data.table, 
+#'       lat.col, 
+#'       lon.col, 
+#'       site.col, 
+#'       x = NULL, 
+#'       write.file = TRUE, 
+#'       data.file = 'deprecated'
+#'     )
 #'
 #' @param path 
 #'     (character) Path to where the template(s) will be imported.
@@ -50,7 +59,7 @@
 
 extract_geocoverage <- function(path, data.path = path, data.table, lat.col, 
                                 lon.col, site.col, x = NULL, write.file = TRUE, 
-                                data.file = NULL){
+                                data.file = 'deprecated'){
   
   message('Creating geographic coverage template.')
   
@@ -70,7 +79,7 @@ extract_geocoverage <- function(path, data.path = path, data.table, lat.col,
     
     # data.file
     
-    if (!is.null(data.file)){
+    if (data.file != 'deprecated'){
       
       stop('Input argument "data.file" has been deprecated. Use "data.table" instead.')
       
@@ -150,7 +159,7 @@ extract_geocoverage <- function(path, data.path = path, data.table, lat.col,
     
     # data.file
     
-    if (!is.null(data.file)){
+    if (data.file != 'deprecated'){
       
       stop('Input argument "data.file" has been deprecated. Use "data.table" instead.')
       

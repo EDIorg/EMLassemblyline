@@ -4,8 +4,15 @@
 \alias{import_templates}
 \title{Import templates for core metadata}
 \usage{
-import_templates(path, data.path = path, data.table = NULL, 
-    x = NULL, data.files = NULL)
+import_templates(
+      path,
+      data.path = path,
+      license,
+      data.table = NULL,
+      x = NULL,
+      write.file = TRUE,
+      data.files = 'deprecated'
+    )
 }
 \arguments{
 \item{path}{(character) Path to where the templates will be imported.}
@@ -21,6 +28,8 @@ entered as arguments to `make_eml`.}
 
 \item{x}{(named list) Alternative input/output to `EMLassemblyline` functions. 
 Use `read_files()` to create `x`.}
+
+\item{write.file}{(logical) Write template files to `path`.}
 
 \item{data.files}{NOTE: `data.files` has been deprecated. Use `data.table` instead.}
 }

@@ -8,8 +8,15 @@
 #'     \url{https://clnsmth.github.io/EMLassemblyline/articles/instructions.html}.
 #'
 #' @usage 
-#'     import_templates(path, data.path = path, data.table = NULL, 
-#'     x = NULL, data.files = NULL)
+#'     import_templates(
+#'       path,
+#'       data.path = path,
+#'       license,
+#'       data.table = NULL,
+#'       x = NULL,
+#'       write.file = TRUE,
+#'       data.files = 'deprecated'
+#'     )
 #'
 #' @param path 
 #'     (character) Path to where the templates will be imported.
@@ -25,6 +32,8 @@
 #' @param x
 #'     (named list) Alternative input/output to `EMLassemblyline` functions. 
 #'     Use `read_files()` to create `x`.
+#' @param write.file
+#'     (logical) Write template files to `path`.
 #' @param data.files
 #'     NOTE: `data.files` has been deprecated. Use `data.table` instead.
 #'
@@ -65,7 +74,7 @@
 
 import_templates <- function(path, data.path = path, license, 
                              data.table = NULL, x = NULL, write.file = TRUE,
-                             data.files = NULL){
+                             data.files = 'deprecated'){
   
   message('Importing metadata templates')
 
@@ -83,7 +92,7 @@ import_templates <- function(path, data.path = path, license,
     
     # data.files
     
-    if (!is.null(data.files)){
+    if (data.files != 'deprecated'){
       stop('Input argument "data.files" has been deprecated. Use "data.table" instead.')
     }
     
@@ -145,7 +154,7 @@ import_templates <- function(path, data.path = path, license,
     
     # data.files
     
-    if (!is.null(data.files)){
+    if (data.files != 'deprecated'){
       stop('Input argument "data.files" has been deprecated. Use "data.table" instead.')
     }
     

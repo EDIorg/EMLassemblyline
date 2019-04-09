@@ -3,7 +3,7 @@
 #' @description
 #'     Validate the content of `EMLassembline` metadata templates.
 #'
-#' @usage validate_arguments(x)
+#' @usage validate_templates(x)
 #'
 #' @param x
 #'     (ADD OBJECT CLASSES) Describe objects.

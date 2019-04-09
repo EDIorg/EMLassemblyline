@@ -4,7 +4,7 @@
 \alias{validate_templates}
 \title{Validate content of `EMLassemblyline` metadata templates}
 \usage{
-validate_arguments(x)
+validate_templates(x)
 }
 \arguments{
 \item{x}{(ADD OBJECT CLASSES) Describe objects.}
