@@ -39,6 +39,49 @@ other.entity <- 'ancillary_data.zip'
 other.entity.description <- 'Ancillary data'
 provenance <- 'edi.100.1'
 
+x_table <- read_files(
+  path = system.file(
+    '/examples/templates', 
+    package = 'EMLassemblyline'
+  ),
+  data.path = system.file(
+    '/examples/data',
+    package = 'EMLassemblyline'
+  ),
+  data.table = c(
+    'decomp.csv',
+    'nitrogen.csv'
+  )
+)
+
+x_table_other <- read_files(
+  path = system.file(
+    '/examples/templates', 
+    package = 'EMLassemblyline'
+  ),
+  data.path = system.file(
+    '/examples/data',
+    package = 'EMLassemblyline'
+  ),
+  data.table = c(
+    'decomp.csv',
+    'nitrogen.csv'
+  ),
+  other.entity = 'ancillary.data.zip'
+)
+
+x_other <- read_files(
+  path = system.file(
+    '/examples/templates', 
+    package = 'EMLassemblyline'
+  ),
+  data.path = system.file(
+    '/examples/data',
+    package = 'EMLassemblyline'
+  ),
+  other.entity = 'ancillary.data.zip'
+)
+
 # File paths within R library
 
 path.inst <- system.file(
@@ -1048,13 +1091,65 @@ testthat::test_that('Expect equal', {
 
 testthat::test_that('Test usage with x (all templates and 2 data tables)', {
   
+  output <- make_eml(
+    path = path,
+    data.path = data.path,
+    eml.path = eml.path,
+    dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+    data.table = data.table,
+    data.table.description = c('Decomposition data', 'Nitrogen data'),
+    data.table.quote.character = c("\"","\""),
+    data.url = data.url,
+    temporal.coverage = c('2014-05-01', '2015-10-31'),
+    geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+    geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+    maintenance.description = 'completed',
+    user.id = user.id,
+    affiliation = affiliation,
+    package.id = 'edi.141.1',
+    return.obj = TRUE,
+    write.file = FALSE,
+    x = x_table
+  )
   
+  expect_equal(
+    class(output) == 'eml',
+    TRUE
+  )
+
 })
 
 # Test usage with x (all templates, 2 data tables, and 1 other entity) --------
 
 testthat::test_that('Test usage with x (all templates, 2 data tables, and 1 other entity)', {
   
+  output <- make_eml(
+    path = path,
+    data.path = data.path,
+    eml.path = eml.path,
+    dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+    data.table = data.table,
+    data.table.description = c('Decomposition data', 'Nitrogen data'),
+    data.table.quote.character = c("\"","\""),
+    data.url = data.url,
+    other.entity = 'ancillary_data.zip',
+    other.entity.description = 'Ancillary data',
+    temporal.coverage = c('2014-05-01', '2015-10-31'),
+    geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+    geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+    maintenance.description = 'completed',
+    user.id = user.id,
+    affiliation = affiliation,
+    package.id = 'edi.141.1',
+    return.obj = TRUE,
+    write.file = FALSE,
+    x = x_table_other
+  )
+  
+  expect_equal(
+    class(output) == 'eml',
+    TRUE
+  )
   
 })
 
@@ -1062,5 +1157,29 @@ testthat::test_that('Test usage with x (all templates, 2 data tables, and 1 othe
 
 testthat::test_that('Test usage with x (all templates and 1 other entity)', {
   
+  output <- make_eml(
+    path = path,
+    data.path = data.path,
+    eml.path = eml.path,
+    dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+    data.url = data.url,
+    other.entity = 'ancillary_data.zip',
+    other.entity.description = 'Ancillary data',
+    temporal.coverage = c('2014-05-01', '2015-10-31'),
+    geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+    geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+    maintenance.description = 'completed',
+    user.id = user.id,
+    affiliation = affiliation,
+    package.id = 'edi.141.1',
+    return.obj = TRUE,
+    write.file = FALSE,
+    x = x_other
+  )
+  
+  expect_equal(
+    class(output) == 'eml',
+    TRUE
+  )
   
 })
