@@ -35,8 +35,8 @@ affiliation <- c('LTER', 'EDI')
 package.id <- 'edi.141.1'
 data.table.quote.character <- c("\\'", "\\'")
 data.url <- 'https://lter.limnology.wisc.edu/sites/default/files/data/edi_141/data'
-other.entity <- 'protocols.zip'
-other.entity.description <- 'Collection of sampling and analytical protocols'
+other.entity <- 'ancillary_data.zip'
+other.entity.description <- 'Ancillary data'
 provenance <- 'edi.100.1'
 
 # File paths within R library

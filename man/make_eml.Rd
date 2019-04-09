@@ -26,6 +26,7 @@ make_eml(
     provenance,
     return.obj = FALSE,
     write.file = TRUE,
+    x = NULL,
     data.files = 'deprecated',
     data.files.description = 'deprecated',
     data.files.quote.character = 'deprecated',
@@ -112,6 +113,9 @@ parent datasets from which this dataset was created (e.g.
 \item{return.obj}{(logical) Return the EML as an R object of class `EML object`.}
 
 \item{write.file}{(logical) Write file to `path`.}
+
+\item{x}{(named list) Alternative input/output to `EMLassemblyline` functions. 
+Use `read_files()` to create `x`.}
 
 \item{data.files}{This argument has been deprecated. Use `data.table` instead.}
 

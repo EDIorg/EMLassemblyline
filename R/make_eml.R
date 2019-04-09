@@ -27,6 +27,7 @@
 #'     provenance,
 #'     return.obj = FALSE,
 #'     write.file = TRUE,
+#'     x = NULL,
 #'     data.files = 'deprecated',
 #'     data.files.description = 'deprecated',
 #'     data.files.quote.character = 'deprecated',
@@ -113,6 +114,9 @@
 #'     (logical) Return the EML as an R object of class `EML object`.
 #' @param write.file
 #'     (logical) Write file to `path`.
+#' @param x
+#'     (named list) Alternative input/output to `EMLassemblyline` functions. 
+#'     Use `read_files()` to create `x`.
 #' @param data.files
 #'     This argument has been deprecated. Use `data.table` instead.
 #' @param data.files.description
@@ -152,11 +156,11 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
                      other.entity.description = NULL,
                      temporal.coverage, geographic.description, geographic.coordinates, maintenance.description, 
                      user.id, affiliation, environment = 'production', package.id, provenance, return.obj = FALSE, 
-                     write.file = TRUE, data.files = 'deprecated', data.files.description = 'deprecated', 
+                     write.file = TRUE, x = NULL, data.files = 'deprecated', data.files.description = 'deprecated', 
                      data.files.quote.character = 'deprecated', data.files.url = 'deprecated', zip.dir = 'deprecated',
                      zip.dir.description = 'deprecated') {
 
-  # Check arguments and parameterize ------------------------------------------
+  # Validate arguments and import data ----------------------------------------
   
   if (missing(path)){
     stop('Input argument "path" is missing! Specify path to your dataset working directory.')
@@ -301,40 +305,84 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
     }
   }
   
+  # Read data into x
+  
+  if (is.null(x)){
+    
+    # Read templates and data into x
+    
+    if (missing(data.table) & is.null(other.entity)){
+      
+      x <- read_files(
+        path = path,
+        data.path = data.path
+      )
+      
+    } else if (!missing(data.table) & is.null(other.entity)){
+      
+      x <- read_files(
+        path = path,
+        data.path = data.path,
+        data.table = table_names
+      )
+      
+    } else if (!missing(data.table) & !is.null(other.entity)){
+      
+      x <- read_files(
+        path = path,
+        data.path = data.path,
+        data.table = table_names,
+        other.entity = other.entity
+      )
+      
+    } else if (missing(data.table) & !is.null(other.entity)){
+      
+      x <- read_files(
+        path = path,
+        data.path = data.path,
+        other.entity = other.entity
+      )
+      
+    }
+    
+    data_read_2_x <- TRUE
+    
+  }
+
   # Compile attributes --------------------------------------------------------
   
   if (!missing(data.table)){
-    attributes_in <- compile_attributes(path, data.path, data.table)
+    attributes_in <- compile_attributes(x = x)
   }
   
-  # Set file names
-
-  fname_abstract <- paste(path, "/abstract.txt", sep = "")
-  
-  fname_additional_info <- paste(path, "/additional_info.txt", sep = "")
-
-  fname_keywords <- paste(path, "/keywords.txt", sep = "")
-  
-  fname_personnel <- paste(path, "/personnel.txt", sep = "")
-  
-  fname_intellectual_rights <- paste(path, "/intellectual_rights.txt", sep = "")
-
-  fname_methods <- paste(path, "/methods.txt", sep = "")
-  
-  fname_custom_units <- paste(path, "/custom_units.txt", sep = "")
-  
-  files <- list.files(path)
-  
-  fname_table_catvars <- c()
-  
-  if (exists('table_names')){
-    for (i in 1:length(table_names)){
-      fname_table_catvars[i] <- paste("catvars_",
-                                      substr(table_names[i], 1, nchar(table_names[i]) - 4),
-                                      ".txt",
-                                      sep = "")
-    }
-  }
+  # # Set file names
+  # 
+  # fname_abstract <- paste(path, "/abstract.txt", sep = "")
+  # 
+  # fname_additional_info <- paste(path, "/additional_info.txt", sep = "")
+  # 
+  # fname_keywords <- paste(path, "/keywords.txt", sep = "")
+  # 
+  # fname_personnel <- paste(path, "/personnel.txt", sep = "")
+  # 
+  # fname_intellectual_rights <- paste(path, "/intellectual_rights.txt", sep = "")
+  # 
+  # fname_methods <- paste(path, "/methods.txt", sep = "")
+  # 
+  # fname_custom_units <- paste(path, "/custom_units.txt", sep = "")
+  # 
+  # files <- list.files(path)
+  # 
+  # fname_table_catvars <- c()
+  # 
+  # if (exists('table_names')){
+  #   for (i in 1:length(table_names)){
+  #     fname_table_catvars[i] <- paste("catvars_",
+  #                                     substr(table_names[i], 1, nchar(table_names[i]) - 4),
+  #                                     ".txt",
+  #                                     sep = "")
+  #   }
+  # }
   
   # Initialize data entity storage (tables)
 
@@ -501,35 +549,11 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
 
   # Read personnel file
 
-  message("Reading personnel file.")
-
-  personinfo <- utils::read.table(
-    fname_personnel,
-    header = T,
-    sep="\t",
-    quote="\"",
-    as.is=TRUE,
-    comment.char = "",
-    fill = T,
-    colClasses = rep("character", 10))
-  personinfo <- personinfo[ ,1:10]
-  colnames(personinfo) <- c("givenName",
-                            "middleInitial",
-                            "surName",
-                            "organizationName",
-                            "electronicMailAddress",
-                            "userId",
-                            "role",
-                            "projectTitle",
-                            "fundingAgency",
-                            "fundingNumber")
+  personinfo <- x$template$personnel.txt$content
   
   personinfo$role <- tolower(personinfo$role)
   
-  # Validate personnel.txt ----------------------------------------------------
-  
   personinfo <- validate_personnel(x = personinfo)
-  
   
   # Build modules--------------------------------------------------------------
 
@@ -599,14 +623,14 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   access@allow <- methods::new("ListOfallow",
                       c(allow))
 
-  # Build dataset module
+  # Build dataset module ------------------------------------------------------
   
   message("<dataset>")
 
   dataset <- methods::new("dataset",
                  title = dataset.title)
 
-  # Add creators
+  # Add creators --------------------------------------------------------------
   
   message("<creators>")
 
@@ -620,44 +644,31 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
 
   dataset@creator <- methods::as(creator_list, "ListOfcreator")
 
-  # Add publicaton date
+  # Add publicaton date -------------------------------------------------------
   
   message("<publicationDate>")
 
   dataset@pubDate <- methods::as(format(Sys.time(), "%Y-%m-%d"), "pubDate")
 
-  # Add abstract
+  # Add abstract --------------------------------------------------------------
   
   message("<abstract>")
   
-  if (!file.exists(fname_abstract)){
+  if (!'abstract.txt' %in% names(x$template)){
     stop("abstract.txt doesn't exist!")
   }
 
-  dataset@abstract <- methods::as(EML::set_TextType(fname_abstract), "abstract")
-
+  dataset@abstract <- x$template$abstract.txt$content
+    
   # Add keywords --------------------------------------------------------------
   
   message("<keywordSet>")
   
-  if (!isTRUE(file.exists(fname_keywords))){
+  if (!'keywords.txt' %in% names(x$template)){
     stop('keywords.txt does not exist! Run import_templates.txt to regenerate this template.')
   }
 
-  keywords <- suppressWarnings(utils::read.table(
-    paste(substr(fname_keywords, 1, nchar(fname_keywords) - 4),
-          ".txt",
-          sep = ""),
-    header = T,
-    sep="\t",
-    quote="\"",
-    as.is=TRUE,
-    comment.char = "",
-    fill = T,
-    colClasses = rep("character", 2)))
-   keywords <- keywords[ ,1:2]
-  colnames(keywords) <- c("keyword", 
-                          "keywordThesaurus")
+  keywords <- x$template$keywords.txt$content
   
   # Edit keywords: Remove blank keyword entries
   
@@ -710,13 +721,11 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
 
   message("<intellectualRights>")
   
-  if (!file.exists(fname_intellectual_rights)){
+  if (!'intellectual_rights.txt' %in% names(x$template)){
     stop("intellectual_rights.txt doesn't exist!")
   }
   
-  dataset@intellectualRights <- methods::as(
-    EML::set_TextType(fname_intellectual_rights),
-    "intellectualRights")
+  dataset@intellectualRights <- x$template$intellectual_rights.txt$content
 
   # Add coverage --------------------------------------------------------------
   
@@ -748,13 +757,9 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   
   # Add coverage defined in bounding_boxes.txt
   
-  if (file.exists(paste0(path, '/', 'bounding_boxes.txt'))){
+  if ('bounding_boxes.txt' %in% names(x$template)){
     
-    bounding_boxes <- suppressMessages(
-      as.data.frame(
-        utils::read.table(paste0(path, '/', 'bounding_boxes.txt'), header = T, sep = '\t', quote = "\"", as.is = T, comment.char = '')
-      )
-    )
+    bounding_boxes <- x$template$bounding_boxes.txt$content
     
     if (nrow(bounding_boxes) != 0){
       
@@ -783,11 +788,20 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   
   dataset@coverage@geographicCoverage <- methods::as(list_of_coverage, "ListOfgeographicCoverage")
   
+  # Add taxonomicCoverage -----------------------------------------------------
   
-  if (file.exists(paste(path, "/", "taxonomicCoverage.xml", sep = ""))){
-    message("<taxonomicCoverage>")
-    taxonomic_coverage <- EML::read_eml(paste(path, "/", "taxonomicCoverage.xml", sep = ""))
-    dataset@coverage@taxonomicCoverage <- methods::as(list(taxonomic_coverage), "ListOftaxonomicCoverage")
+  if ('taxonomicCoverage.xml' %in% names(x$template)){
+    
+    if (class(x$template$taxonomicCoverage.xml$content)[1] == 'taxonomicCoverage'){
+      
+      message("<taxonomicCoverage>")
+      
+      taxonomic_coverage <- x$template$taxonomicCoverage.xml$content
+      
+      dataset@coverage@taxonomicCoverage <- methods::as(list(taxonomic_coverage), "ListOftaxonomicCoverage")
+      
+    }
+    
   }
 
   # Add maintenance -----------------------------------------------------------
@@ -798,7 +812,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   maintenance@description <- methods::as(maintenance.description, "description")
   dataset@maintenance <- maintenance
   
-  # Add contacts
+  # Add contacts --------------------------------------------------------------
   
   message("<contacts>")
 
@@ -812,75 +826,57 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
 
   dataset@contact <- methods::as(contact_list, "ListOfcontact")
 
-  # Add methods
+  # Add methods ---------------------------------------------------------------
   
   message("<methods>")
   
-  if (!file.exists(fname_methods)){
+  if (!'methods.txt' %in% names(x$template)){
     stop("methods.txt doesn't exist!")
   }
 
-  dataset@methods <- EML::set_methods(fname_methods)
+  dataset@methods <- x$template$methods.txt$content
   
-  if (file.exists(paste(path, "/", "geographic_coverage.txt", sep = ""))){
+  if ('geographic_coverage.txt' %in% names(x$template)){
     
-    message("<geographicDescription>")
+    df_geographic_coverage <- x$template$geographic_coverage.txt$content
     
-    df_geographic_coverage <- utils::read.table(paste(path,
-                                               "/",
-                                               "geographic_coverage.txt",
-                                               sep = ""),
-                                         header = T,
-                                         sep="\t",
-                                         quote="\"",
-                                         as.is=TRUE,
-                                         comment.char = "",
-                                         fill = T,
-                                         na.strings = "NA",
-                                         colClasses = c("numeric","numeric","character"),
-                                         fileEncoding = "UTF-8")
-    df_geographic_coverage <- df_geographic_coverage[ ,1:3]
-    colnames(df_geographic_coverage) <- c("latitude",
-                                          "longitude",
-                                          "site")
-    
-    df_geographic_coverage$latitude <- as.character(df_geographic_coverage$latitude)
-    
-    df_geographic_coverage$longitude <- as.character(df_geographic_coverage$longitude)
-    
-    df_geographic_coverage$site <- as.character(df_geographic_coverage$site)
-    
-    list_of_coverage <- list()
-    
-    for (i in 1:dim(df_geographic_coverage)[1]){
+    if (nrow(df_geographic_coverage) != 0){
       
-      coverage <- methods::new("coverage")
+      message("<geographicDescription>")
       
-      geographic_description <- methods::new("geographicDescription", df_geographic_coverage$site[i])
+      list_of_coverage <- list()
       
-      bounding_coordinates <- methods::new("boundingCoordinates",
-                                  westBoundingCoordinate = df_geographic_coverage$longitude[i],
-                                  eastBoundingCoordinate = df_geographic_coverage$longitude[i],
-                                  northBoundingCoordinate = df_geographic_coverage$latitude[i],
-                                  southBoundingCoordinate = df_geographic_coverage$latitude[i])
+      for (i in 1:dim(df_geographic_coverage)[1]){
+        
+        coverage <- methods::new("coverage")
+        
+        geographic_description <- methods::new("geographicDescription", df_geographic_coverage$site[i])
+        
+        bounding_coordinates <- methods::new("boundingCoordinates",
+                                             westBoundingCoordinate = df_geographic_coverage$longitude[i],
+                                             eastBoundingCoordinate = df_geographic_coverage$longitude[i],
+                                             northBoundingCoordinate = df_geographic_coverage$latitude[i],
+                                             southBoundingCoordinate = df_geographic_coverage$latitude[i])
+        
+        geographic_coverage <- methods::new("geographicCoverage",
+                                            geographicDescription = geographic_description,
+                                            boundingCoordinates = bounding_coordinates)
+        
+        coverage@geographicCoverage <- methods::as(list(geographic_coverage), "ListOfgeographicCoverage")
+        
+        list_of_coverage[[i]] <- coverage
+        
+      }
       
-      geographic_coverage <- methods::new("geographicCoverage",
-                                 geographicDescription = geographic_description,
-                                 boundingCoordinates = bounding_coordinates)
+      sampling <- methods::new("sampling")
       
-      coverage@geographicCoverage <- methods::as(list(geographic_coverage), "ListOfgeographicCoverage")
+      sampling@studyExtent@coverage <- methods::as(list_of_coverage, "ListOfcoverage")
       
-      list_of_coverage[[i]] <- coverage
+      sampling@samplingDescription <- methods::as("Geographic coordinates of sampling sites", "samplingDescription")
       
-    }
+      dataset@methods@sampling <- methods::as(list(sampling), "ListOfsampling")
 
-    sampling <- methods::new("sampling")
-    
-    sampling@studyExtent@coverage <- methods::as(list_of_coverage, "ListOfcoverage")
-    
-    sampling@samplingDescription <- methods::as("Geographic coordinates of sampling sites", "samplingDescription")
-    
-    dataset@methods@sampling <- methods::as(list(sampling), "ListOfsampling")
+    }
 
   }
 
@@ -936,7 +932,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
     }
   }
   
-  # Add project and funding
+  # Add project and funding ---------------------------------------------------
   
   useI <- which(personinfo$role == "pi")
   
@@ -1078,15 +1074,14 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
     
   }
   
-  # Add associated parties
-  
-  message("<associatedParty>")
+  # Add associated parties ----------------------------------------------------
   
   useI <- which(personinfo$role != "pi" &
                   personinfo$role != "creator" &
                   personinfo$role != "contact")
   
   if (length(useI) != 0){
+    message("<associatedParty>")
     associated_party_list <- list()
     for (j in 1:length(useI)){
       associated_party_list[[j]] <- suppressWarnings(set_person(info_row = useI[j],
@@ -1095,71 +1090,45 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
     dataset@associatedParty <- methods::as(associated_party_list, "ListOfassociatedParty")
   }
   
-  # Add additional information
+  # Add additional information ------------------------------------------------
   
-  message("<additionalInfo>")
-  
-  if (file.exists(fname_additional_info)){
+  if ('additional_info.txt' %in% names(x$template)){
     
-    additional_info <- methods::as(EML::set_TextType(fname_additional_info), "additionalInfo")
+    message("<additionalInfo>")
+    
+    additional_info <- x$template$additional_info.txt$content
     
     dataset@additionalInfo <- methods::as(list(additional_info), "ListOfadditionalInfo")
-
+    
   }
-  
 
   # Loop through tables -------------------------------------------------------
-
-  if (!missing(data.table)){
-    for (i in 1:length(table_names)){
+  
+  if (!is.null(x$data.table)){
+    for (i in 1:length(names(x$data.table))){
       
       message(paste(
         "<dataTable> ...",
-        table_names[i]))
+        names(x$data.table)[i]))
       
       attributes <- attributes_in[[1]][[i]]
       
-      # Read data table
+      df_table <- x$data.table[[i]]$content
       
-      file_path <- paste(data.path,
-                         "/",
-                         table_names[i],
-                         sep = "")
+      # Get catvars
       
-      delim_guess <- EDIutils::detect_delimeter(data.path, data.files = table_names[i], os)
+      fname_table_catvars <- paste0(
+        'catvars_',
+        stringr::str_remove(
+          string = names(x$data.table)[i],
+          pattern = '\\.[:alpha:]*$'
+        ),
+        '.txt'
+      )
       
-      df_table <- utils::read.table(file_path,
-                             header = TRUE,
-                             sep = delim_guess,
-                             quote = "\"",
-                             as.is = TRUE,
-                             comment.char = "")
-      
-      # Read catvars file
-      
-      if (!is.na(match(fname_table_catvars[i], list.files(path)))){
+      if (fname_table_catvars %in% names(x$template)){
         
-        EDIutils::validate_fields(
-          path = path,
-          data.files = fname_table_catvars[i]
-        )
-        
-        catvars <- utils::read.table(
-          paste(
-            path,
-            "/",
-            fname_table_catvars[i], sep = ""),
-          header = T,
-          sep="\t",
-          quote="\"",
-          as.is=TRUE,
-          comment.char = "",
-          fill = T,
-          colClasses = rep("character", 3))
-        catvars <- catvars[ ,1:3]
-        colnames(catvars) <- c("attributeName",
-                               "code",
-                               "definition")
+        catvars <- x$template[[fname_table_catvars]]$content
         
         # Validate catvars: Definitions for each code
         
@@ -1167,7 +1136,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
         
         if (!isTRUE(use_i)){
           hold <- catvars$code[catvars$definition == ""]
-          stop(paste(fname_table_catvars[i], 
+          stop(paste(fname_table_catvars, 
                      " contains codes without definition. Please add definitions to these codes: ",
                      paste(hold, collapse = ", ")))
         }
@@ -1240,8 +1209,8 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
       # Set physical
       
       eol <- EDIutils::get_eol(
-        path = data.path,
-        file.name = table_names[i],
+        path = x$data.table[[(names(x$data.table)[i])]]$path,
+        file.name = names(x$data.table)[i],
         os = os
       )
       
@@ -1249,13 +1218,13 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
         
         physical_temp <- EML::set_physical(
           paste0(
-            data.path,
+            x$data.table[[(names(x$data.table)[i])]]$path,
             '/',
-            table_names[i]
+            names(x$data.table)[i]
           )
         )
         
-        physical <- EML::set_physical(table_names[i],
+        physical <- EML::set_physical(names(x$data.table)[i],
                                  numHeaderLines = "1",
                                  recordDelimiter = eol,
                                  attributeOrientation = "column",
@@ -1268,13 +1237,13 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
         
         physical_temp <- EML::set_physical(
           paste0(
-            data.path,
+            x$data.table[[(names(x$data.table)[i])]]$path,
             '/',
-            table_names[i]
+            names(x$data.table)[i]
           )
         )
         
-        physical <- EML::set_physical(table_names[i],
+        physical <- EML::set_physical(names(x$data.table)[i],
                                  numHeaderLines = "1",
                                  recordDelimiter = eol,
                                  attributeOrientation = "column",
@@ -1288,15 +1257,15 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
                            unit = "byte",
                            as.character(
                              file.size(
-                               paste(data.path,
+                               paste(x$data.table[[(names(x$data.table)[i])]]$path,
                                      "/",
-                                     table_names[i],
+                                     names(x$data.table)[i],
                                      sep = ""))))
       
       if (!missing(data.url)){
         data_table_url <- paste(data.url,
                                 "/",
-                                table_names[i],
+                                names(x$data.table)[i],
                                 sep = "")
         distribution <- methods::new("distribution",
                             online = methods::new("online",
@@ -1310,9 +1279,9 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
         
         command_certutil <- paste("md5 ",
                                   "\"",
-                                  data.path,
+                                  x$data.table[[(names(x$data.table)[i])]]$path,
                                   "/",
-                                  table_names[i],
+                                  names(x$data.table)[i],
                                   "\"",
                                   sep = "")
         
@@ -1331,9 +1300,9 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
         
         command_certutil <- paste("CertUtil -hashfile ",
                                   "\"",
-                                  data.path,
+                                  x$data.table[[(names(x$data.table)[i])]]$path,
                                   "\\",
-                                  table_names[i],
+                                  names(x$data.table)[i],
                                   "\"",
                                   " MD5",
                                   sep = "")
@@ -1353,9 +1322,9 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
         
         command_certutil <- paste0("md5sum ",
                                    "\"",
-                                   data.path,
+                                   x$data.table[[(names(x$data.table)[i])]]$path,
                                    "/",
-                                   table_names[i],
+                                   names(x$data.table)[i],
                                    "\"")
         
         certutil_output <- system(command_certutil, intern = T)
@@ -1368,9 +1337,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
         
         physical@authentication <- methods::as(list(authentication),
                                       "ListOfauthentication")
-        
-        
-        
+
       }
       
       # Get number of records
@@ -1394,50 +1361,39 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
     
     # Are custom units present in these tables?
     
-    if (file.exists(fname_custom_units)){
+    if ('custom_units.txt' %in% names(x$template)){
       
-      custom_units_df <- utils::read.table(
-        fname_custom_units,
-        header = T,
-        sep="\t",
-        quote="\"",
-        as.is=TRUE,
-        comment.char = "",
-        fill = T,
-        colClasses = rep("character", 5))
-      custom_units_df <- custom_units_df[ ,1:5]
-      colnames(custom_units_df) <- c("id",
-                                     "unitType",
-                                     "parentSI",
-                                     "multiplierToSI",
-                                     "description")
+      custom_units_df <- x$template$custom_units.txt$content
       
-      if (nrow(custom_units_df) < 1){
-        custom_units <- "no"
-      } else {
-        custom_units <- "yes"
-      }
-      
-      # Clean white spaces from custom_units and units_types
-      
-      if (custom_units == "yes"){
+      if (is.data.frame(custom_units_df)){
         
-        message("<additionalMetadata>")
-        
-        for (j in 1:ncol(custom_units_df)){
-          if (class(custom_units_df[ ,j]) == "character" ||
-              (class(custom_units_df[ ,j]) == "factor")){
-            custom_units_df[ ,j] <- trimws(custom_units_df[ ,j])
-          }
+        if (nrow(custom_units_df) < 1){
+          custom_units <- "no"
+        } else {
+          custom_units <- "yes"
         }
         
-        unitsList <- EML::set_unitList(custom_units_df)
-      }
-      
-      
-    } else {
+        # Clean white spaces from custom_units and units_types
+        
+        if (custom_units == "yes"){
+          
+          message("<additionalMetadata>")
+          
+          for (j in 1:ncol(custom_units_df)){
+            if (class(custom_units_df[ ,j]) == "character" ||
+                (class(custom_units_df[ ,j]) == "factor")){
+              custom_units_df[ ,j] <- trimws(custom_units_df[ ,j])
+            }
+          }
+          
+          unitsList <- EML::set_unitList(custom_units_df)
+        }
+
+      } else {
       
       custom_units <- "no"
+      
+      }
       
     }
     
@@ -1451,15 +1407,15 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   
   # Add other.entity ----------------------------------------------------------
   
-  if (!is.null(other.entity)){
+  if (!is.null(x$other.entity)){
     
-    if (length(other.entity) > 0){
+    if (length(names(x$other.entity)) > 0){
       
       list_of_other_entity <- list()
       
       for (i in 1:length(other.entity)){
         
-        message(paste0("<otherEntity> ... ", other.entity[i]))
+        message(paste0("<otherEntity> ... ", names(x$other.entity)[i]))
         
         # Create new other entity element
         
@@ -1478,13 +1434,13 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
         #  Build physical
         
         physical <- methods::new("physical",
-                                 objectName = other.entity[i])
+                                 objectName = names(x$other.entity)[i])
         
         format_name <- "unknown"
         entity_type <- "unknown"
         physical@dataFormat@externallyDefinedFormat@formatName <- format_name
         
-        physical@size <- methods::new("size", unit = "bytes", methods::as(as.character(file.size(paste(data.path, "/", other.entity[i], sep = ""))), "size"))
+        physical@size <- methods::new("size", unit = "bytes", methods::as(as.character(file.size(paste(x$other.entity[[i]]$path, "/", names(x$other.entity)[i], sep = ""))), "size"))
         
         if (!missing(data.url)){
           
@@ -1498,7 +1454,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
                   url = paste0(
                     data.url,
                     '/',
-                    other.entity[i]
+                    names(x$other.entity)[i]
                   )
                 )
               )
@@ -1511,9 +1467,9 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
           
           command_certutil <- paste("md5 ",
                                     "\"",
-                                    data.path,
+                                    x$other.entity[[i]]$path,
                                     "/",
-                                    other.entity[i],
+                                    names(x$other.entity)[i],
                                     "\"",
                                     sep = "")
           
@@ -1532,9 +1488,9 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
           
           command_certutil <- paste("CertUtil -hashfile ",
                                     "\"",
-                                    data.path,
+                                    x$other.entity[[i]]$path,
                                     "\\",
-                                    other.entity[i],
+                                    names(x$other.entity)[i],
                                     "\"",
                                     " MD5",
                                     sep = "")
@@ -1554,9 +1510,9 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
           
           command_certutil <- paste0("md5sum ",
                                      "\"",
-                                     data.path,
+                                     x$other.entity[[i]]$path,
                                      "/",
-                                     other.entity[i],
+                                     names(x$other.entity)[i],
                                      "\"")
           
           certutil_output <- system(command_certutil, intern = T)
@@ -1667,7 +1623,11 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
 # and reformats the attributes table.
 
 
-compile_attributes <- function(path, data.path, data.table){
+compile_attributes <- function(x){
+  
+  path <- x$template[[1]]$path
+  data.path <- x$data.table[[1]]$path
+  data.table <- names(x$data.table)
   
   # Detect users operating system
   
