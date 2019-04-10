@@ -1,10 +1,11 @@
-#' Validate metadata template content
+#' Validate `x` content
 #'
 #' @description
-#'     Validate the content of `EMLassembline` metadata templates.
+#'     Validate contents of `x`, a named list object facilitating 
+#'     inputs/outputs to `EMLassemblyline` functions.
 #'
 #' @usage
-#'     validate_templates(
+#'     validate_x(
 #'       fun.name,
 #'       fun.args
 #'     )
@@ -20,14 +21,17 @@
 #'     Validation checks are function specific.
 #'
 
-validate_templates <- function(fun_name, fun_args){
+validate_x <- function(fun.name, fun.args){
   
   # If called from make_eml() -------------------------------------------------
   
   if (fun.name == 'make_eml'){
     
     x <- fun.args$x
+
+    browser()
     
   }
+  
   
 }

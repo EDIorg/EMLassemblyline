@@ -4,13 +4,21 @@
 \alias{validate_arguments}
 \title{Validate arguments of `EMLassemblyline` functions}
 \usage{
-validate_arguments(x)
+validate_arguments(
+      fun.name, 
+      fun.args
+    )
 }
 \arguments{
-\item{x}{(list) A named list of arguments and corresponding values created by a
-call to `as.list(environment())` within the function whos arguments are
-being validated.}
+\item{fun.name}{(character) Function name passed to `validate_x` with 
+`as.character(match.call()[[1]])`.}
+
+\item{fun.args}{(named list) Function arguments and values passed to `validate_x` with 
+`as.list(environment())`.}
 }
 \description{
 Validate input arguments to `EMLassemblyline` functions.
+}
+\details{
+Validation checks are function specific.
 }
