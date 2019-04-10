@@ -128,18 +128,29 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>validate_arguments</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>validate_arguments</span>(
+      <span class='no'>fun.name</span>,
+      <span class='no'>fun.args</span>
+    )</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>(list) A named list of arguments and corresponding values created by a
-call to `as.list(environment())` within the function whos arguments are
-being validated.</p></td>
+      <th>fun.name</th>
+      <td><p>(character) Function name passed to `validate_x` with 
+`as.character(match.call()[[1]])`.</p></td>
+    </tr>
+    <tr>
+      <th>fun.args</th>
+      <td><p>(named list) Function arguments and values passed to `validate_x` with 
+`as.list(environment())`.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Validation checks are function specific.</p>
     
 
   </div>
@@ -147,7 +158,9 @@ being validated.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#details">Details</a></li>
+          </ul>
 
   </div>
 </div>
@@ -158,7 +171,7 @@ being validated.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
    </div>

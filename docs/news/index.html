@@ -121,32 +121,23 @@
     <div id="emlassemblyline-2-99-0" class="section level1">
 <h1 class="page-header">
 <a href="#emlassemblyline-2-99-0" class="anchor"></a>EMLassemblyline 2.99.0</h1>
-<div id="section" class="section level4">
-<h4 class="hasAnchor">
-<a href="#section" class="anchor"></a>2019-03-31</h4>
 <ul>
 <li>
-<strong>Enhancement:</strong> Release <code><a href="../reference/read_files.html">read_files()</a></code>, a function to read metadata templates and data files into an R list structure as an alternative input to <code>EMLassemblyline</code> functions (i.e. rather than supplying the files themselves). This function is primarily used for testing and demonstration purposes however, this approach is generally useful for interfacing upstream sources with <code>EMLassemblyline</code> (e.g. a metabase or database).</li>
-<li>
-<strong>Enhancement:</strong> Release <code><a href="../reference/create_directory.html">create_directory()</a></code>, a function to create a commonly used directory structure for EMLassemblyline inputs and outputs.</li>
-<li>
-<strong>Bug fix:</strong> <code><a href="../reference/import_templates.html">import_templates()</a></code> no longer fails to import template to empty directories.</li>
-<li>
-<strong>Bug fix:</strong> <code><a href="../reference/import_templates.html">import_templates()</a></code> can now be run on datasets that don’t have data tables.</li>
+<strong>Enhancement:</strong> Support other entity only data packaging use case, thereby extending data packaging use cased to:
+<ul>
+<li>Data table only</li>
+<li>Data table and other entity</li>
+<li>Other entity only</li>
 </ul>
-</div>
-<div id="section-1" class="section level4">
-<h4 class="hasAnchor">
-<a href="#section-1" class="anchor"></a>2019-03-14</h4>
-<ul>
+</li>
 <li>
-<strong>Bug fix:</strong> Add <code>//otherEntity/physical/distribution/online/url</code>. This element was missing though documentation implied it existed.</li>
-</ul>
-</div>
-<div id="section-2" class="section level4">
-<h4 class="hasAnchor">
-<a href="#section-2" class="anchor"></a>2019-03-11</h4>
-<ul>
+<strong>Enhancement:</strong> Enable <code><a href="../reference/make_eml.html">make_eml()</a></code> to create EML for data repositories other than EDI by relaxing constraints on <code>user.id</code>, <code>user.affiliation</code>, and <code>package.id</code> while returning EDI specific warnings, but not errors. Additional refactoring for creating valid access control credentials will be required.</li>
+<li>
+<strong>Enhancement:</strong> Release <code><a href="../reference/read_files.html">read_files()</a></code>, a function to read metadata templates, data files, and function arguments into an R list structure as an alternative input to <code>EMLassemblyline</code> functions (i.e. rather than supplying the files themselves). This approach is generally useful for interfacing upstream sources with <code>EMLassemblyline</code> (e.g. a metabase or database).</li>
+<li>
+<strong>Enhancement:</strong> Release <code>create_directory()</code>, a function to create a commonly used directory structure for EMLassemblyline inputs and outputs.</li>
+<li>
+<strong>Enhancement:</strong> Use arguments <code>data.table.description</code> and <code>other.entity.description</code> for <code>//dataTable/entityName</code> and <code>//otherEntity/entityName</code>, respectively. This provides a more meaningful file description than the file name it self.</li>
 <li>
 <strong>Refactor:</strong> Rename arguments to align with EML element names.
 <ul>
@@ -164,14 +155,6 @@
 </li>
 </ul>
 </li>
-</ul>
-</div>
-<div id="section-3" class="section level4">
-<h4 class="hasAnchor">
-<a href="#section-3" class="anchor"></a>2019-03-02</h4>
-<ul>
-<li>
-<strong>Enhancement:</strong> Use arguments <code>data.table.description</code> and <code>other.entity.description</code> for <code>//dataTable/entityName</code> and <code>//otherEntity/entityName</code>, respectively. This provides a more meaningful file description than the file name it self.</li>
 <li>
 <strong>Refactor:</strong> Rename arguments to align with EML element names.
 <ul>
@@ -184,9 +167,12 @@
 </ul>
 </li>
 <li>
-<strong>Enhancement:</strong> Add change log!</li>
+<strong>Bug fix:</strong> <code><a href="../reference/import_templates.html">import_templates()</a></code> no longer fails to import template to empty directories.</li>
+<li>
+<strong>Bug fix:</strong> <code><a href="../reference/import_templates.html">import_templates()</a></code> can now be run on datasets that don’t have data tables.</li>
+<li>
+<strong>Bug fix:</strong> Add <code>//otherEntity/physical/distribution/online/url</code>. This element was missing though documentation implied it existed.</li>
 </ul>
-</div>
 </div>
   </div>
 
@@ -207,7 +193,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
    </div>

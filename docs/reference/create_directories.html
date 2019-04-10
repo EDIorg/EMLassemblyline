@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Validate metadata template content — validate_templates • EMLassemblyline</title>
+<title>Create directories for `EMLassemblyline` inputs and outputs — create_directories • EMLassemblyline</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,11 @@
 
 
 
-<meta property="og:title" content="Validate metadata template content — validate_templates" />
+<meta property="og:title" content="Create directories for `EMLassemblyline` inputs and outputs — create_directories" />
 
-<meta property="og:description" content="Validate the content of `EMLassembline` metadata templates." />
+<meta property="og:description" content="Create a commonly used directory structure for `EMLassemblyline` inputs 
+    and outputs. You're welcome to organize content in any way you choose,
+    this is just one approach." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -117,40 +119,53 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Validate metadata template content</h1>
-    <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/validate_templates.R'><code>R/validate_templates.R</code></a></small>
-    <div class="hidden name"><code>validate_templates.Rd</code></div>
+    <h1>Create directories for `EMLassemblyline` inputs and outputs</h1>
+    <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/create_directory.R'><code>R/create_directory.R</code></a></small>
+    <div class="hidden name"><code>create_directories.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Validate the content of `EMLassembline` metadata templates.</p>
+    <p>Create a commonly used directory structure for `EMLassemblyline` inputs 
+    and outputs. You're welcome to organize content in any way you choose,
+    this is just one approach.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>validate_templates</span>(
-      <span class='no'>fun.name</span>,
-      <span class='no'>fun.args</span>
-    )</pre>
+    <pre class="usage"><span class='fu'>create_directories</span>(<span class='no'>path</span>, <span class='no'>dir.name</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>fun.name</th>
-      <td><p>(character) Function name passed to `validate_x` with 
-`as.character(match.call()[[1]])`.</p></td>
+      <th>path</th>
+      <td><p>(character) Path to where the directory structure will be created.</p></td>
     </tr>
     <tr>
-      <th>fun.args</th>
-      <td><p>(named list) Function arguments and values passed to `validate_x` with 
-`as.list(environment())`.</p></td>
+      <th>dir.name</th>
+      <td><p>(character) Name of parent directory. Subdirectories have predefined 
+names.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Validation checks are function specific.</p>
+    <p>A directory with the following structure:</p><ul>
+<li><p>`name` Parent directory with given name</p><ul>
+<li><p>`data` Where data and other entities are stored</p></li>
+<li><p>`scripts` Where data processing and packaging scripts are
+            kept.</p></li>
+<li><p>`metadata_templates` Where `EMLassemblyline` template 
+            files are imported and edited</p></li>
+<li><p>`eml` Where EML files are exported to by the 
+            `EMLassemblyline`</p></li>
+</ul></li>
+</ul>
+
+    
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>Existing `dir.name`s at `path` will not be overwritten.</p>
     
 
   </div>
@@ -159,7 +174,9 @@
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#details">Details</a></li>
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#note">Note</a></li>
           </ul>
 
   </div>

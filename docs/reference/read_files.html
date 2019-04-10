@@ -32,13 +32,12 @@
 
 <meta property="og:title" content="Read template and data files into a list structure — read_files" />
 
-<meta property="og:description" content="Read metadata templates and data files into an R list structure as an 
-    alternative input to `EMLassemblyline` functions (i.e. rather than 
-    supplying the files themselves).    
-This function is primarily used for testing and demonstration purposes
-    however, this approach is generally useful for interfacing upstream 
-    sources with `EMLassemblyline` (e.g. a metabase or database). See below 
-    for list structure." />
+<meta property="og:description" content="Read metadata templates, data files, and function arguments into an R 
+    list structure as an alternative input to EMLassemblyline functions 
+    (i.e. rather than supplying the files themselves).    
+This function enables programatic interfacing of upstream sources with 
+    EMLassemblyline (e.g. a metabase or database). See below for valid 
+    list structure." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -130,18 +129,22 @@ This function is primarily used for testing and demonstration purposes
 
     <div class="ref-description">
     
-    <p>Read metadata templates and data files into an R list structure as an 
-    alternative input to `EMLassemblyline` functions (i.e. rather than 
-    supplying the files themselves).</p>    
-<p>This function is primarily used for testing and demonstration purposes
-    however, this approach is generally useful for interfacing upstream 
-    sources with `EMLassemblyline` (e.g. a metabase or database). See below 
-    for list structure.</p>
+    <p>Read metadata templates, data files, and function arguments into an R 
+    list structure as an alternative input to <code>EMLassemblyline</code> functions 
+    (i.e. rather than supplying the files themselves).</p>    
+<p>This function enables programatic interfacing of upstream sources with 
+    <code>EMLassemblyline</code> (e.g. a metabase or database). See below for valid 
+    list structure.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>read_files</span>(<span class='no'>path</span>, <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='no'>path</span>, <span class='kw'>data.table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-<span class='kw'>other.entity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>read_files</span>(
+      <span class='no'>path</span>,
+      <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='no'>path</span>,
+      <span class='kw'>data.table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+      <span class='kw'>other.entity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+      <span class='kw'>sep</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+    )</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -158,93 +161,164 @@ This function is primarily used for testing and demonstration purposes
       <th>data.table</th>
       <td><p>(character) Data table name(s). If more than one, then supply as a 
 vector of character strings (e.g. 
-`data.table = c("concentrations.csv", "characteristics.csv")`).</p></td>
+<code>data.table = c("concentrations.csv", "characteristics.csv")</code>).</p></td>
     </tr>
     <tr>
       <th>other.entity</th>
-      <td><p>(character) Name(s) of `other.entity`(s) in this dataset. Use
-`other.entity` for all non-`data.table` files. `other.entity`(s) should 
-be stored at `data.path`.</p></td>
+      <td><p>(character) Name(s) of <code>other.entity</code>(s) in this dataset. Use
+<code>other.entity</code> for all non-<code>data.table</code> files. <code>other.entity</code>(s) should 
+be stored at <code>data.path</code>.</p></td>
     </tr>
     <tr>
       <th>sep</th>
-      <td><p>(character) Delimiter of `data.table`. Use this argument if `read_files`
-fails to automatically identify `data.table` field delimiters.</p></td>
+      <td><p>(character) Delimiter of <code>data.table</code>. Use this argument if <code>read_files()</code>
+fails to automatically identify <code>data.table</code> field delimiters.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>(named list) Named list with this internal structure.:</p><ul>
-<li><p>`template` Metadata template files</p><ul>
-<li><p>`abstract.txt` Abstract template</p><ul>
-<li><p>`content` EML::TextType containing abstract, `NA` otherwise</p></li>
-<li><p>`path` Path to file, `NA` otherwise</p></li>
+<li><p><strong>template</strong> Metadata template files</p><ul>
+<li><p><strong>abstract.txt</strong> Abstract template</p><ul>
+<li><p><strong>content</strong> EML::TextType containing abstract, <code>NA</code> otherwise</p></li>
+<li><p><strong>path</strong> Path to file, <code>NA</code> otherwise</p></li>
 </ul></li>
-<li><p>`additional_info.txt` Additional information template</p><ul>
-<li><p>`content` EML::TextType containing additional info, `NA` otherwise</p></li>
-<li><p>`path` Path to file, `NA` otherwise</p></li>
+<li><p><strong>additional_info.txt</strong> Additional information template</p><ul>
+<li><p><strong>content</strong> EML::TextType containing additional info, <code>NA</code> otherwise</p></li>
+<li><p><strong>path</strong> Path to file, <code>NA</code> otherwise</p></li>
 </ul></li>
-<li><p>`attributes_*.txt` Attributes template where * is name of `data.table` described by the attributes. Don't include if missing.</p><ul>
-<li><p>`content` Data frame of attributes template, `NA` otherwise</p></li>
-<li><p>`path` Path to file, `NA` otherwise</p></li>
+<li><p><strong>attributes_name.txt</strong> Attributes template where "name" is name of <code>data.table</code> described by the attributes. Don't include if missing.</p><ul>
+<li><p><strong>content</strong> Data frame of attributes template, <code>NA</code> otherwise</p></li>
+<li><p><strong>path</strong> Path to file, <code>NA</code> otherwise</p></li>
 </ul></li>
-<li><p>`bounding_boxes.txt` Bounding boxes template</p><ul>
-<li><p>`content` Data frame of bounding boxes template, `NA` otherwise</p></li>
-<li><p>`path` Path to file, `NA` otherwise</p></li>
+<li><p><strong>bounding_boxes.txt</strong> Bounding boxes template</p><ul>
+<li><p><strong>content</strong> Data frame of bounding boxes template, <code>NA</code> otherwise</p></li>
+<li><p><strong>path</strong> Path to file, <code>NA</code> otherwise</p></li>
 </ul></li>
-<li><p>`catvars_*.txt` Categorical variables template where * is name of `data.table` described by the catvars. Don't include if missing.</p><ul>
-<li><p>`content` Data frame of categorical variables template, `NA` otherwise</p></li>
-<li><p>`path` Path to file, `NA` otherwise</p></li>
+<li><p><strong>catvars_name.txt</strong> Categorical variables template where name is name of <code>data.table</code> described by the catvars. Don't include if missing.</p><ul>
+<li><p><strong>content</strong> Data frame of categorical variables template, <code>NA</code> otherwise</p></li>
+<li><p><strong>path</strong> Path to file, <code>NA</code> otherwise</p></li>
 </ul></li>
-<li><p>`custom_units.txt` Custom units template</p><ul>
-<li><p>`content` Data frame of custom units template, `NA` otherwise</p></li>
-<li><p>`path` Path to file, `NA` otherwise</p></li>
+<li><p><strong>custom_units.txt</strong> Custom units template</p><ul>
+<li><p><strong>content</strong> Data frame of custom units template, <code>NA</code> otherwise</p></li>
+<li><p><strong>path</strong> Path to file, <code>NA</code> otherwise</p></li>
 </ul></li>
-<li><p>`geographic_coverage.txt` Geographic coverage template</p><ul>
-<li><p>`content` Data frame of geographic coverage template, `NA` otherwise</p></li>
-<li><p>`path` Path to file, `NA` otherwise</p></li>
+<li><p><strong>geographic_coverage.txt</strong> Geographic coverage template</p><ul>
+<li><p><strong>content</strong> Data frame of geographic coverage template, <code>NA</code> otherwise</p></li>
+<li><p><strong>path</strong> Path to file, <code>NA</code> otherwise</p></li>
 </ul></li>
-<li><p>`intellectual_rights.txt` Intellectual rights template</p><ul>
-<li><p>`content` EML::TextType containing intellectual rights, `NA` otherwise</p></li>
-<li><p>`path` Path to file, `NA` otherwise</p></li>
+<li><p><strong>intellectual_rights.txt</strong> Intellectual rights template</p><ul>
+<li><p><strong>content</strong> EML::TextType containing intellectual rights, <code>NA</code> otherwise</p></li>
+<li><p><strong>path</strong> Path to file, <code>NA</code> otherwise</p></li>
 </ul></li>
-<li><p>`keywords.txt` Keywords template</p><ul>
-<li><p>`content` Data frame of keywords template, `NA` otherwise</p></li>
-<li><p>`path` Path to file, `NA` otherwise</p></li>
+<li><p><strong>keywords.txt</strong> Keywords template</p><ul>
+<li><p><strong>content</strong> Data frame of keywords template, <code>NA</code> otherwise</p></li>
+<li><p><strong>path</strong> Path to file, <code>NA</code> otherwise</p></li>
 </ul></li>
-<li><p>`methods.txt` Methods template</p><ul>
-<li><p>`content` EML::Methods containing methods, `NA` otherwise</p></li>
-<li><p>`path` Path to file, `NA` otherwise</p></li>
+<li><p><strong>methods.txt</strong> Methods template</p><ul>
+<li><p><strong>content</strong> EML::Methods containing methods, <code>NA</code> otherwise</p></li>
+<li><p><strong>path</strong> Path to file, <code>NA</code> otherwise</p></li>
 </ul></li>
-<li><p>`personnel.txt` Personnel template</p><ul>
-<li><p>`content` Data frame of personnel template, `NA` otherwise</p></li>
-<li><p>`path` Path to file, `NA` otherwise</p></li>
+<li><p><strong>personnel.txt</strong> Personnel template</p><ul>
+<li><p><strong>content</strong> Data frame of personnel template, <code>NA</code> otherwise</p></li>
+<li><p><strong>path</strong> Path to file, <code>NA</code> otherwise</p></li>
 </ul></li>
-<li><p>`taxonomicCoverage.xml` Taxonomic coverage EML element</p><ul>
-<li><p>`content` EML::taxonomicCoverage, `NA` otherwise</p></li>
-<li><p>`path` Path to file, `NA` otherwise</p></li>
-</ul></li>
-</ul></li>
-<li><p>`data.table`</p><ul>
-<li><p>`data.table.name.ext` Name of data table including file extension, `NULL` otherwise</p><ul>
-<li><p>`content` Data frame of data table</p></li>
-<li><p>`path` Path to data table (required if `data.table` exists)</p></li>
+<li><p><strong>taxonomicCoverage.xml</strong> Taxonomic coverage EML element</p><ul>
+<li><p><strong>content</strong> EML::taxonomicCoverage, <code>NA</code> otherwise</p></li>
+<li><p><strong>path</strong> Path to file, <code>NA</code> otherwise</p></li>
 </ul></li>
 </ul></li>
-<li><p>`other.entity`</p><ul>
-<li><p>`other.entity.name.ext` Name of other entity including file extension, `NULL` otherwise</p><ul>
-<li><p>`content` Set to `NA`</p></li>
-<li><p>`path` Path to other entity (required if `data.table` exists)</p></li>
+<li><p><strong>data.table</strong> Data tables</p><ul>
+<li><p><strong>data.table.name.ext</strong> Name of data table including file extension, <code>NULL</code> otherwise</p><ul>
+<li><p><strong>content</strong> Data frame of data table</p></li>
+<li><p><strong>path</strong> Path to data table (required if <code>data.table</code> exists)</p></li>
 </ul></li>
+</ul></li>
+<li><p><strong>other.entity</strong> Other entities</p><ul>
+<li><p><strong>other.entity.name.ext</strong> Name of other entity including file extension, <code>NULL</code> otherwise</p><ul>
+<li><p><strong>content</strong> Set to <code>NA</code></p></li>
+<li><p><strong>path</strong> Path to other entity (required if <code>data.table</code> exists)</p></li>
+</ul></li>
+</ul></li>
+<li><p><strong>argument</strong> A list of arguments to be passed to <code><a href='make_eml.html'>make_eml()</a></code>. 
+       Other <code>EMLassemblyline</code> functions don't yet accept this input.</p><ul>
+<li><p><strong>data.path</strong> (character) Path to where the data files are 
+           stored. This path must be valid when passing the list structure 
+           to <code><a href='make_eml.html'>make_eml()</a></code> because this is where checksum values are 
+           calculated.</p></li>
+<li><p><strong>data.table</strong> (character) Data table name(s). If more than 
+           one, then supply as a vector of character strings (e.g. 
+           <code>data.table = c("concentrations.csv", "characteristics.csv")</code>).</p></li>
+<li><p><strong>data.table.description</strong> (character) Data table 
+           description(s). Brief description of <code>data.table</code>. If more than 
+           one, then supply as a vector of character strings in the same 
+           order as listed in <code>data.table</code>.</p></li>
+<li><p><strong>data.table.quote.character</strong> (character) Quote character(s) 
+           used in <code>data.table</code>. If more than one, then supply as a vector 
+           of character strings in the same order as listed in <code>data.table</code>. 
+           This argument is required only if your data contain quotations. 
+           If the quote character is a quotation, then enter <code>"\""</code>. If 
+           the quote character is an apostrophe, then enter <code>"\'"</code>.</p></li>
+<li><p><strong>data.url</strong> (character) The URL of where your data can be 
+           downloaded by a data repository. This argument is not required, 
+           if the data will be manually uploaded to a data repository.</p></li>
+<li><p><strong>dataset.title</strong> (character) Dataset title. Be descriptive 
+           (more than 5 words) and consider including the temporal coverage 
+           (e.g. "GLEON: Long term lake chloride concentrations from North 
+           America and Europe: 1940-2016").</p></li>
+<li><p><strong>eml.path</strong> (character) Path to where the EML will be 
+           written.</p></li>
+<li><p><strong>geographic.coordinates</strong> (character) Geographic coordinates 
+           delineating the bounding area or point of a dataset, in decimal 
+           degrees. This argument is not required if using 
+           <code>bounding_boxes.txt</code>. Values must be listed in this order: North, 
+           East, South, West. Longitudes West of the prime meridian and 
+           latitudes South of the equator are negative. If representing a 
+           point, repeat the latitude for North and South, and repeat the 
+           longitude for East and West (e.g. 
+           <code>geographic.coordinates = c('28.38', '-119.95', '28.38', '-119.95')</code>).</p></li>
+<li><p><strong>geographic.description</strong> (character) Geographic 
+           description. Don't use this argument if geographic coordinates in 
+           the <code>bounding_boxes.txt</code> template.</p></li>
+<li><p><strong>maintenance.description</strong> (character) Indicator of whether 
+           data collection is <code>ongoing</code> or <code>completed</code>.</p></li>
+<li><p><strong>other.entity</strong> (character) Name(s) of <code>other.entity</code>(s) in 
+           this dataset. Use <code>other.entity</code> for all non-<code>data.table</code> files. 
+           <code>other.entity</code>(s) should be stored at <code>data.path</code>.</p></li>
+<li><p><strong>other.entity.description</strong> (character) Description(s) of 
+           <code>other.entity</code>(s). If more than one, then supply as a vector of 
+           descriptions in the same order as listed in <code>other.entity</code>.</p></li>
+<li><p><strong>package.id</strong> (character) EDI Data Repository Data package 
+           ID for this dataset. A missing package ID defaults to 
+           <code>edi.101.1</code>.</p></li>
+<li><p><strong>path</strong> (character) Path to where the template(s) will be 
+           stored.</p></li>
+<li><p><strong>provenance</strong> (character) EDI Data Repository Data package 
+           ID(s) corresponding to parent datasets from which this dataset 
+           was created (e.g. <code>knb-lter-cap.46.3</code>).</p></li>
+<li><p><strong>return.obj</strong> (logical) Return the EML as an R object of 
+           class <code>EML object</code>.</p></li>
+<li><p><strong>temporal.coverage</strong> (character) Beginning and ending dates 
+           of the dataset as a vector of character strings in the format 
+           <code>YYYY-MM-DD</code>.</p></li>
+<li><p><strong>user.domain</strong> (character) Domain of the <code>user.id</code>(s). Valid 
+           options for EDI are <code>LTER</code> and <code>EDI</code>. If more than one, supply 
+           as a vector of character strings in the same order as 
+           corresponding <code>user.id</code>(s). This argument is not required.</p></li>
+<li><p><strong>user.id</strong> (character) ID(s) of data repository user 
+           account(s). If more than one, supply as a vector of character 
+           strings. Contact EDI (info@environmentaldatainitiative.org) to 
+           obtain one. This argument is not required.</p></li>
+<li><p><strong>write.file</strong> (logical) Write file to <code>eml.path</code>.</p></li>
 </ul></li>
 </ul>
 
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Paths to data tables and other entities must be present for 
-    auto-generated metadata content.</p>
+    <p>Paths to data tables and other entities must be valid when passing the 
+    list structure to <code><a href='make_eml.html'>make_eml()</a></code>. Paths to other content is optional.</p>
     
 
   </div>
@@ -267,7 +341,7 @@ fails to automatically identify `data.table` field delimiters.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
    </div>
