@@ -1,17 +1,22 @@
 #' Read template and data files into a list structure
 #'
 #' @description  
-#'     Read metadata templates and data files into an R list structure as an 
-#'     alternative input to `EMLassemblyline` functions (i.e. rather than 
-#'     supplying the files themselves).
+#'     Read metadata templates, data files, and function arguments into an R 
+#'     list structure as an alternative input to \code{EMLassemblyline} functions 
+#'     (i.e. rather than supplying the files themselves).
 #'     
-#'     This function is primarily used for testing and demonstration purposes
-#'     however, this approach is generally useful for interfacing upstream 
-#'     sources with `EMLassemblyline` (e.g. a metabase or database). See below 
-#'     for list structure.
+#'     This function enables programatic interfacing of upstream sources with 
+#'     \code{EMLassemblyline} (e.g. a metabase or database). See below for valid 
+#'     list structure.
 #'
-#' @usage read_files(path, data.path = path, data.table = NULL, 
-#' other.entity = NULL, sep = NULL)
+#' @usage 
+#'     read_files(
+#'       path,
+#'       data.path = path,
+#'       data.table = NULL,
+#'       other.entity = NULL,
+#'       sep = NULL
+#'     )
 #'
 #' @param path 
 #'     (character) Path to metadata templates.
@@ -20,103 +25,173 @@
 #' @param data.table
 #'     (character) Data table name(s). If more than one, then supply as a 
 #'     vector of character strings (e.g. 
-#'     `data.table = c("concentrations.csv", "characteristics.csv")`).
+#'     \code{data.table = c("concentrations.csv", "characteristics.csv")}).
 #' @param other.entity
-#'     (character) Name(s) of `other.entity`(s) in this dataset. Use
-#'     `other.entity` for all non-`data.table` files. `other.entity`(s) should 
-#'     be stored at `data.path`.
+#'     (character) Name(s) of \code{other.entity}(s) in this dataset. Use
+#'     \code{other.entity} for all non-\code{data.table} files. \code{other.entity}(s) should 
+#'     be stored at \code{data.path}.
 #' @param sep
-#'     (character) Delimiter of `data.table`. Use this argument if `read_files`
-#'     fails to automatically identify `data.table` field delimiters.
+#'     (character) Delimiter of \code{data.table}. Use this argument if \code{read_files()}
+#'     fails to automatically identify \code{data.table} field delimiters.
 #'
 #' @note 
-#'     Paths to data tables and other entities must be present for 
-#'     auto-generated metadata content.
+#'     Paths to data tables and other entities must be valid when passing the 
+#'     list structure to \code{make_eml()}. Paths to other content is optional.
 #'
 #' @return 
 #'     (named list) Named list with this internal structure.:
 #'     \itemize{
-#'         \item `template` Metadata template files
+#'         \item{\strong{template} Metadata template files}
 #'         \itemize{
-#'             \item{`abstract.txt` Abstract template}
+#'             \item{\strong{abstract.txt} Abstract template}
 #'             \itemize{
-#'                 \item{`content` EML::TextType containing abstract, `NA` otherwise}
-#'                 \item{`path` Path to file, `NA` otherwise}
+#'                 \item{\strong{content} EML::TextType containing abstract, \code{NA} otherwise}
+#'                 \item{\strong{path} Path to file, \code{NA} otherwise}
 #'              }
-#'              \item{`additional_info.txt` Additional information template}
+#'              \item{\strong{additional_info.txt} Additional information template}
 #'              \itemize{
-#'                  \item{`content` EML::TextType containing additional info, `NA` otherwise}
-#'                  \item{`path` Path to file, `NA` otherwise}
+#'                  \item{\strong{content} EML::TextType containing additional info, \code{NA} otherwise}
+#'                  \item{\strong{path} Path to file, \code{NA} otherwise}
 #'              }
-#'              \item{`attributes_*.txt` Attributes template where * is name of `data.table` described by the attributes. Don't include if missing.}
+#'              \item{\strong{attributes_name.txt} Attributes template where "name" is name of \code{data.table} described by the attributes. Don't include if missing.}
 #'              \itemize{
-#'                  \item{`content` Data frame of attributes template, `NA` otherwise}
-#'                  \item{`path` Path to file, `NA` otherwise}
+#'                  \item{\strong{content} Data frame of attributes template, \code{NA} otherwise}
+#'                  \item{\strong{path} Path to file, \code{NA} otherwise}
 #'              }
-#'              \item{`bounding_boxes.txt` Bounding boxes template}
+#'              \item{\strong{bounding_boxes.txt} Bounding boxes template}
 #'              \itemize{
-#'                 \item{`content` Data frame of bounding boxes template, `NA` otherwise}
-#'                 \item{`path` Path to file, `NA` otherwise}
+#'                 \item{\strong{content} Data frame of bounding boxes template, \code{NA} otherwise}
+#'                 \item{\strong{path} Path to file, \code{NA} otherwise}
 #'              }
-#'              \item{`catvars_*.txt` Categorical variables template where * is name of `data.table` described by the catvars. Don't include if missing.}
+#'              \item{\strong{catvars_name.txt} Categorical variables template where name is name of \code{data.table} described by the catvars. Don't include if missing.}
 #'              \itemize{
-#'                 \item{`content` Data frame of categorical variables template, `NA` otherwise}
-#'                 \item{`path` Path to file, `NA` otherwise}
+#'                 \item{\strong{content} Data frame of categorical variables template, \code{NA} otherwise}
+#'                 \item{\strong{path} Path to file, \code{NA} otherwise}
 #'              }
-#'              \item{`custom_units.txt` Custom units template}
+#'              \item{\strong{custom_units.txt} Custom units template}
 #'              \itemize{
-#'                 \item{`content` Data frame of custom units template, `NA` otherwise}
-#'                 \item{`path` Path to file, `NA` otherwise}
+#'                 \item{\strong{content} Data frame of custom units template, \code{NA} otherwise}
+#'                 \item{\strong{path} Path to file, \code{NA} otherwise}
 #'              }
-#'              \item{`geographic_coverage.txt` Geographic coverage template}
+#'              \item{\strong{geographic_coverage.txt} Geographic coverage template}
 #'              \itemize{
-#'                 \item{`content` Data frame of geographic coverage template, `NA` otherwise}
-#'                 \item{`path` Path to file, `NA` otherwise}
+#'                 \item{\strong{content} Data frame of geographic coverage template, \code{NA} otherwise}
+#'                 \item{\strong{path} Path to file, \code{NA} otherwise}
 #'              }
-#'              \item{`intellectual_rights.txt` Intellectual rights template}
+#'              \item{\strong{intellectual_rights.txt} Intellectual rights template}
 #'              \itemize{
-#'                 \item{`content` EML::TextType containing intellectual rights, `NA` otherwise}
-#'                 \item{`path` Path to file, `NA` otherwise}
+#'                 \item{\strong{content} EML::TextType containing intellectual rights, \code{NA} otherwise}
+#'                 \item{\strong{path} Path to file, \code{NA} otherwise}
 #'              }
-#'              \item{`keywords.txt` Keywords template}
+#'              \item{\strong{keywords.txt} Keywords template}
 #'              \itemize{
-#'                 \item{`content` Data frame of keywords template, `NA` otherwise}
-#'                 \item{`path` Path to file, `NA` otherwise}
+#'                 \item{\strong{content} Data frame of keywords template, \code{NA} otherwise}
+#'                 \item{\strong{path} Path to file, \code{NA} otherwise}
 #'              }
-#'              \item{`methods.txt` Methods template}
+#'              \item{\strong{methods.txt} Methods template}
 #'              \itemize{
-#'                 \item{`content` EML::Methods containing methods, `NA` otherwise}
-#'                 \item{`path` Path to file, `NA` otherwise}
+#'                 \item{\strong{content} EML::Methods containing methods, \code{NA} otherwise}
+#'                 \item{\strong{path} Path to file, \code{NA} otherwise}
 #'              }
-#'              \item{`personnel.txt` Personnel template}
+#'              \item{\strong{personnel.txt} Personnel template}
 #'              \itemize{
-#'                 \item{`content` Data frame of personnel template, `NA` otherwise}
-#'                 \item{`path` Path to file, `NA` otherwise}
+#'                 \item{\strong{content} Data frame of personnel template, \code{NA} otherwise}
+#'                 \item{\strong{path} Path to file, \code{NA} otherwise}
 #'              }
-#'              \item{`taxonomicCoverage.xml` Taxonomic coverage EML element}
+#'              \item{\strong{taxonomicCoverage.xml} Taxonomic coverage EML element}
 #'              \itemize{
-#'                 \item{`content` EML::taxonomicCoverage, `NA` otherwise}
-#'                 \item{`path` Path to file, `NA` otherwise}
+#'                 \item{\strong{content} EML::taxonomicCoverage, \code{NA} otherwise}
+#'                 \item{\strong{path} Path to file, \code{NA} otherwise}
 #'              }                    
 #'             }
-#'        \item{`data.table`}
+#'        \item{\strong{data.table} Data tables}
 #'        \itemize{
-#'            \item{`data.table.name.ext` Name of data table including file extension, `NULL` otherwise}
+#'            \item{\strong{data.table.name.ext} Name of data table including file extension, \code{NULL} otherwise}
 #'            \itemize{
-#'                 \item{`content` Data frame of data table}
-#'                 \item{`path` Path to data table (required if `data.table` exists)}
+#'                 \item{\strong{content} Data frame of data table}
+#'                 \item{\strong{path} Path to data table (required if \code{data.table} exists)}
 #'            }
 #'          }
-#'        \item{`other.entity`}
+#'        \item{\strong{other.entity} Other entities}
 #'        \itemize{
-#'            \item{`other.entity.name.ext` Name of other entity including file extension, `NULL` otherwise}
+#'            \item{\strong{other.entity.name.ext} Name of other entity including file extension, \code{NULL} otherwise}
 #'            \itemize{
-#'                 \item{`content` Set to `NA`}
-#'                 \item{`path` Path to other entity (required if `data.table` exists)}
+#'                 \item{\strong{content} Set to \code{NA}}
+#'                 \item{\strong{path} Path to other entity (required if \code{data.table} exists)}
 #'            }
-#'        
 #'        }
-#'     
+#'        \item{\strong{argument} A list of arguments to be passed to \code{make_eml()}. 
+#'        Other \code{EMLassemblyline} functions don't yet accept this input.}
+#'        \itemize{
+#'            \item{\strong{data.path} (character) Path to where the data files are 
+#'            stored. This path must be valid when passing the list structure 
+#'            to \code{make_eml()} because this is where checksum values are 
+#'            calculated.}
+#'            \item{\strong{data.table} (character) Data table name(s). If more than 
+#'            one, then supply as a vector of character strings (e.g. 
+#'            \code{data.table = c("concentrations.csv", "characteristics.csv")}).}
+#'            \item{\strong{data.table.description} (character) Data table 
+#'            description(s). Brief description of \code{data.table}. If more than 
+#'            one, then supply as a vector of character strings in the same 
+#'            order as listed in \code{data.table}.}
+#'            \item{\strong{data.table.quote.character} (character) Quote character(s) 
+#'            used in \code{data.table}. If more than one, then supply as a vector 
+#'            of character strings in the same order as listed in \code{data.table}. 
+#'            This argument is required only if your data contain quotations. 
+#'            If the quote character is a quotation, then enter \code{"\\""}. If 
+#'            the quote character is an apostrophe, then enter \code{"\\'"}.}
+#'            \item{\strong{data.url} (character) The URL of where your data can be 
+#'            downloaded by a data repository. This argument is not required, 
+#'            if the data will be manually uploaded to a data repository.}
+#'            \item{\strong{dataset.title} (character) Dataset title. Be descriptive 
+#'            (more than 5 words) and consider including the temporal coverage 
+#'            (e.g. "GLEON: Long term lake chloride concentrations from North 
+#'            America and Europe: 1940-2016").}
+#'            \item{\strong{eml.path} (character) Path to where the EML will be 
+#'            written.}
+#'            \item{\strong{geographic.coordinates} (character) Geographic coordinates 
+#'            delineating the bounding area or point of a dataset, in decimal 
+#'            degrees. This argument is not required if using 
+#'            \code{bounding_boxes.txt}. Values must be listed in this order: North, 
+#'            East, South, West. Longitudes West of the prime meridian and 
+#'            latitudes South of the equator are negative. If representing a 
+#'            point, repeat the latitude for North and South, and repeat the 
+#'            longitude for East and West (e.g. 
+#'            \code{geographic.coordinates = c('28.38', '-119.95', '28.38', '-119.95')}).}
+#'            \item{\strong{geographic.description} (character) Geographic 
+#'            description. Don't use this argument if geographic coordinates in 
+#'            the \code{bounding_boxes.txt} template.}
+#'            \item{\strong{maintenance.description} (character) Indicator of whether 
+#'            data collection is \code{ongoing} or \code{completed}.}
+#'            \item{\strong{other.entity} (character) Name(s) of \code{other.entity}(s) in 
+#'            this dataset. Use \code{other.entity} for all non-\code{data.table} files. 
+#'            \code{other.entity}(s) should be stored at \code{data.path}.}
+#'            \item{\strong{other.entity.description} (character) Description(s) of 
+#'            \code{other.entity}(s). If more than one, then supply as a vector of 
+#'            descriptions in the same order as listed in \code{other.entity}.}
+#'            \item{\strong{package.id} (character) EDI Data Repository Data package 
+#'            ID for this dataset. A missing package ID defaults to 
+#'            \code{edi.101.1}.}
+#'            \item{\strong{path} (character) Path to where the template(s) will be 
+#'            stored.}
+#'            \item{\strong{provenance} (character) EDI Data Repository Data package 
+#'            ID(s) corresponding to parent datasets from which this dataset 
+#'            was created (e.g. \code{knb-lter-cap.46.3}).}
+#'            \item{\strong{return.obj} (logical) Return the EML as an R object of 
+#'            class \code{EML object}.}
+#'            \item{\strong{temporal.coverage} (character) Beginning and ending dates 
+#'            of the dataset as a vector of character strings in the format 
+#'            \code{YYYY-MM-DD}.}
+#'            \item{\strong{user.domain} (character) Domain of the \code{user.id}(s). Valid 
+#'            options for EDI are \code{LTER} and \code{EDI}. If more than one, supply 
+#'            as a vector of character strings in the same order as 
+#'            corresponding \code{user.id}(s). This argument is not required.}
+#'            \item{\strong{user.id} (character) ID(s) of data repository user 
+#'            account(s). If more than one, supply as a vector of character 
+#'            strings. Contact EDI (info@@environmentaldatainitiative.org) to 
+#'            obtain one. This argument is not required.}
+#'            \item{\strong{write.file} (logical) Write file to \code{eml.path}.}
+#'        }
 #'     }
 #'     
 #' @export
@@ -132,6 +207,18 @@ read_files <- function(path, data.path = path, data.table = NULL,
   attr.templates <- utils::read.table(
     file = system.file(
       '/templates/template_characteristics.txt',
+      package = 'EMLassemblyline'
+    ), 
+    header = T,
+    sep = '\t',
+    as.is = T
+  )
+  
+  # Get argument attributes
+  
+  attr.args <- utils::read.table(
+    file = system.file(
+      '/templates/arguments.txt',
       package = 'EMLassemblyline'
     ), 
     header = T,
@@ -252,12 +339,22 @@ read_files <- function(path, data.path = path, data.table = NULL,
     
   }
   
+  # List arguments
+  
+  arguments <- vector(
+    'list',
+    nrow(attr.args)
+  )
+  
+  names(arguments) <- attr.args$argument_name
+  
   # Initialize outgoing list of templates, data tables, and other entities
   
   output <- list(
     template = templates,
     data.table = data_tables,
-    other.entity = other_entities
+    other.entity = other_entities,
+    argument = arguments
   )
   
   # Add template files to outgoing list ---------------------------------------

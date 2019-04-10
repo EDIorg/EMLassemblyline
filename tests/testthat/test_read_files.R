@@ -27,6 +27,16 @@ testthat::test_that('Expect standard structure', {
   
   core_templates <- core_templates[core_templates$core_template == TRUE, ]
   
+  attr.args <- utils::read.table(
+    file = system.file(
+      '/templates/arguments.txt',
+      package = 'EMLassemblyline'
+    ), 
+    header = T,
+    sep = '\t',
+    as.is = T
+  )
+  
   # Is list
   
   expect_equal(
@@ -38,7 +48,7 @@ testthat::test_that('Expect standard structure', {
   
   expect_equal(
     all(
-      c('template', 'data.table', 'other.entity') %in% names(output)
+      c('template', 'data.table', 'other.entity', 'argument') %in% names(output)
     ),
     TRUE
   )
@@ -60,6 +70,13 @@ testthat::test_that('Expect standard structure', {
   expect_equal(
     output$other.entity,
     NULL
+  )
+  
+  expect_equal(
+    all(
+      names(output$argument) %in% 
+        attr.args$argument_name),
+    TRUE
   )
   
   # Has level-3 names
@@ -89,6 +106,17 @@ testthat::test_that('Expect standard structure', {
             )
           )
         )
+      ),
+      TRUE
+    )
+    
+  }
+  
+  for (i in 1:length(output$argument)){
+    
+    expect_equal(
+      is.null(
+        output$argument[[i]]
       ),
       TRUE
     )
@@ -128,7 +156,7 @@ testthat::test_that('Expect standard structure', {
   
   expect_equal(
     all(
-      c('template', 'data.table', 'other.entity') %in% 
+      c('template', 'data.table', 'other.entity', 'argument') %in% 
         names(output)
     ),
     TRUE
@@ -152,6 +180,14 @@ testthat::test_that('Expect standard structure', {
   expect_equal(
     output$other.entity,
     NULL
+  )
+  
+  expect_equal(
+    all(
+      names(output$argument) %in% 
+        attr.args$argument_name
+    ),
+    TRUE
   )
   
 })
@@ -202,7 +238,7 @@ testthat::test_that('Expect standard structure', {
   
   expect_equal(
     all(
-      c('template', 'data.table', 'other.entity') %in% 
+      c('template', 'data.table', 'other.entity', 'argument') %in% 
         names(output)
     ),
     TRUE
@@ -270,7 +306,7 @@ testthat::test_that('Expect standard structure', {
   
   expect_equal(
     all(
-      c('template', 'data.table', 'other.entity') %in% names(output)
+      c('template', 'data.table', 'other.entity', 'argument') %in% names(output)
     ),
     TRUE
   )
@@ -341,7 +377,7 @@ testthat::test_that('Expect standard structure', {
   
   expect_equal(
     all(
-      c('template', 'data.table', 'other.entity') %in% names(output)
+      c('template', 'data.table', 'other.entity', 'argument') %in% names(output)
     ),
     TRUE
   )
