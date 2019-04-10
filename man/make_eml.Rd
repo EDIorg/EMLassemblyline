@@ -8,9 +8,6 @@ make_eml(
       path,
       data.path = path,
       eml.path = path, 
-      user.id,
-      affiliation,
-      package.id,
       dataset.title,
       temporal.coverage,
       geographic.description, 
@@ -23,9 +20,13 @@ make_eml(
       other.entity.description = NULL,
       data.url = NULL,
       provenance = NULL,
+      user.id = NULL,
+      user.domain = NULL,
+      package.id = NULL,
       write.file = TRUE,
       return.obj = FALSE,
       x = NULL,
+      affiliation = 'deprecated',
       data.files = 'deprecated',
       data.files.description = 'deprecated',
       data.files.quote.character = 'deprecated',
@@ -35,24 +36,11 @@ make_eml(
     )
 }
 \arguments{
-\item{path}{(character) Path to where the template(s) will be imported.}
+\item{path}{(character) Path to where the template(s) are stored.}
 
 \item{data.path}{(character) Path to where the data files are stored.}
 
-\item{eml.path}{(character) Path to where the EML will be writtn.}
-
-\item{user.id}{(character) ID(s) of data repository user account(s). If more than one,
-supply as a vector of character strings. Contact EDI 
-(info@environmentaldatainitiative.org) to obtain one. This argument is
-not required.}
-
-\item{affiliation}{(character) Affiliations of the `user.id`(s). Valid options for EDI are
-`LTER` and `EDI`. If more than one, supply as a vector of character 
-strings in the same order as corresponding `user.id`(s). This argument
-is not required.}
-
-\item{package.id}{(character) EDI Data Repository Data package ID for this dataset. A 
-missing package ID defaults to `edi.101.1`.}
+\item{eml.path}{(character) Path to where the EML will be written.}
 
 \item{dataset.title}{(character) Dataset title. Be descriptive (more than 5 words) and 
 consider including the temporal coverage (e.g. "GLEON: Long term lake 
@@ -106,12 +94,27 @@ manually uploaded to a data repository.}
 parent datasets from which this dataset was created (e.g. 
 `knb-lter-cap.46.3`).}
 
-\item{write.file}{(logical) Write file to `path`.}
+\item{user.id}{(character) ID(s) of data repository user account(s). If more than one,
+supply as a vector of character strings. Contact EDI 
+(info@environmentaldatainitiative.org) to obtain one. This argument is
+not required.}
+
+\item{user.domain}{(character) Domain of the `user.id`(s). Valid options for EDI are
+`LTER` and `EDI`. If more than one, supply as a vector of character 
+strings in the same order as corresponding `user.id`(s). This argument
+is not required.}
+
+\item{package.id}{(character) EDI Data Repository Data package ID for this dataset. A 
+missing package ID defaults to `edi.101.1`.}
+
+\item{write.file}{(logical) Write file to `eml.path`.}
 
 \item{return.obj}{(logical) Return the EML as an R object of class `EML object`.}
 
 \item{x}{(named list) Alternative input/output to `EMLassemblyline` functions. 
 Use `read_files()` to create `x`.}
+
+\item{affiliation}{This argument has been deprecated. Use `user.domain` instead.}
 
 \item{data.files}{This argument has been deprecated. Use `data.table` instead.}
 

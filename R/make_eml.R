@@ -9,9 +9,6 @@
 #'       path,
 #'       data.path = path,
 #'       eml.path = path, 
-#'       user.id,
-#'       affiliation,
-#'       package.id,
 #'       dataset.title,
 #'       temporal.coverage,
 #'       geographic.description, 
@@ -24,9 +21,13 @@
 #'       other.entity.description = NULL,
 #'       data.url = NULL,
 #'       provenance = NULL,
+#'       user.id = NULL,
+#'       user.domain = NULL,
+#'       package.id = NULL,
 #'       write.file = TRUE,
 #'       return.obj = FALSE,
 #'       x = NULL,
+#'       affiliation = 'deprecated',
 #'       data.files = 'deprecated',
 #'       data.files.description = 'deprecated',
 #'       data.files.quote.character = 'deprecated',
@@ -36,41 +37,15 @@
 #'     )
 #'     
 #' @param path 
-#'     (character) Path to where the template(s) will be imported.
+#'     (character) Path to where the template(s) are stored.
 #' @param data.path
 #'     (character) Path to where the data files are stored.
 #' @param eml.path
-#'     (character) Path to where the EML will be writtn.
+#'     (character) Path to where the EML will be written.
 #' @param dataset.title
 #'     (character) Dataset title. Be descriptive (more than 5 words) and 
 #'     consider including the temporal coverage (e.g. "GLEON: Long term lake 
 #'     chloride concentrations from North America and Europe: 1940-2016").
-#' @param data.table
-#'     (character) Data table name(s). If more than one, then supply as a 
-#'     vector of character strings (e.g. 
-#'     `data.table = c("concentrations.csv", "characteristics.csv")`).
-#' @param data.table.description
-#'     (character) Data table description(s). Brief description of `data.table`.
-#'     If more than one, then supply as a vector of character strings in the 
-#'     same order as listed in `data.table`.
-#' @param data.table.quote.character
-#'     (character) Quote character(s) used in `data.table`. If more than one, 
-#'     then supply as a vector of character strings in the same order as 
-#'     listed in `data.table`. This argument is required only if your data 
-#'     contain quotations. If the quote character is a quotation, then enter 
-#'     `"\\""`. If the quote character is an apostrophe, then enter `"\\'"`.
-#' @param data.url
-#'     (character) The URL of where your data can be downloaded by a
-#'     data repository. This argument is not required, if the data will be 
-#'     manually uploaded to a data repository.
-#' @param other.entity
-#'     (character) Name(s) of `other.entity`(s) in this dataset. Use
-#'     `other.entity` for all non-`data.table` files. `other.entity`(s) should 
-#'     be stored at `data.path`.
-#' @param other.entity.description
-#'     (character) Description(s) of `other.entity`(s). If more than one, then 
-#'     supply as a vector of descriptions in the same order as listed in 
-#'     `other.entity`.
 #' @param temporal.coverage
 #'     (character) Beginning and ending dates of the dataset as a vector of 
 #'     character strings in the format `YYYY-MM-DD`.
@@ -89,30 +64,58 @@
 #' @param maintenance.description
 #'     (character) Indicator of whether data collection is `ongoing` or 
 #'     `completed`.
+#' @param data.table
+#'     (character) Data table name(s). If more than one, then supply as a 
+#'     vector of character strings (e.g. 
+#'     `data.table = c("concentrations.csv", "characteristics.csv")`).
+#' @param data.table.description
+#'     (character) Data table description(s). Brief description of `data.table`.
+#'     If more than one, then supply as a vector of character strings in the 
+#'     same order as listed in `data.table`.
+#' @param data.table.quote.character
+#'     (character) Quote character(s) used in `data.table`. If more than one, 
+#'     then supply as a vector of character strings in the same order as 
+#'     listed in `data.table`. This argument is required only if your data 
+#'     contain quotations. If the quote character is a quotation, then enter 
+#'     `"\\""`. If the quote character is an apostrophe, then enter `"\\'"`.
+#' @param other.entity
+#'     (character) Name(s) of `other.entity`(s) in this dataset. Use
+#'     `other.entity` for all non-`data.table` files. `other.entity`(s) should 
+#'     be stored at `data.path`.
+#' @param other.entity.description
+#'     (character) Description(s) of `other.entity`(s). If more than one, then 
+#'     supply as a vector of descriptions in the same order as listed in 
+#'     `other.entity`.
+#' @param data.url
+#'     (character) The URL of where your data can be downloaded by a
+#'     data repository. This argument is not required, if the data will be 
+#'     manually uploaded to a data repository.
+#' @param provenance
+#'     (character) EDI Data Repository Data package ID(s) corresponding to 
+#'     parent datasets from which this dataset was created (e.g. 
+#'     `knb-lter-cap.46.3`).
 #' @param user.id
 #'     (character) ID(s) of data repository user account(s). If more than one,
 #'     supply as a vector of character strings. Contact EDI 
 #'     (info@@environmentaldatainitiative.org) to obtain one. This argument is
 #'     not required.
-#' @param affiliation
-#'     (character) Affiliations of the `user.id`(s). Valid options for EDI are
+#' @param user.domain
+#'     (character) Domain of the `user.id`(s). Valid options for EDI are
 #'     `LTER` and `EDI`. If more than one, supply as a vector of character 
 #'     strings in the same order as corresponding `user.id`(s). This argument
 #'     is not required.
 #' @param package.id
 #'     (character) EDI Data Repository Data package ID for this dataset. A 
 #'     missing package ID defaults to `edi.101.1`.
-#' @param provenance
-#'     (character) EDI Data Repository Data package ID(s) corresponding to 
-#'     parent datasets from which this dataset was created (e.g. 
-#'     `knb-lter-cap.46.3`).
+#' @param write.file
+#'     (logical) Write file to `eml.path`.
 #' @param return.obj
 #'     (logical) Return the EML as an R object of class `EML object`.
-#' @param write.file
-#'     (logical) Write file to `path`.
 #' @param x
 #'     (named list) Alternative input/output to `EMLassemblyline` functions. 
 #'     Use `read_files()` to create `x`.
+#' @param affiliation
+#'     This argument has been deprecated. Use `user.domain` instead.
 #' @param data.files
 #'     This argument has been deprecated. Use `data.table` instead.
 #' @param data.files.description
@@ -146,14 +149,10 @@
 #' @export
 #'
 
-
 make_eml <- function(
   path,
   data.path = path,
   eml.path = path, 
-  user.id,
-  affiliation,
-  package.id,
   dataset.title,
   temporal.coverage,
   geographic.description, 
@@ -166,9 +165,13 @@ make_eml <- function(
   other.entity.description = NULL,
   data.url = NULL,
   provenance = NULL,
+  user.id = NULL,
+  user.domain = NULL,
+  package.id = NULL,
   write.file = TRUE,
   return.obj = FALSE,
   x = NULL,
+  affiliation = 'deprecated',
   data.files = 'deprecated',
   data.files.description = 'deprecated',
   data.files.quote.character = 'deprecated',
@@ -176,154 +179,25 @@ make_eml <- function(
   zip.dir = 'deprecated',
   zip.dir.description = 'deprecated') {
 
-  # Validate arguments and import data ----------------------------------------
+  # Validate arguments --------------------------------------------------------
   
   if (missing(path)){
-    stop('Input argument "path" is missing! Specify path to your dataset working directory.')
-  }
-  if (missing(dataset.title)){
-    stop('Input argument "dataset.title" is missing! Add a title for your dataset.')
-  }
-  if (data.files != 'deprecated'){
-    stop('Input argument "data.files" has been deprecated. Use "data.table" instead.')
-  }
-  if (!is.null(data.table)){
-    if (data.files.description != 'deprecated'){
-      stop('Input argument "data.files.description" has been deprecated. Use "data.table.description" instead.')
-    }
-    if (is.null(data.table.description)){
-      stop('Input argument "data.table.description" is missing! Please describe your data files.')
-    }
-  }
-  if (missing(temporal.coverage)){
-    stop('Input argument "temporal.coverage" is missing! Add the temporal coverage of your dataset.')
-  }
-  if (missing(geographic.coordinates) & !file.exists(paste0(path, '/', 'bounding_boxes.txt'))){
-    stop('Input argument "geographic.coordinates" is missing and the "bounding_boxes.txt" template is missing! Add geographic bounding coordinates for your dataset.')
-  }
-  if (!missing(geographic.coordinates)){
-    if (missing(geographic.description)){
-      stop('Input argument "geographic.description is missing.')
-    }
-  }
-  if (missing(geographic.coordinates) & !missing(geographic.description)){
-    stop('Remove input argument "geographic.description". Only use this argument when the "geographic.coordinates" argument is present')
+    stop('Input argument "path" is missing.')
   }
   
-  if (missing(maintenance.description)){
-    stop('Input argument "maintenance.description" is missing! Indicate whether data collection is "ongoing" or "completed" for your dataset.')
-  }
-  if (!missing(user.id) & missing(affiliation)){
-    stop('Input argument "affiliation" is missing! Add one.')
-  }
-  if (!missing(affiliation) & missing(user.id)){
-    stop('Input argument "user.id" is missing! Add one.')
-  }
-  if (data.files.url != 'deprecated'){
-    stop('Input argument "data.files.url" has been deprecated. Use "data.url" instead.')
-  }
+  validate_arguments(
+    fun.name = as.character(match.call()[[1]]),
+    fun.args = as.list(environment())
+  )
   
-  # Validate paths
-  
-  EDIutils::validate_path(path)
-  if (!missing(data.path)){
-    EDIutils::validate_path(data.path)  
-  }
-  if (!missing(eml.path)){
-    EDIutils::validate_path(eml.path)  
-  }
-  
-  # Validate data file names
-  
-  if (!is.null(data.table)){
-    table_names <- EDIutils::validate_file_names(path = data.path, data.files = data.table) 
-  }
-  
-  # Validate fields of data.table
-  
-  if (!is.null(data.table)){
-    EDIutils::validate_fields(data.path, data.files = table_names)
-  }
-  
-  # Detect operating system
-  
-  os <- EDIutils::detect_os()
-  
-  # Validate and set package ID
-  
-  if (!missing(package.id)){
-    if (!isTRUE(stringr::str_detect(package.id, '[:alpha:]\\.[:digit:]+\\.[:digit:]'))){
-      stop('Input argument "package.id" appears to be malformed. A package ID must consist of a scope, identifier, and revision (e.g. "edi.100.4").')
-    }
-    data_package_id <- package.id
-  } else {
-    data_package_id <- "edi.101.1"
-  }
-  
-  # Validate data.table.description
-  
-  if (!is.null(data.table)){
-    if (length(data.table.description) != length(data.table)){
-      stop('The number of descriptions listed in the argument "data.table.description" does not match the number of files listed in the argument "data.table". These must match.')
-    }
-  }
-  
-  # Validate data.table.quote.character
-  
-  if (!is.null(data.table)){
-    if (data.files.quote.character != 'deprecated'){
-      stop('Input argument "data.files.quote.character" has been deprecated. Use "data.table.quote.character" instead.')
-    }
-    if (!is.null(data.table.quote.character)){
-      if (length(data.table.quote.character) != length(data.table)){
-        stop('The number of quote characters listed in the argument "data.table.quote.character" does not match the number of files listed in the argument "data.table". These must match.')
-      }
-    }
-  }
-  
-  # Validate temporal.coverage
-  
-  if (length(temporal.coverage) != 2){
-    stop('The argument "temporal.coverage" requires both a begin date and end date. Please fix this.')
-  }
-  if (length(temporal.coverage) != 2){
-    stop('The argument "temporal.coverage" requires both a begin date and end date. Please fix this.')
-  }
-  
-  # Validate other.entity and other.entity.description
-  
-  if (zip.dir != 'deprecated'){
-    stop('The argument "zip.dir" has been deprecated. Use "other.entity" instead.')
-  }
-  if (zip.dir.description != 'deprecated'){
-    stop('The argument "zip.dir.description" has been deprecated. Use "other.entity.description" instead.')
-  }
-  
-  if ((!is.null(other.entity)) & (is.null(other.entity.description))){
-    stop('The argument "other.entity.description" is missing and "other.entity" is present. Add a description for your zip directory.')
-  }
-  if ((!is.null(other.entity.description)) & (is.null(other.entity))){
-    stop('The argument "other.entity" is missing and "other.entity.description" is present. Add the zip directories you are describing.')
-  }
-  if ((!is.null(other.entity.description)) & (!is.null(other.entity))){
-    if ((length(other.entity)) != (length(other.entity.description))){
-      stop('The number of other.entity and other.entity.descriptions must match!')
-    }
-  }
-  
-  # Validate user.id and association
-  if (!missing(user.id) & !missing(affiliation)){
-    if (length(user.id) != length(affiliation)){
-      stop('The number of values listed in arguments "user.id" and "affiliation" do not match. Each user.id must have a corresponding affiliation')
-    }
-    if (sum(sum(affiliation == 'LTER'), sum(affiliation == 'EDI')) != length(affiliation)){
-      stop('Input argument "affiliation" is not "EDI" or "LTER"! Only "EDI" and "LTER" are acceptable values.')
-    }
-  }
-  
-  # Read data into x
+  # Read metadata templates and data ------------------------------------------
   
   if (is.null(x)){
+    
+    table_names <- EDIutils::validate_file_names(
+      path = data.path, 
+      data.files = data.table
+    )
     
     # Read templates and data into x
     
@@ -364,41 +238,24 @@ make_eml <- function(
     data_read_2_x <- TRUE
     
   }
+  
+  # Validate x and templates --------------------------------------------------
+
+  # validate_x(
+  #   fun.name = as.character(match.call()[[1]]),
+  #   fun.args = as.list(environment())
+  # )
+  # 
+  # validate_templates(
+  #   fun.name = as.character(match.call()[[1]]),
+  #   fun.args = as.list(environment())
+  # )
 
   # Compile attributes --------------------------------------------------------
   
   if (!is.null(data.table)){
     attributes_in <- compile_attributes(x = x)
   }
-  
-  # # Set file names
-  # 
-  # fname_abstract <- paste(path, "/abstract.txt", sep = "")
-  # 
-  # fname_additional_info <- paste(path, "/additional_info.txt", sep = "")
-  # 
-  # fname_keywords <- paste(path, "/keywords.txt", sep = "")
-  # 
-  # fname_personnel <- paste(path, "/personnel.txt", sep = "")
-  # 
-  # fname_intellectual_rights <- paste(path, "/intellectual_rights.txt", sep = "")
-  # 
-  # fname_methods <- paste(path, "/methods.txt", sep = "")
-  # 
-  # fname_custom_units <- paste(path, "/custom_units.txt", sep = "")
-  # 
-  # files <- list.files(path)
-  # 
-  # fname_table_catvars <- c()
-  # 
-  # if (exists('table_names')){
-  #   for (i in 1:length(table_names)){
-  #     fname_table_catvars[i] <- paste("catvars_",
-  #                                     substr(table_names[i], 1, nchar(table_names[i]) - 4),
-  #                                     ".txt",
-  #                                     sep = "")
-  #   }
-  # }
   
   # Initialize data entity storage (tables)
 
@@ -581,40 +438,47 @@ make_eml <- function(
   
   message("<access>")
   
-  if (!missing(user.id) & !missing(affiliation)){
-    list_of_allow_principals <- list()
-    list_of_allow_permissions <- list()
-    for (i in 1:length(user.id)){
-      if (affiliation[i] == 'LTER'){
-        list_of_allow_principals[[i]] <- c(
-          paste0(
-            'uid=',
-            user.id[i],
-            ',o=',
-            affiliation[i],
-            ',dc=ecoinformatics,dc=org'
-          ),
-          "public"
-        )
-      } else if (affiliation[i] == 'EDI'){
-        list_of_allow_principals[[i]] <- c(
-          paste0(
-            'uid=',
-            user.id[i],
-            ',o=',
-            affiliation[i],
-            ',dc=edirepository,dc=org'
-          ),
-          "public"
-        )
-      }
-      list_of_allow_permissions[[i]] <- c(
-        "all",
-        "read")
+  # Set default user.id and user.domain, if not defined
+  
+  if (is.null(user.id)){
+    warning('No "user.id" was supplied. The default "someuserid" will be used.')
+    user.id <- 'someuserid'
+  } else if (is.null(user.domain)){
+    warning('No "user.domain" was supplied. The default "user.domain" will be used.')
+    user.domain <- 'someuserdomain'
+  }
+  
+  # Build access
+  
+  list_of_allow_principals <- list()
+  list_of_allow_permissions <- list()
+  for (i in 1:length(user.id)){
+    if (user.domain[i] == 'LTER'){
+      list_of_allow_principals[[i]] <- c(
+        paste0(
+          'uid=',
+          user.id[i],
+          ',o=',
+          user.domain[i],
+          ',dc=ecoinformatics,dc=org'
+        ),
+        "public"
+      )
+    } else if (user.domain[i] == 'EDI'){
+      list_of_allow_principals[[i]] <- c(
+        paste0(
+          'uid=',
+          user.id[i],
+          ',o=',
+          user.domain[i],
+          ',dc=edirepository,dc=org'
+        ),
+        "public"
+      )
     }
-  } else {
-    list_of_allow_principals <- list()
-    list_of_allow_permissions <- list()
+    list_of_allow_permissions[[i]] <- c(
+      "all",
+      "read")
   }
   
   list_of_allow_principals[[(length(list_of_allow_principals)+1)]] <- c("public")
@@ -1228,7 +1092,7 @@ make_eml <- function(
       eol <- EDIutils::get_eol(
         path = x$data.table[[(names(x$data.table)[i])]]$path,
         file.name = names(x$data.table)[i],
-        os = os
+        os = EDIutils::detect_os()
       )
       
       if (!is.null(data.table.quote.character)){
@@ -1292,7 +1156,7 @@ make_eml <- function(
       }
       
       
-      if (os == "mac"){
+      if (EDIutils::detect_os() == "mac"){
         
         command_certutil <- paste("md5 ",
                                   "\"",
@@ -1313,7 +1177,7 @@ make_eml <- function(
         physical@authentication <- methods::as(list(authentication),
                                       "ListOfauthentication")
         
-      } else if (os == "win"){
+      } else if (EDIutils::detect_os() == "win"){
         
         command_certutil <- paste("CertUtil -hashfile ",
                                   "\"",
@@ -1335,7 +1199,7 @@ make_eml <- function(
         physical@authentication <- methods::as(list(authentication),
                                       "ListOfauthentication")
         
-      } else if (os == "lin"){
+      } else if (EDIutils::detect_os() == "lin"){
         
         command_certutil <- paste0("md5sum ",
                                    "\"",
@@ -1480,7 +1344,7 @@ make_eml <- function(
           
         }
 
-        if (os == "mac"){
+        if (EDIutils::detect_os() == "mac"){
           
           command_certutil <- paste("md5 ",
                                     "\"",
@@ -1501,7 +1365,7 @@ make_eml <- function(
           physical@authentication <- methods::as(list(authentication),
                                         "ListOfauthentication")
           
-        } else if (os == "win"){
+        } else if (EDIutils::detect_os() == "win"){
           
           command_certutil <- paste("CertUtil -hashfile ",
                                     "\"",
@@ -1523,7 +1387,7 @@ make_eml <- function(
           physical@authentication <- methods::as(list(authentication),
                                         "ListOfauthentication")
           
-        } else if (os == "lin"){
+        } else if (EDIutils::detect_os() == "lin"){
           
           command_certutil <- paste0("md5sum ",
                                      "\"",
@@ -1566,7 +1430,12 @@ make_eml <- function(
     
     
   }
-
+  
+  
+  
+  if (is.null(package.id)){
+    package.id <- 'edi.101.1'
+  }
   
   # Build EML -----------------------------------------------------------------
   
@@ -1576,7 +1445,7 @@ make_eml <- function(
     if (custom_units == "yes"){
       eml <- methods::new("eml",
                  schemaLocation = "eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd",
-                 packageId = data_package_id,
+                 packageId = package.id,
                  system = "edi",
                  access = access,
                  dataset = dataset,
@@ -1584,7 +1453,7 @@ make_eml <- function(
     } else {
       eml <- methods::new("eml",
                  schemaLocation = "eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd",
-                 packageId = data_package_id,
+                 packageId = package.id,
                  system = "edi",
                  access = access,
                  dataset = dataset)
@@ -1592,7 +1461,7 @@ make_eml <- function(
   } else {
     eml <- methods::new("eml",
                schemaLocation = "eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd",
-               packageId = data_package_id,
+               packageId = package.id,
                system = "edi",
                access = access,
                dataset = dataset)
@@ -1602,7 +1471,7 @@ make_eml <- function(
   
   if (isTRUE(write.file)){
     message("Writing EML.")
-    EML::write_eml(eml, paste(eml.path, "/", data_package_id, ".xml", sep = ""))
+    EML::write_eml(eml, paste(eml.path, "/", package.id, ".xml", sep = ""))
   }
   
   # Validate EML
@@ -1646,10 +1515,6 @@ compile_attributes <- function(x){
   data.path <- x$data.table[[1]]$path
   data.table <- names(x$data.table)
   
-  # Detect users operating system
-  
-  os <- EDIutils::detect_os()
-  
   # Get names of data files with associated attribute files
   
   files <- list.files(data.path)
@@ -1691,7 +1556,7 @@ compile_attributes <- function(x){
                        table_names[i],
                        sep = "")
     
-    delim_guess <- EDIutils::detect_delimeter(path = data.path, data.files = table_names[i], os = os)
+    delim_guess <- EDIutils::detect_delimeter(path = data.path, data.files = table_names[i], os = EDIutils::detect_os())
     
     df_table <- utils::read.table(file_path,
                            header = TRUE,

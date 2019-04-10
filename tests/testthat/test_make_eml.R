@@ -31,7 +31,7 @@ geographic.description <- 'Alberta, Canada, 100 km south of Fort McMurray, Canad
 geographic.coordinates <- c('55.895', '112.094','55.895', '112.094')
 maintenance.description <- 'completed'
 user.id <- c('csmith', 'someusername')
-affiliation <- c('LTER', 'EDI')
+user.domain <- c('LTER', 'EDI')
 package.id <- 'edi.141.1'
 data.table.quote.character <- c("\\'", "\\'")
 data.url <- 'https://lter.limnology.wisc.edu/sites/default/files/data/edi_141/data'
@@ -82,6 +82,69 @@ x_other <- read_files(
   other.entity = 'ancillary.data.zip'
 )
 
+# Add arguments to list structure x
+
+x_table$argument$data.path <- data.path
+x_table$argument$data.table <- data.table
+x_table$argument$data.table.description <- data.table.description
+x_table$argument$data.table.quote.character <- data.table.quote.character
+x_table$argument$data.url <- data.url
+x_table$argument$dataset.title <- dataset.title
+x_table$argument$eml.path <- eml.path
+x_table$argument$geographic.coordinates <- geographic.coordinates
+x_table$argument$geographic.description <- geographic.description
+x_table$argument$maintenance.description <- maintenance.description
+x_table$argument$package.id <- package.id
+x_table$argument$path <- path
+x_table$argument$provenance <- provenance
+x_table$argument$return.obj <- TRUE
+x_table$argument$temporal.coverage <- temporal.coverage
+x_table$argument$user.domain <- user.domain
+x_table$argument$user.id <- user.id
+x_table$argument$write.file <- FALSE
+x_table$argument$x <- x_table
+
+x_table_other$argument$data.path <- data.path
+x_table_other$argument$data.table <- data.table
+x_table_other$argument$data.table.description <- data.table.description
+x_table_other$argument$data.table.quote.character <- data.table.quote.character
+x_table_other$argument$other.entity <- other.entity
+x_table_other$argument$other.entity.description <- other.entity.description
+x_table_other$argument$data.url <- data.url
+x_table_other$argument$dataset.title <- dataset.title
+x_table_other$argument$eml.path <- eml.path
+x_table_other$argument$geographic.coordinates <- geographic.coordinates
+x_table_other$argument$geographic.description <- geographic.description
+x_table_other$argument$maintenance.description <- maintenance.description
+x_table_other$argument$package.id <- package.id
+x_table_other$argument$path <- path
+x_table_other$argument$provenance <- provenance
+x_table_other$argument$return.obj <- TRUE
+x_table_other$argument$temporal.coverage <- temporal.coverage
+x_table_other$argument$user.domain <- user.domain
+x_table_other$argument$user.id <- user.id
+x_table_other$argument$write.file <- FALSE
+x_table_other$argument$x <- x_table_other
+
+x_other$argument$data.path <- data.path
+x_other$argument$other.entity <- other.entity
+x_other$argument$other.entity.description <- other.entity.description
+x_other$argument$data.url <- data.url
+x_other$argument$dataset.title <- dataset.title
+x_other$argument$eml.path <- eml.path
+x_other$argument$geographic.coordinates <- geographic.coordinates
+x_other$argument$geographic.description <- geographic.description
+x_other$argument$maintenance.description <- maintenance.description
+x_other$argument$package.id <- package.id
+x_other$argument$path <- path
+x_other$argument$provenance <- provenance
+x_other$argument$return.obj <- TRUE
+x_other$argument$temporal.coverage <- temporal.coverage
+x_other$argument$user.domain <- user.domain
+x_other$argument$user.id <- user.id
+x_other$argument$write.file <- FALSE
+x_other$argument$x <- x_other
+
 # File paths within R library
 
 path.inst <- system.file(
@@ -104,7 +167,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = geographic.coordinates,
       maintenance.description = maintenance.description,
       user.id = user.id,
-      affiliation = affiliation
+      user.domain = user.domain
     )
   )
   
@@ -118,7 +181,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = geographic.coordinates,
       maintenance.description = maintenance.description,
       user.id = user.id,
-      affiliation = affiliation
+      user.domain = user.domain
     )
   )
   
@@ -132,7 +195,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = geographic.coordinates,
       maintenance.description = maintenance.description,
       user.id = user.id,
-      affiliation = affiliation
+      user.domain = user.domain
     )
   )
   
@@ -151,7 +214,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
       maintenance.description = 'completed',
       user.id = user.id,
-      affiliation = affiliation,
+      user.domain = user.domain,
       package.id = 'edi.141.1',
       write.file = FALSE
     )
@@ -167,7 +230,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = geographic.coordinates,
       maintenance.description = maintenance.description,
       user.id = user.id,
-      affiliation = affiliation
+      user.domain = user.domain
     )
   )
   
@@ -181,7 +244,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.description = geographic.description,
       maintenance.description = maintenance.description,
       user.id = user.id,
-      affiliation = affiliation
+      user.domain = user.domain
     )
   )
   
@@ -195,7 +258,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.description = geographic.description,
       maintenance.description = maintenance.description,
       user.id = user.id,
-      affiliation = affiliation
+      user.domain = user.domain
     )
   )
   
@@ -209,13 +272,13 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.description = geographic.description,
       geographic.coordinates = geographic.coordinates,
       user.id = user.id,
-      affiliation = affiliation
+      user.domain = user.domain
     )
   )
   
   # user.id
   
-  expect_error(
+  expect_warning(
     make_eml(
       path = path,
       dataset.title = dataset.title,
@@ -223,7 +286,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.description = geographic.description,
       geographic.coordinates = geographic.coordinates,
       maintenance.description = maintenance.description,
-      affiliation = affiliation
+      user.domain = user.domain
     )
   )
   
@@ -238,7 +301,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = geographic.coordinates,
       maintenance.description = maintenance.description,
       user.id = c('csmith', 'nosuchuser'),
-      affiliation = 'LTER'
+      user.domain = 'LTER'
     )
   )
   
@@ -251,13 +314,13 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = geographic.coordinates,
       maintenance.description = maintenance.description,
       user.id = 'csmith',
-      affiliation = c('LTER', 'EDI')
+      user.domain = c('LTER', 'EDI')
     )
   )
   
-  # affiliation
+  # user.domain
   
-  expect_error(
+  expect_warning(
     make_eml(
       path = path,
       dataset.title = dataset.title,
@@ -269,9 +332,9 @@ testthat::test_that('Error out when required arguments are missing', {
     )
   )
   
-  # affiliation (unsupported affiliation)
+  # user.domain (unsupported user.domain)
   
-  expect_error(
+  expect_warning(
     make_eml(
       path = path,
       dataset.title = dataset.title,
@@ -280,7 +343,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = geographic.coordinates,
       maintenance.description = maintenance.description,
       user.id = 'csmith',
-      affiliation = 'EDEYE'
+      user.domain = 'EDEYE'
     )
   )
   
@@ -298,7 +361,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
       maintenance.description = 'completed',
       user.id = user.id,
-      affiliation = affiliation,
+      user.domain = user.domain,
       package.id = 'edi.141.1',
       write.file = FALSE
     )
@@ -306,7 +369,7 @@ testthat::test_that('Error out when required arguments are missing', {
   
   # Malformed package.id
   
-  expect_error(
+  expect_warning(
     make_eml(
       path = path,
       data.path = data.path,
@@ -319,7 +382,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
       maintenance.description = 'completed',
       user.id = user.id,
-      affiliation = affiliation,
+      user.domain = user.domain,
       package.id = 'edi.141',
       write.file = FALSE
     )
@@ -340,7 +403,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
       maintenance.description = 'completed',
       user.id = user.id,
-      affiliation = affiliation,
+      user.domain = user.domain,
       package.id = 'edi.141.1',
       write.file = FALSE
     )
@@ -362,7 +425,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
       maintenance.description = 'completed',
       user.id = user.id,
-      affiliation = affiliation,
+      user.domain = user.domain,
       package.id = 'edi.141.1',
       write.file = FALSE
     )
@@ -384,7 +447,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
       maintenance.description = 'completed',
       user.id = user.id,
-      affiliation = affiliation,
+      user.domain = user.domain,
       package.id = 'edi.141.1',
       write.file = FALSE
     )
@@ -406,7 +469,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
       maintenance.description = 'completed',
       user.id = user.id,
-      affiliation = affiliation,
+      user.domain = user.domain,
       package.id = 'edi.141.1',
       write.file = FALSE
     )
@@ -429,7 +492,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
       maintenance.description = 'completed',
       user.id = user.id,
-      affiliation = affiliation,
+      user.domain = user.domain,
       package.id = 'edi.141.1',
       write.file = FALSE
     )
@@ -450,7 +513,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
       maintenance.description = 'completed',
       user.id = user.id,
-      affiliation = affiliation,
+      user.domain = user.domain,
       package.id = 'edi.141.1',
       write.file = FALSE
     )
@@ -471,7 +534,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
       maintenance.description = 'completed',
       user.id = user.id,
-      affiliation = affiliation,
+      user.domain = user.domain,
       package.id = 'edi.141.1',
       write.file = FALSE
     )
@@ -492,7 +555,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
       maintenance.description = 'completed',
       user.id = user.id,
-      affiliation = affiliation,
+      user.domain = user.domain,
       package.id = 'edi.141.1',
       write.file = FALSE
     )
@@ -513,7 +576,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
       maintenance.description = 'completed',
       user.id = user.id,
-      affiliation = affiliation,
+      user.domain = user.domain,
       package.id = 'edi.141.1',
       write.file = FALSE
     )
@@ -534,7 +597,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
       maintenance.description = 'completed',
       user.id = user.id,
-      affiliation = affiliation,
+      user.domain = user.domain,
       package.id = 'edi.141.1',
       write.file = FALSE
     )
@@ -555,7 +618,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
       maintenance.description = 'completed',
       user.id = user.id,
-      affiliation = affiliation,
+      user.domain = user.domain,
       package.id = 'edi.141.1',
       write.file = FALSE
     )
@@ -576,7 +639,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
       maintenance.description = 'completed',
       user.id = user.id,
-      affiliation = affiliation,
+      user.domain = user.domain,
       package.id = 'edi.141.1',
       write.file = FALSE
     )
@@ -597,7 +660,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
       maintenance.description = 'completed',
       user.id = user.id,
-      affiliation = affiliation,
+      user.domain = user.domain,
       package.id = 'edi.141.1',
       write.file = FALSE
     )
@@ -618,7 +681,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
       maintenance.description = 'completed',
       user.id = user.id,
-      affiliation = affiliation,
+      user.domain = user.domain,
       package.id = 'edi.141.1',
       write.file = FALSE
     )
@@ -639,7 +702,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
       maintenance.description = 'completed',
       user.id = user.id,
-      affiliation = affiliation,
+      user.domain = user.domain,
       package.id = 'edi.141.1',
       write.file = FALSE
     )
@@ -660,7 +723,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
       maintenance.description = 'completed',
       user.id = user.id,
-      affiliation = affiliation,
+      user.domain = user.domain,
       package.id = 'edi.141.1',
       write.file = FALSE
     )
@@ -681,7 +744,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
       maintenance.description = 'completed',
       user.id = user.id,
-      affiliation = affiliation,
+      user.domain = user.domain,
       package.id = 'edi.141.1',
       write.file = FALSE
     )
@@ -702,7 +765,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
       maintenance.description = 'completed',
       user.id = user.id,
-      affiliation = affiliation,
+      user.domain = user.domain,
       package.id = 'edi.141.1',
       write.file = FALSE
     )
@@ -729,7 +792,7 @@ testthat::test_that('Expect equal', {
     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
     maintenance.description = 'completed',
     user.id = user.id,
-    affiliation = affiliation,
+    user.domain = user.domain,
     package.id = 'edi.141.1',
     return.obj = TRUE,
     write.file = FALSE
@@ -755,7 +818,7 @@ testthat::test_that('Expect equal', {
     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
     maintenance.description = 'completed',
     user.id = user.id,
-    affiliation = affiliation,
+    user.domain = user.domain,
     package.id = 'edi.141.1',
     return.obj = TRUE,
     write.file = FALSE
@@ -788,7 +851,7 @@ testthat::test_that('Expect equal', {
     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
     maintenance.description = 'completed',
     user.id = user.id,
-    affiliation = affiliation,
+    user.domain = user.domain,
     package.id = 'edi.141.1',
     return.obj = TRUE,
     write.file = FALSE
@@ -828,7 +891,7 @@ testthat::test_that('Expect equal', {
     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
     maintenance.description = 'completed',
     user.id = user.id,
-    affiliation = affiliation,
+    user.domain = user.domain,
     package.id = 'edi.141.1',
     return.obj = TRUE,
     write.file = FALSE
@@ -860,7 +923,7 @@ testthat::test_that('Expect equal', {
       geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
       maintenance.description = 'completed',
       user.id = user.id,
-      affiliation = affiliation,
+      user.domain = user.domain,
       package.id = 'edi.141.1',
       provenance = c('edi.100.1', 'edi.7.1'),
       return.obj = TRUE,
@@ -890,7 +953,7 @@ testthat::test_that('Expect equal', {
     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
     maintenance.description = 'completed',
     user.id = user.id,
-    affiliation = affiliation,
+    user.domain = user.domain,
     package.id = 'edi.141.1',
     return.obj = TRUE,
     write.file = FALSE
@@ -917,7 +980,7 @@ testthat::test_that('Expect equal', {
     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
     maintenance.description = 'completed',
     user.id = user.id,
-    affiliation = affiliation,
+    user.domain = user.domain,
     package.id = 'edi.141.1',
     return.obj = TRUE,
     write.file = FALSE
@@ -944,7 +1007,7 @@ testthat::test_that('Expect equal', {
     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
     maintenance.description = 'completed',
     user.id = user.id,
-    affiliation = affiliation,
+    user.domain = user.domain,
     package.id = 'edi.141.1',
     return.obj = TRUE,
     write.file = FALSE
@@ -971,7 +1034,7 @@ testthat::test_that('Expect equal', {
     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
     maintenance.description = 'completed',
     user.id = user.id,
-    affiliation = affiliation,
+    user.domain = user.domain,
     package.id = 'edi.141.1',
     return.obj = TRUE,
     write.file = FALSE
@@ -993,7 +1056,7 @@ testthat::test_that('Expect equal', {
     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
     maintenance.description = 'completed',
     user.id = user.id,
-    affiliation = affiliation,
+    user.domain = user.domain,
     package.id = 'edi.141.1',
     return.obj = TRUE,
     write.file = FALSE
@@ -1020,7 +1083,7 @@ testthat::test_that('Expect equal', {
     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
     maintenance.description = 'completed',
     user.id = user.id,
-    affiliation = affiliation,
+    user.domain = user.domain,
     package.id = 'edi.141.1',
     return.obj = TRUE,
     write.file = FALSE
@@ -1047,7 +1110,7 @@ testthat::test_that('Expect equal', {
     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
     maintenance.description = 'completed',
     user.id = user.id,
-    affiliation = affiliation,
+    user.domain = user.domain,
     package.id = 'edi.141.1',
     return.obj = TRUE,
     write.file = FALSE
@@ -1074,7 +1137,7 @@ testthat::test_that('Expect equal', {
     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
     maintenance.description = 'completed',
     user.id = user.id,
-    affiliation = affiliation,
+    user.domain = user.domain,
     package.id = 'edi.141.1',
     return.obj = TRUE,
     write.file = FALSE
@@ -1091,6 +1154,8 @@ testthat::test_that('Expect equal', {
 
 testthat::test_that('Test usage with x (all templates and 2 data tables)', {
   
+  # Arguments supplied to function in long form
+  
   output <- make_eml(
     path = path,
     data.path = data.path,
@@ -1105,11 +1170,23 @@ testthat::test_that('Test usage with x (all templates and 2 data tables)', {
     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
     maintenance.description = 'completed',
     user.id = user.id,
-    affiliation = affiliation,
+    user.domain = user.domain,
     package.id = 'edi.141.1',
     return.obj = TRUE,
     write.file = FALSE,
     x = x_table
+  )
+  
+  expect_equal(
+    class(output) == 'eml',
+    TRUE
+  )
+  
+  # Arguments supplied to function via x
+  
+  output <- do.call(
+    make_eml, 
+    x_table$argument
   )
   
   expect_equal(
@@ -1123,6 +1200,8 @@ testthat::test_that('Test usage with x (all templates and 2 data tables)', {
 
 testthat::test_that('Test usage with x (all templates, 2 data tables, and 1 other entity)', {
   
+  # Arguments supplied to function in long form
+  
   output <- make_eml(
     path = path,
     data.path = data.path,
@@ -1139,11 +1218,23 @@ testthat::test_that('Test usage with x (all templates, 2 data tables, and 1 othe
     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
     maintenance.description = 'completed',
     user.id = user.id,
-    affiliation = affiliation,
+    user.domain = user.domain,
     package.id = 'edi.141.1',
     return.obj = TRUE,
     write.file = FALSE,
     x = x_table_other
+  )
+  
+  expect_equal(
+    class(output) == 'eml',
+    TRUE
+  )
+  
+  # Arguments supplied to function via x
+  
+  output <- do.call(
+    make_eml, 
+    x_table_other$argument
   )
   
   expect_equal(
@@ -1156,6 +1247,8 @@ testthat::test_that('Test usage with x (all templates, 2 data tables, and 1 othe
 # Test usage with x (all templates and 1 other entity) ------------------------
 
 testthat::test_that('Test usage with x (all templates and 1 other entity)', {
+  
+  # Arguments supplied to function in long form
   
   output <- make_eml(
     path = path,
@@ -1170,11 +1263,23 @@ testthat::test_that('Test usage with x (all templates and 1 other entity)', {
     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
     maintenance.description = 'completed',
     user.id = user.id,
-    affiliation = affiliation,
+    user.domain = user.domain,
     package.id = 'edi.141.1',
     return.obj = TRUE,
     write.file = FALSE,
     x = x_other
+  )
+  
+  expect_equal(
+    class(output) == 'eml',
+    TRUE
+  )
+  
+  # Arguments supplied to function via x
+  
+  output <- do.call(
+    make_eml, 
+    x_other$argument
   )
   
   expect_equal(
