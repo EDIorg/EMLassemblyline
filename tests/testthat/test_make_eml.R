@@ -167,7 +167,8 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.coordinates = geographic.coordinates,
       maintenance.description = maintenance.description,
       user.id = user.id,
-      user.domain = user.domain
+      user.domain = user.domain,
+      write.file = FALSE
     )
   )
   
@@ -180,6 +181,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.description = geographic.description,
       geographic.coordinates = geographic.coordinates,
       maintenance.description = maintenance.description,
+      write.file = FALSE,
       user.id = user.id,
       user.domain = user.domain
     )
@@ -194,6 +196,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.description = geographic.description,
       geographic.coordinates = geographic.coordinates,
       maintenance.description = maintenance.description,
+      write.file = FALSE,
       user.id = user.id,
       user.domain = user.domain
     )
@@ -229,6 +232,7 @@ testthat::test_that('Error out when required arguments are missing', {
       temporal.coverage = temporal.coverage,
       geographic.coordinates = geographic.coordinates,
       maintenance.description = maintenance.description,
+      write.file = FALSE,
       user.id = user.id,
       user.domain = user.domain
     )
@@ -243,6 +247,7 @@ testthat::test_that('Error out when required arguments are missing', {
       temporal.coverage = temporal.coverage,
       geographic.description = geographic.description,
       maintenance.description = maintenance.description,
+      write.file = FALSE,
       user.id = user.id,
       user.domain = user.domain
     )
@@ -257,6 +262,7 @@ testthat::test_that('Error out when required arguments are missing', {
       temporal.coverage = temporal.coverage,
       geographic.description = geographic.description,
       maintenance.description = maintenance.description,
+      write.file = FALSE,
       user.id = user.id,
       user.domain = user.domain
     )
@@ -271,6 +277,7 @@ testthat::test_that('Error out when required arguments are missing', {
       temporal.coverage = temporal.coverage,
       geographic.description = geographic.description,
       geographic.coordinates = geographic.coordinates,
+      write.file = FALSE,
       user.id = user.id,
       user.domain = user.domain
     )
@@ -286,6 +293,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.description = geographic.description,
       geographic.coordinates = geographic.coordinates,
       maintenance.description = maintenance.description,
+      write.file = FALSE,
       user.domain = user.domain
     )
   )
@@ -300,6 +308,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.description = geographic.description,
       geographic.coordinates = geographic.coordinates,
       maintenance.description = maintenance.description,
+      write.file = FALSE,
       user.id = c('csmith', 'nosuchuser'),
       user.domain = 'LTER'
     )
@@ -313,6 +322,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.description = geographic.description,
       geographic.coordinates = geographic.coordinates,
       maintenance.description = maintenance.description,
+      write.file = FALSE,
       user.id = 'csmith',
       user.domain = c('LTER', 'EDI')
     )
@@ -328,6 +338,7 @@ testthat::test_that('Error out when required arguments are missing', {
       geographic.description = geographic.description,
       geographic.coordinates = geographic.coordinates,
       maintenance.description = maintenance.description,
+      write.file = FALSE,
       user.id = user.id
     )
   )
@@ -343,6 +354,7 @@ testthat::test_that('Error out when required arguments are missing', {
         geographic.description = geographic.description,
         geographic.coordinates = geographic.coordinates,
         maintenance.description = maintenance.description,
+        write.file = FALSE,
         user.id = 'csmith',
         user.domain = 'EDEYE'
       )

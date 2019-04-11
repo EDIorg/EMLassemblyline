@@ -2,7 +2,7 @@
 % Please edit documentation in R/validate_arguments.R
 \name{validate_arguments}
 \alias{validate_arguments}
-\title{Validate arguments of `EMLassemblyline` functions}
+\title{Validate arguments of EMLassemblyline functions}
 \usage{
 validate_arguments(
       fun.name, 

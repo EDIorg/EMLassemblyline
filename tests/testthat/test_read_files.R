@@ -2,18 +2,25 @@
 context('Read files into list')
 library(EMLassemblyline)
 
+# Parameterize ----------------------------------------------------------------
+
+attr.args <- utils::read.table(
+  file = system.file(
+    '/templates/arguments.txt',
+    package = 'EMLassemblyline'
+  ), 
+  header = T,
+  sep = '\t',
+  as.is = T
+)
+
 # When no templates or files are present --------------------------------------
 
 testthat::test_that('Expect standard structure', {
   
   # Parameterize
   
-  output <- read_files(
-    path = system.file(
-      '/inst',
-      package = 'EMLassemblyline'
-    )
-  )
+  output <- read_files()
   
   core_templates <- utils::read.table(
     file = system.file(
@@ -26,16 +33,6 @@ testthat::test_that('Expect standard structure', {
   )
   
   core_templates <- core_templates[core_templates$core_template == TRUE, ]
-  
-  attr.args <- utils::read.table(
-    file = system.file(
-      '/templates/arguments.txt',
-      package = 'EMLassemblyline'
-    ), 
-    header = T,
-    sep = '\t',
-    as.is = T
-  )
   
   # Is list
   
@@ -86,7 +83,7 @@ testthat::test_that('Expect standard structure', {
     expect_equal(
       all(
         names(output$template[[i]]) %in% 
-          c('content', 'path')
+          'content'
       ),
       TRUE
     )

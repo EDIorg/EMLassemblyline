@@ -1,4 +1,4 @@
-#' Validate arguments of `EMLassemblyline` functions
+#' Validate arguments of EMLassemblyline functions
 #'
 #' @description
 #'     Validate input arguments to `EMLassemblyline` functions.
@@ -23,10 +23,51 @@
 validate_arguments <- function(fun.name, fun.args){
   
   # Parameterize --------------------------------------------------------------
-
+  
   use_i <- sapply(fun.args, function(X) identical(X, quote(expr=)))
   fun.args[use_i] <- list(NULL)
+  
+  # If called from define_catvars() -------------------------------------------
+  
+  if (fun.name == 'define_catvars'){
+    
+    # If not using x ...
+    
+    if (is.null(fun.args$x)){
+      
+      # Get attribute file names and data file names
+      
+      files <- list.files(fun.args$path)
+      use_i <- stringr::str_detect(string = files,
+                                   pattern = "^attributes")
+      if (sum(use_i) == 0){
+        stop('There are no attributes.txt files in your dataset working directory. Please fix this.')
+      }
+      
+      attribute_files <- files[use_i]
+      table_names_base <- stringr::str_sub(string = attribute_files,
+                                           start = 12,
+                                           end = nchar(attribute_files)-4)
+      data_files <- list.files(fun.args$data.path)
+      use_i <- stringr::str_detect(string = data_files,
+                                   pattern = stringr::str_c("^", table_names_base, collapse = "|"))
+      table_names <- data_files[use_i]
+      data_files <- table_names
+      
+      # Send warning if data table name is repeated more than once
+      
+      if (length(unique(tools::file_path_sans_ext(data_files))) != length(data_files)){
+        stop('Duplicate data file names exist in this directory. Please remove duplicates, even if they are a different file type.')
+      }
+      
+      # Validate fields of data.files
+      
+      EDIutils::validate_fields(path = fun.args$data.path, data.files = data_files)
+      
+    }
 
+  }
+  
   # If called from make_eml() -------------------------------------------------
   
   if (fun.name == 'make_eml'){
@@ -96,11 +137,11 @@ validate_arguments <- function(fun.name, fun.args){
       stop('Input argument "user.domain" is missing. Add one.')
     }
     
-    if (!is.null(user.domain) & is.null(fun.args$user.id)){
+    if (!is.null(fun.args$user.domain) & is.null(fun.args$user.id)){
       stop('Input argument "user.id" is missing. Add one.')
     }
     
-    if ((!is.null(fun.args$user.id)) & (!is.null(user.domain))){
+    if ((!is.null(fun.args$user.id)) & (!is.null(fun.args$user.domain))){
       if (length(fun.args$user.id) != length(fun.args$user.domain)){
         stop('The number of values listed in arguments "user.id" and "user.domain" do not match. Each user.id must have a corresponding user.domain')
       }
@@ -197,6 +238,40 @@ validate_arguments <- function(fun.name, fun.args){
 
   }
   
-  # If called from ... --------------------------------------------------------
+  # If called from read_files() -----------------------------------------------
+  
+  if (fun.name == 'read_files'){
+    
+    # path
+    
+    if (!is.null(fun.args$path)){
+      EDIutils::validate_path(fun.args$path)
+    }
+    
+    # data.path
+    
+    if (!is.null(fun.args$data.path)){
+      EDIutils::validate_path(fun.args$data.path)
+    }
+    
+    # data.table
+    
+    if (!is.null(fun.args$data.table)){
+      output <- EDIutils::validate_file_names(
+        path = fun.args$data.path,
+        data.files = fun.args$data.table
+      )
+    }
+    
+    # other.entity
+    
+    if (!is.null(fun.args$other.entity)){
+      output <- EDIutils::validate_file_names(
+        path = fun.args$data.path,
+        data.files = fun.args$other.entity
+      )
+    }
+    
+  }
   
 }

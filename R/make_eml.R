@@ -178,12 +178,12 @@ make_eml <- function(
   data.files.url = 'deprecated',
   zip.dir = 'deprecated',
   zip.dir.description = 'deprecated'
-){
+  ){
 
   # Validate arguments --------------------------------------------------------
   
   # Validate path usage before passing arguments to validate_arguments()
-  # When not using x, inputs are expected from path, data.pat, and 
+  # When not using x, inputs are expected from path, data.path, and 
   # eml.path. When using x, only data.path is required unless write.file = TRUE
   # in which case eml.path is required.
   

@@ -45,28 +45,36 @@ define_catvars <- function(path, data.path = path, x = NULL,
   
   # Validate arguments and import data ------------------------------------------
   
+  # Validate path usage before passing arguments to validate_arguments()
+  # When not using x, inputs are expected from path and data.path. 
+  # When using x, only data.path is used. Ignored are path and write.file.
+  
+  if (is.null(x) & missing(path)){
+    stop('Input argument "path" is missing.')
+  } else if (!is.null(x) & missing(path)){
+    path <- NULL
+    if (missing(data.path)){
+      stop('Input argument "data.path" is missing.')
+    }
+  }
+  
+  # Pass remaining arguments to validate_arguments().
+  
+  validate_arguments(
+    fun.name = 'define_catvars',
+    fun.args = as.list(environment())
+  )
+  
   # If not using x ...
   
   if (is.null(x)){
     
-    # Validate input arguments ...
-    
-    if (missing(path)){
-      stop('Input argument "path" is missing! Specify the path to your dataset working directory.')
-    }
-    
-    # Detect operating system
-    
-    os <- EDIutils::detect_os()
-    
     # Get attribute file names and data file names
-    
+
     files <- list.files(path)
     use_i <- stringr::str_detect(string = files,
                                  pattern = "^attributes")
-    if (sum(use_i) == 0){
-      stop('There are no attributes.txt files in your dataset working directory. Please fix this.')
-    }
+    
     attribute_files <- files[use_i]
     table_names_base <- stringr::str_sub(string = attribute_files,
                                          start = 12,
@@ -76,25 +84,7 @@ define_catvars <- function(path, data.path = path, x = NULL,
                                  pattern = stringr::str_c("^", table_names_base, collapse = "|"))
     table_names <- data_files[use_i]
     data_files <- table_names
-    
-    # Send warning if data table name is repeated more than once
-    
-    if (length(unique(tools::file_path_sans_ext(data_files))) != length(data_files)){
-      stop('Duplicate data file names exist in this directory. Please remove duplicates, even if they are a different file type.')
-    }
-    
-    # Validate fields of data.files
-    
-    EDIutils::validate_fields(path = data.path, data.files = data_files)
-    
-    # Set file names to be written
-    
-    fname_table_catvars <- stringr::str_c("catvars_", table_names_base, ".txt")
-    
-    # Detect field delimiters of data files
-    
-    delim_guess <- EDIutils::detect_delimeter(path = data.path, data.files = data_files, os)
-    
+
     # Read templates and data.table into list
     
     x <- read_files(
@@ -105,30 +95,6 @@ define_catvars <- function(path, data.path = path, x = NULL,
     
     data_read_2_x <- TRUE
     
-  }
-  
-  # Validate arguments and import data from x ---------------------------------
-  
-  # If using x ...
-
-  if (!is.null(x)){
-    
-    # path
-    
-    if (missing(path)){
-      
-      path <- NA_character_
-      
-    }
-    
-    # write.file
-    
-    if (isTRUE(write.file)){
-      
-      stop('Input argument "write.file" is not supported when using "x".')
-      
-    }
-
   }
 
   # Extract categorical variables and write to file ---------------------------
@@ -234,7 +200,7 @@ define_catvars <- function(path, data.path = path, x = NULL,
 
         # Write template to file
 
-        if (isTRUE(write.file)){
+        if (isTRUE(write.file) & is.null(x)){
           
           message(paste("Writing", fname_table_catvars[i]))
           suppressWarnings(utils::write.table(catvars,
@@ -268,7 +234,7 @@ define_catvars <- function(path, data.path = path, x = NULL,
             
             missing_template <- list(
               content = catvars,
-              path = path
+              path = NA_character_
             )
             
             missing_template <- list(

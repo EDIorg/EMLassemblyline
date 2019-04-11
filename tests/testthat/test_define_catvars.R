@@ -85,7 +85,7 @@ testthat::test_that('Test usage with x inputs',{
   
   # All arguments are supported:
   # - /x/templates/catvars_*.txt is created with expected content
-  # - path is added to /x/templates/catvars_*.txt/path
+  # - path is not added /x/templates/catvars_*.txt/path
   # - data.path is not added to x
   
   expect_message(
@@ -140,7 +140,7 @@ testthat::test_that('Test usage with x inputs',{
   
   expect_equal(
     output$template$catvars_decomp.txt$path,
-    '/some/path'
+    NA_character_
   )
   
   # Missing path adds NA to /x/templates/catvars_*.txt/path

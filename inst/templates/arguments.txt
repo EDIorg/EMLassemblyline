@@ -1,22 +1,28 @@
-argument_name	function_name	required
-data.path	make_eml	no
-data.table	make_eml	no
-data.table.description	make_eml	no
-data.table.quote.character	make_eml	no
-data.url	make_eml	no
-dataset.title	make_eml	yes
-eml.path	make_eml	no
-geographic.coordinates	make_eml	yes
-geographic.description	make_eml	yes
-maintenance.description	make_eml	yes
-other.entity	make_eml	no
-other.entity.description	make_eml	no
-package.id	make_eml	no
-path	make_eml	yes
-provenance	make_eml	no
-return.obj	make_eml	no
-temporal.coverage	make_eml	yes
-user.domain	make_eml	no
-user.id	make_eml	no
-write.file	make_eml	no
-x	make_eml	no
+argument_name
+data.path
+data.table
+data.table.description
+data.table.quote.character
+data.url
+dataset.title
+eml.path
+geographic.coordinates
+geographic.description
+maintenance.description
+other.entity
+other.entity.description
+package.id
+path
+provenance
+return.obj
+temporal.coverage
+user.domain
+user.id
+write.file
+x
+dir.name
+lat.col
+lon.col
+site.col
+license
+sep
