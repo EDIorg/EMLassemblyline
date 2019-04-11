@@ -177,16 +177,34 @@ make_eml <- function(
   data.files.quote.character = 'deprecated',
   data.files.url = 'deprecated',
   zip.dir = 'deprecated',
-  zip.dir.description = 'deprecated') {
+  zip.dir.description = 'deprecated'
+){
 
   # Validate arguments --------------------------------------------------------
   
-  if (missing(path)){
+  # Validate path usage before passing arguments to validate_arguments()
+  # When not using x, inputs are expected from path, data.pat, and 
+  # eml.path. When using x, only data.path is required unless write.file = TRUE
+  # in which case eml.path is required.
+  
+  if (is.null(x) & missing(path)){
     stop('Input argument "path" is missing.')
+  } else if (!is.null(x) & missing(path)){
+    path <- NULL
+    if (missing(data.path)){
+      stop('Input argument "data.path" is missing.')
+    }
+    if (isTRUE(write.file) & missing(eml.path)){
+      stop('Input argument "write.file = TRUE" but "eml.path" is missing.')
+    } else if (!isTRUE(write.file) & missing(eml.path)){
+      eml.path <- NULL
+    }
   }
   
+  # Pass remaining arguments to validate_arguments().
+  
   validate_arguments(
-    fun.name = as.character(match.call()[[1]]),
+    fun.name = 'make_eml',
     fun.args = as.list(environment())
   )
   
@@ -785,16 +803,16 @@ make_eml <- function(
         # Write to data.path
         lib_path <- system.file('/examples/templates/abstract.txt', package = 'EMLassemblyline')
         lib_path <- substr(lib_path, 1, nchar(lib_path) - 32)
-        if (!stringr::str_detect(stringr::str_replace_all(eml.path, '\\\\', '/'), lib_path)){
+        if (!stringr::str_detect(stringr::str_replace_all(data.path, '\\\\', '/'), lib_path)){
           xml2::write_xml(
             prov_metadata,
-            paste0(eml.path,
+            paste0(data.path,
                    '/provenance_metadata.xml')
           )
         }
         
         # Read provenance file and add to L0 EML
-        prov_metadata <- EML::read_eml(paste0(eml.path, '/provenance_metadata.xml'))
+        prov_metadata <- EML::read_eml(paste0(data.path, '/provenance_metadata.xml'))
         methods_step <- dataset@methods@methodStep
         methods_step[[length(methods_step)+1]] <- prov_metadata
         dataset@methods@methodStep <- methods_step
@@ -802,9 +820,9 @@ make_eml <- function(
         # Delete provenance_metadata.xml (a temporary file)
         lib_path <- system.file('/examples/templates/abstract.txt', package = 'EMLassemblyline')
         lib_path <- substr(lib_path, 1, nchar(lib_path) - 32)
-        if (!stringr::str_detect(stringr::str_replace_all(eml.path, '\\\\', '/'), lib_path)){
+        if (!stringr::str_detect(stringr::str_replace_all(data.path, '\\\\', '/'), lib_path)){
           file.remove(
-            paste0(eml.path, '/provenance_metadata.xml')
+            paste0(data.path, '/provenance_metadata.xml')
           )
         }
       } else {

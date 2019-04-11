@@ -96,7 +96,7 @@ x_table$argument$geographic.description <- geographic.description
 x_table$argument$maintenance.description <- maintenance.description
 x_table$argument$package.id <- package.id
 x_table$argument$path <- path
-x_table$argument$provenance <- provenance
+x_table$argument$provenance <- NULL
 x_table$argument$return.obj <- TRUE
 x_table$argument$temporal.coverage <- temporal.coverage
 x_table$argument$user.domain <- user.domain
@@ -118,7 +118,7 @@ x_table_other$argument$geographic.description <- geographic.description
 x_table_other$argument$maintenance.description <- maintenance.description
 x_table_other$argument$package.id <- package.id
 x_table_other$argument$path <- path
-x_table_other$argument$provenance <- provenance
+x_table_other$argument$provenance <- NULL
 x_table_other$argument$return.obj <- TRUE
 x_table_other$argument$temporal.coverage <- temporal.coverage
 x_table_other$argument$user.domain <- user.domain
@@ -137,7 +137,7 @@ x_other$argument$geographic.description <- geographic.description
 x_other$argument$maintenance.description <- maintenance.description
 x_other$argument$package.id <- package.id
 x_other$argument$path <- path
-x_other$argument$provenance <- provenance
+x_other$argument$provenance <- NULL
 x_other$argument$return.obj <- TRUE
 x_other$argument$temporal.coverage <- temporal.coverage
 x_other$argument$user.domain <- user.domain
@@ -278,7 +278,7 @@ testthat::test_that('Error out when required arguments are missing', {
   
   # user.id
   
-  expect_warning(
+  expect_error(
     make_eml(
       path = path,
       dataset.title = dataset.title,
@@ -320,7 +320,7 @@ testthat::test_that('Error out when required arguments are missing', {
   
   # user.domain
   
-  expect_warning(
+  expect_error(
     make_eml(
       path = path,
       dataset.title = dataset.title,
@@ -335,15 +335,17 @@ testthat::test_that('Error out when required arguments are missing', {
   # user.domain (unsupported user.domain)
   
   expect_warning(
-    make_eml(
-      path = path,
-      dataset.title = dataset.title,
-      temporal.coverage = temporal.coverage,
-      geographic.description = geographic.description,
-      geographic.coordinates = geographic.coordinates,
-      maintenance.description = maintenance.description,
-      user.id = 'csmith',
-      user.domain = 'EDEYE'
+    suppressMessages(
+      make_eml(
+        path = path,
+        dataset.title = dataset.title,
+        temporal.coverage = temporal.coverage,
+        geographic.description = geographic.description,
+        geographic.coordinates = geographic.coordinates,
+        maintenance.description = maintenance.description,
+        user.id = 'csmith',
+        user.domain = 'EDEYE'
+      )
     )
   )
   
@@ -370,21 +372,23 @@ testthat::test_that('Error out when required arguments are missing', {
   # Malformed package.id
   
   expect_warning(
-    make_eml(
-      path = path,
-      data.path = data.path,
-      eml.path = eml.path,
-      dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.table = data.table,
-      data.table.description = c('Decomposition data', 'Nitrogen data'),
-      temporal.coverage = c('2014-05-01', '2015-10-31'),
-      geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
-      geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
-      maintenance.description = 'completed',
-      user.id = user.id,
-      user.domain = user.domain,
-      package.id = 'edi.141',
-      write.file = FALSE
+    suppressMessages(
+      make_eml(
+        path = path,
+        data.path = data.path,
+        eml.path = eml.path,
+        dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+        data.table = data.table,
+        data.table.description = c('Decomposition data', 'Nitrogen data'),
+        temporal.coverage = c('2014-05-01', '2015-10-31'),
+        geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+        geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+        maintenance.description = 'completed',
+        user.id = user.id,
+        user.domain = user.domain,
+        package.id = 'edi.141',
+        write.file = FALSE
+      )
     )
   )
   
@@ -501,126 +505,138 @@ testthat::test_that('Error out when required arguments are missing', {
   # abstract.txt missing
   
   expect_error(
-    make_eml(
-      path = paste0(path_parent, '/templates_ab'),
-      data.path = data.path,
-      eml.path = eml.path,
-      dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.table = data.table,
-      data.table.description = c('Decomposition data', 'Nitrogen data'),
-      temporal.coverage = c('2014-05-01', '2015-10-31'),
-      geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
-      geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
-      maintenance.description = 'completed',
-      user.id = user.id,
-      user.domain = user.domain,
-      package.id = 'edi.141.1',
-      write.file = FALSE
+    suppressMessages(
+      make_eml(
+        path = paste0(path_parent, '/templates_ab'),
+        data.path = data.path,
+        eml.path = eml.path,
+        dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+        data.table = data.table,
+        data.table.description = c('Decomposition data', 'Nitrogen data'),
+        temporal.coverage = c('2014-05-01', '2015-10-31'),
+        geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+        geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+        maintenance.description = 'completed',
+        user.id = user.id,
+        user.domain = user.domain,
+        package.id = 'edi.141.1',
+        write.file = FALSE
+      )
     )
   )
   
   # keywords.txt missing
   
   expect_error(
-    make_eml(
-      path = paste0(path_parent, '/templates_kw'),
-      data.path = data.path,
-      eml.path = eml.path,
-      dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.table = data.table,
-      data.table.description = c('Decomposition data', 'Nitrogen data'),
-      temporal.coverage = c('2014-05-01', '2015-10-31'),
-      geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
-      geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
-      maintenance.description = 'completed',
-      user.id = user.id,
-      user.domain = user.domain,
-      package.id = 'edi.141.1',
-      write.file = FALSE
+    suppressMessages(
+      make_eml(
+        path = paste0(path_parent, '/templates_kw'),
+        data.path = data.path,
+        eml.path = eml.path,
+        dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+        data.table = data.table,
+        data.table.description = c('Decomposition data', 'Nitrogen data'),
+        temporal.coverage = c('2014-05-01', '2015-10-31'),
+        geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+        geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+        maintenance.description = 'completed',
+        user.id = user.id,
+        user.domain = user.domain,
+        package.id = 'edi.141.1',
+        write.file = FALSE
+      )
     )
   )
   
   # attributes.txt (content outside of table bounds)
   
   expect_error(
-    make_eml(
-      path = paste0(path_parent, '/templates_attr'),
-      data.path = data.path,
-      eml.path = eml.path,
-      dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.table = data.table,
-      data.table.description = c('Decomposition data', 'Nitrogen data'),
-      temporal.coverage = c('2014-05-01', '2015-10-31'),
-      geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
-      geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
-      maintenance.description = 'completed',
-      user.id = user.id,
-      user.domain = user.domain,
-      package.id = 'edi.141.1',
-      write.file = FALSE
+    suppressMessages(
+      make_eml(
+        path = paste0(path_parent, '/templates_attr'),
+        data.path = data.path,
+        eml.path = eml.path,
+        dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+        data.table = data.table,
+        data.table.description = c('Decomposition data', 'Nitrogen data'),
+        temporal.coverage = c('2014-05-01', '2015-10-31'),
+        geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+        geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+        maintenance.description = 'completed',
+        user.id = user.id,
+        user.domain = user.domain,
+        package.id = 'edi.141.1',
+        write.file = FALSE
+      )
     )
   )
   
   # attributes.txt (missing definitions)
   
   expect_error(
-    make_eml(
-      path = paste0(path_parent, '/templates_attr_df'),
-      data.path = data.path,
-      eml.path = eml.path,
-      dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.table = data.table,
-      data.table.description = c('Decomposition data', 'Nitrogen data'),
-      temporal.coverage = c('2014-05-01', '2015-10-31'),
-      geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
-      geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
-      maintenance.description = 'completed',
-      user.id = user.id,
-      user.domain = user.domain,
-      package.id = 'edi.141.1',
-      write.file = FALSE
+    suppressMessages(
+      make_eml(
+        path = paste0(path_parent, '/templates_attr_df'),
+        data.path = data.path,
+        eml.path = eml.path,
+        dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+        data.table = data.table,
+        data.table.description = c('Decomposition data', 'Nitrogen data'),
+        temporal.coverage = c('2014-05-01', '2015-10-31'),
+        geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+        geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+        maintenance.description = 'completed',
+        user.id = user.id,
+        user.domain = user.domain,
+        package.id = 'edi.141.1',
+        write.file = FALSE
+      )
     )
   )
   
   # attributes.txt (default format string present)
   
   expect_error(
-    make_eml(
-      path = paste0(path_parent, '/templates_attr_dtf'),
-      data.path = data.path,
-      eml.path = eml.path,
-      dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.table = data.table,
-      data.table.description = c('Decomposition data', 'Nitrogen data'),
-      temporal.coverage = c('2014-05-01', '2015-10-31'),
-      geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
-      geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
-      maintenance.description = 'completed',
-      user.id = user.id,
-      user.domain = user.domain,
-      package.id = 'edi.141.1',
-      write.file = FALSE
+    suppressMessages(
+      make_eml(
+        path = paste0(path_parent, '/templates_attr_dtf'),
+        data.path = data.path,
+        eml.path = eml.path,
+        dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+        data.table = data.table,
+        data.table.description = c('Decomposition data', 'Nitrogen data'),
+        temporal.coverage = c('2014-05-01', '2015-10-31'),
+        geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+        geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+        maintenance.description = 'completed',
+        user.id = user.id,
+        user.domain = user.domain,
+        package.id = 'edi.141.1',
+        write.file = FALSE
+      )
     )
   )
   
   # attributes.txt (missing attribute class)
   
   expect_error(
-    make_eml(
-      path = paste0(path_parent, '/templates_attr_cl'),
-      data.path = data.path,
-      eml.path = eml.path,
-      dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.table = data.table,
-      data.table.description = c('Decomposition data', 'Nitrogen data'),
-      temporal.coverage = c('2014-05-01', '2015-10-31'),
-      geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
-      geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
-      maintenance.description = 'completed',
-      user.id = user.id,
-      user.domain = user.domain,
-      package.id = 'edi.141.1',
-      write.file = FALSE
+    suppressMessages(
+      make_eml(
+        path = paste0(path_parent, '/templates_attr_cl'),
+        data.path = data.path,
+        eml.path = eml.path,
+        dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+        data.table = data.table,
+        data.table.description = c('Decomposition data', 'Nitrogen data'),
+        temporal.coverage = c('2014-05-01', '2015-10-31'),
+        geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+        geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+        maintenance.description = 'completed',
+        user.id = user.id,
+        user.domain = user.domain,
+        package.id = 'edi.141.1',
+        write.file = FALSE
+      )
     )
   )
   
@@ -902,40 +918,40 @@ testthat::test_that('Expect equal', {
     TRUE
   )
   
-  # Using provenance
-  # class = 'eml'
-  
-  if (all(class(edi_api) != 'try-error')){
-    
-    output <- make_eml(
-      path = path,
-      data.path = data.path,
-      eml.path = eml.path,
-      dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.table = data.table,
-      data.table.description = c('Decomposition data', 'Nitrogen data'),
-      data.table.quote.character = c("\'", "\'"),
-      other.entity = 'ancillary_data.zip',
-      other.entity.description = 'Ancillary data',
-      data.url = 'https://lter.limnology.wisc.edu/sites/default/files/data',
-      temporal.coverage = c('2014-05-01', '2015-10-31'),
-      geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
-      geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
-      maintenance.description = 'completed',
-      user.id = user.id,
-      user.domain = user.domain,
-      package.id = 'edi.141.1',
-      provenance = c('edi.100.1', 'edi.7.1'),
-      return.obj = TRUE,
-      write.file = FALSE
-    )
-    
-  }
-
-  expect_equal(
-    class(output) == 'eml',
-    TRUE
-  )
+  # # Using provenance
+  # # class = 'eml'
+  # 
+  # if (all(class(edi_api) != 'try-error')){
+  #   
+  #   output <- make_eml(
+  #     path = path,
+  #     data.path = data.path,
+  #     eml.path = eml.path,
+  #     dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+  #     data.table = data.table,
+  #     data.table.description = c('Decomposition data', 'Nitrogen data'),
+  #     data.table.quote.character = c("\'", "\'"),
+  #     other.entity = 'ancillary_data.zip',
+  #     other.entity.description = 'Ancillary data',
+  #     data.url = 'https://lter.limnology.wisc.edu/sites/default/files/data',
+  #     temporal.coverage = c('2014-05-01', '2015-10-31'),
+  #     geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+  #     geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+  #     maintenance.description = 'completed',
+  #     user.id = user.id,
+  #     user.domain = user.domain,
+  #     package.id = 'edi.141.1',
+  #     provenance = c('edi.100.1', 'edi.7.1'),
+  #     return.obj = TRUE,
+  #     write.file = FALSE
+  #   )
+  #   
+  # }
+  # 
+  # expect_equal(
+  #   class(output) == 'eml',
+  #   TRUE
+  # )
   
   # Using bounding_boxes.txt
   # class = 'eml'
@@ -1154,6 +1170,110 @@ testthat::test_that('Expect equal', {
 
 testthat::test_that('Test usage with x (all templates and 2 data tables)', {
   
+  # Missing path has no effect
+  
+  output <- make_eml(
+    data.path = data.path,
+    eml.path = eml.path,
+    dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+    data.table = data.table,
+    data.table.description = c('Decomposition data', 'Nitrogen data'),
+    data.table.quote.character = c("\"","\""),
+    data.url = data.url,
+    temporal.coverage = c('2014-05-01', '2015-10-31'),
+    geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+    geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+    maintenance.description = 'completed',
+    user.id = user.id,
+    user.domain = user.domain,
+    package.id = 'edi.141.1',
+    return.obj = TRUE,
+    write.file = FALSE,
+    x = x_table
+  )
+  
+  expect_equal(
+    class(output) == 'eml',
+    TRUE
+  )
+  
+  # Missing path and eml.path has no effect if write.file = FALSE
+  
+  output <- make_eml(
+    data.path = data.path,
+    dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+    data.table = data.table,
+    data.table.description = c('Decomposition data', 'Nitrogen data'),
+    data.table.quote.character = c("\"","\""),
+    data.url = data.url,
+    temporal.coverage = c('2014-05-01', '2015-10-31'),
+    geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+    geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+    maintenance.description = 'completed',
+    user.id = user.id,
+    user.domain = user.domain,
+    package.id = 'edi.141.1',
+    return.obj = TRUE,
+    write.file = FALSE,
+    x = x_table
+  )
+  
+  expect_equal(
+    class(output) == 'eml',
+    TRUE
+  )
+  
+  # Missing eml.path and write.file = TRUE results in error
+  
+  expect_error(
+    suppressMessages(
+      make_eml(
+        data.path = data.path,
+        dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+        data.table = data.table,
+        data.table.description = c('Decomposition data', 'Nitrogen data'),
+        data.table.quote.character = c("\"","\""),
+        data.url = data.url,
+        temporal.coverage = c('2014-05-01', '2015-10-31'),
+        geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+        geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+        maintenance.description = 'completed',
+        user.id = user.id,
+        user.domain = user.domain,
+        package.id = 'edi.141.1',
+        return.obj = TRUE,
+        write.file = TRUE,
+        x = x_table
+      )
+    )
+  )
+  
+  # Missing eml.path and write.file = FALSE has no effect
+  
+  output <- make_eml(
+    data.path = data.path,
+    dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+    data.table = data.table,
+    data.table.description = c('Decomposition data', 'Nitrogen data'),
+    data.table.quote.character = c("\"","\""),
+    data.url = data.url,
+    temporal.coverage = c('2014-05-01', '2015-10-31'),
+    geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+    geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+    maintenance.description = 'completed',
+    user.id = user.id,
+    user.domain = user.domain,
+    package.id = 'edi.141.1',
+    return.obj = TRUE,
+    write.file = FALSE,
+    x = x_table
+  )
+  
+  expect_equal(
+    class(output) == 'eml',
+    TRUE
+  )
+
   # Arguments supplied to function in long form
   
   output <- make_eml(
@@ -1193,7 +1313,7 @@ testthat::test_that('Test usage with x (all templates and 2 data tables)', {
     class(output) == 'eml',
     TRUE
   )
-
+  
 })
 
 # Test usage with x (all templates, 2 data tables, and 1 other entity) --------
@@ -1202,6 +1322,34 @@ testthat::test_that('Test usage with x (all templates, 2 data tables, and 1 othe
   
   # Arguments supplied to function in long form
   
+  output <- make_eml(
+    path = path,
+    data.path = data.path,
+    eml.path = eml.path,
+    dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+    data.table = data.table,
+    data.table.description = c('Decomposition data', 'Nitrogen data'),
+    data.table.quote.character = c("\"","\""),
+    data.url = data.url,
+    other.entity = 'ancillary_data.zip',
+    other.entity.description = 'Ancillary data',
+    temporal.coverage = c('2014-05-01', '2015-10-31'),
+    geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+    geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+    maintenance.description = 'completed',
+    user.id = user.id,
+    user.domain = user.domain,
+    package.id = 'edi.141.1',
+    return.obj = TRUE,
+    write.file = FALSE,
+    x = x_table_other
+  )
+  
+  expect_equal(
+    class(output) == 'eml',
+    TRUE
+  )
+
   output <- make_eml(
     path = path,
     data.path = data.path,
