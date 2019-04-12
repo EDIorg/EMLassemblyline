@@ -1,10 +1,12 @@
 
-context('Read files into list')
+context('Make arguments')
 library(EMLassemblyline)
 
 # Parameterize ----------------------------------------------------------------
 
-attr.args <- utils::read.table(
+# Read argument attributes
+
+attr_args <- utils::read.table(
   file = system.file(
     '/templates/arguments.txt',
     package = 'EMLassemblyline'
@@ -14,107 +16,87 @@ attr.args <- utils::read.table(
   as.is = T
 )
 
-# When no templates or files are present --------------------------------------
+# Read template attributes
 
-testthat::test_that('Expect standard structure', {
+attr_templates <- utils::read.table(
+  file = system.file(
+    '/templates/template_characteristics.txt',
+    package = 'EMLassemblyline'
+  ), 
+  header = T,
+  sep = '\t',
+  as.is = T
+)
+
+# NULL inputs -------------------------------------------------------------
+
+testthat::test_that('NULL inputs', {
   
-  # Parameterize
+  # Make function call
   
-  output <- read_files()
+  output <- make_arguments()
   
-  core_templates <- utils::read.table(
-    file = system.file(
-      '/templates/template_characteristics.txt',
-      package = 'EMLassemblyline'
-    ), 
-    header = T,
-    sep = '\t',
-    as.is = T
-  )
-  
-  core_templates <- core_templates[core_templates$core_template == TRUE, ]
-  
-  # Is list
+  # Class is list
   
   expect_equal(
     class(output), 
     'list'
   )
   
-  # Has level-1 names
+  # Level-1 has argument names
   
   expect_equal(
     all(
-      c('template', 'data.table', 'other.entity', 'argument') %in% names(output)
+      names(output) %in% attr_args$argument_name
     ),
     TRUE
   )
   
-  # Has level-2 names
+  # Level-2 has templates, data tables, and other entities
   
   expect_equal(
     all(
-      names(output$template) %in% 
-        core_templates$regexpr),
+      names(output$x) %in% c('template', 'data.table', 'other.entity')
+    ),
     TRUE
   )
   
   expect_equal(
-    output$data.table,
+    output$x$data.table,
     NULL
   )
   
   expect_equal(
-    output$other.entity,
+    output$x$other.entity,
     NULL
   )
+  
+  # Level-3 has core templates
   
   expect_equal(
     all(
-      names(output$argument) %in% 
-        attr.args$argument_name),
+      names(output$x$template) %in% attr_templates$regexpr
+    ),
     TRUE
   )
   
-  # Has level-3 names
-  
-  for (i in 1:length(output$template)){
+  # Level-4 has content
+
+  for (i in 1:length(output$x$template)){
     
     expect_equal(
       all(
-        names(output$template[[i]]) %in% 
-          'content'
+        names(output$x$template[[i]]) %in% 'content'
       ),
       TRUE
     )
     
   }
   
-  # Has level-3 values
-  
-  for (i in 1:length(output$template)){
+  for (i in 1:length(output$x$template)){
     
     expect_equal(
-      all(
-        is.na(
-          unname(
-            unlist(
-              output$template[[i]]
-            )
-          )
-        )
-      ),
-      TRUE
-    )
-    
-  }
-  
-  for (i in 1:length(output$argument)){
-    
-    expect_equal(
-      is.null(
-        output$argument[[i]]
-      ),
+      is.na(output$x$template[[i]]$content),
       TRUE
     )
     
@@ -122,70 +104,91 @@ testthat::test_that('Expect standard structure', {
   
 })
 
-# When only templates are present ---------------------------------------------
+# Template inputs -------------------------------------------------------------
 
-testthat::test_that('Expect standard structure', {
+testthat::test_that('Template inputs', {
   
-  # Parameterize
+  # Make function call
   
-  output <- read_files(
+  output <- make_arguments(
     path = system.file(
       '/examples/templates',
       package = 'EMLassemblyline'
     )
   )
   
-  path_files <- list.files(
-    system.file(
-      '/examples/templates',
-      package = 'EMLassemblyline'
-    )
-  )
-  
-  # Is list
+  # Class is list
   
   expect_equal(
     class(output), 
     'list'
   )
   
-  # Has level-1 names
+  # Level-1 has argument names
   
   expect_equal(
     all(
-      c('template', 'data.table', 'other.entity', 'argument') %in% 
-        names(output)
+      names(output) %in% attr_args$argument_name
     ),
     TRUE
   )
   
-  # Has level-2 names
+  # Level-2 has templates, data tables, and other entities
   
   expect_equal(
     all(
-      names(output$template) %in% 
-        path_files
+      names(output$x) %in% c('template', 'data.table', 'other.entity')
     ),
     TRUE
   )
   
   expect_equal(
-    output$data.table,
+    output$x$data.table,
     NULL
   )
   
   expect_equal(
-    output$other.entity,
+    output$x$other.entity,
     NULL
   )
   
-  expect_equal(
-    all(
-      names(output$argument) %in% 
-        attr.args$argument_name
-    ),
-    TRUE
-  )
+  # Level-3 has all template possiblities
+  
+  for (i in 1:length(attr_templates$regexpr)){
+    
+    expect_equal(
+      any(
+        stringr::str_detect(
+          string = names(output$x$template),
+          pattern = attr_templates$regexpr[i]
+        )
+      ),
+      TRUE
+    )
+
+  }
+  
+  # Level-4 has content
+  
+  for (i in 1:length(output$x$template)){
+    
+    expect_equal(
+      all(
+        names(output$x$template[[i]]) %in% 'content'
+      ),
+      TRUE
+    )
+    
+  }
+  
+  for (i in 1:length(output$x$template)){
+
+    expect_equal(
+      class(output$x$template[[i]]$content)[1] %in% attr_templates$class,
+      TRUE
+    )
+    
+  }
   
 })
 
@@ -195,7 +198,7 @@ testthat::test_that('Expect standard structure', {
   
   # Parameterize
   
-  output <- read_files(
+  output <- make_arguments(
     path = system.file(
       '/examples/templates',
       package = 'EMLassemblyline'
@@ -266,7 +269,7 @@ testthat::test_that('Expect standard structure', {
   
   # Parameterize
   
-  output <- read_files(
+  output <- make_arguments(
     path = system.file(
       '/examples/templates',
       package = 'EMLassemblyline'
@@ -333,7 +336,7 @@ testthat::test_that('Expect standard structure', {
   
   # Parameterize
   
-  output <- read_files(
+  output <- make_arguments(
     path = system.file(
       '/examples/templates',
       package = 'EMLassemblyline'

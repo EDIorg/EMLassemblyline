@@ -238,9 +238,9 @@ validate_arguments <- function(fun.name, fun.args){
 
   }
   
-  # If called from read_files() -----------------------------------------------
+  # If called from make_arguments() -----------------------------------------------
   
-  if (fun.name == 'read_files'){
+  if (fun.name == 'make_arguments'){
     
     # path
     
