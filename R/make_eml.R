@@ -632,7 +632,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
 
     results <- try(
       resolve_terms(
-        x = 'peat',
+        x = unresolved_terms,
         cv = 'lter'
       ),
       silent = T
