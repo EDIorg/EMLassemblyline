@@ -39,7 +39,7 @@ other.entity <- 'ancillary_data.zip'
 other.entity.description <- 'Ancillary data'
 provenance <- 'edi.100.1'
 
-x_table <- read_files(
+x_table <- make_arguments(
   path = system.file(
     '/examples/templates', 
     package = 'EMLassemblyline'
@@ -54,7 +54,11 @@ x_table <- read_files(
   )
 )
 
-x_table_other <- read_files(
+x_table_docall <- x_table
+
+x_table <- x_table$x
+
+x_table_other <- make_arguments(
   path = system.file(
     '/examples/templates', 
     package = 'EMLassemblyline'
@@ -70,7 +74,11 @@ x_table_other <- read_files(
   other.entity = 'ancillary.data.zip'
 )
 
-x_other <- read_files(
+x_table_other_docall <- x_table_other
+
+x_table_other <- x_table_other$x
+
+x_other <- make_arguments(
   path = system.file(
     '/examples/templates', 
     package = 'EMLassemblyline'
@@ -82,68 +90,72 @@ x_other <- read_files(
   other.entity = 'ancillary.data.zip'
 )
 
+x_other_docall <- x_other
+
+x_other <- x_other$x
+
 # Add arguments to list structure x
 
-x_table$argument$data.path <- data.path
-x_table$argument$data.table <- data.table
-x_table$argument$data.table.description <- data.table.description
-x_table$argument$data.table.quote.character <- data.table.quote.character
-x_table$argument$data.url <- data.url
-x_table$argument$dataset.title <- dataset.title
-x_table$argument$eml.path <- eml.path
-x_table$argument$geographic.coordinates <- geographic.coordinates
-x_table$argument$geographic.description <- geographic.description
-x_table$argument$maintenance.description <- maintenance.description
-x_table$argument$package.id <- package.id
-x_table$argument$path <- path
-x_table$argument$provenance <- NULL
-x_table$argument$return.obj <- TRUE
-x_table$argument$temporal.coverage <- temporal.coverage
-x_table$argument$user.domain <- user.domain
-x_table$argument$user.id <- user.id
-x_table$argument$write.file <- FALSE
-x_table$argument$x <- x_table
+x_table_docall$data.path <- data.path
+x_table_docall$data.table <- data.table
+x_table_docall$data.table.description <- data.table.description
+x_table_docall$data.table.quote.character <- data.table.quote.character
+x_table_docall$data.url <- data.url
+x_table_docall$dataset.title <- dataset.title
+x_table_docall$eml.path <- eml.path
+x_table_docall$geographic.coordinates <- geographic.coordinates
+x_table_docall$geographic.description <- geographic.description
+x_table_docall$maintenance.description <- maintenance.description
+x_table_docall$package.id <- package.id
+x_table_docall$path <- path
+x_table_docall$provenance <- NULL
+x_table_docall$return.obj <- TRUE
+x_table_docall$temporal.coverage <- temporal.coverage
+x_table_docall$user.domain <- user.domain
+x_table_docall$user.id <- user.id
+x_table_docall$write.file <- FALSE
+x_table_docall$x <- x_table_docall
 
-x_table_other$argument$data.path <- data.path
-x_table_other$argument$data.table <- data.table
-x_table_other$argument$data.table.description <- data.table.description
-x_table_other$argument$data.table.quote.character <- data.table.quote.character
-x_table_other$argument$other.entity <- other.entity
-x_table_other$argument$other.entity.description <- other.entity.description
-x_table_other$argument$data.url <- data.url
-x_table_other$argument$dataset.title <- dataset.title
-x_table_other$argument$eml.path <- eml.path
-x_table_other$argument$geographic.coordinates <- geographic.coordinates
-x_table_other$argument$geographic.description <- geographic.description
-x_table_other$argument$maintenance.description <- maintenance.description
-x_table_other$argument$package.id <- package.id
-x_table_other$argument$path <- path
-x_table_other$argument$provenance <- NULL
-x_table_other$argument$return.obj <- TRUE
-x_table_other$argument$temporal.coverage <- temporal.coverage
-x_table_other$argument$user.domain <- user.domain
-x_table_other$argument$user.id <- user.id
-x_table_other$argument$write.file <- FALSE
-x_table_other$argument$x <- x_table_other
+x_table_other_docall$data.path <- data.path
+x_table_other_docall$data.table <- data.table
+x_table_other_docall$data.table.description <- data.table.description
+x_table_other_docall$data.table.quote.character <- data.table.quote.character
+x_table_other_docall$other.entity <- other.entity
+x_table_other_docall$other.entity.description <- other.entity.description
+x_table_other_docall$data.url <- data.url
+x_table_other_docall$dataset.title <- dataset.title
+x_table_other_docall$eml.path <- eml.path
+x_table_other_docall$geographic.coordinates <- geographic.coordinates
+x_table_other_docall$geographic.description <- geographic.description
+x_table_other_docall$maintenance.description <- maintenance.description
+x_table_other_docall$package.id <- package.id
+x_table_other_docall$path <- path
+x_table_other_docall$provenance <- NULL
+x_table_other_docall$return.obj <- TRUE
+x_table_other_docall$temporal.coverage <- temporal.coverage
+x_table_other_docall$user.domain <- user.domain
+x_table_other_docall$user.id <- user.id
+x_table_other_docall$write.file <- FALSE
+x_table_other_docall$x <- x_table_other_docall
 
-x_other$argument$data.path <- data.path
-x_other$argument$other.entity <- other.entity
-x_other$argument$other.entity.description <- other.entity.description
-x_other$argument$data.url <- data.url
-x_other$argument$dataset.title <- dataset.title
-x_other$argument$eml.path <- eml.path
-x_other$argument$geographic.coordinates <- geographic.coordinates
-x_other$argument$geographic.description <- geographic.description
-x_other$argument$maintenance.description <- maintenance.description
-x_other$argument$package.id <- package.id
-x_other$argument$path <- path
-x_other$argument$provenance <- NULL
-x_other$argument$return.obj <- TRUE
-x_other$argument$temporal.coverage <- temporal.coverage
-x_other$argument$user.domain <- user.domain
-x_other$argument$user.id <- user.id
-x_other$argument$write.file <- FALSE
-x_other$argument$x <- x_other
+x_other_docall$data.path <- data.path
+x_other_docall$other.entity <- other.entity
+x_other_docall$other.entity.description <- other.entity.description
+x_other_docall$data.url <- data.url
+x_other_docall$dataset.title <- dataset.title
+x_other_docall$eml.path <- eml.path
+x_other_docall$geographic.coordinates <- geographic.coordinates
+x_other_docall$geographic.description <- geographic.description
+x_other_docall$maintenance.description <- maintenance.description
+x_other_docall$package.id <- package.id
+x_other_docall$path <- path
+x_other_docall$provenance <- NULL
+x_other_docall$return.obj <- TRUE
+x_other_docall$temporal.coverage <- temporal.coverage
+x_other_docall$user.domain <- user.domain
+x_other_docall$user.id <- user.id
+x_other_docall$write.file <- FALSE
+x_other_docall$x <- x_other_docall
 
 # File paths within R library
 
@@ -655,21 +667,23 @@ testthat::test_that('Error out when required arguments are missing', {
   # attributes.txt (missing date time string)
   
   expect_error(
-    make_eml(
-      path = paste0(path_parent, '/templates_attr_dts'),
-      data.path = data.path,
-      eml.path = eml.path,
-      dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.table = data.table,
-      data.table.description = c('Decomposition data', 'Nitrogen data'),
-      temporal.coverage = c('2014-05-01', '2015-10-31'),
-      geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
-      geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
-      maintenance.description = 'completed',
-      user.id = user.id,
-      user.domain = user.domain,
-      package.id = 'edi.141.1',
-      write.file = FALSE
+    suppressMessages(
+      make_eml(
+        path = paste0(path_parent, '/templates_attr_dts'),
+        data.path = data.path,
+        eml.path = eml.path,
+        dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+        data.table = data.table,
+        data.table.description = c('Decomposition data', 'Nitrogen data'),
+        temporal.coverage = c('2014-05-01', '2015-10-31'),
+        geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+        geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+        maintenance.description = 'completed',
+        user.id = user.id,
+        user.domain = user.domain,
+        package.id = 'edi.141.1',
+        write.file = FALSE
+      )
     )
   )
   
@@ -1316,9 +1330,11 @@ testthat::test_that('Test usage with x (all templates and 2 data tables)', {
   
   # Arguments supplied to function via x
   
+  use_i <- names(x_table_docall) %in% names(formals(make_eml))
+  
   output <- do.call(
     make_eml, 
-    x_table$argument
+    x_table_docall[use_i]
   )
   
   expect_equal(
@@ -1394,7 +1410,7 @@ testthat::test_that('Test usage with x (all templates, 2 data tables, and 1 othe
   
   output <- do.call(
     make_eml, 
-    x_table_other$argument
+    x_table_other_docall
   )
   
   expect_equal(
@@ -1439,7 +1455,7 @@ testthat::test_that('Test usage with x (all templates and 1 other entity)', {
   
   output <- do.call(
     make_eml, 
-    x_other$argument
+    x_other_docall
   )
   
   expect_equal(

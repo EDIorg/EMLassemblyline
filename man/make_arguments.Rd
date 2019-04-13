@@ -113,7 +113,7 @@ of character strings (e.g.
     \item{\strong{x} (named list) List of metadata template, data 
     tables, and other entities.}
       \itemize{
-      \item{\strong{template} Metadata template files}
+      \item{\strong{template} - Metadata template files}
         \itemize{
         \item{\strong{abstract.txt} Abstract template}
           \itemize{

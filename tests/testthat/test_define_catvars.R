@@ -62,7 +62,7 @@ testthat::test_that('Test usage with x inputs',{
 
   # Create x_list and x_no_catvars with and without catvars_*.txt, respectivly.
   
-  x_list <- read_files(
+  x_list <- make_arguments(
     path = system.file(
       '/examples/templates', 
       package = 'EMLassemblyline'
@@ -76,6 +76,8 @@ testthat::test_that('Test usage with x inputs',{
       'nitrogen.csv'
     )
   )
+  
+  x_list <- x_list$x
   
   x_no_catvars <- x_list
   
@@ -138,11 +140,6 @@ testthat::test_that('Test usage with x inputs',{
     TRUE
   )
   
-  expect_equal(
-    output$template$catvars_decomp.txt$path,
-    NA_character_
-  )
-  
   # Missing path adds NA to /x/templates/catvars_*.txt/path
   
   expect_message(
@@ -167,11 +164,6 @@ testthat::test_that('Test usage with x inputs',{
     )
   )
   
-  expect_equal(
-    output$template$catvars_decomp.txt$path,
-    NA_character_
-  )
-  
   # Missing path has no effect
   
   expect_message(
@@ -188,56 +180,10 @@ testthat::test_that('Test usage with x inputs',{
   # Missing path and data.path has no effect
   # - /x/templates/catvars_*.txt is created with expected content
   
-  expect_message(
-    define_catvars(
-      x = x_no_catvars,
-      write.file = FALSE
-    )
-  )
-  
-  output <- suppressMessages(
-    define_catvars(
-      x = x_no_catvars,
-      write.file = FALSE
-    )
-  )
-  
-  expect_equal(
-    sum(
-      stringr::str_detect(
-        string = names(output$template),
-        pattern = 'catvars_[:graph:]*.txt'
-      )
-    ),
-    2
-  )
-  
-  expect_equal(
-    class(output$template$catvars_decomp.txt$content),
-    'data.frame'
-  )
-  
-  expect_equal(
-    all(
-      colnames(output$template$catvars_decomp.txt$content) %in%
-        c('attributeName', 'code', 'definition')
-    ),
-    TRUE
-  )
-  
-  expect_equal(
-    output$template$catvars_decomp.txt$path,
-    NA_character_
-  )
-  
-  # write.file = TRUE and x != NULL results in error
-  
   expect_error(
-    suppressMessages(
-      define_catvars(
-        x = x_no_catvars,
-        write.file = TRUE
-      )
+    define_catvars(
+      x = x_no_catvars,
+      write.file = FALSE
     )
   )
   

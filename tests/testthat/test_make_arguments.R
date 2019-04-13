@@ -28,9 +28,27 @@ attr_templates <- utils::read.table(
   as.is = T
 )
 
-# NULL inputs -------------------------------------------------------------
+# List files at path
 
-testthat::test_that('NULL inputs', {
+path_files <- list.files(
+  system.file(
+    '/examples/templates',
+    package = 'EMLassemblyline'
+  )
+)
+
+# List files at data.path
+
+data_path_files <- list.files(
+  system.file(
+    '/examples/data',
+    package = 'EMLassemblyline'
+  )
+)
+
+# Inputs = NULL ---------------------------------------------------------------
+
+testthat::test_that('Inputs = NULL', {
   
   # Make function call
   
@@ -104,7 +122,7 @@ testthat::test_that('NULL inputs', {
   
 })
 
-# Template inputs -------------------------------------------------------------
+# Inputs = templates ----------------------------------------------------------
 
 testthat::test_that('Template inputs', {
   
@@ -192,11 +210,11 @@ testthat::test_that('Template inputs', {
   
 })
 
-# When only templates and data tables are present -----------------------------
+# Inputs = templates and data tables ------------------------------------------
 
-testthat::test_that('Expect standard structure', {
+testthat::test_that('Inputs = templates and data tables', {
   
-  # Parameterize
+  # Make function call
   
   output <- make_arguments(
     path = system.file(
@@ -213,61 +231,111 @@ testthat::test_that('Expect standard structure', {
     )
   )
   
-  path_files <- list.files(
-    system.file(
-      '/examples/templates',
-      package = 'EMLassemblyline'
-    )
-  )
-  
-  data_path_files <- list.files(
-    system.file(
-      '/examples/data',
-      package = 'EMLassemblyline'
-    )
-  )
-  
-  # Is list
+  # Class is list
   
   expect_equal(
     class(output), 
     'list'
   )
   
-  # Has level-1 names
+  # Level-1 has argument names
   
   expect_equal(
     all(
-      c('template', 'data.table', 'other.entity', 'argument') %in% 
-        names(output)
+      names(output) %in% attr_args$argument_name
     ),
     TRUE
   )
   
-  # Has level-2 names
+  # Level-2 has templates, data tables, and other entities
   
   expect_equal(
-    all(names(output$template) %in% path_files),
+    all(
+      names(output$x) %in% c('template', 'data.table', 'other.entity')
+    ),
     TRUE
   )
   
   expect_equal(
-    all(names(output$data.table) %in% data_path_files),
+    !is.null(output$x$data.table),
     TRUE
   )
   
   expect_equal(
-    names(output$other.entity),
+    output$x$other.entity,
     NULL
   )
   
+  # Level-3 has all template possiblities
+  
+  for (i in 1:length(attr_templates$regexpr)){
+    
+    expect_equal(
+      any(
+        stringr::str_detect(
+          string = names(output$x$template),
+          pattern = attr_templates$regexpr[i]
+        )
+      ),
+      TRUE
+    )
+    
+  }
+  
+  # Level-3 has data table names found at data.path
+  
+  expect_equal(
+    all(
+      names(output$x$data.table) %in% data_path_files
+    ),
+    TRUE
+  )
+  
+  # Level-4 has template content
+  
+  for (i in 1:length(output$x$template)){
+    
+    expect_equal(
+      all(
+        names(output$x$template[[i]]) %in% 'content'
+      ),
+      TRUE
+    )
+    
+    expect_equal(
+      class(output$x$template[[i]]$content)[1] %in% attr_templates$class,
+      TRUE
+    )
+    
+  }
+  
+  # Level-4 has data table content
+  
+  for (i in 1:length(output$x$data.table)){
+    
+    expect_equal(
+      all(
+        names(output$x$data.table[[i]]) %in% 'content'
+      ),
+      TRUE
+    )
+    
+    expect_equal(
+      class(
+        output$x$data.table[[i]]$content
+      ),
+      'data.frame'
+    )
+    
+  }
+  
 })
 
-# When only templates and other entities are present --------------------------
+# Inputs = templates and other entities ---------------------------------------
 
-testthat::test_that('Expect standard structure', {
+testthat::test_that('Inputs = templates and other entities', {
   
-  # Parameterize
+  # Make function call
   
   output <- make_arguments(
     path = system.file(
@@ -281,60 +349,111 @@ testthat::test_that('Expect standard structure', {
     other.entity = 'ancillary_data.zip'
   )
   
-  path_files <- list.files(
-    system.file(
-      '/examples/templates',
-      package = 'EMLassemblyline'
-    )
-  )
-  
-  data_path_files <- list.files(
-    system.file(
-      '/examples/data',
-      package = 'EMLassemblyline'
-    )
-  )
-  
-  # Is list
+  # Class is list
   
   expect_equal(
     class(output), 
     'list'
   )
   
-  # Has level-1 names
+  # Level-1 has argument names
   
   expect_equal(
     all(
-      c('template', 'data.table', 'other.entity', 'argument') %in% names(output)
+      names(output) %in% attr_args$argument_name
     ),
     TRUE
   )
   
-  # Has level-2 names
+  # Level-2 has templates, data tables, and other entities
   
   expect_equal(
-    all(names(output$template) %in% path_files),
+    all(
+      names(output$x) %in% c('template', 'data.table', 'other.entity')
+    ),
     TRUE
   )
   
   expect_equal(
-    names(output$data.table),
-    NULL
+    is.null(output$x$data.table),
+    TRUE
   )
   
   expect_equal(
-    all(names(output$other.entity) %in% data_path_files),
+    !is.null(output$x$other.entity),
     TRUE
   )
+  
+  # Level-3 has all template possiblities
+  
+  for (i in 1:length(attr_templates$regexpr)){
+    
+    expect_equal(
+      any(
+        stringr::str_detect(
+          string = names(output$x$template),
+          pattern = attr_templates$regexpr[i]
+        )
+      ),
+      TRUE
+    )
+    
+  }
+  
+  # Level-3 has other entity names found at data.path
+  
+  expect_equal(
+    all(
+      names(output$x$other.entity) %in% data_path_files
+    ),
+    TRUE
+  )
+  
+  # Level-4 has template content
+  
+  for (i in 1:length(output$x$template)){
+    
+    expect_equal(
+      all(
+        names(output$x$template[[i]]) %in% 'content'
+      ),
+      TRUE
+    )
+    
+    expect_equal(
+      class(output$x$template[[i]]$content)[1] %in% attr_templates$class,
+      TRUE
+    )
+    
+  }
+  
+  # Level-4 has other entity content
+  
+  for (i in 1:length(output$x$other.entity)){
+    
+    expect_equal(
+      all(
+        names(output$x$other.entity[[i]]) %in% 'content'
+      ),
+      TRUE
+    )
+    
+    expect_equal(
+      is.na(
+        output$x$other.entity[[i]]$content
+      ),
+      TRUE
+    )
+    
+  }
   
 })
 
-# When templates, data tables, and other entities are present -----------------
+# Inputs = templates, data tables, and other entities -------------------------
 
-testthat::test_that('Expect standard structure', {
+testthat::test_that('Inputs = templates, data tables, and other entities', {
   
-  # Parameterize
+  # Make function call
   
   output <- make_arguments(
     path = system.file(
@@ -351,97 +470,132 @@ testthat::test_that('Expect standard structure', {
     ),
     other.entity = 'ancillary_data.zip'
   )
-  
-  path_files <- list.files(
-    system.file(
-      '/examples/templates',
-      package = 'EMLassemblyline'
-    )
-  )
-  
-  data_path_files <- list.files(
-    system.file(
-      '/examples/data',
-      package = 'EMLassemblyline'
-    )
-  )
     
-  # Is list
+  # Class is list
   
   expect_equal(
     class(output), 
     'list'
   )
   
-  # Has level-1 names
+  # Level-1 has argument names
   
   expect_equal(
     all(
-      c('template', 'data.table', 'other.entity', 'argument') %in% names(output)
+      names(output) %in% attr_args$argument_name
     ),
     TRUE
   )
   
-  # Has level-2 names
+  # Level-2 has templates, data tables, and other entities
   
   expect_equal(
-    all(names(output$template) %in% path_files),
+    all(
+      names(output$x) %in% c('template', 'data.table', 'other.entity')
+    ),
     TRUE
   )
   
   expect_equal(
-    all(names(output$data.table) %in% data_path_files),
+    !is.null(output$x$data.table),
     TRUE
   )
   
   expect_equal(
-    all(names(output$other.entity) %in% data_path_files),
+    !is.null(output$x$other.entity),
     TRUE
   )
   
-  # Has level-3 names
+  # Level-3 has all template possiblities
   
-  for (i in 1:length(names(output))){
-    
-    for (j in 1:length(names(output[[i]]))){
-      
-      expect_equal(
-        all(names(output[[i]][[j]]) %in% c('content', 'path')),
-        TRUE
-      )
-      
-    }
-
-  }
-  
-  # data.table has data.path
-  
-  # For each data.table ...
-  
-  for (i in 1:length(names(output$data.table))){
-    
-    # path exists
+  for (i in 1:length(attr_templates$regexpr)){
     
     expect_equal(
-      !is.na(output$data.table[[i]]$path),
-      TRUE
-    )
-
-  }
-  
-  # other.entity has data.path
-  
-  # For each other.entity ...
-  
-  for (i in 1:length(names(output$other.entity))){
-    
-    # path exists
-    
-    expect_equal(
-      !is.na(output$other.entity[[i]]$path),
+      any(
+        stringr::str_detect(
+          string = names(output$x$template),
+          pattern = attr_templates$regexpr[i]
+        )
+      ),
       TRUE
     )
     
   }
-
+  
+  # Level-3 has data table names found at data.path
+  
+  expect_equal(
+    all(
+      names(output$x$data.table) %in% data_path_files
+    ),
+    TRUE
+  )
+  
+  # Level-3 has other entity names found at data.path
+  
+  expect_equal(
+    all(
+      names(output$x$other.entity) %in% data_path_files
+    ),
+    TRUE
+  )
+  
+  # Level-4 has template content
+  
+  for (i in 1:length(output$x$template)){
+    
+    expect_equal(
+      all(
+        names(output$x$template[[i]]) %in% 'content'
+      ),
+      TRUE
+    )
+    
+    expect_equal(
+      class(output$x$template[[i]]$content)[1] %in% attr_templates$class,
+      TRUE
+    )
+    
+  }
+  
+  # Level-4 has data table content
+  
+  for (i in 1:length(output$x$data.table)){
+    
+    expect_equal(
+      all(
+        names(output$x$data.table[[i]]) %in% 'content'
+      ),
+      TRUE
+    )
+    
+    expect_equal(
+      class(
+        output$x$data.table[[i]]$content
+      ),
+      'data.frame'
+    )
+    
+  }
+  
+  # Level-4 has other entity content
+  
+  for (i in 1:length(output$x$other.entity)){
+    
+    expect_equal(
+      all(
+        names(output$x$other.entity[[i]]) %in% 'content'
+      ),
+      TRUE
+    )
+    
+    expect_equal(
+      is.na(
+        output$x$other.entity[[i]]$content
+      ),
+      TRUE
+    )
+    
+  }
+  
 })

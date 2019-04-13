@@ -112,7 +112,7 @@ missing package ID defaults to `edi.101.1`.}
 \item{return.obj}{(logical) Return the EML as an R object of class `EML object`.}
 
 \item{x}{(named list) Alternative input/output to `EMLassemblyline` functions. 
-Use `read_files()` to create `x`.}
+Use `make_arguments()` to create `x`.}
 
 \item{affiliation}{This argument has been deprecated. Use `user.domain` instead.}
 

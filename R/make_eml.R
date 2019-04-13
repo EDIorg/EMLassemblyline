@@ -113,7 +113,7 @@
 #'     (logical) Return the EML as an R object of class `EML object`.
 #' @param x
 #'     (named list) Alternative input/output to `EMLassemblyline` functions. 
-#'     Use `read_files()` to create `x`.
+#'     Use `make_arguments()` to create `x`.
 #' @param affiliation
 #'     This argument has been deprecated. Use `user.domain` instead.
 #' @param data.files
@@ -221,53 +221,49 @@ make_eml <- function(
     
     if (is.null(data.table) & is.null(other.entity)){
       
-      x <- read_files(
+      x <- make_arguments(
         path = path,
         data.path = data.path
       )
       
+      x <- x$x
+      
     } else if (!is.null(data.table) & is.null(other.entity)){
       
-      x <- read_files(
+      x <- make_arguments(
         path = path,
         data.path = data.path,
         data.table = table_names
       )
       
+      x <- x$x
+      
     } else if (!is.null(data.table) & !is.null(other.entity)){
       
-      x <- read_files(
+      x <- make_arguments(
         path = path,
         data.path = data.path,
         data.table = table_names,
         other.entity = other.entity
       )
       
+      x <- x$x
+      
     } else if (is.null(data.table) & !is.null(other.entity)){
       
-      x <- read_files(
+      x <- make_arguments(
         path = path,
         data.path = data.path,
         other.entity = other.entity
       )
+      
+      x <- x$x
       
     }
     
     data_read_2_x <- TRUE
     
   }
-  
-  # Validate x and templates --------------------------------------------------
-
-  # validate_x(
-  #   fun.name = as.character(match.call()[[1]]),
-  #   fun.args = as.list(environment())
-  # )
-  # 
-  # validate_templates(
-  #   fun.name = as.character(match.call()[[1]]),
-  #   fun.args = as.list(environment())
-  # )
 
   # Compile attributes --------------------------------------------------------
   
@@ -527,7 +523,7 @@ make_eml <- function(
 
   dataset <- methods::new("dataset",
                  title = dataset.title)
-
+  
   # Add creators --------------------------------------------------------------
   
   message("<creators>")
@@ -1108,7 +1104,7 @@ make_eml <- function(
       # Set physical
       
       eol <- EDIutils::get_eol(
-        path = x$data.table[[(names(x$data.table)[i])]]$path,
+        path = data.path,
         file.name = names(x$data.table)[i],
         os = EDIutils::detect_os()
       )
@@ -1117,7 +1113,7 @@ make_eml <- function(
         
         physical_temp <- EML::set_physical(
           paste0(
-            x$data.table[[(names(x$data.table)[i])]]$path,
+            data.path,
             '/',
             names(x$data.table)[i]
           )
@@ -1136,7 +1132,7 @@ make_eml <- function(
         
         physical_temp <- EML::set_physical(
           paste0(
-            x$data.table[[(names(x$data.table)[i])]]$path,
+            data.path,
             '/',
             names(x$data.table)[i]
           )
@@ -1156,7 +1152,7 @@ make_eml <- function(
                            unit = "byte",
                            as.character(
                              file.size(
-                               paste(x$data.table[[(names(x$data.table)[i])]]$path,
+                               paste(data.path,
                                      "/",
                                      names(x$data.table)[i],
                                      sep = ""))))
@@ -1178,7 +1174,7 @@ make_eml <- function(
         
         command_certutil <- paste("md5 ",
                                   "\"",
-                                  x$data.table[[(names(x$data.table)[i])]]$path,
+                                  data.path,
                                   "/",
                                   names(x$data.table)[i],
                                   "\"",
@@ -1199,7 +1195,7 @@ make_eml <- function(
         
         command_certutil <- paste("CertUtil -hashfile ",
                                   "\"",
-                                  x$data.table[[(names(x$data.table)[i])]]$path,
+                                  data.path,
                                   "\\",
                                   names(x$data.table)[i],
                                   "\"",
@@ -1221,7 +1217,7 @@ make_eml <- function(
         
         command_certutil <- paste0("md5sum ",
                                    "\"",
-                                   x$data.table[[(names(x$data.table)[i])]]$path,
+                                   data.path,
                                    "/",
                                    names(x$data.table)[i],
                                    "\"")
@@ -1339,7 +1335,7 @@ make_eml <- function(
         entity_type <- "unknown"
         physical@dataFormat@externallyDefinedFormat@formatName <- format_name
         
-        physical@size <- methods::new("size", unit = "bytes", methods::as(as.character(file.size(paste(x$other.entity[[i]]$path, "/", names(x$other.entity)[i], sep = ""))), "size"))
+        physical@size <- methods::new("size", unit = "bytes", methods::as(as.character(file.size(paste(data.path, "/", names(x$other.entity)[i], sep = ""))), "size"))
         
         if (!is.null(data.url)){
           
@@ -1366,7 +1362,7 @@ make_eml <- function(
           
           command_certutil <- paste("md5 ",
                                     "\"",
-                                    x$other.entity[[i]]$path,
+                                    data.path,
                                     "/",
                                     names(x$other.entity)[i],
                                     "\"",
@@ -1387,7 +1383,7 @@ make_eml <- function(
           
           command_certutil <- paste("CertUtil -hashfile ",
                                     "\"",
-                                    x$other.entity[[i]]$path,
+                                    data.path,
                                     "\\",
                                     names(x$other.entity)[i],
                                     "\"",
@@ -1409,7 +1405,7 @@ make_eml <- function(
           
           command_certutil <- paste0("md5sum ",
                                      "\"",
-                                     x$other.entity[[i]]$path,
+                                     data.path,
                                      "/",
                                      names(x$other.entity)[i],
                                      "\"")
@@ -1529,13 +1525,13 @@ make_eml <- function(
 
 compile_attributes <- function(x){
   
-  path <- x$template[[1]]$path
-  data.path <- x$data.table[[1]]$path
+  # path <- x$template[[1]]$path
+  # data.path <- x$data.table[[1]]$path
   data.table <- names(x$data.table)
   
   # Get names of data files with associated attribute files
   
-  files <- list.files(data.path)
+  files <- names(x$template)
   use_i <- stringr::str_detect(string = files,
                       pattern = "^attributes")
   attribute_files <- files[use_i]
@@ -1543,21 +1539,21 @@ compile_attributes <- function(x){
   table_names_base <- stringr::str_sub(string = attribute_files,
                               start = 12,
                               end = nchar(attribute_files)-4)
-  use_i <- stringr::str_detect(string = files,
+  use_i <- stringr::str_detect(string = names(x$data.table),
                       pattern = stringr::str_c("^", table_names_base, collapse = "|"))
-  table_names <- files[use_i]
+  table_names <- names(x$data.table)
   
   # Synchronize ordering of data files and attribute files
   
-  table_names <- EDIutils::validate_file_names(data.path, data.table)
+  # table_names <- EDIutils::validate_file_names(data.path, data.table)
   
-  attribute_files_out <- c()
-  for (i in 1:length(table_names)){
-    attribute_files_out[i] <- paste0('attributes_',
-                                     stringr::str_c(stringr::str_sub(table_names[i], 1, nchar(table_names[i])-4), collapse = "|"),
-                                     '.txt')
-  }
-  fname_table_attributes <- attribute_files_out
+  # attribute_files_out <- c()
+  # for (i in 1:length(table_names)){
+  #   attribute_files_out[i] <- paste0('attributes_',
+  #                                    stringr::str_c(stringr::str_sub(table_names[i], 1, nchar(table_names[i])-4), collapse = "|"),
+  #                                    '.txt')
+  # }
+  fname_table_attributes <- attribute_files
   
   
   # Loop through data tables --------------------------------------------------
@@ -1569,53 +1565,30 @@ compile_attributes <- function(x){
     message(paste("Compiling", fname_table_attributes[i]))
     
     
-    file_path <- paste(data.path,
-                       "/",
-                       table_names[i],
-                       sep = "")
+    # file_path <- paste(data.path,
+    #                    "/",
+    #                    table_names[i],
+    #                    sep = "")
+    # 
+    # delim_guess <- EDIutils::detect_delimeter(path = data.path, data.files = table_names[i], os = EDIutils::detect_os())
     
-    delim_guess <- EDIutils::detect_delimeter(path = data.path, data.files = table_names[i], os = EDIutils::detect_os())
+    df_table <- x$data.table[[table_names[i]]]$content
     
-    df_table <- utils::read.table(file_path,
-                           header = TRUE,
-                           sep = delim_guess,
-                           quote = "\"",
-                           as.is = TRUE,
-                           comment.char = "")
+    # # Read attributes_datatablename
+    # 
+    # field_count <- utils::count.fields(file = paste0(path,
+    #                                           "/",
+    #                                           fname_table_attributes[i]),
+    #                             sep = "\t")
+    # 
+    # if (!is.na((sum(field_count) > 0)) & (sum(field_count > 7) > 0)){
+    #   stop(paste0('Some of the information in "',
+    #               fname_table_attributes[i],
+    #               '" is not in the correct columns. ',
+    #               "Please double check the organization of content in this file."))
+    # }
     
-    # Read attributes_datatablename
-    
-    field_count <- utils::count.fields(file = paste0(path,
-                                              "/",
-                                              fname_table_attributes[i]),
-                                sep = "\t")
-    
-    if (!is.na((sum(field_count) > 0)) & (sum(field_count > 7) > 0)){
-      stop(paste0('Some of the information in "',
-                  fname_table_attributes[i],
-                  '" is not in the correct columns. ',
-                  "Please double check the organization of content in this file."))
-    }
-    
-    df_attributes <- utils::read.table(paste(path,
-                                      "/",
-                                      fname_table_attributes[i],
-                                      sep = ""),
-                                header = T,
-                                sep="\t",
-                                quote="\"",
-                                as.is=TRUE,
-                                comment.char = "",
-                                fill = T,
-                                colClasses = rep("character", 7))
-    df_attributes <- df_attributes[ ,1:7]
-    colnames(df_attributes) <- c("attributeName",
-                                 "attributeDefinition",
-                                 "class",
-                                 "unit",
-                                 "dateTimeFormatString",
-                                 "missingValueCode",
-                                 "missingValueCodeExplanation")
+    df_attributes <- x$template[[fname_table_attributes[i]]]$content
     
     
     

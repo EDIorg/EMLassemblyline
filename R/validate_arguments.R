@@ -27,7 +27,7 @@ validate_arguments <- function(fun.name, fun.args){
   use_i <- sapply(fun.args, function(X) identical(X, quote(expr=)))
   fun.args[use_i] <- list(NULL)
   
-  # If called from define_catvars() -------------------------------------------
+  # Call from define_catvars() ------------------------------------------------
   
   if (fun.name == 'define_catvars'){
     
@@ -63,12 +63,125 @@ validate_arguments <- function(fun.name, fun.args){
       # Validate fields of data.files
       
       EDIutils::validate_fields(path = fun.args$data.path, data.files = data_files)
+    
+    # If using x ...
+      
+    } else if (!is.null(fun.args$x)){
+      
+      # Get attribute file names and data file names
+      
+      files <- names(fun.args$x$template)
+      use_i <- stringr::str_detect(string = files,
+                                   pattern = "^attributes")
+      if (sum(use_i) == 0){
+        stop('There are no attributes.txt files in your dataset working directory. Please fix this.')
+      }
+      
+      attribute_files <- files[use_i]
+      
+      table_names_base <- stringr::str_sub(string = attribute_files,
+                                           start = 12,
+                                           end = nchar(attribute_files)-4)
+      
+      data_files <- names(fun.args$x$data.table)
+      
+      use_i <- stringr::str_detect(string = data_files,
+                                   pattern = stringr::str_c("^", table_names_base, collapse = "|"))
+      
+      table_names <- data_files[use_i]
+      data_files <- table_names
+      
+      # Send warning if data table name is repeated more than once
+      
+      if (length(unique(tools::file_path_sans_ext(data_files))) != length(data_files)){
+        stop('Duplicate data file names exist in this directory. Please remove duplicates, even if they are a different file type.')
+      }
       
     }
 
   }
   
-  # If called from make_eml() -------------------------------------------------
+  # Call from extract_geocoverage() -------------------------------------------
+  
+  if (fun.name == 'extract_geocoverage'){
+      
+    # data.file
+    
+    if (fun.args$data.file != 'deprecated'){
+      stop('Input argument "data.file" has been deprecated. Use "data.table" instead.')
+    }
+    
+    # data.table
+    
+    if (is.null(fun.args$data.table)){
+      stop('Input argument "data.table" is missing! Specify the data file containing the geographic coordinates.')
+    }
+    
+    # lat.col
+    
+    if (is.null(fun.args$lat.col)){
+      stop('Input argument "lat.col" is missing! Specify latitude column name.')
+    }
+    
+    # lon.col
+    
+    if (is.null(fun.args$lon.col)){
+      stop('Input argument "lon.col" is missing! Specify longitude column name.')
+    }
+    
+    # site.col
+    
+    if (is.null(fun.args$site.col)){
+      stop('Input argument "site.col" is missing! Specify site column name.')
+    }
+
+  }
+  
+  # Call from import_templates() ----------------------------------------------
+  
+  if (fun.name == 'import_templates'){
+    
+    # data.files
+    
+    if (fun.args$data.files != 'deprecated'){
+      stop('Input argument "data.files" has been deprecated. Use "data.table" instead.')
+    }
+    
+    # license
+    
+    if (is.null(fun.args$license)){
+      stop('Input argument "license" is missing')
+    }
+    
+    license.low <- tolower(fun.args$license)
+    
+    if (!stringr::str_detect(license.low, "^cc0$|^ccby$")){
+      stop('Invalid value entered for the "license" argument. Please choose "CC0" or "CCBY".')
+    }
+    
+    # data.table
+    
+    if (!is.null(fun.args$data.table)){
+      
+      # Validate table names
+      
+      data_files <- EDIutils::validate_file_names(
+        path = fun.args$data.path, 
+        data.files = fun.args$data.table
+      )
+      
+      # Validate table fields
+      
+      EDIutils::validate_fields(
+        path = fun.args$data.path, 
+        data.files = data_files
+      )
+      
+    }
+    
+  }
+  
+  # Call from make_eml() ------------------------------------------------------
   
   if (fun.name == 'make_eml'){
     
@@ -238,7 +351,7 @@ validate_arguments <- function(fun.name, fun.args){
 
   }
   
-  # If called from make_arguments() -----------------------------------------------
+  # Call from make_arguments() ------------------------------------------------
   
   if (fun.name == 'make_arguments'){
     

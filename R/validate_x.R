@@ -25,13 +25,7 @@ validate_x <- function(fun.name, fun.args){
   
   # If called from make_eml() -------------------------------------------------
   
-  if (fun.name == 'make_eml'){
-    
-    x <- fun.args$x
-
-    browser()
-    
-  }
+  
   
   
 }

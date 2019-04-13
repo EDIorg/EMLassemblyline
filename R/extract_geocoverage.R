@@ -35,7 +35,7 @@
 #'     specified by `lat.col` and `lon.col`.
 #' @param x
 #'     (named list) Alternative input/output to `EMLassemblyline` functions. 
-#'     Use `read_files()` to create `x`.
+#'     Use `make_arguments()` to create `x`.
 #' @param write.file
 #'     (logical) Write `geographic_coverage.txt` to `path`.
 #' @param data.file
@@ -63,59 +63,33 @@ extract_geocoverage <- function(path, data.path = path, data.table, lat.col,
   
   message('Creating geographic coverage template.')
   
-  # Validate arguments and import data ------------------------------------------
+  # Validate arguments --------------------------------------------------------
+  
+  # Validate path usage before passing arguments to validate_arguments()
+  # When not using x, inputs are expected from path and data.path. 
+  # When using x, only data.path is used. Ignored are path and write.file.
+  
+  if (is.null(x) & missing(path)){
+    stop('Input argument "path" is missing.')
+  } else if (!is.null(x) & missing(path)){
+    path <- NULL
+    if (missing(data.path)){
+      stop('Input argument "data.path" is missing.')
+    }
+  }
+  
+  # Pass remaining arguments to validate_arguments().
+  
+  validate_arguments(
+    fun.name = 'extract_geocoverage',
+    fun.args = as.list(environment())
+  )
+  
+  # Read data -----------------------------------------------------------------
   
   # If not using x ...
   
   if (is.null(x)){
-    
-    # path
-    
-    if (missing(path)){
-      
-      stop('Input argument "path" is missing! Specify the path to your dataset working directory.')
-      
-    }
-    
-    # data.file
-    
-    if (data.file != 'deprecated'){
-      
-      stop('Input argument "data.file" has been deprecated. Use "data.table" instead.')
-      
-    }
-    
-    # data.table
-    
-    if (missing(data.table)){
-      
-      stop('Input argument "data.table" is missing! Specify the data file containing the geographic coordinates.')
-      
-    }
-    
-    # lat.col
-    
-    if (missing(lat.col)){
-      
-      stop('Input argument "lat.col" is missing! Specify latitude column name.')
-      
-    }
-    
-    # lon.col
-    
-    if (missing(lon.col)){
-      
-      stop('Input argument "lon.col" is missing! Specify longitude column name.')
-      
-    }
-    
-    # site.col
-    
-    if (missing(site.col)){
-      
-      stop('Input argument "site.col" is missing! Specify site column name.')
-      
-    }
     
     # Validate file name
     
@@ -133,11 +107,13 @@ extract_geocoverage <- function(path, data.path = path, data.table, lat.col,
     
     # Read data table
     
-    x <- read_files(
+    x <- make_arguments(
       path = path,
       data.path = data.path,
       data.table = data_file
     )
+    
+    x <- x$x
     
     data_read_2_x <- NA_character_
     
@@ -324,8 +300,7 @@ extract_geocoverage <- function(path, data.path = path, data.table, lat.col,
         message('Adding geographic_coverage.txt to x.')
         
         missing_template <- list(
-          content = geocoverage_out,
-          path = path
+          content = geocoverage_out
         )
         
         missing_template <- list(

@@ -814,7 +814,7 @@ make_arguments <- function(
     
     # For all data tables ...
     
-    for (i in 1:length(output$data.table)){
+    for (i in 1:length(output$x$data.table)){
       
       # If delimiter is undefined ...
       
@@ -822,15 +822,15 @@ make_arguments <- function(
         
         delim_guess <- EDIutils::detect_delimeter(
           path = data.path, 
-          data.files = names(output$data.table[i]), 
+          data.files = names(output$x$data.table[i]), 
           os = EDIutils::detect_os()
         )
         
-        output$data.table[[i]]$content <- utils::read.table(
+        output$x$data.table[[i]]$content <- utils::read.table(
           file = paste0(
             data.path,
             '/',
-            names(output$data.table[i])
+            names(output$x$data.table[i])
           ),
           header = T,
           sep = delim_guess,
@@ -843,11 +843,11 @@ make_arguments <- function(
         
       } else {
         
-        output$data.table[[i]]$content <- utils::read.table(
+        output$x$data.table[[i]]$content <- utils::read.table(
           file = paste0(
             data.path,
             '/',
-            names(output$data.table[i])
+            names(output$x$data.table[i])
           ),
           header = T,
           sep = sep,
@@ -870,9 +870,9 @@ make_arguments <- function(
     
     # For all other entities ...
     
-    for (i in 1:length(output$other.entity)){
+    for (i in 1:length(output$x$other.entity)){
       
-      output$other.entity[[i]]$content <- NA
+      output$x$other.entity[[i]]$content <- NA
       
     }
     

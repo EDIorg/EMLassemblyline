@@ -15,7 +15,7 @@
 #'     (character) Path to where the data files are stored.
 #' @param x
 #'     (named list) Alternative input/output to `EMLassemblyline` functions. 
-#'     Use `read_files()` to create `x`.
+#'     Use `make_arguments()` to create `x`.
 #' @param write.file
 #'     (logical) Write `catvars` file to `path`.
 #'
@@ -87,11 +87,13 @@ define_catvars <- function(path, data.path = path, x = NULL,
 
     # Read templates and data.table into list
     
-    x <- read_files(
+    x <- make_arguments(
       path = path,
       data.path = data.path,
       data.table = data_files
     )
+    
+    x <- x$x
     
     data_read_2_x <- TRUE
     
@@ -233,8 +235,7 @@ define_catvars <- function(path, data.path = path, x = NULL,
             )
             
             missing_template <- list(
-              content = catvars,
-              path = NA_character_
+              content = catvars
             )
             
             missing_template <- list(
