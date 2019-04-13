@@ -69,7 +69,7 @@
 
 import_templates <- function(path, data.path = path, license, 
                              data.table = NULL, x = NULL, write.file = TRUE,
-                             data.files = 'deprecated'){
+                             data.files){
   
   message('Importing metadata templates')
 
@@ -94,6 +94,18 @@ import_templates <- function(path, data.path = path, license,
     fun.name = 'import_templates',
     fun.args = as.list(environment())
   )
+  
+  # Handle deprecated arguments
+  
+  if (!missing(data.files)){
+    
+    warning(
+      'Argument "data.files" is deprecated; please use "data.table" instead.',
+      call. = FALSE)
+    
+    data.table <- data.files
+    
+  }
   
   # Read metadata templates and data ------------------------------------------
   

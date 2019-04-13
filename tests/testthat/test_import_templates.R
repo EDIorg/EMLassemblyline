@@ -230,6 +230,29 @@ testthat::test_that('Test usage with file inputs', {
       write.file = FALSE
     )
   )
+  
+  # Deprecated argument results in warning
+  
+  expect_warning(
+    suppressMessages(
+      import_templates(
+        path = system.file(
+          '/examples',
+          package = 'EMLassemblyline'
+        ),
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        data.files = c(
+          'decomp.csv',
+          'nitrogen.csv'
+        ),
+        license = 'CC0',
+        write.file = FALSE
+      )
+    )
+  )
 
   # Attempt to import templates when they already exist results in messages
   
@@ -485,6 +508,26 @@ testthat::test_that('x inputs = data tables', {
     )
   )
   
+  # Deprecated argument results in warning
+  
+  expect_warning(
+    suppressMessages(
+      import_templates(
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        data.files = c(
+          'decomp.csv',
+          'nitrogen.csv'
+        ),
+        x = x,
+        license = 'CC0',
+        write.file = FALSE
+      )
+    )
+  )
+  
   # Valid data path and data tables result in addition of attributes templates
   # with expected names, class, column names, and nrows > 1
   
@@ -675,6 +718,26 @@ testthat::test_that('x inputs = data tables and templates', {
       x = x,
       license = 'CC0',
       write.file = FALSE
+    )
+  )
+  
+  # Deprecated argument results in warning
+  
+  expect_warning(
+    suppressMessages(
+      import_templates(
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        data.files = c(
+          'decomp.csv',
+          'nitrogen.csv'
+        ),
+        x = x,
+        license = 'CC0',
+        write.file = FALSE
+      )
     )
   )
   

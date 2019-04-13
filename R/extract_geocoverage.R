@@ -14,8 +14,7 @@
 #'       lon.col, 
 #'       site.col, 
 #'       x = NULL, 
-#'       write.file = TRUE, 
-#'       data.file = 'deprecated'
+#'       write.file = TRUE
 #'     )
 #'
 #' @param path 
@@ -38,8 +37,6 @@
 #'     Use `make_arguments()` to create `x`.
 #' @param write.file
 #'     (logical) Write `geographic_coverage.txt` to `path`.
-#' @param data.file
-#'     NOTE: `data.file` has been deprecated. Use `data.table` instead.
 #'
 #' @return 
 #'     \itemize{
@@ -59,7 +56,7 @@
 
 extract_geocoverage <- function(path, data.path = path, data.table, lat.col, 
                                 lon.col, site.col, x = NULL, write.file = TRUE, 
-                                data.file = 'deprecated'){
+                                data.file){
   
   message('Creating geographic coverage template.')
   
@@ -73,9 +70,7 @@ extract_geocoverage <- function(path, data.path = path, data.table, lat.col,
     stop('Input argument "path" is missing.')
   } else if (!is.null(x) & missing(path)){
     path <- NULL
-    if (missing(data.path)){
-      stop('Input argument "data.path" is missing.')
-    }
+    data.path <- NULL
   }
   
   # Pass remaining arguments to validate_arguments().
@@ -85,6 +80,18 @@ extract_geocoverage <- function(path, data.path = path, data.table, lat.col,
     fun.args = as.list(environment())
   )
   
+  # Handle deprecated arguments
+  
+  if (!missing(data.file)){
+    
+    warning(
+      'Argument "data.file" is deprecated; please use "data.table" instead.',
+      call. = FALSE)
+
+    data.table <- data.file
+    
+  }
+
   # Read data -----------------------------------------------------------------
   
   # If not using x ...
@@ -116,74 +123,22 @@ extract_geocoverage <- function(path, data.path = path, data.table, lat.col,
     x <- x$x
     
     data_read_2_x <- NA_character_
-    
-  }
-  
-  # Validate arguments and import data from x -----------------------------------
-  
-  # If using x ...
-  
-  if (!is.null(x)){
+
+  # If using x ...  
+        
+  } else if (!is.null(x)){
     
     # path
     
     if (missing(path)){
       
       path <- NA_character_
-
-    }
-    
-    # data.file
-    
-    if (data.file != 'deprecated'){
-      
-      stop('Input argument "data.file" has been deprecated. Use "data.table" instead.')
       
     }
     
     # data.table
     
-    if (missing(data.table)){
-      
-      stop('Input argument "data.table" is missing.')
-      
-    } else {
-      
-      if (!any(data.table %in% names(x$data.table))){
-        
-        stop('Input argument "x" does not contain "data.table".')
-        
-      } else {
-        
-        data_file <- data.table
-        
-      }
-
-    }
-    
-    # lat.col
-    
-    if (missing(lat.col)){
-      
-      stop('Input argument "lat.col" is missing! Specify latitude column name.')
-      
-    }
-    
-    # lon.col
-    
-    if (missing(lon.col)){
-      
-      stop('Input argument "lon.col" is missing! Specify longitude column name.')
-      
-    }
-    
-    # site.col
-    
-    if (missing(site.col)){
-      
-      stop('Input argument "site.col" is missing! Specify site column name.')
-      
-    }
+    data_file <- data.table
     
     # write.file
     
@@ -288,7 +243,7 @@ extract_geocoverage <- function(path, data.path = path, data.table, lat.col,
         )
       )
       
-    } else if (!is.null(x)){
+    } else if (!exists('data_read_2_x')){
       
       value <- stringr::str_detect(
         names(x$template),

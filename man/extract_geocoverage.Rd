@@ -12,8 +12,7 @@ extract_geocoverage(
       lon.col, 
       site.col, 
       x = NULL, 
-      write.file = TRUE, 
-      data.file = 'deprecated'
+      write.file = TRUE
     )
 }
 \arguments{
@@ -36,8 +35,6 @@ specified by `lat.col` and `lon.col`.}
 Use `make_arguments()` to create `x`.}
 
 \item{write.file}{(logical) Write `geographic_coverage.txt` to `path`.}
-
-\item{data.file}{NOTE: `data.file` has been deprecated. Use `data.table` instead.}
 }
 \value{
 \itemize{

@@ -25,14 +25,7 @@ make_eml(
       package.id = NULL,
       write.file = TRUE,
       return.obj = FALSE,
-      x = NULL,
-      affiliation = 'deprecated',
-      data.files = 'deprecated',
-      data.files.description = 'deprecated',
-      data.files.quote.character = 'deprecated',
-      data.files.url = 'deprecated',
-      zip.dir = 'deprecated',
-      zip.dir.description = 'deprecated'
+      x = NULL
     )
 }
 \arguments{
@@ -115,20 +108,6 @@ missing package ID defaults to `edi.101.1`.}
 Use `make_arguments()` to create `x`.}
 
 \item{affiliation}{This argument has been deprecated. Use `user.domain` instead.}
-
-\item{data.files}{This argument has been deprecated. Use `data.table` instead.}
-
-\item{data.files.description}{This argument has been deprecated. Use `data.table.description` instead.}
-
-\item{data.files.quote.character}{This argument has been deprecated. Use `data.table.quote.character` 
-instead.}
-
-\item{data.files.url}{This argument has been deprecated. Use `data.url` instead.}
-
-\item{zip.dir}{This argument has been deprecated. Use `other.entity` instead.}
-
-\item{zip.dir.description}{This argument has been deprecated. Use `other.entity.description` 
-instead.}
 }
 \value{
 \itemize{

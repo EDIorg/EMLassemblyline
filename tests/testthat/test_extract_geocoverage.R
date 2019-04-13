@@ -189,6 +189,46 @@ testthat::test_that('Test usage with file inputs', {
       )
     )
   )
+  
+  # Valid arguments result in messages
+  
+  expect_message(
+    extract_geocoverage(
+      path = system.file(
+        '/examples',
+        package = 'EMLassemblyline'
+      ), 
+      data.path = system.file(
+        '/examples/data',
+        package = 'EMLassemblyline'
+      ), 
+      data.table = 'nitrogen.csv', 
+      site.col = 'site_name', 
+      lat.col = 'site_lat',
+      lon.col = 'site_lon',
+      write.file = FALSE
+    )
+  )
+  
+  # Deprecated arguments result in warning
+  
+  expect_warning(
+    extract_geocoverage(
+      path = system.file(
+        '/examples',
+        package = 'EMLassemblyline'
+      ), 
+      data.path = system.file(
+        '/examples/data',
+        package = 'EMLassemblyline'
+      ), 
+      data.file = 'nitrogen.csv', 
+      site.col = 'site_name', 
+      lat.col = 'site_lat',
+      lon.col = 'site_lon',
+      write.file = FALSE
+    )
+  )
 
 })
 
@@ -222,8 +262,6 @@ testthat::test_that('Test usage with x inputs', {
 
   # All arguments are supported:
   # - /x/templates/geographic_coverage.txt is created with expected content
-  # - path is added to /x/templates/geographic_coverage.txt/path
-  # - data.path is not added to x
   
   expect_message(
     extract_geocoverage(
@@ -298,16 +336,14 @@ testthat::test_that('Test usage with x inputs', {
   
   # Missing data.path has no effect
   
-  expect_error(
-    suppressMessages(
-      extract_geocoverage(
-        data.table = 'nitrogen.csv', 
-        site.col = 'site_name',
-        lat.col = 'site_lat', 
-        lon.col = 'site_lon',
-        x = x_no_coverage,
-        write.file = FALSE
-      )
+  expect_message(
+    extract_geocoverage(
+      data.table = 'nitrogen.csv', 
+      site.col = 'site_name',
+      lat.col = 'site_lat', 
+      lon.col = 'site_lon',
+      x = x_no_coverage,
+      write.file = FALSE
     )
   )
   
@@ -427,4 +463,60 @@ testthat::test_that('Test usage with x inputs', {
     )
   )
   
+  # Deprecated arguments result in warning
+  
+  expect_warning(
+    suppressMessages(
+      extract_geocoverage(
+        data.file = 'nitrogen.csv', 
+        site.col = 'site_name', 
+        lat.col = 'site_lat',
+        lon.col = 'site_lon',
+        x = x_no_coverage,
+        write.file = FALSE
+      )
+    )
+  )
+  
+  # Deprecated arguments result in valid outputs
+  
+  output <- suppressWarnings(
+    suppressMessages(
+      extract_geocoverage(
+        data.file = 'nitrogen.csv', 
+        site.col = 'site_name', 
+        lat.col = 'site_lat',
+        lon.col = 'site_lon',
+        x = x_no_coverage,
+        write.file = FALSE
+      )
+    )
+  )
+  
+  expect_equal(
+    'geographic_coverage.txt' %in% names(output$template),
+    TRUE
+  )
+  
+  expect_equal(
+    class(
+      output$template$geographic_coverage.txt$content
+    ),
+    'data.frame'
+  )
+  
+  expect_equal(
+    all(
+      colnames(output$template$geographic_coverage.txt$content) %in%
+        c('latitude', 'longitude', 'site')
+    ),
+    TRUE
+  )
+  
+  expect_equal(
+    nrow(output$template$geographic_coverage.txt$content) > 1,
+    TRUE
+  )
+
 })
+

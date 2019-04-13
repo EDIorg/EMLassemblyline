@@ -104,13 +104,13 @@ validate_arguments <- function(fun.name, fun.args){
   # Call from extract_geocoverage() -------------------------------------------
   
   if (fun.name == 'extract_geocoverage'){
-      
-    # data.file
     
-    if (fun.args$data.file != 'deprecated'){
-      stop('Input argument "data.file" has been deprecated. Use "data.table" instead.')
+    # Handle deprecated arguments
+    
+    if (!is.null(fun.args$data.file)){
+      fun.args$data.table <- fun.args$data.file
     }
-    
+
     # data.table
     
     if (is.null(fun.args$data.table)){
@@ -141,12 +141,12 @@ validate_arguments <- function(fun.name, fun.args){
   
   if (fun.name == 'import_templates'){
     
-    # data.files
+    # Handle deprecated arguments
     
-    if (fun.args$data.files != 'deprecated'){
-      stop('Input argument "data.files" has been deprecated. Use "data.table" instead.')
+    if (!is.null(fun.args$data.files)){
+      fun.args$data.table <- fun.args$data.files
     }
-    
+
     # license
     
     if (is.null(fun.args$license)){
@@ -185,29 +185,50 @@ validate_arguments <- function(fun.name, fun.args){
   
   if (fun.name == 'make_eml'){
     
+    # Handle deprecated arguments
+    
+    if (!is.null(fun.args$affiliation)){
+      fun.args$user.domain <- fun.args$affiliation
+    }
+    
+    if (!is.null(fun.args$data.files)){
+      fun.args$data.table <- fun.args$data.files
+    }
+    
+    if (!is.null(fun.args$data.files.description)){
+      fun.args$data.table.description <- fun.args$data.files.description
+    }
+    
+    if (!is.null(fun.args$data.files.quote.character)){
+      fun.args$data.table.quote.character <- fun.args$data.files.quote.character
+    }
+    
+    if (!is.null(fun.args$data.files.url)){
+      fun.args$data.url <- fun.args$data.files.url
+    }
+    
+    if (!is.null(fun.args$zip.dir)){
+      fun.args$other.entity <- fun.args$zip.dir
+    }
+    
+    if (!is.null(fun.args$zip.dir.description)){
+      fun.args$other.entity.description <- fun.args$zip.dir.description
+    }
+    
     # dataset.title
     
     if (is.null(fun.args$dataset.title)){
       stop('Input argument "dataset.title" is missing.')
     }
-    
-    # data.files
-    
-    if (fun.args$data.files != 'deprecated'){
-      stop('Input argument "data.files" has been deprecated. Use "data.table" instead.')
-    }
-    
-    # data.files.description
+
+    # data.table.description
     
     if (!is.null(fun.args$data.table)){
-      if (fun.args$data.files.description != 'deprecated'){
-        stop('Input argument "data.files.description" has been deprecated. Use "data.table.description" instead.')
-      }
       if (is.null(fun.args$data.table.description)){
         stop('Input argument "data.table.description" is missing.')
       }
     }
-    
+
     # temporal.coverage
     
     if (is.null(fun.args$temporal.coverage)){
@@ -237,13 +258,7 @@ validate_arguments <- function(fun.name, fun.args){
     if (is.null(fun.args$maintenance.description)){
       stop('Input argument "maintenance.description" is missing. Indicate whether data collection is "ongoing" or "completed" for your dataset.')
     }
-    
-    # affiliation
-    
-    if (fun.args$affiliation != 'deprecated'){
-      stop('Input argument "affiliaton" has been deprecated. Use "user.domain" instead.')
-    }
-    
+
     # user.id and user.domain
     
     if (!is.null(fun.args$user.id) & is.null(fun.args$user.domain)){
@@ -261,12 +276,6 @@ validate_arguments <- function(fun.name, fun.args){
       if (sum(sum(fun.args$user.domain == 'LTER'), sum(fun.args$user.domain == 'EDI')) != length(fun.args$user.domain)){
         warning('Input argument "user.domain" is not "EDI" or "LTER". If not creating a data package for EDI, then ignore this message. A default value "someuserdomain" will be used.')
       }
-    }
-    
-    # data.files.url
-    
-    if (fun.args$data.files.url != 'deprecated'){
-      stop('Input argument "data.files.url" has been deprecated. Use "data.url" instead.')
     }
     
     # path, data.path, and eml.path
@@ -308,9 +317,6 @@ validate_arguments <- function(fun.name, fun.args){
     # data.table.quote.character
     
     if (!is.null(fun.args$data.table)){
-      if (fun.args$data.files.quote.character != 'deprecated'){
-        stop('Input argument "data.files.quote.character" has been deprecated. Use "data.table.quote.character" instead.')
-      }
       if (!is.null(fun.args$data.table.quote.character)){
         if (length(fun.args$data.table.quote.character) != length(fun.args$data.table)){
           stop('The number of quote characters listed in the argument "data.table.quote.character" does not match the number of files listed in the argument "data.table". These must match.')
@@ -319,13 +325,6 @@ validate_arguments <- function(fun.name, fun.args){
     }
     
     # other.entity and other.entity.description
-    
-    if (fun.args$zip.dir != 'deprecated'){
-      stop('The argument "zip.dir" has been deprecated. Use "other.entity" instead.')
-    }
-    if (fun.args$zip.dir.description != 'deprecated'){
-      stop('The argument "zip.dir.description" has been deprecated. Use "other.entity.description" instead.')
-    }
     
     if ((!is.null(fun.args$other.entity)) & (is.null(fun.args$other.entity.description))){
       stop('The argument "other.entity.description" is missing and "other.entity" is present. Add a description for your zip directory.')

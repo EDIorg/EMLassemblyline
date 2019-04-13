@@ -26,14 +26,7 @@
 #'       package.id = NULL,
 #'       write.file = TRUE,
 #'       return.obj = FALSE,
-#'       x = NULL,
-#'       affiliation = 'deprecated',
-#'       data.files = 'deprecated',
-#'       data.files.description = 'deprecated',
-#'       data.files.quote.character = 'deprecated',
-#'       data.files.url = 'deprecated',
-#'       zip.dir = 'deprecated',
-#'       zip.dir.description = 'deprecated'
+#'       x = NULL
 #'     )
 #'     
 #' @param path 
@@ -116,20 +109,6 @@
 #'     Use `make_arguments()` to create `x`.
 #' @param affiliation
 #'     This argument has been deprecated. Use `user.domain` instead.
-#' @param data.files
-#'     This argument has been deprecated. Use `data.table` instead.
-#' @param data.files.description
-#'     This argument has been deprecated. Use `data.table.description` instead.
-#' @param data.files.quote.character
-#'     This argument has been deprecated. Use `data.table.quote.character` 
-#'     instead.
-#' @param data.files.url
-#'     This argument has been deprecated. Use `data.url` instead.
-#' @param zip.dir
-#'     This argument has been deprecated. Use `other.entity` instead.
-#' @param zip.dir.description
-#'     This argument has been deprecated. Use `other.entity.description` 
-#'     instead.
 #'     
 #' @return 
 #'     \itemize{
@@ -171,13 +150,13 @@ make_eml <- function(
   write.file = TRUE,
   return.obj = FALSE,
   x = NULL,
-  affiliation = 'deprecated',
-  data.files = 'deprecated',
-  data.files.description = 'deprecated',
-  data.files.quote.character = 'deprecated',
-  data.files.url = 'deprecated',
-  zip.dir = 'deprecated',
-  zip.dir.description = 'deprecated'
+  affiliation,
+  data.files,
+  data.files.description,
+  data.files.quote.character,
+  data.files.url,
+  zip.dir,
+  zip.dir.description
   ){
 
   # Validate arguments --------------------------------------------------------
@@ -207,6 +186,78 @@ make_eml <- function(
     fun.name = 'make_eml',
     fun.args = as.list(environment())
   )
+  
+  # Handle deprecated arguments
+  
+  if (!missing(affiliation)){
+    
+    warning(
+      'Argument "affiliation" is deprecated; please use "user.domain" instead.',
+      call. = FALSE)
+    
+    user.domain <- affiliation
+    
+  }
+  
+  if (!missing(data.files)){
+    
+    warning(
+      'Argument "data.files" is deprecated; please use "data.table" instead.',
+      call. = FALSE)
+    
+    data.table <- data.files
+    
+  }
+  
+  if (!missing(data.files.description)){
+    
+    warning(
+      'Argument "data.files.description" is deprecated; please use "data.table.description" instead.',
+      call. = FALSE)
+    
+    data.table.description <- data.files.description
+    
+  }
+  
+  if (!missing(data.files.quote.character)){
+    
+    warning(
+      'Argument "data.files.quote.character" is deprecated; please use "data.table.quote.character" instead.',
+      call. = FALSE)
+    
+    data.table.quote.character <- data.files.quote.character
+    
+  }
+  
+  if (!missing(data.files.url)){
+    
+    warning(
+      'Argument "data.files.url" is deprecated; please use "data.url" instead.',
+      call. = FALSE)
+    
+    data.url <- data.files.url
+    
+  }
+  
+  if (!missing(zip.dir)){
+    
+    warning(
+      'Argument "zip.dir" is deprecated; please use "other.entity" instead.',
+      call. = FALSE)
+    
+    other.entity <- zip.dir
+    
+  }
+  
+  if (!missing(zip.dir.description)){
+    
+    warning(
+      'Argument "zip.dir.description" is deprecated; please use "other.entity.description" instead.',
+      call. = FALSE)
+    
+    other.entity.description <- zip.dir.description
+    
+  }
   
   # Read metadata templates and data ------------------------------------------
   
