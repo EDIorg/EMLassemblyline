@@ -27,7 +27,7 @@ or "CCBY" (\url{https://creativecommons.org/licenses/by/4.0/}).}
 entered as arguments to `make_eml`.}
 
 \item{x}{(named list) Alternative input/output to `EMLassemblyline` functions. 
-Use `read_files()` to create `x`.}
+Use `make_arguments()` to create `x`.}
 
 \item{write.file}{(logical) Write template files to `path`.}
 
@@ -66,10 +66,5 @@ Import template files for storage of core metadata. Some templates are
 Existing templates will not be overwritten by `template_core_metadata`.
 }
 \examples{
-    # Create a directory structure for an example dataset
-    
-    # Copy example data tables to /dataset/data
-    
-    # Import templates to /dataset/metadata_templates
     
 }

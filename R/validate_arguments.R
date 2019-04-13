@@ -387,4 +387,93 @@ validate_arguments <- function(fun.name, fun.args){
     
   }
   
+  # Call from template_core_metadata() ----------------------------------------
+  
+  if (fun.name == 'template_core_metadata'){
+    
+    # data.files
+    
+    if (fun.args$data.files != 'deprecated'){
+      stop('Input argument "data.files" has been deprecated. Use "data.table" instead.')
+    }
+    
+    # license
+    
+    if (is.null(fun.args$license)){
+      stop('Input argument "license" is missing')
+    }
+    
+    license.low <- tolower(fun.args$license)
+    
+    if (!stringr::str_detect(license.low, "^cc0$|^ccby$")){
+      stop('Invalid value entered for the "license" argument. Please choose "CC0" or "CCBY".')
+    }
+    
+    # data.table
+    
+    if (!is.null(fun.args$data.table)){
+      
+      # Validate table names
+      
+      data_files <- EDIutils::validate_file_names(
+        path = fun.args$data.path, 
+        data.files = fun.args$data.table
+      )
+      
+      # Validate table fields
+      
+      EDIutils::validate_fields(
+        path = fun.args$data.path, 
+        data.files = data_files
+      )
+      
+    }
+    
+  }
+  
+  # Call from template_table_attributes() -------------------------------------
+  
+  if (fun.name == 'template_table_attributes'){
+    
+    # data.files
+    
+    if (fun.args$data.files != 'deprecated'){
+      stop('Input argument "data.files" has been deprecated. Use "data.table" instead.')
+    }
+    
+    # license
+    
+    if (is.null(fun.args$license)){
+      stop('Input argument "license" is missing')
+    }
+    
+    license.low <- tolower(fun.args$license)
+    
+    if (!stringr::str_detect(license.low, "^cc0$|^ccby$")){
+      stop('Invalid value entered for the "license" argument. Please choose "CC0" or "CCBY".')
+    }
+    
+    # data.table
+    
+    if (!is.null(fun.args$data.table)){
+      
+      # Validate table names
+      
+      data_files <- EDIutils::validate_file_names(
+        path = fun.args$data.path, 
+        data.files = fun.args$data.table
+      )
+      
+      # Validate table fields
+      
+      EDIutils::validate_fields(
+        path = fun.args$data.path, 
+        data.files = data_files
+      )
+      
+    }
+    
+  }
+  
+  
 }

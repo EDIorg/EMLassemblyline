@@ -31,7 +31,7 @@
 #'     entered as arguments to `make_eml`.
 #' @param x
 #'     (named list) Alternative input/output to `EMLassemblyline` functions. 
-#'     Use `read_files()` to create `x`.
+#'     Use `make_arguments()` to create `x`.
 #' @param write.file
 #'     (logical) Write template files to `path`.
 #' @param data.files
@@ -63,11 +63,6 @@
 #'     Existing templates will not be overwritten by `template_table_attributes`.
 #'
 #' @examples
-#'     # Create a directory structure for an example dataset
-#'     
-#'     # Copy example data tables to /dataset/data
-#'     
-#'     # Import templates to /dataset/metadata_templates
 #'     
 #' @export     
 #'     
@@ -78,115 +73,62 @@ template_table_attributes <- function(path, data.path = path, license,
   
   message('Importing metadata templates')
   
-  # Validate arguments and import data ------------------------------------------
+  # Validate arguments --------------------------------------------------------
   
-  # If not using x ...
+  # Validate path usage before passing arguments to validate_arguments()
+  # When not using x, inputs are expected from path and data.path. When using x, 
+  # only data.path is required.
+  
+  if (is.null(x) & missing(path)){
+    stop('Input argument "path" is missing.')
+  } else if (!is.null(x) & missing(path)){
+    path <- NULL
+    if (missing(data.path)){
+      data.path <- NULL
+    }
+  }
+  
+  # Pass remaining arguments to validate_arguments().
+  
+  validate_arguments(
+    fun.name = 'template_table_attributes',
+    fun.args = as.list(environment())
+  )
+  
+  # Read metadata templates and data ------------------------------------------
+  
+  # If x doesn't exist ...
   
   if (is.null(x)){
     
-    # path
+    # If data tables are absent ...
     
-    if (is.null(path)){
-      stop('Input argument "path" is missing! Specify the path to your dataset working directory.')
-    }
-    
-    # data.files
-    
-    if (data.files != 'deprecated'){
-      stop('Input argument "data.files" has been deprecated. Use "data.table" instead.')
-    }
-    
-    # license
-    
-    if (missing(license)){
-      stop('Input argument "license" is missing!')
-    }
-    
-    license.low <- tolower(license)
-    
-    if (!stringr::str_detect(license.low, "^cc0$|^ccby$")){
-      stop('Invalid value entered for the "license" argument. Please choose "CC0" or "CCBY".')
-    }
-    
-    # data.table
-    
-    if (!is.null(data.table)){
+    if (is.null(data.table)){
       
-      # Validate table names
+      # Use NULL values
       
-      data_files <- EDIutils::validate_file_names(
-        data.path, 
-        data.table
-      )
+      x <- make_arguments()
       
-      # Validate table fields
+      x <- x$x
       
-      EDIutils::validate_fields(
-        data.path, 
-        data.files = data_files
-      )
+      # If data tables are present ...
       
-      # Create x
+    } else if (!is.null(data.table)){
       
-      x <- read_files(
-        path = path,
+      # Read data tables
+      
+      x <- make_arguments(
         data.path = data.path,
         data.table = data.table
       )
       
-      data_read_2_x <- TRUE
+      x <- x$x
       
     }
     
-  }
-  
-  # Validate arguments and import data from x ---------------------------------
-  
-  # If using x ...
-  
-  if (!is.null(x)){
+    # Indicate files have been read
     
-    # path
-    
-    if (missing(path)){
-      path <- NA_character_
-    }
-    
-    # data.files
-    
-    if (data.files != 'deprecated'){
-      stop('Input argument "data.files" has been deprecated. Use "data.table" instead.')
-    }
-    
-    # license
-    
-    if (missing(license)){
-      stop('Input argument "license" is missing!')
-    }
-    
-    license.low <- tolower(license)
-    
-    if (!stringr::str_detect(license.low, "^cc0$|^ccby$")){
-      stop('Invalid value entered for the "license" argument. Please choose "CC0" or "CCBY".')
-    }
-    
-    # Get data.path and data.table
-    
-    if (!is.null(x$data.table)){
-      
-      data.path <- x$data.table[[1]]$path
-      
-      data.table <- names(x$data.table)
-      
-    }
-    
-    # write.file
-    
-    if (isTRUE(write.file)){
-      
-      stop('Input argument "write.file" is not supported when using "x".')
-      
-    }
+    data_read_2_x <- TRUE
     
   }
   
@@ -209,7 +151,7 @@ template_table_attributes <- function(path, data.path = path, license,
       )
     )
     
-    # Send status
+    # Send message
     
     if (isTRUE(value)){
       message("Importing abstract.txt.")
@@ -219,15 +161,11 @@ template_table_attributes <- function(path, data.path = path, license,
     
     # If adding to x ...
     
-  } else if (!is.null(x) & !exists('data_read_2_x')){
-    
-    # If template doesn't exist ...
+  } else if (!exists('data_read_2_x')){
     
     if (any(is.na(x$template$abstract.txt$content))){
       
-      # Add to x
-      
-      message("Importing abstract.txt.")
+      # Add to content
       
       x$template$abstract.txt$content <- EML::set_TextType(
         file = system.file(
@@ -236,17 +174,9 @@ template_table_attributes <- function(path, data.path = path, license,
         )
       )
       
-      # If path is not NULL ...
+      # Send message
       
-      if (!is.na(path)){
-        
-        # Add path
-        
-        x$template$abstract.txt$path <- path
-        
-      }
-      
-      # If template does exist ...
+      message("Importing abstract.txt.")
       
     } else {
       
@@ -275,7 +205,7 @@ template_table_attributes <- function(path, data.path = path, license,
       )
     )
     
-    # Send status
+    # Send message
     
     if (isTRUE(value)){
       message("Importing additional_info.txt.")
@@ -285,15 +215,11 @@ template_table_attributes <- function(path, data.path = path, license,
     
     # If adding to x ...
     
-  } else if (!is.null(x) & !exists('data_read_2_x')){
-    
-    # If template doesn't exist ...
+  } else if (!exists('data_read_2_x')){
     
     if (any(is.na(x$template$additional_info.txt$content))){
       
-      # Add template to x
-      
-      message("Importing additional_info.txt")
+      # Add to content
       
       x$template$additional_info.txt$content <- EML::set_TextType(
         file = system.file(
@@ -302,17 +228,9 @@ template_table_attributes <- function(path, data.path = path, license,
         )
       )
       
-      # If path is not NULL ...
+      # Send message
       
-      if (!is.na(path)){
-        
-        # Add path to x
-        
-        x$template$additional_info.txt$path <- path
-        
-      }
-      
-      # If template exist ...
+      message("Importing additional_info.txt")
       
     } else {
       
@@ -341,7 +259,7 @@ template_table_attributes <- function(path, data.path = path, license,
       )
     )
     
-    # Send status
+    # Send message
     
     if (isTRUE(value)){
       message("Importing bounding_boxes.txt.")
@@ -351,15 +269,11 @@ template_table_attributes <- function(path, data.path = path, license,
     
     # If adding to x ...
     
-  } else if (!is.null(x) & !exists('data_read_2_x')){
-    
-    # If template doesn't exist ...
+  } else if (!exists('data_read_2_x')){
     
     if (any(is.na(x$template$bounding_boxes.txt$content))){
       
-      # Add template to x
-      
-      message("Importing bounding_boxes.txt.")
+      # Add to content
       
       x$template$bounding_boxes.txt$content <- utils::read.table(
         file = system.file(
@@ -371,17 +285,9 @@ template_table_attributes <- function(path, data.path = path, license,
         as.is = T
       )
       
-      # If path is not NULL ...
+      # Send message
       
-      if (!is.na(path)){
-        
-        # Add path to x
-        
-        x$template$bounding_boxes.txt$path <- path
-        
-      }
-      
-      # If template exists ...
+      message("Importing bounding_boxes.txt.")
       
     } else {
       
@@ -410,7 +316,7 @@ template_table_attributes <- function(path, data.path = path, license,
       )
     )
     
-    # Send status
+    # Send message
     
     if (isTRUE(value)){
       message("Importing custom_units.txt.")
@@ -420,15 +326,11 @@ template_table_attributes <- function(path, data.path = path, license,
     
     # If adding to x ...
     
-  } else if (!is.null(x) & !exists('data_read_2_x')){
-    
-    # If template doesn't exist ...
+  } else if (!exists('data_read_2_x')){
     
     if (any(is.na(x$template$custom_units.txt$content))){
       
-      # Add template to x
-      
-      message("Importing custom_units.txt.")
+      # Add to content
       
       x$template$custom_units.txt$content <- utils::read.table(
         file = system.file(
@@ -440,17 +342,9 @@ template_table_attributes <- function(path, data.path = path, license,
         as.is = T
       )
       
-      # If path is not NULL ...
+      # Send message
       
-      if (!is.na(path)){
-        
-        # Add path to x
-        
-        x$template$custom_units.txt$path <- path
-        
-      }
-      
-      # If template exists ...
+      message("Importing custom_units.txt.")
       
     } else {
       
@@ -464,7 +358,7 @@ template_table_attributes <- function(path, data.path = path, license,
   
   # If license is CC0 ...
   
-  if (license.low == "cc0"){
+  if (tolower(license) == "cc0"){
     
     # If writing to file ...
     
@@ -483,7 +377,7 @@ template_table_attributes <- function(path, data.path = path, license,
         )
       )
       
-      # Send status
+      # Send message
       
       if (isTRUE(value)){
         message("Importing intellectual_rights.txt.")
@@ -493,15 +387,11 @@ template_table_attributes <- function(path, data.path = path, license,
       
       # If adding x ...
       
-    } else if (!is.null(x) & !exists('data_read_2_x')){
-      
-      # If template doesn't exist ...
+    } else if (!exists('data_read_2_x')){
       
       if (any(is.na(x$template$intellectual_rights.txt$content))){
         
-        # Add template to x
-        
-        message("Importing intellectual_rights.txt.")
+        # Add to content
         
         x$template$intellectual_rights.txt$content <- EML::set_TextType(
           file = system.file(
@@ -510,17 +400,9 @@ template_table_attributes <- function(path, data.path = path, license,
           )
         )
         
-        # If path is not NULL ...
+        # Send message
         
-        if (!is.na(path)){
-          
-          # Add path to x
-          
-          x$template$intellectual_rights.txt$path <- path
-          
-        }
-        
-        # If template exists ...
+        message("Importing intellectual_rights.txt.")
         
       } else {
         
@@ -530,9 +412,9 @@ template_table_attributes <- function(path, data.path = path, license,
       
     }
     
-    # If license is CCBY
+    # If license is CCBY ...
     
-  } else if (license.low == "ccby"){
+  } else if (tolower(license) == "ccby"){
     
     # If writing to file ...
     
@@ -551,7 +433,7 @@ template_table_attributes <- function(path, data.path = path, license,
         )
       )
       
-      # Send status
+      # Send message
       
       if (isTRUE(value)){
         message("Importing intellectual_rights.txt.")
@@ -561,15 +443,11 @@ template_table_attributes <- function(path, data.path = path, license,
       
       # If adding to x ...
       
-    } else if (!is.null(x) & !exists('data_read_2_x')){
-      
-      # If template doesn't exist ...
+    } else if (!exists('data_read_2_x')){
       
       if (any(is.na(x$template$intellectual_rights.txt$content))){
         
-        # Add template to x
-        
-        message("Importing intellectual_rights.txt.")
+        # Add to content
         
         x$template$intellectual_rights.txt$content <- EML::set_TextType(
           file = system.file(
@@ -578,17 +456,9 @@ template_table_attributes <- function(path, data.path = path, license,
           )
         )
         
-        # If path is not NULL ...
+        # Send message
         
-        if (!is.na(path)){
-          
-          # Add path to x
-          
-          x$template$intellectual_rights.txt$path <- path
-          
-        }
-        
-        # If template exists ...
+        message("Importing intellectual_rights.txt.")
         
       } else {
         
@@ -619,7 +489,7 @@ template_table_attributes <- function(path, data.path = path, license,
       )
     )
     
-    # Send status
+    # Send message
     
     if (isTRUE(value)){
       message("Importing keywords.txt.")
@@ -629,15 +499,11 @@ template_table_attributes <- function(path, data.path = path, license,
     
     # If adding to x ...
     
-  } else if (!is.null(x) & !exists('data_read_2_x')){
-    
-    # If template doesn't exist ...
+  } else if (!exists('data_read_2_x')){
     
     if (any(is.na(x$template$keywords.txt$content))){
       
-      # Add template to x
-      
-      message("Importing keywords.txt.")
+      # Add to content
       
       x$template$keywords.txt$content <- utils::read.table(
         file = system.file(
@@ -649,17 +515,9 @@ template_table_attributes <- function(path, data.path = path, license,
         as.is = T
       )
       
-      # If path is not NULL ...
+      # Send message
       
-      if (!is.na(path)){
-        
-        # Add path to x
-        
-        x$template$keywords.txt$path <- path
-        
-      }
-      
-      # If template exists ...
+      message("Importing keywords.txt.")
       
     } else {
       
@@ -688,7 +546,7 @@ template_table_attributes <- function(path, data.path = path, license,
       )
     )
     
-    # Send status
+    # Send message
     
     if (isTRUE(value)){
       message("Importing methods.txt.")
@@ -698,15 +556,11 @@ template_table_attributes <- function(path, data.path = path, license,
     
     # If adding to x ...
     
-  } else if (!is.null(x) & !exists('data_read_2_x')){
-    
-    # If template doesn't exist ...
+  } else if (!exists('data_read_2_x')){
     
     if (any(is.na(x$template$methods.txt$content))){
       
-      # Add template to x
-      
-      message("Importing methods.txt.")
+      # Add to content
       
       x$template$methods.txt$content <- EML::set_methods(
         methods_file = system.file(
@@ -715,17 +569,9 @@ template_table_attributes <- function(path, data.path = path, license,
         )
       )
       
-      # If path is not NULL ...
+      # Send message
       
-      if (!is.na(path)){
-        
-        # Add path to x
-        
-        x$template$methods.txt$path <- path
-        
-      }
-      
-      # If template exists ...
+      message("Importing methods.txt.")
       
     } else {
       
@@ -754,7 +600,7 @@ template_table_attributes <- function(path, data.path = path, license,
       )
     )
     
-    # Send status
+    # Send message
     
     if (isTRUE(value)){
       message("Importing personnel.txt.")
@@ -764,15 +610,11 @@ template_table_attributes <- function(path, data.path = path, license,
     
     # If adding to x ...
     
-  } else if (!is.null(x) & !exists('data_read_2_x')){
-    
-    # If template doesn't exist ...
+  } else if (!exists('data_read_2_x')){
     
     if (any(is.na(x$template$personnel.txt$content))){
       
-      # Add template to x
-      
-      message("Importing personnel.txt.")
+      # Add to content
       
       x$template$personnel.txt$content <- utils::read.table(
         file = system.file(
@@ -784,17 +626,9 @@ template_table_attributes <- function(path, data.path = path, license,
         as.is = T
       )
       
-      # If path is not NULL ...
+      # Send message
       
-      if (!is.na(path)){
-        
-        # Add path to x
-        
-        x$template$personnel.txt$path <- path
-        
-      }
-      
-      # If template exists ...
+      message("Importing personnel.txt.")
       
     } else {
       
@@ -804,7 +638,7 @@ template_table_attributes <- function(path, data.path = path, license,
     
   }
   
-  # Import attributes templates -----------------------------------------------
+  # Import attributes_*.txt ---------------------------------------------------
   
   if (!is.null(data.table)){
     
@@ -927,7 +761,7 @@ template_table_attributes <- function(path, data.path = path, license,
         attributes[[i]]$dateTimeFormatString[use_i] <- "!Add datetime specifier here!"
       }
       
-      # Write template to file or add template to list x
+      # Write template to file or add template to x$template$attributes_*.txt$content
       
       # If writing to file ...
       
@@ -1004,8 +838,7 @@ template_table_attributes <- function(path, data.path = path, license,
           )
           
           missing_template <- list(
-            content = attributes[[i]],
-            path = NA_character_
+            content = attributes[[i]]
           )
           
           missing_template <- list(
@@ -1022,16 +855,6 @@ template_table_attributes <- function(path, data.path = path, license,
             x$template, 
             missing_template
           )
-          
-          # If path is not NULL ...
-          
-          if (!is.na(path)){
-            
-            # Add path to x
-            
-            x$template[[paste0('attributes_', substr(data.table[i], 1, nchar(data.table[i]) - 4), '.txt')]]$path <- path
-            
-          }
           
         } else {
           
@@ -1053,11 +876,15 @@ template_table_attributes <- function(path, data.path = path, license,
   
   # Return --------------------------------------------------------------------
   
-  if (!exists('data_read_2_x')){
-    return(x)
+  if ((!isTRUE(write.file)) & is.null(x)){
+    message('No templates were written to file (write.file = FALSE).')
   }
   
   message("Done.")
+  
+  if (!exists('data_read_2_x')){
+    return(x)
+  }
   
 }
 

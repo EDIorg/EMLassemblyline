@@ -114,7 +114,6 @@ x_table_docall$temporal.coverage <- temporal.coverage
 x_table_docall$user.domain <- user.domain
 x_table_docall$user.id <- user.id
 x_table_docall$write.file <- FALSE
-x_table_docall$x <- x_table_docall
 
 x_table_other_docall$data.path <- data.path
 x_table_other_docall$data.table <- data.table
@@ -136,7 +135,6 @@ x_table_other_docall$temporal.coverage <- temporal.coverage
 x_table_other_docall$user.domain <- user.domain
 x_table_other_docall$user.id <- user.id
 x_table_other_docall$write.file <- FALSE
-x_table_other_docall$x <- x_table_other_docall
 
 x_other_docall$data.path <- data.path
 x_other_docall$other.entity <- other.entity
@@ -155,7 +153,6 @@ x_other_docall$temporal.coverage <- temporal.coverage
 x_other_docall$user.domain <- user.domain
 x_other_docall$user.id <- user.id
 x_other_docall$write.file <- FALSE
-x_other_docall$x <- x_other_docall
 
 # File paths within R library
 
@@ -1330,11 +1327,11 @@ testthat::test_that('Test usage with x (all templates and 2 data tables)', {
   
   # Arguments supplied to function via x
   
-  use_i <- names(x_table_docall) %in% names(formals(make_eml))
-  
   output <- do.call(
     make_eml, 
-    x_table_docall[use_i]
+    x_table_docall[
+      names(x_table_docall) %in% names(formals(make_eml))
+    ]
   )
   
   expect_equal(
@@ -1410,7 +1407,9 @@ testthat::test_that('Test usage with x (all templates, 2 data tables, and 1 othe
   
   output <- do.call(
     make_eml, 
-    x_table_other_docall
+    x_table_other_docall[
+      names(x_table_other_docall) %in% names(formals(make_eml))
+      ]
   )
   
   expect_equal(
@@ -1455,7 +1454,9 @@ testthat::test_that('Test usage with x (all templates and 1 other entity)', {
   
   output <- do.call(
     make_eml, 
-    x_other_docall
+    x_other_docall[
+      names(x_other_docall) %in% names(formals(make_eml))
+    ]
   )
   
   expect_equal(
