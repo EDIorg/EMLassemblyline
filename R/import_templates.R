@@ -14,8 +14,7 @@
 #'       license,
 #'       data.table = NULL,
 #'       x = NULL,
-#'       write.file = TRUE,
-#'       data.files = 'deprecated'
+#'       write.file = TRUE
 #'     )
 #'
 #' @param path 
@@ -34,8 +33,6 @@
 #'     Use `make_arguments()` to create `x`.
 #' @param write.file
 #'     (logical) Write template files to `path`.
-#' @param data.files
-#'     NOTE: `data.files` has been deprecated. Use `data.table` instead.
 #'
 #' @return 
 #'     \itemize{

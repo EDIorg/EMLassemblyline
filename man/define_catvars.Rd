@@ -4,7 +4,12 @@
 \alias{define_catvars}
 \title{Import template(s) for categorical variable definitions}
 \usage{
-define_catvars(path, data.path = path, x = NULL, write.file = TRUE)
+define_catvars(
+      path,
+      data.path = path,
+      x = NULL,
+      write.file = TRUE
+    )
 }
 \arguments{
 \item{path}{(character) Path to where the template(s) will be imported.}

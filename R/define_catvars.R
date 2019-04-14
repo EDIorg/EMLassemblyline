@@ -7,7 +7,13 @@
 #'     Instructions for filling out the template are at
 #'     \url{https://clnsmth.github.io/EMLassemblyline/articles/instructions.html}.
 #'
-#' @usage define_catvars(path, data.path = path, x = NULL, write.file = TRUE)
+#' @usage 
+#'     define_catvars(
+#'       path,
+#'       data.path = path,
+#'       x = NULL,
+#'       write.file = TRUE
+#'     )
 #'
 #' @param path 
 #'     (character) Path to where the template(s) will be imported.

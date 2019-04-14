@@ -10,8 +10,7 @@ import_templates(
       license,
       data.table = NULL,
       x = NULL,
-      write.file = TRUE,
-      data.files = 'deprecated'
+      write.file = TRUE
     )
 }
 \arguments{
@@ -30,8 +29,6 @@ entered as arguments to `make_eml`.}
 Use `make_arguments()` to create `x`.}
 
 \item{write.file}{(logical) Write template files to `path`.}
-
-\item{data.files}{NOTE: `data.files` has been deprecated. Use `data.table` instead.}
 }
 \value{
 \itemize{
