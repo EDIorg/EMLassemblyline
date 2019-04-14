@@ -2,26 +2,20 @@
 % Please edit documentation in R/template_table_attributes.R
 \name{template_table_attributes}
 \alias{template_table_attributes}
-\title{Import core metadata templates}
+\title{Create table attributes template}
 \usage{
 template_table_attributes(
       path,
       data.path = path,
-      license,
       data.table = NULL,
       x = NULL,
-      write.file = TRUE,
-      data.files = 'deprecated'
+      write.file = TRUE
     )
 }
 \arguments{
 \item{path}{(character) Path to where the templates will be imported.}
 
 \item{data.path}{(character) Path to where the data files are stored.}
-
-\item{license}{(character) License under which the data will be released. Use "CC0" 
-(\url{https://creativecommons.org/publicdomain/zero/1.0/}), 
-or "CCBY" (\url{https://creativecommons.org/licenses/by/4.0/}).}
 
 \item{data.table}{(character) Names of tabular data. Names of non-tabular data are
 entered as arguments to `make_eml`.}
@@ -30,27 +24,12 @@ entered as arguments to `make_eml`.}
 Use `make_arguments()` to create `x`.}
 
 \item{write.file}{(logical) Write template files to `path`.}
-
-\item{data.files}{NOTE: `data.files` has been deprecated. Use `data.table` instead.}
 }
 \value{
 \itemize{
-        \item{`abstract.txt`} Template for the dataset abstract.
-        \item{`additional_info.txt`} Template for miscellaneous dataset
-        information.
         \item{`attributes_*.txt`} Template(s) for data table attribute 
         metadata, populated with some automatically extracted metadata 
         content from the data files.
-        \item{`bounding_boxes.txt`} Template for the dataset geographic 
-        bounding coordinates.
-        \item{`custom_units.txt`} Template for defining non-standard units 
-        used in the dataset.
-        \item{`intellectual_rights.txt`} The selected intellectual rights 
-        license.
-        \item{`keywords.txt`} Template for dataset keywords.
-        \item{`methods.txt`} Template for dataset methods.
-        \item{`personnel.txt`} Template for dataset personnel and funding 
-        metadata.
         \item{If using `x`, then content of each above listed template file 
         is added to `x` under `/x/templates/`}
     }
@@ -64,7 +43,4 @@ Import template files for storage of core metadata. Some templates are
 }
 \details{
 Existing templates will not be overwritten by `template_table_attributes`.
-}
-\examples{
-    
 }
