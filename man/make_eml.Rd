@@ -106,8 +106,6 @@ missing package ID defaults to `edi.101.1`.}
 
 \item{x}{(named list) Alternative input/output to `EMLassemblyline` functions. 
 Use `make_arguments()` to create `x`.}
-
-\item{affiliation}{This argument has been deprecated. Use `user.domain` instead.}
 }
 \value{
 \itemize{
