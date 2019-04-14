@@ -20,13 +20,11 @@
 #'     Validation checks are function specific.
 #'
 
-validate_templates <- function(fun_name, fun_args){
+validate_templates <- function(fun.name, fun.args){
   
   # If called from make_eml() -------------------------------------------------
   
   if (fun.name == 'make_eml'){
-    
-    x <- fun.args$x
     
   }
   
