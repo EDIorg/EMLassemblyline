@@ -62,6 +62,3 @@ Import template files for storage of core metadata. Some templates are
 \details{
 Existing templates will not be overwritten by `import_templates`.
 }
-\examples{
-    
-}

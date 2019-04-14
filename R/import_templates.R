@@ -58,8 +58,6 @@
 #'     
 #' @details 
 #'     Existing templates will not be overwritten by `import_templates`.
-#'
-#' @examples
 #'     
 #' @export     
 #'     
@@ -69,6 +67,14 @@ import_templates <- function(path, data.path = path, license,
                              data.files){
   
   message('Importing metadata templates')
+  
+  # Send deprecation notice ---------------------------------------------------
+  
+  .Deprecated(
+    new = 'template_core_metadata and template_table_attributes',
+    package = 'EMLassemblyline',
+    old = 'import_templates'
+  )
 
   # Validate arguments --------------------------------------------------------
   

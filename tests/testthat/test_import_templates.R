@@ -22,10 +22,12 @@ testthat::test_that('File inputs = no data tables', {
   # Missing path results in error
   
   expect_error(
-    suppressMessages(
-      import_templates(
-        license = 'CC0',
-        write.file = FALSE
+    suppressWarnings(
+      suppressMessages(
+        import_templates(
+          license = 'CC0',
+          write.file = FALSE
+        )
       )
     )
   )
@@ -33,28 +35,32 @@ testthat::test_that('File inputs = no data tables', {
   # Missing license results in error
   
   expect_error(
-    suppressMessages(
-      import_templates(
-        path = system.file(
-          '/examples',
-          package = 'EMLassemblyline'
-        ),
-        write.file = FALSE
-      )
+    suppressWarnings(
+      suppressMessages(
+        import_templates(
+          path = system.file(
+            '/examples',
+            package = 'EMLassemblyline'
+          ),
+          write.file = FALSE
+        )
+      ) 
     )
   )
   
   # Unsupported license results in error
   
   expect_error(
-    suppressMessages(
-      import_templates(
-        path = system.file(
-          '/examples',
-          package = 'EMLassemblyline'
-        ),
-        license = 'CCzero',
-        write.file = FALSE
+    suppressWarnings(
+      suppressMessages(
+        import_templates(
+          path = system.file(
+            '/examples',
+            package = 'EMLassemblyline'
+          ),
+          license = 'CCzero',
+          write.file = FALSE
+        )
       )
     )
   )
@@ -62,37 +68,43 @@ testthat::test_that('File inputs = no data tables', {
   # New imports result in messages
   
   expect_message(
-    import_templates(
-      path = system.file(
-        '/examples',
-        package = 'EMLassemblyline'
-      ),
-      license = 'CC0',
-      write.file = FALSE
+    suppressWarnings(
+      import_templates(
+        path = system.file(
+          '/examples',
+          package = 'EMLassemblyline'
+        ),
+        license = 'CC0',
+        write.file = FALSE
+      )
     )
   )
   
   expect_message(
-    import_templates(
-      path = system.file(
-        '/examples',
-        package = 'EMLassemblyline'
-      ),
-      license = 'CCBY',
-      write.file = FALSE
+    suppressWarnings(
+      import_templates(
+        path = system.file(
+          '/examples',
+          package = 'EMLassemblyline'
+        ),
+        license = 'CCBY',
+        write.file = FALSE
+      ) 
     )
   )
   
   # Attempt to import templates when they already exist results in messages
   
   expect_message(
-    import_templates(
-      path = system.file(
-        '/examples/templates',
-        package = 'EMLassemblyline'
-      ),
-      license = 'CC0',
-      write.file = FALSE
+    suppressWarnings(
+      import_templates(
+        path = system.file(
+          '/examples/templates',
+          package = 'EMLassemblyline'
+        ),
+        license = 'CC0',
+        write.file = FALSE
+      ) 
     )
   )
   
@@ -107,17 +119,19 @@ testthat::test_that('Test usage with file inputs', {
   
   expect_error(
     suppressMessages(
-      import_templates(
-        data.path = system.file(
-          '/examples/data',
-          package = 'EMLassemblyline'
-        ),
-        data.table = c(
-          'decomp.csv',
-          'nitrogen.csv'
-        ),
-        license = 'CC0',
-        write.file = FALSE
+      suppressWarnings(
+        import_templates(
+          data.path = system.file(
+            '/examples/data',
+            package = 'EMLassemblyline'
+          ),
+          data.table = c(
+            'decomp.csv',
+            'nitrogen.csv'
+          ),
+          license = 'CC0',
+          write.file = FALSE
+        )
       )
     )
   )
@@ -126,20 +140,22 @@ testthat::test_that('Test usage with file inputs', {
   
   expect_error(
     suppressMessages(
-      import_templates(
-        path = system.file(
-          '/examples',
-          package = 'EMLassemblyline'
-        ),
-        data.path = system.file(
-          '/examples/data',
-          package = 'EMLassemblyline'
-        ),
-        data.table = c(
-          'decomp.csv',
-          'nitrogen.csv'
-        ),
-        write.file = FALSE
+      suppressWarnings(
+        import_templates(
+          path = system.file(
+            '/examples',
+            package = 'EMLassemblyline'
+          ),
+          data.path = system.file(
+            '/examples/data',
+            package = 'EMLassemblyline'
+          ),
+          data.table = c(
+            'decomp.csv',
+            'nitrogen.csv'
+          ),
+          write.file = FALSE
+        )
       )
     )
   )
@@ -148,21 +164,23 @@ testthat::test_that('Test usage with file inputs', {
   
   expect_error(
     suppressMessages(
-      import_templates(
-        path = system.file(
-          '/examples',
-          package = 'EMLassemblyline'
-        ),
-        data.path = system.file(
-          '/examples/data',
-          package = 'EMLassemblyline'
-        ),
-        data.table = c(
-          'decomp.csv',
-          'nitrogen.csv'
-        ),
-        license = 'CCzero',
-        write.file = FALSE
+      suppressWarnings(
+        import_templates(
+          path = system.file(
+            '/examples',
+            package = 'EMLassemblyline'
+          ),
+          data.path = system.file(
+            '/examples/data',
+            package = 'EMLassemblyline'
+          ),
+          data.table = c(
+            'decomp.csv',
+            'nitrogen.csv'
+          ),
+          license = 'CCzero',
+          write.file = FALSE
+        ) 
       )
     )
   )
@@ -171,17 +189,19 @@ testthat::test_that('Test usage with file inputs', {
   
   expect_error(
     suppressMessages(
-      import_templates(
-        path = system.file(
-          '/examples',
-          package = 'EMLassemblyline'
-        ),
-        data.table = c(
-          'decomp.csv',
-          'nitrogen.csv'
-        ),
-        license = 'CC0',
-        write.file = FALSE
+      suppressWarnings(
+        import_templates(
+          path = system.file(
+            '/examples',
+            package = 'EMLassemblyline'
+          ),
+          data.table = c(
+            'decomp.csv',
+            'nitrogen.csv'
+          ),
+          license = 'CC0',
+          write.file = FALSE
+        ) 
       )
     )
   )
@@ -190,6 +210,32 @@ testthat::test_that('Test usage with file inputs', {
   
   expect_error(
     suppressMessages(
+      suppressWarnings(
+        import_templates(
+          path = system.file(
+            '/examples',
+            package = 'EMLassemblyline'
+          ),
+          data.path = system.file(
+            '/examples/data',
+            package = 'EMLassemblyline'
+          ),
+          data.table = c(
+            'decompppp.csv',
+            'nitrogennnnn.csv'
+          ),
+          license = 'CC0',
+          write.file = FALSE
+        ) 
+      )
+    )
+  )
+  
+  
+  # New imports result in messages
+  
+  expect_message(
+    suppressWarnings(
       import_templates(
         path = system.file(
           '/examples',
@@ -200,34 +246,12 @@ testthat::test_that('Test usage with file inputs', {
           package = 'EMLassemblyline'
         ),
         data.table = c(
-          'decompppp.csv',
-          'nitrogennnnn.csv'
+          'decomp.csv',
+          'nitrogen.csv'
         ),
         license = 'CC0',
         write.file = FALSE
-      )
-    )
-  )
-  
-  
-  # New imports result in messages
-  
-  expect_message(
-    import_templates(
-      path = system.file(
-        '/examples',
-        package = 'EMLassemblyline'
-      ),
-      data.path = system.file(
-        '/examples/data',
-        package = 'EMLassemblyline'
-      ),
-      data.table = c(
-        'decomp.csv',
-        'nitrogen.csv'
-      ),
-      license = 'CC0',
-      write.file = FALSE
+      ) 
     )
   )
   
@@ -250,28 +274,30 @@ testthat::test_that('Test usage with file inputs', {
         ),
         license = 'CC0',
         write.file = FALSE
-      )
+      ) 
     )
   )
 
   # Attempt to import templates when they already exist results in messages
   
   expect_message(
-    import_templates(
-      path = system.file(
-        '/examples/templates',
-        package = 'EMLassemblyline'
-      ),
-      data.path = system.file(
-        '/examples/data',
-        package = 'EMLassemblyline'
-      ),
-      data.table = c(
-        'decomp.csv',
-        'nitrogen.csv'
-      ),
-      license = 'CC0',
-      write.file = FALSE
+    suppressWarnings(
+      import_templates(
+        path = system.file(
+          '/examples/templates',
+          package = 'EMLassemblyline'
+        ),
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        data.table = c(
+          'decomp.csv',
+          'nitrogen.csv'
+        ),
+        license = 'CC0',
+        write.file = FALSE
+      ) 
     )
   )
   
@@ -290,20 +316,24 @@ testthat::test_that('x inputs = NULL', {
   # Missing path results in messages
   
   expect_message(
-    import_templates(
-      license = 'CC0',
-      x = x,
-      write.file = FALSE
+    suppressWarnings(
+      import_templates(
+        license = 'CC0',
+        x = x,
+        write.file = FALSE
+      ) 
     )
   )
   
   # Missing path results in expected content classes with empty values
   
   output <- suppressMessages(
-    import_templates(
-      license = 'CC0',
-      x = x,
-      write.file = FALSE
+    suppressWarnings(
+      import_templates(
+        license = 'CC0',
+        x = x,
+        write.file = FALSE
+      ) 
     )
   )
   
@@ -321,13 +351,15 @@ testthat::test_that('x inputs = NULL', {
   
   expect_error(
     suppressMessages(
-      import_templates(
-        path = system.file(
-          '/examples',
-          package = 'EMLassemblyline'
-        ),
-        x = x,
-        write.file = FALSE
+      suppressWarnings(
+        import_templates(
+          path = system.file(
+            '/examples',
+            package = 'EMLassemblyline'
+          ),
+          x = x,
+          write.file = FALSE
+        ) 
       )
     )
   )
@@ -336,14 +368,16 @@ testthat::test_that('x inputs = NULL', {
   
   expect_error(
     suppressMessages(
-      import_templates(
-        path = system.file(
-          '/examples',
-          package = 'EMLassemblyline'
-        ),
-        x = x,
-        license = 'CCzero',
-        write.file = FALSE
+      suppressWarnings(
+        import_templates(
+          path = system.file(
+            '/examples',
+            package = 'EMLassemblyline'
+          ),
+          x = x,
+          license = 'CCzero',
+          write.file = FALSE
+        ) 
       )
     )
   )
@@ -351,28 +385,32 @@ testthat::test_that('x inputs = NULL', {
   # Valid path results in messages
   
   expect_message(
-    import_templates(
-      path = system.file(
-        '/examples',
-        package = 'EMLassemblyline'
-      ),
-      x = x,
-      license = 'CC0',
-      write.file = FALSE
+    suppressWarnings(
+      import_templates(
+        path = system.file(
+          '/examples',
+          package = 'EMLassemblyline'
+        ),
+        x = x,
+        license = 'CC0',
+        write.file = FALSE
+      ) 
     )
   )
   
   # Valid path results in expected content classes with empty values
   
   output <- suppressMessages(
-    import_templates(
-      path = system.file(
-        '/examples',
-        package = 'EMLassemblyline'
-      ),
-      license = 'CC0',
-      x = x,
-      write.file = FALSE
+    suppressWarnings(
+      import_templates(
+        path = system.file(
+          '/examples',
+          package = 'EMLassemblyline'
+        ),
+        license = 'CC0',
+        x = x,
+        write.file = FALSE
+      ) 
     )
   )
   
@@ -389,14 +427,16 @@ testthat::test_that('x inputs = NULL', {
   # Attempt to import templates when they already exist results in messages
   
   expect_message(
-    import_templates(
-      path = system.file(
-        '/examples/templates',
-        package = 'EMLassemblyline'
-      ),
-      x = output,
-      license = 'CC0',
-      write.file = FALSE
+    suppressWarnings(
+      import_templates(
+        path = system.file(
+          '/examples/templates',
+          package = 'EMLassemblyline'
+        ),
+        x = output,
+        license = 'CC0',
+        write.file = FALSE
+      ) 
     )
   )
 
@@ -424,38 +464,44 @@ testthat::test_that('x inputs = data tables', {
   # Missing path and data path results in messages
   
   expect_message(
-    import_templates(
-      license = 'CC0',
-      x = x,
-      write.file = FALSE
+    suppressWarnings(
+      import_templates(
+        license = 'CC0',
+        x = x,
+        write.file = FALSE
+      ) 
     )
   )
   
   # Missing path results in messages
   
   expect_message(
-    import_templates(
-      data.path = system.file(
-        '/examples/data',
-        package = 'EMLassemblyline'
-      ),
-      license = 'CC0',
-      x = x,
-      write.file = FALSE
+    suppressWarnings(
+      import_templates(
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        license = 'CC0',
+        x = x,
+        write.file = FALSE
+      ) 
     )
   )
   
   # Missing data path results in messages
   
   expect_message(
-    import_templates(
-      path = system.file(
-        '/examples',
-        package = 'EMLassemblyline'
-      ),
-      license = 'CC0',
-      x = x,
-      write.file = FALSE
+    suppressWarnings(
+      import_templates(
+        path = system.file(
+          '/examples',
+          package = 'EMLassemblyline'
+        ),
+        license = 'CC0',
+        x = x,
+        write.file = FALSE
+      ) 
     )
   )
   
@@ -463,13 +509,15 @@ testthat::test_that('x inputs = data tables', {
   
   expect_error(
     suppressMessages(
-      import_templates(
-        path = system.file(
-          '/examples',
-          package = 'EMLassemblyline'
-        ),
-        x = x,
-        write.file = FALSE
+      suppressWarnings(
+        import_templates(
+          path = system.file(
+            '/examples',
+            package = 'EMLassemblyline'
+          ),
+          x = x,
+          write.file = FALSE
+        ) 
       )
     )
   )
@@ -478,14 +526,16 @@ testthat::test_that('x inputs = data tables', {
   
   expect_error(
     suppressMessages(
-      import_templates(
-        path = system.file(
-          '/examples',
-          package = 'EMLassemblyline'
-        ),
-        x = x,
-        license = 'CCzero',
-        write.file = FALSE
+      suppressWarnings(
+        import_templates(
+          path = system.file(
+            '/examples',
+            package = 'EMLassemblyline'
+          ),
+          x = x,
+          license = 'CCzero',
+          write.file = FALSE
+        ) 
       )
     )
   )
@@ -493,18 +543,20 @@ testthat::test_that('x inputs = data tables', {
   # Valid data path and data tables results in messages
   
   expect_message(
-    import_templates(
-      data.path = system.file(
-        '/examples/data',
-        package = 'EMLassemblyline'
-      ),
-      data.table = c(
-        'decomp.csv',
-        'nitrogen.csv'
-      ),
-      x = x,
-      license = 'CC0',
-      write.file = FALSE
+    suppressWarnings(
+      import_templates(
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        data.table = c(
+          'decomp.csv',
+          'nitrogen.csv'
+        ),
+        x = x,
+        license = 'CC0',
+        write.file = FALSE
+      ) 
     )
   )
   
@@ -524,7 +576,7 @@ testthat::test_that('x inputs = data tables', {
         x = x,
         license = 'CC0',
         write.file = FALSE
-      )
+      ) 
     )
   )
   
@@ -532,18 +584,20 @@ testthat::test_that('x inputs = data tables', {
   # with expected names, class, column names, and nrows > 1
   
   output <- suppressMessages(
-    import_templates(
-      data.path = system.file(
-        '/examples/data',
-        package = 'EMLassemblyline'
-      ),
-      data.table = c(
-        'decomp.csv',
-        'nitrogen.csv'
-      ),
-      x = x,
-      license = 'CC0',
-      write.file = FALSE
+    suppressWarnings(
+      import_templates(
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        data.table = c(
+          'decomp.csv',
+          'nitrogen.csv'
+        ),
+        x = x,
+        license = 'CC0',
+        write.file = FALSE
+      ) 
     )
   )
   
@@ -588,18 +642,20 @@ testthat::test_that('x inputs = data tables', {
   # Attempt to import templates when they already exist results in messages
   
   expect_message(
-    import_templates(
-      data.path = system.file(
-        '/examples/data',
-        package = 'EMLassemblyline'
-      ),
-      data.table = c(
-        'decomp.csv',
-        'nitrogen.csv'
-      ),
-      x = output,
-      license = 'CC0',
-      write.file = FALSE
+    suppressWarnings(
+      import_templates(
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        data.table = c(
+          'decomp.csv',
+          'nitrogen.csv'
+        ),
+        x = output,
+        license = 'CC0',
+        write.file = FALSE
+      ) 
     )
   )
 
@@ -637,38 +693,44 @@ testthat::test_that('x inputs = data tables and templates', {
   # Missing path and data path results in messages
   
   expect_message(
-    import_templates(
-      license = 'CC0',
-      x = x,
-      write.file = FALSE
+    suppressWarnings(
+      import_templates(
+        license = 'CC0',
+        x = x,
+        write.file = FALSE
+      ) 
     )
   )
   
   # Missing path results in messages
   
   expect_message(
-    import_templates(
-      data.path = system.file(
-        '/examples/data',
-        package = 'EMLassemblyline'
-      ),
-      license = 'CC0',
-      x = x,
-      write.file = FALSE
+    suppressWarnings(
+      import_templates(
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        license = 'CC0',
+        x = x,
+        write.file = FALSE
+      ) 
     )
   )
   
   # Missing data path results in messages
   
   expect_message(
-    import_templates(
-      path = system.file(
-        '/examples',
-        package = 'EMLassemblyline'
-      ),
-      license = 'CC0',
-      x = x,
-      write.file = FALSE
+    suppressWarnings(
+      import_templates(
+        path = system.file(
+          '/examples',
+          package = 'EMLassemblyline'
+        ),
+        license = 'CC0',
+        x = x,
+        write.file = FALSE
+      ) 
     )
   )
   
@@ -676,13 +738,15 @@ testthat::test_that('x inputs = data tables and templates', {
   
   expect_error(
     suppressMessages(
-      import_templates(
-        path = system.file(
-          '/examples',
-          package = 'EMLassemblyline'
-        ),
-        x = x,
-        write.file = FALSE
+      suppressWarnings(
+        import_templates(
+          path = system.file(
+            '/examples',
+            package = 'EMLassemblyline'
+          ),
+          x = x,
+          write.file = FALSE
+        ) 
       )
     )
   )
@@ -691,14 +755,16 @@ testthat::test_that('x inputs = data tables and templates', {
   
   expect_error(
     suppressMessages(
-      import_templates(
-        path = system.file(
-          '/examples',
-          package = 'EMLassemblyline'
-        ),
-        x = x,
-        license = 'CCzero',
-        write.file = FALSE
+      suppressWarnings(
+        import_templates(
+          path = system.file(
+            '/examples',
+            package = 'EMLassemblyline'
+          ),
+          x = x,
+          license = 'CCzero',
+          write.file = FALSE
+        ) 
       )
     )
   )
@@ -706,18 +772,20 @@ testthat::test_that('x inputs = data tables and templates', {
   # Valid data path and data tables results in messages
   
   expect_message(
-    import_templates(
-      data.path = system.file(
-        '/examples/data',
-        package = 'EMLassemblyline'
-      ),
-      data.table = c(
-        'decomp.csv',
-        'nitrogen.csv'
-      ),
-      x = x,
-      license = 'CC0',
-      write.file = FALSE
+    suppressWarnings(
+      import_templates(
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        data.table = c(
+          'decomp.csv',
+          'nitrogen.csv'
+        ),
+        x = x,
+        license = 'CC0',
+        write.file = FALSE
+      ) 
     )
   )
   
@@ -737,7 +805,7 @@ testthat::test_that('x inputs = data tables and templates', {
         x = x,
         license = 'CC0',
         write.file = FALSE
-      )
+      ) 
     )
   )
   
@@ -745,18 +813,20 @@ testthat::test_that('x inputs = data tables and templates', {
   # with expected names, class, column names, and nrows > 1
   
   output <- suppressMessages(
-    import_templates(
-      data.path = system.file(
-        '/examples/data',
-        package = 'EMLassemblyline'
-      ),
-      data.table = c(
-        'decomp.csv',
-        'nitrogen.csv'
-      ),
-      x = x,
-      license = 'CC0',
-      write.file = FALSE
+    suppressWarnings(
+      import_templates(
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        data.table = c(
+          'decomp.csv',
+          'nitrogen.csv'
+        ),
+        x = x,
+        license = 'CC0',
+        write.file = FALSE
+      ) 
     )
   )
   
@@ -801,18 +871,20 @@ testthat::test_that('x inputs = data tables and templates', {
   # Attempt to import templates when they already exist results in messages
   
   expect_message(
-    import_templates(
-      data.path = system.file(
-        '/examples/data',
-        package = 'EMLassemblyline'
-      ),
-      data.table = c(
-        'decomp.csv',
-        'nitrogen.csv'
-      ),
-      x = output,
-      license = 'CC0',
-      write.file = FALSE
+    suppressWarnings(
+      import_templates(
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        data.table = c(
+          'decomp.csv',
+          'nitrogen.csv'
+        ),
+        x = output,
+        license = 'CC0',
+        write.file = FALSE
+      ) 
     )
   )
   
