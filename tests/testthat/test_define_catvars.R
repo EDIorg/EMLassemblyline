@@ -9,6 +9,24 @@ testthat::test_that('Test usage with file inputs', {
   # Correct argument use results in messages
   
   expect_message(
+    suppressWarnings(
+      define_catvars(
+        path = system.file(
+          '/examples/templates',
+          package = 'EMLassemblyline'
+        ), 
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        write.file = FALSE
+      ) 
+    )
+  )
+  
+  # Correct argument use results in deprecation warning
+  
+  expect_warning(
     define_catvars(
       path = system.file(
         '/examples/templates',
@@ -19,19 +37,21 @@ testthat::test_that('Test usage with file inputs', {
         package = 'EMLassemblyline'
       ),
       write.file = FALSE
-    )
+    ) 
   )
   
   # Missing path results in error
 
   expect_error(
     suppressMessages(
-      define_catvars(
-        data.path = system.file(
-          '/examples/data',
-          package = 'EMLassemblyline'
-        ),
-        write.file = FALSE
+      suppressWarnings(
+        define_catvars(
+          data.path = system.file(
+            '/examples/data',
+            package = 'EMLassemblyline'
+          ),
+          write.file = FALSE
+        ) 
       )
     )
   )
@@ -40,16 +60,18 @@ testthat::test_that('Test usage with file inputs', {
   
   expect_error(
     suppressMessages(
-      define_catvars(
-        path = system.file(
-          '/examples/data',
-          package = 'EMLassemblyline'
-        ),
-        data.path = system.file(
-          '/examples/data',
-          package = 'EMLassemblyline'
-        ),
-        write.file = FALSE
+      suppressWarnings(
+        define_catvars(
+          path = system.file(
+            '/examples/data',
+            package = 'EMLassemblyline'
+          ),
+          data.path = system.file(
+            '/examples/data',
+            package = 'EMLassemblyline'
+          ),
+          write.file = FALSE
+        ) 
       )
     )
   )
@@ -91,29 +113,33 @@ testthat::test_that('Test usage with x inputs',{
   # - data.path is not added to x
   
   expect_message(
-    define_catvars(
-      path = system.file(
-        '/examples/templates',
-        package = 'EMLassemblyline'
-      ),
-      data.path = system.file(
-        '/examples/data',
-        package = 'EMLassemblyline'
-      ),
-      x = x_list,
-      write.file = FALSE
+    suppressWarnings(
+      define_catvars(
+        path = system.file(
+          '/examples/templates',
+          package = 'EMLassemblyline'
+        ),
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        x = x_list,
+        write.file = FALSE
+      ) 
     )
   )
   
   output <- suppressMessages(
-    define_catvars(
-      path = '/some/path',
-      data.path = system.file(
-        '/examples/data',
-        package = 'EMLassemblyline'
-      ),
-      x = x_no_catvars,
-      write.file = FALSE
+    suppressWarnings(
+      define_catvars(
+        path = '/some/path',
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        x = x_no_catvars,
+        write.file = FALSE
+      ) 
     )
   )
   
@@ -140,40 +166,63 @@ testthat::test_that('Test usage with x inputs',{
     TRUE
   )
   
-  # Missing path adds NA to /x/templates/catvars_*.txt/path
+  # Correct argument use results in deprecation warning
   
-  expect_message(
+  expect_warning(
     define_catvars(
-      data.path = system.file(
-        '/examples/data',
+      path = system.file(
+        '/examples/templates',
         package = 'EMLassemblyline'
-      ),
-      x = x_list,
-      write.file = FALSE
-    )
-  )
-  
-  output <- suppressMessages(
-    define_catvars(
+      ), 
       data.path = system.file(
         '/examples/data',
         package = 'EMLassemblyline'
       ),
       x = x_no_catvars,
       write.file = FALSE
+    ) 
+  )
+  
+  # Missing path adds NA to /x/templates/catvars_*.txt/path
+  
+  expect_message(
+    suppressWarnings(
+      define_catvars(
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        x = x_list,
+        write.file = FALSE
+      ) 
+    )
+  )
+  
+  output <- suppressMessages(
+    suppressWarnings(
+      define_catvars(
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        x = x_no_catvars,
+        write.file = FALSE
+      ) 
     )
   )
   
   # Missing path has no effect
   
   expect_message(
-    define_catvars(
-      data.path = system.file(
-        '/examples/data',
-        package = 'EMLassemblyline'
-      ),
-      x = x_no_catvars,
-      write.file = FALSE
+    suppressWarnings(
+      define_catvars(
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        x = x_no_catvars,
+        write.file = FALSE
+      ) 
     )
   )
   
@@ -181,9 +230,13 @@ testthat::test_that('Test usage with x inputs',{
   # - /x/templates/catvars_*.txt is created with expected content
   
   expect_error(
-    define_catvars(
-      x = x_no_catvars,
-      write.file = FALSE
+    suppressMessages(
+      suppressWarnings(
+        define_catvars(
+          x = x_no_catvars,
+          write.file = FALSE
+        ) 
+      )
     )
   )
   

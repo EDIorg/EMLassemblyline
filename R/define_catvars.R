@@ -49,7 +49,15 @@ define_catvars <- function(path, data.path = path, x = NULL,
   
   message('Creating categorical variable template.')
   
-  # Validate arguments and import data ------------------------------------------
+  # Send deprecation notice ---------------------------------------------------
+  
+  .Deprecated(
+    new = 'template_categorical_variables',
+    package = 'EMLassemblyline',
+    old = 'define_catvars'
+  )
+  
+  # Validate arguments and import data ----------------------------------------
   
   # Validate path usage before passing arguments to validate_arguments()
   # When not using x, inputs are expected from path and data.path. 
