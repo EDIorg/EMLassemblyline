@@ -2,45 +2,32 @@
 % Please edit documentation in R/template_core_metadata.R
 \name{template_core_metadata}
 \alias{template_core_metadata}
-\title{Import core metadata templates}
+\title{Create core metadata templates}
 \usage{
 template_core_metadata(
       path,
-      data.path = path,
       license,
-      data.table = NULL,
       x = NULL,
-      write.file = TRUE,
-      data.files = 'deprecated'
+      write.file = TRUE
     )
 }
 \arguments{
 \item{path}{(character) Path to where the templates will be imported.}
 
-\item{data.path}{(character) Path to where the data files are stored.}
-
 \item{license}{(character) License under which the data will be released. Use "CC0" 
 (\url{https://creativecommons.org/publicdomain/zero/1.0/}), 
 or "CCBY" (\url{https://creativecommons.org/licenses/by/4.0/}).}
-
-\item{data.table}{(character) Names of tabular data. Names of non-tabular data are
-entered as arguments to `make_eml`.}
 
 \item{x}{(named list) Alternative input/output to `EMLassemblyline` functions. 
 Use `make_arguments()` to create `x`.}
 
 \item{write.file}{(logical) Write template files to `path`.}
-
-\item{data.files}{NOTE: `data.files` has been deprecated. Use `data.table` instead.}
 }
 \value{
 \itemize{
         \item{`abstract.txt`} Template for the dataset abstract.
         \item{`additional_info.txt`} Template for miscellaneous dataset
         information.
-        \item{`attributes_*.txt`} Template(s) for data table attribute 
-        metadata, populated with some automatically extracted metadata 
-        content from the data files.
         \item{`bounding_boxes.txt`} Template for the dataset geographic 
         bounding coordinates.
         \item{`custom_units.txt`} Template for defining non-standard units 
@@ -64,7 +51,4 @@ Import template files for storage of core metadata. Some templates are
 }
 \details{
 Existing templates will not be overwritten by `template_core_metadata`.
-}
-\examples{
-    
 }
