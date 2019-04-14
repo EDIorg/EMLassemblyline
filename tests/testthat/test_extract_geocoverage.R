@@ -9,17 +9,19 @@ testthat::test_that('Test usage with file inputs', {
   
   expect_error(
     suppressMessages(
-      extract_geocoverage(
-        data.path = system.file(
-          '/examples/data',
-          package = 'EMLassemblyline'
-        ), 
-        data.table = 'nitrogen.csv', 
-        site.col = 'site_name',
-        lat.col = 'site_lat', 
-        lon.col = 'site_lon',
-        write.file = FALSE
-      ) 
+      suppressWarnings(
+        extract_geocoverage(
+          data.path = system.file(
+            '/examples/data',
+            package = 'EMLassemblyline'
+          ), 
+          data.table = 'nitrogen.csv', 
+          site.col = 'site_name',
+          lat.col = 'site_lat', 
+          lon.col = 'site_lon',
+          write.file = FALSE
+        ) 
+      )
     )
   )
   
@@ -27,16 +29,18 @@ testthat::test_that('Test usage with file inputs', {
   
   expect_error(
     suppressMessages(
-      extract_geocoverage(
-        path = system.file(
-          '/examples/templates'
-        ), 
-        data.table = 'nitrogen.csv', 
-        site.col = 'site_name',
-        lat.col = 'site_lat', 
-        lon.col = 'site_lon',
-        write.file = FALSE
-      ) 
+      suppressWarnings(
+        extract_geocoverage(
+          path = system.file(
+            '/examples/templates'
+          ), 
+          data.table = 'nitrogen.csv', 
+          site.col = 'site_name',
+          lat.col = 'site_lat', 
+          lon.col = 'site_lon',
+          write.file = FALSE
+        ) 
+      )
     )
   )
   
@@ -44,20 +48,22 @@ testthat::test_that('Test usage with file inputs', {
   
   expect_error(
     suppressMessages(
-      extract_geocoverage(
-        path = system.file(
-          '/examples/templates',
-          package = 'EMLassemblyline'
-        ), 
-        data.path = system.file(
-          '/examples/data',
-          package = 'EMLassemblyline'
-        ), 
-        site.col = 'site_name',
-        lat.col = 'site_lat', 
-        lon.col = 'site_lon',
-        write.file = FALSE
-      ) 
+      suppressWarnings(
+        extract_geocoverage(
+          path = system.file(
+            '/examples/templates',
+            package = 'EMLassemblyline'
+          ), 
+          data.path = system.file(
+            '/examples/data',
+            package = 'EMLassemblyline'
+          ), 
+          site.col = 'site_name',
+          lat.col = 'site_lat', 
+          lon.col = 'site_lon',
+          write.file = FALSE
+        ) 
+      )
     )
   )
   
@@ -65,20 +71,22 @@ testthat::test_that('Test usage with file inputs', {
   
   expect_error(
     suppressMessages(
-      extract_geocoverage(
-        path = system.file(
-          '/examples/templates',
-          package = 'EMLassemblyline'
-        ), 
-        data.path = system.file(
-          '/examples/data',
-          package = 'EMLassemblyline'
-        ), 
-        data.table = 'nitrogen.csv', 
-        lat.col = 'site_lat', 
-        lon.col = 'site_lon',
-        write.file = FALSE
-      ) 
+      suppressWarnings(
+        extract_geocoverage(
+          path = system.file(
+            '/examples/templates',
+            package = 'EMLassemblyline'
+          ), 
+          data.path = system.file(
+            '/examples/data',
+            package = 'EMLassemblyline'
+          ), 
+          data.table = 'nitrogen.csv', 
+          lat.col = 'site_lat', 
+          lon.col = 'site_lon',
+          write.file = FALSE
+        ) 
+      )
     )
   )
   
@@ -86,20 +94,22 @@ testthat::test_that('Test usage with file inputs', {
   
   expect_error(
     suppressMessages(
-      extract_geocoverage(
-        path = system.file(
-          '/examples/templates',
-          package = 'EMLassemblyline'
-        ), 
-        data.path = system.file(
-          '/examples/data',
-          package = 'EMLassemblyline'
-        ), 
-        data.table = 'nitrogen.csv', 
-        site.col = 'site_name', 
-        lon.col = 'site_lon',
-        write.file = FALSE
-      ) 
+      suppressWarnings(
+        extract_geocoverage(
+          path = system.file(
+            '/examples/templates',
+            package = 'EMLassemblyline'
+          ), 
+          data.path = system.file(
+            '/examples/data',
+            package = 'EMLassemblyline'
+          ), 
+          data.table = 'nitrogen.csv', 
+          site.col = 'site_name', 
+          lon.col = 'site_lon',
+          write.file = FALSE
+        ) 
+      )
     )
   )
   
@@ -107,19 +117,21 @@ testthat::test_that('Test usage with file inputs', {
   
   expect_error(
     suppressMessages(
-      extract_geocoverage(
-        path = system.file(
-          '/examples/templates',
-          package = 'EMLassemblyline'
-        ), 
-        data.path = system.file(
-          '/examples/data',
-          package = 'EMLassemblyline'
-        ), 
-        data.table = 'nitrogen.csv', 
-        site.col = 'site_name', 
-        lat.col = 'site_lat',
-        write.file = FALSE
+      suppressWarnings(
+        extract_geocoverage(
+          path = system.file(
+            '/examples/templates',
+            package = 'EMLassemblyline'
+          ), 
+          data.path = system.file(
+            '/examples/data',
+            package = 'EMLassemblyline'
+          ), 
+          data.table = 'nitrogen.csv', 
+          site.col = 'site_name', 
+          lat.col = 'site_lat',
+          write.file = FALSE
+        ) 
       )
     )
   )
@@ -128,20 +140,22 @@ testthat::test_that('Test usage with file inputs', {
   
   expect_error(
     suppressMessages(
-      extract_geocoverage(
-        path = system.file(
-          '/examples',
-          package = 'EMLassemblyline'
-        ), 
-        data.path = system.file(
-          '/examples/data',
-          package = 'EMLassemblyline'
-        ), 
-        data.table = 'nitrogen.csv', 
-        site.col = 'site_nameeee', 
-        lat.col = 'site_lat',
-        lon.col = 'site_lon',
-        write.file = FALSE
+      suppressWarnings(
+        extract_geocoverage(
+          path = system.file(
+            '/examples',
+            package = 'EMLassemblyline'
+          ), 
+          data.path = system.file(
+            '/examples/data',
+            package = 'EMLassemblyline'
+          ), 
+          data.table = 'nitrogen.csv', 
+          site.col = 'site_nameeee', 
+          lat.col = 'site_lat',
+          lon.col = 'site_lon',
+          write.file = FALSE
+        ) 
       )
     )
   )
@@ -150,21 +164,23 @@ testthat::test_that('Test usage with file inputs', {
   
   expect_error(
     suppressMessages(
-      extract_geocoverage(
-        path = system.file(
-          '/examples',
-          package = 'EMLassemblyline'
-        ), 
-        data.path = system.file(
-          '/examples/data',
-          package = 'EMLassemblyline'
-        ), 
-        data.table = 'nitrogen.csv', 
-        site.col = 'site_name', 
-        lat.col = 'site_latt',
-        lon.col = 'site_lon',
-        write.file = FALSE
-      ) 
+      suppressWarnings(
+        extract_geocoverage(
+          path = system.file(
+            '/examples',
+            package = 'EMLassemblyline'
+          ), 
+          data.path = system.file(
+            '/examples/data',
+            package = 'EMLassemblyline'
+          ), 
+          data.table = 'nitrogen.csv', 
+          site.col = 'site_name', 
+          lat.col = 'site_latt',
+          lon.col = 'site_lon',
+          write.file = FALSE
+        ) 
+      )
     )
   )
   
@@ -172,6 +188,30 @@ testthat::test_that('Test usage with file inputs', {
   
   expect_error(
     suppressMessages(
+      suppressWarnings(
+        extract_geocoverage(
+          path = system.file(
+            '/examples',
+            package = 'EMLassemblyline'
+          ), 
+          data.path = system.file(
+            '/examples/data',
+            package = 'EMLassemblyline'
+          ), 
+          data.table = 'nitrogen.csv', 
+          site.col = 'site_name', 
+          lat.col = 'site_lat',
+          lon.col = 'site_lonnnnn',
+          write.file = FALSE
+        ) 
+      )
+    )
+  )
+  
+  # Valid arguments result in messages
+  
+  expect_message(
+    suppressWarnings(
       extract_geocoverage(
         path = system.file(
           '/examples',
@@ -184,29 +224,9 @@ testthat::test_that('Test usage with file inputs', {
         data.table = 'nitrogen.csv', 
         site.col = 'site_name', 
         lat.col = 'site_lat',
-        lon.col = 'site_lonnnnn',
+        lon.col = 'site_lon',
         write.file = FALSE
-      )
-    )
-  )
-  
-  # Valid arguments result in messages
-  
-  expect_message(
-    extract_geocoverage(
-      path = system.file(
-        '/examples',
-        package = 'EMLassemblyline'
-      ), 
-      data.path = system.file(
-        '/examples/data',
-        package = 'EMLassemblyline'
-      ), 
-      data.table = 'nitrogen.csv', 
-      site.col = 'site_name', 
-      lat.col = 'site_lat',
-      lon.col = 'site_lon',
-      write.file = FALSE
+      ) 
     )
   )
   
@@ -264,28 +284,32 @@ testthat::test_that('Test usage with x inputs', {
   # - /x/templates/geographic_coverage.txt is created with expected content
   
   expect_message(
-    extract_geocoverage(
-      path = '/some/path',
-      data.path = '/some/data.path', 
-      data.table = 'nitrogen.csv', 
-      site.col = 'site_name',
-      lat.col = 'site_lat', 
-      lon.col = 'site_lon',
-      x = x_no_coverage,
-      write.file = FALSE
+    suppressWarnings(
+      extract_geocoverage(
+        path = '/some/path',
+        data.path = '/some/data.path', 
+        data.table = 'nitrogen.csv', 
+        site.col = 'site_name',
+        lat.col = 'site_lat', 
+        lon.col = 'site_lon',
+        x = x_no_coverage,
+        write.file = FALSE
+      ) 
     )
   )
   
   output <- suppressMessages(
-    extract_geocoverage(
-      path = '/some/path',
-      data.path = '/some/data.path', 
-      data.table = 'nitrogen.csv', 
-      site.col = 'site_name',
-      lat.col = 'site_lat', 
-      lon.col = 'site_lon',
-      x = x_no_coverage,
-      write.file = FALSE
+    suppressWarnings(
+      extract_geocoverage(
+        path = '/some/path',
+        data.path = '/some/data.path', 
+        data.table = 'nitrogen.csv', 
+        site.col = 'site_name',
+        lat.col = 'site_lat', 
+        lon.col = 'site_lon',
+        x = x_no_coverage,
+        write.file = FALSE
+      ) 
     )
   )
   
@@ -305,45 +329,51 @@ testthat::test_that('Test usage with x inputs', {
   # Missing path adds NA to /x/templates/geographic_coverage.txt/path
   
   expect_message(
-    extract_geocoverage(
-      data.path = system.file(
-        '/examples/data',
-        package = 'EMLassemblyline'
-      ), 
-      data.table = 'nitrogen.csv', 
-      site.col = 'site_name',
-      lat.col = 'site_lat', 
-      lon.col = 'site_lon',
-      x = x_no_coverage,
-      write.file = FALSE
+    suppressWarnings(
+      extract_geocoverage(
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ), 
+        data.table = 'nitrogen.csv', 
+        site.col = 'site_name',
+        lat.col = 'site_lat', 
+        lon.col = 'site_lon',
+        x = x_no_coverage,
+        write.file = FALSE
+      ) 
     )
   )
   
   output <- suppressMessages(
-    extract_geocoverage(
-      data.path = system.file(
-        '/examples/data',
-        package = 'EMLassemblyline'
-      ), 
-      data.table = 'nitrogen.csv', 
-      site.col = 'site_name',
-      lat.col = 'site_lat', 
-      lon.col = 'site_lon',
-      x = x_no_coverage,
-      write.file = FALSE
+    suppressWarnings(
+      extract_geocoverage(
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ), 
+        data.table = 'nitrogen.csv', 
+        site.col = 'site_name',
+        lat.col = 'site_lat', 
+        lon.col = 'site_lon',
+        x = x_no_coverage,
+        write.file = FALSE
+      ) 
     )
   )
   
   # Missing data.path has no effect
   
   expect_message(
-    extract_geocoverage(
-      data.table = 'nitrogen.csv', 
-      site.col = 'site_name',
-      lat.col = 'site_lat', 
-      lon.col = 'site_lon',
-      x = x_no_coverage,
-      write.file = FALSE
+    suppressWarnings(
+      extract_geocoverage(
+        data.table = 'nitrogen.csv', 
+        site.col = 'site_name',
+        lat.col = 'site_lat', 
+        lon.col = 'site_lon',
+        x = x_no_coverage,
+        write.file = FALSE
+      ) 
     )
   )
   
@@ -351,12 +381,14 @@ testthat::test_that('Test usage with x inputs', {
   
   expect_error(
     suppressMessages(
-      extract_geocoverage(
-        site.col = 'site_name',
-        lat.col = 'site_lat', 
-        lon.col = 'site_lon',
-        x = x_no_coverage,
-        write.file = FALSE
+      suppressWarnings(
+        extract_geocoverage(
+          site.col = 'site_name',
+          lat.col = 'site_lat', 
+          lon.col = 'site_lon',
+          x = x_no_coverage,
+          write.file = FALSE
+        ) 
       )
     )
   )
@@ -365,12 +397,14 @@ testthat::test_that('Test usage with x inputs', {
   
   expect_error(
     suppressMessages(
-      extract_geocoverage(
-        data.table = 'nitrogen.csv', 
-        lat.col = 'site_lat', 
-        lon.col = 'site_lon',
-        x = x_no_coverage,
-        write.file = FALSE
+      suppressWarnings(
+        extract_geocoverage(
+          data.table = 'nitrogen.csv', 
+          lat.col = 'site_lat', 
+          lon.col = 'site_lon',
+          x = x_no_coverage,
+          write.file = FALSE
+        ) 
       )
     )
   )
@@ -379,12 +413,14 @@ testthat::test_that('Test usage with x inputs', {
   
   expect_error(
     suppressMessages(
-      extract_geocoverage(
-        data.table = 'nitrogen.csv', 
-        site.col = 'site_name', 
-        lon.col = 'site_lon',
-        x = x_no_coverage,
-        write.file = FALSE
+      suppressWarnings(
+        extract_geocoverage(
+          data.table = 'nitrogen.csv', 
+          site.col = 'site_name', 
+          lon.col = 'site_lon',
+          x = x_no_coverage,
+          write.file = FALSE
+        ) 
       )
     )
   )
@@ -393,12 +429,14 @@ testthat::test_that('Test usage with x inputs', {
   
   expect_error(
     suppressMessages(
-      extract_geocoverage(
-        data.table = 'nitrogen.csv', 
-        site.col = 'site_name', 
-        lat.col = 'site_lat',
-        x = x_no_coverage,
-        write.file = FALSE
+      suppressWarnings(
+        extract_geocoverage(
+          data.table = 'nitrogen.csv', 
+          site.col = 'site_name', 
+          lat.col = 'site_lat',
+          x = x_no_coverage,
+          write.file = FALSE
+        ) 
       )
     )
   )
@@ -407,13 +445,15 @@ testthat::test_that('Test usage with x inputs', {
   
   expect_error(
     suppressMessages(
-      extract_geocoverage(
-        data.table = 'nitrogen.csv', 
-        site.col = 'site_nameeee', 
-        lat.col = 'site_lat',
-        lon.col = 'site_lon',
-        x = x_no_coverage,
-        write.file = FALSE
+      suppressWarnings(
+        extract_geocoverage(
+          data.table = 'nitrogen.csv', 
+          site.col = 'site_nameeee', 
+          lat.col = 'site_lat',
+          lon.col = 'site_lon',
+          x = x_no_coverage,
+          write.file = FALSE
+        ) 
       )
     )
   )
@@ -422,13 +462,15 @@ testthat::test_that('Test usage with x inputs', {
   
   expect_error(
     suppressMessages(
-      extract_geocoverage(
-        data.table = 'nitrogen.csv', 
-        site.col = 'site_name', 
-        lat.col = 'site_lattt',
-        lon.col = 'site_lon',
-        x = x_no_coverage,
-        write.file = FALSE
+      suppressWarnings(
+        extract_geocoverage(
+          data.table = 'nitrogen.csv', 
+          site.col = 'site_name', 
+          lat.col = 'site_lattt',
+          lon.col = 'site_lon',
+          x = x_no_coverage,
+          write.file = FALSE
+        ) 
       )
     )
   )
@@ -437,13 +479,15 @@ testthat::test_that('Test usage with x inputs', {
   
   expect_error(
     suppressMessages(
-      extract_geocoverage(
-        data.table = 'nitrogen.csv', 
-        site.col = 'site_name', 
-        lat.col = 'site_lat',
-        lon.col = 'site_lonnn',
-        x = x_no_coverage,
-        write.file = FALSE
+      suppressWarnings(
+        extract_geocoverage(
+          data.table = 'nitrogen.csv', 
+          site.col = 'site_name', 
+          lat.col = 'site_lat',
+          lon.col = 'site_lonnn',
+          x = x_no_coverage,
+          write.file = FALSE
+        ) 
       )
     )
   )
@@ -452,13 +496,15 @@ testthat::test_that('Test usage with x inputs', {
   
   expect_error(
     suppressMessages(
-      extract_geocoverage(
-        data.table = 'nitrogen.csv', 
-        site.col = 'site_name', 
-        lat.col = 'site_lat',
-        lon.col = 'site_lon',
-        x = x_no_coverage,
-        write.file = TRUE
+      suppressWarnings(
+        extract_geocoverage(
+          data.table = 'nitrogen.csv', 
+          site.col = 'site_name', 
+          lat.col = 'site_lat',
+          lon.col = 'site_lon',
+          x = x_no_coverage,
+          write.file = TRUE
+        ) 
       )
     )
   )

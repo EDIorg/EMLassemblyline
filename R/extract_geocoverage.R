@@ -60,6 +60,14 @@ extract_geocoverage <- function(path, data.path = path, data.table, lat.col,
   
   message('Creating geographic coverage template.')
   
+  # Send deprecation notice ---------------------------------------------------
+  
+  .Deprecated(
+    new = 'template_geographic_coverage',
+    package = 'EMLassemblyline',
+    old = 'extract_geocoverage'
+  )
+  
   # Validate arguments --------------------------------------------------------
   
   # Validate path usage before passing arguments to validate_arguments()
