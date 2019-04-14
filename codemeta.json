@@ -168,19 +168,19 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "EDIutils",
-      "name": "EDIutils",
-      "sameAs": "https://github.com/EDIorg/EDIutils"
+      "identifier": "methods",
+      "name": "methods"
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "methods",
-      "name": "methods"
+      "identifier": "EDIutils",
+      "name": "EDIutils",
+      "sameAs": "https://github.com/EDIorg/EDIutils"
     }
   ],
   "codeRepository": "https://github.com/EDIorg/EMLassemblyline",
   "readme": "https://github.com/clnsmth/EMLassemblyline/blob/master/README.md",
-  "fileSize": "155.055KB",
+  "fileSize": "159.606KB",
   "contIntegration": [
     "https://travis-ci.org/clnsmth/EMLassemblyline",
     "https://codecov.io/github/clnsmth/EMLassemblyline?branch=master"
