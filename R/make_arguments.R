@@ -4,9 +4,9 @@
 #'     Initialize the list of arguments for EMLassemblyline functions including
 #'     \code{x}, an argument containing metadata template and data file 
 #'     content. This approach enables programatic interfacing of upstream 
-#'     metadata sources (e.g. LTER-core-metabase 
-#'     \link{https://github.com/lter/LTER-core-metabase}) to 
-#'     \code{EMLassemblyline} functions.
+#'     metadata sources (e.g. 
+#'     \href{https://github.com/lter/LTER-core-metabase}{LTER-core-metabase}) 
+#'     to \code{EMLassemblyline} functions.
 #'
 #' @usage 
 #'     make_arguments(
@@ -620,30 +620,73 @@ make_arguments <- function(
           comment.char = "",
           fill = T,
           na.strings = "NA",
-          colClasses = c("numeric","numeric","character"),
           fileEncoding = "UTF-8"
         )
         
-        output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:3]
+        # If template has old formatting ...
         
-        colnames(output$x$template[[i]]$content) <- c(
-          "latitude",
-          "longitude",
-          "site"
-        )
-        
-        output$x$template[[i]]$content$latitude <- as.character(
-          output$x$template[[i]]$content$latitude
-        )
-        
-        output$x$template[[i]]$content$longitude <- as.character(
-          output$x$template[[i]]$content$longitude
-        )
-        
-        output$x$template[[i]]$content$site <- as.character(
-          output$x$template[[i]]$content$site
-        )
-        
+        if (all(colnames(output$x$template[[i]]$content) %in% c('site', 'latitude', 'longitude'))){
+          
+          colClasses = c("numeric","numeric","character")
+          
+          output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:3]
+          
+          colnames(output$x$template[[i]]$content) <- c(
+            "latitude",
+            "longitude",
+            "site"
+          )
+          
+          output$x$template[[i]]$content$latitude <- as.character(
+            output$x$template[[i]]$content$latitude
+          )
+          
+          output$x$template[[i]]$content$longitude <- as.character(
+            output$x$template[[i]]$content$longitude
+          )
+          
+          output$x$template[[i]]$content$site <- as.character(
+            output$x$template[[i]]$content$site
+          ) 
+          
+        # If template has new formatting ...
+           
+        } else {
+          
+          colClasses = c("character","numeric","numeric","numeric","numeric")
+          
+          output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:5]
+          
+          colnames(output$x$template[[i]]$content) <- c(
+            'geographicDescription',
+            'northBoundingCoordinate', 
+            'sourthBoundingCoordinate', 
+            'eastBoundingCoordinate', 
+            'westBoundingCoordinate'
+          )
+          
+          output$x$template[[i]]$content$geographicDescription <- as.character(
+            output$x$template[[i]]$content$geographicDescription
+          )
+          
+          output$x$template[[i]]$content$northBoundingCoordinate <- as.character(
+            output$x$template[[i]]$content$northBoundingCoordinate
+          )
+          
+          output$x$template[[i]]$content$sourthBoundingCoordinate <- as.character(
+            output$x$template[[i]]$content$sourthBoundingCoordinate
+          )
+          
+          output$x$template[[i]]$content$eastBoundingCoordinate <- as.character(
+            output$x$template[[i]]$content$eastBoundingCoordinate
+          )
+          
+          output$x$template[[i]]$content$westBoundingCoordinate <- as.character(
+            output$x$template[[i]]$content$westBoundingCoordinate
+          )
+          
+        }
+                
       } else {
         
         output$x$template[[i]]$content <- NA_character_

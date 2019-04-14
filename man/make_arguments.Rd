@@ -205,9 +205,9 @@ of character strings (e.g.
 Initialize the list of arguments for EMLassemblyline functions including
     \code{x}, an argument containing metadata template and data file 
     content. This approach enables programatic interfacing of upstream 
-    metadata sources (e.g. LTER-core-metabase 
-    \link{https://github.com/lter/LTER-core-metabase}) to 
-    \code{EMLassemblyline} functions.
+    metadata sources (e.g. 
+    \href{https://github.com/lter/LTER-core-metabase}{LTER-core-metabase}) 
+    to \code{EMLassemblyline} functions.
 }
 \note{
 The full named list structure is returned irrespective of NULL inputs,
