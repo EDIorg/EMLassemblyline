@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Validate the content and structure of personnel.txt — validate_personnel • EMLassemblyline</title>
+<title>Create categorical variables template — template_categorical_variables • EMLassemblyline</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,11 +30,13 @@
 
 
 
-<meta property="og:title" content="Validate the content and structure of personnel.txt — validate_personnel" />
+<meta property="og:title" content="Create categorical variables template — template_categorical_variables" />
 
-<meta property="og:description" content="This function checks the personnel table for required information and 
-    adjusts content to meet input requirements of the personnel EML making 
-    functions." />
+<meta property="og:description" content="Import template(s) for defining categorical variable codes used in data
+    tables. This function automatically extracts and returns categorical 
+    codes, the definitions of which must be supplied by a human. 
+    Instructions for filling out the template are at
+    https://clnsmth.github.io/EMLassemblyline/articles/instructions.html." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -119,34 +121,68 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Validate the content and structure of personnel.txt</h1>
-    <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/validate_personnel.R'><code>R/validate_personnel.R</code></a></small>
-    <div class="hidden name"><code>validate_personnel.Rd</code></div>
+    <h1>Create categorical variables template</h1>
+    <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/template_categorical_variables.R'><code>R/template_categorical_variables.R</code></a></small>
+    <div class="hidden name"><code>template_categorical_variables.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This function checks the personnel table for required information and 
-    adjusts content to meet input requirements of the personnel EML making 
-    functions.</p>
+    <p>Import template(s) for defining categorical variable codes used in data
+    tables. This function automatically extracts and returns categorical 
+    codes, the definitions of which must be supplied by a human. 
+    Instructions for filling out the template are at
+    <a href='https://clnsmth.github.io/EMLassemblyline/articles/instructions.html'>https://clnsmth.github.io/EMLassemblyline/articles/instructions.html</a>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>validate_personnel</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>template_categorical_variables</span>(
+      <span class='no'>path</span>,
+      <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='no'>path</span>,
+      <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+      <span class='kw'>write.file</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+    )</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>path</th>
+      <td><p>(character) Path to where the template(s) will be imported.</p></td>
+    </tr>
+    <tr>
+      <th>data.path</th>
+      <td><p>(character) Path to where the data files are stored.</p></td>
+    </tr>
+    <tr>
       <th>x</th>
-      <td><p>The data frame created from reading personnel.txt.</p></td>
+      <td><p>(named list) Alternative input/output to `EMLassemblyline` functions. 
+Use `make_arguments()` to create `x`.</p></td>
+    </tr>
+    <tr>
+      <th>write.file</th>
+      <td><p>(logical) Write `catvars` file to `path`.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>If incongruence is found an error is returned, else a valid data frame
-    for inputs to the personnel EML making functions.</p>
+    
+<ul>
+<li><p>`catvars_*.txt` A tab delimited file written to `path`
+        containing codes to be defined. Each template is appended with the 
+        name of the data table from which the codes were extracted.</p></li>
+<li><p>If using `x`, then content of `catvars_*.txt` is added to `x` 
+        under `/x/templates`.</p></li>
+</ul>
+
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>`template_categorical_variables` knows which variables are `categorical` based on their 
+    listing under the `class` column in the `attributes_*.txt` file(s).</p>    
+<p>Existing template(s) will not be overwritten by subsequent calls to 
+    `template_categorical_variables()`.</p>
     
 
   </div>
@@ -156,6 +192,8 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
           </ul>
 
   </div>
