@@ -189,4 +189,30 @@ testthat::test_that('Test usage with x inputs',{
     )
   )
   
+  # Blank rows of catvars*_.txt are removed from output
+  
+  input <- x_no_catvars
+  
+  new_decomp_content <- input$data.table$decomp.csv$content
+  
+  input$data.table$decomp.csv$content <- new_decomp_content[!new_decomp_content$NTRT == 25, ]
+  
+  output <- suppressWarnings(
+    suppressMessages(
+      template_categorical_variables(
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        x = input,
+        write.file = FALSE
+      ) 
+    )
+  )
+  
+  expect_equal(
+    any(output$template$catvars_decomp.txt$content$code == 25, na.rm = T),
+    FALSE
+  )
+  
 })
