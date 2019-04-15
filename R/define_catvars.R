@@ -274,12 +274,6 @@ define_catvars <- function(path, data.path = path, x = NULL,
           
         }
 
-      } else {
-        
-        message("No categorical variables found.")
-        
-        catvars <- NULL
-        
       }
       
     }

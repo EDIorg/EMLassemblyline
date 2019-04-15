@@ -255,15 +255,6 @@ template_categorical_variables <- function(path, data.path = path, x = NULL,
               missing_template
             )
             
-          } else {
-            
-            message(
-              paste0(
-                fname_table_catvars[i],
-                " already exists!"
-              )
-            )
-            
           }
           
         }
