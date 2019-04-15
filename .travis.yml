@@ -12,7 +12,6 @@ r_packages:
   - rmarkdown
   - methods
   - covr
-  - EDIutils
 r_github_packages:
   - EDIorg/EDIutils
 warnings_are_errors: false
