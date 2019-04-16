@@ -1,5 +1,6 @@
 # EMLassemblyline 2.99.0
 
+* __Enhancement:__ All geographic coverage has been moved to /dataset/coverage, which is where data repositories find this information and place it on maps.
 * __Enhancement:__ Support other entity only data packaging use case, thereby extending data packaging use cased to:
     * Data table only
     * Data table and other entity
