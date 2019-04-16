@@ -193,9 +193,9 @@ testthat::test_that('Test usage with x inputs',{
   
   input <- x_no_catvars
   
-  new_decomp_content <- input$data.table$decomp.csv$content
-  
-  input$data.table$decomp.csv$content <- new_decomp_content[!new_decomp_content$NTRT == 25, ]
+  input$data.table$decomp.csv$content$NTRT[
+    input$data.table$decomp.csv$content$NTRT == 25
+    ] <- ''
   
   output <- suppressWarnings(
     suppressMessages(
@@ -211,7 +211,7 @@ testthat::test_that('Test usage with x inputs',{
   )
   
   expect_equal(
-    any(output$template$catvars_decomp.txt$content$code == 25, na.rm = T),
+    any(output$template$catvars_decomp.txt$content$code == '', na.rm = T),
     FALSE
   )
   

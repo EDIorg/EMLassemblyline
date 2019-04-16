@@ -277,7 +277,7 @@ testthat::test_that('Test usage with x inputs', {
   expect_equal(
     all(
       colnames(output$template$geographic_coverage.txt$content) %in%
-        c('northBoundingCoordinate', 'sourthBoundingCoordinate', 
+        c('northBoundingCoordinate', 'southBoundingCoordinate', 
           'eastBoundingCoordinate', 'westBoundingCoordinate', 'geographicDescription')
     ),
     TRUE
@@ -441,6 +441,63 @@ testthat::test_that('Test usage with x inputs', {
         x = x_no_coverage,
         write.file = TRUE
       )
+    )
+  )
+  
+  # Existing geographic_coverage.txt results in messages
+  
+  expect_message(
+    suppressWarnings(
+      template_geographic_coverage(
+        data.table = 'nitrogen.csv', 
+        site.col = 'site_name', 
+        lat.col = 'site_lat',
+        lon.col = 'site_lon',
+        x = x_list,
+        write.file = FALSE
+      ) 
+    )
+  )
+  
+  # Non-numeric characters in latitude column result in error
+  
+  input <- x_list
+  
+  input$template$geographic_coverage.txt <- NULL
+  
+  input$data.table$nitrogen.csv$content$site_lat[1:5] <- 'Ooops'
+  
+  expect_error(
+    suppressMessages(
+      template_geographic_coverage(
+        data.table = 'nitrogen.csv', 
+        site.col = 'site_name', 
+        lat.col = 'site_lat',
+        lon.col = 'site_lon',
+        x = input,
+        write.file = FALSE
+      ) 
+    )
+  )
+  
+  # Non-numeric characters in longitude column result in error
+  
+  input <- x_list
+  
+  input$template$geographic_coverage.txt <- NULL
+  
+  input$data.table$nitrogen.csv$content$site_lon[1:5] <- 'Ooops'
+  
+  expect_error(
+    suppressMessages(
+      template_geographic_coverage(
+        data.table = 'nitrogen.csv', 
+        site.col = 'site_name', 
+        lat.col = 'site_lat',
+        lon.col = 'site_lon',
+        x = input,
+        write.file = FALSE
+      ) 
     )
   )
   

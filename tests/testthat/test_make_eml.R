@@ -1366,6 +1366,47 @@ testthat::test_that('Test usage with x (all templates and 2 data tables)', {
     TRUE
   )
   
+  # New geographic_coverage.txt is supported
+  
+  input <- x_table
+
+  input$template$geographic_coverage.txt <- NULL
+  
+  input <- suppressMessages(
+    template_geographic_coverage(
+      data.table = 'nitrogen.csv', 
+      site.col = 'site_name', 
+      lat.col = 'site_lat',
+      lon.col = 'site_lon',
+      x = input,
+      write.file = FALSE
+    ) 
+  )
+    
+  output <- make_eml(
+    path = path,
+    data.path = data.path,
+    eml.path = eml.path,
+    dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+    data.table = data.table,
+    data.table.description = c('Decomposition data', 'Nitrogen data'),
+    data.table.quote.character = c("\"","\""),
+    data.url = data.url,
+    temporal.coverage = c('2014-05-01', '2015-10-31'),
+    maintenance.description = 'completed',
+    user.id = user.id,
+    user.domain = user.domain,
+    package.id = 'edi.141.1',
+    return.obj = TRUE,
+    write.file = FALSE,
+    x = input
+  )
+  
+  expect_equal(
+    length(output@dataset@coverage@geographicCoverage) > 20,
+    TRUE
+  )
+  
 })
 
 # Test usage with x (all templates, 2 data tables, and 1 other entity) --------
