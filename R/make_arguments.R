@@ -660,7 +660,7 @@ make_arguments <- function(
           colnames(output$x$template[[i]]$content) <- c(
             'geographicDescription',
             'northBoundingCoordinate', 
-            'sourthBoundingCoordinate', 
+            'southBoundingCoordinate', 
             'eastBoundingCoordinate', 
             'westBoundingCoordinate'
           )
@@ -673,8 +673,8 @@ make_arguments <- function(
             output$x$template[[i]]$content$northBoundingCoordinate
           )
           
-          output$x$template[[i]]$content$sourthBoundingCoordinate <- as.character(
-            output$x$template[[i]]$content$sourthBoundingCoordinate
+          output$x$template[[i]]$content$southBoundingCoordinate <- as.character(
+            output$x$template[[i]]$content$southBoundingCoordinate
           )
           
           output$x$template[[i]]$content$eastBoundingCoordinate <- as.character(

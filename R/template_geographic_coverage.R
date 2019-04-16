@@ -128,14 +128,6 @@ template_geographic_coverage <- function(path, data.path = path, data.table,
     
   } else if (!is.null(x)){
     
-    # path
-    
-    if (missing(path)){
-      
-      path <- NA_character_
-      
-    }
-    
     # data.table
     
     data_file <- data.table
@@ -220,7 +212,7 @@ template_geographic_coverage <- function(path, data.path = path, data.table,
     geocoverage_out <- data.frame(
       geographicDescription = site_out,
       northBoundingCoordinate = latitude_out,
-      sourthBoundingCoordinate = latitude_out,
+      southBoundingCoordinate = latitude_out,
       eastBoundingCoordinate = longitude_out,
       westBoundingCoordinate = longitude_out,
       stringsAsFactors = F)
@@ -229,7 +221,7 @@ template_geographic_coverage <- function(path, data.path = path, data.table,
     # 
     # geocoverage_out$geographicDescription <- 'Bounding area of sites'
     # geocoverage_out$northBoundingCoordinate <- latitude_out
-    # geocoverage_out$sourthBoundingCoordinate <- latitude_out
+    # geocoverage_out$southBoundingCoordinate <- latitude_out
     # geocoverage_out$eastBoundingCoordinate <- longitude_out
     # geocoverage_out$westBoundingCoordinate <- longitude_out
     
@@ -279,10 +271,6 @@ template_geographic_coverage <- function(path, data.path = path, data.table,
           x$template, 
           missing_template
         )
-        
-      } else {
-        
-        message('geographic_coverage.txt already exists.')
         
       }
       

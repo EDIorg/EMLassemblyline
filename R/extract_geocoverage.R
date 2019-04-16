@@ -133,15 +133,7 @@ extract_geocoverage <- function(path, data.path = path, data.table, lat.col,
   # If using x ...  
         
   } else if (!is.null(x)){
-    
-    # path
-    
-    if (missing(path)){
-      
-      path <- NA_character_
-      
-    }
-    
+
     # data.table
     
     data_file <- data.table
@@ -274,10 +266,6 @@ extract_geocoverage <- function(path, data.path = path, data.table, lat.col,
           x$template, 
           missing_template
         )
-        
-      } else {
-        
-        message('geographic_coverage.txt already exists.')
         
       }
       
