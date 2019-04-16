@@ -706,16 +706,16 @@ make_eml <- function(
     
     if (nrow(bounding_boxes) != 0){
       
-      bounding_boxes <- lapply(bounding_boxes, as.character)
+      bounding_boxes_2 <- lapply(bounding_boxes, as.character)
       
-      for (i in 1:length(bounding_boxes$geographicDescription)){
+      for (i in 1:length(bounding_boxes_2$geographicDescription)){
         
-        geographic_description <- methods::new("geographicDescription", bounding_boxes$geographicDescription[i])
+        geographic_description <- methods::new("geographicDescription", bounding_boxes_2$geographicDescription[i])
         bounding_coordinates <- methods::new("boundingCoordinates",
-                                    westBoundingCoordinate = bounding_boxes$westBoundingCoordinate[i],
-                                    eastBoundingCoordinate = bounding_boxes$eastBoundingCoordinate[i],
-                                    northBoundingCoordinate = bounding_boxes$northBoundingCoordinate[i],
-                                    southBoundingCoordinate = bounding_boxes$southBoundingCoordinate[i])
+                                    westBoundingCoordinate = bounding_boxes_2$westBoundingCoordinate[i],
+                                    eastBoundingCoordinate = bounding_boxes_2$eastBoundingCoordinate[i],
+                                    northBoundingCoordinate = bounding_boxes_2$northBoundingCoordinate[i],
+                                    southBoundingCoordinate = bounding_boxes_2$southBoundingCoordinate[i])
         geographic_coverage <- methods::new("geographicCoverage",
                                    geographicDescription = geographic_description,
                                    boundingCoordinates = bounding_coordinates)
@@ -723,33 +723,36 @@ make_eml <- function(
         
       }
       
-      dataset@coverage@geographicCoverage <- methods::as(list_of_coverage, "ListOfgeographicCoverage")
-      
     } 
     
-  # Add coverage defined in new version of geographic_coordinates.txt ...
+  
     
-  } else if ('geographic_coverage.txt' %in% names(x$template)){
+  }
+  
+  # If geographic_coverage.txt exists ...
+  
+  if ('geographic_coverage.txt' %in% names(x$template)){
     
-    bounding_boxes <- x$template$bounding_boxes.txt$content
+    # Add coverage defined in new version of geographic_coverage.txt ...
+    
+    bounding_boxes <- x$template$geographic_coverage.txt$content
     
     if (all(colnames(bounding_boxes) %in% 
-            c('northBoundingCoordinate', 'sourthBoundingCoordinate', 'eastBoundingCoordinate', 
+            c('northBoundingCoordinate', 'southBoundingCoordinate', 'eastBoundingCoordinate', 
               'westBoundingCoordinate', 'geographicDescription'))){
       
       if (nrow(bounding_boxes) != 0){
         
-        bounding_boxes <- lapply(bounding_boxes, as.character)
+        bounding_boxes_2 <- lapply(bounding_boxes, as.character)
         
-        
-        for (i in 1:length(bounding_boxes$geographicDescription)){
+        for (i in 1:length(bounding_boxes_2$geographicDescription)){
           
-          geographic_description <- methods::new("geographicDescription", bounding_boxes$geographicDescription[i])
+          geographic_description <- methods::new("geographicDescription", bounding_boxes_2$geographicDescription[i])
           bounding_coordinates <- methods::new("boundingCoordinates",
-                                               westBoundingCoordinate = bounding_boxes$westBoundingCoordinate[i],
-                                               eastBoundingCoordinate = bounding_boxes$eastBoundingCoordinate[i],
-                                               northBoundingCoordinate = bounding_boxes$northBoundingCoordinate[i],
-                                               southBoundingCoordinate = bounding_boxes$southBoundingCoordinate[i])
+                                               westBoundingCoordinate = bounding_boxes_2$westBoundingCoordinate[i],
+                                               eastBoundingCoordinate = bounding_boxes_2$eastBoundingCoordinate[i],
+                                               northBoundingCoordinate = bounding_boxes_2$northBoundingCoordinate[i],
+                                               southBoundingCoordinate = bounding_boxes_2$southBoundingCoordinate[i])
           geographic_coverage <- methods::new("geographicCoverage",
                                               geographicDescription = geographic_description,
                                               boundingCoordinates = bounding_coordinates)
@@ -757,8 +760,33 @@ make_eml <- function(
           
         }
         
-        dataset@coverage@geographicCoverage <- methods::as(list_of_coverage, "ListOfgeographicCoverage")
+      }
+      
+    # Add coverage defined in old version of geographic_coverage.txt ...
+      
+    } else if (all(colnames(bounding_boxes) %in% 
+                   c('site', 'latitude', 'longitude'))){
+      
+      if (nrow(bounding_boxes) != 0){
         
+        bounding_boxes_2 <- lapply(bounding_boxes, as.character)
+        
+        
+        for (i in 1:length(bounding_boxes_2$geographicDescription)){
+          
+          geographic_description <- methods::new("geographicDescription", bounding_boxes_2$site[i])
+          bounding_coordinates <- methods::new("boundingCoordinates",
+                                               westBoundingCoordinate = bounding_boxes_2$longitude[i],
+                                               eastBoundingCoordinate = bounding_boxes_2$longitude[i],
+                                               northBoundingCoordinate = bounding_boxes_2$longitude[i],
+                                               southBoundingCoordinate = bounding_boxes_2$longitude[i])
+          geographic_coverage <- methods::new("geographicCoverage",
+                                              geographicDescription = geographic_description,
+                                              boundingCoordinates = bounding_coordinates)
+          list_of_coverage[[(length(list_of_coverage)+1)]] <- geographic_coverage
+          
+        }
+
       }
       
     }
@@ -814,101 +842,6 @@ make_eml <- function(
   }
 
   dataset@methods <- x$template$methods.txt$content
-  
-  if ('geographic_coverage.txt' %in% names(x$template)){
-    
-    # If old template ...
-    
-    if (all(colnames(x$template_geographic_coverage.txt$content) %in% 
-        c('site','latitude', 'longitude'))){
-      
-      df_geographic_coverage <- x$template$geographic_coverage.txt$content
-      
-      if (nrow(df_geographic_coverage) != 0){
-        
-        message("<geographicDescription>")
-        
-        list_of_coverage <- list()
-        
-        for (i in 1:dim(df_geographic_coverage)[1]){
-          
-          coverage <- methods::new("coverage")
-          
-          geographic_description <- methods::new("geographicDescription", df_geographic_coverage$site[i])
-          
-          bounding_coordinates <- methods::new("boundingCoordinates",
-                                               westBoundingCoordinate = df_geographic_coverage$longitude[i],
-                                               eastBoundingCoordinate = df_geographic_coverage$longitude[i],
-                                               northBoundingCoordinate = df_geographic_coverage$latitude[i],
-                                               southBoundingCoordinate = df_geographic_coverage$latitude[i])
-          
-          geographic_coverage <- methods::new("geographicCoverage",
-                                              geographicDescription = geographic_description,
-                                              boundingCoordinates = bounding_coordinates)
-          
-          coverage@geographicCoverage <- methods::as(list(geographic_coverage), "ListOfgeographicCoverage")
-          
-          list_of_coverage[[i]] <- coverage
-          
-        }
-        
-        sampling <- methods::new("sampling")
-        
-        sampling@studyExtent@coverage <- methods::as(list_of_coverage, "ListOfcoverage")
-        
-        sampling@samplingDescription <- methods::as("Geographic coordinates of sampling sites", "samplingDescription")
-        
-        dataset@methods@sampling <- methods::as(list(sampling), "ListOfsampling")
-      }
-      
-    # If new template ...
-      
-    } else {
-      
-      df_geographic_coverage <- x$template$geographic_coverage.txt$content
-      
-      if (nrow(df_geographic_coverage) != 0){
-        
-        message("<geographicDescription>")
-        
-        list_of_coverage <- list()
-        
-        for (i in 1:dim(df_geographic_coverage)[1]){
-          
-          coverage <- methods::new("coverage")
-          
-          geographic_description <- methods::new("geographicDescription", df_geographic_coverage$geographicDescription[i])
-          
-          bounding_coordinates <- methods::new("boundingCoordinates",
-                                               westBoundingCoordinate = df_geographic_coverage$westBoundingCoordinate[i],
-                                               eastBoundingCoordinate = df_geographic_coverage$eastBoundingCoordinate[i],
-                                               northBoundingCoordinate = df_geographic_coverage$northBoundingCoordinate[i],
-                                               southBoundingCoordinate = df_geographic_coverage$southBoundingCoordinate[i])
-          
-          geographic_coverage <- methods::new("geographicCoverage",
-                                              geographicDescription = geographic_description,
-                                              boundingCoordinates = bounding_coordinates)
-          
-          coverage@geographicCoverage <- methods::as(list(geographic_coverage), "ListOfgeographicCoverage")
-          
-          list_of_coverage[[i]] <- coverage
-          
-        }
-        
-        sampling <- methods::new("sampling")
-        
-        sampling@studyExtent@coverage <- methods::as(list_of_coverage, "ListOfcoverage")
-        
-        sampling@samplingDescription <- methods::as("Geographic coordinates of sampling sites", "samplingDescription")
-        
-        dataset@methods@sampling <- methods::as(list(sampling), "ListOfsampling")
-        
-      }
-      
-    }
-  
-  }
-  
 
   # Add provenance metadata -----------------------------------------------
   
