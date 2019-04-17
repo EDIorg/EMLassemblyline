@@ -169,6 +169,20 @@ testthat::test_that('x inputs = NULL', {
     )
   )
   
+  # CCBY is a supported license
+  
+  expect_message(
+    template_core_metadata(
+      path = system.file(
+        '/examples',
+        package = 'EMLassemblyline'
+      ),
+      x = x,
+      license = 'CCBY',
+      write.file = FALSE
+    )
+  )
+  
   # Valid path results in messages
   
   expect_message(

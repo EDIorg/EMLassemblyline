@@ -210,6 +210,77 @@ testthat::test_that('Test usage with file inputs', {
     )
   )
   
+  # Writing to file results in messages
+  
+  # emptydir <- suppressWarnings(
+  #   file.remove(
+  #     paste0(
+  #       system.file(
+  #         '/examples/write_to',
+  #         package = 'EMLassemblyline'
+  #       ),
+  #       '\\',
+  #       list.files(
+  #         system.file(
+  #           '/examples/write_to',
+  #           package = 'EMLassemblyline'
+  #         )
+  #       )
+  #     )
+  #   ) 
+  # )
+  
+  # expect_message(
+  #   template_geographic_coverage(
+  #     path = system.file(
+  #       '/examples/write_to',
+  #       package = 'EMLassemblyline'
+  #     ), 
+  #     data.path = system.file(
+  #       '/examples/data',
+  #       package = 'EMLassemblyline'
+  #     ), 
+  #     data.table = 'nitrogen.csv', 
+  #     site.col = 'site_name', 
+  #     lat.col = 'site_lat',
+  #     lon.col = 'site_lon',
+  #     write.file = TRUE
+  #   )
+  # )
+  
+  # emptydir <- suppressWarnings(
+  #   file.remove(
+  #     paste0(
+  #       system.file(
+  #         '/examples/write_to',
+  #         package = 'EMLassemblyline'
+  #       ),
+  #       '\\',
+  #       list.files(
+  #         system.file(
+  #           '/examples/write_to',
+  #           package = 'EMLassemblyline'
+  #         )
+  #       )
+  #     )
+  #   ) 
+  # )
+  
+  expect_message(
+    template_geographic_coverage(
+      path = tempdir(), 
+      data.path = system.file(
+        '/examples/data',
+        package = 'EMLassemblyline'
+      ), 
+      data.table = 'nitrogen.csv', 
+      site.col = 'site_name', 
+      lat.col = 'site_lat',
+      lon.col = 'site_lon',
+      write.file = TRUE
+    )
+  )
+  
 })
 
 # Test usage with x inputs ----------------------------------------------------

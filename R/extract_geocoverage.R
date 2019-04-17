@@ -121,7 +121,6 @@ extract_geocoverage <- function(path, data.path = path, data.table, lat.col,
     # Read data table
     
     x <- make_arguments(
-      path = path,
       data.path = data.path,
       data.table = data_file
     )

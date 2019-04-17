@@ -56,7 +56,7 @@
 
 template_geographic_coverage <- function(path, data.path = path, data.table, 
                                          lat.col, lon.col, site.col, x = NULL, 
-                                         write.file = TRUE, data.file){
+                                         write.file = TRUE){
   
   message('Creating geographic coverage template.')
   
@@ -79,18 +79,6 @@ template_geographic_coverage <- function(path, data.path = path, data.table,
     fun.name = 'template_geographic_coverage',
     fun.args = as.list(environment())
   )
-  
-  # Handle deprecated arguments
-  
-  if (!missing(data.file)){
-    
-    warning(
-      'Argument "data.file" is deprecated; please use "data.table" instead.',
-      call. = FALSE)
-    
-    data.table <- data.file
-    
-  }
   
   # Read data -----------------------------------------------------------------
   
@@ -115,7 +103,6 @@ template_geographic_coverage <- function(path, data.path = path, data.table,
     # Read data table
     
     x <- make_arguments(
-      path = path,
       data.path = data.path,
       data.table = data_file
     )
