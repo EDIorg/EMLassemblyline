@@ -214,7 +214,7 @@ define_catvars <- function(path, data.path = path, x = NULL,
 
         # Write template to file
 
-        if (isTRUE(write.file) & is.null(x)){
+        if (isTRUE(write.file) & exists('data_read_2_x')){
           
           message(paste("Writing", fname_table_catvars[i]))
           suppressWarnings(utils::write.table(catvars,
