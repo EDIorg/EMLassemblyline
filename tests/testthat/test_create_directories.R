@@ -24,20 +24,24 @@ testthat::test_that('Directories exist', {
 
 # Directories don't exist -----------------------------------------------------
 
-# testthat::test_that('Directories do not exist', {
-#   
-#   # Mock these tests
-#   
-#   expect_error(
-#     suppressMessages(
-#       create_directories(
-#         path = system.file(
-#           '/examples',
-#           package = 'EMLassemblyline'
-#         ),
-#         dir.name = 'templates'
-#       ) 
-#     )
-#   )
-#   
-# })
+testthat::test_that("Directories don't exist", {
+
+  # Normal use results in directory structure
+
+  suppressMessages(
+    create_directories(
+      path = tempdir(),
+      dir.name = 'edi_101'
+    ) 
+  )
+  
+  expect_true(
+    dir.exists(
+      paste0(
+        tempdir(),
+        '/edi_101'
+      )
+    )
+  )
+
+})
