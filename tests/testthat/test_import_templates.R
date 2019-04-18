@@ -129,7 +129,7 @@ testthat::test_that('File inputs = no data tables', {
       ) 
     )
   )
-  
+
 })
 
 
@@ -252,8 +252,7 @@ testthat::test_that('Test usage with file inputs', {
       )
     )
   )
-  
-  
+
   # New imports result in messages
   
   expect_message(
@@ -324,6 +323,26 @@ testthat::test_that('Test usage with file inputs', {
   )
   
   # write.file = TRUE writes files to path
+  
+  expect_message(
+    suppressWarnings(
+      import_templates(
+        path = tempdir(),
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        data.table = c(
+          'decomp.csv',
+          'nitrogen.csv'
+        ),
+        license = 'CC0',
+        write.file = TRUE
+      ) 
+    )
+  )
+  
+  # write.file = TRUE does not overwrite existing files
   
   expect_message(
     suppressWarnings(
@@ -491,12 +510,14 @@ testthat::test_that('x inputs = NULL', {
           '/examples',
           package = 'EMLassemblyline'
         ),
-        x = output,
+        x = x,
         license = 'CCBY',
         write.file = FALSE
       ) 
     )
   )
+  
+  
 
 })
 
@@ -713,6 +734,34 @@ testthat::test_that('x inputs = data tables', {
         x = output,
         license = 'CC0',
         write.file = FALSE
+      ) 
+    )
+  )
+  
+  # Invalid column names result in error
+  
+  input <- x
+  
+  colnames(input$data.table$nitrogen.csv$content)[
+    colnames(input$data.table$nitrogen.csv$content) == 'STEM_MASS_DENSITY'
+    ] <- 'STEM.MASS.DENSITY'
+  
+  expect_error(
+    suppressMessages(
+      suppressWarnings(
+        import_templates(
+          data.path = system.file(
+            '/examples/data',
+            package = 'EMLassemblyline'
+          ),
+          data.table = c(
+            'decomp.csv',
+            'nitrogen.csv'
+          ),
+          x = input,
+          license = 'CC0',
+          write.file = FALSE
+        ) 
       ) 
     )
   )

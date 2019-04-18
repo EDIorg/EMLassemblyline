@@ -119,7 +119,7 @@ testthat::test_that('Inputs = NULL', {
     )
     
   }
-  
+
 })
 
 # Inputs = templates ----------------------------------------------------------
@@ -328,6 +328,29 @@ testthat::test_that('Inputs = templates and data tables', {
     )
     
   }
+  
+  # Use of the sep argument helps read in data tables
+  
+  expect_equal(
+    class(
+      make_arguments(
+        path = system.file(
+          '/examples/templates',
+          package = 'EMLassemblyline'
+        ),
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        data.table = c(
+          'decomp.csv',
+          'nitrogen.csv'
+        ),
+        sep = ','
+      ) 
+    ),
+    'list'
+  )
   
 })
 
