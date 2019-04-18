@@ -281,4 +281,48 @@ testthat::test_that('x inputs = data tables', {
     )
   )
   
+  # Invalid column names result in error
+  
+  input <- x
+  
+  colnames(input$data.table$nitrogen.csv$content)[
+    colnames(input$data.table$nitrogen.csv$content) == 'STEM_MASS_DENSITY'
+  ] <- 'STEM.MASS.DENSITY'
+  
+  expect_error(
+    suppressMessages(
+      template_table_attributes(
+        path = tempdir(),
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        data.table = c(
+          'decomp.csv',
+          'nitrogen.csv'
+        ),
+        x = input,
+        write.file = FALSE
+      ) 
+    )
+  )
+  
+  # write.file = TRUE writes files to path
+  
+  expect_message(
+    template_table_attributes(
+      path = tempdir(),
+      data.path = system.file(
+        '/examples/data',
+        package = 'EMLassemblyline'
+      ),
+      data.table = c(
+        'decomp.csv',
+        'nitrogen.csv'
+      ),
+      x = x,
+      write.file = TRUE
+    )
+  )
+  
 })

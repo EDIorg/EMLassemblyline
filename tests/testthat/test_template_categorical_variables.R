@@ -17,6 +17,20 @@ testthat::test_that('Test usage with file inputs', {
     recursive = TRUE
   )
   
+  file.remove(
+    paste0(
+      tempdir(),
+      '/templates/catvars_decomp.txt'
+    )
+  )
+  
+  file.remove(
+    paste0(
+      tempdir(),
+      '/templates/catvars_nitrogen.txt'
+    )
+  )
+  
   expect_message(
     suppressWarnings(
       template_categorical_variables(

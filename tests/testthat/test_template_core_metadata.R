@@ -106,6 +106,14 @@ testthat::test_that('File inputs = no data tables', {
     )
   )
   
+  expect_message(
+    template_core_metadata(
+      path = tempdir(),
+      license = 'CCBY',
+      write.file = TRUE
+    )
+  )
+  
 })
 
 # x inputs = NULL -------------------------------------------------------------
@@ -241,6 +249,20 @@ testthat::test_that('x inputs = NULL', {
       ),
       x = output,
       license = 'CC0',
+      write.file = FALSE
+    )
+  )
+  
+  # CCBY is supported
+  
+  expect_message(
+    template_core_metadata(
+      path = system.file(
+        '/examples',
+        package = 'EMLassemblyline'
+      ),
+      x = output,
+      license = 'CCBY',
       write.file = FALSE
     )
   )

@@ -120,6 +120,16 @@ testthat::test_that('File inputs = no data tables', {
     )
   )
   
+  expect_message(
+    suppressWarnings(
+      import_templates(
+        path = tempdir(), 
+        license = 'CCBY',
+        write.file = TRUE
+      ) 
+    )
+  )
+  
 })
 
 
@@ -467,6 +477,22 @@ testthat::test_that('x inputs = NULL', {
         ),
         x = output,
         license = 'CC0',
+        write.file = FALSE
+      ) 
+    )
+  )
+  
+  # CCBY is supported
+  
+  expect_message(
+    suppressWarnings(
+      import_templates(
+        path = system.file(
+          '/examples',
+          package = 'EMLassemblyline'
+        ),
+        x = output,
+        license = 'CCBY',
         write.file = FALSE
       ) 
     )
