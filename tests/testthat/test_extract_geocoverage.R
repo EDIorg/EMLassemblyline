@@ -628,17 +628,19 @@ testthat::test_that('Test usage with x inputs', {
   # Writing to file results in messages
   
   expect_message(
-    extract_geocoverage(
-      path = tempdir(), 
-      data.path = system.file(
-        '/examples/data',
-        package = 'EMLassemblyline'
-      ), 
-      data.table = 'nitrogen.csv', 
-      site.col = 'site_name', 
-      lat.col = 'site_lat',
-      lon.col = 'site_lon',
-      write.file = TRUE
+    suppressWarnings(
+      extract_geocoverage(
+        path = tempdir(), 
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ), 
+        data.table = 'nitrogen.csv', 
+        site.col = 'site_name', 
+        lat.col = 'site_lat',
+        lon.col = 'site_lon',
+        write.file = TRUE
+      ) 
     )
   )
 
