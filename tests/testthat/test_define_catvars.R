@@ -6,6 +6,33 @@ library(EMLassemblyline)
 
 testthat::test_that('Test usage with file inputs', {
   
+  # write.file = TRUE writes files to path
+  
+  file.copy(
+    from = system.file(
+      '/examples/templates',
+      package = 'EMLassemblyline'
+    ),
+    to = tempdir(),
+    recursive = TRUE
+  )
+  
+  expect_message(
+    suppressWarnings(
+      define_catvars(
+        path = paste0(
+          tempdir(),
+          '/templates'
+        ), 
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        write.file = TRUE
+      ) 
+    )
+  )
+  
   # Correct argument use results in messages
   
   expect_message(

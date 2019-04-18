@@ -118,6 +118,23 @@ testthat::test_that('Test usage with file inputs', {
     )
   )
   
+  # write.file = TRUE writes files to path
+  
+  expect_message(
+    template_table_attributes(
+      path = tempdir(),
+      data.path = system.file(
+        '/examples/data',
+        package = 'EMLassemblyline'
+      ),
+      data.table = c(
+        'decomp.csv',
+        'nitrogen.csv'
+      ),
+      write.file = TRUE
+    )
+  )
+  
 })
 
 # x inputs = data tables ------------------------------------------------------

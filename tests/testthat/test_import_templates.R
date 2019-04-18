@@ -108,6 +108,18 @@ testthat::test_that('File inputs = no data tables', {
     )
   )
   
+  # write.file = TRUE writes files to path
+  
+  expect_message(
+    suppressWarnings(
+      import_templates(
+        path = tempdir(), 
+        license = 'CC0',
+        write.file = TRUE
+      ) 
+    )
+  )
+  
 })
 
 
@@ -297,6 +309,26 @@ testthat::test_that('Test usage with file inputs', {
         ),
         license = 'CC0',
         write.file = FALSE
+      ) 
+    )
+  )
+  
+  # write.file = TRUE writes files to path
+  
+  expect_message(
+    suppressWarnings(
+      import_templates(
+        path = tempdir(),
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        data.table = c(
+          'decomp.csv',
+          'nitrogen.csv'
+        ),
+        license = 'CC0',
+        write.file = TRUE
       ) 
     )
   )

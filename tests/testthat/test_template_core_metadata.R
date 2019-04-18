@@ -96,6 +96,16 @@ testthat::test_that('File inputs = no data tables', {
     )
   )
   
+  # write.file = TRUE writes files to path
+  
+  expect_message(
+    template_core_metadata(
+      path = tempdir(),
+      license = 'CC0',
+      write.file = TRUE
+    )
+  )
+  
 })
 
 # x inputs = NULL -------------------------------------------------------------
