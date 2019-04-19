@@ -7,49 +7,58 @@
 template_taxonomic_coverage(
       path,
       data.path = path,
+      taxa.table,
       taxa.col,
+      taxa.name.type,
+      taxa.authority,
       x = NULL,
       write.file = TRUE
     )
 }
 \arguments{
-\item{path}{(character) Path to where the template(s) will be imported.}
+\item{path}{(character) Path to where the template will be written.}
 
-\item{data.path}{(character) Path to where the data files are stored.}
+\item{data.path}{(character) Path to where \code{taxa.table} is stored.}
 
-\item{x}{(named list) Alternative input/output to `EMLassemblyline` functions. 
-Use `make_arguments()` to create `x`.}
+\item{taxa.table}{(character) Name of data table containing \code{taxa.col}.}
 
-\item{write.file}{(logical) Write `catvars` file to `path`.}
+\item{taxa.col}{(character) Name of column in \code{taxa.table} containing taxa names.
+Names can be single words or species binomials.}
 
-\item{name.type}{(character) Taxonomic name type. Can be: 'scientific', 'common', or 
-'both'.}
+\item{taxa.name.type}{(character) Type of taxa names in \code{taxa.col} Can be: 
+\code{scientific}, \code{common}, or \code{both}.}
 
-\item{data.sources}{(integer) An ordered numeric vector of ID's corresponding to data 
-sources (i.e. taxonomic authorities) you'd like to query, in the order 
-of decreasing preference. Run `taxonomyCleanr::view_taxa_authorities` 
-to see supported data sources. Columns `resolve_sci_taxa`, and 
-`resolve_comm_taxa` correspond to scientific and common searches.}
-}
-\value{
-\itemize{
-        \item{`catvars_*.txt` A tab delimited file written to `path`
-        containing codes to be defined. Each template is appended with the 
-        name of the data table from which the codes were extracted.}
-        \item{If using `x`, then content of `catvars_*.txt` is added to `x` 
-        under `/x/templates`.}
-    }
+\item{taxa.authority}{(integer) An ordered numeric vector of ID's corresponding to data 
+sources (i.e. taxonomic authorities) you'd like to resolve taxa names
+to, in the order of decreasing preference. See the list of supported
+data sources with \code{view_taxa_authorities}. Columns 
+"resolve_sci_taxa", and "resolve_comm_taxa" list authorites supporting
+scientific and common searches, respectively.}
+
+\item{x}{(named list) Alternative input/output to \code{EMLassemblyline} 
+functions. Use \code{make_arguments} to create \code{x}.}
+
+\item{write.file}{(logical) Write "taxonomic_coverage.txt" to \code{path}.}
 }
 \description{
 Extract unique taxa and resolve to one or more taxonomic authorities. 
     \code{make_eml} will use this information to get the taxonomic hierarchy
-    for each taxa and add to the EML. The resulting metadata facilitates
-    findability of data by searching on any rank of the taxa.
+    for each taxa and add to the EML. The metadata resulting from this 
+    function allows searching on any rank of the taxa.
 }
 \details{
-`template_categorical_variables` knows which variables are `categorical` based on their 
-    listing under the `class` column in the `attributes_*.txt` file(s). 
+\code{template_taxonomic_coverage} searches the most preferred taxonomic
+    authority for all unique taxa listed in \code{taxa.col} returning
+    the authority name and corresponding taxa identifier for direct matches
+    (no fuzzy searching), then the next most preferred taxonomic authority
+    is search for taxa that have not yet been resolved. This process repeats
+    for subsequently listed authorities. "NA" is returned when an authority 
+    match is not made.
     
-    Existing template(s) will not be overwritten by subsequent calls to 
-    `template_categorical_variables()`.
+    When "taxonomic_coverage.txt" is passed to \code{make_eml}, the 
+    authority information is used to get the hierarchical rank names of 
+    resolved taxa and rendered into the "taxonomicCoverage" element of EML.
+    
+    Existing "taxonomic_coverage.txt" will not be overwritten by subsequent 
+    calls to \code{template_taxonomic_coverage}.
 }

@@ -108,6 +108,18 @@
 #'     \item{\strong{site.col} (character) Name of site column, where
 #'     site is the name of the location specified by \code{lat.col} and 
 #'     \code{lon.col}.}
+#'     \item{\strong{taxa.authority} (integer) An ordered numeric vector of 
+#'     ID's corresponding to data sources (i.e. taxonomic authorities) 
+#'     you'd like to query, in the order of decreasing preference. Run 
+#'     \code{view_taxa_authorities} to see supported data sources. Columns 
+#'     "resolve_sci_taxa", and "resolve_comm_taxa" correspond to scientific 
+#'     and common searches.
+#'     \item{\strong{taxa.col} (character) Name of column in 
+#'     \code{taxa.table}containing taxonomic names.
+#'     \item{\strong{taxa.name.type} (character) Taxonomic name type. Can be: 
+#'     \code{scientific}, \code{common}, or \code{both}.
+#'     \item{\strong{taxa.table} (character) Name of data table containing 
+#'     \code{taxa.col}.
 #'     \item{\strong{temporal.coverage} (character) Beginning and ending 
 #'     dates of the dataset as a vector of character strings in the 
 #'     format \code{YYYY-MM-DD}.}
@@ -653,7 +665,7 @@ make_arguments <- function(
            
         } else {
           
-          colClasses = c("character","numeric","numeric","numeric","numeric")
+          colClasses = c("character","character","character","character","character")
           
           output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:5]
           
@@ -663,26 +675,6 @@ make_arguments <- function(
             'southBoundingCoordinate', 
             'eastBoundingCoordinate', 
             'westBoundingCoordinate'
-          )
-          
-          output$x$template[[i]]$content$geographicDescription <- as.character(
-            output$x$template[[i]]$content$geographicDescription
-          )
-          
-          output$x$template[[i]]$content$northBoundingCoordinate <- as.character(
-            output$x$template[[i]]$content$northBoundingCoordinate
-          )
-          
-          output$x$template[[i]]$content$southBoundingCoordinate <- as.character(
-            output$x$template[[i]]$content$southBoundingCoordinate
-          )
-          
-          output$x$template[[i]]$content$eastBoundingCoordinate <- as.character(
-            output$x$template[[i]]$content$eastBoundingCoordinate
-          )
-          
-          output$x$template[[i]]$content$westBoundingCoordinate <- as.character(
-            output$x$template[[i]]$content$westBoundingCoordinate
           )
           
         }
@@ -847,6 +839,46 @@ make_arguments <- function(
       
     }
 
+  }
+  
+  if (stringr::str_detect(string = templates[i], pattern = 'taxonomic_coverage.txt')){
+    
+    if (file.exists(paste0(path, '/', templates[i]))){
+      
+      output$x$template[[i]]$content <- utils::read.table(
+        paste0(
+          path, 
+          '/', 
+          templates[i]
+        ),
+        header = T,
+        sep="\t",
+        quote="\"",
+        as.is=TRUE,
+        comment.char = "",
+        fill = T,
+        na.strings = "NA",
+        fileEncoding = "UTF-8"
+      )
+      
+      colClasses = c("character","character","character")
+      
+      output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:5]
+      
+      colnames(output$x$template[[i]]$content) <- c(
+        'taxa_name_raw',
+        'taxa_name_clean',
+        'authority_system', 
+        'authority_taxon_id'
+      )
+      
+      
+    } else {
+      
+      output$x$template[[i]]$content <- NA_character_
+      
+    }
+    
   }
   
   # Read data tables ----------------------------------------------------------

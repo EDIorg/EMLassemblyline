@@ -3,291 +3,266 @@
 #' @description  
 #'     Extract unique taxa and resolve to one or more taxonomic authorities. 
 #'     \code{make_eml} will use this information to get the taxonomic hierarchy
-#'     for each taxa and add to the EML. The resulting metadata facilitates
-#'     findability of data by searching on any rank of the taxa.
+#'     for each taxa and add to the EML. The metadata resulting from this 
+#'     function allows searching on any rank of the taxa.
 #'
 #' @usage 
 #'     template_taxonomic_coverage(
 #'       path,
 #'       data.path = path,
+#'       taxa.table,
 #'       taxa.col,
+#'       taxa.name.type,
+#'       taxa.authority,
 #'       x = NULL,
 #'       write.file = TRUE
 #'     )
 #'
 #' @param path 
-#'     (character) Path to where the template(s) will be imported.
+#'     (character) Path to where the template will be written.
 #' @param data.path
-#'     (character) Path to where the data files are stored.
-#' @param x
-#'     (named list) Alternative input/output to `EMLassemblyline` functions. 
-#'     Use `make_arguments()` to create `x`.
-#' @param write.file
-#'     (logical) Write `catvars` file to `path`.
-#' @param name.type
-#'     (character) Taxonomic name type. Can be: 'scientific', 'common', or 
-#'     'both'.
-#' @param data.sources
+#'     (character) Path to where \code{taxa.table} is stored.
+#' @param taxa.table
+#'     (character) Name of data table containing \code{taxa.col}.
+#' @param taxa.col
+#'     (character) Name of column in \code{taxa.table} containing taxa names.
+#'     Names can be single words or species binomials.
+#' @param taxa.name.type
+#'     (character) Type of taxa names in \code{taxa.col} Can be: 
+#'     \code{scientific}, \code{common}, or \code{both}.
+#' @param taxa.authority
 #'     (integer) An ordered numeric vector of ID's corresponding to data 
-#'     sources (i.e. taxonomic authorities) you'd like to query, in the order 
-#'     of decreasing preference. Run `taxonomyCleanr::view_taxa_authorities` 
-#'     to see supported data sources. Columns `resolve_sci_taxa`, and 
-#'     `resolve_comm_taxa` correspond to scientific and common searches.
+#'     sources (i.e. taxonomic authorities) you'd like to resolve taxa names
+#'     to, in the order of decreasing preference. See the list of supported
+#'     data sources with \code{view_taxa_authorities}. Columns 
+#'     "resolve_sci_taxa", and "resolve_comm_taxa" list authorites supporting
+#'     scientific and common searches, respectively.
+#' @param x
+#'     (named list) Alternative input/output to \code{EMLassemblyline} 
+#'     functions. Use \code{make_arguments} to create \code{x}.
+#' @param write.file
+#'     (logical) Write "taxonomic_coverage.txt" to \code{path}.
 #'
 #' @return 
 #'     \itemize{
-#'         \item{`catvars_*.txt` A tab delimited file written to `path`
-#'         containing codes to be defined. Each template is appended with the 
-#'         name of the data table from which the codes were extracted.}
-#'         \item{If using `x`, then content of `catvars_*.txt` is added to `x` 
-#'         under `/x/templates`.}
+#'         \item{\strong{taxonomic_coverage.txt} A tab delimited file written 
+#'         to \code{path} containing authority system names and authority IDs
+#'         for successfully resolved taxa, and "NA" otherwise.
+#'         \item{If using \code{x}, then content of "taxonomic_coverage.txt is 
+#'         added to \code{x} under "/x/templates".}
 #'     }
 #'     
 #' @details 
-#'     `template_categorical_variables` knows which variables are `categorical` based on their 
-#'     listing under the `class` column in the `attributes_*.txt` file(s). 
+#'     \code{template_taxonomic_coverage} searches the most preferred taxonomic
+#'     authority for all unique taxa listed in \code{taxa.col} returning
+#'     the authority name and corresponding taxa identifier for direct matches
+#'     (no fuzzy searching), then the next most preferred taxonomic authority
+#'     is search for taxa that have not yet been resolved. This process repeats
+#'     for subsequently listed authorities. "NA" is returned when an authority 
+#'     match is not made.
 #'     
-#'     Existing template(s) will not be overwritten by subsequent calls to 
-#'     `template_categorical_variables()`.
+#'     When "taxonomic_coverage.txt" is passed to \code{make_eml}, the 
+#'     authority information is used to get the hierarchical rank names of 
+#'     resolved taxa and rendered into the "taxonomicCoverage" element of EML.
+#'     
+#'     Existing "taxonomic_coverage.txt" will not be overwritten by subsequent 
+#'     calls to \code{template_taxonomic_coverage}.
 #'
 #' @export
 #'
 
-template_taxonomic_coverage <- function(path, data.path = path, x = NULL, 
-                           write.file = TRUE) {
+template_taxonomic_coverage <- function(
+  path, 
+  data.path = path, 
+  taxa.table,
+  taxa.col,
+  taxa.name.type,
+  taxa.authority,
+  x = NULL, 
+  write.file = TRUE
+  ){
   
-  # message('Creating categorical variable template.')
-  # 
-  # # Validate arguments and import data ------------------------------------------
-  # 
-  # # Validate path usage before passing arguments to validate_arguments()
-  # # When not using x, inputs are expected from path and data.path. 
-  # # When using x, only data.path is used. Ignored are path and write.file.
-  # 
-  # if (is.null(x) & missing(path)){
-  #   stop('Input argument "path" is missing.')
-  # } else if (!is.null(x) & missing(path)){
-  #   path <- NULL
-  #   if (missing(data.path)){
-  #     stop('Input argument "data.path" is missing.')
-  #   }
-  # }
-  # 
-  # # Pass remaining arguments to validate_arguments().
-  # 
-  # validate_arguments(
-  #   fun.name = 'template_categorical_variables',
-  #   fun.args = as.list(environment())
-  # )
-  # 
-  # # If not using x ...
-  # 
-  # if (is.null(x)){
-  #   
-  #   # Get attribute file names and data file names
-  #   
-  #   files <- list.files(path)
-  #   use_i <- stringr::str_detect(string = files,
-  #                                pattern = "^attributes")
-  #   
-  #   attribute_files <- files[use_i]
-  #   table_names_base <- stringr::str_sub(string = attribute_files,
-  #                                        start = 12,
-  #                                        end = nchar(attribute_files)-4)
-  #   data_files <- list.files(data.path)
-  #   use_i <- stringr::str_detect(string = data_files,
-  #                                pattern = stringr::str_c("^", table_names_base, collapse = "|"))
-  #   table_names <- data_files[use_i]
-  #   data_files <- table_names
-  #   
-  #   # Read templates and data.table into list
-  #   
-  #   x <- make_arguments(
-  #     path = path,
-  #     data.path = data.path,
-  #     data.table = data_files
-  #   )
-  #   
-  #   x <- x$x
-  #   
-  #   data_read_2_x <- TRUE
-  #   
-  # }
-  # 
-  # # Extract categorical variables and write to file ---------------------------
-  # 
-  # table_names <- names(x$data.table)
-  # 
-  # fname_table_catvars <- paste0(
-  #   'catvars_',
-  #   substr(names(x$data.table), 1, (nchar(names(x$data.table))-4)),
-  #   '.txt'
-  # )
-  # 
-  # attribute_files <- names(x$template)[
-  #   stringr::str_detect(
-  #     names(x$template),
-  #     'attributes_[:graph:]*.txt$'
-  #   )
-  #   ]
-  # 
-  # files <- names(x$template)
-  # 
-  # for (i in 1:length(attribute_files)){
-  #   
-  #   use_i <- stringr::str_detect(
-  #     string = files,
-  #     pattern = fname_table_catvars[i]
-  #   )
-  #   
-  #   if (sum(use_i) > 0){
-  #     
-  #     message(paste(files[use_i], "already exists! Skipping this one."))
-  #     
-  #     catvars <- NULL
-  #     
-  #   } else {
-  #     
-  #     # Read attributes_datatablename.txt
-  #     
-  #     df_attributes <- x$template[[attribute_files[i]]]$content
-  #     
-  #     # Build catvars table
-  #     
-  #     catvars_I <- which(df_attributes$class %in% "categorical")
-  #     
-  #     # Read data table
-  #     
-  #     df_table <- x$data.table[[table_names[i]]]$content
-  #     
-  #     # If there are no catvars then skip to the next file
-  #     
-  #     if (length(catvars_I) > 0){
-  #       
-  #       rows <- 0
-  #       for (j in 1:length(catvars_I)){
-  #         factor_names <- unique(
-  #           eval(
-  #             parse(
-  #               text = paste(
-  #                 "df_table",
-  #                 "$",
-  #                 df_attributes$attributeName[catvars_I[j]],
-  #                 sep = ""))))
-  #         
-  #         rows <- length(factor_names) + rows
-  #         
-  #       }
-  #       
-  #       catvars <- data.frame(attributeName = character(rows),
-  #                             code = character(rows),
-  #                             definition = character(rows),
-  #                             stringsAsFactors = F)
-  #       
-  #       row <- 1
-  #       for (j in 1:length(catvars_I)){
-  #         
-  #         factor_names <- unique(
-  #           eval(
-  #             parse(
-  #               text = paste(
-  #                 "df_table",
-  #                 "$",
-  #                 df_attributes$attributeName[catvars_I[j]],
-  #                 sep = ""))))
-  #         
-  #         catvars$attributeName[row:(length(factor_names)+row-1)] <-
-  #           df_attributes$attributeName[catvars_I[j]]
-  #         
-  #         catvars$code[row:(length(factor_names)+row-1)] <- factor_names
-  #         
-  #         row <- row + length(factor_names)
-  #         
-  #       }
-  #       
-  #       # Remove rows with empty codes
-  #       
-  #       use_i <- catvars$code == ""
-  #       if (sum(use_i, na.rm = T) > 0){
-  #         use_i <- match("", catvars$code)
-  #         index <- seq(length(catvars$code))
-  #         use_i <- index %in% use_i
-  #         catvars <- catvars[!use_i, ]
-  #       }
-  #       
-  #       # Write template to file
-  #       
-  #       if (isTRUE(write.file) & is.null(x)){
-  #         
-  #         message(paste("Writing", fname_table_catvars[i]))
-  #         suppressWarnings(utils::write.table(catvars,
-  #                                             paste(path,
-  #                                                   "/",
-  #                                                   fname_table_catvars[i],
-  #                                                   sep = ""),
-  #                                             sep = "\t",
-  #                                             row.names = F,
-  #                                             quote = F,
-  #                                             fileEncoding = "UTF-8"))
-  #         
-  #         # Add template to x
-  #         
-  #       } else if (!exists('data_read_2_x')){
-  #         
-  #         value <- stringr::str_detect(
-  #           names(x$template),
-  #           fname_table_catvars[i]
-  #         )
-  #         
-  #         if (!any(value)){
-  #           
-  #           message(
-  #             paste0(
-  #               "Adding ",
-  #               fname_table_catvars[i],
-  #               ' to x'
-  #             )
-  #           )
-  #           
-  #           missing_template <- list(
-  #             content = catvars
-  #           )
-  #           
-  #           missing_template <- list(
-  #             missing_template
-  #           )
-  #           
-  #           names(missing_template) <- fname_table_catvars[i]
-  #           
-  #           x$template <- c(
-  #             x$template, 
-  #             missing_template
-  #           )
-  #           
-  #         }
-  #         
-  #       }
-  #       
-  #     } else {
-  #       
-  #       message("No categorical variables found.")
-  #       
-  #       catvars <- NULL
-  #       
-  #     }
-  #     
-  #   }
-  #   
-  # }
-  # 
-  # message("Done.")
-  # 
-  # # Return
-  # 
-  # if (!exists('data_read_2_x')){
-  #   
-  #   x
-  #   
-  # }
+  message('Creating taxonomic coverage template.')
+
+  # Validate arguments --------------------------------------------------------
+
+  # Validate path usage before passing arguments to validate_arguments()
+  # When not using x, inputs are expected from path and data.path.
+  # When using x, only data.path is used.
+
+  if (is.null(x) & missing(path)){
+    stop('Input argument "path" is missing.')
+  } else if (!is.null(x) & missing(path)){
+    path <- NULL
+    if (missing(data.path)){
+      stop('Input argument "data.path" is missing.')
+    }
+  }
+
+  # Pass remaining arguments to validate_arguments().
+
+  validate_arguments(
+    fun.name = 'template_taxonomic_coverage',
+    fun.args = as.list(environment())
+  )
+  
+  # Check for existing content
+  
+  if (is.null(x)){
+    if (isTRUE('taxonomic_coverage.txt' %in% list.files(path))){
+      stop('taxonomic_coverage.txt already exists.')
+    }
+  } else if (!is.null(x)){
+    if (!is.null(x$template$taxonomic_coverage.txt$content)){
+      stop('taxonomic_coverage.txt already exists.')
+    }
+  }
+  
+  # Read data -----------------------------------------------------------------
+
+  # Create x if it doesn't exist
+  
+  if (is.null(x)){
+    
+    # Validate file name
+    
+    data_file <- EDIutils::validate_file_names(
+      path = data.path, 
+      data.files = taxa.table
+    )
+
+    # Read templates and data.table into list
+
+    x <- make_arguments(
+      data.path = data.path,
+      data.table = data_file
+    )
+
+    x <- x$x
+
+    data_read_2_x <- TRUE
+
+  }
+  
+  # Initialize output data frame ----------------------------------------------
+  
+  taxa_raw <- unique(
+    x$data.table[[1]]$content[ , taxa.col]
+  )
+  
+  taxa_clean <- taxonomyCleanr::trim_taxa(
+    x = taxa_raw
+  )
+  
+  output <- data.frame(
+    taxa_name_raw = taxa_raw,
+    taxa_name_cleanr = taxa_clean,
+    authority_system = rep(NA_character_, length(taxa_raw)), 
+    authority_taxon_id = rep(NA_character_, length(taxa_raw)),
+    stringsAsFactors = FALSE
+  )
+
+  # Resolve scientific names --------------------------------------------------
+  
+  if (name.type == 'scientific'){
+    
+    taxa_resolved <- taxonomyCleanr::resolve_sci_taxa(
+      data.sources = data.sources,
+      x = taxa
+    )
+    
+    # Add to taxon table
+    
+    taxon <- data.frame(
+      taxon_id = rep(NA_character_, nrow(taxa_resolved)),
+      taxon_rank = taxa_resolved$rank,
+      taxon_name = taxa_resolved$taxa,
+      authority_system = taxa_resolved$authority,
+      authority_taxon_id = taxa_resolved$authority_id,
+      stringsAsFactors = F
+    )
+    
+  }
+  
+  # Resolve common names ------------------------------------------------------
+  
+  if (name.type == 'common'){
+    
+    taxa_resolved <- taxonomyCleanr::resolve_comm_taxa(
+      data.sources = data.sources,
+      x = taxa
+    )
+    
+    # Add to taxon table
+    
+    taxon <- data.frame(
+      taxon_id = rep(NA_character_, nrow(taxa_resolved)),
+      taxon_rank = taxa_resolved$rank,
+      taxon_name = taxa_resolved$taxa,
+      authority_system = taxa_resolved$authority,
+      authority_taxon_id = taxa_resolved$authority_id,
+      stringsAsFactors = F
+    )
+    
+  }
+  
+  # Resolve scientific and common names ---------------------------------------
+  
+  if (name.type == 'both'){
+    
+    authorities <- taxonomyCleanr::view_taxa_authorities()
+    
+    # Scientific
+    
+    use_i <- data.sources %in% authorities$id[
+      authorities$resolve_sci_taxa == 'supported'
+      ]
+    
+    taxa_resolved <- taxonomyCleanr::resolve_sci_taxa(
+      data.sources = data.sources[use_i],
+      x = taxa
+    )
+    
+    # Common
+    
+    index <- is.na(taxa_resolved$taxa_clean)
+    
+    use_i <- data.sources %in% authorities$id[
+      authorities$resolve_comm_taxa == 'supported'
+      ]
+    
+    taxa_comm_resolved <- taxonomyCleanr::resolve_comm_taxa(
+      data.sources = data.sources[use_i],
+      x = taxa_resolved$taxa[index]
+    )
+    
+    # Combine
+    
+    taxa_resolved[index, ] <- taxa_comm_resolved
+    
+    # Add to taxon table
+    
+    taxon <- data.frame(
+      taxon_id = rep(NA_character_, nrow(taxa_resolved)),
+      taxon_rank = taxa_resolved$rank,
+      taxon_name = taxa_resolved$taxa,
+      authority_system = taxa_resolved$authority,
+      authority_taxon_id = taxa_resolved$authority_id,
+      stringsAsFactors = F
+    )
+    
+  }
+  
+  # Write to file or add to x -------------------------------------------------
+  
+  message("Done.")
+
+  # Return
+
+  if (!exists('data_read_2_x')){
+
+    x
+
+  }
   
 }

@@ -173,6 +173,11 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "taxonomyCleanr",
+      "name": "taxonomyCleanr"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "EDIutils",
       "name": "EDIutils",
       "sameAs": "https://github.com/EDIorg/EDIutils"
@@ -180,7 +185,7 @@
   ],
   "codeRepository": "https://github.com/EDIorg/EMLassemblyline",
   "readme": "https://github.com/clnsmth/EMLassemblyline/blob/master/README.md",
-  "fileSize": "162.725KB",
+  "fileSize": "163.545KB",
   "contIntegration": [
     "https://travis-ci.org/clnsmth/EMLassemblyline",
     "https://codecov.io/github/clnsmth/EMLassemblyline?branch=master"

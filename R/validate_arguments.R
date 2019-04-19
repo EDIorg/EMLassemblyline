@@ -534,7 +534,75 @@ validate_arguments <- function(fun.name, fun.args){
   
   if (fun.name == 'template_taxonomic_coverage'){
     
+    # taxa.table
+
+    data_files <- EDIutils::validate_file_names(
+      path = fun.args$data.path, 
+      data.files = fun.args$taxa.table
+    )
     
+    EDIutils::validate_fields(
+      path = fun.args$data.path, 
+      data.files = data_files
+    )
+    
+    # taxa.col
+    
+    if (is.null(fun.args$x)){
+      
+      x <- make_arguments(
+        path = path,
+        data.path = data.path,
+        data.table = data_files
+      )
+      
+      x <- x$x
+      
+      if (!isTRUE(taxa.col %in% colnames(x$data.table[[1]]$content))){
+        stop('Input argument "taxa.col" can not be found in "taxa.table".')
+      }
+      
+    } else if (!is.null(fun.args$x)){
+      
+      if (!isTRUE(taxa.col %in% colnames(x$data.table[[1]]$content))){
+        stop('Input argument "taxa.col" can not be found in "taxa.table"')
+      }
+      
+    }
+    
+    # taxa.name.type
+    
+    if (is.null(fun.args$taxa.name.type)){
+      
+      stop('Input argument "taxa.name.type" is missing.')
+      
+    } else {
+      
+      if ((!stringr::str_detect(tolower(fun.args$taxa.name.type), 'scientific')) & 
+          (!stringr::str_detect(tolower(fun.args$taxa.name.type), 'common')) &
+          (!stringr::str_detect(tolower(fun.args$taxa.name.type), 'both'))){
+        
+        stop('Input argument "taxa.name.type" must be "scientific", "common", or "both".')
+      }
+      
+    }
+    
+    # taxa.authority
+    
+    if (is.null(fun.args$taxa.authority)){
+      stop('Input argument "taxa.authority" is missing.')
+    }
+    
+    authorities <- taxonomyCleanr::view_taxa_authorities()
+    
+    authorities <- authorities[authorities$resolve_sci_taxa == 'supported', ]
+    
+    use_i <- as.character(data.sources) %in% as.character(authorities$id)
+    
+    if (sum(use_i) != length(use_i)){
+      stop('Input argument "taxa.authority" contains unsupported data source IDs!')
+    }
+  
   }
   
   
