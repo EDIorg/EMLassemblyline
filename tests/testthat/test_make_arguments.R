@@ -208,6 +208,20 @@ testthat::test_that('Template inputs', {
     
   }
   
+  # New geographic_coverage.txt is supported
+  
+  expect_equal(
+    class(
+      make_arguments(
+        path = system.file(
+          '/examples/templates_new_geocoverage',
+          package = 'EMLassemblyline'
+        )
+      )
+    ),
+    'list'
+  )
+  
 })
 
 # Inputs = templates and data tables ------------------------------------------
