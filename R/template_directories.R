@@ -5,7 +5,7 @@
 #'     and outputs. You're welcome to organize content in any way you choose,
 #'     this is just one approach.
 #'
-#' @usage create_directories(path, dir.name)
+#' @usage template_directories(path, dir.name)
 #'
 #' @param path 
 #'     (character) Path to where the directory structure will be created.
@@ -34,7 +34,7 @@
 #' @export
 #'
 
-create_directories <- function(path, dir.name){
+template_directories <- function(path, dir.name){
   
   # Stop if directory exists
   

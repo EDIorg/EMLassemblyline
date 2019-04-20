@@ -10,7 +10,7 @@ testthat::test_that('Directories exist', {
   
   expect_error(
     suppressMessages(
-      create_directories(
+      template_directories(
         path = system.file(
           '/examples',
           package = 'EMLassemblyline'
@@ -29,7 +29,7 @@ testthat::test_that("Directories don't exist", {
   # Normal use results in directory structure
 
   suppressMessages(
-    create_directories(
+    template_directories(
       path = tempdir(),
       dir.name = 'edi_101'
     ) 

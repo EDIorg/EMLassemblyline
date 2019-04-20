@@ -14,7 +14,7 @@ reference:
   - title: Helpers
     desc: Helper functions for creating metadata
     contents:
-    - create_directories
     - template_arguments
+    - template_directories
     - view_unit_dictionary
     
