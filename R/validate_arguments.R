@@ -346,9 +346,9 @@ validate_arguments <- function(fun.name, fun.args){
 
   }
   
-  # Call from make_arguments() ------------------------------------------------
+  # Call from template_arguments() ------------------------------------------------
   
-  if (fun.name == 'make_arguments'){
+  if (fun.name == 'template_arguments'){
     
     # path
     
@@ -569,7 +569,7 @@ validate_arguments <- function(fun.name, fun.args){
     
     if (is.null(fun.args$x)){
       
-      x <- make_arguments(
+      x <- template_arguments(
         data.path = fun.args$data.path,
         data.table = data_files
       )

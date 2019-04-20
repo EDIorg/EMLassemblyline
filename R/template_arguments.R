@@ -9,7 +9,7 @@
 #'     to \code{EMLassemblyline} functions.
 #'
 #' @usage 
-#'     make_arguments(
+#'     template_arguments(
 #'       path = NULL,
 #'       data.path = NULL,
 #'       data.table = NULL,
@@ -31,7 +31,7 @@
 #'     \code{other.entity = c('ancillary_data.zip', 'quality_control.R')}).
 #' @param sep
 #'     (character) Data table field delimiter. Use this argument if 
-#'     \code{make_arguments} fails to automatically identify field delimiters of 
+#'     \code{template_arguments} fails to automatically identify field delimiters of 
 #'     \code{data.table}.
 #'
 #' @note 
@@ -113,13 +113,13 @@
 #'     you'd like to query, in the order of decreasing preference. Run 
 #'     \code{view_taxa_authorities} to see supported data sources. Columns 
 #'     "resolve_sci_taxa", and "resolve_comm_taxa" correspond to scientific 
-#'     and common searches.
+#'     and common searches.}
 #'     \item{\strong{taxa.col} (character) Name of column in 
-#'     \code{taxa.table}containing taxonomic names.
+#'     \code{taxa.table}containing taxonomic names.}
 #'     \item{\strong{taxa.name.type} (character) Taxonomic name type. Can be: 
-#'     \code{scientific}, \code{common}, or \code{both}.
+#'     \code{scientific}, \code{common}, or \code{both}}.
 #'     \item{\strong{taxa.table} (character) Name of data table containing 
-#'     \code{taxa.col}.
+#'     \code{taxa.col}}.
 #'     \item{\strong{temporal.coverage} (character) Beginning and ending 
 #'     dates of the dataset as a vector of character strings in the 
 #'     format \code{YYYY-MM-DD}.}
@@ -221,14 +221,13 @@
 #'                 \item{\strong{content} NA}
 #'            }
 #'        }
-#'             
-#'             }
+#'      }
 #'     }
 #'     
 #' @export
 #'
 
-make_arguments <- function(
+template_arguments <- function(
   path = NULL, 
   data.path = NULL, 
   data.table = NULL,
@@ -239,7 +238,7 @@ make_arguments <- function(
   # Validate arguments --------------------------------------------------------
   
   validate_arguments(
-    fun.name = 'make_arguments',
+    fun.name = 'template_arguments',
     fun.args = as.list(environment())
   )
   

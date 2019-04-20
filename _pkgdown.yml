@@ -6,6 +6,7 @@ reference:
     - template_core_metadata
     - template_geographic_coverage
     - template_table_attributes
+    - template_taxonomic_coverage
   - title: Make EML metdata
     desc: Function for creating EML from metadata templates, using automated metadata extraction when possible.
     contents:
@@ -14,6 +15,6 @@ reference:
     desc: Helper functions for creating metadata
     contents:
     - create_directories
-    - make_arguments
+    - template_arguments
     - view_unit_dictionary
     

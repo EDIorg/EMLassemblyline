@@ -39,7 +39,7 @@
 #'     scientific and common searches, respectively.
 #' @param x
 #'     (named list) Alternative input/output to \code{EMLassemblyline} 
-#'     functions. Use \code{make_arguments} to create \code{x}.
+#'     functions. Use \code{template_arguments} to create \code{x}.
 #' @param write.file
 #'     (logical) Write "taxonomic_coverage.txt" to \code{path}.
 #'
@@ -47,7 +47,7 @@
 #'     \itemize{
 #'         \item{\strong{taxonomic_coverage.txt} A tab delimited file written 
 #'         to \code{path} containing authority system names and authority IDs
-#'         for successfully resolved taxa, and "NA" otherwise.
+#'         for successfully resolved taxa, and "NA" otherwise.}
 #'         \item{If using \code{x}, then content of "taxonomic_coverage.txt is 
 #'         added to \code{x} under "/x/templates".}
 #'     }
@@ -131,7 +131,7 @@ template_taxonomic_coverage <- function(
 
     # Read templates and data.table into list
 
-    x <- make_arguments(
+    x <- template_arguments(
       data.path = data.path,
       data.table = data_file
     )

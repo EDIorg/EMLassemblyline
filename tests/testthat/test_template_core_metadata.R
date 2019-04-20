@@ -122,7 +122,7 @@ testthat::test_that('x inputs = NULL', {
   
   # Make function call
   
-  x <- make_arguments()
+  x <- template_arguments()
   
   x <- x$x
   

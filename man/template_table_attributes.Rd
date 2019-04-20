@@ -21,7 +21,7 @@ template_table_attributes(
 entered as arguments to `make_eml`.}
 
 \item{x}{(named list) Alternative input/output to `EMLassemblyline` functions. 
-Use `make_arguments()` to create `x`.}
+Use \code{template_arguments} to create `x`.}
 
 \item{write.file}{(logical) Write template files to `path`.}
 }

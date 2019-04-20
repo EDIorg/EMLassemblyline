@@ -39,7 +39,7 @@ other.entity <- 'ancillary_data.zip'
 other.entity.description <- 'Ancillary data'
 provenance <- 'edi.100.1'
 
-x_table <- make_arguments(
+x_table <- template_arguments(
   path = system.file(
     '/examples/templates', 
     package = 'EMLassemblyline'
@@ -58,7 +58,7 @@ x_table_docall <- x_table
 
 x_table <- x_table$x
 
-x_table_other <- make_arguments(
+x_table_other <- template_arguments(
   path = system.file(
     '/examples/templates', 
     package = 'EMLassemblyline'
@@ -78,7 +78,7 @@ x_table_other_docall <- x_table_other
 
 x_table_other <- x_table_other$x
 
-x_other <- make_arguments(
+x_other <- template_arguments(
   path = system.file(
     '/examples/templates', 
     package = 'EMLassemblyline'

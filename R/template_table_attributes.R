@@ -25,7 +25,7 @@
 #'     entered as arguments to `make_eml`.
 #' @param x
 #'     (named list) Alternative input/output to `EMLassemblyline` functions. 
-#'     Use `make_arguments()` to create `x`.
+#'     Use \code{template_arguments} to create `x`.
 #' @param write.file
 #'     (logical) Write template files to `path`.
 #'
@@ -84,7 +84,7 @@ template_table_attributes <- function(path, data.path = path,
       
       # Use NULL values
       
-      x <- make_arguments()
+      x <- template_arguments()
       
       x <- x$x
       
@@ -94,7 +94,7 @@ template_table_attributes <- function(path, data.path = path,
       
       # Read data tables
       
-      x <- make_arguments(
+      x <- template_arguments(
         data.path = data.path,
         data.table = data.table
       )

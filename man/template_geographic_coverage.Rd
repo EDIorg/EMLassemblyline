@@ -32,7 +32,7 @@ west of the prime meridian are negative.}
 specified by `lat.col` and `lon.col`.}
 
 \item{x}{(named list) Alternative input/output to `EMLassemblyline` functions. 
-Use `make_arguments()` to create `x`.}
+Use \code{template_arguments} to create `x`.}
 
 \item{write.file}{(logical) Write `geographic_coverage.txt` to `path`.}
 }

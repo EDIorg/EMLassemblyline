@@ -106,7 +106,7 @@
 #'     (logical) Return the EML as an R object of class `EML object`.
 #' @param x
 #'     (named list) Alternative input/output to `EMLassemblyline` functions. 
-#'     Use `make_arguments()` to create `x`.
+#'     Use \code{template_arguments} to create `x`.
 #'     
 #' @return 
 #'     \itemize{
@@ -270,7 +270,7 @@ make_eml <- function(
     
     if (is.null(data.table) & is.null(other.entity)){
       
-      x <- make_arguments(
+      x <- template_arguments(
         path = path,
         data.path = data.path
       )
@@ -279,7 +279,7 @@ make_eml <- function(
       
     } else if (!is.null(data.table) & is.null(other.entity)){
       
-      x <- make_arguments(
+      x <- template_arguments(
         path = path,
         data.path = data.path,
         data.table = table_names
@@ -289,7 +289,7 @@ make_eml <- function(
       
     } else if (!is.null(data.table) & !is.null(other.entity)){
       
-      x <- make_arguments(
+      x <- template_arguments(
         path = path,
         data.path = data.path,
         data.table = table_names,
@@ -300,7 +300,7 @@ make_eml <- function(
       
     } else if (is.null(data.table) & !is.null(other.entity)){
       
-      x <- make_arguments(
+      x <- template_arguments(
         path = path,
         data.path = data.path,
         other.entity = other.entity

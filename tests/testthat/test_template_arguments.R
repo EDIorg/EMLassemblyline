@@ -52,7 +52,7 @@ testthat::test_that('Inputs = NULL', {
   
   # Make function call
   
-  output <- make_arguments()
+  output <- template_arguments()
   
   # Class is list
   
@@ -128,7 +128,7 @@ testthat::test_that('Template inputs', {
   
   # Make function call
   
-  output <- make_arguments(
+  output <- template_arguments(
     path = system.file(
       '/examples/templates',
       package = 'EMLassemblyline'
@@ -212,7 +212,7 @@ testthat::test_that('Template inputs', {
   
   expect_equal(
     class(
-      make_arguments(
+      template_arguments(
         path = system.file(
           '/examples/templates_new_geocoverage',
           package = 'EMLassemblyline'
@@ -230,7 +230,7 @@ testthat::test_that('Inputs = templates and data tables', {
   
   # Make function call
   
-  output <- make_arguments(
+  output <- template_arguments(
     path = system.file(
       '/examples/templates',
       package = 'EMLassemblyline'
@@ -347,7 +347,7 @@ testthat::test_that('Inputs = templates and data tables', {
   
   expect_equal(
     class(
-      make_arguments(
+      template_arguments(
         path = system.file(
           '/examples/templates',
           package = 'EMLassemblyline'
@@ -374,7 +374,7 @@ testthat::test_that('Inputs = templates and other entities', {
   
   # Make function call
   
-  output <- make_arguments(
+  output <- template_arguments(
     path = system.file(
       '/examples/templates',
       package = 'EMLassemblyline'
@@ -492,7 +492,7 @@ testthat::test_that('Inputs = templates, data tables, and other entities', {
   
   # Make function call
   
-  output <- make_arguments(
+  output <- template_arguments(
     path = system.file(
       '/examples/templates',
       package = 'EMLassemblyline'

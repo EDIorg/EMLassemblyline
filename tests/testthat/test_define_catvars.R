@@ -125,7 +125,7 @@ testthat::test_that('Test usage with x inputs',{
 
   # Create x_list and x_no_catvars with and without catvars_*.txt, respectivly.
   
-  x_list <- make_arguments(
+  x_list <- template_arguments(
     path = system.file(
       '/examples/templates', 
       package = 'EMLassemblyline'

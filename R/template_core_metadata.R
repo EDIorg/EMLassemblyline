@@ -23,7 +23,7 @@
 #'     or "CCBY" (\url{https://creativecommons.org/licenses/by/4.0/}).
 #' @param x
 #'     (named list) Alternative input/output to `EMLassemblyline` functions. 
-#'     Use `make_arguments()` to create `x`.
+#'     Use \code{template_arguments} to create `x`.
 #' @param write.file
 #'     (logical) Write template files to `path`.
 #'
@@ -81,7 +81,7 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
       
     # Use NULL values
     
-    x <- make_arguments()
+    x <- template_arguments()
     
     x <- x$x
 

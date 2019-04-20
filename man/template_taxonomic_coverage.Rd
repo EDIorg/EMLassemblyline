@@ -36,9 +36,18 @@ data sources with \code{view_taxa_authorities}. Columns
 scientific and common searches, respectively.}
 
 \item{x}{(named list) Alternative input/output to \code{EMLassemblyline} 
-functions. Use \code{make_arguments} to create \code{x}.}
+functions. Use \code{template_arguments} to create \code{x}.}
 
 \item{write.file}{(logical) Write "taxonomic_coverage.txt" to \code{path}.}
+}
+\value{
+\itemize{
+        \item{\strong{taxonomic_coverage.txt} A tab delimited file written 
+        to \code{path} containing authority system names and authority IDs
+        for successfully resolved taxa, and "NA" otherwise.}
+        \item{If using \code{x}, then content of "taxonomic_coverage.txt is 
+        added to \code{x} under "/x/templates".}
+    }
 }
 \description{
 Extract unique taxa and resolve to one or more taxonomic authorities. 
