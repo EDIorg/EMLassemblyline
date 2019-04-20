@@ -94,12 +94,10 @@ template_taxonomic_coverage <- function(
     stop('Input argument "path" is missing.')
   } else if (!is.null(x) & missing(path)){
     path <- NULL
-    if (missing(data.path)){
-      stop('Input argument "data.path" is missing.')
-    }
+    data.path <- NULL
   }
 
-  # Pass remaining arguments to validate_arguments().
+  # Pass remaining arguments to validate_arguments()
 
   validate_arguments(
     fun.name = 'template_taxonomic_coverage',
@@ -147,122 +145,117 @@ template_taxonomic_coverage <- function(
   # Initialize output data frame ----------------------------------------------
   
   taxa_raw <- unique(
-    x$data.table[[1]]$content[ , taxa.col]
+    x$data.table[[taxa.table]]$content[ , taxa.col]
   )
-  
-  taxa_clean <- taxonomyCleanr::trim_taxa(
-    x = taxa_raw
-  )
-  
+
   output <- data.frame(
-    taxa_name_raw = taxa_raw,
-    taxa_name_cleanr = taxa_clean,
-    authority_system = rep(NA_character_, length(taxa_raw)), 
-    authority_taxon_id = rep(NA_character_, length(taxa_raw)),
+    taxa = taxa_raw,
+    name_scientific = rep(NA_character_, length(taxa_raw)),
+    authority_system_scientific = rep(NA_character_, length(taxa_raw)), 
+    authority_id_scientific = rep(NA_character_, length(taxa_raw)), 
+    name_common = rep(NA_character_, length(taxa_raw)),
+    authority_system_common = rep(NA_character_, length(taxa_raw)),
+    authority_id_common = rep(NA_character_, length(taxa_raw)), 
     stringsAsFactors = FALSE
   )
 
   # Resolve scientific names --------------------------------------------------
   
-  if (name.type == 'scientific'){
+  if (taxa.name.type == 'scientific'){
     
     taxa_resolved <- taxonomyCleanr::resolve_sci_taxa(
-      data.sources = data.sources,
-      x = taxa
+      data.sources = taxa.authority,
+      x = taxonomyCleanr::trim_taxa(
+        x = taxa_raw
+      )
     )
+
+    output$authority_system_scientific <- taxa_resolved$authority
     
-    # Add to taxon table
-    
-    taxon <- data.frame(
-      taxon_id = rep(NA_character_, nrow(taxa_resolved)),
-      taxon_rank = taxa_resolved$rank,
-      taxon_name = taxa_resolved$taxa,
-      authority_system = taxa_resolved$authority,
-      authority_taxon_id = taxa_resolved$authority_id,
-      stringsAsFactors = F
-    )
-    
+    output$authority_id_scientific <- taxa_resolved$authority_id
+
   }
   
   # Resolve common names ------------------------------------------------------
   
-  if (name.type == 'common'){
-    
+  if (taxa.name.type == 'common'){
+
     taxa_resolved <- taxonomyCleanr::resolve_comm_taxa(
-      data.sources = data.sources,
-      x = taxa
+      data.sources = 3,
+      x = taxonomyCleanr::trim_taxa(
+        x = taxa_raw
+      )
     )
     
-    # Add to taxon table
+    output$authority_system_common <- taxa_resolved$authority
     
-    taxon <- data.frame(
-      taxon_id = rep(NA_character_, nrow(taxa_resolved)),
-      taxon_rank = taxa_resolved$rank,
-      taxon_name = taxa_resolved$taxa,
-      authority_system = taxa_resolved$authority,
-      authority_taxon_id = taxa_resolved$authority_id,
-      stringsAsFactors = F
-    )
+    output$authority_id_common <- taxa_resolved$authority_id
     
   }
   
   # Resolve scientific and common names ---------------------------------------
   
-  if (name.type == 'both'){
-    
-    authorities <- taxonomyCleanr::view_taxa_authorities()
-    
+  if (taxa.name.type == 'both'){
+
     # Scientific
     
-    use_i <- data.sources %in% authorities$id[
-      authorities$resolve_sci_taxa == 'supported'
-      ]
-    
     taxa_resolved <- taxonomyCleanr::resolve_sci_taxa(
-      data.sources = data.sources[use_i],
-      x = taxa
+      data.sources = taxa.authority,
+      x = taxonomyCleanr::trim_taxa(
+        x = taxa_raw
+      )
     )
+    
+    output$authority_system_scientific <- taxa_resolved$authority
+    
+    output$authority_id_scientific <- taxa_resolved$authority_id
     
     # Common
     
-    index <- is.na(taxa_resolved$taxa_clean)
-    
-    use_i <- data.sources %in% authorities$id[
-      authorities$resolve_comm_taxa == 'supported'
-      ]
-    
-    taxa_comm_resolved <- taxonomyCleanr::resolve_comm_taxa(
-      data.sources = data.sources[use_i],
-      x = taxa_resolved$taxa[index]
+    taxa_resolved <- taxonomyCleanr::resolve_comm_taxa(
+      data.sources = 3,
+      x = taxonomyCleanr::trim_taxa(
+        x = taxa_raw
+      )
     )
     
-    # Combine
+    output$authority_system_common <- taxa_resolved$authority
     
-    taxa_resolved[index, ] <- taxa_comm_resolved
-    
-    # Add to taxon table
-    
-    taxon <- data.frame(
-      taxon_id = rep(NA_character_, nrow(taxa_resolved)),
-      taxon_rank = taxa_resolved$rank,
-      taxon_name = taxa_resolved$taxa,
-      authority_system = taxa_resolved$authority,
-      authority_taxon_id = taxa_resolved$authority_id,
-      stringsAsFactors = F
-    )
-    
+    output$authority_id_common <- taxa_resolved$authority_id
+
   }
   
   # Write to file or add to x -------------------------------------------------
   
-  message("Done.")
-
-  # Return
-
-  if (!exists('data_read_2_x')){
-
-    x
+  if (isTRUE(write.file) & exists('data_read_2_x')){
+    
+    message('Writing taxonomic_coverage.txt to path')
+    
+    suppressWarnings(
+      utils::write.table(
+        output,
+        paste0(
+          path,
+          "/",
+          "taxonomic_coverage.txt"
+        ),
+        sep = "\t",
+        row.names = F,
+        quote = F,
+        fileEncoding = "UTF-8"
+      )
+    )
+    
+  } else if (!exists('data_read_2_x')){
+    
+    message('Adding taxonomic_coverage.txt to x')
+    
+    x$template$taxonomic_coverage.txt$content <- output
+    
+    return(x)
 
   }
   
+  message("Done.")
+
 }

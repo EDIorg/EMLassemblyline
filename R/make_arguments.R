@@ -838,47 +838,50 @@ make_arguments <- function(
       }
       
     }
-
-  }
-  
-  if (stringr::str_detect(string = templates[i], pattern = 'taxonomic_coverage.txt')){
     
-    if (file.exists(paste0(path, '/', templates[i]))){
+    if (stringr::str_detect(string = templates[i], pattern = 'taxonomic_coverage.txt')){
       
-      output$x$template[[i]]$content <- utils::read.table(
-        paste0(
-          path, 
-          '/', 
-          templates[i]
-        ),
-        header = T,
-        sep="\t",
-        quote="\"",
-        as.is=TRUE,
-        comment.char = "",
-        fill = T,
-        na.strings = "NA",
-        fileEncoding = "UTF-8"
-      )
-      
-      colClasses = c("character","character","character")
-      
-      output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:5]
-      
-      colnames(output$x$template[[i]]$content) <- c(
-        'taxa_name_raw',
-        'taxa_name_clean',
-        'authority_system', 
-        'authority_taxon_id'
-      )
-      
-      
-    } else {
-      
-      output$x$template[[i]]$content <- NA_character_
+      if (file.exists(paste0(path, '/', templates[i]))){
+        
+        output$x$template[[i]]$content <- utils::read.table(
+          paste0(
+            path, 
+            '/', 
+            templates[i]
+          ),
+          header = T,
+          sep="\t",
+          quote="\"",
+          as.is=TRUE,
+          comment.char = "",
+          fill = T,
+          na.strings = "NA",
+          fileEncoding = "UTF-8"
+        )
+        
+        colClasses = rep('character', 7)
+        
+        output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:7]
+        
+        colnames(output$x$template[[i]]$content) <- c(
+          'taxa', 
+          'name_scientific', 
+          'authority_system_scientific',
+          'authority_id_scientific',
+          'name_common',
+          'authority_system_common',
+          'authority_id_common'
+        )
+        
+        
+      } else {
+        
+        output$x$template[[i]]$content <- NA_character_
+        
+      }
       
     }
-    
+
   }
   
   # Read data tables ----------------------------------------------------------

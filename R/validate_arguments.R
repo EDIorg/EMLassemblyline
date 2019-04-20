@@ -536,35 +536,51 @@ validate_arguments <- function(fun.name, fun.args){
     
     # taxa.table
 
-    data_files <- EDIutils::validate_file_names(
-      path = fun.args$data.path, 
-      data.files = fun.args$taxa.table
-    )
+    if (is.null(fun.args$taxa.table)){
+      stop('Input argument "taxa.table" is missing.')
+    }
     
-    EDIutils::validate_fields(
-      path = fun.args$data.path, 
-      data.files = data_files
-    )
-    
+    if (is.null(fun.args$x)){
+      
+      data_files <- EDIutils::validate_file_names(
+        path = fun.args$data.path, 
+        data.files = fun.args$taxa.table
+      )
+      
+      EDIutils::validate_fields(
+        path = fun.args$data.path, 
+        data.files = data_files
+      )
+      
+    } else if (!is.null(fun.args$x)){
+      
+      if (!any(fun.args$taxa.table %in% names(fun.args$x$data.table))){
+        stop('Input argument "taxa.table" is invalid.')
+
+      }
+      
+    }
+
     # taxa.col
+    
+    if (is.null(fun.args$taxa.col)){
+      stop('Input argument "taxa.col" is missing.')
+    }
     
     if (is.null(fun.args$x)){
       
       x <- make_arguments(
-        path = path,
-        data.path = data.path,
+        data.path = fun.args$data.path,
         data.table = data_files
       )
-      
-      x <- x$x
-      
-      if (!isTRUE(taxa.col %in% colnames(x$data.table[[1]]$content))){
+
+      if (!isTRUE(fun.args$taxa.col %in% colnames(x$x$data.table[[fun.args$taxa.table]]$content))){
         stop('Input argument "taxa.col" can not be found in "taxa.table".')
       }
       
     } else if (!is.null(fun.args$x)){
       
-      if (!isTRUE(taxa.col %in% colnames(x$data.table[[1]]$content))){
+      if (!isTRUE(fun.args$taxa.col %in% colnames(fun.args$x$data.table[[fun.args$taxa.table]]$content))){
         stop('Input argument "taxa.col" can not be found in "taxa.table"')
       }
       
@@ -578,9 +594,7 @@ validate_arguments <- function(fun.name, fun.args){
       
     } else {
       
-      if ((!stringr::str_detect(tolower(fun.args$taxa.name.type), 'scientific')) & 
-          (!stringr::str_detect(tolower(fun.args$taxa.name.type), 'common')) &
-          (!stringr::str_detect(tolower(fun.args$taxa.name.type), 'both'))){
+      if (!any(tolower(fun.args$taxa.name.type) %in% c('scientific', 'common', 'both'))){
         
         stop('Input argument "taxa.name.type" must be "scientific", "common", or "both".')
       }
@@ -597,10 +611,10 @@ validate_arguments <- function(fun.name, fun.args){
     
     authorities <- authorities[authorities$resolve_sci_taxa == 'supported', ]
     
-    use_i <- as.character(data.sources) %in% as.character(authorities$id)
+    use_i <- as.character(fun.args$taxa.authority) %in% as.character(authorities$id)
     
     if (sum(use_i) != length(use_i)){
-      stop('Input argument "taxa.authority" contains unsupported data source IDs!')
+      stop('Input argument "taxa.authority" contains unsupported authority IDs.')
     }
   
   }
