@@ -120,6 +120,20 @@ testthat::test_that('Test usage with file inputs', {
   
   # write.file = TRUE writes files to path
   
+  file.remove(
+    paste0(
+      tempdir(),
+      '/attributes_decomp.txt'
+    )
+  )
+  
+  file.remove(
+    paste0(
+      tempdir(),
+      '/attributes_nitrogen.txt'
+    )
+  )
+  
   expect_message(
     template_table_attributes(
       path = tempdir(),
