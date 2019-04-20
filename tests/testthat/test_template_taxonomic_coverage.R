@@ -227,7 +227,7 @@ testthat::test_that('x inputs', {
   
   # Make function call
   
-  x <- make_arguments(
+  x <- template_arguments(
     data.path = system.file(
       '/examples/data',
       package = 'EMLassemblyline'
