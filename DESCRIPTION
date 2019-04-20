@@ -28,7 +28,7 @@ LazyData: true
 RoxygenNote: 6.1.1
 Remotes:
     EDIorg/EDIutils,
-    EDIorg/taxonomyCleanrs
+    EDIorg/taxonomyCleanr
 URL: https://github.com/EDIorg/EMLassemblyline
 BugReports: https://github.com/EDIorg/EMLassemblyline/issues
 VignetteBuilder: knitr
