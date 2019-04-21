@@ -3,7 +3,7 @@
 
 # EMLassemblyline
 
-For scientists and data managers who need to easily create high quality metadata for data publication. `EMLassemblyline` is a metadata builder that emphasizes auto-extraction of metadata, appends value added content, and inputs user supplied information through common interfaces thereby minimizing user effort while maximizing metadata features for data discovery and reuse.
+For scientists and data managers who need to easily create high quality EML metadata for data publication. `EMLassemblyline` is a metadata builder that emphasizes auto-extraction of metadata, appends value added content, and inputs user supplied information through common interfaces thereby minimizing user effort while maximizing metadata features for data discovery and reuse.
 
 ## Features
 
