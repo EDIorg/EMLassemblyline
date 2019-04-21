@@ -2,6 +2,13 @@ pandoc: 1.19.2.1
 pkgdown: 1.3.0
 pkgdown_sha: ~
 articles:
+  automate_data_publication: automate_data_publication.html
+  create_eml: create_eml.html
+  create_metadata_templates: create_metadata_templates.html
+  edit_metadata_templates: edit_metadata_templates.html
+  emlassemblyline_via_exchange_format: emlassemblyline_via_exchange_format.html
   instructions: instructions.html
-  my-vignette: my-vignette.html
+  organize_data_package: organize_data_package.html
+  overview: overview.html
+  publish_data_package: publish_data_package.html
 

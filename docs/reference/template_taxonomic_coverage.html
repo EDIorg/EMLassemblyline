@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create core metadata templates — template_core_metadata • EMLassemblyline</title>
+<title>Create taxonomic coverage template — template_taxonomic_coverage • EMLassemblyline</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,13 +30,12 @@
 
 
 
-<meta property="og:title" content="Create core metadata templates — template_core_metadata" />
+<meta property="og:title" content="Create taxonomic coverage template — template_taxonomic_coverage" />
 
-<meta property="og:description" content="Import template files for storage of core metadata. Some templates are 
-    populated with content detected by automated metadata extraction 
-    methods. The remainder will have to be manually entered by a human. 
-    Instructions for filling out the templates are at
-    https://clnsmth.github.io/EMLassemblyline/articles/instructions.html." />
+<meta property="og:description" content="Extract unique taxa and resolve to one or more taxonomic authorities. 
+    make_eml will use this information to get the taxonomic hierarchy
+    for each taxa and add to the EML. The metadata resulting from this 
+    function allows searching on any rank of the taxa." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -133,24 +132,27 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create core metadata templates</h1>
-    <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/template_core_metadata.R'><code>R/template_core_metadata.R</code></a></small>
-    <div class="hidden name"><code>template_core_metadata.Rd</code></div>
+    <h1>Create taxonomic coverage template</h1>
+    <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/template_taxonomic_coverage.R'><code>R/template_taxonomic_coverage.R</code></a></small>
+    <div class="hidden name"><code>template_taxonomic_coverage.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Import template files for storage of core metadata. Some templates are 
-    populated with content detected by automated metadata extraction 
-    methods. The remainder will have to be manually entered by a human. 
-    Instructions for filling out the templates are at
-    <a href='https://clnsmth.github.io/EMLassemblyline/articles/instructions.html'>https://clnsmth.github.io/EMLassemblyline/articles/instructions.html</a>.</p>
+    <p>Extract unique taxa and resolve to one or more taxonomic authorities. 
+    <code>make_eml</code> will use this information to get the taxonomic hierarchy
+    for each taxa and add to the EML. The metadata resulting from this 
+    function allows searching on any rank of the taxa.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>template_core_metadata</span>(
+    <pre class="usage"><span class='fu'>template_taxonomic_coverage</span>(
       <span class='no'>path</span>,
-      <span class='no'>license</span>,
+      <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='no'>path</span>,
+      <span class='no'>taxa.table</span>,
+      <span class='no'>taxa.col</span>,
+      <span class='no'>taxa.name.type</span>,
+      <span class='no'>taxa.authority</span>,
       <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
       <span class='kw'>write.file</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
     )</pre>
@@ -160,22 +162,43 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>path</th>
-      <td><p>(character) Path to where the templates will be imported.</p></td>
+      <td><p>(character) Path to where the template will be written.</p></td>
     </tr>
     <tr>
-      <th>license</th>
-      <td><p>(character) License under which the data will be released. Use "CC0" 
-(<a href='https://creativecommons.org/publicdomain/zero/1.0/'>https://creativecommons.org/publicdomain/zero/1.0/</a>), 
-or "CCBY" (<a href='https://creativecommons.org/licenses/by/4.0/'>https://creativecommons.org/licenses/by/4.0/</a>).</p></td>
+      <th>data.path</th>
+      <td><p>(character) Path to where <code>taxa.table</code> is stored.</p></td>
+    </tr>
+    <tr>
+      <th>taxa.table</th>
+      <td><p>(character) Name of data table containing <code>taxa.col</code>.</p></td>
+    </tr>
+    <tr>
+      <th>taxa.col</th>
+      <td><p>(character) Name of column in <code>taxa.table</code> containing taxa names.
+Names can be single words or species binomials.</p></td>
+    </tr>
+    <tr>
+      <th>taxa.name.type</th>
+      <td><p>(character) Type of taxa names in <code>taxa.col</code> Can be: 
+<code>scientific</code>, <code>common</code>, or <code>both</code>.</p></td>
+    </tr>
+    <tr>
+      <th>taxa.authority</th>
+      <td><p>(integer) An ordered numeric vector of ID's corresponding to data 
+sources (i.e. taxonomic authorities) you'd like to resolve taxa names
+to, in the order of decreasing preference. See the list of supported
+data sources with <code>view_taxa_authorities</code>. Columns 
+"resolve_sci_taxa", and "resolve_comm_taxa" list authorites supporting
+scientific and common searches, respectively.</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>(named list) Alternative input/output to `EMLassemblyline` functions. 
-Use <code>template_arguments</code> to create `x`.</p></td>
+      <td><p>(named list) Alternative input/output to <code>EMLassemblyline</code> 
+functions. Use <code>template_arguments</code> to create <code>x</code>.</p></td>
     </tr>
     <tr>
       <th>write.file</th>
-      <td><p>(logical) Write template files to `path`.</p></td>
+      <td><p>(logical) Write "taxonomic_coverage.txt" to <code>path</code>.</p></td>
     </tr>
     </table>
     
@@ -183,27 +206,28 @@ Use <code>template_arguments</code> to create `x`.</p></td>
 
     
 <ul>
-<li><p>`abstract.txt` Template for the dataset abstract.</p></li>
-<li><p>`additional_info.txt` Template for miscellaneous dataset
-        information.</p></li>
-<li><p>`bounding_boxes.txt` Template for the dataset geographic 
-        bounding coordinates.</p></li>
-<li><p>`custom_units.txt` Template for defining non-standard units 
-        used in the dataset.</p></li>
-<li><p>`intellectual_rights.txt` The selected intellectual rights 
-        license.</p></li>
-<li><p>`keywords.txt` Template for dataset keywords.</p></li>
-<li><p>`methods.txt` Template for dataset methods.</p></li>
-<li><p>`personnel.txt` Template for dataset personnel and funding 
-        metadata.</p></li>
-<li><p>If using `x`, then content of each above listed template file 
-        is added to `x` under `/x/templates/`</p></li>
+<li><p><strong>taxonomic_coverage.txt</strong> A tab delimited file written 
+        to <code>path</code> containing authority system names and authority IDs
+        for successfully resolved taxa, and "NA" otherwise.</p></li>
+<li><p>If using <code>x</code>, then content of "taxonomic_coverage.txt is 
+        added to <code>x</code> under "/x/templates".</p></li>
 </ul>
 
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Existing templates will not be overwritten by `template_core_metadata`.</p>
+    <p><code>template_taxonomic_coverage</code> searches the most preferred taxonomic
+    authority for all unique taxa listed in <code>taxa.col</code> returning
+    the authority name and corresponding taxa identifier for direct matches
+    (no fuzzy searching), then the next most preferred taxonomic authority
+    is search for taxa that have not yet been resolved. This process repeats
+    for subsequently listed authorities. "NA" is returned when an authority 
+    match is not made.</p>    
+<p>When "taxonomic_coverage.txt" is passed to <code>make_eml</code>, the 
+    authority information is used to get the hierarchical rank names of 
+    resolved taxa and rendered into the "taxonomicCoverage" element of EML.</p>    
+<p>Existing "taxonomic_coverage.txt" will not be overwritten by subsequent 
+    calls to <code>template_taxonomic_coverage</code>.</p>
     
 
   </div>

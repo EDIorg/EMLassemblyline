@@ -1,3 +1,8 @@
+title: EMLassemblyline
+
+template:
+  bootswatch: spacelab
+
 reference:
   - title: Create metadata templates
     desc: Functions for creating metadata templates, using automated metadata extraction when possible.
@@ -18,7 +23,7 @@ reference:
     - template_directories
     - view_unit_dictionary
     
-  navbar:
+navbar:
   title: ~
   type: default
   left:
@@ -40,7 +45,7 @@ reference:
         href: articles/publish_data_package.html
       - text: Automate data publication
         href: articles/automate_data_publication.html
-      - text: EMLassemblyline via exchange format
-        href: articles/emlassemblyline_via_exchange format.html
+      - text: Use EMLassemblyline via exchange format
+        href: articles/emlassemblyline_via_exchange_format.html
     - text: News
       href: news/index.html

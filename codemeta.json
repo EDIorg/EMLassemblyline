@@ -174,7 +174,8 @@
     {
       "@type": "SoftwareApplication",
       "identifier": "taxonomyCleanr",
-      "name": "taxonomyCleanr"
+      "name": "taxonomyCleanr",
+      "sameAs": "https://github.com/EDIorg/taxonomyCleanr"
     },
     {
       "@type": "SoftwareApplication",
@@ -185,7 +186,7 @@
   ],
   "codeRepository": "https://github.com/EDIorg/EMLassemblyline",
   "readme": "https://github.com/clnsmth/EMLassemblyline/blob/master/README.md",
-  "fileSize": "163.545KB",
+  "fileSize": "173.481KB",
   "contIntegration": [
     "https://travis-ci.org/clnsmth/EMLassemblyline",
     "https://codecov.io/github/clnsmth/EMLassemblyline?branch=master"
