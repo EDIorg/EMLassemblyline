@@ -33,7 +33,7 @@ navbar:
       menu:
       - text: Overview
         href: articles/overview.html
-      - text: Organize data package
+      - text: Organize data package contents
         href: articles/organize_data_package.html
       - text: Create metadata templates
         href: articles/create_metadata_templates.html
