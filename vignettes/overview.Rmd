@@ -3,7 +3,7 @@ title: "Overview"
 output: html_document
 ---
 
-### Basic use case
+## Basic use case
 
 The basic use case, creating and maintaining EML for a dataset, consists of five steps:
 
@@ -15,7 +15,7 @@ The basic use case, creating and maintaining EML for a dataset, consists of five
 
 Future revisions and updates are done by simply editing relevant portions of metadata templates and rerunning the create EML step.
 
-### Advanced use cases
+## Advanced use cases
 
 Advanced use cases include:
 
