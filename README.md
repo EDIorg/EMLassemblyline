@@ -3,7 +3,24 @@
 
 # EMLassemblyline
 
-The Ecological Metadata Language (EML) is a metadata standard developed by the ecological community for persistence, discoverability, and reuse of ecological data. While the highly detailed structure of the EML schema is necessary to meet these ends, it confronts the inexperienced data provider with a steep learning curve that few have time to tackle. To lower the bar for data documentation, while still maintaining metadata detail and quality, we've created the `EMLassemblyline`. A user-friendly workflow to make high quality EML metadata yourself. `EMLassemblyline` is useful for publishing one-off data packages or to provide a foundation for a data package factory.
+## Vision
+
+For scientists and data managers who need to easily create high quality metadata for data publication. `EMLassemblyline` is a metadata builder that emphasizes auto-extraction of metadata, appends value added content, and inputs user supplied information through common interfaces thereby minimizing user effort while maximizing metadata features for data discovery and reuse.
+
+## Features
+
+* Requires no familiarity with EML metadata
+* Good for one-off data publication
+* Great for medium to large scale data publication
+* Accepts all data and file types
+* Automatically extracts metadata from data entities
+* Automatically appends value added content
+* Accepts user inputs through simple text and spreadsheet editors
+* Supports automated data publication workflows
+* Interoperable with metadata storage systems via an exchange format
+* Incorporates community best practices
+* Is not tied to a specific data repository
+
 
 ## Install
 
@@ -14,24 +31,25 @@ devtools::install_github("EDIorg/EMLassemblyline")
 
 ## Usage
 
-[Check out available functions and use cases at the EMLassemblyline website](https://clnsmth.github.io/EMLassemblyline/)
+[Check out example use cases at the EMLassemblyline website](https://clnsmth.github.io/EMLassemblyline/)
 
-## Roadmap
+## Active projects
 
-User friendly high-level functions for creating EML. Automated metadata extraction from data entities. Supports specification to create EML from metadata system exports.
+* Creating a Shiny interface for editing metadata template files, thus eliminating requirements for text and spreadsheet editors while facilitating use of dictionaries, controlled vocabularies, and ontologies.
+* Developing adapter code to read metadata content from an exchange format thereby allowing use of `EMLassemblyline` with any metadata storage/organization system.
 
 ## Contributing
 
-We welcome contributions of all forms including code, bug reports, and requests for development. Please reference our [code conduct](https://github.com/EDIorg/EMLassemblyline/blob/master/CODE_OF_CONDUCT.md) and [contributing guidelines](https://github.com/EDIorg/EMLassemblyline/blob/master/CONTRIBUTING.md) for submitting pull requrests.
+We welcome contributions of all forms. Please reference our [code conduct](https://github.com/EDIorg/EMLassemblyline/blob/master/CODE_OF_CONDUCT.md) and [contributing guidelines](https://github.com/EDIorg/EMLassemblyline/blob/master/CONTRIBUTING.md) for details.
 
 ## Versioning
 
-This project follows the [semantic versioning specification](https://semver.org).
+This project uses [semantic versioning](https://semver.org).
 
 ## Authors
 
-Several people have participated in this project. [View the current list of team members and contributors](https://github.com/EDIorg/EMLassemblyline/blob/master/AUTHORS.md).
+Several people have contributed to this project. [List of contributors](https://github.com/EDIorg/EMLassemblyline/blob/master/AUTHORS.md).
 
 ## Related materials
 
-[The Ecological Metadata Language.](https://knb.ecoinformatics.org/#external//emlparser/docs/index.html)
+[The Ecological Metadata Language (EML)](https://knb.ecoinformatics.org/#external//emlparser/docs/index.html)
