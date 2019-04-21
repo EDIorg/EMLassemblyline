@@ -1,0 +1,294 @@
+---
+title: "EMLassemblyline via exchange format"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(kableExtra)
+```
+
+# Overview
+
+The `taxonomyCleanr` is easy to use and requires no taxonomic expertiese. Simply send your data through a series of cleaning functions (`count_taxa`, `trim_taxa`, `replace_taxa`, `remove_taxa`), send the resultant output to the resolver functions (`resolve_sci_taxa`, `resolve_comm_taxa`), and create a revision of your raw data (`revise_taxa`). Voila! Clean taxonomic data!
+
+Below is a demonstration of this process using example data that comes installed with the `taxonomyCleanr` package.
+
+# Installation
+
+Install `taxonomyCleanr` from the project GitHub.
+
+```{r instload devtools, message=FALSE, warning=FALSE}
+# Install and load devtools (required to install the taxonomyCleanr)
+#install.packages('devtools')
+library(devtools)
+```
+
+```{r instload taxonomyCleanr, message=FALSE, warning=FALSE}
+# Install and load taxonomyCleanr from the development branch of the project GitHub
+# install_github('EDIorg/taxonomyCleanr')
+library(taxonomyCleanr)
+```
+
+
+
+# Load data
+
+Load the taxonomic data into RStudio _as a data frame_. The taxa must be listed in a single column of character type class, not factor type class.
+
+```{r load data, echo=TRUE, paged.print=TRUE}
+# Load test data installed with the taxonomyCleanr package
+data <- read.table(system.file('test_data.txt', package = 'taxonomyCleanr'), header = T, sep = '\t', stringsAsFactors = F)
+```
+
+This data table has 6 columns:
+
+- **Year** - Year the sample was taken
+- **Sample_Date** - Date the sample was taken
+- **Plot** - Plot number the sample was taken from
+- **Heat_treatment** - The heat treatment applied to the plot.
+- **Species** - Taxa observed in each sample. NOTE: This column contains species binomials, common names, invalid taxonomic names, taxa names of varying hierarchical ranks, etc. This is the list of taxa we will clean up.
+- **Mass** - Mass of the organism obtained from each sample.
+
+```{r view test data, echo=FALSE}
+knitr::kable(data, caption = "Test data containing a column of taxa to be cleaned.") %>%
+  kableExtra::kable_styling() %>%
+  kableExtra::scroll_box(width = '100%', height = '400px')
+```
+
+
+
+# Create taxa map
+
+The taxa map (taxa_map.csv) links the raw data to the cleaned data. Each cleaning function logs changes to taxa_map.csv thereby facilitating an understanding of how the data were changed and a means by which to update the raw data table. A thorough explanation of the maps contents will be provided after the cleaning and resolver processes have been run on these example data.
+
+```{r create taxa_map.csv}
+
+# Create the taxa map
+my_path <- 'C:/Users/Colin/Documents/data'
+taxa_map <- create_taxa_map(path = my_path, x = data, col = 'Species')
+```
+
+
+
+# Count taxa
+
+Get the unique taxa names and respective counts with `count_taxa`. This function helps identify issues that should be fixed before sending the taxa list to the resolver functions. Doing so increases the success of an authority match. Notice, some of the taxa in the test data are obviously misspelled (e.g. _Achillea millefolium(lanulosa)_ and _Achillea millefolium(lanulosaaaa)_ likely represent the same taxon), and some of the listed names are clearly not taxa (e.g. _-9999_ and _Miscellaneous litter_).
+
+```{r Count unique 1}
+# Get unique taxa and counts
+output <- count_taxa(x = data, col = 'Species', path = my_path)
+```
+
+```{r display unique 1, echo=FALSE}
+# Count taxa_map.csv
+knitr::kable(output, caption = "Unique taxa and their respective counts. Several issues exist with these taxa.") %>%
+  kableExtra::kable_styling() %>%
+  kableExtra::scroll_box(width = '100%', height = '400px')
+```
+
+
+
+# Trim taxa
+
+Several of the taxa have variations of common suffixes found in taxonomic data (e.g. _c.f._ and _sp._), but frequently cause issues when searching taxonomic authorities. The `trim_taxa` function removes these excess characters as well as leading and trailing white spaces and under score characters.
+
+```{r trim taxon}
+# Trim excess characters from the taxa list
+output <- trim_taxa(path = my_path)
+```
+
+Running `count_taxa` on the raw data frame (i.e. _data_), in combination with the information logged to taxa_map.csv from `trim_taxa`, creates a view of the updated taxa list.
+
+```{r view after trimming}
+# View the taxa after running trim_taxa
+output <- count_taxa(x = data, col = 'Species', path = my_path)
+```
+
+```{r view taxa_map, echo=FALSE}
+# View unique taxa after trimming
+knitr::kable(output, caption = "Unique taxa and counts after trim_taxa. Notice, extraneous characters (e.g. c.f., spp., and underscores) have been removed.") %>%
+  kableExtra::kable_styling() %>%
+  kableExtra::scroll_box(width = '100%', height = '400px')
+```
+
+
+
+# Replace taxa
+
+Some of the taxa are misspelled. Use `replace_taxa` to replace the misspelled taxa with the correct spelling, or the best guess of the correct spelling. Use `count_taxa` to verify these changes.
+
+```{r replace taxa}
+
+# Replace misspelled taxa with the correct spelling
+output <- replace_taxa(path = my_path, input = 'Achillea millefolium(lanulosa)', output = 'Achillea millefolium')
+output <- replace_taxa(path = my_path, input = 'Achillea millefolium(lanulosaaaa)', output = 'Achillea millefolium')
+output <- replace_taxa(path = my_path, input = 'Achillea millefolium(lanulosabb)', output = 'Achillea millefolium')
+output <- replace_taxa(path = my_path, input = 'Achillea millefolium(lanulosacc)', output = 'Achillea millefolium')
+
+# Get the list of unique taxa
+output <- count_taxa(x = data, col = 'Species', path = my_path)
+```
+
+```{r replace view unique, echo=FALSE}
+# View unique taxa after trimming
+knitr::kable(output, caption = "Unique taxa counts after replacing misspelled taxa.") %>%
+  kableExtra::kable_styling() %>%
+  kableExtra::scroll_box(width = '100%', height = '400px')
+```
+
+
+
+# Remove taxa
+
+Some taxa in the list are clearly not taxa, and should be removed with `remove_taxa` before attempting to resolve to an authority.
+
+```{r remove taxa}
+# Remove taxa
+output <- remove_taxa(path = my_path, input = '')
+output <- remove_taxa(path = my_path, input = '-9999')
+output <- remove_taxa(path = my_path, input = 'Unsorted biomass')
+output <- remove_taxa(path = my_path, input = 'Miscellaneous litter')
+
+# Get unique taxa and counts
+output <- count_taxa(x = data, col = 'Species', path = my_path)
+```
+
+```{r remove view unique, echo=FALSE}
+# View unique taxa after removal
+knitr::kable(output, caption = "Unique taxa and counts after non-taxa have been removed.") %>%
+  kableExtra::kable_styling() %>%
+  kableExtra::scroll_box(width = '100%', height = '400px')
+```
+
+
+
+# Resolve scientific taxa
+
+Now the list of taxa looks reasonable. Extraneous characters have been removed, occurences of similarly spelled taxa have been harmonized, and non-taxa names have been removed. Send the list of taxa to `resolve_sci_taxa`, along with a preferred list of authorities to search, and successful hits will return the accepted scientific spelling, taxonomic serial number, and taxonomic rank. `resolve_sci_taxa` will give preference to the ordering of the taxonomic authorites input to the function. View the list of authorities supported by `resolve_sci_taxa` with `view_taxa_authorities`
+
+```{r view_authorities, eval=FALSE}
+# Supported authorities are listed in the column titled resolve_sci_taxa
+view_taxa_authorities()
+```
+
+```{r view_authorities_table, echo=FALSE}
+# View taxa_map.csv after running resolve_taxa
+output <- view_taxa_authorities()
+knitr::kable(output, caption = "Authorities supported by resolve_sci_taxa and resolve_comm_taxa") %>%
+  kableExtra::kable_styling() %>%
+  kableExtra::scroll_box(width = '100%', height = '400px')
+```
+
+The authorities _ITIS_ and _WORMS_ will be used.
+
+```{r resolve_taxa, message=FALSE, warning=FALSE}
+# Resolve taxa using ITIS and WORMS
+output <- resolve_sci_taxa(path = my_path, data.sources = c(3,9))
+```
+
+```{r resolve_to_sci, echo=FALSE}
+knitr::kable(output, caption = "Output from resolve_sci_taxa call") %>%
+  kableExtra::kable_styling() %>%
+  kableExtra::scroll_box(width = '100%', height = '400px')
+```
+
+The taxa that could be resolved to _ITIS_ and _WORMS_ were logged to taxa_map.csv, along with their taxonomic serial numbers and taxonomic ranks.
+
+
+
+# Resolve common taxa
+
+Some of the taxa that couldn't be resolved by `resolve_sci_taxa` is because their common names were listed. Use `resolve_comm_taxa` to attempt resolution of these common names to an authority. `resolve_comm_taxa` is similar to `resolve_sci_taxa` in that it requires a preferred list of authorities to search against. Select authorities supported by `resolve_comm_taxa`.
+
+```{r view_authorities_2, eval=FALSE}
+# View the list of authorities supported by resolve_comm_taxa
+view_authorities()
+```
+
+```{r view_authorities_table_2, echo=FALSE}
+# View authorities
+output <- view_taxa_authorities()
+knitr::kable(output, caption = "Authorities supported by the resolve_sci_taxa and resolve_comm_taxa") %>%
+  kableExtra::kable_styling() %>%
+  kableExtra::scroll_box(width = '100%', height = '400px')
+```
+
+```{r resolve_common, message=FALSE, warning=FALSE}
+# Resolve common using ITIS
+output <- resolve_comm_taxa(path = my_path, data.sources = 3)
+```
+
+```{r view_resolve_comm_outputs, echo=FALSE}
+knitr::kable(output, caption = "Output from resolve_comm_taxa call") %>%
+  kableExtra::kable_styling() %>%
+  kableExtra::scroll_box(width = '100%', height = '400px')
+```
+
+
+
+# Taxa map overview
+
+Throughout the cleaning process, results have been logged to taxa_map.csv facilitating understanding of the changes to the raw taxa list. The taxa map will be used to create a revision of the raw taxa list, but first an explanation of the columns of this file is warranted. Information about taxa_map.csv can also be found in the documentation for `create_taxa_map` (i.e. `?create_taxa_map`). The taxa map has 10 columns:
+
+- **taxa_raw** - The unique taxa extracted from the raw data by `create_taxa_map`.
+- **taxa_trimmed** - Taxa that were operated on by `trim_taxa`, with the resultant name listed.
+- **taxa_replacement** - Taxa that were operated on by `replace_taxa`, with the resultant replacement listed.
+- **taxa_removed** - Taxa that were operated on by `remove_taxa`. TRUE if taxa was removed, NA otherwise.
+- **taxa_clean** - Taxa that were successfully resolved to an authority by `resolve_sci_taxa` or `resolve_comm_taxa`. The listed taxa spelling is accepted by the matched authority.
+- **rank** - Taxonomic rank determined by `resolve_sci_taxa` or a value of _Common_ if resolved by `resolve_comm_taxa`.
+- **authority** - Taxonomic authority resolved to by `resolve_sci_taxa` or `resolve_comm_taxa`.
+- **authority_id** - Identification number/value of the resolved taxon in the taxonomic authority listed under _authority_.
+- **score** - A value given by some authorities as to how well the raw taxon matched the resolved taxon. See the authority for more information.
+- **difference** - TRUE if there is a difference between taxa_raw and taxa_clean.
+
+Below is the taxa_map.csv for the cleaning procedures implemented on the test data. Some noteworthy features of this map:
+
+- taxa_trimmed, taxa_replacement, and taxa_removed contain values as per the specifications listed above.
+- taxa_clean contains the accepted spelling of taxa that were able to be resolved to a taxonomic authority. Not all taxa were resolved. In these instances a manual search of an authority is recommended. Often a manual search will reveal additional information that will aid in the resolving of a taxon. Once resolved. The fields taxa_clean, rank, authority, and authority_id can be manually updated.
+- rank, authority, and authority_id contain values if the taxon was resolved, and contains NA otherwise.
+
+```{r resolve_common_taxa_map, echo=FALSE}
+output <- read.table(paste0(my_path, '/taxa_map.csv'), header = T, sep = ',', stringsAsFactors = F)
+# View taxa_map.csv after running resolve_common
+knitr::kable(output, caption = "taxa_map.csv after all the cleaning procedures have been applied.") %>%
+  kableExtra::kable_styling() %>%
+  kableExtra::scroll_box(width = '100%', height = '400px')
+```
+
+
+
+# Revise taxa
+
+Now that the taxa have been cleaned, as best they can, the raw data table can be updated with the new taxonomic information. This new information is contained in 4 new columns, which have the same definitions as listed in the taxa map:
+
+- **taxa_clean** - Taxa that were successfully resolved to an authority. The listed taxa spelling is accepted by the matched authority.
+- **taxa_rank** - Taxonomic rank.
+- **taxa_authority** - Taxonomic authority that was resolved.
+- **taxa_authority_id** - Identification number/value of the resolved taxon in the taxonomic authority.
+
+These 4 columns are appended to the raw data table and written to a file named "taxonomyCleanr_output".
+
+```{r update data, message=FALSE, warning=FALSE}
+# Revise the raw data table and write to file
+output <- revise_taxa(path = my_path, x = data, col = 'Species', sep = '\t')
+```
+
+```{r update_data_taxa_map, echo=FALSE}
+knitr::kable(output, caption = "A revision of the raw data table with new taxonomic data appended")  %>%
+  kableExtra::kable_styling() %>%
+  kableExtra::scroll_box(width = '100%', height = '400px')
+```
+
+
+
+# Make taxonomicCoverage EML
+
+When creating EML metadata (Ecological Metadata Language), it is a good practice to include the taxonomic entities and their respective hierarchies to facilitate search and discovery.
+
+```{r create taxonomicCoverage, message=FALSE, warning=FALSE}
+# Create the taxonomicCoverage EML node set and write to file
+make_taxonomicCoverage(path = my_path)
+```
+
+

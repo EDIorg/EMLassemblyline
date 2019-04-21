@@ -18,3 +18,29 @@ reference:
     - template_directories
     - view_unit_dictionary
     
+  navbar:
+  title: ~
+  type: default
+  left:
+    - text: Functions
+      href: reference/index.html
+    - text: Articles
+      menu:
+      - text: Overview
+        href: articles/overview.html
+      - text: Organize data package
+        href: articles/organize_data_package.html
+      - text: Create metadata templates
+        href: articles/create_metadata_templates.html
+      - text: Edit metadata templates
+        href: articles/edit_metadata_templates.html
+      - text: Create EML
+        href: articles/create_eml.html
+      - text: Publish data package
+        href: articles/publish_data_package.html
+      - text: Automate data publication
+        href: articles/automate_data_publication.html
+      - text: EMLassemblyline via exchange format
+        href: articles/emlassemblyline_via_exchange format.html
+    - text: News
+      href: news/index.html
