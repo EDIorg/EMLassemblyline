@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create directories for `EMLassemblyline` inputs and outputs — template_directories • EMLassemblyline</title>
+<title>Create directories for <code>EMLassemblyline</code> inputs and outputs — template_directories • EMLassemblyline</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,11 +30,11 @@
 
 
 
-<meta property="og:title" content="Create directories for `EMLassemblyline` inputs and outputs — template_directories" />
+<meta property="og:title" content="Create directories for <code>EMLassemblyline</code> inputs and outputs — template_directories" />
 
-<meta property="og:description" content="Create a commonly used directory structure for `EMLassemblyline` inputs 
-    and outputs. You're welcome to organize content in any way you choose,
-    this is just one approach." />
+<meta property="og:description" content="Create a commonly used directory structure for EMLassemblyline 
+    inputs and outputs. You're welcome to organize content in any way you 
+    choose, this is just one approach." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -131,16 +131,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create directories for `EMLassemblyline` inputs and outputs</h1>
+    <h1>Create directories for <code>EMLassemblyline</code> inputs and outputs</h1>
     <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/template_directories.R'><code>R/template_directories.R</code></a></small>
     <div class="hidden name"><code>template_directories.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Create a commonly used directory structure for `EMLassemblyline` inputs 
-    and outputs. You're welcome to organize content in any way you choose,
-    this is just one approach.</p>
+    <p>Create a commonly used directory structure for <code>EMLassemblyline</code> 
+    inputs and outputs. You're welcome to organize content in any way you 
+    choose, this is just one approach.</p>
     
     </div>
 
@@ -162,22 +162,24 @@ names.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A directory with the following structure:</p><ul>
-<li><p>`name` Parent directory with given name</p><ul>
-<li><p>`data` Where data and other entities are stored</p></li>
-<li><p>`scripts` Where data processing and packaging scripts are
-            kept.</p></li>
-<li><p>`metadata_templates` Where `EMLassemblyline` template 
-            files are imported and edited</p></li>
-<li><p>`eml` Where EML files are exported to by the 
-            `EMLassemblyline`</p></li>
+    <p>A directory with the following structure and contents:</p><ul>
+<li><p><strong>name</strong> Name of parent directory</p><ul>
+<li><p><strong>objects</strong> Directory for data and other digital 
+            objects to be packaged.</p></li>
+<li><p><strong>metadata_templates</strong> Directory for 
+            <code>EMLassemblyline</code> template files.</p></li>
+<li><p><strong>eml</strong> Directory for EML files created by 
+            <code>EMLassemblyline</code>.</p></li>
+<li><p><strong>run_EMLassemblyline.R</strong> An empty R file for 
+            scripting an <code>EMLassemblyline</code> workflow.</p></li>
 </ul></li>
 </ul>
 
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Existing `dir.name`s at `path` will not be overwritten.</p>
+    <p>Existing directories named with <code>dir.name</code> at <code>path</code> will not 
+    be overwritten.</p>
     
 
   </div>

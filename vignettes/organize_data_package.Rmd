@@ -3,4 +3,47 @@ title: "Organize data package contents"
 output: html_document
 ---
 
-## Sub title
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(EMLassemblyline)
+```
+
+
+## The data package
+
+A data package forms a collection of data, metadata, and other digital objects that enable understanding, use, and citation of a dataset. Metadata play an important role in understanding each object and how they relate to each other. `EMLassemblyline` works for all digital object formats and has been used by the Environmental Data Initiative (EDI) to create and manage well over 250 data packages for a nearly equal number of research scientists. Editing and revisioning data packages on short notice is made easy by `EMLassemblyline` but requires some forethought to file organization.
+
+## An organization scheme
+
+The organization scheme we’ve found most useful at EDI is a single directory for each data package containing:
+
+*  __objects__ A directory of objects to package (e.g. data tables, analysis scripts, .zip files, etc.).
+*  __metadata_templates__ A directory of `EMLassemblyline` metadata templates.
+*  __eml__ A directory of EML files created by `EMLassemblyline`.
+*  __run_EMLassemblyline.R__ An empty R file for scripting the `EMLassemblyline` workflow.
+
+```{r remove_directory, echo=FALSE}
+unlink(
+  x = 'C:/Users/Colin/Desktop/data_packages/edi_301',
+  recursive = TRUE
+)
+```
+
+```{r template_directories, echo=TRUE, paged.print=TRUE}
+
+# Create the standard data package directory structure
+
+template_directories(
+  path = 'C:/Users/Colin/Desktop/data_packages',
+  dir.name = 'edi_301'
+)
+
+# View directory contents
+
+dir(
+  'C:/Users/Colin/Desktop/data_packages/edi_301'
+)
+
+```
+
+You may use any organization scheme you'd like, as long as the metadata template files belonging to a data package are all stored in the same directory.

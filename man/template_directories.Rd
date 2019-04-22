@@ -2,7 +2,7 @@
 % Please edit documentation in R/template_directories.R
 \name{template_directories}
 \alias{template_directories}
-\title{Create directories for `EMLassemblyline` inputs and outputs}
+\title{Create directories for \code{EMLassemblyline} inputs and outputs}
 \usage{
 template_directories(path, dir.name)
 }
@@ -13,25 +13,27 @@ template_directories(path, dir.name)
 names.}
 }
 \value{
-A directory with the following structure:
+A directory with the following structure and contents:
     \itemize{
-        \item{`name` Parent directory with given name}
+        \item{\strong{name} Name of parent directory}
         \itemize{
-            \item{`data` Where data and other entities are stored}
-            \item{`scripts` Where data processing and packaging scripts are
-            kept.}
-            \item{`metadata_templates` Where `EMLassemblyline` template 
-            files are imported and edited}
-            \item{`eml` Where EML files are exported to by the 
-            `EMLassemblyline`}
+            \item{\strong{objects} Directory for data and other digital 
+            objects to be packaged.}
+            \item{\strong{metadata_templates} Directory for 
+            \code{EMLassemblyline} template files.}
+            \item{\strong{eml} Directory for EML files created by 
+            \code{EMLassemblyline}.}
+            \item{\strong{run_EMLassemblyline.R} An empty R file for 
+            scripting an \code{EMLassemblyline} workflow.}
         }
     }
 }
 \description{
-Create a commonly used directory structure for `EMLassemblyline` inputs 
-    and outputs. You're welcome to organize content in any way you choose,
-    this is just one approach.
+Create a commonly used directory structure for \code{EMLassemblyline} 
+    inputs and outputs. You're welcome to organize content in any way you 
+    choose, this is just one approach.
 }
 \note{
-Existing `dir.name`s at `path` will not be overwritten.
+Existing directories named with \code{dir.name} at \code{path} will not 
+    be overwritten.
 }
