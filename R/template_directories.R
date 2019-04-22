@@ -102,13 +102,14 @@ template_directories <- function(path, dir.name){
   
   file.copy(
     from = system.file(
-      '/templates/run_EMLassemblyline',
+      '/templates/run_EMLassemblyline.R',
       package = 'EMLassemblyline'
     ),
     to = paste0(
       path,
       '/run_EMLassemblyline_for_',
-      dir.name
+      dir.name,
+      '.R'
     )
   )
   
