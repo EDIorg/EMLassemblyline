@@ -25,7 +25,7 @@
 #'             \item{\strong{eml} Directory for EML files created by 
 #'             \code{EMLassemblyline}.}
 #'             \item{\strong{run_EMLassemblyline.R} An empty R file for 
-#'             scripting an \code{EMLassemblyline} workflow.
+#'             scripting an \code{EMLassemblyline} workflow.}
 #'         }
 #'     }
 #'     
@@ -100,7 +100,7 @@ template_directories <- function(path, dir.name){
   
   # Create EMLassemblyline R script -------------------------------------------
   
-  file.copy(
+  value <- file.copy(
     from = system.file(
       '/templates/run_EMLassemblyline.R',
       package = 'EMLassemblyline'
