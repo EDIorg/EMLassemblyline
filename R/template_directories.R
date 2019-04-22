@@ -1,9 +1,9 @@
-#' Create directories for `EMLassemblyline` inputs and outputs
+#' Create directories for \code{EMLassemblyline} inputs and outputs
 #'
 #' @description  
-#'     Create a commonly used directory structure for `EMLassemblyline` inputs 
-#'     and outputs. You're welcome to organize content in any way you choose,
-#'     this is just one approach.
+#'     Create a commonly used directory structure for \code{EMLassemblyline} 
+#'     inputs and outputs. You're welcome to organize content in any way you 
+#'     choose, this is just one approach.
 #'
 #' @usage template_directories(path, dir.name)
 #'
@@ -14,22 +14,24 @@
 #'     names.
 #'
 #' @return
-#'     A directory with the following structure:
+#'     A directory with the following structure and contents:
 #'     \itemize{
-#'         \item{`name` Parent directory with given name}
+#'         \item{\strong{name} Name of parent directory}
 #'         \itemize{
-#'             \item{`data` Where data and other entities are stored}
-#'             \item{`scripts` Where data processing and packaging scripts are
-#'             kept.}
-#'             \item{`metadata_templates` Where `EMLassemblyline` template 
-#'             files are imported and edited}
-#'             \item{`eml` Where EML files are exported to by the 
-#'             `EMLassemblyline`}
+#'             \item{\strong{objects} Directory for data and other digital 
+#'             objects to be packaged.}
+#'             \item{\strong{metadata_templates} Directory for 
+#'             \code{EMLassemblyline} template files.}
+#'             \item{\strong{eml} Directory for EML files created by 
+#'             \code{EMLassemblyline}.}
+#'             \item{\strong{run_EMLassemblyline.R} An empty R file for 
+#'             scripting an \code{EMLassemblyline} workflow.
 #'         }
 #'     }
 #'     
 #' @note
-#'     Existing `dir.name`s at `path` will not be overwritten.
+#'     Existing directories named with \code{dir.name} at \code{path} will not 
+#'     be overwritten.
 #'
 #' @export
 #'
@@ -42,7 +44,7 @@ template_directories <- function(path, dir.name){
     stop(paste0(path, '/', dir.name, ' already exists.'))
   }
 
-  # Create parent directory
+  # Create parent directory ---------------------------------------------------
   
   message(
     paste0(
@@ -61,14 +63,16 @@ template_directories <- function(path, dir.name){
     )
   )
   
-  # Create subdirectory data
+  # Create subdirectories -----------------------------------------------------
+  
+  # Create subdirectory objects
   
   dir.create(
     path = paste0(
       path,
       '/',
       dir.name,
-      '/data'
+      '/objects'
     )
   )
   
@@ -94,14 +98,17 @@ template_directories <- function(path, dir.name){
     )
   )
   
-  # Create subdirectory scripts
+  # Create EMLassemblyline R script -------------------------------------------
   
-  dir.create(
-    path = paste0(
+  file.copy(
+    from = system.file(
+      '/templates/run_EMLassemblyline',
+      package = 'EMLassemblyline'
+    ),
+    to = paste0(
       path,
-      '/',
-      dir.name,
-      '/scripts'
+      '/run_EMLassemblyline_for_',
+      dir.name
     )
   )
   
