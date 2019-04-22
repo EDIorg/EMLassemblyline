@@ -107,6 +107,8 @@ template_directories <- function(path, dir.name){
     ),
     to = paste0(
       path,
+      '/',
+      dir.name,
       '/run_EMLassemblyline_for_',
       dir.name,
       '.R'
