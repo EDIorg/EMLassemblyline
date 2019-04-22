@@ -12,6 +12,22 @@ template_directories(path, dir.name)
 \item{dir.name}{(character) Name of parent directory. Subdirectories have predefined 
 names.}
 }
+\value{
+A directory with the following structure and contents:
+    \itemize{
+        \item{\strong{name} Name of parent directory}
+        \itemize{
+            \item{\strong{objects} Directory for data and other digital 
+            objects to be packaged.}
+            \item{\strong{metadata_templates} Directory for 
+            \code{EMLassemblyline} template files.}
+            \item{\strong{eml} Directory for EML files created by 
+            \code{EMLassemblyline}.}
+            \item{\strong{run_EMLassemblyline.R} An empty R file for 
+            scripting an \code{EMLassemblyline} workflow.}
+        }
+    }
+}
 \description{
 Create a commonly used directory structure for \code{EMLassemblyline} 
     inputs and outputs. You're welcome to organize content in any way you 
