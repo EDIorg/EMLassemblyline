@@ -9,7 +9,6 @@ Description: A set of functions facilitating a workflow to create metadata
     information from the data entities, and finally executes a fancy wrapper
     function to build, validate, and write the EML metadata to file.
 Depends:
-    EML (== 1.0.3),
     stringr (>= 1.2.0),
     stringi (>= 1.1.5),
     reader (>= 1.0.6),
@@ -17,9 +16,10 @@ Depends:
     xml2 (>= 1.1.1),
     httr (>= 1.3.1),
     EDIutils,
-    R (>= 3.2.5)
+    EML103
 Remotes:
-    EDIorg/EDIutils    
+    EDIorg/EDIutils,
+    clnsmth/EML103
 Suggests:
     knitr,
     rmarkdown,
@@ -29,6 +29,6 @@ Encoding: UTF-8
 LazyData: true
 URL: http://github.com/EDIorg/EMLassemblyline
 BugReports: http://github.com/EDIorg/EMLassemblyline/issues
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 SystemRequirements: 
 VignetteBuilder: knitr

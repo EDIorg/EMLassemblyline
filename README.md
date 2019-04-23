@@ -19,18 +19,11 @@ The assembly line requires little operational knowledge of the R programming lan
 
 #### R package
 
-`EMLassemblyline` is a collection of wrapper functions to the `EML` R package developed by [Boettiger et al. (2017)](https://github.com/ropensci/EML). For an understanding of what is going on under the hood of the assembly line, we recommend you first take a look at the `EML` R package. Once you understand this you will be able to customize the assembly line for your own workflows or become a developer of this project.
-
 The `EMLassemblyline` R package is available here on GitHub. To install, go to your RStudio Console window and enter these lines of code:
 
 ```
-# Install and load devtools
-install.packages("devtools")
-library(devtools)
-
-# Install and load EMLassemblyline
-install_github("EDIorg/EMLassemblyline")
-library(EMLassemblyline)
+# Install from GitHub
+remotes::install_github("EDIorg/EMLassemblyline")
 ```
 
 __NOTE: Developoment version of EML (Version 1.99.0) is incompatible with EMLassemblyline__ `EMLassemblyline` only works with CRAN releases. A compatible version of `EMLassemblyline` will be released when the newly refurbished `EML` library is released on CRAN.
