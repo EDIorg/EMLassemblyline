@@ -160,15 +160,15 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "taxonomyCleanr",
-      "name": "taxonomyCleanr",
-      "sameAs": "https://github.com/EDIorg/taxonomyCleanr"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "EML103",
       "name": "EML103",
       "sameAs": "https://github.com/clnsmth/EML103"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "taxonomyCleanr",
+      "name": "taxonomyCleanr",
+      "sameAs": "https://github.com/EDIorg/taxonomyCleanr"
     },
     {
       "@type": "SoftwareApplication",
@@ -179,7 +179,7 @@
   ],
   "codeRepository": "https://github.com/EDIorg/EMLassemblyline",
   "readme": "https://github.com/clnsmth/EMLassemblyline/blob/master/README.md",
-  "fileSize": "178.406KB",
+  "fileSize": "175.009KB",
   "contIntegration": [
     "https://travis-ci.org/clnsmth/EMLassemblyline",
     "https://codecov.io/github/clnsmth/EMLassemblyline?branch=master"

@@ -12,8 +12,8 @@ r_packages:
   - methods
   - covr
 r_github_packages:
-  - EDIorg/EDIutils
   - clnsmth/EML103
+  - EDIorg/EDIutils
   - EDIorg/taxonomyCleanr
 warnings_are_errors: false
 after_success:
