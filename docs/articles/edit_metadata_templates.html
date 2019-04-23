@@ -50,7 +50,7 @@
       <a href="../articles/overview.html">Overview</a>
     </li>
     <li>
-      <a href="../articles/organize_data_package.html">Organize data package contents</a>
+      <a href="../articles/organize_data_package.html">Organize data package</a>
     </li>
     <li>
       <a href="../articles/create_metadata_templates.html">Create metadata templates</a>
@@ -105,9 +105,37 @@
 
     
     
-<div id="sub-section" class="section level2">
+<div id="editing" class="section level2">
 <h2 class="hasAnchor">
-<a href="#sub-section" class="anchor"></a>Sub-section</h2>
+<a href="#editing" class="anchor"></a>Editing</h2>
+<p>While a substantial portion of metadata content is auto-extracted, most templates require some user input or validation. Template files can be edited in simple text and spreadsheet editors. Specific instructions for each template are found below.</p>
+<p><em>NOTE:</em></p>
+<ul>
+<li><em>Some content in tabular templates is not required. Leave these spaces blank (no need to add NAs).</em></li>
+<li><em>Only UTF-8 is supported by EML.</em></li>
+</ul>
+</div>
+<div id="abstract-txt" class="section level2">
+<h2 class="hasAnchor">
+<a href="#abstract-txt" class="anchor"></a>abstract.txt</h2>
+<p>Like a journal article, the abstract provides a concise summary of the data package. It should cover what, why, when, where, and how.</p>
+</div>
+<div id="methods-txt" class="section level2">
+<h2 class="hasAnchor">
+<a href="#methods-txt" class="anchor"></a>methods.txt</h2>
+<p>Describe the specific methods used to create the data. Include as much detail as necessary to allow a future scientist to assess fitness for use. Add instrument descriptions, protocols, etc.</p>
+</div>
+<div id="keywords-txt" class="section level2">
+<h2 class="hasAnchor">
+<a href="#keywords-txt" class="anchor"></a>keywords.txt</h2>
+<p>Keywords facilitate search and discovery along scientific terms, as well as research groups, field stations, and other organizations. Using a controlled vocabulary or thesaurus vastly improves discovery (e.g. <a href="http://vocab.lternet.edu/vocab/vocab/index.php">LTER</a>.</p>
+<p><strong>keywords.txt</strong> is a tab delimited table with columns:</p>
+<ul>
+<li>
+<strong>keyword</strong> One keyword per row.</li>
+<li>
+<strong>keywordThesaurus (not required)</strong> URI of controlled vocabulary from which the keyword was found.</li>
+</ul>
 </div>
   </div>
 
@@ -116,7 +144,10 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#sub-section">Sub-section</a></li>
+<li><a href="#editing">Editing</a></li>
+      <li><a href="#abstract-txt">abstract.txt</a></li>
+      <li><a href="#methods-txt">methods.txt</a></li>
+      <li><a href="#keywords-txt">keywords.txt</a></li>
       </ul>
 </div>
       </div>
@@ -129,7 +160,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
 </div>
