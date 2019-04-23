@@ -3,4 +3,30 @@ title: "Edit metadata templates"
 output: html_document
 ---
 
-## Sub-section
+## Editing
+
+While a substantial portion of metadata content is auto-extracted, most templates require some user input or validation. Template files can be edited in simple text and spreadsheet editors. Specific instructions for each template are found below.
+
+_NOTE:_
+
+*  _Some content in tabular templates is not required. Leave these spaces blank (no need to add NAs)._
+*  _Only UTF-8 is supported by EML._
+
+
+## abstract.txt
+
+Like a journal article, the abstract provides a concise summary of the data package. It should cover what, why, when, where, and how.
+
+## methods.txt
+
+Describe the specific methods used to create the data. Include as much detail as necessary to allow a future scientist to assess fitness for use. Add instrument descriptions, protocols, etc. 
+
+## keywords.txt
+
+Keywords facilitate search and discovery along scientific terms, as well as research groups, field stations, and other organizations. Using a controlled vocabulary or thesaurus vastly improves discovery (e.g. [LTER](http://vocab.lternet.edu/vocab/vocab/index.php).
+
+__keywords.txt__ is a tab delimited table with columns:
+
+*  **keyword** One keyword per row.
+*  **keywordThesaurus (not required)** URI of controlled vocabulary from which the keyword was found.
+
