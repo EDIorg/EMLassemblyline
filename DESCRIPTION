@@ -10,7 +10,6 @@ Description:
     minimizing user effort while maximizing metadata features for data 
     discovery and reuse.
 Imports:
-    EML (== 1.0.3),
     stringr (>= 1.2.0),
     stringi (>= 1.1.5),
     reader (>= 1.0.6),
@@ -21,6 +20,7 @@ Imports:
     rmarkdown (>= 1.11),
     methods,
     taxonomyCleanr,
+    EML103,
     EDIutils
 Suggests: testthat
 License: MIT
@@ -29,6 +29,7 @@ LazyData: true
 RoxygenNote: 6.1.1
 Remotes:
     EDIorg/EDIutils,
+    clnsmth/EML103,
     EDIorg/taxonomyCleanr
 URL: https://github.com/EDIorg/EMLassemblyline
 BugReports: https://github.com/EDIorg/EMLassemblyline/issues

@@ -674,7 +674,7 @@ make_eml <- function(
   
   message("<temporalCoverage>")
   
-  dataset@coverage <- EML::set_coverage(
+  dataset@coverage <- EML103::set_coverage(
     begin = temporal.coverage[1],
     end = temporal.coverage[2]
   )
@@ -877,7 +877,7 @@ make_eml <- function(
         }
         
         # Read provenance file and add to L0 EML
-        prov_metadata <- EML::read_eml(paste0(data.path, '/provenance_metadata.xml'))
+        prov_metadata <- EML103::read_eml(paste0(data.path, '/provenance_metadata.xml'))
         methods_step <- dataset@methods@methodStep
         methods_step[[length(methods_step)+1]] <- prov_metadata
         dataset@methods@methodStep <- methods_step
@@ -1144,7 +1144,7 @@ make_eml <- function(
         
         # Create the attributeList element
         
-        attributeList <- suppressWarnings(EML::set_attributes(attributes,
+        attributeList <- suppressWarnings(EML103::set_attributes(attributes,
                                                          factors = catvars,
                                                          col_classes = col_classes))
         
@@ -1165,7 +1165,7 @@ make_eml <- function(
         
         # Create the attributeList element
         
-        attributeList <- suppressWarnings(EML::set_attributes(attributes,
+        attributeList <- suppressWarnings(EML103::set_attributes(attributes,
                                                          col_classes = col_classes))
         
       }
@@ -1180,7 +1180,7 @@ make_eml <- function(
       
       if (!is.null(data.table.quote.character)){
         
-        physical_temp <- EML::set_physical(
+        physical_temp <- EML103::set_physical(
           paste0(
             data.path,
             '/',
@@ -1188,18 +1188,18 @@ make_eml <- function(
           )
         )
         
-        physical <- EML::set_physical(names(x$data.table)[i],
+        physical <- EML103::set_physical(names(x$data.table)[i],
                                  numHeaderLines = "1",
                                  recordDelimiter = eol,
                                  attributeOrientation = "column",
-                                 fieldDelimiter = unlist(EML::eml_get(physical_temp, 'fieldDelimiter')),
+                                 fieldDelimiter = unlist(EML103::eml_get(physical_temp, 'fieldDelimiter')),
                                  quoteCharacter = data.table.quote.character[i])
         
       }
       
       if (is.null(data.table.quote.character)) {
         
-        physical_temp <- EML::set_physical(
+        physical_temp <- EML103::set_physical(
           paste0(
             data.path,
             '/',
@@ -1207,11 +1207,11 @@ make_eml <- function(
           )
         )
         
-        physical <- EML::set_physical(names(x$data.table)[i],
+        physical <- EML103::set_physical(names(x$data.table)[i],
                                  numHeaderLines = "1",
                                  recordDelimiter = eol,
                                  attributeOrientation = "column",
-                                 fieldDelimiter = unlist(EML::eml_get(physical_temp, 'fieldDelimiter')))
+                                 fieldDelimiter = unlist(EML103::eml_get(physical_temp, 'fieldDelimiter')))
         
       }
       
@@ -1350,7 +1350,7 @@ make_eml <- function(
             }
           }
           
-          unitsList <- EML::set_unitList(custom_units_df)
+          unitsList <- EML103::set_unitList(custom_units_df)
         }
 
       } else {
@@ -1554,14 +1554,14 @@ make_eml <- function(
   
   if (isTRUE(write.file)){
     message("Writing EML.")
-    EML::write_eml(eml, paste(eml.path, "/", package.id, ".xml", sep = ""))
+    EML103::write_eml(eml, paste(eml.path, "/", package.id, ".xml", sep = ""))
   }
   
   # Validate EML
   
   message("Validating EML.")
   
-  validation_result <- EML::eml_validate(eml)
+  validation_result <- EML103::eml_validate(eml)
   
   if (validation_result == "TRUE"){
     

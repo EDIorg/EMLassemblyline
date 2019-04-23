@@ -126,7 +126,7 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
       
       # Add to content
       
-      x$template$abstract.txt$content <- EML::set_TextType(
+      x$template$abstract.txt$content <- EML103::set_TextType(
         file = system.file(
           '/templates/abstract.txt',
           package = 'EMLassemblyline'
@@ -180,7 +180,7 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
       
       # Add to content
       
-      x$template$additional_info.txt$content <- EML::set_TextType(
+      x$template$additional_info.txt$content <- EML103::set_TextType(
         file = system.file(
           '/templates/additional_info.txt',
           package = 'EMLassemblyline'
@@ -352,7 +352,7 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
         
         # Add to content
         
-        x$template$intellectual_rights.txt$content <- EML::set_TextType(
+        x$template$intellectual_rights.txt$content <- EML103::set_TextType(
           file = system.file(
             '/templates/intellectual_rights_cc0.txt',
             package = 'EMLassemblyline'
@@ -408,7 +408,7 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
         
         # Add to content
         
-        x$template$intellectual_rights.txt$content <- EML::set_TextType(
+        x$template$intellectual_rights.txt$content <- EML103::set_TextType(
           file = system.file(
             '/templates/intellectual_rights_ccby4.0.txt',
             package = 'EMLassemblyline'
@@ -521,7 +521,7 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
       
       # Add to content
       
-      x$template$methods.txt$content <- EML::set_methods(
+      x$template$methods.txt$content <- EML103::set_methods(
         methods_file = system.file(
           '/templates/methods.txt',
           package = 'EMLassemblyline'

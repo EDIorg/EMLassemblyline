@@ -5,7 +5,7 @@
   ],
   "@type": "SoftwareSourceCode",
   "identifier": "EMLassemblyline",
-  "description": "A set of functions facilitating a workflow to create metadata\n    for a user supplied data entity. Templates are copied to the working\n    directory and instructions prompt the user to provide requisite \n    information. The user selects from a collection of functions to extract\n    information from the data entities, and finally executes a fancy wrapper\n    function to build, validate, and write the EML metadata to file.",
+  "description": "\n    For scientists and data managers who need to easily create high quality \n    metadata for data publication. EMLassemblyline is a metadata builder that \n    emphasizes auto-extraction of metadata, appends value added content, and \n    inputs user supplied information through common interfaces thereby \n    minimizing user effort while maximizing metadata features for data \n    discovery and reuse.",
   "name": "EMLassemblyline: A workflow for creating EML",
   "license": "https://spdx.org/licenses/MIT",
   "version": "2.4.6",
@@ -49,19 +49,6 @@
     }
   ],
   "softwareRequirements": [
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "EML",
-      "name": "EML",
-      "version": "== 1.0.3",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=EML"
-    },
     {
       "@type": "SoftwareApplication",
       "identifier": "stringr",
@@ -179,6 +166,12 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "EML103",
+      "name": "EML103",
+      "sameAs": "https://github.com/clnsmth/EML103"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "EDIutils",
       "name": "EDIutils",
       "sameAs": "https://github.com/EDIorg/EDIutils"
@@ -186,7 +179,7 @@
   ],
   "codeRepository": "https://github.com/EDIorg/EMLassemblyline",
   "readme": "https://github.com/clnsmth/EMLassemblyline/blob/master/README.md",
-  "fileSize": "175.332KB",
+  "fileSize": "177.687KB",
   "contIntegration": [
     "https://travis-ci.org/clnsmth/EMLassemblyline",
     "https://codecov.io/github/clnsmth/EMLassemblyline?branch=master"

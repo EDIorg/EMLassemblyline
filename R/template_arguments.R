@@ -141,12 +141,12 @@
 #'         \itemize{
 #'         \item{\strong{abstract.txt} Abstract template}
 #'           \itemize{
-#'           \item{\strong{content} \code{EML::TextType} containing 
+#'           \item{\strong{content} \code{EML103::TextType} containing 
 #'           abstract, NA otherwise}
 #'           }
 #'         \item{\strong{additional_info.txt} Additional information template}
 #'           \itemize{
-#'           \item{\strong{content} \code{EML::TextType} containing 
+#'           \item{\strong{content} \code{EML103::TextType} containing 
 #'           additional info, NA otherwise}
 #'           }
 #'         \item{\strong{attributes_name.txt} Attributes template where 
@@ -180,7 +180,7 @@
 #'         \item{\strong{intellectual_rights.txt} Intellectual rights 
 #'           template}
 #'           \itemize{
-#'           \item{\strong{content} \code{EML::TextType} containing 
+#'           \item{\strong{content} \code{EML103::TextType} containing 
 #'           intellectual rights template, NA otherwise.}
 #'           }
 #'         \item{\strong{keywords.txt} Keywords template}
@@ -190,7 +190,7 @@
 #'           }
 #'         \item{\strong{methods.txt} Methods template}
 #'           \itemize{
-#'           \item{\strong{content} \code{EML::Methods} containing 
+#'           \item{\strong{content} \code{EML103::Methods} containing 
 #'           methods, NA otherwise.}
 #'           }
 #'         \item{\strong{personnel.txt} Personnel template}
@@ -201,7 +201,7 @@
 #'         \item{\strong{taxonomicCoverage.xml} Taxonomic coverage EML 
 #'           element}
 #'           \itemize{
-#'           \item{\strong{content} \code{EML::taxonomicCoverage}, 
+#'           \item{\strong{content} \code{EML103::taxonomicCoverage}, 
 #'           NA otherwise}
 #'           }     
 #'           }
@@ -421,7 +421,7 @@ template_arguments <- function(
       if (file.exists(paste0(path, '/', templates[i]))){
         
         output$x$template[[i]]$content <- methods::as(
-          EML::set_TextType(
+          EML103::set_TextType(
             file = paste0(
               path, 
               '/', 
@@ -446,7 +446,7 @@ template_arguments <- function(
       if (file.exists(paste0(path, '/', templates[i]))){
         
         output$x$template[[i]]$content <- methods::as(
-          EML::set_TextType(
+          EML103::set_TextType(
             file = paste0(
               path, 
               '/', 
@@ -693,7 +693,7 @@ template_arguments <- function(
       if (file.exists(paste0(path, '/', templates[i]))){
         
         output$x$template[[i]]$content <- methods::as(
-          EML::set_TextType(
+          EML103::set_TextType(
             file = paste0(
               path, 
               '/', 
@@ -753,7 +753,7 @@ template_arguments <- function(
       
       if (file.exists(paste0(path, '/', templates[i]))){
         
-        output$x$template[[i]]$content <- EML::set_methods(
+        output$x$template[[i]]$content <- EML103::set_methods(
           methods_file = paste0(
             path, 
             '/', 
@@ -820,7 +820,7 @@ template_arguments <- function(
       if (file.exists(paste0(path, '/', templates[i]))){
         
         output$x$template[[i]]$content <- methods::as(
-          EML::read_eml(
+          EML103::read_eml(
             paste0(
               path, 
               '/', 
