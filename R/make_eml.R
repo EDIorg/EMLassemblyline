@@ -592,7 +592,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
     stop("abstract.txt doesn't exist!")
   }
 
-  dataset@abstract <- as(set_TextType(fname_abstract), "abstract")
+  dataset@abstract <- as(EML103::set_TextType(fname_abstract), "abstract")
 
   # Add keywords --------------------------------------------------------------
   
@@ -673,14 +673,14 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   }
   
   dataset@intellectualRights <- as(
-    set_TextType(fname_intellectual_rights),
+    EML103::set_TextType(fname_intellectual_rights),
     "intellectualRights")
 
   # Add coverage --------------------------------------------------------------
   
   message("<temporalCoverage>")
   
-  dataset@coverage <- set_coverage(
+  dataset@coverage <- EML103::set_coverage(
     begin = temporal.coverage[1],
     end = temporal.coverage[2]
   )
@@ -744,7 +744,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   
   if (file.exists(paste(path, "/", "taxonomicCoverage.xml", sep = ""))){
     message("<taxonomicCoverage>")
-    taxonomic_coverage <- read_eml(paste(path, "/", "taxonomicCoverage.xml", sep = ""))
+    taxonomic_coverage <- EML103::read_eml(paste(path, "/", "taxonomicCoverage.xml", sep = ""))
     dataset@coverage@taxonomicCoverage <- as(list(taxonomic_coverage), "ListOftaxonomicCoverage")
   }
 
@@ -778,7 +778,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
     stop("methods.txt doesn't exist!")
   }
 
-  dataset@methods <- set_methods(fname_methods)
+  dataset@methods <- EML103::set_methods(fname_methods)
   
   if (file.exists(paste(path, "/", "geographic_coverage.txt", sep = ""))){
     
@@ -869,7 +869,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
                  '/provenance_metadata.xml')
         )
         # Read provenance file and add to L0 EML
-        prov_metadata <- read_eml(paste0(eml.path, '/provenance_metadata.xml'))
+        prov_metadata <- EML103::read_eml(paste0(eml.path, '/provenance_metadata.xml'))
         methods_step <- dataset@methods@methodStep
         methods_step[[length(methods_step)+1]] <- prov_metadata
         dataset@methods@methodStep <- methods_step
@@ -1048,7 +1048,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
   
   if (file.exists(fname_additional_info)){
     
-    additional_info <- as(set_TextType(fname_additional_info), "additionalInfo")
+    additional_info <- as(EML103::set_TextType(fname_additional_info), "additionalInfo")
     
     dataset@additionalInfo <- as(list(additional_info), "ListOfadditionalInfo")
 
@@ -1174,7 +1174,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
         
         # Create the attributeList element
         
-        attributeList <- suppressWarnings(set_attributes(attributes,
+        attributeList <- suppressWarnings(EML103::set_attributes(attributes,
                                                          factors = catvars,
                                                          col_classes = col_classes))
         
@@ -1195,7 +1195,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
         
         # Create the attributeList element
         
-        attributeList <- suppressWarnings(set_attributes(attributes,
+        attributeList <- suppressWarnings(EML103::set_attributes(attributes,
                                                          col_classes = col_classes))
         
       }
@@ -1210,7 +1210,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
       
       if (!missing("data.files.quote.character")){
         
-        physical_temp <- set_physical(
+        physical_temp <- EML103::set_physical(
           paste0(
             data.path,
             '/',
@@ -1218,18 +1218,18 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
           )
         )
         
-        physical <- set_physical(table_names[i],
+        physical <- EML103::set_physical(table_names[i],
                                  numHeaderLines = "1",
                                  recordDelimiter = eol,
                                  attributeOrientation = "column",
-                                 fieldDelimiter = unlist(eml_get(physical_temp, 'fieldDelimiter')),
+                                 fieldDelimiter = unlist(EML103::eml_get(physical_temp, 'fieldDelimiter')),
                                  quoteCharacter = data.files.quote.character[i])
         
       }
       
       if (missing('data.files.quote.character')) {
         
-        physical_temp <- set_physical(
+        physical_temp <- EML103::set_physical(
           paste0(
             data.path,
             '/',
@@ -1237,11 +1237,11 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
           )
         )
         
-        physical <- set_physical(table_names[i],
+        physical <- EML103::set_physical(table_names[i],
                                  numHeaderLines = "1",
                                  recordDelimiter = eol,
                                  attributeOrientation = "column",
-                                 fieldDelimiter = unlist(eml_get(physical_temp, 'fieldDelimiter')))
+                                 fieldDelimiter = unlist(EML103::eml_get(physical_temp, 'fieldDelimiter')))
         
       }
       
@@ -1394,7 +1394,7 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
           }
         }
         
-        unitsList <- set_unitList(custom_units_df)
+        unitsList <- EML103::set_unitList(custom_units_df)
       }
       
       
@@ -1574,13 +1574,13 @@ make_eml <- function(path, data.path = path, eml.path = path, dataset.title, dat
 
   message("Writing EML.")
   
-  write_eml(eml, paste(eml.path, "/", data_package_id, ".xml", sep = ""))
+  EML103::write_eml(eml, paste(eml.path, "/", data_package_id, ".xml", sep = ""))
   
   # Validate EML
   
   message("Validating EML.")
   
-  validation_result <- eml_validate(eml)
+  validation_result <- EML103::eml_validate(eml)
   
   if (validation_result == "TRUE"){
     
