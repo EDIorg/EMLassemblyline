@@ -18,7 +18,7 @@
 #'     \itemize{
 #'         \item{\strong{name} Name of parent directory}
 #'         \itemize{
-#'             \item{\strong{objects} Directory for data and other digital 
+#'             \item{\strong{data_objects} Directory for data and other 
 #'             objects to be packaged.}
 #'             \item{\strong{metadata_templates} Directory for 
 #'             \code{EMLassemblyline} template files.}
@@ -72,7 +72,7 @@ template_directories <- function(path, dir.name){
       path,
       '/',
       dir.name,
-      '/objects'
+      '/data_objects'
     )
   )
   

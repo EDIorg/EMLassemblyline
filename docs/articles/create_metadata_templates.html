@@ -105,9 +105,43 @@
 
     
     
-<div id="sub-section" class="section level2">
+<div id="templating-functions" class="section level2">
 <h2 class="hasAnchor">
-<a href="#sub-section" class="anchor"></a>Sub-section</h2>
+<a href="#templating-functions" class="anchor"></a>Templating functions</h2>
+<p>Metadata templates store content that is converted into EML. Each template is created by a templating function that reads a data entity or object, extracts as much information as possible from data entity or object, then writes this information to file for the user to add information to if necessary. Each templating function focuses on a specific metadata feature thereby allowing the user to highlight the unique features of their data. Currently available functions include:</p>
+<ul>
+<li>
+<strong><code>template_core_metadata</code></strong> Create core metadata templates required by all data packages (abstract, methods, keywords, personnel, license) along with some optional templates (additional information, custom units).</li>
+<li>
+<strong><code>template_table_attributes</code></strong> Create attribute metadata for data tables, including column definitions, classes, and missing value codes.</li>
+<li>
+<strong><code>template_categorical_variables</code></strong> Create categorical variable metadata for data tables containing columns of categorical class.</li>
+<li>
+<strong><code>template_geographic_coverage</code></strong> Create geographic coverage describing sampling points and areas.</li>
+<li>
+<strong><code>template_taxonomic_coverage</code></strong> Create taxonomic coverage metadata including resolution of taxa to authority systems and return of higher rank orders.</li>
+</ul>
+<p>Below is a demonstration of each function and a look at outputs.</p>
+</div>
+<div id="template_core_metadata" class="section level2">
+<h2 class="hasAnchor">
+<a href="#template_core_metadata" class="anchor"></a>template_core_metadata</h2>
+</div>
+<div id="template_table_attributes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#template_table_attributes" class="anchor"></a>template_table_attributes</h2>
+</div>
+<div id="template_categorical-variables" class="section level2">
+<h2 class="hasAnchor">
+<a href="#template_categorical-variables" class="anchor"></a>template_categorical variables</h2>
+</div>
+<div id="template_geographic_coverage" class="section level2">
+<h2 class="hasAnchor">
+<a href="#template_geographic_coverage" class="anchor"></a>template_geographic_coverage</h2>
+</div>
+<div id="template_taxonomic_coverage" class="section level2">
+<h2 class="hasAnchor">
+<a href="#template_taxonomic_coverage" class="anchor"></a>template_taxonomic_coverage</h2>
 </div>
   </div>
 
@@ -116,7 +150,12 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#sub-section">Sub-section</a></li>
+<li><a href="#templating-functions">Templating functions</a></li>
+      <li><a href="#template_core_metadata">template_core_metadata</a></li>
+      <li><a href="#template_table_attributes">template_table_attributes</a></li>
+      <li><a href="#template_categorical-variables">template_categorical variables</a></li>
+      <li><a href="#template_geographic_coverage">template_geographic_coverage</a></li>
+      <li><a href="#template_taxonomic_coverage">template_taxonomic_coverage</a></li>
       </ul>
 </div>
       </div>
@@ -129,7 +168,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
 </div>
       </footer>
 </div>

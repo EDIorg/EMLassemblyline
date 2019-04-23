@@ -3,4 +3,26 @@ title: "Create metadata templates"
 output: html_document
 ---
 
-## Sub-section
+## Templating functions
+
+Metadata templates store content that is converted into EML. Each template is created by a templating function that reads a data entity or object, extracts as much information as possible from data entity or object, then writes this information to file for the user to add information to if necessary. Each templating function focuses on a specific metadata feature thereby allowing the user to highlight the unique features of their data. Currently available functions include:
+
+*  __`template_core_metadata`__ Create core metadata templates required by all data packages (abstract, methods, keywords, personnel, license) along with some optional templates (additional information, custom units).
+*  __`template_table_attributes`__ Create attribute metadata for data tables, including column definitions, classes, and missing value codes.
+*  __`template_categorical_variables`__ Create categorical variable metadata for data tables containing columns of categorical class.
+*  __`template_geographic_coverage`__ Create geographic coverage describing sampling points and areas.
+*  __`template_taxonomic_coverage`__ Create taxonomic coverage metadata including resolution of taxa to authority systems and return of higher rank orders.
+
+Below is a demonstration of each function and a look at outputs.
+
+## template_core_metadata
+
+## template_table_attributes
+
+## template_categorical variables
+
+## template_geographic_coverage
+
+## template_taxonomic_coverage
+
+
