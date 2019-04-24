@@ -150,12 +150,12 @@ template_taxonomic_coverage <- function(
 
   output <- data.frame(
     taxa = taxa_raw,
-    name_scientific = rep(NA_character_, length(taxa_raw)),
-    authority_system_scientific = rep(NA_character_, length(taxa_raw)), 
-    authority_id_scientific = rep(NA_character_, length(taxa_raw)), 
-    name_common = rep(NA_character_, length(taxa_raw)),
-    authority_system_common = rep(NA_character_, length(taxa_raw)),
-    authority_id_common = rep(NA_character_, length(taxa_raw)), 
+    scientific_name = rep(NA_character_, length(taxa_raw)),
+    scientific_authority_system = rep(NA_character_, length(taxa_raw)), 
+    scientific_authority_id = rep(NA_character_, length(taxa_raw)), 
+    common_name = rep(NA_character_, length(taxa_raw)),
+    common_authority_system = rep(NA_character_, length(taxa_raw)),
+    common_authority_id = rep(NA_character_, length(taxa_raw)), 
     stringsAsFactors = FALSE
   )
 
@@ -170,9 +170,9 @@ template_taxonomic_coverage <- function(
       )
     )
 
-    output$authority_system_scientific <- taxa_resolved$authority
+    output$scientific_authority_system <- taxa_resolved$authority
     
-    output$authority_id_scientific <- taxa_resolved$authority_id
+    output$scientific_authority_id <- taxa_resolved$authority_id
 
   }
   
@@ -187,9 +187,9 @@ template_taxonomic_coverage <- function(
       )
     )
     
-    output$authority_system_common <- taxa_resolved$authority
+    output$common_authority_system <- taxa_resolved$authority
     
-    output$authority_id_common <- taxa_resolved$authority_id
+    output$common_authority_id <- taxa_resolved$authority_id
     
   }
   
@@ -206,9 +206,9 @@ template_taxonomic_coverage <- function(
       )
     )
     
-    output$authority_system_scientific <- taxa_resolved$authority
+    output$scientific_authority_system <- taxa_resolved$authority
     
-    output$authority_id_scientific <- taxa_resolved$authority_id
+    output$scientific_authority_id <- taxa_resolved$authority_id
     
     # Common
     
@@ -219,9 +219,9 @@ template_taxonomic_coverage <- function(
       )
     )
     
-    output$authority_system_common <- taxa_resolved$authority
+    output$common_authority_system <- taxa_resolved$authority
     
-    output$authority_id_common <- taxa_resolved$authority_id
+    output$common_authority_id <- taxa_resolved$authority_id
 
   }
   

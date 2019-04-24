@@ -864,12 +864,12 @@ template_arguments <- function(
         
         colnames(output$x$template[[i]]$content) <- c(
           'taxa', 
-          'name_scientific', 
-          'authority_system_scientific',
-          'authority_id_scientific',
-          'name_common',
-          'authority_system_common',
-          'authority_id_common'
+          'scientific_name', 
+          'scientific_authority_system',
+          'scientific_authority_id',
+          'common_name',
+          'common_authority_system',
+          'common_authority_id'
         )
         
         

@@ -47,12 +47,12 @@ testthat::test_that('File inputs', {
     all(
       colnames(input) %in% 
         c('taxa', 
-          'name_scientific', 
-          'authority_system_scientific',
-          'authority_id_scientific',
-          'name_common',
-          'authority_system_common',
-          'authority_id_common')
+          'scientific_name', 
+          'scientific_authority_system',
+          'scientific_authority_id',
+          'common_name',
+          'common_authority_system',
+          'common_authority_id')
     )
   )
   
@@ -262,12 +262,12 @@ testthat::test_that('x inputs', {
     all(
       colnames(output$template$taxonomic_coverage.txt) %in% 
         c('taxa', 
-          'name_scientific', 
-          'authority_system_scientific',
-          'authority_id_scientific',
-          'name_common',
-          'authority_system_common',
-          'authority_id_common')
+          'scientific_name', 
+          'scientific_authority_system',
+          'scientific_authority_id',
+          'common_name',
+          'common_authority_system',
+          'common_authority_id')
     )
   )
 

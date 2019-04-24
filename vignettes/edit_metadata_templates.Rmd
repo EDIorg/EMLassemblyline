@@ -9,9 +9,8 @@ While a substantial portion of metadata content is auto-extracted, most template
 
 _NOTE:_
 
-*  _Some content in tabular templates is not required. Leave these spaces blank (no need to add NAs)._
+*  _Some content in tabular templates is optional. Leave these spaces blank (no need to add NAs)._
 *  _Only UTF-8 is supported by EML._
-
 
 ## abstract.txt
 
@@ -28,5 +27,108 @@ Keywords facilitate search and discovery along scientific terms, as well as rese
 __keywords.txt__ is a tab delimited table with columns:
 
 *  **keyword** One keyword per row.
-*  **keywordThesaurus (not required)** URI of controlled vocabulary from which the keyword was found.
+*  **keywordThesaurus** (optional) URI of controlled vocabulary from which the keyword was found.
 
+## personnel.txt
+
+Personnel and funding information facilitates attribution and credit for the data package.
+
+__personnel.txt__ is a tab delimited table with columns:
+
+* **givenName** First name
+* **middleInitial** (optional) Middle initial
+* **surName** Last name
+* **organizationName** Organization the person is associated with
+* **electronicMailAddress** Email address
+* **userId** (optional) Person's unique identifier (e.g. [ORCID](https://orcid.org/)).
+* **role** Person’s role with respect to the data package. Persons serving more than one role, or roles shared among more than one person, should be added as separate lines. Valid roles are:
+    + **creator** Data package author
+    + **PI** (optional) Principal investigator associated with the data package.
+    + **contact** Data package contact. Can be an organization or position (e.g. data manager). To do this, enter the organization or position name under *givenName* and leave *middleInitial* and *surName* empty.
+    + Any other roles are acceptable and will be listed under _associated party_ (e.g. Field Technician).
+* **projectTitle** (optional) Project title the data package was created under. Only list project titles on lines where the personnel role is *PI*. If an ancillary project was involved, then add a new row below the primary project with the ancillary project title and associated PI. Repeat for additional ancillary projects.
+* **fundingAgency** (optional) Agency the project was funded by. Only list on lines where the role is *PI*.
+* **fundingNumber** (optional) Grant or award number funding the project. Only list on lines where the role is *PI*.
+
+## intellectual_rights.txt
+
+The intellectual rights license describes how the data package may be used in the future. We strongly recommend releasing without restriction ([CC0](https://creativecommons.org/publicdomain/zero/1.0/)) or with minimal attribution ([CC BY](https://creativecommons.org/licenses/by/4.0/)).
+
+## additional_info.txt
+
+(*Optional*) Ancillary information about a data package not within the scope of abstract or methods (e.g. list of research articles created from this dataset).
+
+## attributes_*.txt
+
+Well documented data table attributes facilitate human and machine understanding.
+
+__attributes.txt__ is a tab delimited table with columns:
+
+* **attributeName** Column name
+* **attributeDefinition** Column definition
+* **class** Column class. Valid options are:
+    + **numeric** Numeric variable
+    + **categorical** Categorical variable (i.e. nominal)
+    + **character** Free text character variable (e.g. notes)
+    + **Date** Date and time variable
+* **unit** Column unit. Required for numeric classes. Select from the standard unit dictionary, accessible via the R console command `view_unit_dictionary()`. If not found, then define as a custom unit (see custom_units.txt).
+* **dateTimeFormatString** Format string. Required for Date classes. Valid format string components are:
+    + **Y** Year
+    + **M** Month
+    + **D** Day
+    + **h** Hour
+    + **m** Minute
+    + **s** Second
+All separators of format string components (e.g. - / \ :) are supported.
+* **missingValueCode** Missing value code. Required for columns containing a missing value code).
+* **missingValueCodeExplanation** Definition of missing value code.
+
+## custom_units.txt
+
+Required if non-standard units are used in a data tables *attribute.txt* file. Custom unit definition and relation to SI units facilitates human and machine understanding.
+
+__custom_units.txt__ is a tab delimited table with columns:
+
+* **id** Unit name (e.g. feetPerSecond)
+* **unitType** Unit type (e.g. velocity)
+* **parentSI** SI equivalent (e.g. metersPerSecond)
+* **multiplierToSI** Multiplier to SI equivalent (e.g. 0.3048)
+* **description** Abbreviation (e.g. ft/s)
+
+## catvars_*.txt
+
+Required if an attributes table contains categorical class variables. Categorical variables require definitions to enable full understanding of data table contents.
+
+__catvars.txt__ is a tab delimited table with columns:
+
+* **attributeName** Column name
+* **attributeDefinition** Column definition
+* **class** Column class. Valid options are
+
+## geographic_coverage.txt
+
+(*Optional*) Documented sampling points and areas facilitate data package discovery based on geographic search criteria.
+
+__geographic_coverage.txt__ is a tab delimited table with columns:
+
+* **geographicDescription** Description of geographic point or area.
+* **northBoundingCoordinate** North coordinate
+* **southBoundingCoordinate** South coordinate
+* **eastBoundingCoordinate** East coordinate
+* **westBoundingCoordinate** West coordinate
+
+Coordinates must be in decimal degrees and include a minus sign (-) for latitudes south of the equator and longitudes west of the prime meridian. For points, repeat latitude and longitude coordinates in respective north/south and east/west fields.
+
+## taxonomic_coverage.txt
+
+(*Optional*) Fully documented taxonomic ranks and authority IDs for each taxa enable data package discovery based on taxonomic search criteria.
+
+__taxonomic_coverage.txt__ is a tab delimited table with columns:
+
+* **taxa** Taxa name as it occurs in the data. Can be single word or species binomial.
+* **scientific_name** (optional) Taxa’s scientific name found in an authority system (e.g. _Perca flavescens_)
+* **scientific_authority_system** (optional) Authority system in which the taxa’s scientific name was found (e.g. ITIS).
+* **scientific_authority_id** (optional) Taxa’s identifier in the authority system (e.g. 168469).
+* **common_name** (optional) Taxa’s common name found in an authority system (e.g. Yellow Perch).
+* **common_authority_system** (optional) Authority system in which the taxa’s common name was found (e.g. ITIS).
+* **common_authority_id** (optional) Taxa’s identifier in the authority system (e.g. 168469).
