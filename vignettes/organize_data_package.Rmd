@@ -24,7 +24,7 @@ The organization scheme we’ve found most useful at EDI is a single directory f
 
 ```{r remove_directory, echo=FALSE}
 unlink(
-  x = '/Users/csmith/Desktop/data_packages/edi_301',
+  x = 'C:/Users/Colin/Desktop/data_packages/edi_301',
   recursive = TRUE
 )
 ```
@@ -34,13 +34,13 @@ unlink(
 # Create the standard data package directory
 
 template_directories(
-  path = '/Users/csmith/Desktop/data_packages',
+  path = 'C:/Users/Colin/Desktop/data_packages/edi_301',
   dir.name = 'edi_301'
 )
 
 # View directory contents
 
-dir('/Users/csmith/Desktop/data_packages/edi_301')
+dir('C:/Users/Colin/Desktop/data_packages/edi_301')
 
 ```
 
