@@ -9,7 +9,7 @@ For scientists and data managers who need to easily create high quality EML meta
 
 * Requires no familiarity with EML metadata
 * Good for one-off data publication
-* Great for medium to large scale data publication
+* Great for 10s to 100s of data publications
 * Accepts all data and file types
 * Automatically extracts metadata from data entities
 * Automatically appends value added content
@@ -17,6 +17,7 @@ For scientists and data managers who need to easily create high quality EML meta
 * Supports automated data publication workflows
 * Interoperable with metadata storage systems via an exchange format
 * Incorporates community best practices
+* Based on simple file organization scheme
 * Is not tied to a specific data repository
 
 
