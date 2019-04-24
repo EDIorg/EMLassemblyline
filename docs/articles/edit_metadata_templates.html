@@ -111,7 +111,7 @@
 <p>While a substantial portion of metadata content is auto-extracted, most templates require some user input or validation. Template files can be edited in simple text and spreadsheet editors. Specific instructions for each template are found below.</p>
 <p><em>NOTE:</em></p>
 <ul>
-<li><em>Some content in tabular templates is not required. Leave these spaces blank (no need to add NAs).</em></li>
+<li><em>Some content in tabular templates is optional. Leave these spaces blank (no need to add NAs).</em></li>
 <li><em>Only UTF-8 is supported by EML.</em></li>
 </ul>
 </div>
@@ -134,7 +134,176 @@
 <li>
 <strong>keyword</strong> One keyword per row.</li>
 <li>
-<strong>keywordThesaurus (not required)</strong> URI of controlled vocabulary from which the keyword was found.</li>
+<strong>keywordThesaurus</strong> (optional) URI of controlled vocabulary from which the keyword was found.</li>
+</ul>
+</div>
+<div id="personnel-txt" class="section level2">
+<h2 class="hasAnchor">
+<a href="#personnel-txt" class="anchor"></a>personnel.txt</h2>
+<p>Personnel and funding information facilitates attribution and credit for the data package.</p>
+<p><strong>personnel.txt</strong> is a tab delimited table with columns:</p>
+<ul>
+<li>
+<strong>givenName</strong> First name</li>
+<li>
+<strong>middleInitial</strong> (optional) Middle initial</li>
+<li>
+<strong>surName</strong> Last name</li>
+<li>
+<strong>organizationName</strong> Organization the person is associated with</li>
+<li>
+<strong>electronicMailAddress</strong> Email address</li>
+<li>
+<strong>userId</strong> (optional) Person’s unique identifier (e.g. <a href="https://orcid.org/">ORCID</a>).</li>
+<li>
+<strong>role</strong> Person’s role with respect to the data package. Persons serving more than one role, or roles shared among more than one person, should be added as separate lines. Valid roles are:
+<ul>
+<li>
+<strong>creator</strong> Data package author</li>
+<li>
+<strong>PI</strong> (optional) Principal investigator associated with the data package.</li>
+<li>
+<strong>contact</strong> Data package contact. Can be an organization or position (e.g. data manager). To do this, enter the organization or position name under <em>givenName</em> and leave <em>middleInitial</em> and <em>surName</em> empty.</li>
+<li>Any other roles are acceptable and will be listed under <em>associated party</em> (e.g. Field Technician).</li>
+</ul>
+</li>
+<li>
+<strong>projectTitle</strong> (optional) Project title the data package was created under. Only list project titles on lines where the personnel role is <em>PI</em>. If an ancillary project was involved, then add a new row below the primary project with the ancillary project title and associated PI. Repeat for additional ancillary projects.</li>
+<li>
+<strong>fundingAgency</strong> (optional) Agency the project was funded by. Only list on lines where the role is <em>PI</em>.</li>
+<li>
+<strong>fundingNumber</strong> (optional) Grant or award number funding the project. Only list on lines where the role is <em>PI</em>.</li>
+</ul>
+</div>
+<div id="intellectual_rights-txt" class="section level2">
+<h2 class="hasAnchor">
+<a href="#intellectual_rights-txt" class="anchor"></a>intellectual_rights.txt</h2>
+<p>The intellectual rights license describes how the data package may be used in the future. We strongly recommend releasing without restriction (<a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>) or with minimal attribution (<a href="https://creativecommons.org/licenses/by/4.0/">CC BY</a>).</p>
+</div>
+<div id="additional_info-txt" class="section level2">
+<h2 class="hasAnchor">
+<a href="#additional_info-txt" class="anchor"></a>additional_info.txt</h2>
+<p>(<em>Optional</em>) Ancillary information about a data package not within the scope of abstract or methods (e.g. list of research articles created from this dataset).</p>
+</div>
+<div id="attributes_-txt" class="section level2">
+<h2 class="hasAnchor">
+<a href="#attributes_-txt" class="anchor"></a>attributes_*.txt</h2>
+<p>(<em>Required if data package contains data tables</em>) Well documented data table attributes facilitate human and machine understanding.</p>
+<p><strong>attributes.txt</strong> is a tab delimited table with columns:</p>
+<ul>
+<li>
+<strong>attributeName</strong> Column name</li>
+<li>
+<strong>attributeDefinition</strong> Column definition</li>
+<li>
+<strong>class</strong> Column class. Valid options are:
+<ul>
+<li>
+<strong>numeric</strong> Numeric variable</li>
+<li>
+<strong>categorical</strong> Categorical variable (i.e. nominal)</li>
+<li>
+<strong>character</strong> Free text character variable (e.g. notes)</li>
+<li>
+<strong>Date</strong> Date and time variable</li>
+</ul>
+</li>
+<li>
+<strong>unit</strong> Column unit. Required for numeric classes. Select from the standard unit dictionary, accessible via the R console command <code><a href="../reference/view_unit_dictionary.html">view_unit_dictionary()</a></code>. If not found, then define as a custom unit (see custom_units.txt).</li>
+<li>
+<strong>dateTimeFormatString</strong> Format string. Required for Date classes. Valid format string components are:
+<ul>
+<li>
+<strong>Y</strong> Year</li>
+<li>
+<strong>M</strong> Month</li>
+<li>
+<strong>D</strong> Day</li>
+<li>
+<strong>h</strong> Hour</li>
+<li>
+<strong>m</strong> Minute</li>
+<li>
+<strong>s</strong> Second All separators of format string components (e.g. - /  :) are supported.</li>
+</ul>
+</li>
+<li>
+<strong>missingValueCode</strong> Missing value code. Required for columns containing a missing value code).</li>
+<li>
+<strong>missingValueCodeExplanation</strong> Definition of missing value code.</li>
+</ul>
+</div>
+<div id="custom_units-txt" class="section level2">
+<h2 class="hasAnchor">
+<a href="#custom_units-txt" class="anchor"></a>custom_units.txt</h2>
+<p>(<em>Required if non-standard units are used in a data tables attribute.txt file</em>) Custom unit definition and relation to SI units facilitates human and machine understanding.</p>
+<p><strong>custom_units.txt</strong> is a tab delimited table with columns:</p>
+<ul>
+<li>
+<strong>id</strong> Unit name (e.g. feetPerSecond)</li>
+<li>
+<strong>unitType</strong> Unit type (e.g. velocity)</li>
+<li>
+<strong>parentSI</strong> SI equivalent (e.g. metersPerSecond)</li>
+<li>
+<strong>multiplierToSI</strong> Multiplier to SI equivalent (e.g. 0.3048)</li>
+<li>
+<strong>description</strong> Abbreviation (e.g. ft/s)</li>
+</ul>
+</div>
+<div id="catvars_-txt" class="section level2">
+<h2 class="hasAnchor">
+<a href="#catvars_-txt" class="anchor"></a>catvars_*.txt</h2>
+<p>(<em>Required if an attributes table contains categorical class variables</em>) Categorical variables require definitions to enable full understanding of data table contents.</p>
+<p><strong>catvars.txt</strong> is a tab delimited table with columns:</p>
+<ul>
+<li>
+<strong>attributeName</strong> Column name</li>
+<li>
+<strong>attributeDefinition</strong> Column definition</li>
+<li>
+<strong>class</strong> Column class. Valid options are</li>
+</ul>
+</div>
+<div id="geographic_coverage-txt" class="section level2">
+<h2 class="hasAnchor">
+<a href="#geographic_coverage-txt" class="anchor"></a>geographic_coverage.txt</h2>
+<p>(<em>Optional</em>) Documented sampling points and areas facilitate data package discovery based on geographic search criteria.</p>
+<p><strong>geographic_coverage.txt</strong> is a tab delimited table with columns:</p>
+<ul>
+<li>
+<strong>geographicDescription</strong> Description of geographic point or area.</li>
+<li>
+<strong>northBoundingCoordinate</strong> North coordinate</li>
+<li>
+<strong>southBoundingCoordinate</strong> South coordinate</li>
+<li>
+<strong>eastBoundingCoordinate</strong> East coordinate</li>
+<li>
+<strong>westBoundingCoordinate</strong> West coordinate</li>
+</ul>
+<p>Coordinates must be in decimal degrees and include a minus sign (-) for latitudes south of the equator and longitudes west of the prime meridian. For points, repeat latitude and longitude coordinates in respective north/south and east/west fields.</p>
+</div>
+<div id="taxonomic_coverage-txt" class="section level2">
+<h2 class="hasAnchor">
+<a href="#taxonomic_coverage-txt" class="anchor"></a>taxonomic_coverage.txt</h2>
+<p>(<em>Optional</em>) Fully documented taxonomic ranks and authority IDs for each taxa enable data package discovery based on taxonomic search criteria.</p>
+<p><strong>taxonomic_coverage.txt</strong> is a tab delimited table with columns:</p>
+<ul>
+<li>
+<strong>taxa</strong> Taxa name as it occurs in the data. Can be single word or species binomial.</li>
+<li>
+<strong>scientific_name</strong> (optional) Taxa’s scientific name found in an authority system (e.g. <em>Perca flavescens</em>)</li>
+<li>
+<strong>scientific_authority_system</strong> (optional) Authority system in which the taxa’s scientific name was found (e.g. ITIS).</li>
+<li>
+<strong>scientific_authority_id</strong> (optional) Taxa’s identifier in the authority system (e.g. 168469).</li>
+<li>
+<strong>common_name</strong> (optional) Taxa’s common name found in an authority system (e.g. Yellow Perch).</li>
+<li>
+<strong>common_authority_system</strong> (optional) Authority system in which the taxa’s common name was found (e.g. ITIS).</li>
+<li>
+<strong>common_authority_id</strong> (optional) Taxa’s identifier in the authority system (e.g. 168469).</li>
 </ul>
 </div>
   </div>
@@ -148,6 +317,14 @@
       <li><a href="#abstract-txt">abstract.txt</a></li>
       <li><a href="#methods-txt">methods.txt</a></li>
       <li><a href="#keywords-txt">keywords.txt</a></li>
+      <li><a href="#personnel-txt">personnel.txt</a></li>
+      <li><a href="#intellectual_rights-txt">intellectual_rights.txt</a></li>
+      <li><a href="#additional_info-txt">additional_info.txt</a></li>
+      <li><a href="#attributes_-txt">attributes_*.txt</a></li>
+      <li><a href="#custom_units-txt">custom_units.txt</a></li>
+      <li><a href="#catvars_-txt">catvars_*.txt</a></li>
+      <li><a href="#geographic_coverage-txt">geographic_coverage.txt</a></li>
+      <li><a href="#taxonomic_coverage-txt">taxonomic_coverage.txt</a></li>
       </ul>
 </div>
       </div>
