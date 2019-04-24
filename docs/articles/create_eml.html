@@ -105,9 +105,130 @@
 
     
     
-<div id="sub-section" class="section level2">
+<div id="the-make_eml-function" class="section level2">
 <h2 class="hasAnchor">
-<a href="#sub-section" class="anchor"></a>Sub-section</h2>
+<a href="#the-make_eml-function" class="anchor"></a>The <code>make_eml</code> function</h2>
+<p>The information rich and machine readable EML metadata file should contain all the necessary content, in the correct format, and in the right schema locations according with best practices informed by scientists who use this information and data repositories who serve it in a human discoverable and readable form. In addition to performing all these tasks, the <code>make_eml</code> function adds another layer of auto-extracted metadata to the EML based on template contents and data object types. Usage of <code>make_eml</code> differs slightly based on data package contents comprised of:</p>
+<ul>
+<li>
+<strong>Data tables</strong> Only contains data tables</li>
+<li>
+<strong>Other entities</strong> Only contains non-table data types and other digital objects</li>
+<li>
+<strong>Data tables and other entities</strong> Contains both data tables and other entities</li>
+</ul>
+<p>Below are examples of using <code>make_eml</code> to create EML for each of these use cases.</p>
+</div>
+<div id="make_eml-for-data-tables" class="section level2">
+<h2 class="hasAnchor">
+<a href="#make_eml-for-data-tables" class="anchor"></a><code>make_eml</code> for data tables</h2>
+<p>The most common type of data package only contains data tables. To create EML for this package type, the core metadata and table attribute templates should be complete, as well as the categorical variables and custom units templates if necessary. Some additional metadata information is supplied in function arguments including:</p>
+<ul>
+<li>
+<strong>path</strong> Path to template files</li>
+<li>
+<strong>data.path</strong> Path to data files</li>
+<li>** eml.path** Path to where the EML file will be written</li>
+<li>
+<strong>dataset.title</strong> Title of the data package</li>
+<li>
+<strong>temporal.coverage</strong> Beginning and ending dates of the data using the format YYYY-MM-DD</li>
+<li>
+<strong>geographic.coordinates</strong> (required if not using the <em>geographic_coverage.txt</em> template) A vector of decimal degree coordinates in the order: north, east, south, west, where latitudes south of the equator and longitudes west of the prime meridian are negative.</li>
+<li>
+<strong>maintenance.description</strong> Indicator of whether data collection is ‘ongoing’ or ‘completed’</li>
+<li>
+<strong>data.table</strong> Data table file names.</li>
+<li>
+<strong>data.table.description</strong> Data table descriptions listed in the same order as under <code>data.table</code>
+</li>
+<li>
+<strong>data.table.quote.character</strong> (required if data tables contain quote characters) Quote characters used in each data table in the same order as under <code>data.table</code>. Use “”” for quotes and “’” for apostrophes.</li>
+<li>
+<strong>data.url</strong> (required if uploading data to a repository via URL) A publicly accessible URL to the data</li>
+<li>
+<strong>user.id</strong> (optional) ID(s) of data repository user account(s) to which the data package will be uploaded.</li>
+<li>
+<strong>user.domain</strong> (optional) Domain of the <code>user.id</code>(s).</li>
+<li>
+<strong>package.id</strong> (optional) Data package identifier in the format expected by the receiving data repository.</li>
+</ul>
+<p>EXAMPLE</p>
+</div>
+<div id="make_eml-for-other-entities" class="section level2">
+<h2 class="hasAnchor">
+<a href="#make_eml-for-other-entities" class="anchor"></a><code>make_eml</code> for other entities</h2>
+<p>Some data packages only contain non-tabular data (e.g. geospatial vector, NetCDF, images) or other digital objects (e.g. processing and analysis scripts, modeling code, .pdf). To create EML for this package type, the core metadata templates need to be completed. Several of the same file type, or related file types, should be grouped into an archive format (e.g. zip, rar, tar). Some additional metadata information is supplied in function arguments including:</p>
+<ul>
+<li>
+<strong>path</strong> Path to template files</li>
+<li>
+<strong>data.path</strong> Path to data files and other digital objects</li>
+<li>** eml.path** Path to where the EML file will be written</li>
+<li>
+<strong>dataset.title</strong> Title of the data package</li>
+<li>
+<strong>temporal.coverage</strong> Beginning and ending dates of the data using the format YYYY-MM-DD</li>
+<li>
+<strong>geographic.coordinates</strong> (required if not using the <em>geographic_coverage.txt</em> template) A vector of decimal degree coordinates in the order: north, east, south, west, where latitudes south of the equator and longitudes west of the prime meridian are negative.</li>
+<li>
+<strong>maintenance.description</strong> Indicator of whether data collection is ‘ongoing’ or ‘completed’</li>
+<li>
+<strong>other.entity</strong> File names of non-tabular data and/or other digital objects</li>
+<li>
+<strong>other.entity.description</strong> Other entity descriptions listed in the same order as under <code>other.entity</code>
+</li>
+<li>
+<strong>data.url</strong> (required if uploading data and/or objects to a repository via URL) A publicly accessible URL to the data</li>
+<li>
+<strong>user.id</strong> (optional) ID(s) of data repository user account(s) to which the data package will be uploaded.</li>
+<li>
+<strong>user.domain</strong> (optional) Domain of the <code>user.id</code>(s).</li>
+<li>
+<strong>package.id</strong> (optional) Data package identifier in the format expected by the receiving data repository.</li>
+</ul>
+<p>EXAMPLE</p>
+</div>
+<div id="make_eml-for-data-tables-and-other-entities" class="section level2">
+<h2 class="hasAnchor">
+<a href="#make_eml-for-data-tables-and-other-entities" class="anchor"></a><code>make_eml</code> for data tables and other entities</h2>
+<p>A third type of data package contains both data tables and other entities. To create EML for this package type, the core metadata and table attribute templates should be complete, as well as the categorical variables and custom units templates if necessary. Some additional metadata information is supplied in function arguments including:</p>
+<ul>
+<li>
+<strong>path</strong> Path to template files</li>
+<li>
+<strong>data.path</strong> Path to data files</li>
+<li>** eml.path** Path to where the EML file will be written</li>
+<li>
+<strong>dataset.title</strong> Title of the data package</li>
+<li>
+<strong>temporal.coverage</strong> Beginning and ending dates of the data using the format YYYY-MM-DD</li>
+<li>
+<strong>geographic.coordinates</strong> (required if not using the <em>geographic_coverage.txt</em> template) A vector of decimal degree coordinates in the order: north, east, south, west, where latitudes south of the equator and longitudes west of the prime meridian are negative.</li>
+<li>
+<strong>maintenance.description</strong> Indicator of whether data collection is ‘ongoing’ or ‘completed’</li>
+<li>
+<strong>data.table</strong> Data table file names.</li>
+<li>
+<strong>data.table.description</strong> Data table descriptions listed in the same order as under <code>data.table</code>
+</li>
+<li>
+<strong>data.table.quote.character</strong> (required if data tables contain quote characters) Quote characters used in each data table in the same order as under <code>data.table</code>. Use “”” for quotes and “’” for apostrophes.</li>
+<li>
+<strong>other.entity</strong> File names of non-tabular data and/or other digital objects</li>
+<li>
+<strong>other.entity.description</strong> Other entity descriptions listed in the same order as under <code>other.entity</code>
+</li>
+<li>
+<strong>data.url</strong> (required if uploading data to a repository via URL) A publicly accessible URL to the data</li>
+<li>
+<strong>user.id</strong> (optional) ID(s) of data repository user account(s) to which the data package will be uploaded.</li>
+<li>
+<strong>user.domain</strong> (optional) Domain of the <code>user.id</code>(s).</li>
+<li>
+<strong>package.id</strong> (optional) Data package identifier in the format expected by the receiving data repository.</li>
+</ul>
+<p>EXAMPLE</p>
 </div>
   </div>
 
@@ -116,7 +237,10 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#sub-section">Sub-section</a></li>
+<li><a href="#the-make_eml-function">The <code>make_eml</code> function</a></li>
+      <li><a href="#make_eml-for-data-tables"><code>make_eml</code> for data tables</a></li>
+      <li><a href="#make_eml-for-other-entities"><code>make_eml</code> for other entities</a></li>
+      <li><a href="#make_eml-for-data-tables-and-other-entities"><code>make_eml</code> for data tables and other entities</a></li>
       </ul>
 </div>
       </div>
