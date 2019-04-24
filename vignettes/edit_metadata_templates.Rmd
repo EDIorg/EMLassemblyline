@@ -60,7 +60,7 @@ The intellectual rights license describes how the data package may be used in th
 
 ## attributes_*.txt
 
-Well documented data table attributes facilitate human and machine understanding.
+(*Required if data package contains data tables*) Well documented data table attributes facilitate human and machine understanding.
 
 __attributes.txt__ is a tab delimited table with columns:
 
@@ -85,7 +85,7 @@ All separators of format string components (e.g. - / \ :) are supported.
 
 ## custom_units.txt
 
-Required if non-standard units are used in a data tables *attribute.txt* file. Custom unit definition and relation to SI units facilitates human and machine understanding.
+(*Required if non-standard units are used in a data tables attribute.txt file*) Custom unit definition and relation to SI units facilitates human and machine understanding.
 
 __custom_units.txt__ is a tab delimited table with columns:
 
@@ -97,7 +97,7 @@ __custom_units.txt__ is a tab delimited table with columns:
 
 ## catvars_*.txt
 
-Required if an attributes table contains categorical class variables. Categorical variables require definitions to enable full understanding of data table contents.
+(*Required if an attributes table contains categorical class variables*) Categorical variables require definitions to enable full understanding of data table contents.
 
 __catvars.txt__ is a tab delimited table with columns:
 
