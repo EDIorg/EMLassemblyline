@@ -5,7 +5,7 @@ output: html_document
 
 ## Editing
 
-While a substantial portion of metadata content is auto-extracted, most templates require some user input or validation. Template files can be edited in simple text and spreadsheet editors. Specific instructions for each template are found below.
+While a substantial portion of metadata content is auto-extracted, most templates require some user input. Template files can be edited in simple text and spreadsheet editors. Specific instructions for each template are found below.
 
 _NOTE:_
 
