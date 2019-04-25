@@ -14,7 +14,8 @@ For scientists and data managers who need to easily create high quality EML meta
 * Automatically extracts metadata from data entities
 * Automatically appends value added content
 * Accepts user inputs through simple text and spreadsheet editors
-* Supports automated data publication workflows
+* Supports automated data publication
+* Supports complex reproducible science workflows
 * Interoperable with metadata storage systems via an exchange format
 * Incorporates community best practices
 * Based on simple file organization scheme
