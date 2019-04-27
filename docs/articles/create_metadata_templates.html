@@ -92,7 +92,7 @@
 <!--/.navbar -->
 
       
-      </header><div class="row">
+      </header><script src="create_metadata_templates_files/kePrint-0.0.1/kePrint.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Create metadata templates</h1>
@@ -126,22 +126,2891 @@
 <div id="template_core_metadata" class="section level2">
 <h2 class="hasAnchor">
 <a href="#template_core_metadata" class="anchor"></a>template_core_metadata</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Set working directory</span>
+
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">setwd</a></span>(<span class="st">'/Users/csmith/Desktop/data_packages/edi_301'</span>)
+
+<span class="co"># Create core metadata templates</span>
+
+<span class="kw"><a href="../reference/template_core_metadata.html">template_core_metadata</a></span>(
+  <span class="dt">path =</span> <span class="st">'./metadata_templates'</span>,
+  <span class="dt">license =</span> <span class="st">'CC0'</span>
+)
+
+<span class="co"># View directory contents</span>
+
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./metadata_templates'</span>)</code></pre></div>
+<pre><code>## [1] "abstract.txt"            "additional_info.txt"    
+## [3] "custom_units.txt"        "intellectual_rights.txt"
+## [5] "keywords.txt"            "methods.txt"            
+## [7] "personnel.txt"</code></pre>
 </div>
 <div id="template_table_attributes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#template_table_attributes" class="anchor"></a>template_table_attributes</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create templates for data table attributes</span>
+
+<span class="kw"><a href="../reference/template_table_attributes.html">template_table_attributes</a></span>(
+  <span class="dt">path =</span> <span class="st">'./metadata_templates'</span>,
+  <span class="dt">data.path =</span> <span class="st">'./data_objects'</span>,
+  <span class="dt">data.table =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'decomp.csv'</span>, <span class="st">'nitrogen.csv'</span>)
+)
+
+<span class="co"># View directory contents</span>
+
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./metadata_templates'</span>)</code></pre></div>
+<pre><code>## [1] "abstract.txt"            "additional_info.txt"    
+## [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
+## [5] "custom_units.txt"        "intellectual_rights.txt"
+## [7] "keywords.txt"            "methods.txt"            
+## [9] "personnel.txt"</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View contents of attribute templates</span>
+<span class="co"># </span><span class="al">NOTE</span><span class="co">: attributeName and class is automatically populated, and unit and dateTimeFormatString note where content should be added.</span></code></pre></div>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; ">
+<table class="table table table-bordered">
+<caption style="font-size: initial !important;">
+attributes_decomp.txt
+</caption>
+<thead><tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+attributeName
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+attributeDefinition
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+class
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+unit
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+dateTimeFormatString
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+missingValueCode
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+missingValueCodeExplanation
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+type
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+categorical
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+date
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Date
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+!Add datetime specifier here!
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+arm
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:left;">
+!Add units here!
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ntrt
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+categorical
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+year
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Date
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+!Add datetime specifier here!
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+percent_loss
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:left;">
+!Add units here!
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+taxa
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+character
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; ">
+<table class="table table table-bordered">
+<caption style="font-size: initial !important;">
+attributes_nitrogen.txt
+</caption>
+<thead><tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+attributeName
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+attributeDefinition
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+class
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+unit
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+dateTimeFormatString
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+missingValueCode
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+missingValueCodeExplanation
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+date
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Date
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+!Add datetime specifier here!
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ntrt
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+categorical
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+arm
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:left;">
+!Add units here!
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+net_primary_production
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:left;">
+!Add units here!
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+stem_mass_density
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:left;">
+!Add units here!
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+plant_density
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:left;">
+!Add units here!
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+stem_n_concentration
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:left;">
+!Add units here!
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+n_assimilated
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:left;">
+!Add units here!
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_name
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+character
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_lon
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:left;">
+!Add units here!
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_lat
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:left;">
+!Add units here!
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div id="template_categorical-variables" class="section level2">
 <h2 class="hasAnchor">
 <a href="#template_categorical-variables" class="anchor"></a>template_categorical variables</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create templates for categorical variables</span>
+
+<span class="kw"><a href="../reference/template_categorical_variables.html">template_categorical_variables</a></span>(
+  <span class="dt">path =</span> <span class="st">'./metadata_templates'</span>,
+  <span class="dt">data.path =</span> <span class="st">'./data_objects'</span>
+)
+
+<span class="co"># View directory contents</span>
+
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./metadata_templates'</span>)</code></pre></div>
+<pre><code>##  [1] "abstract.txt"            "additional_info.txt"    
+##  [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
+##  [5] "catvars_decomp.txt"      "catvars_nitrogen.txt"   
+##  [7] "custom_units.txt"        "intellectual_rights.txt"
+##  [9] "keywords.txt"            "methods.txt"            
+## [11] "personnel.txt"</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View contents of categorical variable templates</span>
+<span class="co"># </span><span class="al">NOTE</span><span class="co">: attributeName and code is automatically populated.</span></code></pre></div>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; ">
+<table class="table table table-bordered">
+<caption style="font-size: initial !important;">
+catvars_decomp.txt
+</caption>
+<thead><tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+attributeName
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+code
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+definition
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+type
+</td>
+<td style="text-align:left;">
+Sphagnum
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+type
+</td>
+<td style="text-align:left;">
+Vascular
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ntrt
+</td>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ntrt
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ntrt
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ntrt
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ntrt
+</td>
+<td style="text-align:left;">
+15
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ntrt
+</td>
+<td style="text-align:left;">
+20
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ntrt
+</td>
+<td style="text-align:left;">
+25
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; ">
+<table class="table table table-bordered">
+<caption style="font-size: initial !important;">
+catvars_nitrogen.txt
+</caption>
+<thead><tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+attributeName
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+code
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+definition
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+ntrt
+</td>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ntrt
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ntrt
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ntrt
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ntrt
+</td>
+<td style="text-align:left;">
+15
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ntrt
+</td>
+<td style="text-align:left;">
+20
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ntrt
+</td>
+<td style="text-align:left;">
+25
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div id="template_geographic_coverage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#template_geographic_coverage" class="anchor"></a>template_geographic_coverage</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create geographic coverage template</span>
+
+<span class="kw"><a href="../reference/template_geographic_coverage.html">template_geographic_coverage</a></span>(
+  <span class="dt">path =</span> <span class="st">'./metadata_templates'</span>,
+  <span class="dt">data.path =</span> <span class="st">'./data_objects'</span>,
+  <span class="dt">data.table =</span> <span class="st">'nitrogen.csv'</span>,
+  <span class="dt">site.col =</span> <span class="st">'site_name'</span>,
+  <span class="dt">lat.col =</span> <span class="st">'site_lat'</span>,
+  <span class="dt">lon.col =</span> <span class="st">'site_lon'</span>
+)
+
+<span class="co"># View directory contents</span>
+
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./metadata_templates'</span>)</code></pre></div>
+<pre><code>##  [1] "abstract.txt"            "additional_info.txt"    
+##  [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
+##  [5] "catvars_decomp.txt"      "catvars_nitrogen.txt"   
+##  [7] "custom_units.txt"        "geographic_coverage.txt"
+##  [9] "intellectual_rights.txt" "keywords.txt"           
+## [11] "methods.txt"             "personnel.txt"</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View contents of geographic coverage template</span></code></pre></div>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; ">
+<table class="table table table-bordered">
+<caption style="font-size: initial !important;">
+geographic_coverage.txt
+</caption>
+<thead><tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+geographicDescription
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+northBoundingCoordinate
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+southBoundingCoordinate
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+eastBoundingCoordinate
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+westBoundingCoordinate
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+site_1
+</td>
+<td style="text-align:left;">
+45.23
+</td>
+<td style="text-align:left;">
+45.23
+</td>
+<td style="text-align:left;">
+-89.43
+</td>
+<td style="text-align:left;">
+-89.43
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_2
+</td>
+<td style="text-align:left;">
+45.24
+</td>
+<td style="text-align:left;">
+45.24
+</td>
+<td style="text-align:left;">
+-89.44
+</td>
+<td style="text-align:left;">
+-89.44
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_3
+</td>
+<td style="text-align:left;">
+45.25
+</td>
+<td style="text-align:left;">
+45.25
+</td>
+<td style="text-align:left;">
+-89.45
+</td>
+<td style="text-align:left;">
+-89.45
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_4
+</td>
+<td style="text-align:left;">
+45.26
+</td>
+<td style="text-align:left;">
+45.26
+</td>
+<td style="text-align:left;">
+-89.46
+</td>
+<td style="text-align:left;">
+-89.46
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_5
+</td>
+<td style="text-align:left;">
+45.27
+</td>
+<td style="text-align:left;">
+45.27
+</td>
+<td style="text-align:left;">
+-89.47
+</td>
+<td style="text-align:left;">
+-89.47
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_6
+</td>
+<td style="text-align:left;">
+45.28
+</td>
+<td style="text-align:left;">
+45.28
+</td>
+<td style="text-align:left;">
+-89.48
+</td>
+<td style="text-align:left;">
+-89.48
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_7
+</td>
+<td style="text-align:left;">
+45.29
+</td>
+<td style="text-align:left;">
+45.29
+</td>
+<td style="text-align:left;">
+-89.49
+</td>
+<td style="text-align:left;">
+-89.49
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_8
+</td>
+<td style="text-align:left;">
+45.3
+</td>
+<td style="text-align:left;">
+45.3
+</td>
+<td style="text-align:left;">
+-89.5
+</td>
+<td style="text-align:left;">
+-89.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_9
+</td>
+<td style="text-align:left;">
+45.31
+</td>
+<td style="text-align:left;">
+45.31
+</td>
+<td style="text-align:left;">
+-89.51
+</td>
+<td style="text-align:left;">
+-89.51
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_10
+</td>
+<td style="text-align:left;">
+45.32
+</td>
+<td style="text-align:left;">
+45.32
+</td>
+<td style="text-align:left;">
+-89.52
+</td>
+<td style="text-align:left;">
+-89.52
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_11
+</td>
+<td style="text-align:left;">
+45.33
+</td>
+<td style="text-align:left;">
+45.33
+</td>
+<td style="text-align:left;">
+-89.53
+</td>
+<td style="text-align:left;">
+-89.53
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_12
+</td>
+<td style="text-align:left;">
+45.34
+</td>
+<td style="text-align:left;">
+45.34
+</td>
+<td style="text-align:left;">
+-89.54
+</td>
+<td style="text-align:left;">
+-89.54
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_13
+</td>
+<td style="text-align:left;">
+45.35
+</td>
+<td style="text-align:left;">
+45.35
+</td>
+<td style="text-align:left;">
+-89.55
+</td>
+<td style="text-align:left;">
+-89.55
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_14
+</td>
+<td style="text-align:left;">
+45.36
+</td>
+<td style="text-align:left;">
+45.36
+</td>
+<td style="text-align:left;">
+-89.56
+</td>
+<td style="text-align:left;">
+-89.56
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_15
+</td>
+<td style="text-align:left;">
+45.37
+</td>
+<td style="text-align:left;">
+45.37
+</td>
+<td style="text-align:left;">
+-89.57
+</td>
+<td style="text-align:left;">
+-89.57
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_16
+</td>
+<td style="text-align:left;">
+45.38
+</td>
+<td style="text-align:left;">
+45.38
+</td>
+<td style="text-align:left;">
+-89.58
+</td>
+<td style="text-align:left;">
+-89.58
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_17
+</td>
+<td style="text-align:left;">
+45.39
+</td>
+<td style="text-align:left;">
+45.39
+</td>
+<td style="text-align:left;">
+-89.59
+</td>
+<td style="text-align:left;">
+-89.59
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_18
+</td>
+<td style="text-align:left;">
+45.4
+</td>
+<td style="text-align:left;">
+45.4
+</td>
+<td style="text-align:left;">
+-89.6
+</td>
+<td style="text-align:left;">
+-89.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_19
+</td>
+<td style="text-align:left;">
+45.41
+</td>
+<td style="text-align:left;">
+45.41
+</td>
+<td style="text-align:left;">
+-89.61
+</td>
+<td style="text-align:left;">
+-89.61
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_20
+</td>
+<td style="text-align:left;">
+45.42
+</td>
+<td style="text-align:left;">
+45.42
+</td>
+<td style="text-align:left;">
+-89.62
+</td>
+<td style="text-align:left;">
+-89.62
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_21
+</td>
+<td style="text-align:left;">
+45.43
+</td>
+<td style="text-align:left;">
+45.43
+</td>
+<td style="text-align:left;">
+-89.63
+</td>
+<td style="text-align:left;">
+-89.63
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_22
+</td>
+<td style="text-align:left;">
+45.44
+</td>
+<td style="text-align:left;">
+45.44
+</td>
+<td style="text-align:left;">
+-89.64
+</td>
+<td style="text-align:left;">
+-89.64
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_23
+</td>
+<td style="text-align:left;">
+45.45
+</td>
+<td style="text-align:left;">
+45.45
+</td>
+<td style="text-align:left;">
+-89.65
+</td>
+<td style="text-align:left;">
+-89.65
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_24
+</td>
+<td style="text-align:left;">
+45.46
+</td>
+<td style="text-align:left;">
+45.46
+</td>
+<td style="text-align:left;">
+-89.66
+</td>
+<td style="text-align:left;">
+-89.66
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_25
+</td>
+<td style="text-align:left;">
+45.47
+</td>
+<td style="text-align:left;">
+45.47
+</td>
+<td style="text-align:left;">
+-89.67
+</td>
+<td style="text-align:left;">
+-89.67
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_26
+</td>
+<td style="text-align:left;">
+45.48
+</td>
+<td style="text-align:left;">
+45.48
+</td>
+<td style="text-align:left;">
+-89.68
+</td>
+<td style="text-align:left;">
+-89.68
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_27
+</td>
+<td style="text-align:left;">
+45.49
+</td>
+<td style="text-align:left;">
+45.49
+</td>
+<td style="text-align:left;">
+-89.69
+</td>
+<td style="text-align:left;">
+-89.69
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_28
+</td>
+<td style="text-align:left;">
+45.5
+</td>
+<td style="text-align:left;">
+45.5
+</td>
+<td style="text-align:left;">
+-89.7
+</td>
+<td style="text-align:left;">
+-89.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_29
+</td>
+<td style="text-align:left;">
+45.51
+</td>
+<td style="text-align:left;">
+45.51
+</td>
+<td style="text-align:left;">
+-89.71
+</td>
+<td style="text-align:left;">
+-89.71
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_30
+</td>
+<td style="text-align:left;">
+45.52
+</td>
+<td style="text-align:left;">
+45.52
+</td>
+<td style="text-align:left;">
+-89.72
+</td>
+<td style="text-align:left;">
+-89.72
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_31
+</td>
+<td style="text-align:left;">
+45.53
+</td>
+<td style="text-align:left;">
+45.53
+</td>
+<td style="text-align:left;">
+-89.73
+</td>
+<td style="text-align:left;">
+-89.73
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_32
+</td>
+<td style="text-align:left;">
+45.54
+</td>
+<td style="text-align:left;">
+45.54
+</td>
+<td style="text-align:left;">
+-89.74
+</td>
+<td style="text-align:left;">
+-89.74
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_33
+</td>
+<td style="text-align:left;">
+45.55
+</td>
+<td style="text-align:left;">
+45.55
+</td>
+<td style="text-align:left;">
+-89.75
+</td>
+<td style="text-align:left;">
+-89.75
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_34
+</td>
+<td style="text-align:left;">
+45.56
+</td>
+<td style="text-align:left;">
+45.56
+</td>
+<td style="text-align:left;">
+-89.76
+</td>
+<td style="text-align:left;">
+-89.76
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_35
+</td>
+<td style="text-align:left;">
+45.57
+</td>
+<td style="text-align:left;">
+45.57
+</td>
+<td style="text-align:left;">
+-89.77
+</td>
+<td style="text-align:left;">
+-89.77
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_36
+</td>
+<td style="text-align:left;">
+45.58
+</td>
+<td style="text-align:left;">
+45.58
+</td>
+<td style="text-align:left;">
+-89.78
+</td>
+<td style="text-align:left;">
+-89.78
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_37
+</td>
+<td style="text-align:left;">
+45.59
+</td>
+<td style="text-align:left;">
+45.59
+</td>
+<td style="text-align:left;">
+-89.79
+</td>
+<td style="text-align:left;">
+-89.79
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_38
+</td>
+<td style="text-align:left;">
+45.6
+</td>
+<td style="text-align:left;">
+45.6
+</td>
+<td style="text-align:left;">
+-89.8
+</td>
+<td style="text-align:left;">
+-89.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_39
+</td>
+<td style="text-align:left;">
+45.61
+</td>
+<td style="text-align:left;">
+45.61
+</td>
+<td style="text-align:left;">
+-89.81
+</td>
+<td style="text-align:left;">
+-89.81
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_40
+</td>
+<td style="text-align:left;">
+45.62
+</td>
+<td style="text-align:left;">
+45.62
+</td>
+<td style="text-align:left;">
+-89.82
+</td>
+<td style="text-align:left;">
+-89.82
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_41
+</td>
+<td style="text-align:left;">
+45.63
+</td>
+<td style="text-align:left;">
+45.63
+</td>
+<td style="text-align:left;">
+-89.83
+</td>
+<td style="text-align:left;">
+-89.83
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_42
+</td>
+<td style="text-align:left;">
+45.64
+</td>
+<td style="text-align:left;">
+45.64
+</td>
+<td style="text-align:left;">
+-89.84
+</td>
+<td style="text-align:left;">
+-89.84
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_43
+</td>
+<td style="text-align:left;">
+45.65
+</td>
+<td style="text-align:left;">
+45.65
+</td>
+<td style="text-align:left;">
+-89.85
+</td>
+<td style="text-align:left;">
+-89.85
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_44
+</td>
+<td style="text-align:left;">
+45.66
+</td>
+<td style="text-align:left;">
+45.66
+</td>
+<td style="text-align:left;">
+-89.86
+</td>
+<td style="text-align:left;">
+-89.86
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_45
+</td>
+<td style="text-align:left;">
+45.67
+</td>
+<td style="text-align:left;">
+45.67
+</td>
+<td style="text-align:left;">
+-89.87
+</td>
+<td style="text-align:left;">
+-89.87
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_46
+</td>
+<td style="text-align:left;">
+45.68
+</td>
+<td style="text-align:left;">
+45.68
+</td>
+<td style="text-align:left;">
+-89.88
+</td>
+<td style="text-align:left;">
+-89.88
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_47
+</td>
+<td style="text-align:left;">
+45.69
+</td>
+<td style="text-align:left;">
+45.69
+</td>
+<td style="text-align:left;">
+-89.89
+</td>
+<td style="text-align:left;">
+-89.89
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_48
+</td>
+<td style="text-align:left;">
+45.7
+</td>
+<td style="text-align:left;">
+45.7
+</td>
+<td style="text-align:left;">
+-89.9
+</td>
+<td style="text-align:left;">
+-89.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_49
+</td>
+<td style="text-align:left;">
+45.71
+</td>
+<td style="text-align:left;">
+45.71
+</td>
+<td style="text-align:left;">
+-89.91
+</td>
+<td style="text-align:left;">
+-89.91
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_50
+</td>
+<td style="text-align:left;">
+45.72
+</td>
+<td style="text-align:left;">
+45.72
+</td>
+<td style="text-align:left;">
+-89.92
+</td>
+<td style="text-align:left;">
+-89.92
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_51
+</td>
+<td style="text-align:left;">
+45.73
+</td>
+<td style="text-align:left;">
+45.73
+</td>
+<td style="text-align:left;">
+-89.93
+</td>
+<td style="text-align:left;">
+-89.93
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_52
+</td>
+<td style="text-align:left;">
+45.74
+</td>
+<td style="text-align:left;">
+45.74
+</td>
+<td style="text-align:left;">
+-89.94
+</td>
+<td style="text-align:left;">
+-89.94
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_53
+</td>
+<td style="text-align:left;">
+45.75
+</td>
+<td style="text-align:left;">
+45.75
+</td>
+<td style="text-align:left;">
+-89.95
+</td>
+<td style="text-align:left;">
+-89.95
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_54
+</td>
+<td style="text-align:left;">
+45.76
+</td>
+<td style="text-align:left;">
+45.76
+</td>
+<td style="text-align:left;">
+-89.96
+</td>
+<td style="text-align:left;">
+-89.96
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_55
+</td>
+<td style="text-align:left;">
+45.77
+</td>
+<td style="text-align:left;">
+45.77
+</td>
+<td style="text-align:left;">
+-89.97
+</td>
+<td style="text-align:left;">
+-89.97
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_56
+</td>
+<td style="text-align:left;">
+45.78
+</td>
+<td style="text-align:left;">
+45.78
+</td>
+<td style="text-align:left;">
+-89.98
+</td>
+<td style="text-align:left;">
+-89.98
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_57
+</td>
+<td style="text-align:left;">
+45.79
+</td>
+<td style="text-align:left;">
+45.79
+</td>
+<td style="text-align:left;">
+-89.99
+</td>
+<td style="text-align:left;">
+-89.99
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_58
+</td>
+<td style="text-align:left;">
+45.8
+</td>
+<td style="text-align:left;">
+45.8
+</td>
+<td style="text-align:left;">
+-90
+</td>
+<td style="text-align:left;">
+-90
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_59
+</td>
+<td style="text-align:left;">
+45.81
+</td>
+<td style="text-align:left;">
+45.81
+</td>
+<td style="text-align:left;">
+-90.01
+</td>
+<td style="text-align:left;">
+-90.01
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_60
+</td>
+<td style="text-align:left;">
+45.82
+</td>
+<td style="text-align:left;">
+45.82
+</td>
+<td style="text-align:left;">
+-90.02
+</td>
+<td style="text-align:left;">
+-90.02
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_61
+</td>
+<td style="text-align:left;">
+45.83
+</td>
+<td style="text-align:left;">
+45.83
+</td>
+<td style="text-align:left;">
+-90.03
+</td>
+<td style="text-align:left;">
+-90.03
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_62
+</td>
+<td style="text-align:left;">
+45.84
+</td>
+<td style="text-align:left;">
+45.84
+</td>
+<td style="text-align:left;">
+-90.04
+</td>
+<td style="text-align:left;">
+-90.04
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_63
+</td>
+<td style="text-align:left;">
+45.85
+</td>
+<td style="text-align:left;">
+45.85
+</td>
+<td style="text-align:left;">
+-90.05
+</td>
+<td style="text-align:left;">
+-90.05
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_64
+</td>
+<td style="text-align:left;">
+45.86
+</td>
+<td style="text-align:left;">
+45.86
+</td>
+<td style="text-align:left;">
+-90.06
+</td>
+<td style="text-align:left;">
+-90.06
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_65
+</td>
+<td style="text-align:left;">
+45.87
+</td>
+<td style="text-align:left;">
+45.87
+</td>
+<td style="text-align:left;">
+-90.07
+</td>
+<td style="text-align:left;">
+-90.07
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_66
+</td>
+<td style="text-align:left;">
+45.88
+</td>
+<td style="text-align:left;">
+45.88
+</td>
+<td style="text-align:left;">
+-90.08
+</td>
+<td style="text-align:left;">
+-90.08
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_67
+</td>
+<td style="text-align:left;">
+45.89
+</td>
+<td style="text-align:left;">
+45.89
+</td>
+<td style="text-align:left;">
+-90.09
+</td>
+<td style="text-align:left;">
+-90.09
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_68
+</td>
+<td style="text-align:left;">
+45.9
+</td>
+<td style="text-align:left;">
+45.9
+</td>
+<td style="text-align:left;">
+-90.1
+</td>
+<td style="text-align:left;">
+-90.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_69
+</td>
+<td style="text-align:left;">
+45.91
+</td>
+<td style="text-align:left;">
+45.91
+</td>
+<td style="text-align:left;">
+-90.11
+</td>
+<td style="text-align:left;">
+-90.11
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_70
+</td>
+<td style="text-align:left;">
+45.92
+</td>
+<td style="text-align:left;">
+45.92
+</td>
+<td style="text-align:left;">
+-90.12
+</td>
+<td style="text-align:left;">
+-90.12
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_71
+</td>
+<td style="text-align:left;">
+45.93
+</td>
+<td style="text-align:left;">
+45.93
+</td>
+<td style="text-align:left;">
+-90.13
+</td>
+<td style="text-align:left;">
+-90.13
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_72
+</td>
+<td style="text-align:left;">
+45.94
+</td>
+<td style="text-align:left;">
+45.94
+</td>
+<td style="text-align:left;">
+-90.14
+</td>
+<td style="text-align:left;">
+-90.14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_73
+</td>
+<td style="text-align:left;">
+45.95
+</td>
+<td style="text-align:left;">
+45.95
+</td>
+<td style="text-align:left;">
+-90.15
+</td>
+<td style="text-align:left;">
+-90.15
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_74
+</td>
+<td style="text-align:left;">
+45.96
+</td>
+<td style="text-align:left;">
+45.96
+</td>
+<td style="text-align:left;">
+-90.16
+</td>
+<td style="text-align:left;">
+-90.16
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_75
+</td>
+<td style="text-align:left;">
+45.97
+</td>
+<td style="text-align:left;">
+45.97
+</td>
+<td style="text-align:left;">
+-90.17
+</td>
+<td style="text-align:left;">
+-90.17
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_76
+</td>
+<td style="text-align:left;">
+45.98
+</td>
+<td style="text-align:left;">
+45.98
+</td>
+<td style="text-align:left;">
+-90.18
+</td>
+<td style="text-align:left;">
+-90.18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_77
+</td>
+<td style="text-align:left;">
+45.99
+</td>
+<td style="text-align:left;">
+45.99
+</td>
+<td style="text-align:left;">
+-90.19
+</td>
+<td style="text-align:left;">
+-90.19
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_78
+</td>
+<td style="text-align:left;">
+46
+</td>
+<td style="text-align:left;">
+46
+</td>
+<td style="text-align:left;">
+-90.2
+</td>
+<td style="text-align:left;">
+-90.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_79
+</td>
+<td style="text-align:left;">
+46.01
+</td>
+<td style="text-align:left;">
+46.01
+</td>
+<td style="text-align:left;">
+-90.21
+</td>
+<td style="text-align:left;">
+-90.21
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_80
+</td>
+<td style="text-align:left;">
+46.02
+</td>
+<td style="text-align:left;">
+46.02
+</td>
+<td style="text-align:left;">
+-90.22
+</td>
+<td style="text-align:left;">
+-90.22
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_81
+</td>
+<td style="text-align:left;">
+46.03
+</td>
+<td style="text-align:left;">
+46.03
+</td>
+<td style="text-align:left;">
+-90.23
+</td>
+<td style="text-align:left;">
+-90.23
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_82
+</td>
+<td style="text-align:left;">
+46.04
+</td>
+<td style="text-align:left;">
+46.04
+</td>
+<td style="text-align:left;">
+-90.24
+</td>
+<td style="text-align:left;">
+-90.24
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_83
+</td>
+<td style="text-align:left;">
+46.05
+</td>
+<td style="text-align:left;">
+46.05
+</td>
+<td style="text-align:left;">
+-90.25
+</td>
+<td style="text-align:left;">
+-90.25
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_84
+</td>
+<td style="text-align:left;">
+46.06
+</td>
+<td style="text-align:left;">
+46.06
+</td>
+<td style="text-align:left;">
+-90.26
+</td>
+<td style="text-align:left;">
+-90.26
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_85
+</td>
+<td style="text-align:left;">
+46.07
+</td>
+<td style="text-align:left;">
+46.07
+</td>
+<td style="text-align:left;">
+-90.27
+</td>
+<td style="text-align:left;">
+-90.27
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_86
+</td>
+<td style="text-align:left;">
+46.08
+</td>
+<td style="text-align:left;">
+46.08
+</td>
+<td style="text-align:left;">
+-90.28
+</td>
+<td style="text-align:left;">
+-90.28
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_87
+</td>
+<td style="text-align:left;">
+46.09
+</td>
+<td style="text-align:left;">
+46.09
+</td>
+<td style="text-align:left;">
+-90.29
+</td>
+<td style="text-align:left;">
+-90.29
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_88
+</td>
+<td style="text-align:left;">
+46.1
+</td>
+<td style="text-align:left;">
+46.1
+</td>
+<td style="text-align:left;">
+-90.3
+</td>
+<td style="text-align:left;">
+-90.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_89
+</td>
+<td style="text-align:left;">
+46.11
+</td>
+<td style="text-align:left;">
+46.11
+</td>
+<td style="text-align:left;">
+-90.31
+</td>
+<td style="text-align:left;">
+-90.31
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_90
+</td>
+<td style="text-align:left;">
+46.12
+</td>
+<td style="text-align:left;">
+46.12
+</td>
+<td style="text-align:left;">
+-90.32
+</td>
+<td style="text-align:left;">
+-90.32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_91
+</td>
+<td style="text-align:left;">
+46.13
+</td>
+<td style="text-align:left;">
+46.13
+</td>
+<td style="text-align:left;">
+-90.33
+</td>
+<td style="text-align:left;">
+-90.33
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_92
+</td>
+<td style="text-align:left;">
+46.14
+</td>
+<td style="text-align:left;">
+46.14
+</td>
+<td style="text-align:left;">
+-90.34
+</td>
+<td style="text-align:left;">
+-90.34
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_93
+</td>
+<td style="text-align:left;">
+46.15
+</td>
+<td style="text-align:left;">
+46.15
+</td>
+<td style="text-align:left;">
+-90.35
+</td>
+<td style="text-align:left;">
+-90.35
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_94
+</td>
+<td style="text-align:left;">
+46.16
+</td>
+<td style="text-align:left;">
+46.16
+</td>
+<td style="text-align:left;">
+-90.36
+</td>
+<td style="text-align:left;">
+-90.36
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_95
+</td>
+<td style="text-align:left;">
+46.17
+</td>
+<td style="text-align:left;">
+46.17
+</td>
+<td style="text-align:left;">
+-90.37
+</td>
+<td style="text-align:left;">
+-90.37
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_96
+</td>
+<td style="text-align:left;">
+46.18
+</td>
+<td style="text-align:left;">
+46.18
+</td>
+<td style="text-align:left;">
+-90.38
+</td>
+<td style="text-align:left;">
+-90.38
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_97
+</td>
+<td style="text-align:left;">
+46.19
+</td>
+<td style="text-align:left;">
+46.19
+</td>
+<td style="text-align:left;">
+-90.39
+</td>
+<td style="text-align:left;">
+-90.39
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_98
+</td>
+<td style="text-align:left;">
+46.2
+</td>
+<td style="text-align:left;">
+46.2
+</td>
+<td style="text-align:left;">
+-90.4
+</td>
+<td style="text-align:left;">
+-90.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_99
+</td>
+<td style="text-align:left;">
+46.21
+</td>
+<td style="text-align:left;">
+46.21
+</td>
+<td style="text-align:left;">
+-90.41
+</td>
+<td style="text-align:left;">
+-90.41
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_100
+</td>
+<td style="text-align:left;">
+46.22
+</td>
+<td style="text-align:left;">
+46.22
+</td>
+<td style="text-align:left;">
+-90.42
+</td>
+<td style="text-align:left;">
+-90.42
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_101
+</td>
+<td style="text-align:left;">
+46.23
+</td>
+<td style="text-align:left;">
+46.23
+</td>
+<td style="text-align:left;">
+-90.43
+</td>
+<td style="text-align:left;">
+-90.43
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_102
+</td>
+<td style="text-align:left;">
+46.24
+</td>
+<td style="text-align:left;">
+46.24
+</td>
+<td style="text-align:left;">
+-90.44
+</td>
+<td style="text-align:left;">
+-90.44
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_103
+</td>
+<td style="text-align:left;">
+46.25
+</td>
+<td style="text-align:left;">
+46.25
+</td>
+<td style="text-align:left;">
+-90.45
+</td>
+<td style="text-align:left;">
+-90.45
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+site_104
+</td>
+<td style="text-align:left;">
+46.26
+</td>
+<td style="text-align:left;">
+46.26
+</td>
+<td style="text-align:left;">
+-90.46
+</td>
+<td style="text-align:left;">
+-90.46
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div id="template_taxonomic_coverage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#template_taxonomic_coverage" class="anchor"></a>template_taxonomic_coverage</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create taxonomic coverage template</span>
+
+<span class="kw"><a href="../reference/template_taxonomic_coverage.html">template_taxonomic_coverage</a></span>(
+  <span class="dt">path =</span> <span class="st">'./metadata_templates'</span>,
+  <span class="dt">data.path =</span> <span class="st">'./data_objects'</span>,
+  <span class="dt">taxa.table =</span> <span class="st">'decomp.csv'</span>,
+  <span class="dt">taxa.col =</span> <span class="st">'taxa'</span>,
+  <span class="dt">taxa.authority =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">3</span>,<span class="dv">11</span>),
+  <span class="dt">taxa.name.type =</span> <span class="st">'scientific'</span>
+)
+
+<span class="co"># View directory contents</span>
+
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./metadata_templates'</span>)</code></pre></div>
+<pre><code>##  [1] "abstract.txt"            "additional_info.txt"    
+##  [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
+##  [5] "catvars_decomp.txt"      "catvars_nitrogen.txt"   
+##  [7] "custom_units.txt"        "geographic_coverage.txt"
+##  [9] "intellectual_rights.txt" "keywords.txt"           
+## [11] "methods.txt"             "personnel.txt"          
+## [13] "taxonomic_coverage.txt"</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View contents of taxonomic coverage template</span>
+<span class="co"># </span><span class="al">NOTE</span><span class="co">: Unresolved taxa have missing authority information</span></code></pre></div>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; ">
+<table class="table table table-bordered">
+<caption style="font-size: initial !important;">
+taxonomic_coverage.txt
+</caption>
+<thead><tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+taxa
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+scientific_name
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+scientific_authority_system
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+scientific_authority_id
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+common_name
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+common_authority_system
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+common_authority_id
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Mosses
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Unsorted biomass
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Achillea millefolium
+</td>
+<td style="text-align:left;">
+Achillea millefolium
+</td>
+<td style="text-align:left;">
+ITIS
+</td>
+<td style="text-align:left;">
+35423
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Crepis tectorum
+</td>
+<td style="text-align:left;">
+Crepis tectorum
+</td>
+<td style="text-align:left;">
+ITIS
+</td>
+<td style="text-align:left;">
+37212
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cyperus sp.
+</td>
+<td style="text-align:left;">
+Cyperus
+</td>
+<td style="text-align:left;">
+ITIS
+</td>
+<td style="text-align:left;">
+39882
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Euphorbia glyptosperma
+</td>
+<td style="text-align:left;">
+Euphorbia glyptosperma
+</td>
+<td style="text-align:left;">
+ITIS
+</td>
+<td style="text-align:left;">
+28074
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lespedeza capitata
+</td>
+<td style="text-align:left;">
+Lespedeza capitata
+</td>
+<td style="text-align:left;">
+ITIS
+</td>
+<td style="text-align:left;">
+25897
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lepidium densiflorum
+</td>
+<td style="text-align:left;">
+Lepidium densiflorum
+</td>
+<td style="text-align:left;">
+ITIS
+</td>
+<td style="text-align:left;">
+22960
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Poa pratensis
+</td>
+<td style="text-align:left;">
+Poa pratensis
+</td>
+<td style="text-align:left;">
+ITIS
+</td>
+<td style="text-align:left;">
+41088
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Rumex acetosella
+</td>
+<td style="text-align:left;">
+Rumex acetosella
+</td>
+<td style="text-align:left;">
+ITIS
+</td>
+<td style="text-align:left;">
+20934
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Schizachyrium scoparium
+</td>
+<td style="text-align:left;">
+Schizachyrium scoparium
+</td>
+<td style="text-align:left;">
+ITIS
+</td>
+<td style="text-align:left;">
+42076
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bouteloua gracilis
+</td>
+<td style="text-align:left;">
+Bouteloua gracilis
+</td>
+<td style="text-align:left;">
+ITIS
+</td>
+<td style="text-align:left;">
+41493
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Koeleria cristata
+</td>
+<td style="text-align:left;">
+Koeleria cristata
+</td>
+<td style="text-align:left;">
+ITIS
+</td>
+<td style="text-align:left;">
+515476
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Liatris aspera
+</td>
+<td style="text-align:left;">
+Liatris aspera
+</td>
+<td style="text-align:left;">
+ITIS
+</td>
+<td style="text-align:left;">
+37909
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
   </div>
 
@@ -168,7 +3037,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
 </div>
       </footer>
 </div>
