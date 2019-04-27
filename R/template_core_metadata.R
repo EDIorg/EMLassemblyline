@@ -32,8 +32,6 @@
 #'         \item{`abstract.txt`} Template for the dataset abstract.
 #'         \item{`additional_info.txt`} Template for miscellaneous dataset
 #'         information.
-#'         \item{`bounding_boxes.txt`} Template for the dataset geographic 
-#'         bounding coordinates.
 #'         \item{`custom_units.txt`} Template for defining non-standard units 
 #'         used in the dataset.
 #'         \item{`intellectual_rights.txt`} The selected intellectual rights 
@@ -198,64 +196,7 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
     }
     
   }
-  
-  # Import bounding_boxes.txt -------------------------------------------------
-  
-  # If writing to file ...
-  
-  if (isTRUE(write.file)){
-    
-    # Write to path
-    
-    value <- file.copy(
-      from = system.file(
-        '/templates/bounding_boxes.txt',
-        package = 'EMLassemblyline'
-      ),
-      to = paste0(
-        path,
-        "/bounding_boxes.txt"
-      )
-    )
-    
-    # Send message
-    
-    if (isTRUE(value)){
-      message("Importing bounding_boxes.txt.")
-    } else {
-      message("bounding_boxes.txt already exists!")
-    }
-    
-    # If adding to x ...
-    
-  } else if (!exists('data_read_2_x')){
-    
-    if (any(is.na(x$template$bounding_boxes.txt$content))){
-      
-      # Add to content
-      
-      x$template$bounding_boxes.txt$content <- utils::read.table(
-        file = system.file(
-          '/templates/bounding_boxes.txt',
-          package = 'EMLassemblyline'
-        ), 
-        header = T,
-        sep = '\t',
-        as.is = T
-      )
-      
-      # Send message
-      
-      message("Importing bounding_boxes.txt.")
-      
-    } else {
-      
-      message("bounding_boxes.txt already exists!")
-      
-    }
-    
-  }
-  
+
   # Import custom_units.txt ---------------------------------------------------
   
   # If writing to file ...

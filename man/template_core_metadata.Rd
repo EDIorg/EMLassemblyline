@@ -28,8 +28,6 @@ Use \code{template_arguments} to create `x`.}
         \item{`abstract.txt`} Template for the dataset abstract.
         \item{`additional_info.txt`} Template for miscellaneous dataset
         information.
-        \item{`bounding_boxes.txt`} Template for the dataset geographic 
-        bounding coordinates.
         \item{`custom_units.txt`} Template for defining non-standard units 
         used in the dataset.
         \item{`intellectual_rights.txt`} The selected intellectual rights 
