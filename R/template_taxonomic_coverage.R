@@ -170,6 +170,8 @@ template_taxonomic_coverage <- function(
       )
     )
 
+    output$scientific_name <- taxa_resolved$taxa_clean
+    
     output$scientific_authority_system <- taxa_resolved$authority
     
     output$scientific_authority_id <- taxa_resolved$authority_id
@@ -186,6 +188,8 @@ template_taxonomic_coverage <- function(
         x = taxa_raw
       )
     )
+    
+    output$common_name <- taxa_resolved$taxa_clean
     
     output$common_authority_system <- taxa_resolved$authority
     
@@ -206,6 +210,8 @@ template_taxonomic_coverage <- function(
       )
     )
     
+    output$scientific_name <- taxa_resolved$taxa_clean
+    
     output$scientific_authority_system <- taxa_resolved$authority
     
     output$scientific_authority_id <- taxa_resolved$authority_id
@@ -218,6 +224,8 @@ template_taxonomic_coverage <- function(
         x = taxa_raw
       )
     )
+    
+    output$common_name <- taxa_resolved$taxa_clean
     
     output$common_authority_system <- taxa_resolved$authority
     
