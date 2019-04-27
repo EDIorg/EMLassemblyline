@@ -300,8 +300,8 @@ testthat::test_that('x inputs = data tables', {
   input <- x
   
   colnames(input$data.table$nitrogen.csv$content)[
-    colnames(input$data.table$nitrogen.csv$content) == 'STEM_MASS_DENSITY'
-  ] <- 'STEM.MASS.DENSITY'
+    colnames(input$data.table$nitrogen.csv$content) == 'stem_mass_density'
+  ] <- 'stem.mass.density'
   
   expect_error(
     suppressMessages(

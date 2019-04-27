@@ -234,8 +234,8 @@ testthat::test_that('Test usage with x inputs',{
   
   input <- x_no_catvars
   
-  input$data.table$decomp.csv$content$NTRT[
-    input$data.table$decomp.csv$content$NTRT == 25
+  input$data.table$decomp.csv$content$ntrt[
+    input$data.table$decomp.csv$content$ntrt == 25
     ] <- ''
   
   output <- suppressWarnings(
