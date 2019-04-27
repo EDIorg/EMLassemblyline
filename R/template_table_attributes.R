@@ -193,6 +193,16 @@ template_table_attributes <- function(path, data.path = path,
         guess[use_i] <- "Date"
       }
       
+      use_i <- guess == "numeric"
+      
+      if (sum(use_i) > 0){
+        potential_date_cols <- colnames(x$data.table[[i]]$content)[use_i]
+        potential_date_i <- stringr::str_detect(tolower(potential_date_cols), "date|time|day|year")
+        guess_datetime <- potential_date_cols[potential_date_i]
+        use_i <- match(guess_datetime, attributes[[i]]$attributeName)
+        guess[use_i] <- "Date"
+      }
+      
       # Guess factor class
       
       use_i <- guess == "character"
