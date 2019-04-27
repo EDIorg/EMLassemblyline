@@ -23,25 +23,35 @@ The organization scheme we’ve found most useful at EDI is a single directory f
 *  __run_EMLassemblyline.R__ An empty R file for scripting the `EMLassemblyline` workflow.
 
 ```{r remove_directory, echo=FALSE}
+
 unlink(
-  x = 'C:/Users/Colin/Desktop/data_packages/edi_301',
+  x = '/Users/csmith/Desktop/data_packages/edi_301',
   recursive = TRUE
 )
+
+# Set working directory
+
+knitr::opts_knit$set(root.dir = '/Users/csmith/Desktop/data_packages')
+
 ```
 
-```{r template_directories, echo=TRUE, paged.print=TRUE}
+```{r template_directories, echo=TRUE, paged.print=TRUE, message = FALSE}
+
+# Set working directory
+
+setwd('/Users/csmith/Desktop/data_packages')
 
 # Create the standard data package directory
 
 template_directories(
-  path = 'C:/Users/Colin/Desktop/data_packages/edi_301',
+  path = '.',
   dir.name = 'edi_301'
 )
 
 # View directory contents
 
-dir('C:/Users/Colin/Desktop/data_packages/edi_301')
+dir('./edi_301')
 
 ```
 
-You may use any organization scheme you'd like, as long as the metadata template files belonging to a data package are all stored in the same directory.
+Any organization scheme is accepted as long as all the template files of a data package are located in the same directory.
