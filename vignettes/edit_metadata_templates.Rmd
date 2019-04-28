@@ -137,13 +137,18 @@ Example:
 
 ```{r abstract.txt, comment='', echo = FALSE}
 
-suppressWarnings(
-  cat(
-    readLines(
-      './metadata_templates/abstract.txt'
-    )
-  )
+# Display template
+
+abstract <- suppressWarnings(
+  readLines('./metadata_templates/abstract.txt')
 )
+
+knitr::kable(
+  row.names = FALSE, 
+  col.names = '', 
+  abstract, caption = 'abstract.txt') %>%
+  kableExtra::kable_styling('bordered', font_size = 12) %>%
+  kableExtra::scroll_box(width = '100%', height = '200px')
 
 ```
 
@@ -155,13 +160,18 @@ Example:
 
 ```{r methods.txt, comment='', echo = FALSE}
 
-suppressWarnings(
-  cat(
-    readLines(
-      './metadata_templates/methods.txt'
-    )
-  )
+# Display template
+
+methods <- suppressWarnings(
+  readLines('./metadata_templates/methods.txt')
 )
+
+knitr::kable(
+  row.names = FALSE, 
+  col.names = '', 
+  methods, caption = 'methods.txt') %>%
+  kableExtra::kable_styling('bordered', font_size = 12) %>%
+  kableExtra::scroll_box(width = '100%', height = '200px')
 
 ```
 
@@ -267,13 +277,18 @@ Example:
 
 ```{r intellectual_rights.txt, comment='', echo = FALSE}
 
-suppressWarnings(
-  cat(
-    readLines(
-      './metadata_templates/intellectual_rights.txt'
-    )
-  )
+# Display template
+
+intellectual_rights <- suppressWarnings(
+  readLines('./metadata_templates/intellectual_rights.txt')
 )
+
+knitr::kable(
+  row.names = FALSE, 
+  col.names = '', 
+  intellectual_rights, caption = 'intellectual_rights.txt') %>%
+  kableExtra::kable_styling('bordered', font_size = 12) %>%
+  kableExtra::scroll_box(width = '100%', height = '200px')
 
 ```
 
@@ -285,13 +300,19 @@ Example:
 
 ```{r additional_info.txt, comment='', echo = FALSE}
 
-suppressWarnings(
-  cat(
-    readLines(
-      './metadata_templates/additional_info.txt'
-    )
-  )
+# Display template
+
+additional_info <- suppressWarnings(
+  readLines('./metadata_templates/additional_info.txt')
 )
+
+knitr::kable(
+  row.names = FALSE, 
+  col.names = '', 
+  additional_info, caption = 'additional_info.txt') %>%
+  kableExtra::kable_styling('bordered', font_size = 12) %>%
+  kableExtra::scroll_box(width = '50%', height = '100px')
+
 
 ```
 
@@ -397,7 +418,7 @@ custom_units <- read.table(
 knitr::kable(
   custom_units, caption = 'custom_units.txt') %>%
   kableExtra::kable_styling('bordered', font_size = 12) %>%
-  kableExtra::scroll_box(width = '100%', height = '150px')
+  kableExtra::scroll_box(width = '100%', height = '250px')
 
 ```
 
@@ -444,13 +465,13 @@ catvars_nitrogen <- read.table(
 knitr::kable(
   catvars_decomp, caption = 'catvars_decomp.txt') %>%
   kableExtra::kable_styling('bordered', font_size = 12) %>%
-  kableExtra::scroll_box(width = '60%', height = '300px')
+  kableExtra::scroll_box(width = '45%', height = '300px')
 
 
 knitr::kable(
   catvars_nitrogen, caption = 'catvars_nitrogen.txt') %>%
   kableExtra::kable_styling('bordered', font_size = 12) %>%
-  kableExtra::scroll_box(width = '60%', height = '300px')
+  kableExtra::scroll_box(width = '45%', height = '300px')
 
 ```
 

@@ -251,13 +251,13 @@ catvars_nitrogen <- read.table(
 knitr::kable(
   catvars_decomp, caption = 'catvars_decomp.txt') %>%
   kableExtra::kable_styling('bordered', font_size = 12) %>%
-  kableExtra::scroll_box(width = '60%', height = '300px')
+  kableExtra::scroll_box(width = '35%', height = '300px')
 
 
 knitr::kable(
   catvars_nitrogen, caption = 'catvars_nitrogen.txt') %>%
   kableExtra::kable_styling('bordered', font_size = 12) %>%
-  kableExtra::scroll_box(width = '60%', height = '300px')
+  kableExtra::scroll_box(width = '35%', height = '300px')
 
 ```
 

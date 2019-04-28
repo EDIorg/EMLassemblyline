@@ -3,6 +3,123 @@ title: "Create EML"
 output: html_document
 ---
 
+```{r setup, include=FALSE}
+
+# Parameterize
+
+dir_path <- '/Users/csmith/Desktop/data_packages'
+data_path <- '/Users/csmith/Desktop/data_packages/edi_301/data_objects'
+
+# Initialize .Rmd
+
+knitr::opts_chunk$set(echo = TRUE)
+library(kableExtra)
+library(EMLassemblyline)
+
+# Clear contents of data package directory
+
+unlink(
+  x = '/Users/csmith/Desktop/data_packages/edi_301',
+  recursive = TRUE
+)
+
+# Create directory structure
+
+template_directories(
+  path = dir_path,
+  dir.name = 'edi_301'
+)
+
+# Add completed templates
+
+file.copy(
+  from = paste0(
+    system.file(
+      '/examples/templates',
+      package = 'EMLassemblyline'
+    ),
+    '/',
+    list.files(
+      system.file(
+        '/examples/templates',
+        package = 'EMLassemblyline'
+      )
+    )
+  ),
+  to = paste0(
+    dir_path,
+    '/edi_301/metadata_templates'
+  )
+)
+
+# Remove templates
+
+file.remove(
+  paste0(
+    dir_path,
+    '/edi_301/metadata_templates/bounding_boxes.txt'
+  )
+)
+
+file.remove(
+  paste0(
+    dir_path,
+    '/edi_301/metadata_templates/geographic_coverage.txt'
+  )
+)
+
+file.remove(
+  paste0(
+    dir_path,
+    '/edi_301/metadata_templates/taxonomicCoverage.xml'
+  )
+)
+
+# Add data objects
+
+file.copy(
+  from = paste0(
+    system.file(
+      '/examples/data',
+      package = 'EMLassemblyline'
+    ),
+    '/',
+    list.files(
+      system.file(
+        '/examples/data',
+        package = 'EMLassemblyline'
+      )
+    )
+  ),
+  to = paste0(
+    dir_path,
+    '/edi_301/data_objects'
+  )
+)
+
+# Create templates
+
+template_geographic_coverage(
+  path = paste0(
+    dir_path,
+    '/edi_301/metadata_templates'
+  ),
+  data.path = paste0(
+    dir_path,
+    '/edi_301/data_objects'
+  ),
+  data.table = 'nitrogen.csv',
+  site.col = 'site_name',
+  lat.col = 'site_lat',
+  lon.col = 'site_lon'
+)
+
+# Set working directory
+
+knitr::opts_knit$set(root.dir = '/Users/csmith/Desktop/data_packages/edi_301')
+
+```
+
 ## The `make_eml` function
 
 The information rich and machine readable EML metadata file should contain all the necessary content, in the correct format, and in the right schema locations according with best practices informed by scientists who use this information and data repositories who serve it in a human discoverable and readable form. In addition to performing all these tasks, the `make_eml` function adds another layer of auto-extracted metadata to the EML based on template contents and data object types. Usage of `make_eml` differs slightly based on data package contents comprised of:
@@ -32,7 +149,52 @@ The most common type of data package only contains data tables. To create EML fo
 *  **user.domain** (optional) Domain of the `user.id`(s).
 *  **package.id** (optional) Data package identifier in the format expected by the receiving data repository.
 
-EXAMPLE
+```{r make EML for data tables, message = FALSE}
+
+# Create EML for data tables
+
+make_eml(
+  path = './metadata_templates',
+  data.path = './data_objects',
+  eml.path = './eml',
+  dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions',
+  temporal.coverage = c('2014-05-01', '2015-10-31'),
+  geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+  geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+  maintenance.description = 'completed',
+  data.table = c('decomp.csv', 'nitrogen.csv'),
+  data.table.description = c('Decomposition data', 'Nitrogen data'),
+  user.id = 'csmith',
+  user.domain = 'EDI',
+  package.id = 'edi.301.1'
+)
+
+# View directory
+
+dir('./eml')
+
+# View EML
+
+```
+
+```{r EML data tables, comment='', echo = FALSE}
+
+# Display template
+
+EML103::read_eml('./eml/edi.301.1.xml')
+
+# intellectual_rights <- suppressWarnings(
+#   readLines('./metadata_templates/intellectual_rights.txt')
+# )
+# 
+# knitr::kable(
+#   row.names = FALSE, 
+#   col.names = '', 
+#   intellectual_rights, caption = 'intellectual_rights.txt') %>%
+#   kableExtra::kable_styling('bordered', font_size = 12) %>%
+#   kableExtra::scroll_box(width = '100%', height = '200px')
+
+```
 
 ## `make_eml` for other entities
 
@@ -52,7 +214,33 @@ Some data packages only contain non-tabular data (e.g. geospatial vector, NetCDF
 *  **user.domain** (optional) Domain of the `user.id`(s).
 *  **package.id** (optional) Data package identifier in the format expected by the receiving data repository.
 
-EXAMPLE
+```{r make EML for other entities, message = FALSE}
+
+# Create EML for other entities
+
+make_eml(
+  path = './metadata_templates',
+  data.path = './data_objects',
+  eml.path = './eml',
+  dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions',
+  temporal.coverage = c('2014-05-01', '2015-10-31'),
+  geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+  geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+  maintenance.description = 'completed',
+  other.entity = c('ancillary_data.zip', 'processing_and_analysis.R'),
+  other.entity.description = c('Ancillary data', 'Data processing and analysis script'),
+  user.id = 'csmith',
+  user.domain = 'EDI',
+  package.id = 'edi.301.1'
+)
+
+# View directory
+
+dir('./eml')
+
+# View template
+
+```
 
 ## `make_eml` for data tables and other entities
 
@@ -75,4 +263,32 @@ A third type of data package contains both data tables and other entities. To cr
 *  **user.domain** (optional) Domain of the `user.id`(s).
 *  **package.id** (optional) Data package identifier in the format expected by the receiving data repository.
 
-EXAMPLE
+```{r make EML for data tables and other entities, message = FALSE}
+
+# Create EML for data tables and other entities
+
+make_eml(
+  path = './metadata_templates',
+  data.path = './data_objects',
+  eml.path = './eml',
+  dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions',
+  temporal.coverage = c('2014-05-01', '2015-10-31'),
+  geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+  geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+  maintenance.description = 'completed',
+  data.table = c('decomp.csv', 'nitrogen.csv'),
+  data.table.description = c('Decomposition data', 'Nitrogen data'),
+  other.entity = c('ancillary_data.zip', 'processing_and_analysis.R'),
+  other.entity.description = c('Ancillary data', 'Data processing and analysis script'),
+  user.id = 'csmith',
+  user.domain = 'EDI',
+  package.id = 'edi.301.1'
+)
+
+# View directory
+
+dir('./eml')
+
+# View template
+
+```
