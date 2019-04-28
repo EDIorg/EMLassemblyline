@@ -47,9 +47,8 @@
 #'     coordinates in the `bounding_boxes.txt` template.
 #' @param geographic.coordinates
 #'     (character) Geographic coordinates delineating the bounding area or 
-#'     point of a dataset, in decimal degrees. This argument is not required 
-#'     if using `bounding_boxes.txt`. Values must be listed in this order:
-#'     North, East, South, West. Longitudes West of the 
+#'     point of a dataset, in decimal degrees. Values must be listed in this 
+#'     order: North, East, South, West. Longitudes West of the 
 #'     prime meridian and latitudes South of the equator are negative. If 
 #'     representing a point, repeat the latitude for North and South, and 
 #'     repeat the longitude for East and West (e.g. 
@@ -702,31 +701,37 @@ make_eml <- function(
   
   if ('bounding_boxes.txt' %in% names(x$template)){
     
+    warning(
+      'Template "bounding_boxes.txt" is deprecated; please use "geographic_coverage.txt" instead.',
+      call. = FALSE)
+    
     bounding_boxes <- x$template$bounding_boxes.txt$content
     
-    if (nrow(bounding_boxes) != 0){
+    if (is.data.frame(bounding_boxes)){
       
-      bounding_boxes_2 <- lapply(bounding_boxes, as.character)
-      
-      for (i in 1:length(bounding_boxes_2$geographicDescription)){
+      if (nrow(bounding_boxes) != 0){
         
-        geographic_description <- methods::new("geographicDescription", bounding_boxes_2$geographicDescription[i])
-        bounding_coordinates <- methods::new("boundingCoordinates",
-                                    westBoundingCoordinate = bounding_boxes_2$westBoundingCoordinate[i],
-                                    eastBoundingCoordinate = bounding_boxes_2$eastBoundingCoordinate[i],
-                                    northBoundingCoordinate = bounding_boxes_2$northBoundingCoordinate[i],
-                                    southBoundingCoordinate = bounding_boxes_2$southBoundingCoordinate[i])
-        geographic_coverage <- methods::new("geographicCoverage",
-                                   geographicDescription = geographic_description,
-                                   boundingCoordinates = bounding_coordinates)
-        list_of_coverage[[(length(list_of_coverage)+1)]] <- geographic_coverage
+        bounding_boxes_2 <- lapply(bounding_boxes, as.character)
+        
+        for (i in 1:length(bounding_boxes_2$geographicDescription)){
+          
+          geographic_description <- methods::new("geographicDescription", bounding_boxes_2$geographicDescription[i])
+          bounding_coordinates <- methods::new("boundingCoordinates",
+                                               westBoundingCoordinate = bounding_boxes_2$westBoundingCoordinate[i],
+                                               eastBoundingCoordinate = bounding_boxes_2$eastBoundingCoordinate[i],
+                                               northBoundingCoordinate = bounding_boxes_2$northBoundingCoordinate[i],
+                                               southBoundingCoordinate = bounding_boxes_2$southBoundingCoordinate[i])
+          geographic_coverage <- methods::new("geographicCoverage",
+                                              geographicDescription = geographic_description,
+                                              boundingCoordinates = bounding_coordinates)
+          list_of_coverage[[(length(list_of_coverage)+1)]] <- geographic_coverage
+          
+        }
         
       }
       
-    } 
-    
-  
-    
+    }
+
   }
   
   # If geographic_coverage.txt exists ...
