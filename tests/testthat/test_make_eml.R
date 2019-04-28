@@ -162,6 +162,24 @@ path.inst <- system.file(
 )
 path.inst <- substr(path.inst, 1, nchar(path.inst)-23)
 
+# Move templates to tempdir() and remove bounding_boxes.txt
+
+test <- file.copy(
+  from  = system.file(
+    '/examples/templates',
+    package = 'EMLassemblyline'
+  ),
+  to = tempdir(),
+  recursive = TRUE
+)
+
+test <- file.remove(
+  paste0(
+    tempdir(),
+    '/templates/bounding_boxes.txt'
+  )
+)
+
 # Expect errors ---------------------------------------------------------------
 
 testthat::test_that('Error out when required arguments are missing', {
@@ -844,10 +862,32 @@ testthat::test_that('Error out when required arguments are missing', {
 
 testthat::test_that('Expect equal', {
 
+  # Deprecated bounding_boxes.txt results in warning
+  
+  expect_warning(
+    make_eml(
+      path = path,
+      data.path = data.path,
+      eml.path = eml.path,
+      dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+      data.table = data.table,
+      data.table.description = c('Decomposition data', 'Nitrogen data'),
+      temporal.coverage = c('2014-05-01', '2015-10-31'),
+      geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+      geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+      maintenance.description = 'completed',
+      user.id = user.id,
+      user.domain = user.domain,
+      package.id = 'edi.141.1',
+      return.obj = TRUE,
+      write.file = FALSE
+    )
+  )
+  
   # class = 'eml'
 
   output <- make_eml(
-    path = path,
+    path = paste0(tempdir(), '/templates'),
     data.path = data.path,
     eml.path = eml.path,
     dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
@@ -872,7 +912,7 @@ testthat::test_that('Expect equal', {
   # data.table.quote.character (is present)
   
   output <- make_eml(
-    path = path,
+    path = paste0(tempdir(), '/templates'),
     data.path = data.path,
     eml.path = eml.path,
     dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
@@ -903,7 +943,7 @@ testthat::test_that('Expect equal', {
   # other.entity
   
   output <- make_eml(
-    path = path,
+    path = paste0(tempdir(), '/templates'),
     data.path = data.path,
     eml.path = eml.path,
     dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
@@ -942,7 +982,7 @@ testthat::test_that('Expect equal', {
   # class = 'eml'
   
   output <- make_eml(
-    path = path,
+    path = paste0(tempdir(), '/templates'),
     data.path = data.path,
     eml.path = eml.path,
     dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
@@ -1220,6 +1260,34 @@ testthat::test_that('Expect equal', {
 
 testthat::test_that('Test usage with x (all templates and 2 data tables)', {
   
+  # Using deprecated template bounding_boxes.txt results in warning
+  
+  expect_warning(
+    make_eml(
+      data.path = data.path,
+      eml.path = eml.path,
+      dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+      data.table = data.table,
+      data.table.description = c('Decomposition data', 'Nitrogen data'),
+      data.table.quote.character = c("\"","\""),
+      data.url = data.url,
+      temporal.coverage = c('2014-05-01', '2015-10-31'),
+      geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+      geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+      maintenance.description = 'completed',
+      user.id = user.id,
+      user.domain = user.domain,
+      package.id = 'edi.141.1',
+      return.obj = TRUE,
+      write.file = FALSE,
+      x = x_table
+    )
+  )
+  
+  # Remove deprecated template
+  
+  x_table$template$bounding_boxes.txt <- NULL
+
   # Missing path has no effect
   
   output <- make_eml(
@@ -1354,11 +1422,13 @@ testthat::test_that('Test usage with x (all templates and 2 data tables)', {
   
   # Arguments supplied to function via x
   
-  output <- do.call(
-    make_eml, 
-    x_table_docall[
-      names(x_table_docall) %in% names(formals(make_eml))
-    ]
+  output <- suppressWarnings(
+    do.call(
+      make_eml, 
+      x_table_docall[
+        names(x_table_docall) %in% names(formals(make_eml))
+      ]
+    )
   )
   
   expect_equal(
@@ -1413,6 +1483,37 @@ testthat::test_that('Test usage with x (all templates and 2 data tables)', {
 
 testthat::test_that('Test usage with x (all templates, 2 data tables, and 1 other entity)', {
   
+  # Use of deprecated template bounding_boxes.txt results in warning
+  
+  expect_warning(
+    make_eml(
+      path = path,
+      data.path = data.path,
+      eml.path = eml.path,
+      dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+      data.table = data.table,
+      data.table.description = c('Decomposition data', 'Nitrogen data'),
+      data.table.quote.character = c("\"","\""),
+      data.url = data.url,
+      other.entity = 'ancillary_data.zip',
+      other.entity.description = 'Ancillary data',
+      temporal.coverage = c('2014-05-01', '2015-10-31'),
+      geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+      geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+      maintenance.description = 'completed',
+      user.id = user.id,
+      user.domain = user.domain,
+      package.id = 'edi.141.1',
+      return.obj = TRUE,
+      write.file = FALSE,
+      x = x_table_other
+    )
+  )
+  
+  # Remove deprecated template bounding_boxes.txt
+  
+  x_table_other$template$bounding_boxes.txt <- NULL
+  
   # Arguments supplied to function in long form
   
   output <- make_eml(
@@ -1473,11 +1574,13 @@ testthat::test_that('Test usage with x (all templates, 2 data tables, and 1 othe
   
   # Arguments supplied to function via x
   
-  output <- do.call(
-    make_eml, 
-    x_table_other_docall[
-      names(x_table_other_docall) %in% names(formals(make_eml))
+  output <- suppressWarnings(
+    do.call(
+      make_eml, 
+      x_table_other_docall[
+        names(x_table_other_docall) %in% names(formals(make_eml))
       ]
+    )
   )
   
   expect_equal(
@@ -1490,6 +1593,34 @@ testthat::test_that('Test usage with x (all templates, 2 data tables, and 1 othe
 # Test usage with x (all templates and 1 other entity) ------------------------
 
 testthat::test_that('Test usage with x (all templates and 1 other entity)', {
+  
+  # Use of deprecated template bounding_boxes.txt results in warning
+  
+  expect_warning(
+    make_eml(
+      path = path,
+      data.path = data.path,
+      eml.path = eml.path,
+      dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+      data.url = data.url,
+      other.entity = 'ancillary_data.zip',
+      other.entity.description = 'Ancillary data',
+      temporal.coverage = c('2014-05-01', '2015-10-31'),
+      geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+      geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+      maintenance.description = 'completed',
+      user.id = user.id,
+      user.domain = user.domain,
+      package.id = 'edi.141.1',
+      return.obj = TRUE,
+      write.file = FALSE,
+      x = x_other
+    )
+  )
+  
+  # Remove deprecated template bounding_boxes.txt
+  
+  x_other$template$bounding_boxes.txt <- NULL
   
   # Arguments supplied to function in long form
   
@@ -1520,11 +1651,13 @@ testthat::test_that('Test usage with x (all templates and 1 other entity)', {
   
   # Arguments supplied to function via x
   
-  output <- do.call(
-    make_eml, 
-    x_other_docall[
-      names(x_other_docall) %in% names(formals(make_eml))
-    ]
+  output <- suppressWarnings(
+    do.call(
+      make_eml, 
+      x_other_docall[
+        names(x_other_docall) %in% names(formals(make_eml))
+      ]
+    )
   )
   
   expect_equal(
