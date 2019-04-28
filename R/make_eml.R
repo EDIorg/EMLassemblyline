@@ -701,13 +701,13 @@ make_eml <- function(
   
   if ('bounding_boxes.txt' %in% names(x$template)){
     
-    warning(
-      'Template "bounding_boxes.txt" is deprecated; please use "geographic_coverage.txt" instead.',
-      call. = FALSE)
-    
     bounding_boxes <- x$template$bounding_boxes.txt$content
     
     if (is.data.frame(bounding_boxes)){
+      
+      warning(
+        'Template "bounding_boxes.txt" is deprecated; please use "geographic_coverage.txt" instead.',
+        call. = FALSE)
       
       if (nrow(bounding_boxes) != 0){
         
