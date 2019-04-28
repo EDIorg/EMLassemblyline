@@ -1,16 +1,16 @@
 taxa	scientific_name	scientific_authority_system	scientific_authority_id	common_name	common_authority_system	common_authority_id
-Mosses	NA	NA	NA	NA	ITIS	14189
+Mosses	NA	NA	NA	Mosses	ITIS	14189
 Unsorted biomass	NA	NA	NA	NA	NA	NA
-Achillea millefolium	NA	ITIS	35423	NA	NA	NA
-Crepis tectorum	NA	ITIS	37212	NA	NA	NA
-Cyperus sp.	NA	ITIS	39882	NA	NA	NA
-Euphorbia glyptosperma	NA	ITIS	28074	NA	NA	NA
-Lespedeza capitata	NA	ITIS	25897	NA	NA	NA
-Lepidium densiflorum	NA	ITIS	22960	NA	NA	NA
-Poa pratensis	NA	ITIS	41088	NA	NA	NA
-Rumex acetosella	NA	ITIS	20934	NA	NA	NA
-Schizachyrium scoparium	NA	ITIS	42076	NA	NA	NA
-Bouteloua gracilis	NA	ITIS	41493	NA	NA	NA
-Koeleria cristata	NA	ITIS	515476	NA	NA	NA
-Liatris aspera	NA	ITIS	37909	NA	NA	NA
+Achillea millefolium	Achillea millefolium	ITIS	35423	NA	NA	NA
+Crepis tectorum	Crepis tectorum	ITIS	37212	NA	NA	NA
+Cyperus sp.	Cyperus	ITIS	39882	NA	NA	NA
+Euphorbia glyptosperma	Euphorbia glyptosperma	ITIS	28074	NA	NA	NA
+Lespedeza capitata	Lespedeza capitata	ITIS	25897	NA	NA	NA
+Lepidium densiflorum	Lepidium densiflorum	ITIS	22960	NA	NA	NA
+Poa pratensis	Poa pratensis	ITIS	41088	NA	NA	NA
+Rumex acetosella	Rumex acetosella	ITIS	20934	NA	NA	NA
+Schizachyrium scoparium	Schizachyrium scoparium	ITIS	42076	NA	NA	NA
+Bouteloua gracilis	Bouteloua gracilis	ITIS	41493	NA	NA	NA
+Koeleria cristata	Koeleria cristata	ITIS	515476	NA	NA	NA
+Liatris aspera	Liatris aspera	ITIS	37909	NA	NA	NA
 	NA	NA	NA	NA	NA	NA
