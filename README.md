@@ -26,7 +26,7 @@ For scientists and data managers who need to easily create high quality EML meta
 
 ```
 # Install from GitHub
-devtools::install_github("EDIorg/EMLassemblyline")
+remotes::install_github("EDIorg/EMLassemblyline")
 ```
 
 ## Usage

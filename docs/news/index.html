@@ -135,11 +135,13 @@
 <a href="#emlassemblyline-2-99-0" class="anchor"></a>EMLassemblyline 2.99.0</h1>
 <ul>
 <li>
+<strong>Enhancement:</strong> <code>import_templates</code> can now be run on datasets that don’t have data tables.</li>
+<li>
 <strong>Enhancement:</strong> Release <code>template_taxonomic_coverage</code>, a function for resolving taxa to authority systems and creating the full rank specific hierarchical EML element.</li>
 <li>
 <strong>Enhancement:</strong> All geographic coverage has been moved to /dataset/coverage, which is where data repositories find this information and place it on maps.</li>
 <li>
-<strong>Enhancement:</strong> Support other entity only data packaging use case, thereby extending data packaging use cased to:
+<strong>Enhancement:</strong> Support other entity only data packaging use case, thereby extending data packaging use cases to:
 <ul>
 <li>Data table only</li>
 <li>Data table and other entity</li>
@@ -147,15 +149,14 @@
 </ul>
 </li>
 <li>
-<strong>Enhancement:</strong> Enable <code><a href="../reference/make_eml.html">make_eml()</a></code> to create EML for data repositories other than EDI by relaxing constraints on <code>user.id</code>, <code>user.affiliation</code>, and <code>package.id</code> while returning EDI specific warnings, but not errors. Additional refactoring for creating valid access control credentials will be required.</li>
+<strong>Enhancement:</strong> Enable <code><a href="../reference/make_eml.html">make_eml()</a></code> to create EML for data repositories other than EDI by relaxing constraints on <code>user.id</code>, <code>user.affiliation</code>, and <code>package.id</code> while returning EDI specific warnings. Additional refactoring for creating valid access control credentials will be required.</li>
 <li>
-<strong>Enhancement:</strong> Release <code>read_files()</code>, a function to read metadata templates, data files, and function arguments into an R list structure as an alternative input to <code>EMLassemblyline</code> functions (i.e. rather than supplying the files themselves). This approach is generally useful for interfacing upstream sources with <code>EMLassemblyline</code> (e.g. a metabase or database).</li>
+<strong>Enhancement:</strong> Release <code>template_arguments</code>, a function to read metadata templates, data files, and function arguments into an R list structure as an alternative input to <code>EMLassemblyline</code> functions (i.e. rather than supplying the files themselves). This approach is generally useful for interfacing upstream sources with <code>EMLassemblyline</code> (e.g. a metabase or database).</li>
 <li>
 <strong>Enhancement:</strong> Release <code>create_directory()</code>, a function to create a commonly used directory structure for EMLassemblyline inputs and outputs.</li>
+<li><p><strong>Enhancement:</strong> Use arguments <code>data.table.description</code> and <code>other.entity.description</code> for <code>//dataTable/entityName</code> and <code>//otherEntity/entityName</code>, respectively. This provides a more meaningful file description than the file name it self.</p></li>
 <li>
-<strong>Enhancement:</strong> Use arguments <code>data.table.description</code> and <code>other.entity.description</code> for <code>//dataTable/entityName</code> and <code>//otherEntity/entityName</code>, respectively. This provides a more meaningful file description than the file name it self.</li>
-<li>
-<strong>Refactor:</strong> Rename arguments to align with EML element names.
+<strong>Deprecated:</strong> Rename arguments to align with EML element names.
 <ul>
 <li>
 <code>data.files</code> -&gt; <code>data.table</code>
@@ -169,11 +170,6 @@
 <li>
 <code>data.files.url</code> -&gt; <code>data.url</code>
 </li>
-</ul>
-</li>
-<li>
-<strong>Refactor:</strong> Rename arguments to align with EML element names.
-<ul>
 <li>
 <code>zip.dir</code> -&gt; <code>other.entity</code>
 </li>
@@ -183,11 +179,12 @@
 </ul>
 </li>
 <li>
-<strong>Bug fix:</strong> <code><a href="../reference/import_templates.html">import_templates()</a></code> no longer fails to import template to empty directories.</li>
-<li>
-<strong>Bug fix:</strong> <code><a href="../reference/import_templates.html">import_templates()</a></code> can now be run on datasets that don’t have data tables.</li>
-<li>
-<strong>Bug fix:</strong> Add <code>//otherEntity/physical/distribution/online/url</code>. This element was missing though documentation implied it existed.</li>
+<strong>Deprecated:</strong> Rename templating functions to align with organization scheme.
+<ul>
+<li><code>test</code></li>
+</ul>
+</li>
+<li><p><strong>Bug fix:</strong> Add <code>//otherEntity/physical/distribution/online/url</code>. This element was missing though documentation implied it existed.</p></li>
 </ul>
 </div>
   </div>

@@ -134,7 +134,7 @@ The most common type of data package only contains data tables. To create EML fo
 
 *  **path**  Path to template files
 *  **data.path** Path to data files
-*  ** eml.path** Path to where the EML file will be written
+*  **eml.path** Path to where the EML file will be written
 *  **dataset.title** Title of the data package
 *  **temporal.coverage** Beginning and ending dates of the data using the format YYYY-MM-DD
 *  **geographic.coordinates** (required if not using the _geographic_coverage.txt_ template) A vector of decimal degree coordinates in the order: north, east, south, west, where latitudes south of the equator and longitudes west of the prime meridian are negative.
@@ -191,7 +191,7 @@ Some data packages only contain non-tabular data (e.g. geospatial vector, NetCDF
 
 *  **path**  Path to template files
 *  **data.path** Path to data files and other digital objects
-*  ** eml.path** Path to where the EML file will be written
+*  **eml.path** Path to where the EML file will be written
 *  **dataset.title** Title of the data package
 *  **temporal.coverage** Beginning and ending dates of the data using the format YYYY-MM-DD
 *  **geographic.coordinates** (required if not using the _geographic_coverage.txt_ template) A vector of decimal degree coordinates in the order: north, east, south, west, where latitudes south of the equator and longitudes west of the prime meridian are negative.
@@ -247,7 +247,7 @@ A third type of data package contains both data tables and other entities. To cr
 
 *  **path**  Path to template files
 *  **data.path** Path to data files
-*  ** eml.path** Path to where the EML file will be written
+*  **eml.path** Path to where the EML file will be written
 *  **dataset.title** Title of the data package
 *  **temporal.coverage** Beginning and ending dates of the data using the format YYYY-MM-DD
 *  **geographic.coordinates** (required if not using the _geographic_coverage.txt_ template) A vector of decimal degree coordinates in the order: north, east, south, west, where latitudes south of the equator and longitudes west of the prime meridian are negative.
