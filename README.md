@@ -1,5 +1,5 @@
-[![Travis-CI Build Status](https://travis-ci.com/clnsmth/EMLassemblyline.svg?branch=master)](https://travis-ci.org/clnsmth/EMLassemblyline)
-[![codecov.io](https://codecov.io/github/clnsmth/EMLassemblyline/coverage.svg?branch=master)](https://codecov.io/github/clnsmth/EMLassemblyline?branch=master)
+[![Travis-CI Build Status](https://travis-ci.com/EDIorg/EMLassemblyline.svg?branch=master)](https://travis-ci.org/EDIorg/EMLassemblyline)
+[![codecov.io](https://codecov.io/github/EDIorg/EMLassemblyline/coverage.svg?branch=master)](https://codecov.io/github/EDIorg/EMLassemblyline?branch=master)
 
 # EMLassemblyline
 
@@ -31,7 +31,7 @@ remotes::install_github("EDIorg/EMLassemblyline")
 
 ## Usage
 
-[Check out example use cases at the EMLassemblyline website](https://clnsmth.github.io/EMLassemblyline/)
+[Check out example use cases at the EMLassemblyline website](https://EDIorg.github.io/EMLassemblyline/)
 
 ## Active projects
 
