@@ -259,12 +259,7 @@ make_eml <- function(
   # Read metadata templates and data ------------------------------------------
   
   if (is.null(x)){
-    
-    table_names <- EDIutils::validate_file_names(
-      path = data.path, 
-      data.files = data.table
-    )
-    
+
     # Read templates and data into x
     
     if (is.null(data.table) & is.null(other.entity)){
@@ -278,6 +273,11 @@ make_eml <- function(
       
     } else if (!is.null(data.table) & is.null(other.entity)){
       
+      table_names <- EDIutils::validate_file_names(
+        path = data.path, 
+        data.files = data.table
+      )
+      
       x <- template_arguments(
         path = path,
         data.path = data.path,
@@ -287,6 +287,11 @@ make_eml <- function(
       x <- x$x
       
     } else if (!is.null(data.table) & !is.null(other.entity)){
+      
+      table_names <- EDIutils::validate_file_names(
+        path = data.path, 
+        data.files = data.table
+      )
       
       x <- template_arguments(
         path = path,
@@ -312,7 +317,7 @@ make_eml <- function(
     data_read_2_x <- TRUE
     
   }
-
+  
   # Compile attributes --------------------------------------------------------
   
   if (!is.null(data.table)){
@@ -811,6 +816,29 @@ make_eml <- function(
       taxonomic_coverage <- x$template$taxonomicCoverage.xml$content
       
       dataset@coverage@taxonomicCoverage <- methods::as(list(taxonomic_coverage), "ListOftaxonomicCoverage")
+      
+    }
+    
+  } else if ('taxonomic_coverage.txt' %in% names(x$template)){
+    
+    if (!is.na(x$template$taxonomic_coverage.txt$content)){
+      
+      message('<taxonomicCoverage>')
+      
+      if (sum(is.na(x$template$taxonomic_coverage.txt$content$scientific_authority_id)) != nrow(x$template$taxonomic_coverage.txt$content)){
+        
+        tc <- taxonomyCleanr::make_taxonomicCoverage(
+          taxa.clean = x$template$taxonomic_coverage.txt$content$scientific_name,
+          authority = x$template$taxonomic_coverage.txt$content$scientific_authority_system,
+          authority.id = x$template$taxonomic_coverage.txt$content$scientific_authority_id
+        )
+        
+        xml_in@dataset@coverage@taxonomicCoverage <- as(
+          list(tc), 
+          "ListOftaxonomicCoverage"
+        )
+        
+      }
       
     }
     
