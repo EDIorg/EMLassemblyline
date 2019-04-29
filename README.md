@@ -31,7 +31,7 @@ remotes::install_github("EDIorg/EMLassemblyline")
 
 ## Usage
 
-[Check out example use cases at the EMLassemblyline website](https://EDIorg.github.io/EMLassemblyline/)
+[Check out example use cases at the EMLassemblyline website](https://ediorg.github.io/EMLassemblyline/)
 
 ## Active projects
 
