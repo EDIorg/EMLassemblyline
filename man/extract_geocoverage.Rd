@@ -2,34 +2,55 @@
 % Please edit documentation in R/extract_geocoverage.R
 \name{extract_geocoverage}
 \alias{extract_geocoverage}
-\title{Extract geographic coverage}
+\title{Import template for geographic coverage}
 \usage{
-extract_geocoverage(path, data.file, lat.col, lon.col, site.col)
+extract_geocoverage(
+      path, 
+      data.path = path, 
+      data.table, 
+      lat.col, 
+      lon.col, 
+      site.col, 
+      x = NULL, 
+      write.file = TRUE
+    )
 }
 \arguments{
-\item{path}{A path to the metadata directory.}
+\item{path}{(character) Path to where the template(s) will be imported.}
 
-\item{data.path}{A path to the directory containing the data table with geographic information. Don't use this argument if the data table is located at the path argument listed above.}
+\item{data.path}{(character) Path to where the data files are stored.}
 
-\item{data.file}{Name of the input data table containing geographic coverage data.}
+\item{data.table}{(character) Data table containing geographic coordinates represented in 
+decimal degrees, where latitudes south of the equator and longitudes 
+west of the prime meridian are negative.}
 
-\item{lat.col}{Name of latitude column. Values of this column must be in decimal 
-degrees. Latitudes south of the equator must be prefixed with a minus 
-sign (i.e. dash, "-").}
+\item{lat.col}{(character) Name of latitude column.}
 
-\item{lon.col}{Name of longitude column. Values of this column must be in decimal 
-degrees. Longitudes west of the prime meridian must be prefixed with a 
-minus sign (i.e. dash, "-").}
+\item{lon.col}{(character) Name of longitude column.}
 
-\item{site.col}{Name of site column. This column lists site specific names to be 
-associated with the geographic coordinates.}
+\item{site.col}{(character) Name of site column, where site is the name of the location
+specified by `lat.col` and `lon.col`.}
+
+\item{x}{(named list) Alternative input/output to `EMLassemblyline` functions. 
+Use \code{template_arguments} to create `x`.}
+
+\item{write.file}{(logical) Write `geographic_coverage.txt` to `path`.}
 }
 \value{
-A tab delimited file in the dataset working directory 
-    titled \emph{geographic_coverage.txt} and containing decimal degree 
-    latitude, decimal degree longitude, and site name.
+\itemize{
+        \item{`geographic_coverage.txt` A tab delimited file written to 
+        `path` containing geographic coordinates and corresponding site 
+        names.}
+        \item{If using `x`, then content of `geographic_coverage.txt` is 
+        added to `x` under `/x/templates`}
+    }
 }
 \description{
-Extract detailed geographic coverage (latitude, longitude, and site 
-    name) to be included in the EML.
+Import template for describing the geographic coverage of a dataset.
+    The content of this template is automatically extracted from a data 
+    table containing geographical coordinates.
+}
+\details{
+Existing templates will not be overwritten by subsequent calls to 
+    `extract_geocoverage`.
 }

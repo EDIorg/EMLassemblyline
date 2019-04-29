@@ -2,9 +2,9 @@
 % Please edit documentation in R/validate_personnel.R
 \name{validate_personnel}
 \alias{validate_personnel}
-\title{Validate personnel}
+\title{Validate the content and structure of personnel.txt}
 \usage{
-validate_personnel(x = personinfo)
+validate_personnel(x)
 }
 \arguments{
 \item{x}{The data frame created from reading personnel.txt.}

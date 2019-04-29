@@ -1,0 +1,28 @@
+---
+title: "Publish data package"
+output: html_document
+---
+
+## Choose a repository
+
+Once an information rich EML metadata file has been created for a data package, the next step is to publish the data package in a repository. Before uploading, it’s a good practice and a common courtesy to contact the repository of interest because some repositories:
+
+* are science domain specific
+* are funding source specific
+* are better at serving particular data types
+* are recommended by journals
+* are certified trust worthy
+* have valuable user features
+* offer sandbox environments for testing data package display prior to publication
+* have limits on the volume of data that can be uploaded
+* have unique upload procedures
+* have support staff to help with uploads
+* require a user ID and password
+
+A list of data repositories accepting EML:
+
+* [__Environmental Data Initiative__](https://portal.edirepository.org/nis/home.jsp)
+* [__Arctic Data Center__](https://arcticdata.io/)
+* [__Knowledge Network for Biocomplexity__](https://knb.ecoinformatics.org/)
+* [__28 additional data repositories accepting EML ...__](https://www.re3data.org/search?query=&metadataStandards%5B%5D=EML%20-%20Ecological%20Metadata%20Language)
+

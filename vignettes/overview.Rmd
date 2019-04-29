@@ -1,0 +1,23 @@
+---
+title: "Overview"
+output: html_document
+---
+
+## Basic use case
+
+The basic use case, creating and maintaining EML for a dataset, consists of five steps:
+
+1. [Organize data package](https://clnsmth.github.io/EMLassemblyline/articles/organize_data_package.html) contents into a simple directory structure that is readable by EMLassemblyline and accords with user preferences.
+2. [Create metadata templates](https://clnsmth.github.io/EMLassemblyline/articles/create_metadata_templates.html) using functions that automatically extract metadata from data entities.
+3. [Edit metadata templates](https://clnsmth.github.io/EMLassemblyline/articles/edit_metadata_templates.html) with simple text and spreadsheet editors to supply information that could not be automatically extracted.
+4. [Create EML](https://clnsmth.github.io/EMLassemblyline/articles/create_eml.html) metadata from the contents of template files and additional value added content automatically detected in the EML creation  process.
+5. [Publish data package](https://clnsmth.github.io/EMLassemblyline/articles/publish_data_package.html) in a data repository accepting EML metadata.
+
+Future revisions and updates are done by simply editing relevant portions of metadata templates and rerunning the create EML step.
+
+## Advanced use cases
+
+Advanced use cases include:
+
+-  [Automate data publication](https://clnsmth.github.io/EMLassemblyline/articles/automate_data_publication.html) for ongoing time series or derived data products that have a consistent structure described in the metadata templates.
+-  [Use EMLassemblyline via exchange format](https://clnsmth.github.io/EMLassemblyline/articles/emlassemblyline_via_exchange_format.html) thereby facilitating interoperability with any metadata storage/organization system.

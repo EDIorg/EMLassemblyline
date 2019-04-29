@@ -1,0 +1,10 @@
+---
+title: "Use EMLassemblyline via exchange format"
+output: html_document
+---
+
+## The exchange format
+
+The Environmental Data Initiative is in the beginning stages of developing an exchange format for environmental metadata to facilitate use of EMLassemblyline (and other metadata builders) with any metadata storage/organization system (e.g. [LTER-core-metabase](https://github.com/lter/LTER-core-metabase)).
+
+Stay tuned!

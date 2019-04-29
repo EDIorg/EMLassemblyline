@@ -1,0 +1,47 @@
+---
+title: "Automate data publication"
+output: html_document
+---
+
+## Why and when?
+
+Recurring data publication was traditionally a manual edit and upload process that can now be automated with programmatic approaches like `EMLassemblyline` and use of data repository APIs. These approaches not only reduce effort, but improve metadata accuracy and enable complex reproducible science workflows. Automated publication and upload is suitable for:
+
+* **Ongoing data collection** Data package is updated periodically with new data
+* **Ongoing derived data product** Data package is derived from sources with ongoing collection
+
+These use cases are demonstrated below.
+
+## Ongoing data collection
+
+Ongoing data collection can be the addition of new data to a time series, or data changing as a result of an evolving data processing or analytical method. In either case, automated publication requires stabilization of package contents and configuration of `EMLassemblyline`. If package contents deviate from what can be programmatically input to `EMLassemblyline`, then metadata accuracy decreases and human and machine understanding are compromised. Example automated data publication for ongoing data collection:
+
+1. **Upload data** Field technician uploads new raw data to a queue on their project server.
+2. **Process data** The presence of queued data triggers a scripted data processing workflow in which raw data are aggregated and quality control procedures applied to create a publication ready dataset for which `EMLassemblyline` has been configured for.
+3. **Make EML** The script then updates the values input to `make_eml`’s `temporal.coverage` and `package.id` arguments, and then runs `make_eml` for the new dataset.
+4. **Publish** The new dataset and EML are then published via the data repository API.
+
+![Processes of automated publication for a dataset with ongoing collection](automated_publication_ongoing.png)
+
+Here’s the script for the workflow described above:
+
+## Ongoing derived data product
+
+Another valuable use case of automated data publication is the creation of data packages that are derived from sources with ongoing collection. The derived package may produce a stand alone product, or may be part of a larger science workflow with additional downstream processes. The derived package publication relies on an additional service provided by many data repositories, event notifications. The event notification is sent to the subscriber when a source data package is updated. Build upon the previous workflow:
+
+5. **Event notification** An event notification is sent by the data repository to the synthesis science team server, which triggers a scripted data processing and publication workflow.
+6. **Download data** The script downloads the updated data package
+7. **Process data** Next the data are processed, analyzed, and formatted into a data product for which the `EMLassemblyline` has been configured for.
+8. **Make EML** The script then updates values for the `temporal.coverage` and `package.id` arguments, and runs `make_eml` for the data product.
+9. **Publish** The data product and EML are then published via the data repository API.
+
+At this point the synthesis science teams workflow ends, but is the beginning of another automated workflow that utilizes the published data product and serves the information to the public. Continuing with the workflow:
+
+10. **Event notification** The local water authority website receives an event notification that the data product of interest has been updated.
+11. **Download data** The new data package is downloaded.
+12. **Process data** The package contents are processed into website content.
+13. **Use information** The public access and utilizes this information.
+
+![An example implementation](automated_publication_derived.png)
+
+Automated data publication and use of data repository event notifications enable highly efficient, valuable, and reproducible science workflows.

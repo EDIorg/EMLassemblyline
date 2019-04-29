@@ -1,0 +1,51 @@
+title: EMLassemblyline
+
+template:
+  bootswatch: spacelab
+
+reference:
+  - title: Create metadata templates
+    desc: Functions for creating metadata templates, using automated metadata extraction when possible.
+    contents:
+    - template_categorical_variables
+    - template_core_metadata
+    - template_geographic_coverage
+    - template_table_attributes
+    - template_taxonomic_coverage
+  - title: Make EML metdata
+    desc: Function for creating EML from metadata templates, using automated metadata extraction when possible.
+    contents:
+    - make_eml
+  - title: Helpers
+    desc: Helper functions for creating metadata
+    contents:
+    - template_arguments
+    - template_directories
+    - view_unit_dictionary
+    
+navbar:
+  title: ~
+  type: default
+  left:
+    - text: Functions
+      href: reference/index.html
+    - text: Articles
+      menu:
+      - text: Overview
+        href: articles/overview.html
+      - text: Organize data package
+        href: articles/organize_data_package.html
+      - text: Create metadata templates
+        href: articles/create_metadata_templates.html
+      - text: Edit metadata templates
+        href: articles/edit_metadata_templates.html
+      - text: Create EML
+        href: articles/create_eml.html
+      - text: Publish data package
+        href: articles/publish_data_package.html
+      - text: Automate data publication
+        href: articles/automate_data_publication.html
+      - text: Use EMLassemblyline via exchange format
+        href: articles/emlassemblyline_via_exchange_format.html
+    - text: News
+      href: news/index.html

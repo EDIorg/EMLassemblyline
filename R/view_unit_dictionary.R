@@ -1,4 +1,4 @@
-#' View the standard unit dictionary
+#' View EML's standard unit dictionary
 #'
 #' @description  
 #'     View the standard unit dictionary of the Ecological Metadata Language
@@ -16,6 +16,7 @@
 view_unit_dictionary <- function(){
   
   standardUnits <- EML103::get_unitList()
-  View(standardUnits$units)
+
+  utils::View(standardUnits$units)
 
 }
