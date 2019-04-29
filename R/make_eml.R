@@ -614,7 +614,7 @@ make_eml <- function(
   if (!'keywords.txt' %in% names(x$template)){
     stop('keywords.txt does not exist! Run import_templates.txt to regenerate this template.')
   }
-
+  
   keywords <- x$template$keywords.txt$content
   
   # Edit keywords: Remove blank keyword entries
@@ -645,11 +645,11 @@ make_eml <- function(
     }
     
   }
-
+  
   # Build keywordSet
   
   list_keywordSet <- list()
-
+  
   uni_keywordThesaurus <- unique(keywords$keywordThesaurus)
   for (i in 1:length(uni_keywordThesaurus)){
     keywordSet <- list()
@@ -659,8 +659,8 @@ make_eml <- function(
       keywordSet[[k]] <- methods::as(kws[k], "keyword")
     }
     list_keywordSet[[i]] <- methods::new("keywordSet",
-                           keywordSet,
-                           keywordThesaurus = uni_keywordThesaurus[i])
+                                         keywordSet,
+                                         keywordThesaurus = uni_keywordThesaurus[i])
   }
   dataset@keywordSet <- methods::as(list_keywordSet, "ListOfkeywordSet")
 
@@ -850,7 +850,7 @@ make_eml <- function(
       }
       
     }
-    
+
   }
 
   # Add maintenance -----------------------------------------------------------
@@ -919,6 +919,7 @@ make_eml <- function(
         }
         
         # Read provenance file and add to L0 EML
+
         prov_metadata <- EML103::read_eml(paste0(data.path, '/provenance_metadata.xml'))
         methods_step <- dataset@methods@methodStep
         methods_step[[length(methods_step)+1]] <- prov_metadata
@@ -1531,9 +1532,7 @@ make_eml <- function(
           
           physical@authentication <- methods::as(list(authentication),
                                         "ListOfauthentication")
-          
-          
-          
+
         }
         
         other_entity@physical <- methods::as(c(physical), "ListOfphysical")
@@ -1636,8 +1635,6 @@ make_eml <- function(
 
 compile_attributes <- function(x){
   
-  # path <- x$template[[1]]$path
-  # data.path <- x$data.table[[1]]$path
   data.table <- names(x$data.table)
   
   # Get names of data files with associated attribute files
@@ -1656,14 +1653,6 @@ compile_attributes <- function(x){
   
   # Synchronize ordering of data files and attribute files
   
-  # table_names <- EDIutils::validate_file_names(data.path, data.table)
-  
-  # attribute_files_out <- c()
-  # for (i in 1:length(table_names)){
-  #   attribute_files_out[i] <- paste0('attributes_',
-  #                                    stringr::str_c(stringr::str_sub(table_names[i], 1, nchar(table_names[i])-4), collapse = "|"),
-  #                                    '.txt')
-  # }
   fname_table_attributes <- attribute_files
   
   
@@ -1674,35 +1663,11 @@ compile_attributes <- function(x){
   for (i in 1:length(table_names)){
     
     message(paste("Compiling", fname_table_attributes[i]))
-    
-    
-    # file_path <- paste(data.path,
-    #                    "/",
-    #                    table_names[i],
-    #                    sep = "")
-    # 
-    # delim_guess <- EDIutils::detect_delimeter(path = data.path, data.files = table_names[i], os = EDIutils::detect_os())
-    
+
     df_table <- x$data.table[[table_names[i]]]$content
     
-    # # Read attributes_datatablename
-    # 
-    # field_count <- utils::count.fields(file = paste0(path,
-    #                                           "/",
-    #                                           fname_table_attributes[i]),
-    #                             sep = "\t")
-    # 
-    # if (!is.na((sum(field_count) > 0)) & (sum(field_count > 7) > 0)){
-    #   stop(paste0('Some of the information in "',
-    #               fname_table_attributes[i],
-    #               '" is not in the correct columns. ',
-    #               "Please double check the organization of content in this file."))
-    # }
-    
     df_attributes <- x$template[[fname_table_attributes[i]]]$content
-    
-    
-    
+
     # Convert user inputs to consistent case
     
     df_attributes$class <- tolower(df_attributes$class)
