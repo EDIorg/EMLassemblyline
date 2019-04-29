@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5.0</span>
       </span>
     </div>
 
@@ -130,62 +130,88 @@
       <small>Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="emlassemblyline-2-99-0" class="section level1">
+    <div id="emlassemblyline-2-5-0" class="section level1">
 <h1 class="page-header">
-<a href="#emlassemblyline-2-99-0" class="anchor"></a>EMLassemblyline 2.99.0</h1>
+<a href="#emlassemblyline-2-5-0" class="anchor"></a>EMLassemblyline 2.5.0</h1>
+<div id="new-features" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-features" class="anchor"></a>New features</h2>
 <ul>
 <li>
-<strong>Enhancement:</strong> <code>import_templates</code> can now be run on datasets that don’t have data tables.</li>
+<strong>Website:</strong> Improved documentation with vignettes demonstrating common and advanced use cases. Implemented with <code>pkgdown</code>.</li>
 <li>
-<strong>Enhancement:</strong> Release <code>template_taxonomic_coverage</code>, a function for resolving taxa to authority systems and creating the full rank specific hierarchical EML element.</li>
+<strong>Templating functions:</strong> Functions creating metadata templates are grouped under the prefix <code>template_*</code> to simplify user identification.</li>
 <li>
-<strong>Enhancement:</strong> All geographic coverage has been moved to /dataset/coverage, which is where data repositories find this information and place it on maps.</li>
+<strong>template_taxonomic_coverage</strong> A templating function resolving taxa to one or more authority systems and supporting creation of the hierarchical rank specific EML taxonomicCoverage element by <code>make_eml</code>.</li>
 <li>
-<strong>Enhancement:</strong> Support other entity only data packaging use case, thereby extending data packaging use cases to:
+<strong>template_arguments</strong> A templating function for all user inputs to <code>EMLassemblyline</code> (i.e. metadata template content and function arguments) to entirely programmatic workflows with focus on supporting content ingestion from upstream metadata sources.</li>
+<li>
+<strong>template_directories</strong> A templating function creating a simple and effective directory structure for <code>EMLassemblyline</code> files and data package contents.</li>
+<li>
+<strong>Support for other entity data packages:</strong> Data packages comprised completely of other entities (i.e. non-tabular data) is now supported.</li>
+<li>
+<strong>Geographic coverage:</strong> All geographic coverage metadata has been moved to //dataset/coverage, where most data repositories find it for rendering to maps and other visualizations for users.</li>
+<li>
+<strong>Make EML for other data repositories:</strong> Arguments requiring EDI specific content (i.e. <code>user.id</code>, <code>user.domain</code>, <code>package.id</code>) have been relaxed to enable creation of EML for other data repositories.</li>
+<li>
+<strong>Better entity descriptions:</strong> Use arguments <code>data.table.description</code> and <code>other.entity.description</code> for <code>//dataTable/entityName</code> and <code>//otherEntity/entityName</code>, respectively. This provides a more meaningful file description than the file name it self.</li>
+</ul>
+</div>
+<div id="deprecation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#deprecation" class="anchor"></a>Deprecation</h2>
+<p>Several templating functions, templates, and arguments have been deprecated. Full backwards compatibility of these functions, templates, and arguments will be supported for the next year (i.e. until May 1, 2020).</p>
+<p><strong>Functions:</strong></p>
 <ul>
-<li>Data table only</li>
-<li>Data table and other entity</li>
-<li>Other entity only</li>
-</ul>
+<li>
+<code>import_templates</code> is deprecated in favor of <code>template_core_metadata</code> (i.e. metadata required by all data packages) and <code>template_table_attributes</code> (i.e. metadata for data tables).</li>
+<li>
+<code>define_catvars</code> is deprecated in favor of `template_categorical_variables.</li>
+<li>
+<code>extract_geocoverage</code> is deprecated in favor of <code>template_geographic_coverage</code>
 </li>
-<li>
-<strong>Enhancement:</strong> Enable <code><a href="../reference/make_eml.html">make_eml()</a></code> to create EML for data repositories other than EDI by relaxing constraints on <code>user.id</code>, <code>user.affiliation</code>, and <code>package.id</code> while returning EDI specific warnings. Additional refactoring for creating valid access control credentials will be required.</li>
-<li>
-<strong>Enhancement:</strong> Release <code>template_arguments</code>, a function to read metadata templates, data files, and function arguments into an R list structure as an alternative input to <code>EMLassemblyline</code> functions (i.e. rather than supplying the files themselves). This approach is generally useful for interfacing upstream sources with <code>EMLassemblyline</code> (e.g. a metabase or database).</li>
-<li>
-<strong>Enhancement:</strong> Release <code>create_directory()</code>, a function to create a commonly used directory structure for EMLassemblyline inputs and outputs.</li>
-<li><p><strong>Enhancement:</strong> Use arguments <code>data.table.description</code> and <code>other.entity.description</code> for <code>//dataTable/entityName</code> and <code>//otherEntity/entityName</code>, respectively. This provides a more meaningful file description than the file name it self.</p></li>
-<li>
-<strong>Deprecated:</strong> Rename arguments to align with EML element names.
+</ul>
+<p><strong>Templates:</strong></p>
 <ul>
 <li>
-<code>data.files</code> -&gt; <code>data.table</code>
+<code>bounding_boxes.txt</code> is deprecated in favor of <code>geographic_coverage.txt</code>
 </li>
 <li>
-<code>data.files.description</code> -&gt; <code>data.table.description</code>
-</li>
-<li>
-<code>data.files.quote.character</code> -&gt; <code>data.table.quote.character</code>
-</li>
-<li>
-<code>data.files.url</code> -&gt; <code>data.url</code>
-</li>
-<li>
-<code>zip.dir</code> -&gt; <code>other.entity</code>
-</li>
-<li>
-<code>zip.dir.description</code> -&gt; <code>other.entity.description</code>
-</li>
+<code>geographic_coverage.txt</code> is deprecated in favor of a new version of <code>geographic_coverage.txt</code> that supports both point locations and areas.</li>
 </ul>
-</li>
-<li>
-<strong>Deprecated:</strong> Rename templating functions to align with organization scheme.
+<p><strong>Arguments:</strong></p>
 <ul>
-<li><code>test</code></li>
-</ul>
+<li>
+<code>data.files</code> is deprecated in favor of <code>data.table</code>
 </li>
-<li><p><strong>Bug fix:</strong> Add <code>//otherEntity/physical/distribution/online/url</code>. This element was missing though documentation implied it existed.</p></li>
+<li>
+<code>data.files.description</code> is deprecated in favor of <code>data.table.description</code>
+</li>
+<li>
+<code>data.files.quote.character</code> is deprecated in favor of <code>data.table.quote.character</code>
+</li>
+<li>
+<code>data.files.url</code> is deprecated in favor of <code>data.url</code>
+</li>
+<li>
+<code>zip.dir</code> is deprecated in favor of <code>other.entity</code>
+</li>
+<li>
+<code>zip.dir.description</code> is deprecated in favor of <code>other.entity.description</code>
+</li>
+<li>
+<code>affiliation</code> is deprecated in favor of <code>user.domain</code>
+</li>
 </ul>
+</div>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>
+<strong>otherEntity url</strong> Add EML element<code>//otherEntity/physical/distribution/online/url</code> via <code>make_eml</code>. This element was missing though documentation implied its existence.</li>
+</ul>
+</div>
 </div>
   </div>
 
@@ -193,7 +219,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#emlassemblyline-2-99-0">2.99.0</a></li>
+        <li><a href="#emlassemblyline-2-5-0">2.5.0</a></li>
       </ul>
     </div>
   </div>
