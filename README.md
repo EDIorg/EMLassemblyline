@@ -1,3 +1,5 @@
+<!-- This comment enables badge extraction to pkgdown site -->
+
 [![Travis-CI Build Status](https://travis-ci.com/EDIorg/EMLassemblyline.svg?branch=master)](https://travis-ci.org/EDIorg/EMLassemblyline)
 [![codecov.io](https://codecov.io/github/EDIorg/EMLassemblyline/coverage.svg?branch=master)](https://codecov.io/github/EDIorg/EMLassemblyline?branch=master)
 [![DOI](https://zenodo.org/badge/84467795.svg)](https://zenodo.org/badge/latestdoi/84467795)
