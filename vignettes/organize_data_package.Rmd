@@ -25,13 +25,13 @@ The organization scheme we’ve found most useful at EDI is a single directory f
 ```{r remove_directory, echo=FALSE}
 
 unlink(
-  x = '/Users/csmith/Desktop/data_packages/edi_301',
+  x = '/Users/Colin/Desktop/data_packages/edi_301',
   recursive = TRUE
 )
 
 # Set working directory
 
-knitr::opts_knit$set(root.dir = '/Users/csmith/Desktop/data_packages')
+knitr::opts_knit$set(root.dir = '/Users/Colin/Desktop/data_packages')
 
 ```
 
@@ -39,7 +39,7 @@ knitr::opts_knit$set(root.dir = '/Users/csmith/Desktop/data_packages')
 
 # Set working directory
 
-setwd('/Users/csmith/Desktop/data_packages')
+setwd('/Users/Colin/Desktop/data_packages')
 
 # Create the standard data package directory
 

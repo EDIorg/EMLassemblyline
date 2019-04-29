@@ -7,8 +7,8 @@ output: html_document
 
 # Parameterize
 
-dir_path <- '/Users/csmith/Desktop/data_packages'
-data_path <- '/Users/csmith/Desktop/data_packages/edi_301/data_objects'
+dir_path <- '/Users/Colin/Desktop/data_packages'
+data_path <- '/Users/Colin/Desktop/data_packages/edi_301/data_objects'
 
 # Initialize .Rmd
 
@@ -19,7 +19,7 @@ library(EMLassemblyline)
 # Clear contents of data package directory
 
 unlink(
-  x = '/Users/csmith/Desktop/data_packages/edi_301',
+  x = '/Users/Colin/Desktop/data_packages/edi_301',
   recursive = TRUE
 )
 
@@ -78,7 +78,7 @@ file.copy(
 
 # Set working directory
 
-knitr::opts_knit$set(root.dir = '/Users/csmith/Desktop/data_packages/edi_301')
+knitr::opts_knit$set(root.dir = 'C:\\Users\\Colin\\Desktop\\data_packages\\edi_301')
 
 ```
 
@@ -100,7 +100,7 @@ Below is a demonstration of each function and a look at outputs.
 
 # Set working directory
 
-setwd('/Users/csmith/Desktop/data_packages/edi_301')
+setwd('/Users/Colin/Desktop/data_packages/edi_301')
 
 # Create core templates
 
@@ -344,7 +344,7 @@ taxacoverage <- read.table(
   as.is = TRUE,
   comment.char = "",
   fill = T,
-  colClasses = rep("character", 7)
+  colClasses = rep("character", 5)
 )
 
 # Display taxonomic coverage template
@@ -352,6 +352,6 @@ taxacoverage <- read.table(
 knitr::kable(
   taxacoverage, caption = 'taxonomic_coverage.txt') %>%
   kableExtra::kable_styling('bordered', font_size = 12) %>%
-  kableExtra::scroll_box(width = '100%', height = '400px')
+  kableExtra::scroll_box(width = '70%', height = '400px')
 
 ```

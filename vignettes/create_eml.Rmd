@@ -7,8 +7,8 @@ output: html_document
 
 # Parameterize
 
-dir_path <- '/Users/csmith/Desktop/data_packages'
-data_path <- '/Users/csmith/Desktop/data_packages/edi_301/data_objects'
+dir_path <- '/Users/Colin/Desktop/data_packages'
+data_path <- '/Users/Colin/Desktop/data_packages/edi_301/data_objects'
 
 # Initialize .Rmd
 
@@ -19,7 +19,7 @@ library(XML)
 
 # Remove directory
 
-unlink(paste0(dir_path, '/edi_301'), recursive = TRUE)
+unlink(paste0(dir_path, '\\edi_301'), recursive = TRUE)
 
 # Create directory structure
 
@@ -56,13 +56,6 @@ file.remove(
   paste0(
     dir_path,
     '/edi_301/metadata_templates/bounding_boxes.txt'
-  )
-)
-
-file.remove(
-  paste0(
-    dir_path,
-    '/edi_301/metadata_templates/geographic_coverage.txt'
   )
 )
 
@@ -114,7 +107,7 @@ template_geographic_coverage(
 
 # Set working directory
 
-knitr::opts_knit$set(root.dir = '/Users/csmith/Desktop/data_packages/edi_301')
+knitr::opts_knit$set(root.dir = 'C:\\Users\\Colin\\Desktop\\data_packages\\edi_301')
 
 ```
 
@@ -220,7 +213,7 @@ make_eml(
   other.entity.description = c('Ancillary data', 'Data processing and analysis script'),
   user.id = 'csmith',
   user.domain = 'EDI',
-  package.id = 'edi.301.2'
+  package.id = 'edi.301.1'
 )
 
 # View directory
@@ -281,7 +274,7 @@ make_eml(
   other.entity.description = c('Ancillary data', 'Data processing and analysis script'),
   user.id = 'csmith',
   user.domain = 'EDI',
-  package.id = 'edi.301.3'
+  package.id = 'edi.301.1'
 )
 
 # View directory

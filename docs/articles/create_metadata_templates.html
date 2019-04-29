@@ -128,7 +128,7 @@
 <a href="#template_core_metadata" class="anchor"></a>template_core_metadata</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Set working directory</span>
 
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">setwd</a></span>(<span class="st">'/Users/csmith/Desktop/data_packages/edi_301'</span>)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">setwd</a></span>(<span class="st">'/Users/Colin/Desktop/data_packages/edi_301'</span>)
 
 <span class="co"># Create core templates</span>
 
@@ -2635,32 +2635,26 @@ site_104
 ## [13] "taxonomic_coverage.txt"</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View template</span>
 <span class="co"># </span><span class="al">NOTE</span><span class="co">: Unresolved taxa lack authority information</span></code></pre></div>
-<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; ">
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:70%; ">
 <table class="table table table-bordered">
 <caption style="font-size: initial !important;">
 taxonomic_coverage.txt
 </caption>
 <thead><tr>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-taxa
+name
 </th>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-scientific_name
+name_type
 </th>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-scientific_authority_system
+name_resolved
 </th>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-scientific_authority_id
+authority_system
 </th>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-common_name
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-common_authority_system
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-common_authority_id
+authority_id
 </th>
 </tr></thead>
 <tbody>
@@ -2669,13 +2663,261 @@ common_authority_id
 Mosses
 </td>
 <td style="text-align:left;">
-NA
+scientific
 </td>
 <td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
 NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Unsorted biomass
+</td>
+<td style="text-align:left;">
+scientific
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Achillea millefolium
+</td>
+<td style="text-align:left;">
+scientific
+</td>
+<td style="text-align:left;">
+Achillea millefolium
+</td>
+<td style="text-align:left;">
+ITIS
+</td>
+<td style="text-align:left;">
+35423
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Crepis tectorum
+</td>
+<td style="text-align:left;">
+scientific
+</td>
+<td style="text-align:left;">
+Crepis tectorum
+</td>
+<td style="text-align:left;">
+ITIS
+</td>
+<td style="text-align:left;">
+37212
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cyperus sp.
+</td>
+<td style="text-align:left;">
+scientific
+</td>
+<td style="text-align:left;">
+Cyperus
+</td>
+<td style="text-align:left;">
+ITIS
+</td>
+<td style="text-align:left;">
+39882
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Euphorbia glyptosperma
+</td>
+<td style="text-align:left;">
+scientific
+</td>
+<td style="text-align:left;">
+Euphorbia glyptosperma
+</td>
+<td style="text-align:left;">
+ITIS
+</td>
+<td style="text-align:left;">
+28074
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lespedeza capitata
+</td>
+<td style="text-align:left;">
+scientific
+</td>
+<td style="text-align:left;">
+Lespedeza capitata
+</td>
+<td style="text-align:left;">
+ITIS
+</td>
+<td style="text-align:left;">
+25897
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lepidium densiflorum
+</td>
+<td style="text-align:left;">
+scientific
+</td>
+<td style="text-align:left;">
+Lepidium densiflorum
+</td>
+<td style="text-align:left;">
+ITIS
+</td>
+<td style="text-align:left;">
+22960
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Poa pratensis
+</td>
+<td style="text-align:left;">
+scientific
+</td>
+<td style="text-align:left;">
+Poa pratensis
+</td>
+<td style="text-align:left;">
+ITIS
+</td>
+<td style="text-align:left;">
+41088
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Rumex acetosella
+</td>
+<td style="text-align:left;">
+scientific
+</td>
+<td style="text-align:left;">
+Rumex acetosella
+</td>
+<td style="text-align:left;">
+ITIS
+</td>
+<td style="text-align:left;">
+20934
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Schizachyrium scoparium
+</td>
+<td style="text-align:left;">
+scientific
+</td>
+<td style="text-align:left;">
+Schizachyrium scoparium
+</td>
+<td style="text-align:left;">
+ITIS
+</td>
+<td style="text-align:left;">
+42076
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bouteloua gracilis
+</td>
+<td style="text-align:left;">
+scientific
+</td>
+<td style="text-align:left;">
+Bouteloua gracilis
+</td>
+<td style="text-align:left;">
+ITIS
+</td>
+<td style="text-align:left;">
+41493
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Koeleria cristata
+</td>
+<td style="text-align:left;">
+scientific
+</td>
+<td style="text-align:left;">
+Koeleria cristata
+</td>
+<td style="text-align:left;">
+ITIS
+</td>
+<td style="text-align:left;">
+515476
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Liatris aspera
+</td>
+<td style="text-align:left;">
+scientific
+</td>
+<td style="text-align:left;">
+Liatris aspera
+</td>
+<td style="text-align:left;">
+ITIS
+</td>
+<td style="text-align:left;">
+37909
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+scientific
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mosses
+</td>
+<td style="text-align:left;">
+common
 </td>
 <td style="text-align:left;">
 Mosses
@@ -2692,13 +2934,7 @@ ITIS
 Unsorted biomass
 </td>
 <td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
+common
 </td>
 <td style="text-align:left;">
 NA
@@ -2715,13 +2951,7 @@ NA
 Achillea millefolium
 </td>
 <td style="text-align:left;">
-Achillea millefolium
-</td>
-<td style="text-align:left;">
-ITIS
-</td>
-<td style="text-align:left;">
-35423
+common
 </td>
 <td style="text-align:left;">
 NA
@@ -2738,13 +2968,7 @@ NA
 Crepis tectorum
 </td>
 <td style="text-align:left;">
-Crepis tectorum
-</td>
-<td style="text-align:left;">
-ITIS
-</td>
-<td style="text-align:left;">
-37212
+common
 </td>
 <td style="text-align:left;">
 NA
@@ -2761,13 +2985,7 @@ NA
 Cyperus sp.
 </td>
 <td style="text-align:left;">
-Cyperus
-</td>
-<td style="text-align:left;">
-ITIS
-</td>
-<td style="text-align:left;">
-39882
+common
 </td>
 <td style="text-align:left;">
 NA
@@ -2784,13 +3002,7 @@ NA
 Euphorbia glyptosperma
 </td>
 <td style="text-align:left;">
-Euphorbia glyptosperma
-</td>
-<td style="text-align:left;">
-ITIS
-</td>
-<td style="text-align:left;">
-28074
+common
 </td>
 <td style="text-align:left;">
 NA
@@ -2807,13 +3019,7 @@ NA
 Lespedeza capitata
 </td>
 <td style="text-align:left;">
-Lespedeza capitata
-</td>
-<td style="text-align:left;">
-ITIS
-</td>
-<td style="text-align:left;">
-25897
+common
 </td>
 <td style="text-align:left;">
 NA
@@ -2830,13 +3036,7 @@ NA
 Lepidium densiflorum
 </td>
 <td style="text-align:left;">
-Lepidium densiflorum
-</td>
-<td style="text-align:left;">
-ITIS
-</td>
-<td style="text-align:left;">
-22960
+common
 </td>
 <td style="text-align:left;">
 NA
@@ -2853,13 +3053,7 @@ NA
 Poa pratensis
 </td>
 <td style="text-align:left;">
-Poa pratensis
-</td>
-<td style="text-align:left;">
-ITIS
-</td>
-<td style="text-align:left;">
-41088
+common
 </td>
 <td style="text-align:left;">
 NA
@@ -2876,13 +3070,7 @@ NA
 Rumex acetosella
 </td>
 <td style="text-align:left;">
-Rumex acetosella
-</td>
-<td style="text-align:left;">
-ITIS
-</td>
-<td style="text-align:left;">
-20934
+common
 </td>
 <td style="text-align:left;">
 NA
@@ -2899,13 +3087,7 @@ NA
 Schizachyrium scoparium
 </td>
 <td style="text-align:left;">
-Schizachyrium scoparium
-</td>
-<td style="text-align:left;">
-ITIS
-</td>
-<td style="text-align:left;">
-42076
+common
 </td>
 <td style="text-align:left;">
 NA
@@ -2922,13 +3104,7 @@ NA
 Bouteloua gracilis
 </td>
 <td style="text-align:left;">
-Bouteloua gracilis
-</td>
-<td style="text-align:left;">
-ITIS
-</td>
-<td style="text-align:left;">
-41493
+common
 </td>
 <td style="text-align:left;">
 NA
@@ -2945,13 +3121,7 @@ NA
 Koeleria cristata
 </td>
 <td style="text-align:left;">
-Koeleria cristata
-</td>
-<td style="text-align:left;">
-ITIS
-</td>
-<td style="text-align:left;">
-515476
+common
 </td>
 <td style="text-align:left;">
 NA
@@ -2968,13 +3138,7 @@ NA
 Liatris aspera
 </td>
 <td style="text-align:left;">
-Liatris aspera
-</td>
-<td style="text-align:left;">
-ITIS
-</td>
-<td style="text-align:left;">
-37909
+common
 </td>
 <td style="text-align:left;">
 NA
@@ -2990,13 +3154,7 @@ NA
 <td style="text-align:left;">
 </td>
 <td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
+common
 </td>
 <td style="text-align:left;">
 NA
@@ -3037,7 +3195,7 @@ NA
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
 </div>
