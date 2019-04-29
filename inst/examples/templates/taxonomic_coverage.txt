@@ -1,16 +1,31 @@
-taxa	scientific_name	scientific_authority_system	scientific_authority_id	common_name	common_authority_system	common_authority_id
-Mosses	NA	NA	NA	Mosses	ITIS	14189
-Unsorted biomass	NA	NA	NA	NA	NA	NA
-Achillea millefolium	Achillea millefolium	ITIS	35423	NA	NA	NA
-Crepis tectorum	Crepis tectorum	ITIS	37212	NA	NA	NA
-Cyperus sp.	Cyperus	ITIS	39882	NA	NA	NA
-Euphorbia glyptosperma	Euphorbia glyptosperma	ITIS	28074	NA	NA	NA
-Lespedeza capitata	Lespedeza capitata	ITIS	25897	NA	NA	NA
-Lepidium densiflorum	Lepidium densiflorum	ITIS	22960	NA	NA	NA
-Poa pratensis	Poa pratensis	ITIS	41088	NA	NA	NA
-Rumex acetosella	Rumex acetosella	ITIS	20934	NA	NA	NA
-Schizachyrium scoparium	Schizachyrium scoparium	ITIS	42076	NA	NA	NA
-Bouteloua gracilis	Bouteloua gracilis	ITIS	41493	NA	NA	NA
-Koeleria cristata	Koeleria cristata	ITIS	515476	NA	NA	NA
-Liatris aspera	Liatris aspera	ITIS	37909	NA	NA	NA
-	NA	NA	NA	NA	NA	NA
+name	name_type	name_resolved	authority_system	authority_id
+Mosses	scientific	NA	NA	NA
+Unsorted biomass	scientific	NA	NA	NA
+Achillea millefolium	scientific	Achillea millefolium	ITIS	35423
+Crepis tectorum	scientific	Crepis tectorum	ITIS	37212
+Cyperus sp.	scientific	Cyperus	ITIS	39882
+Euphorbia glyptosperma	scientific	Euphorbia glyptosperma	ITIS	28074
+Lespedeza capitata	scientific	Lespedeza capitata	ITIS	25897
+Lepidium densiflorum	scientific	Lepidium densiflorum	ITIS	22960
+Poa pratensis	scientific	Poa pratensis	ITIS	41088
+Rumex acetosella	scientific	Rumex acetosella	ITIS	20934
+Schizachyrium scoparium	scientific	Schizachyrium scoparium	ITIS	42076
+Bouteloua gracilis	scientific	Bouteloua gracilis	ITIS	41493
+Koeleria cristata	scientific	Koeleria cristata	ITIS	515476
+Liatris aspera	scientific	Liatris aspera	ITIS	37909
+	scientific	NA	NA	NA
+Mosses	common	Mosses	ITIS	14189
+Unsorted biomass	common	NA	NA	NA
+Achillea millefolium	common	NA	NA	NA
+Crepis tectorum	common	NA	NA	NA
+Cyperus sp.	common	NA	NA	NA
+Euphorbia glyptosperma	common	NA	NA	NA
+Lespedeza capitata	common	NA	NA	NA
+Lepidium densiflorum	common	NA	NA	NA
+Poa pratensis	common	NA	NA	NA
+Rumex acetosella	common	NA	NA	NA
+Schizachyrium scoparium	common	NA	NA	NA
+Bouteloua gracilis	common	NA	NA	NA
+Koeleria cristata	common	NA	NA	NA
+Liatris aspera	common	NA	NA	NA
+	common	NA	NA	NA

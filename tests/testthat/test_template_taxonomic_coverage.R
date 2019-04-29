@@ -46,13 +46,11 @@ testthat::test_that('File inputs', {
   expect_true(
     all(
       colnames(input) %in% 
-        c('taxa', 
-          'scientific_name', 
-          'scientific_authority_system',
-          'scientific_authority_id',
-          'common_name',
-          'common_authority_system',
-          'common_authority_id')
+        c('name', 
+          'name_type', 
+          'name_resolved',
+          'authority_system',
+          'authority_id')
     )
   )
   
@@ -261,13 +259,11 @@ testthat::test_that('x inputs', {
   expect_true(
     all(
       colnames(output$template$taxonomic_coverage.txt) %in% 
-        c('taxa', 
-          'scientific_name', 
-          'scientific_authority_system',
-          'scientific_authority_id',
-          'common_name',
-          'common_authority_system',
-          'common_authority_id')
+        c('name', 
+          'name_type', 
+          'name_resolved',
+          'authority_system',
+          'authority_id')
     )
   )
 

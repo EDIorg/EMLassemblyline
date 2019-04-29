@@ -858,18 +858,16 @@ template_arguments <- function(
           fileEncoding = "UTF-8"
         )
         
-        colClasses = rep('character', 7)
+        colClasses = rep('character', 5)
         
-        output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:7]
+        output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:5]
         
         colnames(output$x$template[[i]]$content) <- c(
-          'taxa', 
-          'scientific_name', 
-          'scientific_authority_system',
-          'scientific_authority_id',
-          'common_name',
-          'common_authority_system',
-          'common_authority_id'
+          'name', 
+          'name_type', 
+          'name_resolved',
+          'authority_system',
+          'authority_id'
         )
         
         

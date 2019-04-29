@@ -180,6 +180,13 @@ test <- file.remove(
   )
 )
 
+test <- file.remove(
+  paste0(
+    tempdir(),
+    '/templates/taxonomicCoverage.xml'
+  )
+)
+
 # Expect errors ---------------------------------------------------------------
 
 testthat::test_that('Error out when required arguments are missing', {

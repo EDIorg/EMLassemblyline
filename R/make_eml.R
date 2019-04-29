@@ -825,15 +825,15 @@ make_eml <- function(
     
     if (is.data.frame(x$template$taxonomic_coverage.txt$content)){
 
-      if (sum(is.na(x$template$taxonomic_coverage.txt$content$scientific_authority_id)) != nrow(x$template$taxonomic_coverage.txt$content)){
+      if (sum(is.na(x$template$taxonomic_coverage.txt$content$authority_id)) != nrow(x$template$taxonomic_coverage.txt$content)){
         
         message('<taxonomicCoverage>')
 
         tc <- try(
           taxonomyCleanr::make_taxonomicCoverage(
-            taxa.clean = x$template$taxonomic_coverage.txt$content$scientific_name,
-            authority = x$template$taxonomic_coverage.txt$content$scientific_authority_system,
-            authority.id = x$template$taxonomic_coverage.txt$content$scientific_authority_id
+            taxa.clean = x$template$taxonomic_coverage.txt$content$name_resolved,
+            authority = x$template$taxonomic_coverage.txt$content$authority_system,
+            authority.id = x$template$taxonomic_coverage.txt$content$authority_id
           ),
           silent = T
         )

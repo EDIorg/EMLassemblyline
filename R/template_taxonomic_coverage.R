@@ -142,26 +142,28 @@ template_taxonomic_coverage <- function(
 
   }
   
-  # Initialize output data frame ----------------------------------------------
+  # Identify unique taxa ------------------------------------------------------
   
   taxa_raw <- unique(
     x$data.table[[taxa.table]]$content[ , taxa.col]
   )
 
-  output <- data.frame(
-    taxa = taxa_raw,
-    scientific_name = rep(NA_character_, length(taxa_raw)),
-    scientific_authority_system = rep(NA_character_, length(taxa_raw)), 
-    scientific_authority_id = rep(NA_character_, length(taxa_raw)), 
-    common_name = rep(NA_character_, length(taxa_raw)),
-    common_authority_system = rep(NA_character_, length(taxa_raw)),
-    common_authority_id = rep(NA_character_, length(taxa_raw)), 
-    stringsAsFactors = FALSE
-  )
-
   # Resolve scientific names --------------------------------------------------
   
   if (taxa.name.type == 'scientific'){
+    
+    # Initialize output
+    
+    output_scientific <- data.frame(
+      name = taxa_raw,
+      name_type = rep('scientific', length(taxa_raw)),
+      name_resolved = rep(NA_character_, length(taxa_raw)),
+      authority_system = rep(NA_character_, length(taxa_raw)), 
+      authority_id = rep(NA_character_, length(taxa_raw)),
+      stringsAsFactors = FALSE
+    )
+    
+    # Resolve and add to output
     
     taxa_resolved <- taxonomyCleanr::resolve_sci_taxa(
       data.sources = taxa.authority,
@@ -170,11 +172,11 @@ template_taxonomic_coverage <- function(
       )
     )
 
-    output$scientific_name <- taxa_resolved$taxa_clean
+    output_scientific$name_resolved <- taxa_resolved$taxa_clean
     
-    output$scientific_authority_system <- taxa_resolved$authority
+    output_scientific$authority_system <- taxa_resolved$authority
     
-    output$scientific_authority_id <- taxa_resolved$authority_id
+    output_scientific$authority_id <- taxa_resolved$authority_id
 
   }
   
@@ -182,6 +184,19 @@ template_taxonomic_coverage <- function(
   
   if (taxa.name.type == 'common'){
 
+    # Initialize output
+    
+    output_common <- data.frame(
+      name = taxa_raw,
+      name_type = rep('common', length(taxa_raw)),
+      name_resolved = rep(NA_character_, length(taxa_raw)),
+      authority_system = rep(NA_character_, length(taxa_raw)), 
+      authority_id = rep(NA_character_, length(taxa_raw)),
+      stringsAsFactors = FALSE
+    )
+    
+    # Resolve and add to output
+    
     taxa_resolved <- taxonomyCleanr::resolve_comm_taxa(
       data.sources = 3,
       x = taxonomyCleanr::trim_taxa(
@@ -189,19 +204,39 @@ template_taxonomic_coverage <- function(
       )
     )
     
-    output$common_name <- taxa_resolved$taxa_clean
+    output_common$name_resolved <- taxa_resolved$taxa_clean
     
-    output$common_authority_system <- taxa_resolved$authority
+    output_common$authority_system <- taxa_resolved$authority
     
-    output$common_authority_id <- taxa_resolved$authority_id
+    output_common$authority_id <- taxa_resolved$authority_id
     
   }
   
   # Resolve scientific and common names ---------------------------------------
   
   if (taxa.name.type == 'both'){
+    
+    # Initialize output
+    
+    output_scientific <- data.frame(
+      name = taxa_raw,
+      name_type = rep('scientific', length(taxa_raw)),
+      name_resolved = rep(NA_character_, length(taxa_raw)),
+      authority_system = rep(NA_character_, length(taxa_raw)), 
+      authority_id = rep(NA_character_, length(taxa_raw)),
+      stringsAsFactors = FALSE
+    )
+    
+    output_common <- data.frame(
+      name = taxa_raw,
+      name_type = rep('common', length(taxa_raw)),
+      name_resolved = rep(NA_character_, length(taxa_raw)),
+      authority_system = rep(NA_character_, length(taxa_raw)), 
+      authority_id = rep(NA_character_, length(taxa_raw)),
+      stringsAsFactors = FALSE
+    )
 
-    # Scientific
+    # Resolve and add to output (scientific)
     
     taxa_resolved <- taxonomyCleanr::resolve_sci_taxa(
       data.sources = taxa.authority,
@@ -210,13 +245,13 @@ template_taxonomic_coverage <- function(
       )
     )
     
-    output$scientific_name <- taxa_resolved$taxa_clean
+    output_scientific$name_resolved <- taxa_resolved$taxa_clean
     
-    output$scientific_authority_system <- taxa_resolved$authority
+    output_scientific$authority_system <- taxa_resolved$authority
     
-    output$scientific_authority_id <- taxa_resolved$authority_id
+    output_scientific$authority_id <- taxa_resolved$authority_id
     
-    # Common
+    # Resolve and add to output (common)
     
     taxa_resolved <- taxonomyCleanr::resolve_comm_taxa(
       data.sources = 3,
@@ -225,12 +260,31 @@ template_taxonomic_coverage <- function(
       )
     )
     
-    output$common_name <- taxa_resolved$taxa_clean
+    output_common$name_resolved <- taxa_resolved$taxa_clean
     
-    output$common_authority_system <- taxa_resolved$authority
+    output_common$authority_system <- taxa_resolved$authority
     
-    output$common_authority_id <- taxa_resolved$authority_id
+    output_common$authority_id <- taxa_resolved$authority_id
 
+  }
+  
+  # Aggregate outputs ---------------------------------------------------------
+  
+  if (exists('output_scientific') & exists('output_common')){
+    
+    output <- rbind(
+      output_scientific,
+      output_common
+    )
+    
+  } else if (exists('output_scientific') & !exists('output_common')){
+    
+    output <- output_scientific
+    
+  } else if (!exists('output_scientific') & exists('output_common')){
+    
+    output <- output_common
+    
   }
   
   # Write to file or add to x -------------------------------------------------
