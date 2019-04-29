@@ -36,7 +36,7 @@ devtools::install_github("EDIorg/EMLassemblyline")
 ## Active projects
 
 * Creating a Shiny interface for editing metadata template files, thus eliminating requirements for text and spreadsheet editors while facilitating use of dictionaries, controlled vocabularies, and ontologies.
-* Developing adapter code to read metadata content from an exchange format thereby allowing use of `EMLassemblyline` with any metadata storage/organization system.
+* Developing an exchange format for environmental metadata so `EMLassemblyline` (and other metadata builders) can be used with any metadata storage/organization system (e.g. [LTER-core-metabase](https://github.com/lter/LTER-core-metabase)).
 
 ## Contributing
 
