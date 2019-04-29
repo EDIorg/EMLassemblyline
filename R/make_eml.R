@@ -632,7 +632,7 @@ make_eml <- function(
     
     results <- try(
       EDIutils::vocab_resolve_terms(
-        x = 'peat',
+        x = unresolved_terms,
         cv = 'lter'
       ),
       silent = T
