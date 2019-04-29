@@ -15,13 +15,11 @@ data_path <- '/Users/csmith/Desktop/data_packages/edi_301/data_objects'
 knitr::opts_chunk$set(echo = TRUE)
 library(kableExtra)
 library(EMLassemblyline)
+library(XML)
 
-# Clear contents of data package directory
+# Remove directory
 
-unlink(
-  x = '/Users/csmith/Desktop/data_packages/edi_301',
-  recursive = TRUE
-)
+unlink(paste0(dir_path, '/edi_301'), recursive = TRUE)
 
 # Create directory structure
 
@@ -179,20 +177,11 @@ dir('./eml')
 
 ```{r EML data tables, comment='', echo = FALSE}
 
-# Display template
+# Display EML
 
-EML103::read_eml('./eml/edi.301.1.xml')
+output <- XML::xmlTreeParse('./eml/edi.301.1.xml')
 
-# intellectual_rights <- suppressWarnings(
-#   readLines('./metadata_templates/intellectual_rights.txt')
-# )
-# 
-# knitr::kable(
-#   row.names = FALSE, 
-#   col.names = '', 
-#   intellectual_rights, caption = 'intellectual_rights.txt') %>%
-#   kableExtra::kable_styling('bordered', font_size = 12) %>%
-#   kableExtra::scroll_box(width = '100%', height = '200px')
+output$doc$children
 
 ```
 
@@ -231,14 +220,24 @@ make_eml(
   other.entity.description = c('Ancillary data', 'Data processing and analysis script'),
   user.id = 'csmith',
   user.domain = 'EDI',
-  package.id = 'edi.301.1'
+  package.id = 'edi.301.2'
 )
 
 # View directory
 
 dir('./eml')
 
-# View template
+# View EML
+
+```
+
+```{r EML other entities, comment='', echo = FALSE}
+
+# Display EML
+
+output <- XML::xmlTreeParse('./eml/edi.301.1.xml')
+
+output$doc$children
 
 ```
 
@@ -282,13 +281,23 @@ make_eml(
   other.entity.description = c('Ancillary data', 'Data processing and analysis script'),
   user.id = 'csmith',
   user.domain = 'EDI',
-  package.id = 'edi.301.1'
+  package.id = 'edi.301.3'
 )
 
 # View directory
 
 dir('./eml')
 
-# View template
+# View EML
+
+```
+
+```{r EML data tables and other entities, comment='', echo = FALSE}
+
+# Display EML
+
+output <- XML::xmlTreeParse('./eml/edi.301.1.xml')
+
+output$doc$children
 
 ```
