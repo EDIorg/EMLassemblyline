@@ -819,25 +819,34 @@ make_eml <- function(
       
     }
     
-  } else if ('taxonomic_coverage.txt' %in% names(x$template)){
+  } 
+  
+  if ('taxonomic_coverage.txt' %in% names(x$template)){
     
-    if (!is.na(x$template$taxonomic_coverage.txt$content)){
-      
-      message('<taxonomicCoverage>')
-      
+    if (is.data.frame(x$template$taxonomic_coverage.txt$content)){
+
       if (sum(is.na(x$template$taxonomic_coverage.txt$content$scientific_authority_id)) != nrow(x$template$taxonomic_coverage.txt$content)){
         
-        tc <- taxonomyCleanr::make_taxonomicCoverage(
-          taxa.clean = x$template$taxonomic_coverage.txt$content$scientific_name,
-          authority = x$template$taxonomic_coverage.txt$content$scientific_authority_system,
-          authority.id = x$template$taxonomic_coverage.txt$content$scientific_authority_id
+        message('<taxonomicCoverage>')
+
+        tc <- try(
+          taxonomyCleanr::make_taxonomicCoverage(
+            taxa.clean = x$template$taxonomic_coverage.txt$content$scientific_name,
+            authority = x$template$taxonomic_coverage.txt$content$scientific_authority_system,
+            authority.id = x$template$taxonomic_coverage.txt$content$scientific_authority_id
+          ),
+          silent = T
         )
         
-        xml_in@dataset@coverage@taxonomicCoverage <- as(
-          list(tc), 
-          "ListOftaxonomicCoverage"
-        )
-        
+        if (class(tc)[1] == 'taxonomicCoverage'){
+          
+          dataset@coverage@taxonomicCoverage <- as(
+            list(tc), 
+            "ListOftaxonomicCoverage"
+          )
+          
+        }
+
       }
       
     }
