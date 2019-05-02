@@ -72,6 +72,13 @@ template_table_attributes <- function(path, data.path = path,
     fun.args = as.list(environment())
   )
   
+  # Validate data.table
+  
+  data.table <- EDIutils::validate_file_names(
+    path = data.path, 
+    data.files = data.table
+  )
+  
   # Read metadata templates and data ------------------------------------------
   
   # If x doesn't exist ...

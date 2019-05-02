@@ -366,6 +366,28 @@ testthat::test_that('Inputs = templates and data tables', {
     'list'
   )
   
+  # Missing file extensions are supported
+  
+  output <- template_arguments(
+    path = system.file(
+      '/examples/templates',
+      package = 'EMLassemblyline'
+    ),
+    data.path = system.file(
+      '/examples/data',
+      package = 'EMLassemblyline'
+    ),
+    data.table = c(
+      'decomp',
+      'nitrogen.csv'
+    )
+  )
+  
+  expect_equal(
+    class(output),
+    'list'
+  )
+  
 })
 
 # Inputs = templates and other entities ---------------------------------------

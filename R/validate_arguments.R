@@ -574,13 +574,13 @@ validate_arguments <- function(fun.name, fun.args){
         data.table = data_files
       )
 
-      if (!isTRUE(fun.args$taxa.col %in% colnames(x$x$data.table[[fun.args$taxa.table]]$content))){
+      if (!isTRUE(fun.args$taxa.col %in% colnames(x$x$data.table[[data_files]]$content))){
         stop('Input argument "taxa.col" can not be found in "taxa.table".')
       }
       
     } else if (!is.null(fun.args$x)){
       
-      if (!isTRUE(fun.args$taxa.col %in% colnames(fun.args$x$data.table[[fun.args$taxa.table]]$content))){
+      if (!isTRUE(fun.args$taxa.col %in% colnames(fun.args$x$data.table[[data_files]]$content))){
         stop('Input argument "taxa.col" can not be found in "taxa.table"')
       }
       

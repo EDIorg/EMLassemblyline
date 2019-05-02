@@ -747,58 +747,62 @@ make_eml <- function(
     
     bounding_boxes <- x$template$geographic_coverage.txt$content
     
-    if (all(colnames(bounding_boxes) %in% 
-            c('northBoundingCoordinate', 'southBoundingCoordinate', 'eastBoundingCoordinate', 
-              'westBoundingCoordinate', 'geographicDescription'))){
+    if (is.data.frame(bounding_boxes)){
       
-      if (nrow(bounding_boxes) != 0){
+      if (all(colnames(bounding_boxes) %in% 
+              c('northBoundingCoordinate', 'southBoundingCoordinate', 'eastBoundingCoordinate', 
+                'westBoundingCoordinate', 'geographicDescription'))){
         
-        bounding_boxes_2 <- lapply(bounding_boxes, as.character)
-        
-        for (i in 1:length(bounding_boxes_2$geographicDescription)){
+        if (nrow(bounding_boxes) != 0){
           
-          geographic_description <- methods::new("geographicDescription", bounding_boxes_2$geographicDescription[i])
-          bounding_coordinates <- methods::new("boundingCoordinates",
-                                               westBoundingCoordinate = bounding_boxes_2$westBoundingCoordinate[i],
-                                               eastBoundingCoordinate = bounding_boxes_2$eastBoundingCoordinate[i],
-                                               northBoundingCoordinate = bounding_boxes_2$northBoundingCoordinate[i],
-                                               southBoundingCoordinate = bounding_boxes_2$southBoundingCoordinate[i])
-          geographic_coverage <- methods::new("geographicCoverage",
-                                              geographicDescription = geographic_description,
-                                              boundingCoordinates = bounding_coordinates)
-          list_of_coverage[[(length(list_of_coverage)+1)]] <- geographic_coverage
+          bounding_boxes_2 <- lapply(bounding_boxes, as.character)
+          
+          for (i in 1:length(bounding_boxes_2$geographicDescription)){
+            
+            geographic_description <- methods::new("geographicDescription", bounding_boxes_2$geographicDescription[i])
+            bounding_coordinates <- methods::new("boundingCoordinates",
+                                                 westBoundingCoordinate = bounding_boxes_2$westBoundingCoordinate[i],
+                                                 eastBoundingCoordinate = bounding_boxes_2$eastBoundingCoordinate[i],
+                                                 northBoundingCoordinate = bounding_boxes_2$northBoundingCoordinate[i],
+                                                 southBoundingCoordinate = bounding_boxes_2$southBoundingCoordinate[i])
+            geographic_coverage <- methods::new("geographicCoverage",
+                                                geographicDescription = geographic_description,
+                                                boundingCoordinates = bounding_coordinates)
+            list_of_coverage[[(length(list_of_coverage)+1)]] <- geographic_coverage
+            
+          }
+          
+        }
+        
+        # Add coverage defined in old version of geographic_coverage.txt ...
+        
+      } else if (all(colnames(bounding_boxes) %in% 
+                     c('site', 'latitude', 'longitude'))){
+        
+        if (nrow(bounding_boxes) != 0){
+          
+          bounding_boxes_2 <- lapply(bounding_boxes, as.character)
+          
+          
+          for (i in 1:length(bounding_boxes_2$geographicDescription)){
+            
+            geographic_description <- methods::new("geographicDescription", bounding_boxes_2$site[i])
+            bounding_coordinates <- methods::new("boundingCoordinates",
+                                                 westBoundingCoordinate = bounding_boxes_2$longitude[i],
+                                                 eastBoundingCoordinate = bounding_boxes_2$longitude[i],
+                                                 northBoundingCoordinate = bounding_boxes_2$longitude[i],
+                                                 southBoundingCoordinate = bounding_boxes_2$longitude[i])
+            geographic_coverage <- methods::new("geographicCoverage",
+                                                geographicDescription = geographic_description,
+                                                boundingCoordinates = bounding_coordinates)
+            list_of_coverage[[(length(list_of_coverage)+1)]] <- geographic_coverage
+            
+          }
           
         }
         
       }
-      
-    # Add coverage defined in old version of geographic_coverage.txt ...
-      
-    } else if (all(colnames(bounding_boxes) %in% 
-                   c('site', 'latitude', 'longitude'))){
-      
-      if (nrow(bounding_boxes) != 0){
-        
-        bounding_boxes_2 <- lapply(bounding_boxes, as.character)
-        
-        
-        for (i in 1:length(bounding_boxes_2$geographicDescription)){
-          
-          geographic_description <- methods::new("geographicDescription", bounding_boxes_2$site[i])
-          bounding_coordinates <- methods::new("boundingCoordinates",
-                                               westBoundingCoordinate = bounding_boxes_2$longitude[i],
-                                               eastBoundingCoordinate = bounding_boxes_2$longitude[i],
-                                               northBoundingCoordinate = bounding_boxes_2$longitude[i],
-                                               southBoundingCoordinate = bounding_boxes_2$longitude[i])
-          geographic_coverage <- methods::new("geographicCoverage",
-                                              geographicDescription = geographic_description,
-                                              boundingCoordinates = bounding_coordinates)
-          list_of_coverage[[(length(list_of_coverage)+1)]] <- geographic_coverage
-          
-        }
 
-      }
-      
     }
     
   }
@@ -1639,32 +1643,39 @@ compile_attributes <- function(x){
   
   # Get names of data files with associated attribute files
   
-  files <- names(x$template)
-  use_i <- stringr::str_detect(string = files,
-                      pattern = "^attributes")
-  attribute_files <- files[use_i]
-  fname_table_attributes <- attribute_files
-  table_names_base <- stringr::str_sub(string = attribute_files,
-                              start = 12,
-                              end = nchar(attribute_files)-4)
-  use_i <- stringr::str_detect(string = names(x$data.table),
-                      pattern = stringr::str_c("^", table_names_base, collapse = "|"))
-  table_names <- names(x$data.table)
-  
-  # Synchronize ordering of data files and attribute files
-  
-  fname_table_attributes <- attribute_files
+  # files <- names(x$template)
+  # use_i <- stringr::str_detect(string = files,
+  #                     pattern = "^attributes")
+  # attribute_files <- files[use_i]
+  # fname_table_attributes <- attribute_files
+  # # table_names_base <- stringr::str_sub(string = attribute_files,
+  # #                             start = 12,
+  # #                             end = nchar(attribute_files)-4)
+  # # use_i <- stringr::str_detect(string = names(x$data.table),
+  # #                     pattern = stringr::str_c("^", table_names_base, collapse = "|"))
+  # # table_names <- names(x$data.table)
+  # 
+  # # Synchronize ordering of data files and attribute files
+  # 
+  fname_table_attributes <- paste0(
+    'attributes_',
+    stringr::str_remove(
+      string = data.table,
+      pattern = '\\.[:alpha:]*$'
+    ),
+    '.txt'
+  )
   
   
   # Loop through data tables --------------------------------------------------
   
   attributes_stored <- list()
   
-  for (i in 1:length(table_names)){
+  for (i in 1:length(data.table)){
     
     message(paste("Compiling", fname_table_attributes[i]))
 
-    df_table <- x$data.table[[table_names[i]]]$content
+    df_table <- x$data.table[[data.table[i]]]$content
     
     df_attributes <- x$template[[fname_table_attributes[i]]]$content
 

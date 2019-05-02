@@ -124,7 +124,7 @@ template_taxonomic_coverage <- function(
     
     # Validate file name
     
-    data_file <- EDIutils::validate_file_names(
+    taxa.table <- EDIutils::validate_file_names(
       path = data.path, 
       data.files = taxa.table
     )
@@ -133,7 +133,7 @@ template_taxonomic_coverage <- function(
 
     x <- template_arguments(
       data.path = data.path,
-      data.table = data_file
+      data.table = taxa.table
     )
 
     x <- x$x

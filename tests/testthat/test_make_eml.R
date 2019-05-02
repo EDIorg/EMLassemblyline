@@ -947,6 +947,28 @@ testthat::test_that('Expect equal', {
     "'"
   )
   
+  # Data tabales without extensions are supported
+  
+  expect_message(
+    make_eml(
+      path = paste0(tempdir(), '/templates'),
+      data.path = data.path,
+      eml.path = eml.path,
+      dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+      data.table = c('decomp.csv', 'nitrogen'),
+      data.table.description = c('Decomposition data', 'Nitrogen data'),
+      data.table.quote.character = c("\'", "\'"),
+      temporal.coverage = c('2014-05-01', '2015-10-31'),
+      geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+      geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+      maintenance.description = 'completed',
+      user.id = user.id,
+      user.domain = user.domain,
+      package.id = 'edi.141.1',
+      write.file = FALSE
+    ) 
+  )
+  
   # other.entity
   
   output <- make_eml(

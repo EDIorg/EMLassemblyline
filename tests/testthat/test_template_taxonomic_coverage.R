@@ -217,6 +217,23 @@ testthat::test_that('File inputs', {
     ) 
   )
   
+  # Missing file extensions are supported
+  
+  expect_message(
+    template_taxonomic_coverage(
+      path = tempdir(),
+      data.path = system.file(
+        '/examples/data',
+        package = 'EMLassemblyline'
+      ),
+      taxa.table = 'decomp',
+      taxa.col = 'taxa',
+      taxa.name.type = 'both',
+      taxa.authority = c(3, 11),
+      write.file = TRUE
+    ) 
+  )
+  
 })
 
 # x inputs --------------------------------------------------------------------
