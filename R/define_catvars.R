@@ -41,6 +41,8 @@
 #'     Existing template(s) will not be overwritten by subsequent calls to 
 #'     `define_catvars()`.
 #'
+#' @export
+#'
 
 define_catvars <- function(path, data.path = path, x = NULL, 
                            write.file = TRUE) {

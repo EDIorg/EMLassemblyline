@@ -59,6 +59,8 @@
 #' @details 
 #'     Existing templates will not be overwritten by `import_templates`.
 #'     
+#' @export
+#'     
 
 import_templates <- function(path, data.path = path, license, 
                              data.table = NULL, x = NULL, write.file = TRUE,

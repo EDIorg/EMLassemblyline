@@ -219,6 +219,13 @@ testthat::test_that('File inputs', {
   
   # Missing file extensions are supported
   
+  file.remove(
+    paste0(
+      tempdir(),
+      '/taxonomic_coverage.txt'
+    )
+  )
+  
   expect_message(
     template_taxonomic_coverage(
       path = tempdir(),
