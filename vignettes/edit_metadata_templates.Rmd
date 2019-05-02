@@ -128,6 +128,7 @@ _NOTE:_
 
 *  _Some content in tabular templates is optional. Leave these spaces blank (no need to add NAs)._
 *  _Only UTF-8 is supported by EML._
+*  _Remove non-UTF-8 characters with [this webservice](https://pteo.paranoiaworks.mobi/diacriticsremover/)._
 
 ## abstract.txt
 
