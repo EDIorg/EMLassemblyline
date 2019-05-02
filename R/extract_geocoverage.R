@@ -50,6 +50,8 @@
 #' @details 
 #'     Existing templates will not be overwritten by subsequent calls to 
 #'     `extract_geocoverage`.
+#'     
+#' @export
 #'
 
 extract_geocoverage <- function(path, data.path = path, data.table, lat.col, 
