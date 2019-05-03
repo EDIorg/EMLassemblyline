@@ -329,7 +329,7 @@ testthat::test_that('x inputs = data tables', {
         ),
         data.table = c(
           'decomp.csv',
-          'nitrogen.csv's
+          'nitrogen.csv'
         ),
         x = input,
         write.file = FALSE
