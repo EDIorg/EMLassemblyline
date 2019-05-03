@@ -241,12 +241,12 @@ validate_arguments <- function(fun.name, fun.args){
     
     # geographic.coordinates and geographic.description
     
-    if (is.null(fun.args$geographic.coordinates) & (!is.data.frame(fun.args$x$template$bounding_boxes.txt$content)) & (!is.data.frame(fun.args$x$template$geographic_coverage$content))){
-      stop('Input argument "geographic.coordinates" is missing and the "bounding_boxes.txt" and "geographic_coverage.txt" templates are missing. Add geographic bounding coordinates for your dataset.')
-    }
-    
     if (!is.null(fun.args$geographic.coordinates) & is.null(fun.args$geographic.description)){
       stop('Input argument "geographic.description" is missing.')
+    }
+    
+    if (is.null(fun.args$geographic.coordinates) & !is.null(fun.args$geographic.description)){
+      stop('Input argument "geographic.coordinates" is missing.')
     }
 
     # maintenance.description
