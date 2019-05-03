@@ -134,6 +134,13 @@ testthat::test_that('Test usage with file inputs', {
     )
   )
   
+  file.remove(
+    paste0(
+      tempdir(),
+      '/custom_units.txt'
+    )
+  )
+  
   expect_message(
     template_table_attributes(
       path = tempdir(),
@@ -147,6 +154,10 @@ testthat::test_that('Test usage with file inputs', {
       ),
       write.file = TRUE
     )
+  )
+  
+  expect_true(
+    'custom_units.txt' %in% list.files(tempdir())
   )
   
 })
@@ -223,7 +234,8 @@ testthat::test_that('x inputs = data tables', {
   )
   
   # Valid data path and data tables result in addition of attributes templates
-  # with expected names, class, column names, and nrows > 1
+  # with expected names, class, column names, and nrows > 1. Custom units
+  # template is also added.
   
   output <- suppressMessages(
     template_table_attributes(
@@ -278,6 +290,10 @@ testthat::test_that('x inputs = data tables', {
     
   }
   
+  expect_true(
+    'custom_units.txt' %in% names(output$template)
+  )
+  
   # Attempt to import templates when they already exist results in messages
   
   expect_message(
@@ -313,7 +329,7 @@ testthat::test_that('x inputs = data tables', {
         ),
         data.table = c(
           'decomp.csv',
-          'nitrogen.csv'
+          'nitrogen.csv's
         ),
         x = input,
         write.file = FALSE

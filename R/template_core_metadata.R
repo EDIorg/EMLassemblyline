@@ -32,8 +32,6 @@
 #'         \item{`abstract.txt`} Template for the dataset abstract.
 #'         \item{`additional_info.txt`} Template for miscellaneous dataset
 #'         information.
-#'         \item{`custom_units.txt`} Template for defining non-standard units 
-#'         used in the dataset.
 #'         \item{`intellectual_rights.txt`} The selected intellectual rights 
 #'         license.
 #'         \item{`keywords.txt`} Template for dataset keywords.
@@ -192,63 +190,6 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
     } else {
       
       message("additional_info.txt already exists!")
-      
-    }
-    
-  }
-
-  # Import custom_units.txt ---------------------------------------------------
-  
-  # If writing to file ...
-  
-  if (isTRUE(write.file)){
-    
-    # Write to path
-    
-    value <- file.copy(
-      from = system.file(
-        '/templates/custom_units.txt',
-        package = 'EMLassemblyline'
-      ),
-      to = paste0(
-        path,
-        "/custom_units.txt"
-      )
-    )
-    
-    # Send message
-    
-    if (isTRUE(value)){
-      message("Importing custom_units.txt.")
-    } else {
-      message("custom_units.txt already exists!")
-    }
-    
-    # If adding to x ...
-    
-  } else if (!exists('data_read_2_x')){
-    
-    if (any(is.na(x$template$custom_units.txt$content))){
-      
-      # Add to content
-      
-      x$template$custom_units.txt$content <- utils::read.table(
-        file = system.file(
-          '/templates/custom_units.txt',
-          package = 'EMLassemblyline'
-        ), 
-        header = T,
-        sep = '\t',
-        as.is = T
-      )
-      
-      # Send message
-      
-      message("Importing custom_units.txt.")
-      
-    } else {
-      
-      message("custom_units.txt already exists!")
       
     }
     

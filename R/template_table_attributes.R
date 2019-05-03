@@ -34,6 +34,8 @@
 #'         \item{`attributes_*.txt`} Template(s) for data table attribute 
 #'         metadata, populated with some automatically extracted metadata 
 #'         content from the data files.
+#'         \item{`custom_units.txt`} Template for defining non-standard units 
+#'         used in the `attributes_*.txt` file.
 #'         \item{If using `x`, then content of each above listed template file 
 #'         is added to `x` under `/x/templates/`}
 #'     }
@@ -362,6 +364,63 @@ template_table_attributes <- function(path, data.path = path,
     
   }
   
+  # Import custom_units.txt ---------------------------------------------------
+  
+  # If writing to file ...
+  
+  if (isTRUE(write.file)){
+    
+    # Write to path
+    
+    value <- file.copy(
+      from = system.file(
+        '/templates/custom_units.txt',
+        package = 'EMLassemblyline'
+      ),
+      to = paste0(
+        path,
+        "/custom_units.txt"
+      )
+    )
+    
+    # Send message
+    
+    if (isTRUE(value)){
+      message("Importing custom_units.txt.")
+    } else {
+      message("custom_units.txt already exists!")
+    }
+    
+    # If adding to x ...
+    
+  } else if (!exists('data_read_2_x')){
+    
+    if (any(is.na(x$template$custom_units.txt$content))){
+      
+      # Add to content
+      
+      x$template$custom_units.txt$content <- utils::read.table(
+        file = system.file(
+          '/templates/custom_units.txt',
+          package = 'EMLassemblyline'
+        ), 
+        header = T,
+        sep = '\t',
+        as.is = T
+      )
+      
+      # Send message
+      
+      message("Importing custom_units.txt.")
+      
+    } else {
+      
+      message("custom_units.txt already exists!")
+      
+    }
+    
+  }
+
   # Return --------------------------------------------------------------------
   
   if ((!isTRUE(write.file)) & is.null(x)){

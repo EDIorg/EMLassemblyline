@@ -30,6 +30,8 @@ Use \code{template_arguments} to create `x`.}
         \item{`attributes_*.txt`} Template(s) for data table attribute 
         metadata, populated with some automatically extracted metadata 
         content from the data files.
+        \item{`custom_units.txt`} Template for defining non-standard units 
+        used in the `attributes_*.txt` file.
         \item{If using `x`, then content of each above listed template file 
         is added to `x` under `/x/templates/`}
     }
