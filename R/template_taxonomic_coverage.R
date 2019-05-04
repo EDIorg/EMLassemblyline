@@ -68,6 +68,43 @@
 #'     Existing "taxonomic_coverage.txt" will not be overwritten by subsequent 
 #'     calls to \code{template_taxonomic_coverage}.
 #'
+#' @examples 
+#' # Set working directory
+#' setwd(tempdir())
+#' 
+#' # Create data package directory "edi_255"
+#' file.copy(
+#'   from = system.file('/examples/edi_255', package = 'EMLassemblyline'),
+#'   to = '.',
+#'   recursive = TRUE
+#' )
+#' 
+#' # View directory contents (NOTE: taxonomic_coverage.txt doesn't exist)
+#' dir('./edi_255/metadata_templates')
+#' 
+#' # Template taxonomic coverage
+#' template_taxonomic_coverage(
+#'   path = './edi_255/metadata_templates',
+#'   data.path = './edi_255/data_objects',
+#'   taxa.table = 'decomp.csv',
+#'   taxa.col = 'taxa',
+#'   taxa.authority = c(3,11),
+#'   taxa.name.type = 'both'
+#' )
+#' 
+#' # View directory contents (NOTE: taxonomic_coverage.txt exists)
+#' dir('./edi_255/metadata_templates')
+#' 
+#' # Rerunning template_taxonomic_coverage() does not overwrite file
+#' template_taxonomic_coverage(
+#'   path = './edi_255/metadata_templates',
+#'   data.path = './edi_255/data_objects',
+#'   taxa.table = 'decomp.csv',
+#'   taxa.col = 'taxa',
+#'   taxa.authority = c(3,11),
+#'   taxa.name.type = 'both'
+#' )
+#'
 #' @export
 #'
 

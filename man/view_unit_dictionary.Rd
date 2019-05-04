@@ -13,3 +13,8 @@ View the standard unit dictionary of the Ecological Metadata Language
 \details{
 Use the search field to find the unit of interest.
 }
+\examples{
+# View unit dictionary
+view_unit_dictionary()
+              
+}

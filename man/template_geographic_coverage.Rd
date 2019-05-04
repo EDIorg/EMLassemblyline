@@ -54,3 +54,41 @@ Import template for describing the geographic coverage of a dataset.
 Existing templates will not be overwritten by subsequent calls to 
     `template_geographic_coverage`.
 }
+\examples{
+# Set working directory
+setwd(tempdir())
+
+# Create data package directory "edi_255"
+file.copy(
+  from = system.file('/examples/edi_255', package = 'EMLassemblyline'),
+  to = '.',
+  recursive = TRUE
+)
+
+# View directory contents (NOTE: geographic_coverage.txt doesn't exist)
+dir('./edi_255/metadata_templates')
+
+# Template geographic coverage
+template_geographic_coverage(
+  path = './edi_255/metadata_templates',
+  data.path = './edi_255/data_objects',
+  data.table = 'nitrogen.csv',
+  site.col = 'site_name',
+  lat.col = 'site_lat',
+  lon.col = 'site_lon'
+)
+
+# View directory contents (NOTE: geographic_coverage.txt exists)
+dir('./edi_255/metadata_templates')
+
+# Rerunning template_geographic_coverage() does not overwrite files
+template_geographic_coverage(
+  path = './edi_255/metadata_templates',
+  data.path = './edi_255/data_objects',
+  data.table = 'nitrogen.csv',
+  site.col = 'site_name',
+  lat.col = 'site_lat',
+  lon.col = 'site_lon'
+)
+
+}

@@ -44,3 +44,33 @@ Import template(s) for defining categorical variable codes used in data
     Existing template(s) will not be overwritten by subsequent calls to 
     `template_categorical_variables()`.
 }
+\examples{
+# Set working directory
+setwd(tempdir())
+
+# Create data package directory "edi_255"
+file.copy(
+  from = system.file('/examples/edi_255', package = 'EMLassemblyline'),
+  to = '.',
+  recursive = TRUE
+)
+
+# View directory contents (NOTE: catvars_*.txt files don't exist)
+dir('./edi_255/metadata_templates')
+
+# Template categorical variables
+template_categorical_variables(
+  path = './edi_255/metadata_templates',
+  data.path = './edi_255/data_objects'
+)
+
+# View directory contents (NOTE: catvars_*.txt files exist)
+dir('./edi_255/metadata_templates')
+
+# Rerunning template_categorical_variables() does not overwrite files
+template_categorical_variables(
+  path = './edi_255/metadata_templates',
+  data.path = './edi_255/data_objects'
+)
+
+}

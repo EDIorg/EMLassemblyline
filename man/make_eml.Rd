@@ -125,3 +125,80 @@ If validation fails, open the EML document in a .xml editor to identify
     then forward the `EML` to info@environmentaldatainitiative.org for 
     support.
 }
+\examples{
+# Set working directory
+setwd(tempdir())
+
+# Create data package directory "edi_260"
+file.copy(
+  from = system.file('/examples/edi_260', package = 'EMLassemblyline'),
+  to = '.',
+  recursive = TRUE
+)
+
+# Make EML (for data package with data tables)
+
+make_eml(
+  path = './edi_260/metadata_templates',
+  data.path = './edi_260/data_objects',
+  eml.path = './edi_260/eml',
+  dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions',
+  temporal.coverage = c('2014-05-01', '2015-10-31'),
+  geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+  geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+  maintenance.description = 'completed',
+  data.table = c('decomp.csv', 'nitrogen.csv'),
+  data.table.description = c('Decomposition data', 'Nitrogen data'),
+  user.id = 'csmith',
+  user.domain = 'EDI',
+  package.id = 'edi.260.1'
+)
+
+# View EML directory contents (NOTE: edi.260.1 exists)
+dir('./edi_260/eml')
+
+# Make EML (for data package with other entities)
+
+make_eml(
+  path = './edi_260/metadata_templates',
+  data.path = './edi_260/data_objects',
+  eml.path = './edi_260/eml',
+  dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions',
+  temporal.coverage = c('2014-05-01', '2015-10-31'),
+  geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+  geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+  maintenance.description = 'completed',
+  other.entity = c('ancillary_data.zip', 'processing_and_analysis.R'),
+  other.entity.description = c('Ancillary data', 'Data processing and analysis script'),
+  user.id = 'csmith',
+  user.domain = 'EDI',
+  package.id = 'edi.260.2'
+)
+
+# View EML directory contents (NOTE: edi.260.2 exists)
+dir('./edi_260/eml')
+
+# Make EML (for data package with data tables and other entities)
+
+make_eml(
+  path = './edi_260/metadata_templates',
+  data.path = './edi_260/data_objects',
+  eml.path = './edi_260/eml',
+  dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions',
+  temporal.coverage = c('2014-05-01', '2015-10-31'),
+  geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+  geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+  maintenance.description = 'completed',
+  data.table = c('decomp.csv', 'nitrogen.csv'),
+  data.table.description = c('Decomposition data', 'Nitrogen data'),
+  other.entity = c('ancillary_data.zip', 'processing_and_analysis.R'),
+  other.entity.description = c('Ancillary data', 'Data processing and analysis script'),
+  user.id = 'csmith',
+  user.domain = 'EDI',
+  package.id = 'edi.260.3'
+)
+
+# View EML directory contents (NOTE: edi.260.3 exists)
+dir('./edi_260/eml')
+
+}

@@ -62,3 +62,52 @@ Import template files for storage of core metadata. Some templates are
 \details{
 Existing templates will not be overwritten by `import_templates`.
 }
+\examples{
+# Set working directory
+setwd(tempdir())
+
+# Create data package directory "edi_250"
+file.copy(
+  from = system.file('/examples/edi_250', package = 'EMLassemblyline'),
+  to = '.',
+  recursive = TRUE
+)
+
+# View directory contents (NOTE: Directory is empty)
+dir('./edi_250/metadata_templates')
+
+# Import templates (for data package with no tables)
+import_templates(
+  path = './edi_250/metadata_templates',
+  license = 'CC0'
+)
+
+# View directory contents (NOTE: Templates exist)
+dir('./edi_250/metadata_templates')
+
+# Rerunning import_templates() does not overwrite files
+import_templates(
+  path = './edi_250/metadata_templates',
+  license = 'CC0'
+)
+
+# Remove templates from directory
+file.remove(
+  list.files('./edi_250/metadata_templates', full.names = TRUE)
+)
+
+# Import templates (for data package with tables)
+import_templates(
+  path = './edi_250/metadata_templates',
+  data.path = './edi_250/data_objects',
+  data.table = c(
+    'decomp.csv',
+    'nitrogen.csv'
+  ),
+  license = 'CC0'
+)
+
+# View directory contents (NOTE: Templates, including attributes*_.txt, exist)
+dir('./edi_250/metadata_templates')
+          
+}

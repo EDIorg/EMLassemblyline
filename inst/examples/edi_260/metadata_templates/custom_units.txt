@@ -1,0 +1,3 @@
+id	unitType	parentSI	multiplierToSI	description
+gramsPerSquaredMeterPerCentimeter	areal mass density per length	kilogramsPerSquaredMeterPerMeter	0.1	grams per meter squared per centimeter
+milligramsPerGram	mass	kilogramsPerSquaredMeterPerMeter	1000	milligrams per gram

@@ -33,6 +33,19 @@
 #'     Existing directories named with \code{dir.name} at \code{path} will not 
 #'     be overwritten.
 #'
+#' @examples
+#' # Set working directory
+#' setwd(tempdir())
+#' 
+#' # Template data package directory "edi_301"
+#' template_directories(
+#'   path = '.',
+#'   dir.name =  'edi_301'
+#' )
+#' 
+#' # View directory contents
+#' dir('./edi_301')
+#'
 #' @export
 #'
 

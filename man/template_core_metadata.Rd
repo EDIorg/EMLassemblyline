@@ -48,3 +48,33 @@ Import template files for storage of core metadata. Some templates are
 \details{
 Existing templates will not be overwritten by `template_core_metadata`.
 }
+\examples{
+# Set working directory
+setwd(tempdir())
+
+# Create data package directory "edi_250"
+file.copy(
+  from = system.file('/examples/edi_250', package = 'EMLassemblyline'),
+  to = '.',
+  recursive = TRUE
+)
+
+# View directory contents (NOTE: Directory is empty)
+dir('./edi_250/metadata_templates')
+
+# Template core metadata
+template_core_metadata(
+  path = './edi_250/metadata_templates',
+  license = 'CC0'
+)
+
+# View directory contents (NOTE: Templates exist)
+dir('./edi_250/metadata_templates')
+
+# Rerunning template_core_metadata() does not overwrite files
+template_core_metadata(
+  path = './edi_250/metadata_templates',
+  license = 'CC0'
+)
+    
+}

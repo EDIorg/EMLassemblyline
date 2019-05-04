@@ -51,6 +51,43 @@
 #'     Existing templates will not be overwritten by subsequent calls to 
 #'     `extract_geocoverage`.
 #'     
+#' @examples 
+#' # Set working directory
+#' setwd(tempdir())
+#' 
+#' # Create data package directory "edi_255"
+#' file.copy(
+#'   from = system.file('/examples/edi_255', package = 'EMLassemblyline'),
+#'   to = '.',
+#'   recursive = TRUE
+#' )
+#' 
+#' # View directory contents (NOTE: geographic_coverage.txt doesn't exist)
+#' dir('./edi_255/metadata_templates')
+#' 
+#' # Extract geographic coverage
+#' extract_geocoverage(
+#'   path = './edi_255/metadata_templates',
+#'   data.path = './edi_255/data_objects',
+#'   data.table = 'nitrogen.csv',
+#'   site.col = 'site_name',
+#'   lat.col = 'site_lat',
+#'   lon.col = 'site_lon'
+#' )
+#' 
+#' # View directory contents (NOTE: geographic_coverage.txt exists)
+#' dir('./edi_255/metadata_templates')
+#' 
+#' # Rerunning extract_geocoverage() does not overwrite files
+#' extract_geocoverage(
+#'   path = './edi_255/metadata_templates',
+#'   data.path = './edi_255/data_objects',
+#'   data.table = 'nitrogen.csv',
+#'   site.col = 'site_name',
+#'   lat.col = 'site_lat',
+#'   lon.col = 'site_lon'
+#' )
+#'     
 #' @export
 #'
 
