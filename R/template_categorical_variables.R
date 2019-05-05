@@ -1,45 +1,48 @@
 #' Create categorical variables template
 #'
 #' @description  
-#'     Import template(s) for defining categorical variable codes used in data
+#'     Create template for defining categorical variable codes used in data
 #'     tables. This function automatically extracts and returns categorical 
-#'     codes, the definitions of which must be supplied by a human. 
-#'     Instructions for filling out the template are at
-#'     \url{https://clnsmth.github.io/EMLassemblyline/articles/instructions.html}.
+#'     codes, the definitions of which must be supplied by the user. 
+#'     \href{https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html}{Instructions for editing the template.}
 #'
 #' @usage 
 #'     template_categorical_variables(
 #'       path,
 #'       data.path = path,
-#'       x = NULL,
-#'       write.file = TRUE
+#'       write.file = TRUE,
+#'       x = NULL
 #'     )
 #'
 #' @param path 
-#'     (character) Path to where the template(s) will be imported.
+#'     (character) Path to the directory containing table attributes 
+#'     template(s), and where the categorical variable template(s) will be
+#'     written.
 #' @param data.path
-#'     (character) Path to where the data files are stored.
-#' @param x
-#'     (named list) Alternative input/output to `EMLassemblyline` functions. 
-#'     Use \code{template_arguments} to create `x`.
+#'     (character) Path to the directory containing the data table with 
+#'     categorical variables.
 #' @param write.file
-#'     (logical) Write `catvars` file to `path`.
+#'     (logical; optional) Whether to write the categorical variable template
+#'     to \code{path}.
+#' @param x
+#'     (named list; optional) Alternative input to \code{EMLassemblyline} 
+#'     functions. Use \code{template_arguments()} to create \code{x}.
 #'
 #' @return 
 #'     \itemize{
-#'         \item{`catvars_*.txt` A tab delimited file written to `path`
-#'         containing codes to be defined. Each template is appended with the 
-#'         name of the data table from which the codes were extracted.}
-#'         \item{If using `x`, then content of `catvars_*.txt` is added to `x` 
-#'         under `/x/templates`.}
+#'         \item{\strong{catvars_*.txt} The categorical variable 
+#'         template. A tab delimited table.}
+#'         \item{If using \code{x}, then the categorical variable template is 
+#'         added to \strong{/x/templates}.}
 #'     }
 #'     
 #' @details 
-#'     `template_categorical_variables` knows which variables are `categorical` based on their 
-#'     listing under the `class` column in the `attributes_*.txt` file(s). 
+#'     \code{define_catvars()} knows which variables are \code{categorical} 
+#'     based on their listing in the \code{class} column of the 
+#'     attributes.txt template. 
 #'     
-#'     Existing template(s) will not be overwritten by subsequent calls to 
-#'     `template_categorical_variables()`.
+#'     An existing categorical variables template will not be overwritten 
+#'     by subsequent calls to \code{define_catvars()}.
 #'
 #' @examples 
 #' # Set working directory

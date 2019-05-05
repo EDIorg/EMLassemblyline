@@ -2,65 +2,67 @@
 % Please edit documentation in R/import_templates.R
 \name{import_templates}
 \alias{import_templates}
-\title{Import core metadata templates}
+\title{Import core metadata and table attribute templates}
 \usage{
 import_templates(
       path,
       data.path = path,
       license,
       data.table = NULL,
-      x = NULL,
-      write.file = TRUE
+      write.file = TRUE,
+      x = NULL
     )
 }
 \arguments{
-\item{path}{(character) Path to where the templates will be imported.}
+\item{path}{(character) Path to the directory where the templates will be written.}
 
-\item{data.path}{(character) Path to where the data files are stored.}
+\item{data.path}{(character) Path to the directory where the data tables are stored.}
 
-\item{license}{(character) License under which the data will be released. Use "CC0" 
-(\url{https://creativecommons.org/publicdomain/zero/1.0/}), 
-or "CCBY" (\url{https://creativecommons.org/licenses/by/4.0/}).}
+\item{license}{(character) License under which the data will be released. Use 
+\href{"CC0"}{https://creativecommons.org/publicdomain/zero/1.0/} or 
+\href{"CCBY"}{https://creativecommons.org/licenses/by/4.0/}.}
 
-\item{data.table}{(character) Names of tabular data. Names of non-tabular data are
-entered as arguments to `make_eml`.}
+\item{data.table}{(character) Name of data table. If more than one, then supply as a 
+vector of character strings (e.g. 
+\code{data.table = c('concentrations.csv', 'characteristics.csv')}).}
 
-\item{x}{(named list) Alternative input/output to `EMLassemblyline` functions. 
-Use \code{template_arguments} to create `x`.}
+\item{x}{(named list; optional) Alternative input to \code{EMLassemblyline} 
+functions. Use \code{template_arguments()} to create \code{x}.}
 
-\item{write.file}{(logical) Write template files to `path`.}
+\item{write.file}{(logical; optional) Whether to write the templates to \code{path}.}
 }
 \value{
 \itemize{
-        \item{`abstract.txt`} Template for the dataset abstract.
-        \item{`additional_info.txt`} Template for miscellaneous dataset
-        information.
-        \item{`attributes_*.txt`} Template(s) for data table attribute 
+        \item{\strong{abstract.txt} Template for the dataset abstract.}
+        \item{\strong{additional_info.txt`} Template for miscellaneous dataset
+        information.}
+        \item{\strong{attributes_*.txt} Template(s) for data table attribute 
         metadata, populated with some automatically extracted metadata 
-        content from the data files.
-        \item{`bounding_boxes.txt`} Template for the dataset geographic 
-        bounding coordinates.
-        \item{`custom_units.txt`} Template for defining non-standard units 
-        used in the dataset.
-        \item{`intellectual_rights.txt`} The selected intellectual rights 
-        license.
-        \item{`keywords.txt`} Template for dataset keywords.
-        \item{`methods.txt`} Template for dataset methods.
-        \item{`personnel.txt`} Template for dataset personnel and funding 
-        metadata.
-        \item{If using `x`, then content of each above listed template file 
-        is added to `x` under `/x/templates/`}
+        content from the data tables. A tab delimited table.}
+        \item{\strong{bounding_boxes.txt} Template for the dataset geographic 
+        bounding coordinates. A tab delimited table.}
+        \item{\strong{custom_units.txt} Template for defining non-standard units 
+        used in data tables. A tab delimited table.}
+        \item{\strong{intellectual_rights.txt} The selected intellectual rights 
+        license.}
+        \item{\strong{keywords.txt} Template for dataset keywords. A tab 
+        delimited table.}
+        \item{\strong{methods.txt} Template for dataset methods.}
+        \item{\strong{personnel.txt} Template for dataset personnel and funding 
+        metadata. A tab delimited table.}
+        \item{If using \code{x}, then the templates are added to 
+        \strong{/x/templates}.}
     }
 }
 \description{
-Import template files for storage of core metadata. Some templates are 
-    populated with content detected by automated metadata extraction 
-    methods. The remainder will have to be manually entered by a human. 
-    Instructions for filling out the templates are at
-    \url{https://clnsmth.github.io/EMLassemblyline/articles/instructions.html}.
+Import template files for storage of core metadata and table attributes. 
+    Some templates are populated with content detected by automated metadata 
+    extraction methods. The remainder is manually entered by the user. 
+    \href{https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html}{Instructions for editing the templates.}
 }
 \details{
-Existing templates will not be overwritten by `import_templates`.
+Existing templates will not be overwritten subsequent calls to 
+    \code{import_templates()}.
 }
 \examples{
 # Set working directory

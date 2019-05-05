@@ -2,20 +2,22 @@
 % Please edit documentation in R/template_directories.R
 \name{template_directories}
 \alias{template_directories}
-\title{Create directories for \code{EMLassemblyline} inputs and outputs}
+\title{Create data package directory}
 \usage{
-template_directories(path, dir.name)
+template_directories(
+      path, 
+      dir.name
+    )
 }
 \arguments{
-\item{path}{(character) Path to where the directory structure will be created.}
+\item{path}{(character) Path to where the data package directory will be created.}
 
-\item{dir.name}{(character) Name of parent directory. Subdirectories have predefined 
-names.}
+\item{dir.name}{(character) Name of the directory.}
 }
 \value{
 A directory with the following structure and contents:
     \itemize{
-        \item{\strong{name} Name of parent directory}
+        \item{\strong{name} Name supplied via \code{dir.name}}
         \itemize{
             \item{\strong{data_objects} Directory for data and other 
             objects to be packaged.}
@@ -29,11 +31,11 @@ A directory with the following structure and contents:
     }
 }
 \description{
-Create a commonly used directory structure for \code{EMLassemblyline} 
-    inputs and outputs. You're welcome to organize content in any way you 
-    choose, this is just one approach.
+Create a directory structure for data package contents and 
+    \code{EMLassemblyline} files. Any organization scheme is supported. This
+    is one recommendation.
 }
-\note{
+\details{
 Existing directories named with \code{dir.name} at \code{path} will not 
     be overwritten.
 }

@@ -3,47 +3,47 @@
 #' @description  
 #'     Import template files for storage of core metadata. Some templates are 
 #'     populated with content detected by automated metadata extraction 
-#'     methods. The remainder will have to be manually entered by a human. 
-#'     Instructions for filling out the templates are at
-#'     \url{https://clnsmth.github.io/EMLassemblyline/articles/instructions.html}.
+#'     methods. The remainder is supplied by the user.
+#'     \href{https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html}{Instructions for editing templates.}
 #'
 #' @usage 
 #'     template_core_metadata(
 #'       path,
 #'       license,
-#'       x = NULL,
-#'       write.file = TRUE
+#'       write.file = TRUE,
+#'       x = NULL
 #'     )
 #'
 #' @param path 
-#'     (character) Path to where the templates will be imported.
+#'     (character) Path to the directory where the templates will be written.
 #' @param license
-#'     (character) License under which the data will be released. Use "CC0" 
-#'     (\url{https://creativecommons.org/publicdomain/zero/1.0/}), 
-#'     or "CCBY" (\url{https://creativecommons.org/licenses/by/4.0/}).
-#' @param x
-#'     (named list) Alternative input/output to `EMLassemblyline` functions. 
-#'     Use \code{template_arguments} to create `x`.
+#'     (character) License under which the data will be released. Use 
+#'     \href{"CC0"}{https://creativecommons.org/publicdomain/zero/1.0/} or 
+#'     \href{"CCBY"}{https://creativecommons.org/licenses/by/4.0/}.
 #' @param write.file
-#'     (logical) Write template files to `path`.
+#'     (logical; optional) Whether to write the templates to \code{path}.
+#' @param x
+#'     (named list; optional) Alternative input to \code{EMLassemblyline} 
+#'     functions. Use \code{template_arguments()} to create \code{x}.
 #'
 #' @return 
 #'     \itemize{
-#'         \item{`abstract.txt`} Template for the dataset abstract.
-#'         \item{`additional_info.txt`} Template for miscellaneous dataset
-#'         information.
-#'         \item{`intellectual_rights.txt`} The selected intellectual rights 
-#'         license.
-#'         \item{`keywords.txt`} Template for dataset keywords.
-#'         \item{`methods.txt`} Template for dataset methods.
-#'         \item{`personnel.txt`} Template for dataset personnel and funding 
-#'         metadata.
-#'         \item{If using `x`, then content of each above listed template file 
-#'         is added to `x` under `/x/templates/`}
+#'         \item{\strong{abstract.txt} Template for the dataset abstract.}
+#'         \item{\strong{additional_info.txt} Template for miscellaneous dataset
+#'         information.}
+#'         \item{\strong{intellectual_rights.txt} The selected intellectual rights 
+#'         license.}
+#'         \item{\strong{keywords.txt} Template for dataset keywords. A tab 
+#'         delimited table.}
+#'         \item{\strong{methods.txt} Template for dataset methods.}
+#'         \item{\strong{personnel.txt} Template for dataset personnel and funding 
+#'         metadata. A tab delimited table.}
+#'         \item{If using \code{x}, then content of each above listed template file 
+#'         is added to \code{x} under \strong{/x/templates/}}
 #'     }
 #'     
 #' @details 
-#'     Existing templates will not be overwritten by `template_core_metadata`.
+#'     Existing templates will not be overwritten by \code{template_core_metadata()}.
 #' 
 #' @examples
 #' # Set working directory

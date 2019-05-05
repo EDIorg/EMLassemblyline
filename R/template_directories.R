@@ -1,22 +1,25 @@
-#' Create directories for \code{EMLassemblyline} inputs and outputs
+#' Create data package directory
 #'
 #' @description  
-#'     Create a commonly used directory structure for \code{EMLassemblyline} 
-#'     inputs and outputs. You're welcome to organize content in any way you 
-#'     choose, this is just one approach.
+#'     Create a directory structure for data package contents and 
+#'     \code{EMLassemblyline} files. Any organization scheme is supported. This
+#'     is one recommendation.
 #'
-#' @usage template_directories(path, dir.name)
+#' @usage 
+#'     template_directories(
+#'       path, 
+#'       dir.name
+#'     )
 #'
 #' @param path 
-#'     (character) Path to where the directory structure will be created.
+#'     (character) Path to where the data package directory will be created.
 #' @param dir.name
-#'     (character) Name of parent directory. Subdirectories have predefined 
-#'     names.
+#'     (character) Name of the directory.
 #'
 #' @return
 #'     A directory with the following structure and contents:
 #'     \itemize{
-#'         \item{\strong{name} Name of parent directory}
+#'         \item{\strong{name} Name supplied via \code{dir.name}}
 #'         \itemize{
 #'             \item{\strong{data_objects} Directory for data and other 
 #'             objects to be packaged.}
@@ -29,7 +32,7 @@
 #'         }
 #'     }
 #'     
-#' @note
+#' @details 
 #'     Existing directories named with \code{dir.name} at \code{path} will not 
 #'     be overwritten.
 #'

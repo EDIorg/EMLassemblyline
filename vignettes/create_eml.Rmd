@@ -1,5 +1,5 @@
 ---
-title: "Create EML"
+title: "Make EML"
 output: html_document
 ---
 
@@ -111,19 +111,19 @@ knitr::opts_knit$set(root.dir = 'C:\\Users\\Colin\\Desktop\\data_packages\\edi_3
 
 ```
 
-## The `make_eml` function
+## The `make_eml()` function
 
-The information rich and machine readable EML metadata file should contain all the necessary content, in the correct format, and in the right schema locations according with best practices informed by scientists who use this information and data repositories who serve it in a human discoverable and readable form. In addition to performing all these tasks, the `make_eml` function adds another layer of auto-extracted metadata to the EML based on template contents and data object types. Usage of `make_eml` differs slightly based on data package contents comprised of:
+The information rich and machine readable EML metadata file should contain all the necessary content, in the correct format, and in the right schema locations according with best practices informed by scientists who use this information and data repositories who serve it in a human discoverable and readable form. In addition to performing all these tasks, the `make_eml()` function adds another layer of auto-extracted metadata to the EML based on template contents and data object types. Usage of `make_eml()` differs slightly depending on data package contents. The three use cases are:
 
 * **Data tables** Only contains data tables
 * **Other entities** Only contains non-table data types and other digital objects
 * **Data tables and other entities** Contains both data tables and other entities
 
-Below are examples of using `make_eml` to create EML for each of these use cases.
+Below are examples of each use case.
 
-## `make_eml` for data tables
+## `make_eml()` (data tables)
 
-The most common type of data package only contains data tables. To create EML for this package type, the core metadata and table attribute templates should be complete, as well as the categorical variables and custom units templates if necessary. Some additional metadata information is supplied in function arguments including:
+The most common data package only contains tables. To make EML for this package type, the core metadata and table attribute templates should be complete, as well as the categorical variables and custom units templates if necessary. The relevant `make_eml()` arguments for this package type are:
 
 *  **path**  Path to template files
 *  **data.path** Path to data files
@@ -142,7 +142,7 @@ The most common type of data package only contains data tables. To create EML fo
 
 ```{r make EML for data tables, message = FALSE}
 
-# Create EML for data tables
+# Make EML for data tables
 
 make_eml(
   path = './metadata_templates',
@@ -178,9 +178,9 @@ output$doc$children
 
 ```
 
-## `make_eml` for other entities
+## `make_eml()` (other entities)
 
-Some data packages only contain non-tabular data (e.g. geospatial vector, NetCDF, images) or other digital objects (e.g. processing and analysis scripts, modeling code, .pdf). To create EML for this package type, the core metadata templates need to be completed. Several of the same file type, or related file types, should be grouped into an archive format (e.g. zip, rar, tar). Some additional metadata information is supplied in function arguments including:
+Some data packages only contain non-tabular data (e.g. geospatial vector, NetCDF, images) or other digital objects (e.g. processing and analysis scripts, modeling code, .pdf). To make EML for this package type, the core metadata templates should be completed. Several of the same file type, or related file types, should be grouped into an archive format (e.g. zip, rar, tar). The relevant `make_eml()` arguments for this package type are:
 
 *  **path**  Path to template files
 *  **data.path** Path to data files and other digital objects
@@ -198,7 +198,7 @@ Some data packages only contain non-tabular data (e.g. geospatial vector, NetCDF
 
 ```{r make EML for other entities, message = FALSE}
 
-# Create EML for other entities
+# Make EML for other entities
 
 make_eml(
   path = './metadata_templates',
@@ -234,9 +234,9 @@ output$doc$children
 
 ```
 
-## `make_eml` for data tables and other entities
+## `make_eml()` (data tables and other entities)
 
-A third type of data package contains both data tables and other entities. To create EML for this package type, the core metadata and table attribute templates should be complete, as well as the categorical variables and custom units templates if necessary. Some additional metadata information is supplied in function arguments including:
+A third type of data package contains both data tables and other entities. To make EML for this package type, the core metadata and table attribute templates should be complete, as well as the categorical variables and custom units templates if necessary. The relevant `make_eml()` arguments for this package type are:
 
 *  **path**  Path to template files
 *  **data.path** Path to data files
@@ -257,7 +257,7 @@ A third type of data package contains both data tables and other entities. To cr
 
 ```{r make EML for data tables and other entities, message = FALSE}
 
-# Create EML for data tables and other entities
+# Make EML for data tables and other entities
 
 make_eml(
   path = './metadata_templates',

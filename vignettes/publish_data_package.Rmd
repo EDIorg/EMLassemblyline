@@ -5,7 +5,7 @@ output: html_document
 
 ## Choose a repository
 
-Once an information rich EML metadata file has been created for a data package, the next step is to publish the data package in a repository. Before uploading, it’s a good practice and a common courtesy to contact the repository of interest because some repositories:
+Once the information rich EML metadata has been created, the next step is to publish the data package in a repository. Before uploading, it’s a good practice and a common courtesy to contact the repository of interest because some repositories:
 
 * are science domain specific
 * are funding source specific

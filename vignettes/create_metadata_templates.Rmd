@@ -84,17 +84,17 @@ knitr::opts_knit$set(root.dir = 'C:\\Users\\Colin\\Desktop\\data_packages\\edi_3
 
 ## Templating functions
 
-Metadata templates store content that is converted into EML. Each template is created by a templating function that reads a data entity or object, extracts as much information as possible from data entity or object, then writes this information to file for the user to add information to if necessary. Each templating function focuses on a specific metadata feature thereby allowing the user to highlight the unique features of their data. Currently available functions include:
+Metadata templates store content that is converted into EML. Each template is created by a function that reads a data entity or object, extracts as much information as possible from data entity or object, then writes this information to file for the user to add information to if necessary. Each templating function focuses on a specific metadata feature thereby allowing the user to highlight the unique features of their data in a modular fashion. Currently available templating functions include:
 
-*  __`template_core_metadata`__ Create core metadata templates required by all data packages (abstract, methods, keywords, personnel, license). The optional additional information template is included as well.
-*  __`template_table_attributes`__ Create attribute metadata for data tables, including column definitions, classes, and missing value codes. The custom units template is created incase non-standard units need definition.
-*  __`template_categorical_variables`__ Create categorical variable metadata for data tables containing columns of categorical class.
-*  __`template_geographic_coverage`__ Create geographic coverage describing sampling points and areas.
-*  __`template_taxonomic_coverage`__ Create taxonomic coverage metadata including resolution of taxa to authority systems and return of higher rank orders.
+*  __`template_core_metadata()`__ Create core metadata templates required by all data packages (abstract, methods, keywords, personnel, license). The _additional information_ template (optional) is included.
+*  __`template_table_attributes()`__ Create attribute metadata for data tables, including column definitions, classes, and missing value codes. The _custom units_ template is created incase non-standard units need definition.
+*  __`template_categorical_variables()`__ Create categorical variable metadata for data tables containing this data class.
+*  __`template_geographic_coverage()`__ Create geographic coverage describing sampling points and areas.
+*  __`template_taxonomic_coverage()`__ Create taxonomic coverage metadata including resolution to authority systems and hierarchical rank names.
 
 Below is a demonstration of each function and a look at outputs.
 
-## template_core_metadata
+## template_core_metadata()
 
 ```{r call template_core_metadata, message = FALSE}
 
@@ -115,7 +115,7 @@ dir('./metadata_templates')
 
 ```
 
-## template_table_attributes
+## template_table_attributes()
 
 ```{r call template_table_attributes, message = FALSE}
 
@@ -200,7 +200,7 @@ knitr::kable(
 
 ```
 
-## template_categorical variables
+## template_categorical variables()
 
 ```{r call template_categorical_variables, message = FALSE}
 
@@ -261,7 +261,7 @@ knitr::kable(
 
 ```
 
-## template_geographic_coverage
+## template_geographic_coverage()
 
 ```{r call template_geographic_coverage, message = FALSE}
 
@@ -308,7 +308,7 @@ knitr::kable(
 
 ```
 
-## template_taxonomic_coverage
+## template_taxonomic_coverage()
 
 ```{r call template_taxonomic_coverage, message = FALSE}
 

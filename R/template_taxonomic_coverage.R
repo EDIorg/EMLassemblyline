@@ -14,14 +14,14 @@
 #'       taxa.col,
 #'       taxa.name.type,
 #'       taxa.authority,
-#'       x = NULL,
-#'       write.file = TRUE
+#'       write.file = TRUE,
+#'       x = NULL
 #'     )
 #'
 #' @param path 
-#'     (character) Path to where the template will be written.
+#'     (character) Path to the directory where the template will be written.
 #' @param data.path
-#'     (character) Path to where \code{taxa.table} is stored.
+#'     (character) Path to the directory containing \code{taxa.table}.
 #' @param taxa.table
 #'     (character) Name of data table containing \code{taxa.col}.
 #' @param taxa.col
@@ -32,41 +32,42 @@
 #'     \code{scientific}, \code{common}, or \code{both}.
 #' @param taxa.authority
 #'     (integer) An ordered numeric vector of ID's corresponding to data 
-#'     sources (i.e. taxonomic authorities) you'd like to resolve taxa names
-#'     to, in the order of decreasing preference. See the list of supported
-#'     data sources with \code{view_taxa_authorities}. Columns 
-#'     "resolve_sci_taxa", and "resolve_comm_taxa" list authorites supporting
-#'     scientific and common searches, respectively.
-#' @param x
-#'     (named list) Alternative input/output to \code{EMLassemblyline} 
-#'     functions. Use \code{template_arguments} to create \code{x}.
+#'     sources (i.e. taxonomic authorities) to resolve taxa names to, in the 
+#'     order of decreasing preference. See the list of supported data sources 
+#'     with \code{view_taxa_authorities}. Columns "resolve_sci_taxa", and 
+#'     "resolve_comm_taxa" list authorites supporting scientific and common 
+#'     searches, respectively.
 #' @param write.file
-#'     (logical) Write "taxonomic_coverage.txt" to \code{path}.
+#'     (logical; optional) Whether to write the taxonomic coverage template
+#'     to \code{path}.
+#' @param x
+#'     (named list; optional) Alternative input to \code{EMLassemblyline} 
+#'     functions. Use \code{template_arguments()} to create \code{x}.
 #'
 #' @return 
 #'     \itemize{
-#'         \item{\strong{taxonomic_coverage.txt} A tab delimited file written 
-#'         to \code{path} containing authority system names and authority IDs
-#'         for successfully resolved taxa, and "NA" otherwise.}
-#'         \item{If using \code{x}, then content of "taxonomic_coverage.txt is 
-#'         added to \code{x} under "/x/templates".}
+#'         \item{\strong{taxonomic_coverage.txt} A tab delimited table 
+#'         containing authority system names and authority IDs for 
+#'         successfully resolved taxa, and "NA" otherwise.}
+#'         \item{If using \code{x}, then the taxonomic coverage template is 
+#'         added to \strong{/x/templates}.}
 #'     }
 #'     
 #' @details 
-#'     \code{template_taxonomic_coverage} searches the most preferred taxonomic
-#'     authority for all unique taxa listed in \code{taxa.col} returning
-#'     the authority name and corresponding taxa identifier for direct matches
-#'     (no fuzzy searching), then the next most preferred taxonomic authority
-#'     is search for taxa that have not yet been resolved. This process repeats
-#'     for subsequently listed authorities. "NA" is returned when an authority 
-#'     match is not made.
+#'     \code{template_taxonomic_coverage()} searches the most preferred 
+#'     taxonomic authority for all unique taxa listed in \code{taxa.col} 
+#'     returning the authority name and corresponding taxa identifier for 
+#'     direct matches (no fuzzy searching), then the next most preferred 
+#'     taxonomic authority is search for taxa that have not yet been resolved. 
+#'     This process repeats for subsequently listed authorities. "NA" is 
+#'     returned when an authority match is not made.
 #'     
-#'     When "taxonomic_coverage.txt" is passed to \code{make_eml}, the 
+#'     When taxonomic_coverage.txt is passed to \code{make_eml()}, the 
 #'     authority information is used to get the hierarchical rank names of 
 #'     resolved taxa and rendered into the "taxonomicCoverage" element of EML.
 #'     
-#'     Existing "taxonomic_coverage.txt" will not be overwritten by subsequent 
-#'     calls to \code{template_taxonomic_coverage}.
+#'     Existing taxonomic_coverage.txt will not be overwritten by subsequent 
+#'     calls to \code{template_taxonomic_coverage()}.
 #'
 #' @examples 
 #' # Set working directory
