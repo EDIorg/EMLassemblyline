@@ -1,7 +1,7 @@
 #' Create geographic coverage template
 #'
 #' @description  
-#'     Import template for describing the geographic coverage of a dataset.
+#'     Create template for describing the geographic coverage of a data package.
 #'     The content of this template is automatically extracted from a data 
 #'     table containing geographical coordinates.
 #'
@@ -13,43 +13,83 @@
 #'       lat.col, 
 #'       lon.col, 
 #'       site.col, 
-#'       x = NULL, 
-#'       write.file = TRUE
+#'       write.file = TRUE,
+#'       x = NULL
 #'     )
 #'
 #' @param path 
-#'     (character) Path to where the template(s) will be imported.
+#'     (character) Path to the directory where the geographic coverage 
+#'     template will be written.
 #' @param data.path
-#'     (character) Path to where the data files are stored.
+#'     (character) Path to the directory containing \code{data.table}.
 #' @param data.table 
-#'     (character) Data table containing geographic coordinates represented in 
-#'     decimal degrees, where latitudes south of the equator and longitudes 
-#'     west of the prime meridian are negative.
+#'     (character) Name of table containing geographic coordinates 
+#'     represented in decimal degrees, where latitudes south of the equator 
+#'     and longitudes west of the prime meridian are negative.
 #' @param lat.col 
 #'     (character) Name of latitude column.
 #' @param lon.col 
 #'     (character) Name of longitude column.
 #' @param site.col
 #'     (character) Name of site column, where site is the name of the location
-#'     specified by `lat.col` and `lon.col`.
-#' @param x
-#'     (named list) Alternative input/output to `EMLassemblyline` functions. 
-#'     Use \code{template_arguments} to create `x`.
+#'     specified by \code{lat.col} and \code{lon.col}.
 #' @param write.file
-#'     (logical) Write `geographic_coverage.txt` to `path`.
+#'     (logical; optional) Whether to write the geographic coverage template 
+#'     to \code{path}.
+#' @param x
+#'     (named list; optional) Alternative input to 
+#'     \code{EMLassemblyline} functions. Use \code{template_arguments()} to 
+#'     create \code{x}.
 #'
 #' @return 
 #'     \itemize{
-#'         \item{`geographic_coverage.txt` A tab delimited file written to 
-#'         `path` containing geographic coordinates and corresponding site 
-#'         names.}
-#'         \item{If using `x`, then content of `geographic_coverage.txt` is 
-#'         added to `x` under `/x/templates`}
+#'         \item{\strong{geographic_coverage.txt} The geographic 
+#'         coverage template. A tab delimited table.}
+#'         \item{If using \code{x}, then the geographic coverage template is 
+#'         added to \strong{/x/templates}.}
 #'     }
 #'     
 #' @details 
-#'     Existing templates will not be overwritten by subsequent calls to 
-#'     `template_geographic_coverage`.
+#'     An existing geographic coverage template will not be overwritten by 
+#'     subsequent calls to \code{extract_geocoverage()}.
+#'
+#' @examples 
+#' # Set working directory
+#' setwd(tempdir())
+#' 
+#' # Create data package directory "edi_255"
+#' file.copy(
+#'   from = system.file('/examples/edi_255', package = 'EMLassemblyline'),
+#'   to = '.',
+#'   recursive = TRUE
+#' )
+#' 
+#' # View directory contents (NOTE: geographic_coverage.txt doesn't exist)
+#' dir('./edi_255/metadata_templates')
+#' 
+#' # Template geographic coverage
+#' template_geographic_coverage(
+#'   path = './edi_255/metadata_templates',
+#'   data.path = './edi_255/data_objects',
+#'   data.table = 'nitrogen.csv',
+#'   site.col = 'site_name',
+#'   lat.col = 'site_lat',
+#'   lon.col = 'site_lon'
+#' )
+#' 
+#' # View directory contents (NOTE: geographic_coverage.txt exists)
+#' dir('./edi_255/metadata_templates')
+#' 
+#' # Rerunning template_geographic_coverage() does not overwrite files
+#' template_geographic_coverage(
+#'   path = './edi_255/metadata_templates',
+#'   data.path = './edi_255/data_objects',
+#'   data.table = 'nitrogen.csv',
+#'   site.col = 'site_name',
+#'   lat.col = 'site_lat',
+#'   lon.col = 'site_lon'
+#' )
+
 #'
 #' @export
 #'

@@ -39,7 +39,7 @@ navbar:
         href: articles/create_metadata_templates.html
       - text: Edit metadata templates
         href: articles/edit_metadata_templates.html
-      - text: Create EML
+      - text: Make EML
         href: articles/create_eml.html
       - text: Publish data package
         href: articles/publish_data_package.html

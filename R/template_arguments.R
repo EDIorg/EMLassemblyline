@@ -1,9 +1,9 @@
-#' Initialize list of arguments for EMLassemblyline functions
+#' Initialize list of arguments and contents to \code{EMLassemblyline} functions
 #'
 #' @description  
 #'     Initialize the list of arguments for EMLassemblyline functions including
 #'     \code{x}, an argument containing metadata template and data file 
-#'     content. This approach enables programatic interfacing of upstream 
+#'     contents. This approach enables programatic interfacing of upstream 
 #'     metadata sources (e.g. 
 #'     \href{https://github.com/lter/LTER-core-metabase}{LTER-core-metabase}) 
 #'     to \code{EMLassemblyline} functions.
@@ -18,9 +18,11 @@
 #'     )
 #'
 #' @param path 
-#'     (character) Path to metadata templates.
+#'     (character) Path to the directory containing \code{EMLassemblyline} 
+#'     metadata templates.
 #' @param data.path
-#'     (character) Path to data tables and other entities.
+#'     (character) Path to the directory containing \code{data.table} and 
+#'     \code{other.entity}.
 #' @param data.table
 #'     (character) Data table name. If more than one, then supply as a vector 
 #'     of character strings (e.g. 
@@ -34,12 +36,10 @@
 #'     \code{template_arguments} fails to automatically identify field delimiters of 
 #'     \code{data.table}.
 #'
-#' @note 
+#' @details  
 #'     The full named list structure is returned irrespective of NULL inputs,
-#'     so content can be added downstream. If valid inputs are supplied, then
-#'     the respective list structures are populated. Pass the output of this 
-#'     function to \code{make_template_core} to initilize (or add) core 
-#'     template data frames, text objects, or XML objects.
+#'     so content can be added downstream (e.g. \code{EMLassemblyline} templating 
+#'     functions).
 #'
 #' @return 
 #'     (named list) A list of all \code{EMLassemblyline} arguments with this
@@ -59,8 +59,8 @@
 #'     a vector of character strings in the same order as listed in 
 #'     \code{data.table}. This argument is required only if 
 #'     \code{data.table} contain quotations. If the quote character is 
-#'     a quotation, then enter "\\"". If the quote character is an 
-#'     apostrophe, then enter "\\'".}
+#'     a quotation, then enter \code{"\\""}. If the quote character is an 
+#'     apostrophe, then enter \code{"\\'"}.}
 #'     \item{\strong{data.url} (character) A publicly accessible URL to 
 #'     data tables and other entities of this dataset.}
 #'     \item{\strong{dataset.title} (character) Dataset title.}
@@ -71,7 +71,7 @@
 #'     \item{\strong{geographic.coordinates} (character) Geographic coordinates 
 #'     delineating the bounding area or point of a dataset, in decimal 
 #'     degrees. This argument is not required if using 
-#'     \code{bounding_boxes.txt}. Values must be listed in this order: 
+#'     bounding_boxes.txt. Values must be listed in this order: 
 #'     North, East, South, West. Longitudes West of the prime meridian 
 #'     and latitudes South of the equator are negative. If representing 
 #'     a point, repeat the latitude for North and South, and repeat the 
@@ -79,13 +79,13 @@
 #'     \code{geographic.coordinates = c('28.38', '-119.95', '28.38', '-119.95')}).}
 #'     \item{\strong{geographic.description} (character) Geographic 
 #'     description. Don't use this argument if using the 
-#'     \code{bounding_boxes.txt} template.}
+#'     geographic_coverage.txt template.}
 #'     \item{\strong{lat.col} (character) Name of latitude column.}
 #'     \item{\strong{license} (character) License under which the data 
 #'     will be released.}
 #'     \item{\strong{lon.col} (character) Name of longitude column.}
-#'     \item{\strong{maintenance.description} (character) Indicator of 
-#'     whether data collection is 'ongoing' or 'completed'.}
+#'     \item{\strong{maintenance.description} (character) Data collection 
+#'     status. Can be "ongoing" or "completed".}
 #'     \item{\strong{other.entity} (character) Other entity name. If 
 #'     more than one, then supply as a vector of character strings. 
 #'     Other entities should be located at \code{data.path}.}
@@ -102,7 +102,7 @@
 #'     dataset was created (e.g. 'knb-lter-cap.46.3'). If more than one, 
 #'     then supply as a vector of character strings.}
 #'     \item{\strong{return.obj} (logical) Return the EML as an R 
-#'     object of class \code{EML object}.}
+#'     object of class EML object.}
 #'     \item{\strong{sep} (character) Field delimiter to be used when 
 #'     reading data tables.}
 #'     \item{\strong{site.col} (character) Name of site column, where
@@ -111,27 +111,27 @@
 #'     \item{\strong{taxa.authority} (integer) An ordered numeric vector of 
 #'     ID's corresponding to data sources (i.e. taxonomic authorities) 
 #'     you'd like to query, in the order of decreasing preference. Run 
-#'     \code{view_taxa_authorities} to see supported data sources. Columns 
+#'     \code{view_taxa_authorities()} to see supported data sources. Columns 
 #'     "resolve_sci_taxa", and "resolve_comm_taxa" correspond to scientific 
 #'     and common searches.}
 #'     \item{\strong{taxa.col} (character) Name of column in 
 #'     \code{taxa.table}containing taxonomic names.}
 #'     \item{\strong{taxa.name.type} (character) Taxonomic name type. Can be: 
-#'     \code{scientific}, \code{common}, or \code{both}}.
+#'     "scientific", "common", or "both".}
 #'     \item{\strong{taxa.table} (character) Name of data table containing 
-#'     \code{taxa.col}}.
+#'     \code{taxa.col}.}
 #'     \item{\strong{temporal.coverage} (character) Beginning and ending 
 #'     dates of the dataset as a vector of character strings in the 
-#'     format \code{YYYY-MM-DD}.}
+#'     format \strong{YYYY-MM-DD}.}
 #'     \item{\strong{user.domain} (character) Domain of the 
 #'     \code{user.id}. If more than one, then supply as a vector of 
 #'     character strings in the same order corresponding to listed under
-#'     \code{user.id}. Valid options for EDI are 'LTER' and 'EDI'. Other 
+#'     \code{user.id}. Valid options for EDI are "LTER" and "EDI". Other 
 #'     data repository IDs may be used. NULL user.domain defaults to 
-#'     'someuserdomain'.}
+#'     "someuserdomain".}
 #'     \item{\strong{user.id} (character) ID of data repository user 
 #'     account. If more than one, supply as a vector of character 
-#'     strings. NULL user.id defaults to 'someuserid'.}
+#'     strings. NULL user.id defaults to "someuserid".}
 #'     \item{\strong{write.file} (logical) Write file to 
 #'     \code{eml.path}.}
 #'     \item{\strong{x} (named list) List of metadata template, data 

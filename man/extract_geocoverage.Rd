@@ -11,46 +11,86 @@ extract_geocoverage(
       lat.col, 
       lon.col, 
       site.col, 
-      x = NULL, 
-      write.file = TRUE
+      write.file = TRUE,
+      x = NULL
     )
 }
 \arguments{
-\item{path}{(character) Path to where the template(s) will be imported.}
+\item{path}{(character) Path to the directory where the geographic coverage 
+template will be written.}
 
-\item{data.path}{(character) Path to where the data files are stored.}
+\item{data.path}{(character) Path to the directory containing \code{data.table}.}
 
-\item{data.table}{(character) Data table containing geographic coordinates represented in 
-decimal degrees, where latitudes south of the equator and longitudes 
-west of the prime meridian are negative.}
+\item{data.table}{(character) Name of table containing geographic coordinates 
+represented in decimal degrees, where latitudes south of the equator 
+and longitudes west of the prime meridian are negative.}
 
 \item{lat.col}{(character) Name of latitude column.}
 
 \item{lon.col}{(character) Name of longitude column.}
 
 \item{site.col}{(character) Name of site column, where site is the name of the location
-specified by `lat.col` and `lon.col`.}
+specified by \code{lat.col} and \code{lon.col}.}
 
-\item{x}{(named list) Alternative input/output to `EMLassemblyline` functions. 
-Use \code{template_arguments} to create `x`.}
+\item{x}{(named list; optional) Alternative input to 
+\code{EMLassemblyline} functions. Use \code{template_arguments()} to 
+create \code{x}.}
 
-\item{write.file}{(logical) Write `geographic_coverage.txt` to `path`.}
+\item{write.file}{(logical; optional) Whether to write the geographic coverage template 
+to \code{path}.}
 }
 \value{
 \itemize{
-        \item{`geographic_coverage.txt` A tab delimited file written to 
-        `path` containing geographic coordinates and corresponding site 
-        names.}
-        \item{If using `x`, then content of `geographic_coverage.txt` is 
-        added to `x` under `/x/templates`}
+        \item{\strong{geographic_coverage.txt} The geographic 
+        coverage template. A tab delimited table.}
+        \item{If using \code{x}, then the geographic coverage template is 
+        added to \strong{/x/templates}.}
     }
 }
 \description{
-Import template for describing the geographic coverage of a dataset.
+Import template for defining geographic points and areas of a dataset. 
     The content of this template is automatically extracted from a data 
-    table containing geographical coordinates.
+    table containing geographic coordinates.
 }
 \details{
-Existing templates will not be overwritten by subsequent calls to 
-    `extract_geocoverage`.
+An existing geographic coverage template will not be overwritten by 
+    subsequent calls to \code{extract_geocoverage()}.
+}
+\examples{
+# Set working directory
+setwd(tempdir())
+
+# Create data package directory "edi_255"
+file.copy(
+  from = system.file('/examples/edi_255', package = 'EMLassemblyline'),
+  to = '.',
+  recursive = TRUE
+)
+
+# View directory contents (NOTE: geographic_coverage.txt doesn't exist)
+dir('./edi_255/metadata_templates')
+
+# Extract geographic coverage
+extract_geocoverage(
+  path = './edi_255/metadata_templates',
+  data.path = './edi_255/data_objects',
+  data.table = 'nitrogen.csv',
+  site.col = 'site_name',
+  lat.col = 'site_lat',
+  lon.col = 'site_lon'
+)
+
+# View directory contents (NOTE: geographic_coverage.txt exists)
+dir('./edi_255/metadata_templates')
+
+# Rerunning extract_geocoverage() does not overwrite files
+extract_geocoverage(
+  path = './edi_255/metadata_templates',
+  data.path = './edi_255/data_objects',
+  data.table = 'nitrogen.csv',
+  site.col = 'site_name',
+  lat.col = 'site_lat',
+  lon.col = 'site_lon'
+)
+    
 }

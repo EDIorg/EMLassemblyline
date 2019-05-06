@@ -17,7 +17,7 @@ A data package forms a collection of data, metadata, and other digital objects t
 
 The organization scheme we’ve found most useful at EDI is a single directory for each data package containing:
 
-*  __data_objects__ A directory of data and other objects to package (e.g. data tables, analysis scripts, .zip files, etc.).
+*  __data_objects__ A directory of data and other objects to be packaged (e.g. data tables, analysis scripts, .zip files, etc.).
 *  __metadata_templates__ A directory of `EMLassemblyline` metadata templates.
 *  __eml__ A directory of EML files created by `EMLassemblyline`.
 *  __run_EMLassemblyline.R__ An empty R file for scripting the `EMLassemblyline` workflow.
@@ -54,4 +54,4 @@ dir('./edi_301')
 
 ```
 
-Any organization scheme is accepted as long as all the template files of a data package are located in the same directory.
+Any organization scheme is possible as long as all the template files of a data package are located in the same directory.

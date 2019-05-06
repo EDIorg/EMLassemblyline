@@ -1,8 +1,7 @@
-#' Render templates into EML metadata
+#' Make EML metadata
 #'
 #' @description  
-#'     Render the content of metadata templates into the EML, then validate the
-#'     EML and write to file.
+#'     Render the contents of metadata templates into EML and validate.
 #'     
 #' @usage 
 #'     make_eml(
@@ -30,21 +29,22 @@
 #'     )
 #'     
 #' @param path 
-#'     (character) Path to where the template(s) are stored.
+#'     (character) Path to the directory containing \code{EMLassemblyline} 
+#'     templates.
 #' @param data.path
-#'     (character) Path to where the data files are stored.
+#'     (character) Path to the directory containing data objects.
 #' @param eml.path
-#'     (character) Path to where the EML will be written.
+#'     (character) Path to the directory where the EML will be written.
 #' @param dataset.title
 #'     (character) Dataset title. Be descriptive (more than 5 words) and 
 #'     consider including the temporal coverage (e.g. "GLEON: Long term lake 
 #'     chloride concentrations from North America and Europe: 1940-2016").
 #' @param temporal.coverage
 #'     (character) Beginning and ending dates of the dataset as a vector of 
-#'     character strings in the format `YYYY-MM-DD`.
+#'     character strings in the format \strong{YYYY-MM-DD}.
 #' @param geographic.description
 #'     (character) Geographic description. Don't use this argument if geographic
-#'     coordinates in the `bounding_boxes.txt` template.
+#'     coordinates are supplied in the geographic_coverage.txt template.
 #' @param geographic.coordinates
 #'     (character) Geographic coordinates delineating the bounding area or 
 #'     point of a dataset, in decimal degrees. Values must be listed in this 
@@ -52,75 +52,154 @@
 #'     prime meridian and latitudes South of the equator are negative. If 
 #'     representing a point, repeat the latitude for North and South, and 
 #'     repeat the longitude for East and West (e.g. 
-#'     `geographic.coordinates = c('28.38', '-119.95', '28.38', '-119.95)`).
+#'     \code{geographic.coordinates = c('28.38', '-119.95', '28.38', '-119.95')}).
+#'     Don't use this argument if geographic coordinates are supplied in the 
+#'     geographic_coverage.txt template.
 #' @param maintenance.description
-#'     (character) Indicator of whether data collection is `ongoing` or 
-#'     `completed`.
+#'     (character) Data collection status. Can be "ongoing" or "completed".
 #' @param data.table
-#'     (character) Data table name(s). If more than one, then supply as a 
-#'     vector of character strings (e.g. 
-#'     `data.table = c("concentrations.csv", "characteristics.csv")`).
+#'     (character; optional) Name of data table. If more than one, then supply 
+#'     as a vector of character strings (e.g. 
+#'     \code{data.table = c("concentrations.csv", "characteristics.csv")}).
 #' @param data.table.description
-#'     (character) Data table description(s). Brief description of `data.table`.
-#'     If more than one, then supply as a vector of character strings in the 
-#'     same order as listed in `data.table`.
+#'     (character; optional) Data table description(s). Brief description of 
+#'     \code{data.table}. If more than one, then supply as a vector of 
+#'     character strings in the same order as listed in \code{data.table}.
 #' @param data.table.quote.character
-#'     (character) Quote character(s) used in `data.table`. If more than one, 
-#'     then supply as a vector of character strings in the same order as 
-#'     listed in `data.table`. This argument is required only if your data 
-#'     contain quotations. If the quote character is a quotation, then enter 
-#'     `"\\""`. If the quote character is an apostrophe, then enter `"\\'"`.
+#'     (character; optional) Quote character(s) used in \code{data.table}. If 
+#'     more than one, then supply as a vector of character strings in the same 
+#'     order as listed in \code{data.table}. This argument is required only if 
+#'     your data contain quotations. If the quote character is a quotation, 
+#'     then enter \code{"\\""}. If the quote character is an apostrophe, then 
+#'     enter \code{"\\'"}.
 #' @param other.entity
-#'     (character) Name(s) of `other.entity`(s) in this dataset. Use
-#'     `other.entity` for all non-`data.table` files. `other.entity`(s) should 
-#'     be stored at `data.path`.
+#'     (character; optional) Name(s) of \code{other.entity}(s) in this 
+#'     dataset. Use \code{other.entity} for all non-\code{data.table} files. 
+#'     \code{other.entity}(s) should be stored at \code{data.path}. If more 
+#'     than one, then supply as a vector of character strings (e.g. 
+#'     \code{other.entity = c('ancillary_data.zip', 'quality_control.R')}).
 #' @param other.entity.description
-#'     (character) Description(s) of `other.entity`(s). If more than one, then 
-#'     supply as a vector of descriptions in the same order as listed in 
-#'     `other.entity`.
+#'     (character; optional) Description(s) of \code{other.entity}(s). If more 
+#'     than one, then supply as a vector of descriptions in the same order as 
+#'     listed in \code{other.entity}.
 #' @param data.url
-#'     (character) The URL of where your data can be downloaded by a
+#'     (character; optional) The URL of where your data can be downloaded by a
 #'     data repository. This argument is not required, if the data will be 
 #'     manually uploaded to a data repository.
 #' @param provenance
-#'     (character) EDI Data Repository Data package ID(s) corresponding to 
-#'     parent datasets from which this dataset was created (e.g. 
-#'     `knb-lter-cap.46.3`).
+#'     (character; optional) EDI Data Repository Data package ID(s) 
+#'     corresponding to parent datasets from which this dataset was created 
+#'     (e.g. \code{knb-lter-cap.46.3}).
 #' @param user.id
-#'     (character) ID(s) of data repository user account(s). If more than one,
-#'     supply as a vector of character strings. Contact EDI 
-#'     (info@@environmentaldatainitiative.org) to obtain one. This argument is
-#'     not required.
+#'     (character; optional) ID(s) of data repository user account(s). If more 
+#'     than one, supply as a vector of character strings. Contact EDI 
+#'     (info@@environmentaldatainitiative.org) to obtain one.
 #' @param user.domain
-#'     (character) Domain of the `user.id`(s). Valid options for EDI are
-#'     `LTER` and `EDI`. If more than one, supply as a vector of character 
-#'     strings in the same order as corresponding `user.id`(s). This argument
-#'     is not required.
+#'     (character; optional) Domain of the \code{user.id}(s). Valid options 
+#'     for EDI are "LTER" and "EDI". If more than one, supply as a vector of 
+#'     character strings in the same order as corresponding \code{user.id}(s).
 #' @param package.id
-#'     (character) EDI Data Repository Data package ID for this dataset. A 
-#'     missing package ID defaults to `edi.101.1`.
+#'     (character; optional) Data Repository data package ID for this dataset. A 
+#'     missing package ID defaults to "edi.101.1".
 #' @param write.file
-#'     (logical) Write file to `eml.path`.
+#'     (logical; optional) Whether to write the EML file to \code{eml.path}.
 #' @param return.obj
-#'     (logical) Return the EML as an R object of class `EML object`.
+#'     (logical; optional) Return the EML as an R object of class 
+#'     \code{EML object}.
 #' @param x
-#'     (named list) Alternative input/output to `EMLassemblyline` functions. 
-#'     Use \code{template_arguments} to create `x`.
+#'     (named list; optional) Alternative input to \code{EMLassemblyline} 
+#'     functions. Use \code{template_arguments()} to create \code{x}.
 #'     
 #' @return 
 #'     \itemize{
-#'         \item{`Status messages` describing the EML creation status}
-#'         \item{`Validation result` indicating whether the EML is schema valid}
-#'         \item{`EML file` written to `path` and in the form `package.id.xml`}
-#'         \item{`EML object` when `return.obj = TRUE`}
+#'         \item{\strong{EML file} written to \code{eml.path}.}
+#'         \item{\strong{EML object} when \code{return.obj = TRUE}.}
 #'     }
 #'     
 #' @details 
-#'     If validation fails, open the EML document in a .xml editor to identify 
-#'     the source of error. Often the error is small and quickly resolved with 
-#'     the aid of an editors schema validator. If the issue can't be resolved
-#'     then forward the `EML` to info@@environmentaldatainitiative.org for 
-#'     support.
+#'     \code{make_eml()} reads the contents of metadata templates, 
+#'     auto-extracts additional metadata from the data entities, appends value 
+#'     added content (e.g. resolving keywords to controlled vocabularies), and 
+#'     adds all the metadata content to locations in the EML schema according 
+#'     with best practice recommendations of scientists, data managers, and 
+#'     data repositories. The EML is then validated against the schema and 
+#'     written to file.
+#'
+#' @examples 
+#' # Set working directory
+#' setwd(tempdir())
+#' 
+#' # Create data package directory "edi_260"
+#' file.copy(
+#'   from = system.file('/examples/edi_260', package = 'EMLassemblyline'),
+#'   to = '.',
+#'   recursive = TRUE
+#' )
+#' 
+#' # Make EML (for data package with data tables)
+#' 
+#' make_eml(
+#'   path = './edi_260/metadata_templates',
+#'   data.path = './edi_260/data_objects',
+#'   eml.path = './edi_260/eml',
+#'   dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions',
+#'   temporal.coverage = c('2014-05-01', '2015-10-31'),
+#'   geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+#'   geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+#'   maintenance.description = 'completed',
+#'   data.table = c('decomp.csv', 'nitrogen.csv'),
+#'   data.table.description = c('Decomposition data', 'Nitrogen data'),
+#'   user.id = 'csmith',
+#'   user.domain = 'EDI',
+#'   package.id = 'edi.260.1'
+#' )
+#' 
+#' # View EML directory contents (NOTE: edi.260.1 exists)
+#' dir('./edi_260/eml')
+#' 
+#' # Make EML (for data package with other entities)
+#' 
+#' make_eml(
+#'   path = './edi_260/metadata_templates',
+#'   data.path = './edi_260/data_objects',
+#'   eml.path = './edi_260/eml',
+#'   dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions',
+#'   temporal.coverage = c('2014-05-01', '2015-10-31'),
+#'   geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+#'   geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+#'   maintenance.description = 'completed',
+#'   other.entity = c('ancillary_data.zip', 'processing_and_analysis.R'),
+#'   other.entity.description = c('Ancillary data', 'Data processing and analysis script'),
+#'   user.id = 'csmith',
+#'   user.domain = 'EDI',
+#'   package.id = 'edi.260.2'
+#' )
+#' 
+#' # View EML directory contents (NOTE: edi.260.2 exists)
+#' dir('./edi_260/eml')
+#' 
+#' # Make EML (for data package with data tables and other entities)
+#' 
+#' make_eml(
+#'   path = './edi_260/metadata_templates',
+#'   data.path = './edi_260/data_objects',
+#'   eml.path = './edi_260/eml',
+#'   dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions',
+#'   temporal.coverage = c('2014-05-01', '2015-10-31'),
+#'   geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+#'   geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+#'   maintenance.description = 'completed',
+#'   data.table = c('decomp.csv', 'nitrogen.csv'),
+#'   data.table.description = c('Decomposition data', 'Nitrogen data'),
+#'   other.entity = c('ancillary_data.zip', 'processing_and_analysis.R'),
+#'   other.entity.description = c('Ancillary data', 'Data processing and analysis script'),
+#'   user.id = 'csmith',
+#'   user.domain = 'EDI',
+#'   package.id = 'edi.260.3'
+#' )
+#' 
+#' # View EML directory contents (NOTE: edi.260.3 exists)
+#' dir('./edi_260/eml')
 #'
 #' @export
 #'

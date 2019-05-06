@@ -122,7 +122,7 @@ knitr::opts_knit$set(root.dir = 'C:\\Users\\Colin\\Desktop\\data_packages\\edi_3
 
 ## Editing
 
-While a substantial portion of metadata content is auto-extracted, most templates require some user input. Template files can be edited in simple text and spreadsheet editors. Specific instructions for each template are found below.
+While a substantial portion of metadata is automatically extracted by the templating functions, most templates require some user input. Templates can be edited in simple text and spreadsheet editors. Specific editing instructions are below.
 
 _NOTE:_
 
@@ -178,7 +178,7 @@ knitr::kable(
 
 ## keywords.txt
 
-Keywords facilitate search and discovery along scientific terms, as well as research groups, field stations, and other organizations. Using a controlled vocabulary or thesaurus vastly improves discovery (e.g. [LTER](http://vocab.lternet.edu/vocab/vocab/index.php).
+Keywords facilitate search and discovery on scientific terms, as well as names of research groups, field stations, and other organizations. Using a controlled vocabulary or thesaurus vastly improves discovery (e.g. [LTER](http://vocab.lternet.edu/vocab/vocab/index.php).
 
 __keywords.txt__ is a tab delimited table with columns:
 
@@ -522,13 +522,17 @@ knitr::kable(
 
 __taxonomic_coverage.txt__ is a tab delimited table with columns:
 
-* **taxa** Taxa name as it occurs in the data. Can be single word or species binomial.
-* **scientific_name** (optional) Taxa’s scientific name found in an authority system (e.g. _Perca flavescens_)
-* **scientific_authority_system** (optional) Authority system in which the taxa’s scientific name was found (e.g. ITIS).
-* **scientific_authority_id** (optional) Taxa’s identifier in the authority system (e.g. 168469).
-* **common_name** (optional) Taxa’s common name found in an authority system (e.g. Yellow Perch).
-* **common_authority_system** (optional) Authority system in which the taxa’s common name was found (e.g. ITIS).
-* **common_authority_id** (optional) Taxa’s identifier in the authority system (e.g. 168469).
+* **taxa_raw** Taxa name as it occurs in the data. Can be single word or species binomial.
+* **name_type** (optional) Type of taxonomic name. Can be `scientific` or `common`.
+* **name_resolved** (optional) Taxa’s name found in an authority system.
+* **authority_system** (optional) Authority system in which the taxa’s scientific name was found (e.g. ITIS).
+* **authority_id** (optional) Taxa’s identifier in the authority system (e.g. 168469).
+
+name = taxa_raw,
+      name_type = rep('scientific', length(taxa_raw)),
+      name_resolved = rep(NA_character_, length(taxa_raw)),
+      authority_system = rep(NA_character_, length(taxa_raw)), 
+      authority_id = rep(NA_character_, length(taxa_raw)),
 
 Example:
 
