@@ -105,6 +105,12 @@
 #'   taxa.authority = c(3,11),
 #'   taxa.name.type = 'both'
 #' )
+#' 
+#' # Clean up
+#' unlink(
+#'   './edi_255',
+#'   recursive = TRUE
+#' )
 #'
 #' @export
 #'
@@ -120,7 +126,7 @@ template_taxonomic_coverage <- function(
   write.file = TRUE
   ){
   
-  message('Creating taxonomic coverage template.')
+  message('Templating taxonomic coverage ...')
 
   # Validate arguments --------------------------------------------------------
 
@@ -142,18 +148,6 @@ template_taxonomic_coverage <- function(
     fun.args = as.list(environment())
   )
   
-  # Check for existing content
-  
-  if (is.null(x)){
-    if (isTRUE('taxonomic_coverage.txt' %in% list.files(path))){
-      stop('taxonomic_coverage.txt already exists.')
-    }
-  } else if (!is.null(x)){
-    if (!is.null(x$template$taxonomic_coverage.txt$content)){
-      stop('taxonomic_coverage.txt already exists.')
-    }
-  }
-  
   # Read data -----------------------------------------------------------------
 
   # Create x if it doesn't exist
@@ -170,6 +164,7 @@ template_taxonomic_coverage <- function(
     # Read templates and data.table into list
 
     x <- template_arguments(
+      path = path,
       data.path = data.path,
       data.table = taxa.table
     )
@@ -180,180 +175,190 @@ template_taxonomic_coverage <- function(
 
   }
   
-  # Identify unique taxa ------------------------------------------------------
+  # Check if taxonomic_coverage.txt exists ------------------------------------
   
-  taxa_raw <- unique(
-    x$data.table[[taxa.table]]$content[ , taxa.col]
-  )
-
-  # Resolve scientific names --------------------------------------------------
-  
-  if (taxa.name.type == 'scientific'){
+  if (is.data.frame(x$template$taxonomic_coverage.txt$content)){
     
-    # Initialize output
+    message('taxonomic_coverage.txt already exists!')
     
-    output_scientific <- data.frame(
-      name = taxa_raw,
-      name_type = rep('scientific', length(taxa_raw)),
-      name_resolved = rep(NA_character_, length(taxa_raw)),
-      authority_system = rep(NA_character_, length(taxa_raw)), 
-      authority_id = rep(NA_character_, length(taxa_raw)),
-      stringsAsFactors = FALSE
+  } else {
+    
+    # Identify unique taxa ----------------------------------------------------
+    
+    taxa_raw <- unique(
+      x$data.table[[taxa.table]]$content[ , taxa.col]
     )
     
-    # Resolve and add to output
+    # Resolve scientific names ------------------------------------------------
     
-    taxa_resolved <- taxonomyCleanr::resolve_sci_taxa(
-      data.sources = taxa.authority,
-      x = taxonomyCleanr::trim_taxa(
-        x = taxa_raw
+    if (taxa.name.type == 'scientific'){
+      
+      # Initialize output
+      
+      output_scientific <- data.frame(
+        name = taxa_raw,
+        name_type = rep('scientific', length(taxa_raw)),
+        name_resolved = rep(NA_character_, length(taxa_raw)),
+        authority_system = rep(NA_character_, length(taxa_raw)), 
+        authority_id = rep(NA_character_, length(taxa_raw)),
+        stringsAsFactors = FALSE
       )
-    )
-
-    output_scientific$name_resolved <- taxa_resolved$taxa_clean
-    
-    output_scientific$authority_system <- taxa_resolved$authority
-    
-    output_scientific$authority_id <- taxa_resolved$authority_id
-
-  }
-  
-  # Resolve common names ------------------------------------------------------
-  
-  if (taxa.name.type == 'common'){
-
-    # Initialize output
-    
-    output_common <- data.frame(
-      name = taxa_raw,
-      name_type = rep('common', length(taxa_raw)),
-      name_resolved = rep(NA_character_, length(taxa_raw)),
-      authority_system = rep(NA_character_, length(taxa_raw)), 
-      authority_id = rep(NA_character_, length(taxa_raw)),
-      stringsAsFactors = FALSE
-    )
-    
-    # Resolve and add to output
-    
-    taxa_resolved <- taxonomyCleanr::resolve_comm_taxa(
-      data.sources = 3,
-      x = taxonomyCleanr::trim_taxa(
-        x = taxa_raw
+      
+      # Resolve and add to output
+      
+      taxa_resolved <- taxonomyCleanr::resolve_sci_taxa(
+        data.sources = taxa.authority,
+        x = taxonomyCleanr::trim_taxa(
+          x = taxa_raw
+        )
       )
-    )
+      
+      output_scientific$name_resolved <- taxa_resolved$taxa_clean
+      
+      output_scientific$authority_system <- taxa_resolved$authority
+      
+      output_scientific$authority_id <- taxa_resolved$authority_id
+      
+    }
     
-    output_common$name_resolved <- taxa_resolved$taxa_clean
+    # Resolve common names ----------------------------------------------------
     
-    output_common$authority_system <- taxa_resolved$authority
-    
-    output_common$authority_id <- taxa_resolved$authority_id
-    
-  }
-  
-  # Resolve scientific and common names ---------------------------------------
-  
-  if (taxa.name.type == 'both'){
-    
-    # Initialize output
-    
-    output_scientific <- data.frame(
-      name = taxa_raw,
-      name_type = rep('scientific', length(taxa_raw)),
-      name_resolved = rep(NA_character_, length(taxa_raw)),
-      authority_system = rep(NA_character_, length(taxa_raw)), 
-      authority_id = rep(NA_character_, length(taxa_raw)),
-      stringsAsFactors = FALSE
-    )
-    
-    output_common <- data.frame(
-      name = taxa_raw,
-      name_type = rep('common', length(taxa_raw)),
-      name_resolved = rep(NA_character_, length(taxa_raw)),
-      authority_system = rep(NA_character_, length(taxa_raw)), 
-      authority_id = rep(NA_character_, length(taxa_raw)),
-      stringsAsFactors = FALSE
-    )
-
-    # Resolve and add to output (scientific)
-    
-    taxa_resolved <- taxonomyCleanr::resolve_sci_taxa(
-      data.sources = taxa.authority,
-      x = taxonomyCleanr::trim_taxa(
-        x = taxa_raw
+    if (taxa.name.type == 'common'){
+      
+      # Initialize output
+      
+      output_common <- data.frame(
+        name = taxa_raw,
+        name_type = rep('common', length(taxa_raw)),
+        name_resolved = rep(NA_character_, length(taxa_raw)),
+        authority_system = rep(NA_character_, length(taxa_raw)), 
+        authority_id = rep(NA_character_, length(taxa_raw)),
+        stringsAsFactors = FALSE
       )
-    )
-    
-    output_scientific$name_resolved <- taxa_resolved$taxa_clean
-    
-    output_scientific$authority_system <- taxa_resolved$authority
-    
-    output_scientific$authority_id <- taxa_resolved$authority_id
-    
-    # Resolve and add to output (common)
-    
-    taxa_resolved <- taxonomyCleanr::resolve_comm_taxa(
-      data.sources = 3,
-      x = taxonomyCleanr::trim_taxa(
-        x = taxa_raw
+      
+      # Resolve and add to output
+      
+      taxa_resolved <- taxonomyCleanr::resolve_comm_taxa(
+        data.sources = 3,
+        x = taxonomyCleanr::trim_taxa(
+          x = taxa_raw
+        )
       )
-    )
+      
+      output_common$name_resolved <- taxa_resolved$taxa_clean
+      
+      output_common$authority_system <- taxa_resolved$authority
+      
+      output_common$authority_id <- taxa_resolved$authority_id
+      
+    }
     
-    output_common$name_resolved <- taxa_resolved$taxa_clean
+    # Resolve scientific and common names -------------------------------------
     
-    output_common$authority_system <- taxa_resolved$authority
-    
-    output_common$authority_id <- taxa_resolved$authority_id
-
-  }
-  
-  # Aggregate outputs ---------------------------------------------------------
-  
-  if (exists('output_scientific') & exists('output_common')){
-    
-    output <- rbind(
-      output_scientific,
-      output_common
-    )
-    
-  } else if (exists('output_scientific') & !exists('output_common')){
-    
-    output <- output_scientific
-    
-  } else if (!exists('output_scientific') & exists('output_common')){
-    
-    output <- output_common
-    
-  }
-  
-  # Write to file or add to x -------------------------------------------------
-  
-  if (isTRUE(write.file) & exists('data_read_2_x')){
-    
-    message('Writing taxonomic_coverage.txt to path')
-    
-    suppressWarnings(
-      utils::write.table(
-        output,
-        paste0(
-          path,
-          "/",
-          "taxonomic_coverage.txt"
-        ),
-        sep = "\t",
-        row.names = F,
-        quote = F,
-        fileEncoding = "UTF-8"
+    if (taxa.name.type == 'both'){
+      
+      # Initialize output
+      
+      output_scientific <- data.frame(
+        name = taxa_raw,
+        name_type = rep('scientific', length(taxa_raw)),
+        name_resolved = rep(NA_character_, length(taxa_raw)),
+        authority_system = rep(NA_character_, length(taxa_raw)), 
+        authority_id = rep(NA_character_, length(taxa_raw)),
+        stringsAsFactors = FALSE
       )
-    )
+      
+      output_common <- data.frame(
+        name = taxa_raw,
+        name_type = rep('common', length(taxa_raw)),
+        name_resolved = rep(NA_character_, length(taxa_raw)),
+        authority_system = rep(NA_character_, length(taxa_raw)), 
+        authority_id = rep(NA_character_, length(taxa_raw)),
+        stringsAsFactors = FALSE
+      )
+      
+      # Resolve and add to output (scientific)
+      
+      taxa_resolved <- taxonomyCleanr::resolve_sci_taxa(
+        data.sources = taxa.authority,
+        x = taxonomyCleanr::trim_taxa(
+          x = taxa_raw
+        )
+      )
+      
+      output_scientific$name_resolved <- taxa_resolved$taxa_clean
+      
+      output_scientific$authority_system <- taxa_resolved$authority
+      
+      output_scientific$authority_id <- taxa_resolved$authority_id
+      
+      # Resolve and add to output (common)
+      
+      taxa_resolved <- taxonomyCleanr::resolve_comm_taxa(
+        data.sources = 3,
+        x = taxonomyCleanr::trim_taxa(
+          x = taxa_raw
+        )
+      )
+      
+      output_common$name_resolved <- taxa_resolved$taxa_clean
+      
+      output_common$authority_system <- taxa_resolved$authority
+      
+      output_common$authority_id <- taxa_resolved$authority_id
+      
+    }
     
-  } else if (!exists('data_read_2_x')){
+    # Aggregate outputs -------------------------------------------------------
     
-    message('Adding taxonomic_coverage.txt to x')
+    if (exists('output_scientific') & exists('output_common')){
+      
+      output <- rbind(
+        output_scientific,
+        output_common
+      )
+      
+    } else if (exists('output_scientific') & !exists('output_common')){
+      
+      output <- output_scientific
+      
+    } else if (!exists('output_scientific') & exists('output_common')){
+      
+      output <- output_common
+      
+    }
     
-    x$template$taxonomic_coverage.txt$content <- output
+    # Write to file or add to x -----------------------------------------------
     
-    return(x)
-
+    if (isTRUE(write.file) & exists('data_read_2_x')){
+      
+      message('taxonomic_coverage.txt')
+      
+      suppressWarnings(
+        utils::write.table(
+          output,
+          paste0(
+            path,
+            "/",
+            "taxonomic_coverage.txt"
+          ),
+          sep = "\t",
+          row.names = F,
+          quote = F,
+          fileEncoding = "UTF-8"
+        )
+      )
+      
+    } else if (!exists('data_read_2_x')){
+      
+      message('Adding taxonomic_coverage.txt to x')
+      
+      x$template$taxonomic_coverage.txt$content <- output
+      
+      return(x)
+      
+    }
+    
   }
   
   message("Done.")

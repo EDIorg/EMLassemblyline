@@ -11,4 +11,4 @@ keywords	keywords.txt	\t	TRUE	data.frame
 methods	methods.txt	NA	TRUE	methods
 personnel	personnel.txt	\t	TRUE	data.frame
 taxonomicCoverage	taxonomicCoverage.xml	NA	TRUE	taxonomicCoverage
-taxonomic_coverage	taxonomic_coverage.txt	\t	FALSE	data.frame
+taxonomic_coverage	taxonomic_coverage.txt	\t	TRUE	data.frame
