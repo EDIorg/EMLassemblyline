@@ -89,7 +89,12 @@
 #'   lat.col = 'site_lat',
 #'   lon.col = 'site_lon'
 #' )
-
+#' 
+#' # Clean up
+#' unlink(
+#'   './edi_255',
+#'   recursive = TRUE
+#' )
 #'
 #' @export
 #'
@@ -98,7 +103,7 @@ template_geographic_coverage <- function(path, data.path = path, data.table,
                                          lat.col, lon.col, site.col, x = NULL, 
                                          write.file = TRUE){
   
-  message('Creating geographic coverage template.')
+  message('Templating geographic coverage ...')
   
   # Validate arguments --------------------------------------------------------
   
@@ -143,6 +148,7 @@ template_geographic_coverage <- function(path, data.path = path, data.table,
     # Read data table
     
     x <- template_arguments(
+      path = path,
       data.path = data.path,
       data.table = data_file
     )
@@ -176,6 +182,8 @@ template_geographic_coverage <- function(path, data.path = path, data.table,
     message("geographic_coverage.txt already exists!")
     
   } else {
+    
+    message('geographic_coverage.txt')
     
     df_table <- x$data.table[[data_file]]$content
     
@@ -255,8 +263,6 @@ template_geographic_coverage <- function(path, data.path = path, data.table,
     # Write geographic_coverage.txt -------------------------------------------
     
     if (isTRUE(write.file)){
-      
-      message('Writing geographic_coverage.txt to path')
       
       suppressWarnings(
         utils::write.table(
