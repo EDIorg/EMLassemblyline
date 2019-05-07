@@ -212,7 +212,7 @@ to create <code>x</code>.</p></td>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/getwd'>setwd</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(), <span class='st'>'./pkg_250'</span>))
 
 <span class='co'># View directory contents (NOTE: Directory is empty)</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='st'>'./metadata_templates'</span>)</div><div class='output co'>#&gt; character(0)</div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='st'>'./metadata_templates'</span>)</div><div class='output co'>#&gt; [1] "README.txt"</div><div class='input'>
 <span class='co'># Template core metadata</span>
 <span class='fu'>template_core_metadata</span>(
   <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./metadata_templates'</span>,
@@ -221,7 +221,8 @@ to create <code>x</code>.</p></td>
 <span class='co'># View directory contents (NOTE: Templates exist)</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='st'>'./metadata_templates'</span>)</div><div class='output co'>#&gt; [1] "abstract.txt"            "additional_info.txt"    
 #&gt; [3] "intellectual_rights.txt" "keywords.txt"           
-#&gt; [5] "methods.txt"             "personnel.txt"          </div><div class='input'>
+#&gt; [5] "methods.txt"             "personnel.txt"          
+#&gt; [7] "README.txt"             </div><div class='input'>
 <span class='co'># Rerunning template_core_metadata() does not overwrite files</span>
 <span class='fu'>template_core_metadata</span>(
   <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./metadata_templates'</span>,

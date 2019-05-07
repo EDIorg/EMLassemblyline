@@ -68,7 +68,7 @@
 #' # Create data package directory "pkg_250"
 #' file.copy(
 #'   from = system.file('/examples/pkg_250', package = 'EMLassemblyline'),
-#'   to = '.',
+#'   to = tempdir(),
 #'   recursive = TRUE
 #' )
 #'

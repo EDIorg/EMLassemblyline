@@ -228,11 +228,11 @@ functions. Use <code><a href='template_arguments.html'>template_arguments()</a><
 <span class='co'># Create data package directory "pkg_250"</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/files'>file.copy</a></span>(
   <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>'/examples/pkg_250'</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'EMLassemblyline'</span>),
-  <span class='kw'>to</span> <span class='kw'>=</span> <span class='st'>'.'</span>,
+  <span class='kw'>to</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),
   <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># View directory contents (NOTE: Directory is empty)</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='st'>'./pkg_250/metadata_templates'</span>)</div><div class='output co'>#&gt; character(0)</div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='st'>'./pkg_250/metadata_templates'</span>)</div><div class='output co'>#&gt; [1] "README.txt"</div><div class='input'>
 <span class='co'># Import templates (for data package with no tables)</span>
 <span class='fu'>import_templates</span>(
   <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./pkg_250/metadata_templates'</span>,
@@ -244,7 +244,8 @@ functions. Use <code><a href='template_arguments.html'>template_arguments()</a><
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='st'>'./pkg_250/metadata_templates'</span>)</div><div class='output co'>#&gt; [1] "abstract.txt"            "additional_info.txt"    
 #&gt; [3] "bounding_boxes.txt"      "custom_units.txt"       
 #&gt; [5] "intellectual_rights.txt" "keywords.txt"           
-#&gt; [7] "methods.txt"             "personnel.txt"          </div><div class='input'>
+#&gt; [7] "methods.txt"             "personnel.txt"          
+#&gt; [9] "README.txt"             </div><div class='input'>
 <span class='co'># Rerunning import_templates() does not overwrite files</span>
 <span class='fu'>import_templates</span>(
   <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./pkg_250/metadata_templates'</span>,
@@ -255,7 +256,7 @@ functions. Use <code><a href='template_arguments.html'>template_arguments()</a><
 <span class='co'># Remove templates from directory</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/files'>file.remove</a></span>(
   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>list.files</a></span>(<span class='st'>'./pkg_250/metadata_templates'</span>, <span class='kw'>full.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-)</div><div class='output co'>#&gt; [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</div><div class='input'>
+)</div><div class='output co'>#&gt; [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</div><div class='input'>
 <span class='co'># Import templates (for data package with tables)</span>
 <span class='fu'>import_templates</span>(
   <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./pkg_250/metadata_templates'</span>,

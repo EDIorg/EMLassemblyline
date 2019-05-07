@@ -138,13 +138,13 @@
   <span class="dt">path =</span> <span class="st">'./pkg_301/metadata_templates'</span>,
   <span class="dt">license =</span> <span class="st">'CC0'</span>
 )</code></pre></div>
-<pre><code>## Creating core metadata templates</code></pre>
-<pre><code>## Importing abstract.txt.</code></pre>
-<pre><code>## Importing additional_info.txt.</code></pre>
-<pre><code>## Importing intellectual_rights.txt.</code></pre>
-<pre><code>## Importing keywords.txt.</code></pre>
-<pre><code>## Importing methods.txt.</code></pre>
-<pre><code>## Importing personnel.txt.</code></pre>
+<pre><code>## Templating core metadata ...</code></pre>
+<pre><code>## abstract.txt</code></pre>
+<pre><code>## additional_info.txt</code></pre>
+<pre><code>## intellectual_rights.txt</code></pre>
+<pre><code>## keywords.txt.</code></pre>
+<pre><code>## methods.txt</code></pre>
+<pre><code>## personnel.txt</code></pre>
 <pre><code>## Done.</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Core templates are now present</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/metadata_templates'</span>)</code></pre></div>
@@ -177,10 +177,10 @@
   <span class="dt">data.path =</span> <span class="st">'./pkg_301/data_objects'</span>,
   <span class="dt">data.table =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'decomp.csv'</span>, <span class="st">'nitrogen.csv'</span>)
 )</code></pre></div>
-<pre><code>## Creating table attributes template</code></pre>
-<pre><code>## Creating attributes_decomp.txt.</code></pre>
-<pre><code>## Creating attributes_nitrogen.txt.</code></pre>
-<pre><code>## Importing custom_units.txt.</code></pre>
+<pre><code>## Templating table attributes ...</code></pre>
+<pre><code>## attributes_decomp.txt.</code></pre>
+<pre><code>## attributes_nitrogen.txt.</code></pre>
+<pre><code>## custom_units.txt</code></pre>
 <pre><code>## Done.</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Table attributes templates are now present</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/metadata_templates'</span>)</code></pre></div>
@@ -618,9 +618,9 @@ numeric
   <span class="dt">path =</span> <span class="st">'./pkg_301/metadata_templates'</span>,
   <span class="dt">data.path =</span> <span class="st">'./pkg_301/data_objects'</span>
 )</code></pre></div>
-<pre><code>## Creating categorical variable template.</code></pre>
-<pre><code>## Writing catvars_decomp.txt</code></pre>
-<pre><code>## Writing catvars_nitrogen.txt</code></pre>
+<pre><code>## Templating categorical variables ...</code></pre>
+<pre><code>## catvars_decomp.txt</code></pre>
+<pre><code>## catvars_nitrogen.txt</code></pre>
 <pre><code>## Done.</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Categorical variable templates are now present</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/metadata_templates'</span>)</code></pre></div>
@@ -876,8 +876,8 @@ arm
   <span class="dt">lat.col =</span> <span class="st">'site_lat'</span>,
   <span class="dt">lon.col =</span> <span class="st">'site_lon'</span>
 )</code></pre></div>
-<pre><code>## Creating geographic coverage template.</code></pre>
-<pre><code>## Writing geographic_coverage.txt to path</code></pre>
+<pre><code>## Templating geographic coverage ...</code></pre>
+<pre><code>## geographic_coverage.txt</code></pre>
 <pre><code>## Done.</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The geographic coverage template has been added</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/metadata_templates'</span>)</code></pre></div>
@@ -2696,7 +2696,7 @@ site_104
   <span class="dt">taxa.authority =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">3</span>,<span class="dv">11</span>),
   <span class="dt">taxa.name.type =</span> <span class="st">'both'</span>
 )</code></pre></div>
-<pre><code>## Creating taxonomic coverage template.</code></pre>
+<pre><code>## Templating taxonomic coverage ...</code></pre>
 <pre><code>## Searching ITIS for "Mosses"</code></pre>
 <pre><code>## Searching GBIF Backbone Taxonomy for "Mosses"</code></pre>
 <pre><code>## Searching ITIS for "Unsorted biomass"</code></pre>
@@ -2781,7 +2781,7 @@ site_104
 ## Retrieving data for taxon 'Liatris aspera'</code></pre>
 <pre><code>## 
 ## Retrieving data for taxon ''</code></pre>
-<pre><code>## Writing taxonomic_coverage.txt to path</code></pre>
+<pre><code>## taxonomic_coverage.txt</code></pre>
 <pre><code>## Done.</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The taxonomic coverage template is present</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/metadata_templates'</span>)</code></pre></div>

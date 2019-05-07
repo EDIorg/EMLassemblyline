@@ -216,7 +216,8 @@ to create <code>x</code>.</p></td>
 <span class='co'># View directory contents (NOTE: attributes_*.txt don't exist)</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='st'>'./metadata_templates'</span>)</div><div class='output co'>#&gt; [1] "abstract.txt"            "additional_info.txt"    
 #&gt; [3] "intellectual_rights.txt" "keywords.txt"           
-#&gt; [5] "methods.txt"             "personnel.txt"          </div><div class='input'>
+#&gt; [5] "methods.txt"             "personnel.txt"          
+#&gt; [7] "README.txt"             </div><div class='input'>
 <span class='co'># Template table attributes</span>
 <span class='fu'>template_table_attributes</span>(
   <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./metadata_templates'</span>,
@@ -224,11 +225,11 @@ to create <code>x</code>.</p></td>
   <span class='kw'>data.table</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>'decomp.csv'</span>, <span class='st'>'nitrogen.csv'</span>)
 )</div><div class='output co'>#&gt; <span class='message'>Templating table attributes ...</span></div><div class='output co'>#&gt; <span class='message'>attributes_decomp.txt.</span></div><div class='output co'>#&gt; <span class='message'>attributes_nitrogen.txt.</span></div><div class='output co'>#&gt; <span class='message'>custom_units.txt</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
 <span class='co'># View directory contents (NOTE: attributes_*.txt and custom_units.txt exist)</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='st'>'./metadata_templates'</span>)</div><div class='output co'>#&gt; [1] "abstract.txt"            "additional_info.txt"    
-#&gt; [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
-#&gt; [5] "custom_units.txt"        "intellectual_rights.txt"
-#&gt; [7] "keywords.txt"            "methods.txt"            
-#&gt; [9] "personnel.txt"          </div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='st'>'./metadata_templates'</span>)</div><div class='output co'>#&gt;  [1] "abstract.txt"            "additional_info.txt"    
+#&gt;  [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
+#&gt;  [5] "custom_units.txt"        "intellectual_rights.txt"
+#&gt;  [7] "keywords.txt"            "methods.txt"            
+#&gt;  [9] "personnel.txt"           "README.txt"             </div><div class='input'>
 <span class='co'># Rerunning template_table_attributes() does not overwrite files</span>
 <span class='fu'>template_table_attributes</span>(
   <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./metadata_templates'</span>,
