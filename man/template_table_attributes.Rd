@@ -13,71 +13,74 @@ template_table_attributes(
     )
 }
 \arguments{
-\item{path}{(character) Path to the directory where the attributes template will be
-written.}
+\item{path}{(character) Path to the metadata template directory.}
 
-\item{data.path}{(character) Path to the directory containing \code{data.table}.}
+\item{data.path}{(character) Path to the data directory.}
 
-\item{data.table}{(character) Name of data table. If more than one, then supply as a 
+\item{data.table}{(character) Table name. If more than one, then supply as a 
 vector of character strings (e.g. 
-\code{data.table = c('concentrations.csv', 'characteristics.csv')}).}
+\code{data.table = c('nitrogen.csv', 'decomp.csv')}).}
 
 \item{x}{(named list; optional) Alternative input to 
-\code{EMLassemblyline} functions. Use \code{template_arguments()} to 
-create \code{x}.}
+\code{template_table_attributes()}. Use \code{template_arguments()} 
+to create \code{x}.}
 
-\item{write.file}{(logical; optional) Whether to write the attribute template(s) to 
-\code{path}.}
+\item{write.file}{(logical; optional) Whether to write the template file.}
 }
 \value{
 \itemize{
-        \item{\strong{attributes_*.txt} The table attribute template. A tab
-        delimited table.}
-        \item{\strong{custom_units.txt} Template for defining non-standard 
-        units if used in \strong{attributes_*.txt}. A tab delimited table.}
-        \item{If using \code{x}, then the attribute template is added to 
-        \strong{/x/templates}.}
+        \item{\strong{attributes_*.txt} The tab delimited attributes 
+        template where * is the table name from which the attributes were 
+        extracted. This file is written to \code{path} unless using \code{x}, 
+        in which case the template is added to 
+        \strong{/x/templates/attributes_*.txt}.}
+        \item{\strong{custom_units.txt} The tab delimited custom units 
+        template for defining non-standard units. This file is written to 
+        \code{path} unless using \code{x}, in which case the template is 
+        added to \strong{/x/templates/custom_units.txt}.}
     }
 }
 \description{
-Create the data table attributes template. Some fields are populated 
-    with content detected by automated metadata extraction methods. The 
-    remainder is manually entered by the user. 
-    \href{https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html}{Instructions for editing the template.}
+Use this function to extract column names and classes of a data table 
+    and return for user supplied column definitions and missing value codes.
+    \href{https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html}{Instructions for editing this template.}
 }
 \details{
 An existing attributes template will not be overwritten by subsequent 
     calls to \code{template_table_attributes()}.
 }
 \examples{
-# Set working directory
-setwd(tempdir())
-
-# Create data package directory "edi_250"
+# Initialize data package directory for template_table_attributes()
 file.copy(
- from = system.file('/examples/edi_250', package = 'EMLassemblyline'),
- to = '.',
+ from = system.file('/examples/pkg_250', package = 'EMLassemblyline'),
+ to = tempdir(),
  recursive = TRUE
 )
 
-# View directory contents (NOTE: attributes*_.txt don't exist)
-dir('./edi_250/metadata_templates')
+# Set working directory
+setwd(paste0(tempdir(), './pkg_250'))
+
+# View directory contents (NOTE: attributes_*.txt don't exist)
+dir('./metadata_templates')
 
 # Template table attributes
 template_table_attributes(
-  path = './edi_250/metadata_templates',
-  data.path = './edi_250/data_objects',
+  path = './metadata_templates',
+  data.path = './data_objects',
   data.table = c('decomp.csv', 'nitrogen.csv')
 )
 
-# View directory contents (NOTE: attributes*_.txt exist)
-dir('./edi_250/metadata_templates')
+# View directory contents (NOTE: attributes_*.txt and custom_units.txt exist)
+dir('./metadata_templates')
 
 # Rerunning template_table_attributes() does not overwrite files
 template_table_attributes(
-  path = './edi_250/metadata_templates',
-  data.path = './edi_250/data_objects',
+  path = './metadata_templates',
+  data.path = './data_objects',
   data.table = c('decomp.csv', 'nitrogen.csv')
 )
+
+# Clean up
+unlink('.', recursive = TRUE)
     
 }

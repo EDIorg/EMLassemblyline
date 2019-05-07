@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Initialize list of arguments for EMLassemblyline functions — template_arguments • EMLassemblyline</title>
+<title>Initialize list of arguments and contents to <code>EMLassemblyline</code> functions — template_arguments • EMLassemblyline</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,11 +30,11 @@
 
 
 
-<meta property="og:title" content="Initialize list of arguments for EMLassemblyline functions — template_arguments" />
+<meta property="og:title" content="Initialize list of arguments and contents to <code>EMLassemblyline</code> functions — template_arguments" />
 
 <meta property="og:description" content="Initialize the list of arguments for EMLassemblyline functions including
     x, an argument containing metadata template and data file 
-    content. This approach enables programatic interfacing of upstream 
+    contents. This approach enables programatic interfacing of upstream 
     metadata sources (e.g. 
     LTER-core-metabase) 
     to EMLassemblyline functions." />
@@ -97,7 +97,7 @@
       <a href="../articles/edit_metadata_templates.html">Edit metadata templates</a>
     </li>
     <li>
-      <a href="../articles/create_eml.html">Create EML</a>
+      <a href="../articles/create_eml.html">Make EML</a>
     </li>
     <li>
       <a href="../articles/publish_data_package.html">Publish data package</a>
@@ -134,7 +134,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Initialize list of arguments for EMLassemblyline functions</h1>
+    <h1>Initialize list of arguments and contents to <code>EMLassemblyline</code> functions</h1>
     <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/template_arguments.R'><code>R/template_arguments.R</code></a></small>
     <div class="hidden name"><code>template_arguments.Rd</code></div>
     </div>
@@ -143,7 +143,7 @@
     
     <p>Initialize the list of arguments for EMLassemblyline functions including
     <code>x</code>, an argument containing metadata template and data file 
-    content. This approach enables programatic interfacing of upstream 
+    contents. This approach enables programatic interfacing of upstream 
     metadata sources (e.g. 
     <a href='https://github.com/lter/LTER-core-metabase'>LTER-core-metabase</a>) 
     to <code>EMLassemblyline</code> functions.</p>
@@ -163,11 +163,13 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>path</th>
-      <td><p>(character) Path to metadata templates.</p></td>
+      <td><p>(character) Path to the directory containing <code>EMLassemblyline</code> 
+metadata templates.</p></td>
     </tr>
     <tr>
       <th>data.path</th>
-      <td><p>(character) Path to data tables and other entities.</p></td>
+      <td><p>(character) Path to the directory containing <code>data.table</code> and 
+<code>other.entity</code>.</p></td>
     </tr>
     <tr>
       <th>data.table</th>
@@ -207,8 +209,8 @@ of character strings (e.g.
     a vector of character strings in the same order as listed in 
     <code>data.table</code>. This argument is required only if 
     <code>data.table</code> contain quotations. If the quote character is 
-    a quotation, then enter "\"". If the quote character is an 
-    apostrophe, then enter "\'".</p></li>
+    a quotation, then enter <code>"\""</code>. If the quote character is an 
+    apostrophe, then enter <code>"\'"</code>.</p></li>
 <li><p><strong>data.url</strong> (character) A publicly accessible URL to 
     data tables and other entities of this dataset.</p></li>
 <li><p><strong>dataset.title</strong> (character) Dataset title.</p></li>
@@ -219,7 +221,7 @@ of character strings (e.g.
 <li><p><strong>geographic.coordinates</strong> (character) Geographic coordinates 
     delineating the bounding area or point of a dataset, in decimal 
     degrees. This argument is not required if using 
-    <code>bounding_boxes.txt</code>. Values must be listed in this order: 
+    bounding_boxes.txt. Values must be listed in this order: 
     North, East, South, West. Longitudes West of the prime meridian 
     and latitudes South of the equator are negative. If representing 
     a point, repeat the latitude for North and South, and repeat the 
@@ -227,13 +229,13 @@ of character strings (e.g.
     <code>geographic.coordinates = c('28.38', '-119.95', '28.38', '-119.95')</code>).</p></li>
 <li><p><strong>geographic.description</strong> (character) Geographic 
     description. Don't use this argument if using the 
-    <code>bounding_boxes.txt</code> template.</p></li>
+    geographic_coverage.txt template.</p></li>
 <li><p><strong>lat.col</strong> (character) Name of latitude column.</p></li>
 <li><p><strong>license</strong> (character) License under which the data 
     will be released.</p></li>
 <li><p><strong>lon.col</strong> (character) Name of longitude column.</p></li>
-<li><p><strong>maintenance.description</strong> (character) Indicator of 
-    whether data collection is 'ongoing' or 'completed'.</p></li>
+<li><p><strong>maintenance.description</strong> (character) Data collection 
+    status. Can be "ongoing" or "completed".</p></li>
 <li><p><strong>other.entity</strong> (character) Other entity name. If 
     more than one, then supply as a vector of character strings. 
     Other entities should be located at <code>data.path</code>.</p></li>
@@ -250,7 +252,7 @@ of character strings (e.g.
     dataset was created (e.g. 'knb-lter-cap.46.3'). If more than one, 
     then supply as a vector of character strings.</p></li>
 <li><p><strong>return.obj</strong> (logical) Return the EML as an R 
-    object of class <code>EML object</code>.</p></li>
+    object of class EML object.</p></li>
 <li><p><strong>sep</strong> (character) Field delimiter to be used when 
     reading data tables.</p></li>
 <li><p><strong>site.col</strong> (character) Name of site column, where
@@ -259,27 +261,27 @@ of character strings (e.g.
 <li><p><strong>taxa.authority</strong> (integer) An ordered numeric vector of 
     ID's corresponding to data sources (i.e. taxonomic authorities) 
     you'd like to query, in the order of decreasing preference. Run 
-    <code>view_taxa_authorities</code> to see supported data sources. Columns 
+    <code>view_taxa_authorities()</code> to see supported data sources. Columns 
     "resolve_sci_taxa", and "resolve_comm_taxa" correspond to scientific 
     and common searches.</p></li>
 <li><p><strong>taxa.col</strong> (character) Name of column in 
     <code>taxa.table</code>containing taxonomic names.</p></li>
 <li><p><strong>taxa.name.type</strong> (character) Taxonomic name type. Can be: 
-    <code>scientific</code>, <code>common</code>, or <code>both</code>.</p></li>
+    "scientific", "common", or "both".</p></li>
 <li><p><strong>taxa.table</strong> (character) Name of data table containing 
     <code>taxa.col</code>.</p></li>
 <li><p><strong>temporal.coverage</strong> (character) Beginning and ending 
     dates of the dataset as a vector of character strings in the 
-    format <code>YYYY-MM-DD</code>.</p></li>
+    format <strong>YYYY-MM-DD</strong>.</p></li>
 <li><p><strong>user.domain</strong> (character) Domain of the 
     <code>user.id</code>. If more than one, then supply as a vector of 
     character strings in the same order corresponding to listed under
-    <code>user.id</code>. Valid options for EDI are 'LTER' and 'EDI'. Other 
+    <code>user.id</code>. Valid options for EDI are "LTER" and "EDI". Other 
     data repository IDs may be used. NULL user.domain defaults to 
-    'someuserdomain'.</p></li>
+    "someuserdomain".</p></li>
 <li><p><strong>user.id</strong> (character) ID of data repository user 
     account. If more than one, supply as a vector of character 
-    strings. NULL user.id defaults to 'someuserid'.</p></li>
+    strings. NULL user.id defaults to "someuserid".</p></li>
 <li><p><strong>write.file</strong> (logical) Write file to 
     <code>eml.path</code>.</p></li>
 <li><p><strong>x</strong> (named list) List of metadata template, data 
@@ -355,13 +357,11 @@ of character strings (e.g.
 </ul>
 
     
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The full named list structure is returned irrespective of NULL inputs,
-    so content can be added downstream. If valid inputs are supplied, then
-    the respective list structures are populated. Pass the output of this 
-    function to <code>make_template_core</code> to initilize (or add) core 
-    template data frames, text objects, or XML objects.</p>
+    so content can be added downstream (e.g. <code>EMLassemblyline</code> templating 
+    functions).</p>
     
 
   </div>
@@ -372,7 +372,7 @@ of character strings (e.g.
       
       <li><a href="#value">Value</a></li>
 
-      <li><a href="#note">Note</a></li>
+      <li><a href="#details">Details</a></li>
           </ul>
 
   </div>

@@ -9,10 +9,6 @@
 #'     
 #' @details
 #'     Use the search field to find the unit of interest.
-#'
-#' @examples 
-#' # View unit dictionary
-#' view_unit_dictionary()
 #'               
 #' @export     
 #'     

@@ -29,51 +29,45 @@ make_eml(
     )
 }
 \arguments{
-\item{path}{(character) Path to the directory containing \code{EMLassemblyline} 
-templates.}
+\item{path}{(character) Path to the metadata template directory.}
 
-\item{data.path}{(character) Path to the directory containing data objects.}
+\item{data.path}{(character) Path to the data directory.}
 
-\item{eml.path}{(character) Path to the directory where the EML will be written.}
+\item{eml.path}{(character) Path to the EML directory, where EML files are written.}
 
-\item{dataset.title}{(character) Dataset title. Be descriptive (more than 5 words) and 
-consider including the temporal coverage (e.g. "GLEON: Long term lake 
-chloride concentrations from North America and Europe: 1940-2016").}
+\item{dataset.title}{(character) Title of the dataset.}
 
-\item{temporal.coverage}{(character) Beginning and ending dates of the dataset as a vector of 
-character strings in the format \strong{YYYY-MM-DD}.}
+\item{temporal.coverage}{(character) Beginning and ending dates of the dataset in the format 
+"YYYY-MM-DD" (e.g. 
+\code{temporal.coverage = c('2012-05-01', '2014-11-30')}).}
 
-\item{geographic.description}{(character) Geographic description. Don't use this argument if geographic
-coordinates are supplied in the geographic_coverage.txt template.}
+\item{geographic.description}{(character) Description of datasets geographic extent. Don't use this 
+argument if geographic coverage is supplied by geographic_coverage.txt.}
 
-\item{geographic.coordinates}{(character) Geographic coordinates delineating the bounding area or 
-point of a dataset, in decimal degrees. Values must be listed in this 
-order: North, East, South, West. Longitudes West of the 
-prime meridian and latitudes South of the equator are negative. If 
-representing a point, repeat the latitude for North and South, and 
-repeat the longitude for East and West (e.g. 
+\item{geographic.coordinates}{(character) Coordinates of datasets geographic extent. Coordinates are
+listed in this order: North, East, South, West (e.g. 
 \code{geographic.coordinates = c('28.38', '-119.95', '28.38', '-119.95')}).
-Don't use this argument if geographic coordinates are supplied in the 
-geographic_coverage.txt template.}
+Longitudes west of the prime meridian and latitudes south of the equator 
+are negative. Don't use this argument if geographic coverage is supplied
+by geographic_coverage.txt.}
 
-\item{maintenance.description}{(character) Data collection status. Can be "ongoing" or "completed".}
+\item{maintenance.description}{(character) Data collection status ("ongoing" or "complete").}
 
-\item{data.table}{(character; optional) Name of data table. If more than one, then supply 
+\item{data.table}{(character; optional) Table name. If more than one, then supply 
 as a vector of character strings (e.g. 
-\code{data.table = c("concentrations.csv", "characteristics.csv")}).}
+\code{data.table = c("nitrogen.csv", "decomp.csv")}).}
 
-\item{data.table.description}{(character; optional) Data table description(s). Brief description of 
-\code{data.table}. If more than one, then supply as a vector of 
-character strings in the same order as listed in \code{data.table}.}
+\item{data.table.description}{(character; optional) Table description. If more than one, then supply 
+as a vector of character strings in the same order as listed in 
+\code{data.table}.}
 
-\item{data.table.quote.character}{(character; optional) Quote character(s) used in \code{data.table}. If 
+\item{data.table.quote.character}{(character; optional) Quote character used in \code{data.table}. If 
 more than one, then supply as a vector of character strings in the same 
-order as listed in \code{data.table}. This argument is required only if 
-your data contain quotations. If the quote character is a quotation, 
+order as listed in \code{data.table}. If the quote character is a quotation, 
 then enter \code{"\\""}. If the quote character is an apostrophe, then 
 enter \code{"\\'"}.}
 
-\item{other.entity}{(character; optional) Name(s) of \code{other.entity}(s) in this 
+\item{other.entity}{(character; optional) Name of \code{other.entity}(s) in this 
 dataset. Use \code{other.entity} for all non-\code{data.table} files. 
 \code{other.entity}(s) should be stored at \code{data.path}. If more 
 than one, then supply as a vector of character strings (e.g. 
@@ -83,17 +77,17 @@ than one, then supply as a vector of character strings (e.g.
 than one, then supply as a vector of descriptions in the same order as 
 listed in \code{other.entity}.}
 
-\item{data.url}{(character; optional) The URL of where your data can be downloaded by a
-data repository. This argument is not required, if the data will be 
-manually uploaded to a data repository.}
+\item{data.url}{(character; optional) The publicly accessible URL from which 
+\code{data.table}s or \code{other.entity}s can be downloaded.
+This argument is not required, if the data will be 
+uploaded manually to the data repository.}
 
 \item{provenance}{(character; optional) EDI Data Repository Data package ID(s) 
 corresponding to parent datasets from which this dataset was created 
 (e.g. \code{knb-lter-cap.46.3}).}
 
 \item{user.id}{(character; optional) ID(s) of data repository user account(s). If more 
-than one, supply as a vector of character strings. Contact EDI 
-(info@environmentaldatainitiative.org) to obtain one.}
+than one, supply as a vector of character strings.}
 
 \item{user.domain}{(character; optional) Domain of the \code{user.id}(s). Valid options 
 for EDI are "LTER" and "EDI". If more than one, supply as a vector of 
@@ -102,13 +96,14 @@ character strings in the same order as corresponding \code{user.id}(s).}
 \item{package.id}{(character; optional) Data Repository data package ID for this dataset. A 
 missing package ID defaults to "edi.101.1".}
 
-\item{write.file}{(logical; optional) Whether to write the EML file to \code{eml.path}.}
+\item{write.file}{(logical; optional) Whether to write the EML file.}
 
-\item{return.obj}{(logical; optional) Return the EML as an R object of class 
+\item{return.obj}{(logical; optional) Whether to return the EML as an R object of class 
 \code{EML object}.}
 
-\item{x}{(named list; optional) Alternative input to \code{EMLassemblyline} 
-functions. Use \code{template_arguments()} to create \code{x}.}
+\item{x}{(named list; optional) Alternative input to 
+\code{make_eml()}. Use \code{template_arguments()} 
+to create \code{x}.}
 }
 \value{
 \itemize{
@@ -117,7 +112,8 @@ functions. Use \code{template_arguments()} to create \code{x}.}
     }
 }
 \description{
-Render the contents of metadata templates into EML and validate.
+Render the contents of metadata templates into EML, validate, and write
+    to file.
 }
 \details{
 \code{make_eml()} reads the contents of metadata templates, 
@@ -129,22 +125,22 @@ Render the contents of metadata templates into EML and validate.
     written to file.
 }
 \examples{
-# Set working directory
-setwd(tempdir())
-
-# Create data package directory "edi_260"
+# Initialize data package directory for make_eml()
 file.copy(
-  from = system.file('/examples/edi_260', package = 'EMLassemblyline'),
-  to = '.',
+  from = system.file('/examples/pkg_260', package = 'EMLassemblyline'),
+  to = tempdir(),
   recursive = TRUE
 )
+
+# Set working directory
+setwd(paste0(tempdir(), '/pkg_260'))
 
 # Make EML (for data package with data tables)
 
 make_eml(
-  path = './edi_260/metadata_templates',
-  data.path = './edi_260/data_objects',
-  eml.path = './edi_260/eml',
+  path = './metadata_templates',
+  data.path = './data_objects',
+  eml.path = './eml',
   dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions',
   temporal.coverage = c('2014-05-01', '2015-10-31'),
   geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
@@ -158,14 +154,14 @@ make_eml(
 )
 
 # View EML directory contents (NOTE: edi.260.1 exists)
-dir('./edi_260/eml')
+dir('./eml')
 
 # Make EML (for data package with other entities)
 
 make_eml(
-  path = './edi_260/metadata_templates',
-  data.path = './edi_260/data_objects',
-  eml.path = './edi_260/eml',
+  path = './metadata_templates',
+  data.path = './data_objects',
+  eml.path = './eml',
   dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions',
   temporal.coverage = c('2014-05-01', '2015-10-31'),
   geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
@@ -179,14 +175,14 @@ make_eml(
 )
 
 # View EML directory contents (NOTE: edi.260.2 exists)
-dir('./edi_260/eml')
+dir('./eml')
 
 # Make EML (for data package with data tables and other entities)
 
 make_eml(
-  path = './edi_260/metadata_templates',
-  data.path = './edi_260/data_objects',
-  eml.path = './edi_260/eml',
+  path = './metadata_templates',
+  data.path = './data_objects',
+  eml.path = './eml',
   dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions',
   temporal.coverage = c('2014-05-01', '2015-10-31'),
   geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
@@ -202,6 +198,9 @@ make_eml(
 )
 
 # View EML directory contents (NOTE: edi.260.3 exists)
-dir('./edi_260/eml')
+dir('./eml')
+
+# Clean up
+unlink('.', recursive = TRUE)
 
 }

@@ -57,20 +57,20 @@
 #' # Set working directory
 #' setwd(tempdir())
 #' 
-#' # Create data package directory "edi_255"
+#' # Create data package directory "pkg_255"
 #' file.copy(
-#'   from = system.file('/examples/edi_255', package = 'EMLassemblyline'),
+#'   from = system.file('/examples/pkg_255', package = 'EMLassemblyline'),
 #'   to = '.',
 #'   recursive = TRUE
 #' )
 #' 
 #' # View directory contents (NOTE: geographic_coverage.txt doesn't exist)
-#' dir('./edi_255/metadata_templates')
+#' dir('./pkg_255/metadata_templates')
 #' 
 #' # Extract geographic coverage
 #' extract_geocoverage(
-#'   path = './edi_255/metadata_templates',
-#'   data.path = './edi_255/data_objects',
+#'   path = './pkg_255/metadata_templates',
+#'   data.path = './pkg_255/data_objects',
 #'   data.table = 'nitrogen.csv',
 #'   site.col = 'site_name',
 #'   lat.col = 'site_lat',
@@ -78,16 +78,22 @@
 #' )
 #' 
 #' # View directory contents (NOTE: geographic_coverage.txt exists)
-#' dir('./edi_255/metadata_templates')
+#' dir('./pkg_255/metadata_templates')
 #' 
 #' # Rerunning extract_geocoverage() does not overwrite files
 #' extract_geocoverage(
-#'   path = './edi_255/metadata_templates',
-#'   data.path = './edi_255/data_objects',
+#'   path = './pkg_255/metadata_templates',
+#'   data.path = './pkg_255/data_objects',
 #'   data.table = 'nitrogen.csv',
 #'   site.col = 'site_name',
 #'   lat.col = 'site_lat',
 #'   lon.col = 'site_lon'
+#' )
+#' 
+#' # Clean up
+#' unlink(
+#'   './pkg_255',
+#'   recursive = TRUE
 #' )
 #'     
 #' @export

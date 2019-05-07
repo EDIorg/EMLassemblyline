@@ -89,7 +89,7 @@
       <a href="../articles/edit_metadata_templates.html">Edit metadata templates</a>
     </li>
     <li>
-      <a href="../articles/create_eml.html">Create EML</a>
+      <a href="../articles/create_eml.html">Make EML</a>
     </li>
     <li>
       <a href="../articles/publish_data_package.html">Publish data package</a>
@@ -133,28 +133,39 @@
     <div id="emlassemblyline-2-5-0" class="section level1">
 <h1 class="page-header">
 <a href="#emlassemblyline-2-5-0" class="anchor"></a>EMLassemblyline 2.5.0</h1>
-<div id="new-features" class="section level2">
+<div id="new-features-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features" class="anchor"></a>New features</h2>
+<a href="#new-features-1" class="anchor"></a>New features</h2>
 <ul>
 <li>
 <strong>Website:</strong> Improved documentation with vignettes demonstrating common and advanced use cases. Implemented with <code>pkgdown</code>.</li>
 <li>
-<strong>Templating functions:</strong> Functions creating metadata templates are grouped under the prefix <code>template_*</code> to simplify user identification.</li>
+<strong>Templating functions:</strong> Functions creating metadata templates are grouped under the prefix <code>template_*</code> to simplify user understanding.
+<ul>
 <li>
-<strong>template_taxonomic_coverage</strong> A templating function resolving taxa to one or more authority systems and supporting creation of the hierarchical rank specific EML taxonomicCoverage element by <code>make_eml</code>.</li>
+<code><a href="../reference/template_arguments.html">template_arguments()</a></code> Create template for all user inputs to <code>EMLassemblyline</code> (i.e. metadata template content and function arguments) to entirely programmatic workflows with focus on supporting content ingestion from upstream metadata sources.</li>
 <li>
-<strong>template_arguments</strong> A templating function for all user inputs to <code>EMLassemblyline</code> (i.e. metadata template content and function arguments) to entirely programmatic workflows with focus on supporting content ingestion from upstream metadata sources.</li>
+<code>template_categorical_variable()</code> Create categorical variables template (previously named <code><a href="../reference/define_catvars.html">define_catvars()</a></code>).</li>
 <li>
-<strong>template_directories</strong> A templating function creating a simple and effective directory structure for <code>EMLassemblyline</code> files and data package contents.</li>
+<code><a href="../reference/template_core_metadata.html">template_core_metadata()</a></code> Create core metadata templates (previously part of <code><a href="../reference/import_templates.html">import_templates()</a></code>).</li>
+<li>
+<code><a href="../reference/template_directories.html">template_directories()</a></code> Create a simple and effective directory structure for <code>EMLassemblyline</code> files and data package contents.</li>
+<li>
+<code><a href="../reference/template_geographic_coverage.html">template_geographic_coverage()</a></code> Create geographic coverage template (a refactor of <code><a href="../reference/extract_geocoverage.html">extract_geocoverage()</a></code>).</li>
+<li>
+<code><a href="../reference/template_table_attributes.html">template_table_attributes()</a></code> Create table attributes templates (previously part of <code><a href="../reference/import_templates.html">import_templates()</a></code>).</li>
+<li>
+<code><a href="../reference/template_taxonomic_coverage.html">template_taxonomic_coverage()</a></code> Create the taxonomic coverage template for resolving taxa to one or more authority systems and supporting creation of the hierarchical rank specific EML taxonomicCoverage element by <code><a href="../reference/make_eml.html">make_eml()</a></code>.</li>
+</ul>
+</li>
 <li>
 <strong>Support for other entity data packages:</strong> Data packages comprised completely of other entities (i.e. non-tabular data) is now supported.</li>
 <li>
-<strong>Geographic coverage:</strong> All geographic coverage metadata has been moved to //dataset/coverage, where most data repositories find it for rendering to maps and other visualizations for users.</li>
+<strong>Geographic coverage:</strong> All geographic coverage metadata has been moved to <em>//dataset/coverage</em>, where most data repositories find it for rendering to maps and other visualizations for users.</li>
 <li>
 <strong>Make EML for other data repositories:</strong> Arguments requiring EDI specific content (i.e. <code>user.id</code>, <code>user.domain</code>, <code>package.id</code>) have been relaxed to enable creation of EML for other data repositories.</li>
 <li>
-<strong>Better entity descriptions:</strong> Use arguments <code>data.table.description</code> and <code>other.entity.description</code> for <code>//dataTable/entityName</code> and <code>//otherEntity/entityName</code>, respectively. This provides a more meaningful file description than the file name it self.</li>
+<strong>Better entity descriptions:</strong> Use arguments <code>data.table.description</code> and <code>other.entity.description</code> for <em>//dataTable/entityName</em> and <em>//otherEntity/entityName</em>, respectively. This provides a more meaningful file description than the file name it self.</li>
 </ul>
 </div>
 <div id="deprecation" class="section level2">
@@ -164,20 +175,17 @@
 <p><strong>Functions:</strong></p>
 <ul>
 <li>
-<code>import_templates</code> is deprecated in favor of <code>template_core_metadata</code> (i.e. metadata required by all data packages) and <code>template_table_attributes</code> (i.e. metadata for data tables).</li>
+<code><a href="../reference/import_templates.html">import_templates()</a></code> is deprecated in favor of <code><a href="../reference/template_core_metadata.html">template_core_metadata()</a></code> (i.e. metadata required by all data packages) and <code><a href="../reference/template_table_attributes.html">template_table_attributes()</a></code> (i.e. metadata for data tables).</li>
 <li>
-<code>define_catvars</code> is deprecated in favor of `template_categorical_variables.</li>
+<code><a href="../reference/define_catvars.html">define_catvars()</a></code> is deprecated in favor of <code><a href="../reference/template_categorical_variables.html">template_categorical_variables()</a></code>.</li>
 <li>
-<code>extract_geocoverage</code> is deprecated in favor of <code>template_geographic_coverage</code>
+<code><a href="../reference/extract_geocoverage.html">extract_geocoverage()</a></code> is deprecated in favor of <code><a href="../reference/template_geographic_coverage.html">template_geographic_coverage()</a></code>
 </li>
 </ul>
 <p><strong>Templates:</strong></p>
 <ul>
-<li>
-<code>bounding_boxes.txt</code> is deprecated in favor of <code>geographic_coverage.txt</code>
-</li>
-<li>
-<code>geographic_coverage.txt</code> is deprecated in favor of a new version of <code>geographic_coverage.txt</code> that supports both point locations and areas.</li>
+<li>bounding_boxes.txt is deprecated in favor of geographic_coverage.txt</li>
+<li>geographic_coverage.txt is deprecated in favor of a new version of geographic_coverage.txt that supports both point locations and areas.</li>
 </ul>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -204,12 +212,12 @@
 </li>
 </ul>
 </div>
-<div id="bug-fixes" class="section level2">
+<div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
-<strong>otherEntity url</strong> Add EML element<code>//otherEntity/physical/distribution/online/url</code> via <code>make_eml</code>. This element was missing though documentation implied its existence.</li>
+<strong>otherEntity url</strong> Add EML element <em>//otherEntity/physical/distribution/online/url</em> via <code><a href="../reference/make_eml.html">make_eml()</a></code>. This element was missing though documentation implied its existence.</li>
 </ul>
 </div>
 </div>

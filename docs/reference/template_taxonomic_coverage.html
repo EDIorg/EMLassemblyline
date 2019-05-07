@@ -32,10 +32,12 @@
 
 <meta property="og:title" content="Create taxonomic coverage template — template_taxonomic_coverage" />
 
-<meta property="og:description" content="Extract unique taxa and resolve to one or more taxonomic authorities. 
-    make_eml will use this information to get the taxonomic hierarchy
-    for each taxa and add to the EML. The metadata resulting from this 
-    function allows searching on any rank of the taxa." />
+<meta property="og:description" content="Use this function to extract the unique taxa of a data table and 
+    try to resolve (match) to a taxonomic authority system (e.g. 
+    ITIS) and return for user supplied 
+    inputs if necessary. This information is later used to list the full
+    hierarchical rank names in the metadata.
+    Instructions for editing this template." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -95,7 +97,7 @@
       <a href="../articles/edit_metadata_templates.html">Edit metadata templates</a>
     </li>
     <li>
-      <a href="../articles/create_eml.html">Create EML</a>
+      <a href="../articles/create_eml.html">Make EML</a>
     </li>
     <li>
       <a href="../articles/publish_data_package.html">Publish data package</a>
@@ -139,10 +141,12 @@
 
     <div class="ref-description">
     
-    <p>Extract unique taxa and resolve to one or more taxonomic authorities. 
-    <code>make_eml</code> will use this information to get the taxonomic hierarchy
-    for each taxa and add to the EML. The metadata resulting from this 
-    function allows searching on any rank of the taxa.</p>
+    <p>Use this function to extract the unique taxa of a data table and 
+    try to resolve (match) to a taxonomic authority system (e.g. 
+    <a href='https://www.itis.gov/'>ITIS</a>) and return for user supplied 
+    inputs if necessary. This information is later used to list the full
+    hierarchical rank names in the metadata.
+    <a href='https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html'>Instructions for editing this template.</a></p>
     
     </div>
 
@@ -153,8 +157,8 @@
       <span class='no'>taxa.col</span>,
       <span class='no'>taxa.name.type</span>,
       <span class='no'>taxa.authority</span>,
-      <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-      <span class='kw'>write.file</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+      <span class='kw'>write.file</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+      <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
     )</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -162,74 +166,169 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>path</th>
-      <td><p>(character) Path to where the template will be written.</p></td>
+      <td><p>(character) Path to the metadata template directory.</p></td>
     </tr>
     <tr>
       <th>data.path</th>
-      <td><p>(character) Path to where <code>taxa.table</code> is stored.</p></td>
+      <td><p>(character) Path to the data directory.</p></td>
     </tr>
     <tr>
       <th>taxa.table</th>
-      <td><p>(character) Name of data table containing <code>taxa.col</code>.</p></td>
+      <td><p>(character) Table name containing <code>taxa.col</code>.</p></td>
     </tr>
     <tr>
       <th>taxa.col</th>
-      <td><p>(character) Name of column in <code>taxa.table</code> containing taxa names.
-Names can be single words or species binomials.</p></td>
+      <td><p>(character) Column name containing taxa names. Species binomials are
+accepted.</p></td>
     </tr>
     <tr>
       <th>taxa.name.type</th>
-      <td><p>(character) Type of taxa names in <code>taxa.col</code> Can be: 
+      <td><p>(character) Taxa name type. Can be: 
 <code>scientific</code>, <code>common</code>, or <code>both</code>.</p></td>
     </tr>
     <tr>
       <th>taxa.authority</th>
-      <td><p>(integer) An ordered numeric vector of ID's corresponding to data 
-sources (i.e. taxonomic authorities) you'd like to resolve taxa names
-to, in the order of decreasing preference. See the list of supported
-data sources with <code>view_taxa_authorities</code>. Columns 
-"resolve_sci_taxa", and "resolve_comm_taxa" list authorites supporting
+      <td><p>(integer) Taxonomic authorities to resolve to as an ordered numeric vector 
+of ID's decreasing in preference. See the list of supported authorities 
+with <code><a href='https://www.rdocumentation.org/packages/taxonomyCleanr/topics/view_taxa_authorities'>taxonomyCleanr::view_taxa_authorities()</a></code>. Columns 
+"resolve_sci_taxa", and "resolve_comm_taxa" list authorites supporting 
 scientific and common searches, respectively.</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>(named list) Alternative input/output to <code>EMLassemblyline</code> 
-functions. Use <code>template_arguments</code> to create <code>x</code>.</p></td>
+      <td><p>(named list; optional) Alternative input to 
+<code>template_taxonomic_coverage()</code>. Use <code><a href='template_arguments.html'>template_arguments()</a></code> 
+to create <code>x</code>.</p></td>
     </tr>
     <tr>
       <th>write.file</th>
-      <td><p>(logical) Write "taxonomic_coverage.txt" to <code>path</code>.</p></td>
+      <td><p>(logical; optional) Whether to write the template file.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
-<ul>
-<li><p><strong>taxonomic_coverage.txt</strong> A tab delimited file written 
-        to <code>path</code> containing authority system names and authority IDs
-        for successfully resolved taxa, and "NA" otherwise.</p></li>
-<li><p>If using <code>x</code>, then content of "taxonomic_coverage.txt is 
-        added to <code>x</code> under "/x/templates".</p></li>
-</ul>
-
+    <p><strong>taxonomic_coverage.txt</strong> The tab delimited taxonomic coverage 
+    template. This file is written to <code>path</code> unless using <code>x</code>,
+    in which case the template is added to 
+    <strong>/x/templates/taxonomic_coverage.txt</strong>. Non-resolved taxa result 
+    NA.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>template_taxonomic_coverage</code> searches the most preferred taxonomic
-    authority for all unique taxa listed in <code>taxa.col</code> returning
-    the authority name and corresponding taxa identifier for direct matches
-    (no fuzzy searching), then the next most preferred taxonomic authority
-    is search for taxa that have not yet been resolved. This process repeats
-    for subsequently listed authorities. "NA" is returned when an authority 
-    match is not made.</p>    
-<p>When "taxonomic_coverage.txt" is passed to <code>make_eml</code>, the 
+    <p><code>template_taxonomic_coverage()</code> searches the most preferred 
+    taxonomic authority for all unique taxa listed in <code>taxa.col</code> 
+    returning the authority name and corresponding taxa identifier for 
+    direct matches (no fuzzy searching), then the next most preferred 
+    taxonomic authority is search for taxa that have not yet been resolved. 
+    This process repeats for subsequently listed authorities. "NA" is 
+    returned when an authority match is not made.</p>    
+<p>When taxonomic_coverage.txt is passed to <code><a href='make_eml.html'>make_eml()</a></code>, the 
     authority information is used to get the hierarchical rank names of 
     resolved taxa and rendered into the "taxonomicCoverage" element of EML.</p>    
-<p>Existing "taxonomic_coverage.txt" will not be overwritten by subsequent 
-    calls to <code>template_taxonomic_coverage</code>.</p>
+<p>Existing taxonomic_coverage.txt will not be overwritten by subsequent 
+    calls to <code>template_taxonomic_coverage()</code>.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Initialize data package directory for template_taxonomic_coverage()</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/files'>file.copy</a></span>(
+  <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>'/examples/pkg_255'</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'EMLassemblyline'</span>),
+  <span class='kw'>to</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),
+  <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='co'># Set working directory</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/getwd'>setwd</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(), <span class='st'>'/pkg_255'</span>))
+
+<span class='co'># View directory contents (NOTE: taxonomic_coverage.txt doesn't exist)</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='st'>'./metadata_templates'</span>)</div><div class='output co'>#&gt;  [1] "abstract.txt"            "additional_info.txt"    
+#&gt;  [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
+#&gt;  [5] "catvars_decomp.txt"      "catvars_nitrogen.txt"   
+#&gt;  [7] "custom_units.txt"        "geographic_coverage.txt"
+#&gt;  [9] "intellectual_rights.txt" "keywords.txt"           
+#&gt; [11] "methods.txt"             "personnel.txt"          </div><div class='input'>
+<span class='co'># Template taxonomic coverage</span>
+<span class='fu'>template_taxonomic_coverage</span>(
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./metadata_templates'</span>,
+  <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='st'>'./data_objects'</span>,
+  <span class='kw'>taxa.table</span> <span class='kw'>=</span> <span class='st'>'decomp.csv'</span>,
+  <span class='kw'>taxa.col</span> <span class='kw'>=</span> <span class='st'>'taxa'</span>,
+  <span class='kw'>taxa.authority</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>3</span>,<span class='fl'>11</span>),
+  <span class='kw'>taxa.name.type</span> <span class='kw'>=</span> <span class='st'>'both'</span>
+)</div><div class='output co'>#&gt; <span class='message'>Templating taxonomic coverage ...</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Mosses"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Mosses"</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Unsorted biomass"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Unsorted biomass"</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Achillea millefolium"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Achillea millefolium"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Achillea millefolium'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Crepis tectorum"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Crepis tectorum"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Crepis tectorum'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Cyperus"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Cyperus"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Cyperus'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Euphorbia glyptosperma"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Euphorbia glyptosperma"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Euphorbia glyptosperma'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Lespedeza capitata"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Lespedeza capitata"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Lespedeza capitata'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Lepidium densiflorum"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Lepidium densiflorum"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Lepidium densiflorum'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Poa pratensis"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Poa pratensis"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Poa pratensis'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Rumex acetosella"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Rumex acetosella"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Rumex acetosella'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Schizachyrium scoparium"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Schizachyrium scoparium"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Schizachyrium scoparium'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Bouteloua gracilis"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Bouteloua gracilis"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Bouteloua gracilis'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Koeleria cristata"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Koeleria cristata"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Koeleria cristata'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Liatris aspera"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Liatris aspera"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Liatris aspera'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for ""</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for ""</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Mosses'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Unsorted biomass'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Achillea millefolium'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Crepis tectorum'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Cyperus'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Euphorbia glyptosperma'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Lespedeza capitata'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Lepidium densiflorum'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Poa pratensis'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Rumex acetosella'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Schizachyrium scoparium'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Bouteloua gracilis'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Koeleria cristata'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Liatris aspera'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon ''</span></div><div class='output co'>#&gt; <span class='message'>taxonomic_coverage.txt</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
+<span class='co'># View directory contents (NOTE: taxonomic_coverage.txt exists)</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='st'>'./metadata_templates'</span>)</div><div class='output co'>#&gt;  [1] "abstract.txt"            "additional_info.txt"    
+#&gt;  [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
+#&gt;  [5] "catvars_decomp.txt"      "catvars_nitrogen.txt"   
+#&gt;  [7] "custom_units.txt"        "geographic_coverage.txt"
+#&gt;  [9] "intellectual_rights.txt" "keywords.txt"           
+#&gt; [11] "methods.txt"             "personnel.txt"          
+#&gt; [13] "taxonomic_coverage.txt" </div><div class='input'>
+<span class='co'># Rerunning template_taxonomic_coverage() does not overwrite file</span>
+<span class='fu'>template_taxonomic_coverage</span>(
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./metadata_templates'</span>,
+  <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='st'>'./data_objects'</span>,
+  <span class='kw'>taxa.table</span> <span class='kw'>=</span> <span class='st'>'decomp.csv'</span>,
+  <span class='kw'>taxa.col</span> <span class='kw'>=</span> <span class='st'>'taxa'</span>,
+  <span class='kw'>taxa.authority</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>3</span>,<span class='fl'>11</span>),
+  <span class='kw'>taxa.name.type</span> <span class='kw'>=</span> <span class='st'>'both'</span>
+)</div><div class='output co'>#&gt; <span class='message'>Templating taxonomic coverage ...</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Mosses"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Mosses"</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Unsorted biomass"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Unsorted biomass"</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Achillea millefolium"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Achillea millefolium"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Achillea millefolium'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Crepis tectorum"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Crepis tectorum"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Crepis tectorum'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Cyperus"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Cyperus"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Cyperus'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Euphorbia glyptosperma"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Euphorbia glyptosperma"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Euphorbia glyptosperma'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Lespedeza capitata"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Lespedeza capitata"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Lespedeza capitata'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Lepidium densiflorum"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Lepidium densiflorum"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Lepidium densiflorum'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Poa pratensis"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Poa pratensis"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Poa pratensis'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Rumex acetosella"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Rumex acetosella"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Rumex acetosella'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Schizachyrium scoparium"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Schizachyrium scoparium"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Schizachyrium scoparium'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Bouteloua gracilis"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Bouteloua gracilis"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Bouteloua gracilis'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Koeleria cristata"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Koeleria cristata"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Koeleria cristata'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Liatris aspera"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Liatris aspera"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Liatris aspera'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for ""</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for ""</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Mosses'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Unsorted biomass'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Achillea millefolium'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Crepis tectorum'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Cyperus'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Euphorbia glyptosperma'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Lespedeza capitata'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Lepidium densiflorum'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Poa pratensis'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Rumex acetosella'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Schizachyrium scoparium'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Bouteloua gracilis'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Koeleria cristata'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Liatris aspera'</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon ''</span></div><div class='output co'>#&gt; <span class='message'>taxonomic_coverage.txt</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
+<span class='co'># Clean up</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/unlink'>unlink</a></span>(<span class='st'>'.'</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -239,7 +338,9 @@ functions. Use <code>template_arguments</code> to create <code>x</code>.</p></td
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

@@ -51,29 +51,35 @@ Import template for defining categorical variables used in data a
 # Set working directory
 setwd(tempdir())
 
-# Create data package directory "edi_255"
+# Create data package directory "pkg_255"
 file.copy(
-  from = system.file('/examples/edi_255', package = 'EMLassemblyline'),
+  from = system.file('/examples/pkg_255', package = 'EMLassemblyline'),
   to = '.',
   recursive = TRUE
 )
 
 # View directory contents (NOTE: catvars_*.txt files don't exist)
-dir('./edi_255/metadata_templates')
+dir('./pkg_255/metadata_templates')
 
 # Define categorical variables
 define_catvars(
-  path = './edi_255/metadata_templates',
-  data.path = './edi_255/data_objects'
+  path = './pkg_255/metadata_templates',
+  data.path = './pkg_255/data_objects'
 )
 
 # View directory contents (NOTE: catvars_*.txt files exist)
-dir('./edi_255/metadata_templates')
+dir('./pkg_255/metadata_templates')
 
 # Rerunning define_catvars() does not overwrite files
 define_catvars(
-  path = './edi_255/metadata_templates',
-  data.path = './edi_255/data_objects'
+  path = './pkg_255/metadata_templates',
+  data.path = './pkg_255/data_objects'
+)
+
+# Clean up
+unlink(
+  './pkg_255',
+  recursive = TRUE
 )
 
 }

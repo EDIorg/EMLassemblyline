@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Import core metadata templates — import_templates • EMLassemblyline</title>
+<title>Import core metadata and table attribute templates — import_templates • EMLassemblyline</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,13 +30,12 @@
 
 
 
-<meta property="og:title" content="Import core metadata templates — import_templates" />
+<meta property="og:title" content="Import core metadata and table attribute templates — import_templates" />
 
-<meta property="og:description" content="Import template files for storage of core metadata. Some templates are 
-    populated with content detected by automated metadata extraction 
-    methods. The remainder will have to be manually entered by a human. 
-    Instructions for filling out the templates are at
-    https://clnsmth.github.io/EMLassemblyline/articles/instructions.html." />
+<meta property="og:description" content="Import template files for storage of core metadata and table attributes. 
+    Some templates are populated with content detected by automated metadata 
+    extraction methods. The remainder is manually entered by the user. 
+    Instructions for editing the templates." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -96,7 +95,7 @@
       <a href="../articles/edit_metadata_templates.html">Edit metadata templates</a>
     </li>
     <li>
-      <a href="../articles/create_eml.html">Create EML</a>
+      <a href="../articles/create_eml.html">Make EML</a>
     </li>
     <li>
       <a href="../articles/publish_data_package.html">Publish data package</a>
@@ -133,18 +132,17 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Import core metadata templates</h1>
+    <h1>Import core metadata and table attribute templates</h1>
     <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/import_templates.R'><code>R/import_templates.R</code></a></small>
     <div class="hidden name"><code>import_templates.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Import template files for storage of core metadata. Some templates are 
-    populated with content detected by automated metadata extraction 
-    methods. The remainder will have to be manually entered by a human. 
-    Instructions for filling out the templates are at
-    <a href='https://clnsmth.github.io/EMLassemblyline/articles/instructions.html'>https://clnsmth.github.io/EMLassemblyline/articles/instructions.html</a>.</p>
+    <p>Import template files for storage of core metadata and table attributes. 
+    Some templates are populated with content detected by automated metadata 
+    extraction methods. The remainder is manually entered by the user. 
+    <a href='https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html'>Instructions for editing the templates.</a></p>
     
     </div>
 
@@ -153,8 +151,8 @@
       <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='no'>path</span>,
       <span class='no'>license</span>,
       <span class='kw'>data.table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-      <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-      <span class='kw'>write.file</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+      <span class='kw'>write.file</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+      <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
     )</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -162,31 +160,32 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>path</th>
-      <td><p>(character) Path to where the templates will be imported.</p></td>
+      <td><p>(character) Path to the directory where the templates will be written.</p></td>
     </tr>
     <tr>
       <th>data.path</th>
-      <td><p>(character) Path to where the data files are stored.</p></td>
+      <td><p>(character) Path to the directory where the data tables are stored.</p></td>
     </tr>
     <tr>
       <th>license</th>
-      <td><p>(character) License under which the data will be released. Use "CC0" 
-(<a href='https://creativecommons.org/publicdomain/zero/1.0/'>https://creativecommons.org/publicdomain/zero/1.0/</a>), 
-or "CCBY" (<a href='https://creativecommons.org/licenses/by/4.0/'>https://creativecommons.org/licenses/by/4.0/</a>).</p></td>
+      <td><p>(character) License under which the data will be released. Use 
+<a href='"CC0"'>https://creativecommons.org/publicdomain/zero/1.0/</a> or 
+<a href='"CCBY"'>https://creativecommons.org/licenses/by/4.0/</a>.</p></td>
     </tr>
     <tr>
       <th>data.table</th>
-      <td><p>(character) Names of tabular data. Names of non-tabular data are
-entered as arguments to `make_eml`.</p></td>
+      <td><p>(character) Name of data table. If more than one, then supply as a 
+vector of character strings (e.g. 
+<code>data.table = c('concentrations.csv', 'characteristics.csv')</code>).</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>(named list) Alternative input/output to `EMLassemblyline` functions. 
-Use <code>template_arguments</code> to create `x`.</p></td>
+      <td><p>(named list; optional) Alternative input to <code>EMLassemblyline</code> 
+functions. Use <code><a href='template_arguments.html'>template_arguments()</a></code> to create <code>x</code>.</p></td>
     </tr>
     <tr>
       <th>write.file</th>
-      <td><p>(logical) Write template files to `path`.</p></td>
+      <td><p>(logical; optional) Whether to write the templates to <code>path</code>.</p></td>
     </tr>
     </table>
     
@@ -194,32 +193,92 @@ Use <code>template_arguments</code> to create `x`.</p></td>
 
     
 <ul>
-<li><p>`abstract.txt` Template for the dataset abstract.</p></li>
-<li><p>`additional_info.txt` Template for miscellaneous dataset
+<li><p><strong>abstract.txt</strong> Template for the dataset abstract.</p></li>
+<li><p><strong>additional_info.txt`</strong> Template for miscellaneous dataset
         information.</p></li>
-<li><p>`attributes_*.txt` Template(s) for data table attribute 
+<li><p><strong>attributes_*.txt</strong> Template(s) for data table attribute 
         metadata, populated with some automatically extracted metadata 
-        content from the data files.</p></li>
-<li><p>`bounding_boxes.txt` Template for the dataset geographic 
-        bounding coordinates.</p></li>
-<li><p>`custom_units.txt` Template for defining non-standard units 
-        used in the dataset.</p></li>
-<li><p>`intellectual_rights.txt` The selected intellectual rights 
+        content from the data tables. A tab delimited table.</p></li>
+<li><p><strong>bounding_boxes.txt</strong> Template for the dataset geographic 
+        bounding coordinates. A tab delimited table.</p></li>
+<li><p><strong>custom_units.txt</strong> Template for defining non-standard units 
+        used in data tables. A tab delimited table.</p></li>
+<li><p><strong>intellectual_rights.txt</strong> The selected intellectual rights 
         license.</p></li>
-<li><p>`keywords.txt` Template for dataset keywords.</p></li>
-<li><p>`methods.txt` Template for dataset methods.</p></li>
-<li><p>`personnel.txt` Template for dataset personnel and funding 
-        metadata.</p></li>
-<li><p>If using `x`, then content of each above listed template file 
-        is added to `x` under `/x/templates/`</p></li>
+<li><p><strong>keywords.txt</strong> Template for dataset keywords. A tab 
+        delimited table.</p></li>
+<li><p><strong>methods.txt</strong> Template for dataset methods.</p></li>
+<li><p><strong>personnel.txt</strong> Template for dataset personnel and funding 
+        metadata. A tab delimited table.</p></li>
+<li><p>If using <code>x</code>, then the templates are added to 
+        <strong>/x/templates</strong>.</p></li>
 </ul>
 
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Existing templates will not be overwritten by `import_templates`.</p>
+    <p>Existing templates will not be overwritten subsequent calls to 
+    <code>import_templates()</code>.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Set working directory</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/getwd'>setwd</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>())
+
+<span class='co'># Create data package directory "pkg_250"</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/files'>file.copy</a></span>(
+  <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>'/examples/pkg_250'</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'EMLassemblyline'</span>),
+  <span class='kw'>to</span> <span class='kw'>=</span> <span class='st'>'.'</span>,
+  <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='co'># View directory contents (NOTE: Directory is empty)</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='st'>'./pkg_250/metadata_templates'</span>)</div><div class='output co'>#&gt; character(0)</div><div class='input'>
+<span class='co'># Import templates (for data package with no tables)</span>
+<span class='fu'>import_templates</span>(
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./pkg_250/metadata_templates'</span>,
+  <span class='kw'>license</span> <span class='kw'>=</span> <span class='st'>'CC0'</span>
+)</div><div class='output co'>#&gt; <span class='message'>Importing metadata templates</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'import_templates' is deprecated.</span>
+#&gt; <span class='warning'>Use 'template_core_metadata and template_table_attributes' instead.</span>
+#&gt; <span class='warning'>See help("Deprecated") and help("EMLassemblyline-deprecated").</span></div><div class='output co'>#&gt; <span class='message'>Importing abstract.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing additional_info.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing bounding_boxes.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing custom_units.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing intellectual_rights.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing keywords.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing methods.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing personnel.txt.</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
+<span class='co'># View directory contents (NOTE: Templates exist)</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='st'>'./pkg_250/metadata_templates'</span>)</div><div class='output co'>#&gt; [1] "abstract.txt"            "additional_info.txt"    
+#&gt; [3] "bounding_boxes.txt"      "custom_units.txt"       
+#&gt; [5] "intellectual_rights.txt" "keywords.txt"           
+#&gt; [7] "methods.txt"             "personnel.txt"          </div><div class='input'>
+<span class='co'># Rerunning import_templates() does not overwrite files</span>
+<span class='fu'>import_templates</span>(
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./pkg_250/metadata_templates'</span>,
+  <span class='kw'>license</span> <span class='kw'>=</span> <span class='st'>'CC0'</span>
+)</div><div class='output co'>#&gt; <span class='message'>Importing metadata templates</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'import_templates' is deprecated.</span>
+#&gt; <span class='warning'>Use 'template_core_metadata and template_table_attributes' instead.</span>
+#&gt; <span class='warning'>See help("Deprecated") and help("EMLassemblyline-deprecated").</span></div><div class='output co'>#&gt; <span class='message'>abstract.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>additional_info.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>bounding_boxes.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>custom_units.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>intellectual_rights.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>keywords.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>methods.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>personnel.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
+<span class='co'># Remove templates from directory</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/files'>file.remove</a></span>(
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>list.files</a></span>(<span class='st'>'./pkg_250/metadata_templates'</span>, <span class='kw'>full.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+)</div><div class='output co'>#&gt; [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</div><div class='input'>
+<span class='co'># Import templates (for data package with tables)</span>
+<span class='fu'>import_templates</span>(
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./pkg_250/metadata_templates'</span>,
+  <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='st'>'./pkg_250/data_objects'</span>,
+  <span class='kw'>data.table</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(
+    <span class='st'>'decomp.csv'</span>,
+    <span class='st'>'nitrogen.csv'</span>
+  ),
+  <span class='kw'>license</span> <span class='kw'>=</span> <span class='st'>'CC0'</span>
+)</div><div class='output co'>#&gt; <span class='message'>Importing metadata templates</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'import_templates' is deprecated.</span>
+#&gt; <span class='warning'>Use 'template_core_metadata and template_table_attributes' instead.</span>
+#&gt; <span class='warning'>See help("Deprecated") and help("EMLassemblyline-deprecated").</span></div><div class='output co'>#&gt; <span class='message'>Importing abstract.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing additional_info.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing bounding_boxes.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing custom_units.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing intellectual_rights.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing keywords.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing methods.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing personnel.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing attributes_decomp.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing attributes_nitrogen.txt.</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
+<span class='co'># View directory contents (NOTE: Templates, including attributes*_.txt, exist)</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='st'>'./pkg_250/metadata_templates'</span>)</div><div class='output co'>#&gt;  [1] "abstract.txt"            "additional_info.txt"    
+#&gt;  [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
+#&gt;  [5] "bounding_boxes.txt"      "custom_units.txt"       
+#&gt;  [7] "intellectual_rights.txt" "keywords.txt"           
+#&gt;  [9] "methods.txt"             "personnel.txt"          </div><div class='input'>
+<span class='co'># Clean up</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/unlink'>unlink</a></span>(
+  <span class='st'>'./pkg_250'</span>,
+  <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -229,7 +288,9 @@ Use <code>template_arguments</code> to create `x`.</p></td>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

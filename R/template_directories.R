@@ -40,14 +40,17 @@
 #' # Set working directory
 #' setwd(tempdir())
 #' 
-#' # Template data package directory "edi_301"
+#' # Template data package directory "pkg_301"
 #' template_directories(
 #'   path = '.',
-#'   dir.name =  'edi_301'
+#'   dir.name =  'pkg_301'
 #' )
 #' 
 #' # View directory contents
-#' dir('./edi_301')
+#' dir('./pkg_301')
+#'
+#' # Clean up
+#' unlink('./pkg_301', recursive = TRUE)
 #'
 #' @export
 #'
@@ -57,14 +60,14 @@ template_directories <- function(path, dir.name){
   # Stop if directory exists
   
   if (dir.exists(paste0(path, '/', dir.name))){
-    stop(paste0(path, '/', dir.name, ' already exists.'))
+    stop(paste0(path, '/', dir.name, ' already exists!'))
   }
 
   # Create parent directory ---------------------------------------------------
   
   message(
     paste0(
-      'Creating ',
+      'Templating ',
       path,
       '/',
       dir.name
@@ -130,5 +133,7 @@ template_directories <- function(path, dir.name){
       '.R'
     )
   )
+  
+  message('Done.')
   
 }

@@ -1,9 +1,8 @@
 #' Create geographic coverage template
 #'
 #' @description  
-#'     Create template for describing the geographic coverage of a data package.
-#'     The content of this template is automatically extracted from a data 
-#'     table containing geographical coordinates.
+#'     Use this function to extract the unique location coordinates and names
+#'     from a data table.
 #'
 #' @usage 
 #'     template_geographic_coverage(
@@ -18,59 +17,54 @@
 #'     )
 #'
 #' @param path 
-#'     (character) Path to the directory where the geographic coverage 
-#'     template will be written.
+#'     (character) Path to the metadata template directory.
 #' @param data.path
-#'     (character) Path to the directory containing \code{data.table}.
+#'     (character) Path to the data directory.
 #' @param data.table 
-#'     (character) Name of table containing geographic coordinates 
-#'     represented in decimal degrees, where latitudes south of the equator 
-#'     and longitudes west of the prime meridian are negative.
+#'     (character) Table name containing geographic coordinates.
 #' @param lat.col 
-#'     (character) Name of latitude column.
+#'     (character) Column name containing latitude coordinates in decimal 
+#'     degrees, where latitudes south of the equator are negative.
 #' @param lon.col 
-#'     (character) Name of longitude column.
+#'     (character) Column name containing longitude coordinates in decimal 
+#'     degrees, where longitudes west of the prime meridian are negative.
 #' @param site.col
-#'     (character) Name of site column, where site is the name of the location
-#'     specified by \code{lat.col} and \code{lon.col}.
+#'     (character) Column name containing site names.
 #' @param write.file
-#'     (logical; optional) Whether to write the geographic coverage template 
-#'     to \code{path}.
+#'     (logical; optional) Whether to write the template file.
 #' @param x
 #'     (named list; optional) Alternative input to 
-#'     \code{EMLassemblyline} functions. Use \code{template_arguments()} to 
-#'     create \code{x}.
+#'     \code{template_geographical_coverage()}. Use \code{template_arguments()} 
+#'     to create \code{x}.
 #'
-#' @return 
-#'     \itemize{
-#'         \item{\strong{geographic_coverage.txt} The geographic 
-#'         coverage template. A tab delimited table.}
-#'         \item{If using \code{x}, then the geographic coverage template is 
-#'         added to \strong{/x/templates}.}
-#'     }
+#' @return
+#'     \strong{geographic_coverage.txt} The tab delimited geographic coverage 
+#'     template. This file is written to \code{path} unless using \code{x},
+#'     in which case the template is added to 
+#'     \strong{/x/templates/catvars_*.txt}.
 #'     
 #' @details 
 #'     An existing geographic coverage template will not be overwritten by 
-#'     subsequent calls to \code{extract_geocoverage()}.
+#'     subsequent calls to \code{template_geographic_coverage()}.
 #'
 #' @examples 
-#' # Set working directory
-#' setwd(tempdir())
-#' 
-#' # Create data package directory "edi_255"
+#' # Initialize data package directory for template_template_geographic_coverage()
 #' file.copy(
-#'   from = system.file('/examples/edi_255', package = 'EMLassemblyline'),
-#'   to = '.',
+#'   from = system.file('/examples/pkg_255', package = 'EMLassemblyline'),
+#'   to = tempdir(),
 #'   recursive = TRUE
 #' )
 #' 
+#' # Set working directory
+#' setwd(paste0(tempdir(), './pkg_255'))
+#' 
 #' # View directory contents (NOTE: geographic_coverage.txt doesn't exist)
-#' dir('./edi_255/metadata_templates')
+#' dir('./metadata_templates')
 #' 
 #' # Template geographic coverage
 #' template_geographic_coverage(
-#'   path = './edi_255/metadata_templates',
-#'   data.path = './edi_255/data_objects',
+#'   path = './metadata_templates',
+#'   data.path = './data_objects',
 #'   data.table = 'nitrogen.csv',
 #'   site.col = 'site_name',
 #'   lat.col = 'site_lat',
@@ -78,12 +72,12 @@
 #' )
 #' 
 #' # View directory contents (NOTE: geographic_coverage.txt exists)
-#' dir('./edi_255/metadata_templates')
+#' dir('./metadata_templates')
 #' 
 #' # Rerunning template_geographic_coverage() does not overwrite files
 #' template_geographic_coverage(
-#'   path = './edi_255/metadata_templates',
-#'   data.path = './edi_255/data_objects',
+#'   path = './metadata_templates',
+#'   data.path = './data_objects',
 #'   data.table = 'nitrogen.csv',
 #'   site.col = 'site_name',
 #'   lat.col = 'site_lat',
@@ -91,10 +85,7 @@
 #' )
 #' 
 #' # Clean up
-#' unlink(
-#'   './edi_255',
-#'   recursive = TRUE
-#' )
+#' unlink('.', recursive = TRUE)
 #'
 #' @export
 #'
@@ -148,7 +139,6 @@ template_geographic_coverage <- function(path, data.path = path, data.table,
     # Read data table
     
     x <- template_arguments(
-      path = path,
       data.path = data.path,
       data.table = data_file
     )

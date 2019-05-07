@@ -59,7 +59,7 @@
       <a href="../articles/edit_metadata_templates.html">Edit metadata templates</a>
     </li>
     <li>
-      <a href="../articles/create_eml.html">Create EML</a>
+      <a href="../articles/create_eml.html">Make EML</a>
     </li>
     <li>
       <a href="../articles/publish_data_package.html">Publish data package</a>
@@ -108,7 +108,7 @@
 <div id="editing" class="section level2">
 <h2 class="hasAnchor">
 <a href="#editing" class="anchor"></a>Editing</h2>
-<p>While a substantial portion of metadata content is auto-extracted, most templates require some user input. Template files can be edited in simple text and spreadsheet editors. Specific instructions for each template are found below.</p>
+<p>While a substantial portion of metadata is automatically extracted by the templating functions, most templates require some user input. Templates can be edited in simple text and spreadsheet editors. Specific editing instructions are below.</p>
 <p><em>NOTE:</em></p>
 <ul>
 <li><em>Some content in tabular templates is optional. Leave these spaces blank (no need to add NAs).</em></li>
@@ -163,7 +163,7 @@ In 2014 and 2015, we quantified decomposition of plant litter material collected
 <div id="keywords-txt" class="section level2">
 <h2 class="hasAnchor">
 <a href="#keywords-txt" class="anchor"></a>keywords.txt</h2>
-<p>Keywords facilitate search and discovery along scientific terms, as well as research groups, field stations, and other organizations. Using a controlled vocabulary or thesaurus vastly improves discovery (e.g. <a href="http://vocab.lternet.edu/vocab/vocab/index.php">LTER</a>.</p>
+<p>Keywords facilitate search and discovery on scientific terms, as well as names of research groups, field stations, and other organizations. Using a controlled vocabulary or thesaurus vastly improves discovery (e.g. <a href="http://vocab.lternet.edu/vocab/vocab/index.php">LTER</a>.</p>
 <p><strong>keywords.txt</strong> is a tab delimited table with columns:</p>
 <ul>
 <li>
@@ -3510,20 +3510,17 @@ site_104
 <p><strong>taxonomic_coverage.txt</strong> is a tab delimited table with columns:</p>
 <ul>
 <li>
-<strong>taxa</strong> Taxa name as it occurs in the data. Can be single word or species binomial.</li>
+<strong>taxa_raw</strong> Taxa name as it occurs in the data. Can be single word or species binomial.</li>
 <li>
-<strong>scientific_name</strong> (optional) Taxa’s scientific name found in an authority system (e.g. <em>Perca flavescens</em>)</li>
+<strong>name_type</strong> (optional) Type of taxonomic name. Can be <code>scientific</code> or <code>common</code>.</li>
 <li>
-<strong>scientific_authority_system</strong> (optional) Authority system in which the taxa’s scientific name was found (e.g. ITIS).</li>
+<strong>name_resolved</strong> (optional) Taxa’s name found in an authority system.</li>
 <li>
-<strong>scientific_authority_id</strong> (optional) Taxa’s identifier in the authority system (e.g. 168469).</li>
+<strong>authority_system</strong> (optional) Authority system in which the taxa’s scientific name was found (e.g. ITIS).</li>
 <li>
-<strong>common_name</strong> (optional) Taxa’s common name found in an authority system (e.g. Yellow Perch).</li>
-<li>
-<strong>common_authority_system</strong> (optional) Authority system in which the taxa’s common name was found (e.g. ITIS).</li>
-<li>
-<strong>common_authority_id</strong> (optional) Taxa’s identifier in the authority system (e.g. 168469).</li>
+<strong>authority_id</strong> (optional) Taxa’s identifier in the authority system (e.g. 168469).</li>
 </ul>
+<p>name = taxa_raw, name_type = rep(‘scientific’, length(taxa_raw)), name_resolved = rep(NA_character_, length(taxa_raw)), authority_system = rep(NA_character_, length(taxa_raw)), authority_id = rep(NA_character_, length(taxa_raw)),</p>
 <p>Example:</p>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:70%; ">
 <table class="table table table-bordered">

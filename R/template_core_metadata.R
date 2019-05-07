@@ -1,10 +1,9 @@
 #' Create core metadata templates
 #'
 #' @description  
-#'     Import template files for storage of core metadata. Some templates are 
-#'     populated with content detected by automated metadata extraction 
-#'     methods. The remainder is supplied by the user.
-#'     \href{https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html}{Instructions for editing templates.}
+#'     Use this function to create the core metadata templates required by 
+#'     all data packages. Most templates require user supplied information.
+#'     \href{https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html}{Instructions for editing these templates.}
 #'
 #' @usage 
 #'     template_core_metadata(
@@ -15,71 +14,76 @@
 #'     )
 #'
 #' @param path 
-#'     (character) Path to the directory where the templates will be written.
+#'     (character) Path to the metadata template directory.
 #' @param license
-#'     (character) License under which the data will be released. Use 
-#'     \href{"CC0"}{https://creativecommons.org/publicdomain/zero/1.0/} or 
-#'     \href{"CCBY"}{https://creativecommons.org/licenses/by/4.0/}.
+#'     (character) License to publicly release the data package under. Use
+#'     \href{https://creativecommons.org/publicdomain/zero/1.0/}{"CC0"} or 
+#'     \href{https://creativecommons.org/licenses/by/4.0/}{"CCBY"}.
 #' @param write.file
-#'     (logical; optional) Whether to write the templates to \code{path}.
+#'     (logical; optional) Whether to write the template files.
 #' @param x
-#'     (named list; optional) Alternative input to \code{EMLassemblyline} 
-#'     functions. Use \code{template_arguments()} to create \code{x}.
+#'     (named list; optional) Alternative input to 
+#'     \code{template_core_metadatta()}. Use \code{template_arguments()} 
+#'     to create \code{x}.
 #'
 #' @return 
 #'     \itemize{
-#'         \item{\strong{abstract.txt} Template for the dataset abstract.}
-#'         \item{\strong{additional_info.txt} Template for miscellaneous dataset
+#'         \item{\strong{abstract.txt} The abstract template.}
+#'         \item{\strong{additional_info.txt} The template for miscellaneous
 #'         information.}
-#'         \item{\strong{intellectual_rights.txt} The selected intellectual rights 
-#'         license.}
-#'         \item{\strong{keywords.txt} Template for dataset keywords. A tab 
-#'         delimited table.}
-#'         \item{\strong{methods.txt} Template for dataset methods.}
-#'         \item{\strong{personnel.txt} Template for dataset personnel and funding 
-#'         metadata. A tab delimited table.}
-#'         \item{If using \code{x}, then content of each above listed template file 
-#'         is added to \code{x} under \strong{/x/templates/}}
+#'         \item{\strong{intellectual_rights.txt} The intellectual rights 
+#'         license with the text of CC0 or CCBY.}
+#'         \item{\strong{keywords.txt} The tab delimited keywords template.}
+#'         \item{\strong{methods.txt} The methods template.}
+#'         \item{\strong{personnel.txt} The tab delimited personnel template 
+#'         for information on persons and funding involved in the creation of 
+#'         the data package.}
+#'         \item{These files is written to \code{path} unless using \code{x},
+#'         in which case the templates are added to 
+#'         \strong{/x/templates}.}
 #'     }
 #'     
 #' @details 
 #'     Existing templates will not be overwritten by \code{template_core_metadata()}.
 #' 
 #' @examples
-#' # Set working directory
-#' setwd(tempdir())
-#' 
-#' # Create data package directory "edi_250"
+#' # Initialize data package directory for template_core_metadata()
 #' file.copy(
-#'   from = system.file('/examples/edi_250', package = 'EMLassemblyline'),
-#'   to = '.',
+#'   from = system.file('/examples/pkg_250', package = 'EMLassemblyline'),
+#'   to = tempdir(),
 #'   recursive = TRUE
 #' )
 #' 
+#' # Set working directory
+#' setwd(paste0(tempdir(), './pkg_250'))
+#' 
 #' # View directory contents (NOTE: Directory is empty)
-#' dir('./edi_250/metadata_templates')
+#' dir('./metadata_templates')
 #' 
 #' # Template core metadata
 #' template_core_metadata(
-#'   path = './edi_250/metadata_templates',
+#'   path = './metadata_templates',
 #'   license = 'CC0'
 #' )
 #' 
 #' # View directory contents (NOTE: Templates exist)
-#' dir('./edi_250/metadata_templates')
+#' dir('./metadata_templates')
 #' 
 #' # Rerunning template_core_metadata() does not overwrite files
 #' template_core_metadata(
-#'   path = './edi_250/metadata_templates',
+#'   path = './metadata_templates',
 #'   license = 'CC0'
 #' )
+#' 
+#' # Clean up
+#' unlink('.', recursive = TRUE)
 #'     
 #' @export     
 #'     
 
 template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
   
-  message('Creating core metadata templates')
+  message('Templating core metadata ...')
   
   # Validate arguments --------------------------------------------------------
   
@@ -138,7 +142,7 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
     # Send message
     
     if (isTRUE(value)){
-      message("Importing abstract.txt.")
+      message("abstract.txt")
     } else {
       message("abstract.txt already exists!")
     }
@@ -160,7 +164,7 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
       
       # Send message
       
-      message("Importing abstract.txt.")
+      message("abstract.txt")
       
     } else {
       
@@ -192,7 +196,7 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
     # Send message
     
     if (isTRUE(value)){
-      message("Importing additional_info.txt.")
+      message("additional_info.txt")
     } else {
       message("additional_info.txt already exists!")
     }
@@ -214,7 +218,7 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
       
       # Send message
       
-      message("Importing additional_info.txt")
+      message("additional_info.txt")
       
     } else {
       
@@ -250,7 +254,7 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
       # Send message
       
       if (isTRUE(value)){
-        message("Importing intellectual_rights.txt.")
+        message("intellectual_rights.txt")
       } else {
         message("intellectual_rights.txt already exists!")
       }
@@ -272,11 +276,11 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
         
         # Send message
         
-        message("Importing intellectual_rights.txt.")
+        message("intellectual_rights.txt")
         
       } else {
         
-        message("intellectual_rights.txt. already exists!")
+        message("intellectual_rights.txt already exists!")
         
       }
       
@@ -306,7 +310,7 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
       # Send message
       
       if (isTRUE(value)){
-        message("Importing intellectual_rights.txt.")
+        message("intellectual_rights.txt")
       } else {
         message("intellectual_rights.txt already exists!")
       }
@@ -328,7 +332,7 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
         
         # Send message
         
-        message("Importing intellectual_rights.txt.")
+        message("intellectual_rights.txt")
         
       } else {
         
@@ -362,7 +366,7 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
     # Send message
     
     if (isTRUE(value)){
-      message("Importing keywords.txt.")
+      message("keywords.txt.")
     } else {
       message("keywords.txt already exists!")
     }
@@ -387,7 +391,7 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
       
       # Send message
       
-      message("Importing keywords.txt.")
+      message("keywords.txt")
       
     } else {
       
@@ -419,7 +423,7 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
     # Send message
     
     if (isTRUE(value)){
-      message("Importing methods.txt.")
+      message("methods.txt")
     } else {
       message("methods.txt already exists!")
     }
@@ -441,7 +445,7 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
       
       # Send message
       
-      message("Importing methods.txt.")
+      message("methods.txt")
       
     } else {
       
@@ -473,7 +477,7 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
     # Send message
     
     if (isTRUE(value)){
-      message("Importing personnel.txt.")
+      message("personnel.txt")
     } else {
       message("personnel.txt already exists!")
     }
@@ -498,7 +502,7 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
       
       # Send message
       
-      message("Importing personnel.txt.")
+      message("personnel.txt")
       
     } else {
       

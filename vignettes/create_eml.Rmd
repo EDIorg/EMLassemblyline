@@ -5,11 +5,6 @@ output: html_document
 
 ```{r setup, include=FALSE}
 
-# Parameterize
-
-dir_path <- '/Users/Colin/Desktop/data_packages'
-data_path <- '/Users/Colin/Desktop/data_packages/edi_301/data_objects'
-
 # Initialize .Rmd
 
 knitr::opts_chunk$set(echo = TRUE)
@@ -17,15 +12,21 @@ library(kableExtra)
 library(EMLassemblyline)
 library(XML)
 
-# Remove directory
+# Remove example package directory
 
-unlink(paste0(dir_path, '\\edi_301'), recursive = TRUE)
+unlink(
+  paste0(
+    tempdir(),
+    '/pkg_301'
+  ), 
+  recursive = TRUE
+)
 
-# Create directory structure
+# Create the data package directory from organize_data_package.Rmd
 
 template_directories(
-  path = dir_path,
-  dir.name = 'edi_301'
+  path = tempdir(),
+  dir.name = 'pkg_301'
 )
 
 # Add completed templates
@@ -45,8 +46,8 @@ file.copy(
     )
   ),
   to = paste0(
-    dir_path,
-    '/edi_301/metadata_templates'
+    tempdir(),
+    '/pkg_301/metadata_templates'
   )
 )
 
@@ -54,50 +55,40 @@ file.copy(
 
 file.remove(
   paste0(
-    dir_path,
-    '/edi_301/metadata_templates/bounding_boxes.txt'
+    tempdir(),
+    '/pkg_301/metadata_templates/bounding_boxes.txt'
   )
 )
 
 file.remove(
   paste0(
-    dir_path,
-    '/edi_301/metadata_templates/taxonomicCoverage.xml'
+    tempdir(),
+    '/pkg_301/metadata_templates/taxonomicCoverage.xml'
   )
 )
 
-# Add data objects
+# Add a couple tables to "pkg_301"
 
 file.copy(
-  from = paste0(
-    system.file(
-      '/examples/data',
-      package = 'EMLassemblyline'
-    ),
-    '/',
-    list.files(
-      system.file(
-        '/examples/data',
-        package = 'EMLassemblyline'
-      )
-    )
-  ),
-  to = paste0(
-    dir_path,
-    '/edi_301/data_objects'
-  )
+  from = system.file('/examples/data/nitrogen.csv', package = 'EMLassemblyline'),
+  to = paste0(tempdir(), '/pkg_301/data_objects')
+)
+
+file.copy(
+  from = system.file('/examples/data/decomp.csv', package = 'EMLassemblyline'),
+  to = paste0(tempdir(), '/pkg_301/data_objects')
 )
 
 # Create templates
 
 template_geographic_coverage(
   path = paste0(
-    dir_path,
-    '/edi_301/metadata_templates'
+    tempdir(),
+    '/pkg_301/metadata_templates'
   ),
   data.path = paste0(
-    dir_path,
-    '/edi_301/data_objects'
+    tempdir(),
+    '/pkg_301/data_objects'
   ),
   data.table = 'nitrogen.csv',
   site.col = 'site_name',
@@ -107,21 +98,69 @@ template_geographic_coverage(
 
 # Set working directory
 
-knitr::opts_knit$set(root.dir = 'C:\\Users\\Colin\\Desktop\\data_packages\\edi_301')
+knitr::opts_knit$set(root.dir = tempdir())
 
 ```
 
-## The `make_eml()` function
+## The make_eml() function
 
 The information rich and machine readable EML metadata file should contain all the necessary content, in the correct format, and in the right schema locations according with best practices informed by scientists who use this information and data repositories who serve it in a human discoverable and readable form. In addition to performing all these tasks, the `make_eml()` function adds another layer of auto-extracted metadata to the EML based on template contents and data object types. Usage of `make_eml()` differs slightly depending on data package contents. The three use cases are:
 
-* **Data tables** Only contains data tables
-* **Other entities** Only contains non-table data types and other digital objects
-* **Data tables and other entities** Contains both data tables and other entities
+* **Data tables** The data package only contains data tables
+* **Other entities** The data package only contains non-table data types and other digital objects
+* **Data tables and other entities** The data package contains both data tables and other entities
 
-Below are examples of each use case.
+Below are examples of each use case. First set up the working directory with templates and data objects required by these use cases:
 
-## `make_eml()` (data tables)
+```{r initialize workspace, message = TRUE}
+# Continuing with the data package directory ("pkg_301") developed in the article "Create metadata templates" ... replace partially complete templates with fully completed templates required by make_eml()
+
+# attributes.txt
+
+file.copy(
+  from = system.file('/examples/templates/attributes_nitrogen.txt', package = 'EMLassemblyline'),
+  to = './pkg_301/metadata_templates',
+  overwrite = TRUE
+)
+
+file.copy(
+  from = system.file('/examples/templates/attributes_decomp.txt', package = 'EMLassemblyline'),
+  to = './pkg_301/metadata_templates',
+  overwrite = TRUE
+)
+
+# catvars.txt
+
+file.copy(
+  from = system.file('/examples/templates/catvars_nitrogen.txt', package = 'EMLassemblyline'),
+  to = './pkg_301/metadata_templates',
+  overwrite = TRUE
+)
+
+file.copy(
+  from = system.file('/examples/templates/catvars_decomp.txt', package = 'EMLassemblyline'),
+  to = './pkg_301/metadata_templates',
+  overwrite = TRUE
+)
+
+# Add a couple data objects
+
+file.copy(
+  from = system.file('/examples/data/ancillary_data.zip', package = 'EMLassemblyline'),
+  to = './pkg_301/data_objects',
+  overwrite = TRUE
+)
+
+file.copy(
+  from = system.file('/examples/data/processing_and_analysis.R', package = 'EMLassemblyline'),
+  to = './pkg_301/data_objects',
+  overwrite = TRUE
+)
+
+
+```
+
+## Make EML for data tables
 
 The most common data package only contains tables. To make EML for this package type, the core metadata and table attribute templates should be complete, as well as the categorical variables and custom units templates if necessary. The relevant `make_eml()` arguments for this package type are:
 
@@ -140,14 +179,14 @@ The most common data package only contains tables. To make EML for this package 
 *  **user.domain** (optional) Domain of the `user.id`(s).
 *  **package.id** (optional) Data package identifier in the format expected by the receiving data repository.
 
-```{r make EML for data tables, message = FALSE}
+```{r make EML for data tables, message = TRUE}
 
 # Make EML for data tables
 
 make_eml(
-  path = './metadata_templates',
-  data.path = './data_objects',
-  eml.path = './eml',
+  path = './pkg_301/metadata_templates',
+  data.path = './pkg_301/data_objects',
+  eml.path = './pkg_301/eml',
   dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions',
   temporal.coverage = c('2014-05-01', '2015-10-31'),
   geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
@@ -162,7 +201,7 @@ make_eml(
 
 # View directory
 
-dir('./eml')
+dir('./pkg_301/eml')
 
 # View EML
 
@@ -172,13 +211,13 @@ dir('./eml')
 
 # Display EML
 
-output <- XML::xmlTreeParse('./eml/edi.301.1.xml')
+output <- XML::xmlTreeParse('./pkg_301/eml/edi.301.1.xml')
 
 output$doc$children
 
 ```
 
-## `make_eml()` (other entities)
+## Make EML for other entities
 
 Some data packages only contain non-tabular data (e.g. geospatial vector, NetCDF, images) or other digital objects (e.g. processing and analysis scripts, modeling code, .pdf). To make EML for this package type, the core metadata templates should be completed. Several of the same file type, or related file types, should be grouped into an archive format (e.g. zip, rar, tar). The relevant `make_eml()` arguments for this package type are:
 
@@ -196,14 +235,14 @@ Some data packages only contain non-tabular data (e.g. geospatial vector, NetCDF
 *  **user.domain** (optional) Domain of the `user.id`(s).
 *  **package.id** (optional) Data package identifier in the format expected by the receiving data repository.
 
-```{r make EML for other entities, message = FALSE}
+```{r make EML for other entities, message = TRUE}
 
 # Make EML for other entities
 
 make_eml(
-  path = './metadata_templates',
-  data.path = './data_objects',
-  eml.path = './eml',
+  path = './pkg_301/metadata_templates',
+  data.path = './pkg_301/data_objects',
+  eml.path = './pkg_301/eml',
   dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions',
   temporal.coverage = c('2014-05-01', '2015-10-31'),
   geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
@@ -218,7 +257,7 @@ make_eml(
 
 # View directory
 
-dir('./eml')
+dir('./pkg_301/eml')
 
 # View EML
 
@@ -228,13 +267,13 @@ dir('./eml')
 
 # Display EML
 
-output <- XML::xmlTreeParse('./eml/edi.301.1.xml')
+output <- XML::xmlTreeParse('./pkg_301/eml/edi.301.1.xml')
 
 output$doc$children
 
 ```
 
-## `make_eml()` (data tables and other entities)
+## Make EML for data tables and other entities
 
 A third type of data package contains both data tables and other entities. To make EML for this package type, the core metadata and table attribute templates should be complete, as well as the categorical variables and custom units templates if necessary. The relevant `make_eml()` arguments for this package type are:
 
@@ -255,14 +294,14 @@ A third type of data package contains both data tables and other entities. To ma
 *  **user.domain** (optional) Domain of the `user.id`(s).
 *  **package.id** (optional) Data package identifier in the format expected by the receiving data repository.
 
-```{r make EML for data tables and other entities, message = FALSE}
+```{r make EML for data tables and other entities, message = TRUE}
 
 # Make EML for data tables and other entities
 
 make_eml(
-  path = './metadata_templates',
-  data.path = './data_objects',
-  eml.path = './eml',
+  path = './pkg_301/metadata_templates',
+  data.path = './pkg_301/data_objects',
+  eml.path = './pkg_301/eml',
   dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions',
   temporal.coverage = c('2014-05-01', '2015-10-31'),
   geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
@@ -279,7 +318,7 @@ make_eml(
 
 # View directory
 
-dir('./eml')
+dir('./pkg_301/eml')
 
 # View EML
 
@@ -289,7 +328,7 @@ dir('./eml')
 
 # Display EML
 
-output <- XML::xmlTreeParse('./eml/edi.301.1.xml')
+output <- XML::xmlTreeParse('./pkg_301/eml/edi.301.1.xml')
 
 output$doc$children
 

@@ -59,7 +59,7 @@
       <a href="../articles/edit_metadata_templates.html">Edit metadata templates</a>
     </li>
     <li>
-      <a href="../articles/create_eml.html">Create EML</a>
+      <a href="../articles/create_eml.html">Make EML</a>
     </li>
     <li>
       <a href="../articles/publish_data_package.html">Publish data package</a>
@@ -108,64 +108,90 @@
 <div id="templating-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#templating-functions" class="anchor"></a>Templating functions</h2>
-<p>Metadata templates store content that is converted into EML. Each template is created by a templating function that reads a data entity or object, extracts as much information as possible from data entity or object, then writes this information to file for the user to add information to if necessary. Each templating function focuses on a specific metadata feature thereby allowing the user to highlight the unique features of their data. Currently available functions include:</p>
+<p>Metadata templates store content that is converted into EML. Each template is created by a function that reads a data object, extracts as much information as possible, then writes this information to file for the user to add information to if necessary. Each templating function focuses on a specific metadata feature thereby allowing the user to build metadata in a modular fashion. Currently available templating functions include:</p>
 <ul>
 <li>
-<strong><code>template_core_metadata</code></strong> Create core metadata templates required by all data packages (abstract, methods, keywords, personnel, license). The optional additional information template is included as well.</li>
+<strong><code><a href="../reference/template_core_metadata.html">template_core_metadata()</a></code></strong> Create core metadata templates required by all data packages (abstract, methods, keywords, personnel, license). The <em>additional information</em> template (optional) is included.</li>
 <li>
-<strong><code>template_table_attributes</code></strong> Create attribute metadata for data tables, including column definitions, classes, and missing value codes. The custom units template is created incase non-standard units need definition.</li>
+<strong><code><a href="../reference/template_table_attributes.html">template_table_attributes()</a></code></strong> Create attribute metadata for data tables, including column definitions, classes, and missing value codes. The <em>custom units</em> template is created incase non-standard units need definition.</li>
 <li>
-<strong><code>template_categorical_variables</code></strong> Create categorical variable metadata for data tables containing columns of categorical class.</li>
+<strong><code><a href="../reference/template_categorical_variables.html">template_categorical_variables()</a></code></strong> Create categorical variable metadata for data tables, if needed.</li>
 <li>
-<strong><code>template_geographic_coverage</code></strong> Create geographic coverage describing sampling points and areas.</li>
+<strong><code><a href="../reference/template_geographic_coverage.html">template_geographic_coverage()</a></code></strong> Create geographic coverage describing location names, points, and areas.</li>
 <li>
-<strong><code>template_taxonomic_coverage</code></strong> Create taxonomic coverage metadata including resolution of taxa to authority systems and return of higher rank orders.</li>
+<strong><code><a href="../reference/template_taxonomic_coverage.html">template_taxonomic_coverage()</a></code></strong> Create taxonomic coverage metadata facilitating resolution to authority systems and returning hierarchical rank names.</li>
 </ul>
 <p>Below is a demonstration of each function and a look at outputs.</p>
 </div>
 <div id="template_core_metadata" class="section level2">
 <h2 class="hasAnchor">
-<a href="#template_core_metadata" class="anchor"></a>template_core_metadata</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Set working directory</span>
+<a href="#template_core_metadata" class="anchor"></a>template_core_metadata()</h2>
+<p>Use <code><a href="../reference/template_core_metadata.html">template_core_metadata()</a></code> to create metadata templates required by every data package.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Continuing with the data package directory ("pkg_301") set up in</span>
+<span class="co"># the article "Organize data package" ...</span>
 
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">setwd</a></span>(<span class="st">'/Users/Colin/Desktop/data_packages/edi_301'</span>)
-
-<span class="co"># Create core templates</span>
-
+<span class="co"># The templates directory is empty</span>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/metadata_templates'</span>)</code></pre></div>
+<pre><code>## character(0)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Template core metadata</span>
 <span class="kw"><a href="../reference/template_core_metadata.html">template_core_metadata</a></span>(
-  <span class="dt">path =</span> <span class="st">'./metadata_templates'</span>,
+  <span class="dt">path =</span> <span class="st">'./pkg_301/metadata_templates'</span>,
   <span class="dt">license =</span> <span class="st">'CC0'</span>
-)
-
-<span class="co"># View directory</span>
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./metadata_templates'</span>)</code></pre></div>
+)</code></pre></div>
+<pre><code>## Creating core metadata templates</code></pre>
+<pre><code>## Importing abstract.txt.</code></pre>
+<pre><code>## Importing additional_info.txt.</code></pre>
+<pre><code>## Importing intellectual_rights.txt.</code></pre>
+<pre><code>## Importing keywords.txt.</code></pre>
+<pre><code>## Importing methods.txt.</code></pre>
+<pre><code>## Importing personnel.txt.</code></pre>
+<pre><code>## Done.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Core templates are now present</span>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/metadata_templates'</span>)</code></pre></div>
 <pre><code>## [1] "abstract.txt"            "additional_info.txt"    
-## [3] "custom_units.txt"        "intellectual_rights.txt"
-## [5] "keywords.txt"            "methods.txt"            
-## [7] "personnel.txt"</code></pre>
+## [3] "intellectual_rights.txt" "keywords.txt"           
+## [5] "methods.txt"             "personnel.txt"</code></pre>
 </div>
 <div id="template_table_attributes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#template_table_attributes" class="anchor"></a>template_table_attributes</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create templates for table attributes</span>
+<a href="#template_table_attributes" class="anchor"></a>template_table_attributes()</h2>
+<p>Use <code><a href="../reference/template_table_attributes.html">template_table_attributes()</a></code> to create templates required by data tables.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add a couple tables to "pkg_301"</span>
 
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/files">file.copy</a></span>(
+  <span class="dt">from =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">'/examples/data/nitrogen.csv'</span>, <span class="dt">package =</span> <span class="st">'EMLassemblyline'</span>),
+  <span class="dt">to =</span> <span class="st">'./pkg_301/data_objects'</span>
+)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/files">file.copy</a></span>(
+  <span class="dt">from =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">'/examples/data/decomp.csv'</span>, <span class="dt">package =</span> <span class="st">'EMLassemblyline'</span>),
+  <span class="dt">to =</span> <span class="st">'./pkg_301/data_objects'</span>
+)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Tables are now present</span>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/data_objects'</span>)</code></pre></div>
+<pre><code>## [1] "decomp.csv"   "nitrogen.csv"</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Template table attributes for each table</span>
 <span class="kw"><a href="../reference/template_table_attributes.html">template_table_attributes</a></span>(
-  <span class="dt">path =</span> <span class="st">'./metadata_templates'</span>,
-  <span class="dt">data.path =</span> <span class="st">'./data_objects'</span>,
+  <span class="dt">path =</span> <span class="st">'./pkg_301/metadata_templates'</span>,
+  <span class="dt">data.path =</span> <span class="st">'./pkg_301/data_objects'</span>,
   <span class="dt">data.table =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'decomp.csv'</span>, <span class="st">'nitrogen.csv'</span>)
-)
-
-<span class="co"># View directory</span>
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./metadata_templates'</span>)</code></pre></div>
+)</code></pre></div>
+<pre><code>## Creating table attributes template</code></pre>
+<pre><code>## Creating attributes_decomp.txt.</code></pre>
+<pre><code>## Creating attributes_nitrogen.txt.</code></pre>
+<pre><code>## Importing custom_units.txt.</code></pre>
+<pre><code>## Done.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Table attributes templates are now present</span>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/metadata_templates'</span>)</code></pre></div>
 <pre><code>## [1] "abstract.txt"            "additional_info.txt"    
 ## [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
 ## [5] "custom_units.txt"        "intellectual_rights.txt"
 ## [7] "keywords.txt"            "methods.txt"            
 ## [9] "personnel.txt"</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View templates</span>
-<span class="co"># </span><span class="al">NOTE</span><span class="co">: attributeName and class are autogenerated, and unit and dateTimeFormatString note where specific content is needed.</span></code></pre></div>
+<span class="co"># </span><span class="al">NOTE</span><span class="co">: attributeName and class are autogenerated, and unit and </span>
+<span class="co"># dateTimeFormatString note where specific content is needed.</span></code></pre></div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
 <table class="table table table-bordered">
 <caption style="font-size: initial !important;">
@@ -568,19 +594,36 @@ numeric
 </table>
 </div>
 </div>
-<div id="template_categorical-variables" class="section level2">
+<div id="template_categorical_variables" class="section level2">
 <h2 class="hasAnchor">
-<a href="#template_categorical-variables" class="anchor"></a>template_categorical variables</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create templates for categorical variables</span>
+<a href="#template_categorical_variables" class="anchor"></a>template_categorical_variables()</h2>
+<p>Use <code><a href="../reference/template_categorical_variables.html">template_categorical_variables()</a></code> if any data table contains categorical variables.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Replace partially complete table attributes templates with fully completed </span>
+<span class="co"># ones as required by template_categorical_variables()</span>
 
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/files">file.copy</a></span>(
+  <span class="dt">from =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">'/examples/templates/attributes_nitrogen.txt'</span>, <span class="dt">package =</span> <span class="st">'EMLassemblyline'</span>),
+  <span class="dt">to =</span> <span class="st">'./pkg_301/metadata_templates'</span>,
+  <span class="dt">overwrite =</span> <span class="ot">TRUE</span>
+)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/files">file.copy</a></span>(
+  <span class="dt">from =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">'/examples/templates/attributes_nitrogen.txt'</span>, <span class="dt">package =</span> <span class="st">'EMLassemblyline'</span>),
+  <span class="dt">to =</span> <span class="st">'./pkg_301/metadata_templates'</span>,
+  <span class="dt">overwrite =</span> <span class="ot">TRUE</span>
+)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Template categorical variables</span>
 <span class="kw"><a href="../reference/template_categorical_variables.html">template_categorical_variables</a></span>(
-  <span class="dt">path =</span> <span class="st">'./metadata_templates'</span>,
-  <span class="dt">data.path =</span> <span class="st">'./data_objects'</span>
-)
-
-<span class="co"># View directory</span>
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./metadata_templates'</span>)</code></pre></div>
+  <span class="dt">path =</span> <span class="st">'./pkg_301/metadata_templates'</span>,
+  <span class="dt">data.path =</span> <span class="st">'./pkg_301/data_objects'</span>
+)</code></pre></div>
+<pre><code>## Creating categorical variable template.</code></pre>
+<pre><code>## Writing catvars_decomp.txt</code></pre>
+<pre><code>## Writing catvars_nitrogen.txt</code></pre>
+<pre><code>## Done.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Categorical variable templates are now present</span>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/metadata_templates'</span>)</code></pre></div>
 <pre><code>##  [1] "abstract.txt"            "additional_info.txt"    
 ##  [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
 ##  [5] "catvars_decomp.txt"      "catvars_nitrogen.txt"   
@@ -588,7 +631,7 @@ numeric
 ##  [9] "keywords.txt"            "methods.txt"            
 ## [11] "personnel.txt"</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View templates</span>
-<span class="co"># </span><span class="al">NOTE</span><span class="co">: attributeName and code is autogenerated.</span></code></pre></div>
+<span class="co"># </span><span class="al">NOTE</span><span class="co">: attributeName and code is auto generated.</span></code></pre></div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:35%; ">
 <table class="table table table-bordered">
 <caption style="font-size: initial !important;">
@@ -786,27 +829,58 @@ ntrt
 <td style="text-align:left;">
 </td>
 </tr>
+<tr>
+<td style="text-align:left;">
+arm
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+arm
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+arm
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
 </tbody>
 </table>
 </div>
 </div>
 <div id="template_geographic_coverage" class="section level2">
 <h2 class="hasAnchor">
-<a href="#template_geographic_coverage" class="anchor"></a>template_geographic_coverage</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create geographic coverage template</span>
-
+<a href="#template_geographic_coverage" class="anchor"></a>template_geographic_coverage()</h2>
+<p>Use <code><a href="../reference/template_geographic_coverage.html">template_geographic_coverage()</a></code> to document the locations of sampling points or areas.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Template geographic coverage</span>
 <span class="kw"><a href="../reference/template_geographic_coverage.html">template_geographic_coverage</a></span>(
-  <span class="dt">path =</span> <span class="st">'./metadata_templates'</span>,
-  <span class="dt">data.path =</span> <span class="st">'./data_objects'</span>,
+  <span class="dt">path =</span> <span class="st">'./pkg_301/metadata_templates'</span>,
+  <span class="dt">data.path =</span> <span class="st">'./pkg_301/data_objects'</span>,
   <span class="dt">data.table =</span> <span class="st">'nitrogen.csv'</span>,
   <span class="dt">site.col =</span> <span class="st">'site_name'</span>,
   <span class="dt">lat.col =</span> <span class="st">'site_lat'</span>,
   <span class="dt">lon.col =</span> <span class="st">'site_lon'</span>
-)
-
-<span class="co"># View directory</span>
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./metadata_templates'</span>)</code></pre></div>
+)</code></pre></div>
+<pre><code>## Creating geographic coverage template.</code></pre>
+<pre><code>## Writing geographic_coverage.txt to path</code></pre>
+<pre><code>## Done.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The geographic coverage template has been added</span>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/metadata_templates'</span>)</code></pre></div>
 <pre><code>##  [1] "abstract.txt"            "additional_info.txt"    
 ##  [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
 ##  [5] "catvars_decomp.txt"      "catvars_nitrogen.txt"   
@@ -2611,21 +2685,106 @@ site_104
 </div>
 <div id="template_taxonomic_coverage" class="section level2">
 <h2 class="hasAnchor">
-<a href="#template_taxonomic_coverage" class="anchor"></a>template_taxonomic_coverage</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create taxonomic coverage template</span>
-
+<a href="#template_taxonomic_coverage" class="anchor"></a>template_taxonomic_coverage()</h2>
+<p>Use <code><a href="../reference/template_taxonomic_coverage.html">template_taxonomic_coverage()</a></code> to automatically resolve taxa to authority systems and create hierarchical rank specific metadata.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Template taxonomic coverage</span>
 <span class="kw"><a href="../reference/template_taxonomic_coverage.html">template_taxonomic_coverage</a></span>(
-  <span class="dt">path =</span> <span class="st">'./metadata_templates'</span>,
-  <span class="dt">data.path =</span> <span class="st">'./data_objects'</span>,
+  <span class="dt">path =</span> <span class="st">'./pkg_301/metadata_templates'</span>,
+  <span class="dt">data.path =</span> <span class="st">'./pkg_301/data_objects'</span>,
   <span class="dt">taxa.table =</span> <span class="st">'decomp.csv'</span>,
   <span class="dt">taxa.col =</span> <span class="st">'taxa'</span>,
   <span class="dt">taxa.authority =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">3</span>,<span class="dv">11</span>),
   <span class="dt">taxa.name.type =</span> <span class="st">'both'</span>
-)
-
-<span class="co"># View directory</span>
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./metadata_templates'</span>)</code></pre></div>
+)</code></pre></div>
+<pre><code>## Creating taxonomic coverage template.</code></pre>
+<pre><code>## Searching ITIS for "Mosses"</code></pre>
+<pre><code>## Searching GBIF Backbone Taxonomy for "Mosses"</code></pre>
+<pre><code>## Searching ITIS for "Unsorted biomass"</code></pre>
+<pre><code>## Searching GBIF Backbone Taxonomy for "Unsorted biomass"</code></pre>
+<pre><code>## Searching ITIS for "Achillea millefolium"</code></pre>
+<pre><code>## Searching GBIF Backbone Taxonomy for "Achillea millefolium"</code></pre>
+<pre><code>## 
+## Retrieving data for taxon 'Achillea millefolium'</code></pre>
+<pre><code>## Searching ITIS for "Crepis tectorum"</code></pre>
+<pre><code>## Searching GBIF Backbone Taxonomy for "Crepis tectorum"</code></pre>
+<pre><code>## 
+## Retrieving data for taxon 'Crepis tectorum'</code></pre>
+<pre><code>## Searching ITIS for "Cyperus"</code></pre>
+<pre><code>## Searching GBIF Backbone Taxonomy for "Cyperus"</code></pre>
+<pre><code>## 
+## Retrieving data for taxon 'Cyperus'</code></pre>
+<pre><code>## Searching ITIS for "Euphorbia glyptosperma"</code></pre>
+<pre><code>## Searching GBIF Backbone Taxonomy for "Euphorbia glyptosperma"</code></pre>
+<pre><code>## 
+## Retrieving data for taxon 'Euphorbia glyptosperma'</code></pre>
+<pre><code>## Searching ITIS for "Lespedeza capitata"</code></pre>
+<pre><code>## Searching GBIF Backbone Taxonomy for "Lespedeza capitata"</code></pre>
+<pre><code>## 
+## Retrieving data for taxon 'Lespedeza capitata'</code></pre>
+<pre><code>## Searching ITIS for "Lepidium densiflorum"</code></pre>
+<pre><code>## Searching GBIF Backbone Taxonomy for "Lepidium densiflorum"</code></pre>
+<pre><code>## 
+## Retrieving data for taxon 'Lepidium densiflorum'</code></pre>
+<pre><code>## Searching ITIS for "Poa pratensis"</code></pre>
+<pre><code>## Searching GBIF Backbone Taxonomy for "Poa pratensis"</code></pre>
+<pre><code>## 
+## Retrieving data for taxon 'Poa pratensis'</code></pre>
+<pre><code>## Searching ITIS for "Rumex acetosella"</code></pre>
+<pre><code>## Searching GBIF Backbone Taxonomy for "Rumex acetosella"</code></pre>
+<pre><code>## 
+## Retrieving data for taxon 'Rumex acetosella'</code></pre>
+<pre><code>## Searching ITIS for "Schizachyrium scoparium"</code></pre>
+<pre><code>## Searching GBIF Backbone Taxonomy for "Schizachyrium scoparium"</code></pre>
+<pre><code>## 
+## Retrieving data for taxon 'Schizachyrium scoparium'</code></pre>
+<pre><code>## Searching ITIS for "Bouteloua gracilis"</code></pre>
+<pre><code>## Searching GBIF Backbone Taxonomy for "Bouteloua gracilis"</code></pre>
+<pre><code>## 
+## Retrieving data for taxon 'Bouteloua gracilis'</code></pre>
+<pre><code>## Searching ITIS for "Koeleria cristata"</code></pre>
+<pre><code>## Searching GBIF Backbone Taxonomy for "Koeleria cristata"</code></pre>
+<pre><code>## 
+## Retrieving data for taxon 'Koeleria cristata'</code></pre>
+<pre><code>## Searching ITIS for "Liatris aspera"</code></pre>
+<pre><code>## Searching GBIF Backbone Taxonomy for "Liatris aspera"</code></pre>
+<pre><code>## 
+## Retrieving data for taxon 'Liatris aspera'</code></pre>
+<pre><code>## Searching ITIS for ""</code></pre>
+<pre><code>## Searching GBIF Backbone Taxonomy for ""</code></pre>
+<pre><code>## 
+## Retrieving data for taxon 'Mosses'</code></pre>
+<pre><code>## 
+## Retrieving data for taxon 'Unsorted biomass'</code></pre>
+<pre><code>## 
+## Retrieving data for taxon 'Achillea millefolium'</code></pre>
+<pre><code>## 
+## Retrieving data for taxon 'Crepis tectorum'</code></pre>
+<pre><code>## 
+## Retrieving data for taxon 'Cyperus'</code></pre>
+<pre><code>## 
+## Retrieving data for taxon 'Euphorbia glyptosperma'</code></pre>
+<pre><code>## 
+## Retrieving data for taxon 'Lespedeza capitata'</code></pre>
+<pre><code>## 
+## Retrieving data for taxon 'Lepidium densiflorum'</code></pre>
+<pre><code>## 
+## Retrieving data for taxon 'Poa pratensis'</code></pre>
+<pre><code>## 
+## Retrieving data for taxon 'Rumex acetosella'</code></pre>
+<pre><code>## 
+## Retrieving data for taxon 'Schizachyrium scoparium'</code></pre>
+<pre><code>## 
+## Retrieving data for taxon 'Bouteloua gracilis'</code></pre>
+<pre><code>## 
+## Retrieving data for taxon 'Koeleria cristata'</code></pre>
+<pre><code>## 
+## Retrieving data for taxon 'Liatris aspera'</code></pre>
+<pre><code>## 
+## Retrieving data for taxon ''</code></pre>
+<pre><code>## Writing taxonomic_coverage.txt to path</code></pre>
+<pre><code>## Done.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The taxonomic coverage template is present</span>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/metadata_templates'</span>)</code></pre></div>
 <pre><code>##  [1] "abstract.txt"            "additional_info.txt"    
 ##  [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
 ##  [5] "catvars_decomp.txt"      "catvars_nitrogen.txt"   
@@ -3178,11 +3337,11 @@ NA
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#templating-functions">Templating functions</a></li>
-      <li><a href="#template_core_metadata">template_core_metadata</a></li>
-      <li><a href="#template_table_attributes">template_table_attributes</a></li>
-      <li><a href="#template_categorical-variables">template_categorical variables</a></li>
-      <li><a href="#template_geographic_coverage">template_geographic_coverage</a></li>
-      <li><a href="#template_taxonomic_coverage">template_taxonomic_coverage</a></li>
+      <li><a href="#template_core_metadata">template_core_metadata()</a></li>
+      <li><a href="#template_table_attributes">template_table_attributes()</a></li>
+      <li><a href="#template_categorical_variables">template_categorical_variables()</a></li>
+      <li><a href="#template_geographic_coverage">template_geographic_coverage()</a></li>
+      <li><a href="#template_taxonomic_coverage">template_taxonomic_coverage()</a></li>
       </ul>
 </div>
       </div>

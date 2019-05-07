@@ -43,13 +43,16 @@ Existing directories named with \code{dir.name} at \code{path} will not
 # Set working directory
 setwd(tempdir())
 
-# Template data package directory "edi_301"
+# Template data package directory "pkg_301"
 template_directories(
   path = '.',
-  dir.name =  'edi_301'
+  dir.name =  'pkg_301'
 )
 
 # View directory contents
-dir('./edi_301')
+dir('./pkg_301')
+
+# Clean up
+unlink('./pkg_301', recursive = TRUE)
 
 }

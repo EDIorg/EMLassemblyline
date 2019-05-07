@@ -32,9 +32,8 @@
 
 <meta property="og:title" content="Create geographic coverage template — template_geographic_coverage" />
 
-<meta property="og:description" content="Import template for describing the geographic coverage of a dataset.
-    The content of this template is automatically extracted from a data 
-    table containing geographical coordinates." />
+<meta property="og:description" content="Use this function to extract the unique location coordinates and names
+    from a data table." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -94,7 +93,7 @@
       <a href="../articles/edit_metadata_templates.html">Edit metadata templates</a>
     </li>
     <li>
-      <a href="../articles/create_eml.html">Create EML</a>
+      <a href="../articles/create_eml.html">Make EML</a>
     </li>
     <li>
       <a href="../articles/publish_data_package.html">Publish data package</a>
@@ -138,9 +137,8 @@
 
     <div class="ref-description">
     
-    <p>Import template for describing the geographic coverage of a dataset.
-    The content of this template is automatically extracted from a data 
-    table containing geographical coordinates.</p>
+    <p>Use this function to extract the unique location coordinates and names
+    from a data table.</p>
     
     </div>
 
@@ -151,8 +149,8 @@
       <span class='no'>lat.col</span>,
       <span class='no'>lon.col</span>,
       <span class='no'>site.col</span>,
-      <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-      <span class='kw'>write.file</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+      <span class='kw'>write.file</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+      <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
     )</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -160,60 +158,99 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>path</th>
-      <td><p>(character) Path to where the template(s) will be imported.</p></td>
+      <td><p>(character) Path to the metadata template directory.</p></td>
     </tr>
     <tr>
       <th>data.path</th>
-      <td><p>(character) Path to where the data files are stored.</p></td>
+      <td><p>(character) Path to the data directory.</p></td>
     </tr>
     <tr>
       <th>data.table</th>
-      <td><p>(character) Data table containing geographic coordinates represented in 
-decimal degrees, where latitudes south of the equator and longitudes 
-west of the prime meridian are negative.</p></td>
+      <td><p>(character) Table name containing geographic coordinates.</p></td>
     </tr>
     <tr>
       <th>lat.col</th>
-      <td><p>(character) Name of latitude column.</p></td>
+      <td><p>(character) Column name containing latitude coordinates in decimal 
+degrees, where latitudes south of the equator are negative.</p></td>
     </tr>
     <tr>
       <th>lon.col</th>
-      <td><p>(character) Name of longitude column.</p></td>
+      <td><p>(character) Column name containing longitude coordinates in decimal 
+degrees, where longitudes west of the prime meridian are negative.</p></td>
     </tr>
     <tr>
       <th>site.col</th>
-      <td><p>(character) Name of site column, where site is the name of the location
-specified by `lat.col` and `lon.col`.</p></td>
+      <td><p>(character) Column name containing site names.</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>(named list) Alternative input/output to `EMLassemblyline` functions. 
-Use <code>template_arguments</code> to create `x`.</p></td>
+      <td><p>(named list; optional) Alternative input to 
+<code>template_geographical_coverage()</code>. Use <code><a href='template_arguments.html'>template_arguments()</a></code> 
+to create <code>x</code>.</p></td>
     </tr>
     <tr>
       <th>write.file</th>
-      <td><p>(logical) Write `geographic_coverage.txt` to `path`.</p></td>
+      <td><p>(logical; optional) Whether to write the template file.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
-<ul>
-<li><p>`geographic_coverage.txt` A tab delimited file written to 
-        `path` containing geographic coordinates and corresponding site 
-        names.</p></li>
-<li><p>If using `x`, then content of `geographic_coverage.txt` is 
-        added to `x` under `/x/templates`</p></li>
-</ul>
-
+    <p><strong>geographic_coverage.txt</strong> The tab delimited geographic coverage 
+    template. This file is written to <code>path</code> unless using <code>x</code>,
+    in which case the template is added to 
+    <strong>/x/templates/catvars_*.txt</strong>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Existing templates will not be overwritten by subsequent calls to 
-    `template_geographic_coverage`.</p>
+    <p>An existing geographic coverage template will not be overwritten by 
+    subsequent calls to <code>template_geographic_coverage()</code>.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Initialize data package directory for template_template_geographic_coverage()</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/files'>file.copy</a></span>(
+  <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>'/examples/pkg_255'</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'EMLassemblyline'</span>),
+  <span class='kw'>to</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),
+  <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='co'># Set working directory</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/getwd'>setwd</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(), <span class='st'>'./pkg_255'</span>))
+
+<span class='co'># View directory contents (NOTE: geographic_coverage.txt doesn't exist)</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='st'>'./metadata_templates'</span>)</div><div class='output co'>#&gt;  [1] "abstract.txt"            "additional_info.txt"    
+#&gt;  [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
+#&gt;  [5] "catvars_decomp.txt"      "catvars_nitrogen.txt"   
+#&gt;  [7] "custom_units.txt"        "intellectual_rights.txt"
+#&gt;  [9] "keywords.txt"            "methods.txt"            
+#&gt; [11] "personnel.txt"          </div><div class='input'>
+<span class='co'># Template geographic coverage</span>
+<span class='fu'>template_geographic_coverage</span>(
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./metadata_templates'</span>,
+  <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='st'>'./data_objects'</span>,
+  <span class='kw'>data.table</span> <span class='kw'>=</span> <span class='st'>'nitrogen.csv'</span>,
+  <span class='kw'>site.col</span> <span class='kw'>=</span> <span class='st'>'site_name'</span>,
+  <span class='kw'>lat.col</span> <span class='kw'>=</span> <span class='st'>'site_lat'</span>,
+  <span class='kw'>lon.col</span> <span class='kw'>=</span> <span class='st'>'site_lon'</span>
+)</div><div class='output co'>#&gt; <span class='message'>Templating geographic coverage ...</span></div><div class='output co'>#&gt; <span class='message'>geographic_coverage.txt</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
+<span class='co'># View directory contents (NOTE: geographic_coverage.txt exists)</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='st'>'./metadata_templates'</span>)</div><div class='output co'>#&gt;  [1] "abstract.txt"            "additional_info.txt"    
+#&gt;  [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
+#&gt;  [5] "catvars_decomp.txt"      "catvars_nitrogen.txt"   
+#&gt;  [7] "custom_units.txt"        "geographic_coverage.txt"
+#&gt;  [9] "intellectual_rights.txt" "keywords.txt"           
+#&gt; [11] "methods.txt"             "personnel.txt"          </div><div class='input'>
+<span class='co'># Rerunning template_geographic_coverage() does not overwrite files</span>
+<span class='fu'>template_geographic_coverage</span>(
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./metadata_templates'</span>,
+  <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='st'>'./data_objects'</span>,
+  <span class='kw'>data.table</span> <span class='kw'>=</span> <span class='st'>'nitrogen.csv'</span>,
+  <span class='kw'>site.col</span> <span class='kw'>=</span> <span class='st'>'site_name'</span>,
+  <span class='kw'>lat.col</span> <span class='kw'>=</span> <span class='st'>'site_lat'</span>,
+  <span class='kw'>lon.col</span> <span class='kw'>=</span> <span class='st'>'site_lon'</span>
+)</div><div class='output co'>#&gt; <span class='message'>Templating geographic coverage ...</span></div><div class='output co'>#&gt; <span class='message'>geographic_coverage.txt</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
+<span class='co'># Clean up</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/unlink'>unlink</a></span>(<span class='st'>'.'</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -223,7 +260,9 @@ Use <code>template_arguments</code> to create `x`.</p></td>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

@@ -59,7 +59,7 @@
       <a href="../articles/edit_metadata_templates.html">Edit metadata templates</a>
     </li>
     <li>
-      <a href="../articles/create_eml.html">Create EML</a>
+      <a href="../articles/create_eml.html">Make EML</a>
     </li>
     <li>
       <a href="../articles/publish_data_package.html">Publish data package</a>
@@ -108,39 +108,36 @@
 <div id="the-data-package" class="section level2">
 <h2 class="hasAnchor">
 <a href="#the-data-package" class="anchor"></a>The data package</h2>
-<p>A data package forms a collection of data, metadata, and other digital objects that enable understanding, use, and citation of a dataset. Metadata play an important role in understanding each object and how they relate to each other. <code>EMLassemblyline</code> works for all digital object formats and has been used by the Environmental Data Initiative (EDI) to create and manage well over 250 data packages for a nearly equal number of research scientists. Editing and revisioning data packages on short notice is made easy by <code>EMLassemblyline</code> but requires some forethought to file organization.</p>
+<p>A data package forms a collection of data objects and metadata enabling understanding, use, and citation of a dataset. Metadata play an important role in understanding each object and how they relate to each other. <code>EMLassemblyline</code> works for all digital object formats and has been used by the <a href="https://environmentaldatainitiative.org/">Environmental Data Initiative</a> (EDI) to create and manage well over 250 data packages for a nearly equal number of research scientists. Editing and revisioning data packages on short notice is made easy by <code>EMLassemblyline</code> but requires some forethought about file organization.</p>
 </div>
 <div id="an-organization-scheme" class="section level2">
 <h2 class="hasAnchor">
 <a href="#an-organization-scheme" class="anchor"></a>An organization scheme</h2>
-<p>The organization scheme we’ve found most useful at EDI is a single directory for each data package containing:</p>
+<p>A simple and useful organization scheme is a single directory for each data package containing:</p>
 <ul>
 <li>
-<strong>data_objects</strong> A directory of data and other objects to package (e.g. data tables, analysis scripts, .zip files, etc.).</li>
+<strong>data_objects</strong> A directory of data and other objects to be packaged (e.g. data tables, analysis scripts, .zip files, etc.).</li>
 <li>
 <strong>metadata_templates</strong> A directory of <code>EMLassemblyline</code> metadata templates.</li>
 <li>
 <strong>eml</strong> A directory of EML files created by <code>EMLassemblyline</code>.</li>
 <li>
-<strong>run_EMLassemblyline.R</strong> An empty R file for scripting the <code>EMLassemblyline</code> workflow.</li>
+<strong>run_EMLassemblyline.R</strong> An R file for scripting an <code>EMLassemblyline</code> workflow.</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Set working directory</span>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">setwd</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/tempfile">tempdir</a></span>())
 
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">setwd</a></span>(<span class="st">'/Users/Colin/Desktop/data_packages'</span>)
-
-<span class="co"># Create the standard data package directory</span>
-
+<span class="co"># Template a data package directory</span>
 <span class="kw"><a href="../reference/template_directories.html">template_directories</a></span>(
   <span class="dt">path =</span> <span class="st">'.'</span>,
-  <span class="dt">dir.name =</span> <span class="st">'edi_301'</span>
-)
-
-<span class="co"># View directory contents</span>
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./edi_301'</span>)</code></pre></div>
+  <span class="dt">dir.name =</span> <span class="st">'pkg_301'</span>
+)</code></pre></div>
+<pre><code>## Creating ./pkg_301</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View directory contents</span>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301'</span>)</code></pre></div>
 <pre><code>## [1] "data_objects"                      "eml"                              
-## [3] "metadata_templates"                "run_EMLassemblyline_for_edi_301.R"</code></pre>
-<p>Any organization scheme is accepted as long as all the template files of a data package are located in the same directory.</p>
+## [3] "metadata_templates"                "run_EMLassemblyline_for_pkg_301.R"</code></pre>
+<p>Any organization scheme is possible as long as all the metadata template files belonging to a data package are co-located in a single directory.</p>
 </div>
   </div>
 

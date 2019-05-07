@@ -32,11 +32,9 @@
 
 <meta property="og:title" content="Create core metadata templates — template_core_metadata" />
 
-<meta property="og:description" content="Import template files for storage of core metadata. Some templates are 
-    populated with content detected by automated metadata extraction 
-    methods. The remainder will have to be manually entered by a human. 
-    Instructions for filling out the templates are at
-    https://clnsmth.github.io/EMLassemblyline/articles/instructions.html." />
+<meta property="og:description" content="Use this function to create the core metadata templates required by 
+    all data packages. Most templates require user supplied information.
+    Instructions for editing these templates." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -96,7 +94,7 @@
       <a href="../articles/edit_metadata_templates.html">Edit metadata templates</a>
     </li>
     <li>
-      <a href="../articles/create_eml.html">Create EML</a>
+      <a href="../articles/create_eml.html">Make EML</a>
     </li>
     <li>
       <a href="../articles/publish_data_package.html">Publish data package</a>
@@ -140,19 +138,17 @@
 
     <div class="ref-description">
     
-    <p>Import template files for storage of core metadata. Some templates are 
-    populated with content detected by automated metadata extraction 
-    methods. The remainder will have to be manually entered by a human. 
-    Instructions for filling out the templates are at
-    <a href='https://clnsmth.github.io/EMLassemblyline/articles/instructions.html'>https://clnsmth.github.io/EMLassemblyline/articles/instructions.html</a>.</p>
+    <p>Use this function to create the core metadata templates required by 
+    all data packages. Most templates require user supplied information.
+    <a href='https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html'>Instructions for editing these templates.</a></p>
     
     </div>
 
     <pre class="usage"><span class='fu'>template_core_metadata</span>(
       <span class='no'>path</span>,
       <span class='no'>license</span>,
-      <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-      <span class='kw'>write.file</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+      <span class='kw'>write.file</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+      <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
     )</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -160,22 +156,23 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>path</th>
-      <td><p>(character) Path to where the templates will be imported.</p></td>
+      <td><p>(character) Path to the metadata template directory.</p></td>
     </tr>
     <tr>
       <th>license</th>
-      <td><p>(character) License under which the data will be released. Use "CC0" 
-(<a href='https://creativecommons.org/publicdomain/zero/1.0/'>https://creativecommons.org/publicdomain/zero/1.0/</a>), 
-or "CCBY" (<a href='https://creativecommons.org/licenses/by/4.0/'>https://creativecommons.org/licenses/by/4.0/</a>).</p></td>
+      <td><p>(character) License to publicly release the data package under. Use
+<a href='https://creativecommons.org/publicdomain/zero/1.0/'>"CC0"</a> or 
+<a href='https://creativecommons.org/licenses/by/4.0/'>"CCBY"</a>.</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>(named list) Alternative input/output to `EMLassemblyline` functions. 
-Use <code>template_arguments</code> to create `x`.</p></td>
+      <td><p>(named list; optional) Alternative input to 
+<code>template_core_metadatta()</code>. Use <code><a href='template_arguments.html'>template_arguments()</a></code> 
+to create <code>x</code>.</p></td>
     </tr>
     <tr>
       <th>write.file</th>
-      <td><p>(logical) Write template files to `path`.</p></td>
+      <td><p>(logical; optional) Whether to write the template files.</p></td>
     </tr>
     </table>
     
@@ -183,25 +180,55 @@ Use <code>template_arguments</code> to create `x`.</p></td>
 
     
 <ul>
-<li><p>`abstract.txt` Template for the dataset abstract.</p></li>
-<li><p>`additional_info.txt` Template for miscellaneous dataset
+<li><p><strong>abstract.txt</strong> The abstract template.</p></li>
+<li><p><strong>additional_info.txt</strong> The template for miscellaneous
         information.</p></li>
-<li><p>`intellectual_rights.txt` The selected intellectual rights 
-        license.</p></li>
-<li><p>`keywords.txt` Template for dataset keywords.</p></li>
-<li><p>`methods.txt` Template for dataset methods.</p></li>
-<li><p>`personnel.txt` Template for dataset personnel and funding 
-        metadata.</p></li>
-<li><p>If using `x`, then content of each above listed template file 
-        is added to `x` under `/x/templates/`</p></li>
+<li><p><strong>intellectual_rights.txt</strong> The intellectual rights 
+        license with the text of CC0 or CCBY.</p></li>
+<li><p><strong>keywords.txt</strong> The tab delimited keywords template.</p></li>
+<li><p><strong>methods.txt</strong> The methods template.</p></li>
+<li><p><strong>personnel.txt</strong> The tab delimited personnel template 
+        for information on persons and funding involved in the creation of 
+        the data package.</p></li>
+<li><p>These files is written to <code>path</code> unless using <code>x</code>,
+        in which case the templates are added to 
+        <strong>/x/templates</strong>.</p></li>
 </ul>
 
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Existing templates will not be overwritten by `template_core_metadata`.</p>
+    <p>Existing templates will not be overwritten by <code>template_core_metadata()</code>.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Initialize data package directory for template_core_metadata()</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/files'>file.copy</a></span>(
+  <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>'/examples/pkg_250'</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'EMLassemblyline'</span>),
+  <span class='kw'>to</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),
+  <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='co'># Set working directory</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/getwd'>setwd</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(), <span class='st'>'./pkg_250'</span>))
+
+<span class='co'># View directory contents (NOTE: Directory is empty)</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='st'>'./metadata_templates'</span>)</div><div class='output co'>#&gt; character(0)</div><div class='input'>
+<span class='co'># Template core metadata</span>
+<span class='fu'>template_core_metadata</span>(
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./metadata_templates'</span>,
+  <span class='kw'>license</span> <span class='kw'>=</span> <span class='st'>'CC0'</span>
+)</div><div class='output co'>#&gt; <span class='message'>Templating core metadata ...</span></div><div class='output co'>#&gt; <span class='message'>abstract.txt</span></div><div class='output co'>#&gt; <span class='message'>additional_info.txt</span></div><div class='output co'>#&gt; <span class='message'>intellectual_rights.txt</span></div><div class='output co'>#&gt; <span class='message'>keywords.txt.</span></div><div class='output co'>#&gt; <span class='message'>methods.txt</span></div><div class='output co'>#&gt; <span class='message'>personnel.txt</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
+<span class='co'># View directory contents (NOTE: Templates exist)</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='st'>'./metadata_templates'</span>)</div><div class='output co'>#&gt; [1] "abstract.txt"            "additional_info.txt"    
+#&gt; [3] "intellectual_rights.txt" "keywords.txt"           
+#&gt; [5] "methods.txt"             "personnel.txt"          </div><div class='input'>
+<span class='co'># Rerunning template_core_metadata() does not overwrite files</span>
+<span class='fu'>template_core_metadata</span>(
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./metadata_templates'</span>,
+  <span class='kw'>license</span> <span class='kw'>=</span> <span class='st'>'CC0'</span>
+)</div><div class='output co'>#&gt; <span class='message'>Templating core metadata ...</span></div><div class='output co'>#&gt; <span class='message'>abstract.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>additional_info.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>intellectual_rights.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>keywords.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>methods.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>personnel.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
+<span class='co'># Clean up</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/unlink'>unlink</a></span>(<span class='st'>'.'</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -211,7 +238,9 @@ Use <code>template_arguments</code> to create `x`.</p></td>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

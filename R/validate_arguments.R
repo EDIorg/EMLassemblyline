@@ -502,6 +502,51 @@ validate_arguments <- function(fun.name, fun.args){
       stop('Input argument "site.col" is missing! Specify site column name.')
     }
     
+    if (is.null(fun.args$x)){
+      
+      # Validate file name
+      
+      data_file <- EDIutils::validate_file_names(
+        path = fun.args$data.path, 
+        data.files = fun.args$data.table
+      )
+      
+      # Validate fields of data.tables
+      
+      EDIutils::validate_fields(
+        path = fun.args$data.path, 
+        data.files = data_file
+      )
+      
+      # Read data table
+      
+      x <- template_arguments(
+        data.path = fun.args$data.path,
+        data.table = data_file
+      )
+      
+      x <- x$x
+      
+      data_read_2_x <- NA_character_
+      
+    }
+    
+    df_table <- fun.args$x$data.table[[fun.args$data.table]]$content
+    
+    # Validate column names
+    
+    columns <- colnames(df_table)
+    columns_in <- c(fun.args$lat.col, fun.args$lon.col, fun.args$site.col)
+    use_i <- stringr::str_detect(string = columns,
+                                 pattern = stringr::str_c("^", columns_in, "$", collapse = "|"))
+    if (sum(use_i) > 0){
+      use_i2 <- columns[use_i]
+      use_i3 <- columns_in %in% use_i2
+      if (sum(use_i) != 3){
+        stop(paste("Invalid column names entered: ", paste(columns_in[!use_i3], collapse = ", "), sep = ""))
+      }
+    }
+    
   }
   
   # Call from template_table_attributes() -------------------------------------

@@ -32,11 +32,9 @@
 
 <meta property="og:title" content="Create table attributes template — template_table_attributes" />
 
-<meta property="og:description" content="Import template files for storage of core metadata. Some templates are 
-    populated with content detected by automated metadata extraction 
-    methods. The remainder will have to be manually entered by a human. 
-    Instructions for filling out the templates are at
-    https://clnsmth.github.io/EMLassemblyline/articles/instructions.html." />
+<meta property="og:description" content="Use this function to extract column names and classes of a data table 
+    and return for user supplied column definitions and missing value codes.
+    Instructions for editing this template." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -96,7 +94,7 @@
       <a href="../articles/edit_metadata_templates.html">Edit metadata templates</a>
     </li>
     <li>
-      <a href="../articles/create_eml.html">Create EML</a>
+      <a href="../articles/create_eml.html">Make EML</a>
     </li>
     <li>
       <a href="../articles/publish_data_package.html">Publish data package</a>
@@ -140,11 +138,9 @@
 
     <div class="ref-description">
     
-    <p>Import template files for storage of core metadata. Some templates are 
-    populated with content detected by automated metadata extraction 
-    methods. The remainder will have to be manually entered by a human. 
-    Instructions for filling out the templates are at
-    <a href='https://clnsmth.github.io/EMLassemblyline/articles/instructions.html'>https://clnsmth.github.io/EMLassemblyline/articles/instructions.html</a>.</p>
+    <p>Use this function to extract column names and classes of a data table 
+    and return for user supplied column definitions and missing value codes.
+    <a href='https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html'>Instructions for editing this template.</a></p>
     
     </div>
 
@@ -152,8 +148,8 @@
       <span class='no'>path</span>,
       <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='no'>path</span>,
       <span class='kw'>data.table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-      <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-      <span class='kw'>write.file</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+      <span class='kw'>write.file</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+      <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
     )</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -161,25 +157,27 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>path</th>
-      <td><p>(character) Path to where the templates will be imported.</p></td>
+      <td><p>(character) Path to the metadata template directory.</p></td>
     </tr>
     <tr>
       <th>data.path</th>
-      <td><p>(character) Path to where the data files are stored.</p></td>
+      <td><p>(character) Path to the data directory.</p></td>
     </tr>
     <tr>
       <th>data.table</th>
-      <td><p>(character) Names of tabular data. Names of non-tabular data are
-entered as arguments to `make_eml`.</p></td>
+      <td><p>(character) Table name. If more than one, then supply as a 
+vector of character strings (e.g. 
+<code>data.table = c('nitrogen.csv', 'decomp.csv')</code>).</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>(named list) Alternative input/output to `EMLassemblyline` functions. 
-Use <code>template_arguments</code> to create `x`.</p></td>
+      <td><p>(named list; optional) Alternative input to 
+<code>template_table_attributes()</code>. Use <code><a href='template_arguments.html'>template_arguments()</a></code> 
+to create <code>x</code>.</p></td>
     </tr>
     <tr>
       <th>write.file</th>
-      <td><p>(logical) Write template files to `path`.</p></td>
+      <td><p>(logical; optional) Whether to write the template file.</p></td>
     </tr>
     </table>
     
@@ -187,21 +185,58 @@ Use <code>template_arguments</code> to create `x`.</p></td>
 
     
 <ul>
-<li><p>`attributes_*.txt` Template(s) for data table attribute 
-        metadata, populated with some automatically extracted metadata 
-        content from the data files.</p></li>
-<li><p>`custom_units.txt` Template for defining non-standard units 
-        used in the `attributes_*.txt` file.</p></li>
-<li><p>If using `x`, then content of each above listed template file 
-        is added to `x` under `/x/templates/`</p></li>
+<li><p><strong>attributes_*.txt</strong> The tab delimited attributes 
+        template where * is the table name from which the attributes were 
+        extracted. This file is written to <code>path</code> unless using <code>x</code>, 
+        in which case the template is added to 
+        <strong>/x/templates/attributes_*.txt</strong>.</p></li>
+<li><p><strong>custom_units.txt</strong> The tab delimited custom units 
+        template for defining non-standard units. This file is written to 
+        <code>path</code> unless using <code>x</code>, in which case the template is 
+        added to <strong>/x/templates/custom_units.txt</strong>.</p></li>
 </ul>
 
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Existing templates will not be overwritten by `template_table_attributes`.</p>
+    <p>An existing attributes template will not be overwritten by subsequent 
+    calls to <code>template_table_attributes()</code>.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Initialize data package directory for template_table_attributes()</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/files'>file.copy</a></span>(
+ <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>'/examples/pkg_250'</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'EMLassemblyline'</span>),
+ <span class='kw'>to</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),
+ <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='co'># Set working directory</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/getwd'>setwd</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(), <span class='st'>'./pkg_250'</span>))
+
+<span class='co'># View directory contents (NOTE: attributes_*.txt don't exist)</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='st'>'./metadata_templates'</span>)</div><div class='output co'>#&gt; [1] "abstract.txt"            "additional_info.txt"    
+#&gt; [3] "intellectual_rights.txt" "keywords.txt"           
+#&gt; [5] "methods.txt"             "personnel.txt"          </div><div class='input'>
+<span class='co'># Template table attributes</span>
+<span class='fu'>template_table_attributes</span>(
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./metadata_templates'</span>,
+  <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='st'>'./data_objects'</span>,
+  <span class='kw'>data.table</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>'decomp.csv'</span>, <span class='st'>'nitrogen.csv'</span>)
+)</div><div class='output co'>#&gt; <span class='message'>Templating table attributes ...</span></div><div class='output co'>#&gt; <span class='message'>attributes_decomp.txt.</span></div><div class='output co'>#&gt; <span class='message'>attributes_nitrogen.txt.</span></div><div class='output co'>#&gt; <span class='message'>custom_units.txt</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
+<span class='co'># View directory contents (NOTE: attributes_*.txt and custom_units.txt exist)</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='st'>'./metadata_templates'</span>)</div><div class='output co'>#&gt; [1] "abstract.txt"            "additional_info.txt"    
+#&gt; [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
+#&gt; [5] "custom_units.txt"        "intellectual_rights.txt"
+#&gt; [7] "keywords.txt"            "methods.txt"            
+#&gt; [9] "personnel.txt"          </div><div class='input'>
+<span class='co'># Rerunning template_table_attributes() does not overwrite files</span>
+<span class='fu'>template_table_attributes</span>(
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./metadata_templates'</span>,
+  <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='st'>'./data_objects'</span>,
+  <span class='kw'>data.table</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>'decomp.csv'</span>, <span class='st'>'nitrogen.csv'</span>)
+)</div><div class='output co'>#&gt; <span class='message'>Templating table attributes ...</span></div><div class='output co'>#&gt; <span class='message'>attributes_decomp.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>attributes_nitrogen.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>custom_units.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
+<span class='co'># Clean up</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/unlink'>unlink</a></span>(<span class='st'>'.'</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -211,7 +246,9 @@ Use <code>template_arguments</code> to create `x`.</p></td>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

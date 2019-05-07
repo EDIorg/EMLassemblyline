@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Create EML • EMLassemblyline</title>
+<title>Make EML • EMLassemblyline</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Create EML">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Make EML">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -59,7 +59,7 @@
       <a href="../articles/edit_metadata_templates.html">Edit metadata templates</a>
     </li>
     <li>
-      <a href="../articles/create_eml.html">Create EML</a>
+      <a href="../articles/create_eml.html">Make EML</a>
     </li>
     <li>
       <a href="../articles/publish_data_package.html">Publish data package</a>
@@ -95,7 +95,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Create EML</h1>
+      <h1>Make EML</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/EDIorg/EMLassemblyline/blob/master/vignettes/create_eml.Rmd"><code>vignettes/create_eml.Rmd</code></a></small>
@@ -107,22 +107,66 @@
     
 <div id="the-make_eml-function" class="section level2">
 <h2 class="hasAnchor">
-<a href="#the-make_eml-function" class="anchor"></a>The <code>make_eml</code> function</h2>
-<p>The information rich and machine readable EML metadata file should contain all the necessary content, in the correct format, and in the right schema locations according with best practices informed by scientists who use this information and data repositories who serve it in a human discoverable and readable form. In addition to performing all these tasks, the <code>make_eml</code> function adds another layer of auto-extracted metadata to the EML based on template contents and data object types. Usage of <code>make_eml</code> differs slightly based on data package contents comprised of:</p>
+<a href="#the-make_eml-function" class="anchor"></a>The make_eml() function</h2>
+<p>The information rich and machine readable EML metadata file should contain all the necessary content, in the correct format, and in the right schema locations according with best practices informed by scientists who use this information and data repositories who serve it in a human discoverable and readable form. In addition to performing all these tasks, the <code><a href="../reference/make_eml.html">make_eml()</a></code> function adds another layer of auto-extracted metadata to the EML based on template contents and data object types. Usage of <code><a href="../reference/make_eml.html">make_eml()</a></code> differs slightly depending on data package contents. The three use cases are:</p>
 <ul>
 <li>
-<strong>Data tables</strong> Only contains data tables</li>
+<strong>Data tables</strong> The data package only contains data tables</li>
 <li>
-<strong>Other entities</strong> Only contains non-table data types and other digital objects</li>
+<strong>Other entities</strong> The data package only contains non-table data types and other digital objects</li>
 <li>
-<strong>Data tables and other entities</strong> Contains both data tables and other entities</li>
+<strong>Data tables and other entities</strong> The data package contains both data tables and other entities</li>
 </ul>
-<p>Below are examples of using <code>make_eml</code> to create EML for each of these use cases.</p>
+<p>Below are examples of each use case. First set up the working directory with templates and data objects required by these use cases:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Continuing with the data package directory ("pkg_301") developed in the article "Create metadata templates" ... replace partially complete templates with fully completed templates required by make_eml()</span>
+
+<span class="co"># attributes.txt</span>
+
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/files">file.copy</a></span>(
+  <span class="dt">from =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">'/examples/templates/attributes_nitrogen.txt'</span>, <span class="dt">package =</span> <span class="st">'EMLassemblyline'</span>),
+  <span class="dt">to =</span> <span class="st">'./pkg_301/metadata_templates'</span>,
+  <span class="dt">overwrite =</span> <span class="ot">TRUE</span>
+)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/files">file.copy</a></span>(
+  <span class="dt">from =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">'/examples/templates/attributes_decomp.txt'</span>, <span class="dt">package =</span> <span class="st">'EMLassemblyline'</span>),
+  <span class="dt">to =</span> <span class="st">'./pkg_301/metadata_templates'</span>,
+  <span class="dt">overwrite =</span> <span class="ot">TRUE</span>
+)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># catvars.txt</span>
+
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/files">file.copy</a></span>(
+  <span class="dt">from =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">'/examples/templates/catvars_nitrogen.txt'</span>, <span class="dt">package =</span> <span class="st">'EMLassemblyline'</span>),
+  <span class="dt">to =</span> <span class="st">'./pkg_301/metadata_templates'</span>,
+  <span class="dt">overwrite =</span> <span class="ot">TRUE</span>
+)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/files">file.copy</a></span>(
+  <span class="dt">from =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">'/examples/templates/catvars_decomp.txt'</span>, <span class="dt">package =</span> <span class="st">'EMLassemblyline'</span>),
+  <span class="dt">to =</span> <span class="st">'./pkg_301/metadata_templates'</span>,
+  <span class="dt">overwrite =</span> <span class="ot">TRUE</span>
+)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add a couple data objects</span>
+
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/files">file.copy</a></span>(
+  <span class="dt">from =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">'/examples/data/ancillary_data.zip'</span>, <span class="dt">package =</span> <span class="st">'EMLassemblyline'</span>),
+  <span class="dt">to =</span> <span class="st">'./pkg_301/data_objects'</span>,
+  <span class="dt">overwrite =</span> <span class="ot">TRUE</span>
+)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/files">file.copy</a></span>(
+  <span class="dt">from =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">'/examples/data/processing_and_analysis.R'</span>, <span class="dt">package =</span> <span class="st">'EMLassemblyline'</span>),
+  <span class="dt">to =</span> <span class="st">'./pkg_301/data_objects'</span>,
+  <span class="dt">overwrite =</span> <span class="ot">TRUE</span>
+)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
 </div>
-<div id="make_eml-for-data-tables" class="section level2">
+<div id="make-eml-for-data-tables" class="section level2">
 <h2 class="hasAnchor">
-<a href="#make_eml-for-data-tables" class="anchor"></a><code>make_eml</code> for data tables</h2>
-<p>The most common type of data package only contains data tables. To create EML for this package type, the core metadata and table attribute templates should be complete, as well as the categorical variables and custom units templates if necessary. Some additional metadata information is supplied in function arguments including:</p>
+<a href="#make-eml-for-data-tables" class="anchor"></a>Make EML for data tables</h2>
+<p>The most common data package only contains tables. To make EML for this package type, the core metadata and table attribute templates should be complete, as well as the categorical variables and custom units templates if necessary. The relevant <code><a href="../reference/make_eml.html">make_eml()</a></code> arguments for this package type are:</p>
 <ul>
 <li>
 <strong>path</strong> Path to template files</li>
@@ -154,12 +198,12 @@
 <li>
 <strong>package.id</strong> (optional) Data package identifier in the format expected by the receiving data repository.</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create EML for data tables</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Make EML for data tables</span>
 
 <span class="kw"><a href="../reference/make_eml.html">make_eml</a></span>(
-  <span class="dt">path =</span> <span class="st">'./metadata_templates'</span>,
-  <span class="dt">data.path =</span> <span class="st">'./data_objects'</span>,
-  <span class="dt">eml.path =</span> <span class="st">'./eml'</span>,
+  <span class="dt">path =</span> <span class="st">'./pkg_301/metadata_templates'</span>,
+  <span class="dt">data.path =</span> <span class="st">'./pkg_301/data_objects'</span>,
+  <span class="dt">eml.path =</span> <span class="st">'./pkg_301/eml'</span>,
   <span class="dt">dataset.title =</span> <span class="st">'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions'</span>,
   <span class="dt">temporal.coverage =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'2014-05-01'</span>, <span class="st">'2015-10-31'</span>),
   <span class="dt">geographic.description =</span> <span class="st">'Alberta, Canada, 100 km south of Fort McMurray, Canada'</span>,
@@ -170,11 +214,37 @@
   <span class="dt">user.id =</span> <span class="st">'csmith'</span>,
   <span class="dt">user.domain =</span> <span class="st">'EDI'</span>,
   <span class="dt">package.id =</span> <span class="st">'edi.301.1'</span>
-)
+)</code></pre></div>
+<pre><code>## Compiling attributes_decomp.txt</code></pre>
+<pre><code>## Compiling attributes_nitrogen.txt</code></pre>
+<pre><code>## Building EML ...</code></pre>
+<pre><code>## &lt;access&gt;</code></pre>
+<pre><code>## &lt;dataset&gt;</code></pre>
+<pre><code>## &lt;creators&gt;</code></pre>
+<pre><code>## &lt;publicationDate&gt;</code></pre>
+<pre><code>## &lt;abstract&gt;</code></pre>
+<pre><code>## &lt;keywordSet&gt;</code></pre>
+<pre><code>## &lt;intellectualRights&gt;</code></pre>
+<pre><code>## &lt;temporalCoverage&gt;</code></pre>
+<pre><code>## &lt;geographicCoverage&gt;</code></pre>
+<pre><code>## &lt;taxonomicCoverage&gt;</code></pre>
+<pre><code>## &lt;maintenance&gt;</code></pre>
+<pre><code>## &lt;contacts&gt;</code></pre>
+<pre><code>## &lt;methods&gt;</code></pre>
+<pre><code>## &lt;project&gt;</code></pre>
+<pre><code>## &lt;associatedParty&gt;</code></pre>
+<pre><code>## &lt;additionalInfo&gt;</code></pre>
+<pre><code>## &lt;dataTable&gt; ... decomp.csv</code></pre>
+<pre><code>## &lt;dataTable&gt; ... nitrogen.csv</code></pre>
+<pre><code>## &lt;additionalMetadata&gt;</code></pre>
+<pre><code>## Compiling EML.</code></pre>
+<pre><code>## Writing EML.</code></pre>
+<pre><code>## Validating EML.</code></pre>
+<pre><code>## EML passed validation!</code></pre>
+<pre><code>## Done.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View directory</span>
 
-<span class="co"># View directory</span>
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./eml'</span>)</code></pre></div>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/eml'</span>)</code></pre></div>
 <pre><code>## [1] "edi.301.1.xml"</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View EML</span></code></pre></div>
 <pre><code>$eml
@@ -318,7 +388,7 @@
    &lt;userId directory="https://orcid.org"&gt;https://orcid.org/0000-0001-5856-8473&lt;/userId&gt;
    &lt;role&gt;Equipment Lead&lt;/role&gt;
   &lt;/associatedParty&gt;
-  &lt;pubDate&gt;2019-05-03&lt;/pubDate&gt;
+  &lt;pubDate&gt;2019-05-07&lt;/pubDate&gt;
   &lt;abstract&gt;
    &lt;para&gt;Development of the oil sands has led to increasing atmospheric N
   deposition, with values as high as 17 kg N ha^-1 yr^-1; regional
@@ -2422,10 +2492,10 @@
  &lt;/additionalMetadata&gt;
 &lt;/eml:eml&gt;</code></pre>
 </div>
-<div id="make_eml-for-other-entities" class="section level2">
+<div id="make-eml-for-other-entities" class="section level2">
 <h2 class="hasAnchor">
-<a href="#make_eml-for-other-entities" class="anchor"></a><code>make_eml</code> for other entities</h2>
-<p>Some data packages only contain non-tabular data (e.g. geospatial vector, NetCDF, images) or other digital objects (e.g. processing and analysis scripts, modeling code, .pdf). To create EML for this package type, the core metadata templates need to be completed. Several of the same file type, or related file types, should be grouped into an archive format (e.g. zip, rar, tar). Some additional metadata information is supplied in function arguments including:</p>
+<a href="#make-eml-for-other-entities" class="anchor"></a>Make EML for other entities</h2>
+<p>Some data packages only contain non-tabular data (e.g. geospatial vector, NetCDF, images) or other digital objects (e.g. processing and analysis scripts, modeling code, .pdf). To make EML for this package type, the core metadata templates should be completed. Several of the same file type, or related file types, should be grouped into an archive format (e.g. zip, rar, tar). The relevant <code><a href="../reference/make_eml.html">make_eml()</a></code> arguments for this package type are:</p>
 <ul>
 <li>
 <strong>path</strong> Path to template files</li>
@@ -2455,12 +2525,12 @@
 <li>
 <strong>package.id</strong> (optional) Data package identifier in the format expected by the receiving data repository.</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create EML for other entities</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Make EML for other entities</span>
 
 <span class="kw"><a href="../reference/make_eml.html">make_eml</a></span>(
-  <span class="dt">path =</span> <span class="st">'./metadata_templates'</span>,
-  <span class="dt">data.path =</span> <span class="st">'./data_objects'</span>,
-  <span class="dt">eml.path =</span> <span class="st">'./eml'</span>,
+  <span class="dt">path =</span> <span class="st">'./pkg_301/metadata_templates'</span>,
+  <span class="dt">data.path =</span> <span class="st">'./pkg_301/data_objects'</span>,
+  <span class="dt">eml.path =</span> <span class="st">'./pkg_301/eml'</span>,
   <span class="dt">dataset.title =</span> <span class="st">'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions'</span>,
   <span class="dt">temporal.coverage =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'2014-05-01'</span>, <span class="st">'2015-10-31'</span>),
   <span class="dt">geographic.description =</span> <span class="st">'Alberta, Canada, 100 km south of Fort McMurray, Canada'</span>,
@@ -2471,11 +2541,34 @@
   <span class="dt">user.id =</span> <span class="st">'csmith'</span>,
   <span class="dt">user.domain =</span> <span class="st">'EDI'</span>,
   <span class="dt">package.id =</span> <span class="st">'edi.301.1'</span>
-)
+)</code></pre></div>
+<pre><code>## Building EML ...</code></pre>
+<pre><code>## &lt;access&gt;</code></pre>
+<pre><code>## &lt;dataset&gt;</code></pre>
+<pre><code>## &lt;creators&gt;</code></pre>
+<pre><code>## &lt;publicationDate&gt;</code></pre>
+<pre><code>## &lt;abstract&gt;</code></pre>
+<pre><code>## &lt;keywordSet&gt;</code></pre>
+<pre><code>## &lt;intellectualRights&gt;</code></pre>
+<pre><code>## &lt;temporalCoverage&gt;</code></pre>
+<pre><code>## &lt;geographicCoverage&gt;</code></pre>
+<pre><code>## &lt;taxonomicCoverage&gt;</code></pre>
+<pre><code>## &lt;maintenance&gt;</code></pre>
+<pre><code>## &lt;contacts&gt;</code></pre>
+<pre><code>## &lt;methods&gt;</code></pre>
+<pre><code>## &lt;project&gt;</code></pre>
+<pre><code>## &lt;associatedParty&gt;</code></pre>
+<pre><code>## &lt;additionalInfo&gt;</code></pre>
+<pre><code>## &lt;otherEntity&gt; ... ancillary_data.zip</code></pre>
+<pre><code>## &lt;otherEntity&gt; ... processing_and_analysis.R</code></pre>
+<pre><code>## Compiling EML.</code></pre>
+<pre><code>## Writing EML.</code></pre>
+<pre><code>## Validating EML.</code></pre>
+<pre><code>## EML passed validation!</code></pre>
+<pre><code>## Done.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View directory</span>
 
-<span class="co"># View directory</span>
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./eml'</span>)</code></pre></div>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/eml'</span>)</code></pre></div>
 <pre><code>## [1] "edi.301.1.xml"</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View EML</span></code></pre></div>
 <pre><code>$eml
@@ -2619,7 +2712,7 @@
    &lt;userId directory="https://orcid.org"&gt;https://orcid.org/0000-0001-5856-8473&lt;/userId&gt;
    &lt;role&gt;Equipment Lead&lt;/role&gt;
   &lt;/associatedParty&gt;
-  &lt;pubDate&gt;2019-05-03&lt;/pubDate&gt;
+  &lt;pubDate&gt;2019-05-07&lt;/pubDate&gt;
   &lt;abstract&gt;
    &lt;para&gt;Development of the oil sands has led to increasing atmospheric N
   deposition, with values as high as 17 kg N ha^-1 yr^-1; regional
@@ -4330,10 +4423,10 @@
  &lt;/dataset&gt;
 &lt;/eml:eml&gt;</code></pre>
 </div>
-<div id="make_eml-for-data-tables-and-other-entities" class="section level2">
+<div id="make-eml-for-data-tables-and-other-entities" class="section level2">
 <h2 class="hasAnchor">
-<a href="#make_eml-for-data-tables-and-other-entities" class="anchor"></a><code>make_eml</code> for data tables and other entities</h2>
-<p>A third type of data package contains both data tables and other entities. To create EML for this package type, the core metadata and table attribute templates should be complete, as well as the categorical variables and custom units templates if necessary. Some additional metadata information is supplied in function arguments including:</p>
+<a href="#make-eml-for-data-tables-and-other-entities" class="anchor"></a>Make EML for data tables and other entities</h2>
+<p>A third type of data package contains both data tables and other entities. To make EML for this package type, the core metadata and table attribute templates should be complete, as well as the categorical variables and custom units templates if necessary. The relevant <code><a href="../reference/make_eml.html">make_eml()</a></code> arguments for this package type are:</p>
 <ul>
 <li>
 <strong>path</strong> Path to template files</li>
@@ -4370,12 +4463,12 @@
 <li>
 <strong>package.id</strong> (optional) Data package identifier in the format expected by the receiving data repository.</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create EML for data tables and other entities</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Make EML for data tables and other entities</span>
 
 <span class="kw"><a href="../reference/make_eml.html">make_eml</a></span>(
-  <span class="dt">path =</span> <span class="st">'./metadata_templates'</span>,
-  <span class="dt">data.path =</span> <span class="st">'./data_objects'</span>,
-  <span class="dt">eml.path =</span> <span class="st">'./eml'</span>,
+  <span class="dt">path =</span> <span class="st">'./pkg_301/metadata_templates'</span>,
+  <span class="dt">data.path =</span> <span class="st">'./pkg_301/data_objects'</span>,
+  <span class="dt">eml.path =</span> <span class="st">'./pkg_301/eml'</span>,
   <span class="dt">dataset.title =</span> <span class="st">'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions'</span>,
   <span class="dt">temporal.coverage =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'2014-05-01'</span>, <span class="st">'2015-10-31'</span>),
   <span class="dt">geographic.description =</span> <span class="st">'Alberta, Canada, 100 km south of Fort McMurray, Canada'</span>,
@@ -4388,11 +4481,39 @@
   <span class="dt">user.id =</span> <span class="st">'csmith'</span>,
   <span class="dt">user.domain =</span> <span class="st">'EDI'</span>,
   <span class="dt">package.id =</span> <span class="st">'edi.301.1'</span>
-)
+)</code></pre></div>
+<pre><code>## Compiling attributes_decomp.txt</code></pre>
+<pre><code>## Compiling attributes_nitrogen.txt</code></pre>
+<pre><code>## Building EML ...</code></pre>
+<pre><code>## &lt;access&gt;</code></pre>
+<pre><code>## &lt;dataset&gt;</code></pre>
+<pre><code>## &lt;creators&gt;</code></pre>
+<pre><code>## &lt;publicationDate&gt;</code></pre>
+<pre><code>## &lt;abstract&gt;</code></pre>
+<pre><code>## &lt;keywordSet&gt;</code></pre>
+<pre><code>## &lt;intellectualRights&gt;</code></pre>
+<pre><code>## &lt;temporalCoverage&gt;</code></pre>
+<pre><code>## &lt;geographicCoverage&gt;</code></pre>
+<pre><code>## &lt;taxonomicCoverage&gt;</code></pre>
+<pre><code>## &lt;maintenance&gt;</code></pre>
+<pre><code>## &lt;contacts&gt;</code></pre>
+<pre><code>## &lt;methods&gt;</code></pre>
+<pre><code>## &lt;project&gt;</code></pre>
+<pre><code>## &lt;associatedParty&gt;</code></pre>
+<pre><code>## &lt;additionalInfo&gt;</code></pre>
+<pre><code>## &lt;dataTable&gt; ... decomp.csv</code></pre>
+<pre><code>## &lt;dataTable&gt; ... nitrogen.csv</code></pre>
+<pre><code>## &lt;additionalMetadata&gt;</code></pre>
+<pre><code>## &lt;otherEntity&gt; ... ancillary_data.zip</code></pre>
+<pre><code>## &lt;otherEntity&gt; ... processing_and_analysis.R</code></pre>
+<pre><code>## Compiling EML.</code></pre>
+<pre><code>## Writing EML.</code></pre>
+<pre><code>## Validating EML.</code></pre>
+<pre><code>## EML passed validation!</code></pre>
+<pre><code>## Done.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View directory</span>
 
-<span class="co"># View directory</span>
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./eml'</span>)</code></pre></div>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/eml'</span>)</code></pre></div>
 <pre><code>## [1] "edi.301.1.xml"</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View EML</span></code></pre></div>
 <pre><code>$eml
@@ -4536,7 +4657,7 @@
    &lt;userId directory="https://orcid.org"&gt;https://orcid.org/0000-0001-5856-8473&lt;/userId&gt;
    &lt;role&gt;Equipment Lead&lt;/role&gt;
   &lt;/associatedParty&gt;
-  &lt;pubDate&gt;2019-05-03&lt;/pubDate&gt;
+  &lt;pubDate&gt;2019-05-07&lt;/pubDate&gt;
   &lt;abstract&gt;
    &lt;para&gt;Development of the oil sands has led to increasing atmospheric N
   deposition, with values as high as 17 kg N ha^-1 yr^-1; regional
@@ -6677,10 +6798,10 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#the-make_eml-function">The <code>make_eml</code> function</a></li>
-      <li><a href="#make_eml-for-data-tables"><code>make_eml</code> for data tables</a></li>
-      <li><a href="#make_eml-for-other-entities"><code>make_eml</code> for other entities</a></li>
-      <li><a href="#make_eml-for-data-tables-and-other-entities"><code>make_eml</code> for data tables and other entities</a></li>
+<li><a href="#the-make_eml-function">The make_eml() function</a></li>
+      <li><a href="#make-eml-for-data-tables">Make EML for data tables</a></li>
+      <li><a href="#make-eml-for-other-entities">Make EML for other entities</a></li>
+      <li><a href="#make-eml-for-data-tables-and-other-entities">Make EML for data tables and other entities</a></li>
       </ul>
 </div>
       </div>

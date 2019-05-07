@@ -2,7 +2,7 @@
 
 ## New features
 
-* __Add function examples__ Add example usage to the documentation of each function.
+* __Add function examples__ Add examples to function documentation.
 * __Change template import__ Import custom_units.txt with `template_table_attributes()` instead of with `template_core_metadata()`. This is a more logical pairing.
 
 ## Bug fixes

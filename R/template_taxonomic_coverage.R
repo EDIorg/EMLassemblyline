@@ -1,10 +1,12 @@
 #' Create taxonomic coverage template
 #'
 #' @description  
-#'     Extract unique taxa and resolve to one or more taxonomic authorities. 
-#'     \code{make_eml} will use this information to get the taxonomic hierarchy
-#'     for each taxa and add to the EML. The metadata resulting from this 
-#'     function allows searching on any rank of the taxa.
+#'     Use this function to extract the unique taxa of a data table and 
+#'     try to resolve (match) to a taxonomic authority system (e.g. 
+#'     \href{https://www.itis.gov/}{ITIS}) and return for user supplied 
+#'     inputs if necessary. This information is later used to list the full
+#'     hierarchical rank names in the metadata.
+#'     \href{https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html}{Instructions for editing this template.}
 #'
 #' @usage 
 #'     template_taxonomic_coverage(
@@ -19,39 +21,36 @@
 #'     )
 #'
 #' @param path 
-#'     (character) Path to the directory where the template will be written.
+#'     (character) Path to the metadata template directory.
 #' @param data.path
-#'     (character) Path to the directory containing \code{taxa.table}.
+#'     (character) Path to the data directory.
 #' @param taxa.table
-#'     (character) Name of data table containing \code{taxa.col}.
+#'     (character) Table name containing \code{taxa.col}.
 #' @param taxa.col
-#'     (character) Name of column in \code{taxa.table} containing taxa names.
-#'     Names can be single words or species binomials.
+#'     (character) Column name containing taxa names. Species binomials are
+#'     accepted.
 #' @param taxa.name.type
-#'     (character) Type of taxa names in \code{taxa.col} Can be: 
+#'     (character) Taxa name type. Can be: 
 #'     \code{scientific}, \code{common}, or \code{both}.
 #' @param taxa.authority
-#'     (integer) An ordered numeric vector of ID's corresponding to data 
-#'     sources (i.e. taxonomic authorities) to resolve taxa names to, in the 
-#'     order of decreasing preference. See the list of supported data sources 
-#'     with \code{view_taxa_authorities}. Columns "resolve_sci_taxa", and 
-#'     "resolve_comm_taxa" list authorites supporting scientific and common 
-#'     searches, respectively.
+#'     (integer) Taxonomic authorities to resolve to as an ordered numeric vector 
+#'     of ID's decreasing in preference. See the list of supported authorities 
+#'     with \code{taxonomyCleanr::view_taxa_authorities()}. Columns 
+#'     "resolve_sci_taxa", and "resolve_comm_taxa" list authorites supporting 
+#'     scientific and common searches, respectively.
 #' @param write.file
-#'     (logical; optional) Whether to write the taxonomic coverage template
-#'     to \code{path}.
+#'     (logical; optional) Whether to write the template file.
 #' @param x
-#'     (named list; optional) Alternative input to \code{EMLassemblyline} 
-#'     functions. Use \code{template_arguments()} to create \code{x}.
+#'     (named list; optional) Alternative input to 
+#'     \code{template_taxonomic_coverage()}. Use \code{template_arguments()} 
+#'     to create \code{x}.
 #'
 #' @return 
-#'     \itemize{
-#'         \item{\strong{taxonomic_coverage.txt} A tab delimited table 
-#'         containing authority system names and authority IDs for 
-#'         successfully resolved taxa, and "NA" otherwise.}
-#'         \item{If using \code{x}, then the taxonomic coverage template is 
-#'         added to \strong{/x/templates}.}
-#'     }
+#'     \strong{taxonomic_coverage.txt} The tab delimited taxonomic coverage 
+#'     template. This file is written to \code{path} unless using \code{x},
+#'     in which case the template is added to 
+#'     \strong{/x/templates/taxonomic_coverage.txt}. Non-resolved taxa result 
+#'     NA.
 #'     
 #' @details 
 #'     \code{template_taxonomic_coverage()} searches the most preferred 
@@ -70,23 +69,23 @@
 #'     calls to \code{template_taxonomic_coverage()}.
 #'
 #' @examples 
-#' # Set working directory
-#' setwd(tempdir())
-#' 
-#' # Create data package directory "edi_255"
+#' # Initialize data package directory for template_taxonomic_coverage()
 #' file.copy(
-#'   from = system.file('/examples/edi_255', package = 'EMLassemblyline'),
-#'   to = '.',
+#'   from = system.file('/examples/pkg_255', package = 'EMLassemblyline'),
+#'   to = tempdir(),
 #'   recursive = TRUE
 #' )
 #' 
+#' # Set working directory
+#' setwd(paste0(tempdir(), '/pkg_255'))
+#' 
 #' # View directory contents (NOTE: taxonomic_coverage.txt doesn't exist)
-#' dir('./edi_255/metadata_templates')
+#' dir('./metadata_templates')
 #' 
 #' # Template taxonomic coverage
 #' template_taxonomic_coverage(
-#'   path = './edi_255/metadata_templates',
-#'   data.path = './edi_255/data_objects',
+#'   path = './metadata_templates',
+#'   data.path = './data_objects',
 #'   taxa.table = 'decomp.csv',
 #'   taxa.col = 'taxa',
 #'   taxa.authority = c(3,11),
@@ -94,12 +93,12 @@
 #' )
 #' 
 #' # View directory contents (NOTE: taxonomic_coverage.txt exists)
-#' dir('./edi_255/metadata_templates')
+#' dir('./metadata_templates')
 #' 
 #' # Rerunning template_taxonomic_coverage() does not overwrite file
 #' template_taxonomic_coverage(
-#'   path = './edi_255/metadata_templates',
-#'   data.path = './edi_255/data_objects',
+#'   path = './metadata_templates',
+#'   data.path = './data_objects',
 #'   taxa.table = 'decomp.csv',
 #'   taxa.col = 'taxa',
 #'   taxa.authority = c(3,11),
@@ -107,10 +106,7 @@
 #' )
 #' 
 #' # Clean up
-#' unlink(
-#'   './edi_255',
-#'   recursive = TRUE
-#' )
+#' unlink('.', recursive = TRUE)
 #'
 #' @export
 #'
@@ -164,7 +160,6 @@ template_taxonomic_coverage <- function(
     # Read templates and data.table into list
 
     x <- template_arguments(
-      path = path,
       data.path = data.path,
       data.table = taxa.table
     )

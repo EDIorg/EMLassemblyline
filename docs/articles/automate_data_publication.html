@@ -59,7 +59,7 @@
       <a href="../articles/edit_metadata_templates.html">Edit metadata templates</a>
     </li>
     <li>
-      <a href="../articles/create_eml.html">Create EML</a>
+      <a href="../articles/create_eml.html">Make EML</a>
     </li>
     <li>
       <a href="../articles/publish_data_package.html">Publish data package</a>
@@ -115,40 +115,39 @@
 <li>
 <strong>Ongoing derived data product</strong> Data package is derived from sources with ongoing collection</li>
 </ul>
-<p>These use cases are demonstrated below.</p>
+<p>Each use case is demonstrated below.</p>
 </div>
 <div id="ongoing-data-collection" class="section level2">
 <h2 class="hasAnchor">
 <a href="#ongoing-data-collection" class="anchor"></a>Ongoing data collection</h2>
-<p>Ongoing data collection can be the addition of new data to a time series, or data changing as a result of an evolving data processing or analytical method. In either case, automated publication requires stabilization of package contents and configuration of <code>EMLassemblyline</code>. If package contents deviate from what can be programmatically input to <code>EMLassemblyline</code>, then metadata accuracy decreases and human and machine understanding are compromised. Example automated data publication for ongoing data collection:</p>
+<p>Ongoing data collection can be the addition of new data to a time series, or data changing as a result of an evolving data processing or analytical method. In either case, automated publication requires stabilization of package contents and configuration of <code>EMLassemblyline</code> for these contents. If package contents deviate from what can be programmatically input to <code>EMLassemblyline</code>, then metadata accuracy decreases and human and machine understanding are compromised. Example automated data publication for ongoing data collection:</p>
 <ol style="list-style-type: decimal">
 <li>
 <strong>Upload data</strong> Field technician uploads new raw data to a queue on their project server.</li>
 <li>
-<strong>Process data</strong> The presence of queued data triggers a scripted data processing workflow in which raw data are aggregated and quality control procedures applied to create a publication ready dataset for which <code>EMLassemblyline</code> has been configured for.</li>
+<strong>Process data</strong> The presence of queued data triggers a scripted workflow in which raw data are aggregated and quality control procedures applied to create a publication ready dataset for which <code>EMLassemblyline</code> has been configured.</li>
 <li>
-<strong>Make EML</strong> The script then updates the values input to <code>make_eml</code>’s <code>temporal.coverage</code> and <code>package.id</code> arguments, and then runs <code>make_eml</code> for the new dataset.</li>
+<strong>Make EML</strong> The script then updates values input to <code><a href="../reference/make_eml.html">make_eml()</a></code>’s <code>temporal.coverage</code> and <code>package.id</code> arguments, and then runs <code><a href="../reference/make_eml.html">make_eml()</a></code> for the new data.</li>
 <li>
-<strong>Publish</strong> The new dataset and EML are then published via the data repository API.</li>
+<strong>Publish</strong> The new data and EML are then published via the data repository API.</li>
 </ol>
 <div class="figure">
 <img src="automated_publication_ongoing.png" alt="Processes of automated publication for a dataset with ongoing collection"><p class="caption">Processes of automated publication for a dataset with ongoing collection</p>
 </div>
-<p>Here’s the script for the workflow described above:</p>
 </div>
 <div id="ongoing-derived-data-product" class="section level2">
 <h2 class="hasAnchor">
 <a href="#ongoing-derived-data-product" class="anchor"></a>Ongoing derived data product</h2>
-<p>Another valuable use case of automated data publication is the creation of data packages that are derived from sources with ongoing collection. The derived package may produce a stand alone product, or may be part of a larger science workflow with additional downstream processes. The derived package publication relies on an additional service provided by many data repositories, event notifications. The event notification is sent to the subscriber when a source data package is updated. Build upon the previous workflow:</p>
+<p>Another valuable use case of automated data publication is the creation of data packages that are derived from sources with ongoing collection. The derived package may produce a stand alone product, or may be part of a larger science workflow with additional downstream processes. The derived package publication relies event notification, which are a service some data repositories provide. The event notification is sent to the subscriber when a source data package is updated. Building upon the previous workflow:</p>
 <ol start="5" style="list-style-type: decimal">
 <li>
 <strong>Event notification</strong> An event notification is sent by the data repository to the synthesis science team server, which triggers a scripted data processing and publication workflow.</li>
 <li>
-<strong>Download data</strong> The script downloads the updated data package</li>
+<strong>Download data</strong> The script downloads the updated package.</li>
 <li>
-<strong>Process data</strong> Next the data are processed, analyzed, and formatted into a data product for which the <code>EMLassemblyline</code> has been configured for.</li>
+<strong>Process data</strong> Next the data are processed, analyzed, and formatted into a data product for which the <code>EMLassemblyline</code> has been configured.</li>
 <li>
-<strong>Make EML</strong> The script then updates values for the <code>temporal.coverage</code> and <code>package.id</code> arguments, and runs <code>make_eml</code> for the data product.</li>
+<strong>Make EML</strong> The script then updates values for the <code>temporal.coverage</code> and <code>package.id</code> arguments, and runs <code><a href="../reference/make_eml.html">make_eml()</a></code> for the data product.</li>
 <li>
 <strong>Publish</strong> The data product and EML are then published via the data repository API.</li>
 </ol>
@@ -161,12 +160,12 @@
 <li>
 <strong>Process data</strong> The package contents are processed into website content.</li>
 <li>
-<strong>Use information</strong> The public access and utilizes this information.</li>
+<strong>Use information</strong> The public uses this information.</li>
 </ol>
 <div class="figure">
 <img src="automated_publication_derived.png" alt="An example implementation"><p class="caption">An example implementation</p>
 </div>
-<p>Automated data publication and use of data repository event notifications enable highly efficient, valuable, and reproducible science workflows.</p>
+<p>Automated data publication coupled with repository event notifications enable highly efficient, reproducible, and valuable science workflows.</p>
 </div>
   </div>
 

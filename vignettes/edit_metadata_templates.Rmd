@@ -8,7 +8,7 @@ output: html_document
 # Parameterize
 
 dir_path <- '/Users/Colin/Desktop/data_packages'
-data_path <- '/Users/Colin/Desktop/data_packages/edi_301/data_objects'
+data_path <- '/Users/Colin/Desktop/data_packages/pkg_301/data_objects'
 
 # Initialize .Rmd
 
@@ -19,7 +19,7 @@ library(EMLassemblyline)
 # Clear contents of data package directory
 
 unlink(
-  x = '/Users/Colin/Desktop/data_packages/edi_301',
+  x = '/Users/Colin/Desktop/data_packages/pkg_301',
   recursive = TRUE
 )
 
@@ -27,7 +27,7 @@ unlink(
 
 template_directories(
   path = dir_path,
-  dir.name = 'edi_301'
+  dir.name = 'pkg_301'
 )
 
 # Add completed templates
@@ -48,7 +48,7 @@ file.copy(
   ),
   to = paste0(
     dir_path,
-    '/edi_301/metadata_templates'
+    '/pkg_301/metadata_templates'
   )
 )
 
@@ -57,21 +57,21 @@ file.copy(
 file.remove(
   paste0(
     dir_path,
-    '/edi_301/metadata_templates/bounding_boxes.txt'
+    '/pkg_301/metadata_templates/bounding_boxes.txt'
   )
 )
 
 file.remove(
   paste0(
     dir_path,
-    '/edi_301/metadata_templates/geographic_coverage.txt'
+    '/pkg_301/metadata_templates/geographic_coverage.txt'
   )
 )
 
 file.remove(
   paste0(
     dir_path,
-    '/edi_301/metadata_templates/taxonomicCoverage.xml'
+    '/pkg_301/metadata_templates/taxonomicCoverage.xml'
   )
 )
 
@@ -93,7 +93,7 @@ file.copy(
   ),
   to = paste0(
     dir_path,
-    '/edi_301/data_objects'
+    '/pkg_301/data_objects'
   )
 )
 
@@ -102,11 +102,11 @@ file.copy(
 template_geographic_coverage(
   path = paste0(
     dir_path,
-    '/edi_301/metadata_templates'
+    '/pkg_301/metadata_templates'
   ),
   data.path = paste0(
     dir_path,
-    '/edi_301/data_objects'
+    '/pkg_301/data_objects'
   ),
   data.table = 'nitrogen.csv',
   site.col = 'site_name',
@@ -116,7 +116,7 @@ template_geographic_coverage(
 
 # Set working directory
 
-knitr::opts_knit$set(root.dir = 'C:\\Users\\Colin\\Desktop\\data_packages\\edi_301')
+knitr::opts_knit$set(root.dir = 'C:\\Users\\Colin\\Desktop\\data_packages\\pkg_301')
 
 ```
 

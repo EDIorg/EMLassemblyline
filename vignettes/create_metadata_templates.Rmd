@@ -5,134 +5,104 @@ output: html_document
 
 ```{r setup, include=FALSE}
 
-# Parameterize
-
-dir_path <- '/Users/Colin/Desktop/data_packages'
-data_path <- '/Users/Colin/Desktop/data_packages/edi_301/data_objects'
-
 # Initialize .Rmd
 
 knitr::opts_chunk$set(echo = TRUE)
 library(kableExtra)
 library(EMLassemblyline)
 
-# Clear contents of data package directory
+# Remove example package directory
 
 unlink(
-  x = '/Users/Colin/Desktop/data_packages/edi_301',
+  paste0(
+    tempdir(),
+    '/pkg_301'
+  ), 
   recursive = TRUE
 )
 
-# Create directory structure
+# Create the data package directory from organize_data_package.Rmd
 
 template_directories(
-  path = dir_path,
-  dir.name = 'edi_301'
+  path = tempdir(),
+  dir.name = 'pkg_301'
 )
-
-# Copy package objects to data
-
-file.copy(
-      from = system.file(
-        '/examples/data/decomp.csv',
-        package = 'EMLassemblyline'
-      ),
-      to = paste0(
-        data_path,
-        "/decomp.csv"
-      )
-    )
-
-file.copy(
-      from = system.file(
-        '/examples/data/nitrogen.csv',
-        package = 'EMLassemblyline'
-      ),
-      to = paste0(
-        data_path,
-        "/nitrogen.csv"
-      )
-    )
-
-file.copy(
-      from = system.file(
-        '/examples/data/ancillary_data.zip',
-        package = 'EMLassemblyline'
-      ),
-      to = paste0(
-        data_path,
-        "/ancillary_data.zip"
-      )
-    )
-
-file.copy(
-      from = system.file(
-        '/examples/data/processing_and_analysis.R',
-        package = 'EMLassemblyline'
-      ),
-      to = paste0(
-        data_path,
-        "/processing_and_analysis.R"
-      )
-    )
 
 # Set working directory
 
-knitr::opts_knit$set(root.dir = 'C:\\Users\\Colin\\Desktop\\data_packages\\edi_301')
+knitr::opts_knit$set(root.dir = tempdir())
 
 ```
 
 ## Templating functions
 
-Metadata templates store content that is converted into EML. Each template is created by a function that reads a data entity or object, extracts as much information as possible from data entity or object, then writes this information to file for the user to add information to if necessary. Each templating function focuses on a specific metadata feature thereby allowing the user to highlight the unique features of their data in a modular fashion. Currently available templating functions include:
+Metadata templates store content that is converted into EML. Each template is created by a function that reads a data object, extracts as much information as possible, then writes this information to file for the user to add information to if necessary. Each templating function focuses on a specific metadata feature thereby allowing the user to build metadata in a modular fashion. Currently available templating functions include:
 
 *  __`template_core_metadata()`__ Create core metadata templates required by all data packages (abstract, methods, keywords, personnel, license). The _additional information_ template (optional) is included.
 *  __`template_table_attributes()`__ Create attribute metadata for data tables, including column definitions, classes, and missing value codes. The _custom units_ template is created incase non-standard units need definition.
-*  __`template_categorical_variables()`__ Create categorical variable metadata for data tables containing this data class.
-*  __`template_geographic_coverage()`__ Create geographic coverage describing sampling points and areas.
-*  __`template_taxonomic_coverage()`__ Create taxonomic coverage metadata including resolution to authority systems and hierarchical rank names.
+*  __`template_categorical_variables()`__ Create categorical variable metadata for data tables, if needed.
+*  __`template_geographic_coverage()`__ Create geographic coverage describing location names, points, and areas.
+*  __`template_taxonomic_coverage()`__ Create taxonomic coverage metadata facilitating resolution to authority systems and returning hierarchical rank names.
 
 Below is a demonstration of each function and a look at outputs.
 
 ## template_core_metadata()
 
-```{r call template_core_metadata, message = FALSE}
+Use `template_core_metadata()` to create metadata templates required by every data package.
 
-# Set working directory
+```{r call template_core_metadata, message = TRUE}
 
-setwd('/Users/Colin/Desktop/data_packages/edi_301')
+# Continuing with the data package directory ("pkg_301") set up in
+# the article "Organize data package" ...
 
-# Create core templates
+# The templates directory is empty
+dir('./pkg_301/metadata_templates')
 
+# Template core metadata
 template_core_metadata(
-  path = './metadata_templates',
+  path = './pkg_301/metadata_templates',
   license = 'CC0'
 )
 
-# View directory
-
-dir('./metadata_templates')
+# Core templates are now present
+dir('./pkg_301/metadata_templates')
 
 ```
 
 ## template_table_attributes()
 
-```{r call template_table_attributes, message = FALSE}
+Use `template_table_attributes()` to create templates required by data tables.
 
-# Create templates for table attributes
+```{r call template_table_attributes, message = TRUE}
 
+# Add a couple tables to "pkg_301"
+
+file.copy(
+  from = system.file('/examples/data/nitrogen.csv', package = 'EMLassemblyline'),
+  to = './pkg_301/data_objects'
+)
+
+file.copy(
+  from = system.file('/examples/data/decomp.csv', package = 'EMLassemblyline'),
+  to = './pkg_301/data_objects'
+)
+ 
+# Tables are now present
+dir('./pkg_301/data_objects')
+
+# Template table attributes for each table
 template_table_attributes(
-  path = './metadata_templates',
-  data.path = './data_objects',
+  path = './pkg_301/metadata_templates',
+  data.path = './pkg_301/data_objects',
   data.table = c('decomp.csv', 'nitrogen.csv')
 )
 
-# View directory
-
-dir('./metadata_templates')
+# Table attributes templates are now present
+dir('./pkg_301/metadata_templates')
 
 # View templates
-# NOTE: attributeName and class are autogenerated, and unit and dateTimeFormatString note where specific content is needed.
+# NOTE: attributeName and class are autogenerated, and unit and 
+# dateTimeFormatString note where specific content is needed.
 
 ```
 
@@ -141,7 +111,7 @@ dir('./metadata_templates')
 # Change taxa class from categorical to character
 
 attributes_decomp <- read.table(
-  file = './metadata_templates/attributes_decomp.txt',
+  file = './pkg_301/metadata_templates/attributes_decomp.txt',
   header = TRUE,
   sep = '\t',
   quote = "\"",
@@ -155,7 +125,7 @@ attributes_decomp$class[attributes_decomp$attributeName == 'taxa'] <- 'character
 
 write.table(
   x = attributes_decomp,
-  file = './metadata_templates/attributes_decomp.txt', 
+  file = './pkg_301/metadata_templates/attributes_decomp.txt', 
   sep = '\t',
   row.names = FALSE,
   quote = FALSE
@@ -164,7 +134,7 @@ write.table(
 # Read attribute templates
 
 attributes_decomp <- read.table(
-  file = './metadata_templates/attributes_decomp.txt',
+  file = './pkg_301/metadata_templates/attributes_decomp.txt',
   header = TRUE,
   sep = '\t',
   quote = "\"",
@@ -175,7 +145,7 @@ attributes_decomp <- read.table(
 )
 
 attributes_nitrogen <- read.table(
-  file = './metadata_templates/attributes_nitrogen.txt',
+  file = './pkg_301/metadata_templates/attributes_nitrogen.txt',
   header = TRUE,
   sep = '\t',
   quote = "\"",
@@ -200,23 +170,38 @@ knitr::kable(
 
 ```
 
-## template_categorical variables()
+## template_categorical_variables()
 
-```{r call template_categorical_variables, message = FALSE}
+Use `template_categorical_variables()` if any data table contains categorical variables.
 
-# Create templates for categorical variables
+```{r call template_categorical_variables, message = TRUE}
 
-template_categorical_variables(
-  path = './metadata_templates',
-  data.path = './data_objects'
+# Replace partially complete table attributes templates with fully completed 
+# ones as required by template_categorical_variables()
+
+file.copy(
+  from = system.file('/examples/templates/attributes_nitrogen.txt', package = 'EMLassemblyline'),
+  to = './pkg_301/metadata_templates',
+  overwrite = TRUE
 )
 
-# View directory
+file.copy(
+  from = system.file('/examples/templates/attributes_nitrogen.txt', package = 'EMLassemblyline'),
+  to = './pkg_301/metadata_templates',
+  overwrite = TRUE
+)
 
-dir('./metadata_templates')
+# Template categorical variables
+template_categorical_variables(
+  path = './pkg_301/metadata_templates',
+  data.path = './pkg_301/data_objects'
+)
+
+# Categorical variable templates are now present
+dir('./pkg_301/metadata_templates')
 
 # View templates
-# NOTE: attributeName and code is autogenerated.
+# NOTE: attributeName and code is auto generated.
 
 ```
 
@@ -225,7 +210,7 @@ dir('./metadata_templates')
 # Read catvar templates
 
 catvars_decomp <- read.table(
-  file = './metadata_templates/catvars_decomp.txt',
+  file = './pkg_301/metadata_templates/catvars_decomp.txt',
   header = TRUE,
   sep = '\t',
   quote = "\"",
@@ -236,7 +221,7 @@ catvars_decomp <- read.table(
 )
 
 catvars_nitrogen <- read.table(
-  file = './metadata_templates/catvars_nitrogen.txt',
+  file = './pkg_301/metadata_templates/catvars_nitrogen.txt',
   header = TRUE,
   sep = '\t',
   quote = "\"",
@@ -263,22 +248,22 @@ knitr::kable(
 
 ## template_geographic_coverage()
 
-```{r call template_geographic_coverage, message = FALSE}
+Use `template_geographic_coverage()` to document the locations of sampling points or areas.
 
-# Create geographic coverage template
+```{r call template_geographic_coverage, message = TRUE}
 
+# Template geographic coverage
 template_geographic_coverage(
-  path = './metadata_templates',
-  data.path = './data_objects',
+  path = './pkg_301/metadata_templates',
+  data.path = './pkg_301/data_objects',
   data.table = 'nitrogen.csv',
   site.col = 'site_name',
   lat.col = 'site_lat',
   lon.col = 'site_lon'
 )
 
-# View directory
-
-dir('./metadata_templates')
+# The geographic coverage template has been added
+dir('./pkg_301/metadata_templates')
 
 # View template
 
@@ -289,7 +274,7 @@ dir('./metadata_templates')
 # Read geocoverage template
 
 geocoverage <- read.table(
-  file = './metadata_templates/geographic_coverage.txt',
+  file = './pkg_301/metadata_templates/geographic_coverage.txt',
   header = TRUE,
   sep = '\t',
   quote = "\"",
@@ -310,22 +295,22 @@ knitr::kable(
 
 ## template_taxonomic_coverage()
 
-```{r call template_taxonomic_coverage, message = FALSE}
+Use `template_taxonomic_coverage()` to automatically resolve taxa to authority systems and create hierarchical rank specific metadata.
 
-# Create taxonomic coverage template
+```{r call template_taxonomic_coverage, message = TRUE}
 
+# Template taxonomic coverage
 template_taxonomic_coverage(
-  path = './metadata_templates',
-  data.path = './data_objects',
+  path = './pkg_301/metadata_templates',
+  data.path = './pkg_301/data_objects',
   taxa.table = 'decomp.csv',
   taxa.col = 'taxa',
   taxa.authority = c(3,11),
   taxa.name.type = 'both'
 )
 
-# View directory
-
-dir('./metadata_templates')
+# The taxonomic coverage template is present
+dir('./pkg_301/metadata_templates')
 
 # View template
 # NOTE: Unresolved taxa lack authority information
@@ -337,7 +322,7 @@ dir('./metadata_templates')
 # Read taxonomic coverage template
 
 taxacoverage <- read.table(
-  file = './metadata_templates/taxonomic_coverage.txt',
+  file = './pkg_301/metadata_templates/taxonomic_coverage.txt',
   header = TRUE,
   sep = '\t',
   quote = "\"",

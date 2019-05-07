@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Import template(s) for categorical variable definitions — define_catvars • EMLassemblyline</title>
+<title>Import template for categorical variables — define_catvars • EMLassemblyline</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,13 +30,12 @@
 
 
 
-<meta property="og:title" content="Import template(s) for categorical variable definitions — define_catvars" />
+<meta property="og:title" content="Import template for categorical variables — define_catvars" />
 
-<meta property="og:description" content="Import template(s) for defining categorical variable codes used in data
-    tables. This function automatically extracts and returns categorical 
-    codes, the definitions of which must be supplied by a human. 
-    Instructions for filling out the template are at
-    https://clnsmth.github.io/EMLassemblyline/articles/instructions.html." />
+<meta property="og:description" content="Import template for defining categorical variables used in data a
+    table. This function automatically extracts and returns categorical 
+    codes, the definitions of which are supplied by the user. 
+    Instructions for editing the template." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -96,7 +95,7 @@
       <a href="../articles/edit_metadata_templates.html">Edit metadata templates</a>
     </li>
     <li>
-      <a href="../articles/create_eml.html">Create EML</a>
+      <a href="../articles/create_eml.html">Make EML</a>
     </li>
     <li>
       <a href="../articles/publish_data_package.html">Publish data package</a>
@@ -133,26 +132,25 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Import template(s) for categorical variable definitions</h1>
+    <h1>Import template for categorical variables</h1>
     <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/define_catvars.R'><code>R/define_catvars.R</code></a></small>
     <div class="hidden name"><code>define_catvars.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Import template(s) for defining categorical variable codes used in data
-    tables. This function automatically extracts and returns categorical 
-    codes, the definitions of which must be supplied by a human. 
-    Instructions for filling out the template are at
-    <a href='https://clnsmth.github.io/EMLassemblyline/articles/instructions.html'>https://clnsmth.github.io/EMLassemblyline/articles/instructions.html</a>.</p>
+    <p>Import template for defining categorical variables used in data a
+    table. This function automatically extracts and returns categorical 
+    codes, the definitions of which are supplied by the user. 
+    <a href='https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html'>Instructions for editing the template.</a></p>
     
     </div>
 
     <pre class="usage"><span class='fu'>define_catvars</span>(
       <span class='no'>path</span>,
       <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='no'>path</span>,
-      <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-      <span class='kw'>write.file</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+      <span class='kw'>write.file</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+      <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
     )</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -160,20 +158,24 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>path</th>
-      <td><p>(character) Path to where the template(s) will be imported.</p></td>
+      <td><p>(character) Path to the directory containing table attributes 
+template(s), and where the categorical variable template(s) will be
+written.</p></td>
     </tr>
     <tr>
       <th>data.path</th>
-      <td><p>(character) Path to where the data files are stored.</p></td>
-    </tr>
-    <tr>
-      <th>x</th>
-      <td><p>(named list) Alternative input/output to `EMLassemblyline` functions. 
-Use <code>template_arguments</code> to create `x`.</p></td>
+      <td><p>(character) Path to the directory containing the data table with 
+categorical variables.</p></td>
     </tr>
     <tr>
       <th>write.file</th>
-      <td><p>(logical) Write `catvars` file to `path`.</p></td>
+      <td><p>(logical; optional) Whether to write the categorical variable template
+to <code>path</code>.</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>(named list; optional) Alternative input to <code>EMLassemblyline</code> 
+functions. Use <code><a href='template_arguments.html'>template_arguments()</a></code> to create <code>x</code>.</p></td>
     </tr>
     </table>
     
@@ -181,22 +183,64 @@ Use <code>template_arguments</code> to create `x`.</p></td>
 
     
 <ul>
-<li><p>`catvars_*.txt` A tab delimited file written to `path`
-        containing codes to be defined. Each template is appended with the 
-        name of the data table from which the codes were extracted.</p></li>
-<li><p>If using `x`, then content of `catvars_*.txt` is added to `x` 
-        under `/x/templates`.</p></li>
+<li><p><strong>catvars_*.txt</strong> The categorical variable 
+        template. A tab delimited table.</p></li>
+<li><p>If using <code>x</code>, then the categorical variable template is 
+        added to <strong>/x/templates</strong>.</p></li>
 </ul>
 
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>`define_catvars` knows which variables are `categorical` based on their 
-    listing under the `class` column in the `attributes_*.txt` file(s).</p>    
-<p>Existing template(s) will not be overwritten by subsequent calls to 
-    `define_catvars()`.</p>
+    <p><code>define_catvars()</code> knows which variables are <code>categorical</code> 
+    based on their listing in the <code>class</code> column of the 
+    attributes.txt template.</p>    
+<p>An existing categorical variables template will not be overwritten 
+    by subsequent calls to <code>define_catvars()</code>.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Set working directory</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/getwd'>setwd</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>())
+
+<span class='co'># Create data package directory "pkg_255"</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/files'>file.copy</a></span>(
+  <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>'/examples/pkg_255'</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'EMLassemblyline'</span>),
+  <span class='kw'>to</span> <span class='kw'>=</span> <span class='st'>'.'</span>,
+  <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='co'># View directory contents (NOTE: catvars_*.txt files don't exist)</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='st'>'./pkg_255/metadata_templates'</span>)</div><div class='output co'>#&gt; [1] "abstract.txt"            "additional_info.txt"    
+#&gt; [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
+#&gt; [5] "custom_units.txt"        "intellectual_rights.txt"
+#&gt; [7] "keywords.txt"            "methods.txt"            
+#&gt; [9] "personnel.txt"          </div><div class='input'>
+<span class='co'># Define categorical variables</span>
+<span class='fu'>define_catvars</span>(
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./pkg_255/metadata_templates'</span>,
+  <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='st'>'./pkg_255/data_objects'</span>
+)</div><div class='output co'>#&gt; <span class='message'>Creating categorical variable template.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'define_catvars' is deprecated.</span>
+#&gt; <span class='warning'>Use 'template_categorical_variables' instead.</span>
+#&gt; <span class='warning'>See help("Deprecated") and help("EMLassemblyline-deprecated").</span></div><div class='output co'>#&gt; <span class='message'>Writing catvars_decomp.txt</span></div><div class='output co'>#&gt; <span class='message'>Writing catvars_nitrogen.txt</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
+<span class='co'># View directory contents (NOTE: catvars_*.txt files exist)</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='st'>'./pkg_255/metadata_templates'</span>)</div><div class='output co'>#&gt;  [1] "abstract.txt"            "additional_info.txt"    
+#&gt;  [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
+#&gt;  [5] "catvars_decomp.txt"      "catvars_nitrogen.txt"   
+#&gt;  [7] "custom_units.txt"        "intellectual_rights.txt"
+#&gt;  [9] "keywords.txt"            "methods.txt"            
+#&gt; [11] "personnel.txt"          </div><div class='input'>
+<span class='co'># Rerunning define_catvars() does not overwrite files</span>
+<span class='fu'>define_catvars</span>(
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./pkg_255/metadata_templates'</span>,
+  <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='st'>'./pkg_255/data_objects'</span>
+)</div><div class='output co'>#&gt; <span class='message'>Creating categorical variable template.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'define_catvars' is deprecated.</span>
+#&gt; <span class='warning'>Use 'template_categorical_variables' instead.</span>
+#&gt; <span class='warning'>See help("Deprecated") and help("EMLassemblyline-deprecated").</span></div><div class='output co'>#&gt; <span class='message'>catvars_decomp.txt already exists! Skipping this one.</span></div><div class='output co'>#&gt; <span class='message'>catvars_nitrogen.txt already exists! Skipping this one.</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
+<span class='co'># Clean up</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/unlink'>unlink</a></span>(
+  <span class='st'>'./pkg_255'</span>,
+  <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -206,7 +250,9 @@ Use <code>template_arguments</code> to create `x`.</p></td>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

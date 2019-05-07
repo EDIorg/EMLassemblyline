@@ -12,68 +12,66 @@ template_categorical_variables(
     )
 }
 \arguments{
-\item{path}{(character) Path to the directory containing table attributes 
-template(s), and where the categorical variable template(s) will be
-written.}
+\item{path}{(character) Path to the metadata template directory.}
 
-\item{data.path}{(character) Path to the directory containing the data table with 
-categorical variables.}
+\item{data.path}{(character) Path to the data directory.}
 
-\item{x}{(named list; optional) Alternative input to \code{EMLassemblyline} 
-functions. Use \code{template_arguments()} to create \code{x}.}
+\item{x}{(named list; optional) Alternative input to 
+\code{template_categorical_variables()}. Use \code{template_arguments()} 
+to create \code{x}.}
 
-\item{write.file}{(logical; optional) Whether to write the categorical variable template
-to \code{path}.}
+\item{write.file}{(logical; optional) Whether to write the template file.}
 }
 \value{
-\itemize{
-        \item{\strong{catvars_*.txt} The categorical variable 
-        template. A tab delimited table.}
-        \item{If using \code{x}, then the categorical variable template is 
-        added to \strong{/x/templates}.}
-    }
+\strong{catvars_*.txt} The tab delimited categorical variable 
+    template, where * is the table name from which the variables were
+    extracted. This file is written to \code{path} unless using \code{x},
+    in which case the template is added to 
+    \strong{/x/templates/catvars_*.txt}.
 }
 \description{
-Create template for defining categorical variable codes used in data
-    tables. This function automatically extracts and returns categorical 
-    codes, the definitions of which must be supplied by the user. 
-    \href{https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html}{Instructions for editing the template.}
+Use this function to extract the unique categorical variables of a data
+    table and return for user supplied definitions. 
+    \href{https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html}{Instructions for editing this template.}
 }
 \details{
-\code{define_catvars()} knows which variables are \code{categorical} 
-    based on their listing in the \code{class} column of the 
-    attributes.txt template. 
+\code{template_categorical_variables()} knows which columns of a table
+    are \code{categorical} based on their definition under the \code{class} 
+    column of the attributes_*.txt template.
     
     An existing categorical variables template will not be overwritten 
-    by subsequent calls to \code{define_catvars()}.
+    by subsequent calls to \code{template_categorical_variables()}.
 }
 \examples{
-# Set working directory
-setwd(tempdir())
-
-# Create data package directory "edi_255"
+# Initialize data package directory for template_categorical_variables()
 file.copy(
-  from = system.file('/examples/edi_255', package = 'EMLassemblyline'),
-  to = '.',
+  from = system.file('/examples/pkg_255', package = 'EMLassemblyline'),
+  to = tempdir(),
   recursive = TRUE
 )
 
+# Set working directory
+setwd(paste0(tempdir(), './pkg_255'))
+
 # View directory contents (NOTE: catvars_*.txt files don't exist)
-dir('./edi_255/metadata_templates')
+dir('./metadata_templates')
 
 # Template categorical variables
 template_categorical_variables(
-  path = './edi_255/metadata_templates',
-  data.path = './edi_255/data_objects'
+  path = './metadata_templates',
+  data.path = './data_objects'
 )
 
 # View directory contents (NOTE: catvars_*.txt files exist)
-dir('./edi_255/metadata_templates')
+dir('./metadata_templates')
 
 # Rerunning template_categorical_variables() does not overwrite files
 template_categorical_variables(
-  path = './edi_255/metadata_templates',
-  data.path = './edi_255/data_objects'
+  path = './metadata_templates',
+  data.path = './data_objects'
 )
+
+# Clean up
+unlink('.', recursive = TRUE)
 
 }

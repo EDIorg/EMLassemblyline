@@ -7,13 +7,13 @@ output: html_document
 
 The basic use case, creating and maintaining EML for a dataset, consists of five steps:
 
-1. [Organize data package](https://clnsmth.github.io/EMLassemblyline/articles/organize_data_package.html) contents into a simple directory structure that is readable by `EMLassemblyline` and accords with user preferences.
-2. [Create metadata templates](https://clnsmth.github.io/EMLassemblyline/articles/create_metadata_templates.html) using functions that automatically extract information from data entities.
+1. [Organize data package](https://clnsmth.github.io/EMLassemblyline/articles/organize_data_package.html) contents into a simple directory structure readable by `EMLassemblyline` and according with user preferences.
+2. [Create metadata templates](https://clnsmth.github.io/EMLassemblyline/articles/create_metadata_templates.html) using functions to automatically extract information from data entities.
 3. [Edit metadata templates](https://clnsmth.github.io/EMLassemblyline/articles/edit_metadata_templates.html) with simple text and spreadsheet editors to supply information that could not be automatically extracted.
-4. [Make EML](https://clnsmth.github.io/EMLassemblyline/articles/create_eml.html) metadata from templates and value added content automatically created by the `make_eml()` function.
-5. [Publish data package](https://clnsmth.github.io/EMLassemblyline/articles/publish_data_package.html) in a data repository accepting EML metadata.
+4. [Make EML](https://clnsmth.github.io/EMLassemblyline/articles/create_eml.html) metadata from templates and value added content created by the `make_eml()` function.
+5. [Publish data package](https://clnsmth.github.io/EMLassemblyline/articles/publish_data_package.html) in a data repository.
 
-EML revisions and updates are done by simply editing relevant portions of the templates and rerunning the `make_eml()` function.
+Revise EML by simply editing templates and rerunning `make_eml()`.
 
 ## Advanced use cases
 

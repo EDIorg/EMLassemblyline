@@ -12,69 +12,73 @@ template_core_metadata(
     )
 }
 \arguments{
-\item{path}{(character) Path to the directory where the templates will be written.}
+\item{path}{(character) Path to the metadata template directory.}
 
-\item{license}{(character) License under which the data will be released. Use 
-\href{"CC0"}{https://creativecommons.org/publicdomain/zero/1.0/} or 
-\href{"CCBY"}{https://creativecommons.org/licenses/by/4.0/}.}
+\item{license}{(character) License to publicly release the data package under. Use
+\href{https://creativecommons.org/publicdomain/zero/1.0/}{"CC0"} or 
+\href{https://creativecommons.org/licenses/by/4.0/}{"CCBY"}.}
 
-\item{x}{(named list; optional) Alternative input to \code{EMLassemblyline} 
-functions. Use \code{template_arguments()} to create \code{x}.}
+\item{x}{(named list; optional) Alternative input to 
+\code{template_core_metadatta()}. Use \code{template_arguments()} 
+to create \code{x}.}
 
-\item{write.file}{(logical; optional) Whether to write the templates to \code{path}.}
+\item{write.file}{(logical; optional) Whether to write the template files.}
 }
 \value{
 \itemize{
-        \item{\strong{abstract.txt} Template for the dataset abstract.}
-        \item{\strong{additional_info.txt} Template for miscellaneous dataset
+        \item{\strong{abstract.txt} The abstract template.}
+        \item{\strong{additional_info.txt} The template for miscellaneous
         information.}
-        \item{\strong{intellectual_rights.txt} The selected intellectual rights 
-        license.}
-        \item{\strong{keywords.txt} Template for dataset keywords. A tab 
-        delimited table.}
-        \item{\strong{methods.txt} Template for dataset methods.}
-        \item{\strong{personnel.txt} Template for dataset personnel and funding 
-        metadata. A tab delimited table.}
-        \item{If using \code{x}, then content of each above listed template file 
-        is added to \code{x} under \strong{/x/templates/}}
+        \item{\strong{intellectual_rights.txt} The intellectual rights 
+        license with the text of CC0 or CCBY.}
+        \item{\strong{keywords.txt} The tab delimited keywords template.}
+        \item{\strong{methods.txt} The methods template.}
+        \item{\strong{personnel.txt} The tab delimited personnel template 
+        for information on persons and funding involved in the creation of 
+        the data package.}
+        \item{These files is written to \code{path} unless using \code{x},
+        in which case the templates are added to 
+        \strong{/x/templates}.}
     }
 }
 \description{
-Import template files for storage of core metadata. Some templates are 
-    populated with content detected by automated metadata extraction 
-    methods. The remainder is supplied by the user.
-    \href{https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html}{Instructions for editing templates.}
+Use this function to create the core metadata templates required by 
+    all data packages. Most templates require user supplied information.
+    \href{https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html}{Instructions for editing these templates.}
 }
 \details{
 Existing templates will not be overwritten by \code{template_core_metadata()}.
 }
 \examples{
-# Set working directory
-setwd(tempdir())
-
-# Create data package directory "edi_250"
+# Initialize data package directory for template_core_metadata()
 file.copy(
-  from = system.file('/examples/edi_250', package = 'EMLassemblyline'),
-  to = '.',
+  from = system.file('/examples/pkg_250', package = 'EMLassemblyline'),
+  to = tempdir(),
   recursive = TRUE
 )
 
+# Set working directory
+setwd(paste0(tempdir(), './pkg_250'))
+
 # View directory contents (NOTE: Directory is empty)
-dir('./edi_250/metadata_templates')
+dir('./metadata_templates')
 
 # Template core metadata
 template_core_metadata(
-  path = './edi_250/metadata_templates',
+  path = './metadata_templates',
   license = 'CC0'
 )
 
 # View directory contents (NOTE: Templates exist)
-dir('./edi_250/metadata_templates')
+dir('./metadata_templates')
 
 # Rerunning template_core_metadata() does not overwrite files
 template_core_metadata(
-  path = './edi_250/metadata_templates',
+  path = './metadata_templates',
   license = 'CC0'
 )
+
+# Clean up
+unlink('.', recursive = TRUE)
     
 }
