@@ -55,7 +55,7 @@
 #' )
 #' 
 #' # Set working directory
-#' setwd(paste0(tempdir(), './pkg_250'))
+#' setwd(paste0(tempdir(), '/pkg_250'))
 #' 
 #' # View directory contents (NOTE: Directory is empty)
 #' dir('./metadata_templates')

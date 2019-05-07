@@ -5,6 +5,16 @@ library(EMLassemblyline)
 
 testthat::test_that('Test usage with file inputs', {
   
+  # Clean tempdir() of geographic_coverage.txt
+  
+  unlink(
+    paste0(
+      tempdir(),
+      '/geographic_coverage.txt'
+    ),
+    force = TRUE
+  )
+  
   # Missing path results in error
   
   expect_error(
@@ -129,10 +139,7 @@ testthat::test_that('Test usage with file inputs', {
   expect_error(
     suppressMessages(
       template_geographic_coverage(
-        path = system.file(
-          '/examples',
-          package = 'EMLassemblyline'
-        ), 
+        path = tempdir(), 
         data.path = system.file(
           '/examples/data',
           package = 'EMLassemblyline'
@@ -151,10 +158,7 @@ testthat::test_that('Test usage with file inputs', {
   expect_error(
     suppressMessages(
       template_geographic_coverage(
-        path = system.file(
-          '/examples',
-          package = 'EMLassemblyline'
-        ), 
+        path = tempdir(), 
         data.path = system.file(
           '/examples/data',
           package = 'EMLassemblyline'
@@ -173,10 +177,7 @@ testthat::test_that('Test usage with file inputs', {
   expect_error(
     suppressMessages(
       template_geographic_coverage(
-        path = system.file(
-          '/examples',
-          package = 'EMLassemblyline'
-        ), 
+        path = tempdir(), 
         data.path = system.file(
           '/examples/data',
           package = 'EMLassemblyline'
@@ -194,10 +195,7 @@ testthat::test_that('Test usage with file inputs', {
   
   expect_message(
     template_geographic_coverage(
-      path = system.file(
-        '/examples',
-        package = 'EMLassemblyline'
-      ), 
+      path = tempdir(), 
       data.path = system.file(
         '/examples/data',
         package = 'EMLassemblyline'
@@ -211,61 +209,7 @@ testthat::test_that('Test usage with file inputs', {
   )
   
   # Writing to file results in messages
-  
-  # emptydir <- suppressWarnings(
-  #   file.remove(
-  #     paste0(
-  #       system.file(
-  #         '/examples/write_to',
-  #         package = 'EMLassemblyline'
-  #       ),
-  #       '\\',
-  #       list.files(
-  #         system.file(
-  #           '/examples/write_to',
-  #           package = 'EMLassemblyline'
-  #         )
-  #       )
-  #     )
-  #   ) 
-  # )
-  
-  # expect_message(
-  #   template_geographic_coverage(
-  #     path = system.file(
-  #       '/examples/write_to',
-  #       package = 'EMLassemblyline'
-  #     ), 
-  #     data.path = system.file(
-  #       '/examples/data',
-  #       package = 'EMLassemblyline'
-  #     ), 
-  #     data.table = 'nitrogen.csv', 
-  #     site.col = 'site_name', 
-  #     lat.col = 'site_lat',
-  #     lon.col = 'site_lon',
-  #     write.file = TRUE
-  #   )
-  # )
-  
-  # emptydir <- suppressWarnings(
-  #   file.remove(
-  #     paste0(
-  #       system.file(
-  #         '/examples/write_to',
-  #         package = 'EMLassemblyline'
-  #       ),
-  #       '\\',
-  #       list.files(
-  #         system.file(
-  #           '/examples/write_to',
-  #           package = 'EMLassemblyline'
-  #         )
-  #       )
-  #     )
-  #   ) 
-  # )
-  
+
   expect_message(
     template_geographic_coverage(
       path = tempdir(), 
@@ -279,6 +223,14 @@ testthat::test_that('Test usage with file inputs', {
       lon.col = 'site_lon',
       write.file = TRUE
     )
+  )
+  
+  unlink(
+    paste0(
+      tempdir(),
+      '/geographic_coverage.txt'
+    ),
+    force = TRUE
   )
   
 })

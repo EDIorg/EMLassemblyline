@@ -252,7 +252,7 @@ make_eml(
   other.entity.description = c('Ancillary data', 'Data processing and analysis script'),
   user.id = 'csmith',
   user.domain = 'EDI',
-  package.id = 'edi.301.1'
+  package.id = 'edi.301.2'
 )
 
 # View directory
@@ -267,7 +267,7 @@ dir('./pkg_301/eml')
 
 # Display EML
 
-output <- XML::xmlTreeParse('./pkg_301/eml/edi.301.1.xml')
+output <- XML::xmlTreeParse('./pkg_301/eml/edi.301.2.xml')
 
 output$doc$children
 
@@ -313,7 +313,7 @@ make_eml(
   other.entity.description = c('Ancillary data', 'Data processing and analysis script'),
   user.id = 'csmith',
   user.domain = 'EDI',
-  package.id = 'edi.301.1'
+  package.id = 'edi.301.3'
 )
 
 # View directory
@@ -328,7 +328,7 @@ dir('./pkg_301/eml')
 
 # Display EML
 
-output <- XML::xmlTreeParse('./pkg_301/eml/edi.301.1.xml')
+output <- XML::xmlTreeParse('./pkg_301/eml/edi.301.3.xml')
 
 output$doc$children
 

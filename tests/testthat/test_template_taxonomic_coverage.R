@@ -54,6 +54,14 @@ testthat::test_that('File inputs', {
     )
   )
   
+  unlink(
+    paste0(
+      tempdir(),
+      '/taxonomic_coverage.txt'
+    ),
+    force = TRUE
+  )
+  
   # Missing path results in error
   
   expect_error(
@@ -67,11 +75,11 @@ testthat::test_that('File inputs', {
         taxa.col = 'taxa',
         taxa.name.type = 'both',
         taxa.authority = c(3, 11),
-        write.file = TRUE
+        write.file = FALSE
       ) 
     ) 
   )
-  
+
   # Missing data.path results in error
   
   expect_error(
@@ -82,7 +90,7 @@ testthat::test_that('File inputs', {
         taxa.col = 'taxa',
         taxa.name.type = 'both',
         taxa.authority = c(3, 11),
-        write.file = TRUE
+        write.file = FALSE
       ) 
     ) 
   )
@@ -100,7 +108,7 @@ testthat::test_that('File inputs', {
         taxa.col = 'taxa',
         taxa.name.type = 'both',
         taxa.authority = c(3, 11),
-        write.file = TRUE
+        write.file = FALSE
       ) 
     ) 
   )
@@ -119,7 +127,7 @@ testthat::test_that('File inputs', {
         taxa.col = 'taxa',
         taxa.name.type = 'both',
         taxa.authority = c(3, 11),
-        write.file = TRUE
+        write.file = FALSE
       ) 
     ) 
   )
@@ -137,7 +145,7 @@ testthat::test_that('File inputs', {
         taxa.table = 'decomp.csv',
         taxa.name.type = 'both',
         taxa.authority = c(3, 11),
-        write.file = TRUE
+        write.file = FALSE
       ) 
     ) 
   )
@@ -156,7 +164,7 @@ testthat::test_that('File inputs', {
         taxa.col = 'taxaaa',
         taxa.name.type = 'both',
         taxa.authority = c(3, 11),
-        write.file = TRUE
+        write.file = FALSE
       ) 
     ) 
   )
@@ -174,7 +182,7 @@ testthat::test_that('File inputs', {
         taxa.table = 'decomp.csv',
         taxa.col = 'taxa',
         taxa.authority = c(3, 11),
-        write.file = TRUE
+        write.file = FALSE
       ) 
     ) 
   )
@@ -193,7 +201,7 @@ testthat::test_that('File inputs', {
         taxa.col = 'taxa',
         taxa.name.type = 'commontific',
         taxa.authority = c(3, 11),
-        write.file = TRUE
+        write.file = FALSE
       ) 
     ) 
   )
@@ -212,18 +220,19 @@ testthat::test_that('File inputs', {
         taxa.col = 'taxa',
         taxa.name.type = 'scientific',
         taxa.authority = 2112,
-        write.file = TRUE
+        write.file = FALSE
       ) 
     ) 
   )
   
   # Missing file extensions are supported
   
-  file.remove(
+  unlink(
     paste0(
       tempdir(),
       '/taxonomic_coverage.txt'
-    )
+    ),
+    force = TRUE
   )
   
   expect_message(
@@ -237,7 +246,7 @@ testthat::test_that('File inputs', {
       taxa.col = 'taxa',
       taxa.name.type = 'both',
       taxa.authority = c(3, 11),
-      write.file = TRUE
+      write.file = FALSE
     ) 
   )
   

@@ -48,7 +48,7 @@
 #' )
 #' 
 #' # Set working directory
-#' setwd(paste0(tempdir(), './pkg_255'))
+#' setwd(paste0(tempdir(), '/pkg_255'))
 #' 
 #' # View directory contents (NOTE: catvars_*.txt files don't exist)
 #' dir('./metadata_templates')

@@ -215,7 +215,7 @@ to create <code>x</code>.</p></td>
   <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># Set working directory</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/getwd'>setwd</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(), <span class='st'>'./pkg_255'</span>))
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/getwd'>setwd</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(), <span class='st'>'/pkg_255'</span>))
 
 <span class='co'># View directory contents (NOTE: geographic_coverage.txt doesn't exist)</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='st'>'./metadata_templates'</span>)</div><div class='output co'>#&gt;  [1] "abstract.txt"            "additional_info.txt"    
@@ -248,7 +248,7 @@ to create <code>x</code>.</p></td>
   <span class='kw'>site.col</span> <span class='kw'>=</span> <span class='st'>'site_name'</span>,
   <span class='kw'>lat.col</span> <span class='kw'>=</span> <span class='st'>'site_lat'</span>,
   <span class='kw'>lon.col</span> <span class='kw'>=</span> <span class='st'>'site_lon'</span>
-)</div><div class='output co'>#&gt; <span class='message'>Templating geographic coverage ...</span></div><div class='output co'>#&gt; <span class='message'>geographic_coverage.txt</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
+)</div><div class='output co'>#&gt; <span class='message'>Templating geographic coverage ...</span></div><div class='output co'>#&gt; <span class='message'>geographic_coverage.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
 <span class='co'># Clean up</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/unlink'>unlink</a></span>(<span class='st'>'.'</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
   </div>

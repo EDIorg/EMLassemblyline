@@ -167,12 +167,27 @@ template_taxonomic_coverage <- function(
     x <- x$x
 
     data_read_2_x <- TRUE
+    
+    # Does file exist?
+    
+    f_exists <- file.exists(
+      paste0(
+        path,
+        '/taxonomic_coverage.txt'
+      )
+    )
 
+  } else if (!is.null(x)){
+    
+    # Does file exist?
+    
+    f_exists <- is.data.frame(x$template$taxonomic_coverage.txt$content)
+    
   }
   
   # Check if taxonomic_coverage.txt exists ------------------------------------
   
-  if (is.data.frame(x$template$taxonomic_coverage.txt$content)){
+  if (isTRUE(f_exists)){
     
     message('taxonomic_coverage.txt already exists!')
     

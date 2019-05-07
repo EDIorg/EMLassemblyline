@@ -56,7 +56,7 @@
 #' )
 #' 
 #' # Set working directory
-#' setwd(paste0(tempdir(), './pkg_255'))
+#' setwd(paste0(tempdir(), '/pkg_255'))
 #' 
 #' # View directory contents (NOTE: geographic_coverage.txt doesn't exist)
 #' dir('./metadata_templates')
@@ -146,6 +146,15 @@ template_geographic_coverage <- function(path, data.path = path, data.table,
     x <- x$x
     
     data_read_2_x <- NA_character_
+
+    # Does file exist?
+    
+    f_exists <- file.exists(
+      paste0(
+        path,
+        '/geographic_coverage.txt'
+      )
+    )
     
     # If using x ...  
     
@@ -163,11 +172,15 @@ template_geographic_coverage <- function(path, data.path = path, data.table,
       
     }
     
+    # Does file exist?
+    
+    f_exists <- is.data.frame(x$template$geographic_coverage.txt$content)
+    
   }
   
   # Extract geographic coverage -----------------------------------------------
   
-  if (is.data.frame(x$template[['geographic_coverage.txt']]$content)){
+  if (isTRUE(f_exists)){
     
     message("geographic_coverage.txt already exists!")
     
