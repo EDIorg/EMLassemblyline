@@ -120,32 +120,32 @@ template_taxonomic_coverage <- function(
   taxa.authority,
   x = NULL, 
   write.file = TRUE
-  ){
+){
   
   message('Templating taxonomic coverage ...')
-
+  
   # Validate arguments --------------------------------------------------------
-
+  
   # Validate path usage before passing arguments to validate_arguments()
   # When not using x, inputs are expected from path and data.path.
   # When using x, only data.path is used.
-
+  
   if (is.null(x) & missing(path)){
     stop('Input argument "path" is missing.')
   } else if (!is.null(x) & missing(path)){
     path <- NULL
     data.path <- NULL
   }
-
+  
   # Pass remaining arguments to validate_arguments()
-
+  
   validate_arguments(
     fun.name = 'template_taxonomic_coverage',
     fun.args = as.list(environment())
   )
   
   # Read data -----------------------------------------------------------------
-
+  
   # Create x if it doesn't exist
   
   if (is.null(x)){
@@ -156,16 +156,16 @@ template_taxonomic_coverage <- function(
       path = data.path, 
       data.files = taxa.table
     )
-
+    
     # Read templates and data.table into list
-
+    
     x <- template_arguments(
       data.path = data.path,
       data.table = taxa.table
     )
-
+    
     x <- x$x
-
+    
     data_read_2_x <- TRUE
     
     # Does file exist?
@@ -176,7 +176,7 @@ template_taxonomic_coverage <- function(
         '/taxonomic_coverage.txt'
       )
     )
-
+    
   } else if (!is.null(x)){
     
     # Does file exist?
@@ -216,18 +216,29 @@ template_taxonomic_coverage <- function(
       
       # Resolve and add to output
       
-      taxa_resolved <- taxonomyCleanr::resolve_sci_taxa(
-        data.sources = taxa.authority,
-        x = taxonomyCleanr::trim_taxa(
-          x = taxa_raw
-        )
+      taxa_resolved <- try(
+        taxonomyCleanr::resolve_sci_taxa(
+          data.sources = taxa.authority,
+          x = taxonomyCleanr::trim_taxa(
+            x = taxa_raw
+          )
+        ), 
+        silent = TRUE
       )
       
-      output_scientific$name_resolved <- taxa_resolved$taxa_clean
-      
-      output_scientific$authority_system <- taxa_resolved$authority
-      
-      output_scientific$authority_id <- taxa_resolved$authority_id
+      if (is.data.frame(taxa_resolved)){
+        
+        output_scientific$name_resolved <- taxa_resolved$taxa_clean
+        
+        output_scientific$authority_system <- taxa_resolved$authority
+        
+        output_scientific$authority_id <- taxa_resolved$authority_id
+        
+      } else if (class(taxa_resolved) == 'try-error'){
+        
+        warning('Taxonomic authorities are not available at this moment. Please try your call again later.')
+        
+      }
       
     }
     
@@ -248,18 +259,26 @@ template_taxonomic_coverage <- function(
       
       # Resolve and add to output
       
-      taxa_resolved <- taxonomyCleanr::resolve_comm_taxa(
-        data.sources = 3,
-        x = taxonomyCleanr::trim_taxa(
-          x = taxa_raw
+      if (is.data.frame(taxa_resolved)){
+        
+        taxa_resolved <- taxonomyCleanr::resolve_comm_taxa(
+          data.sources = 3,
+          x = taxonomyCleanr::trim_taxa(
+            x = taxa_raw
+          )
         )
-      )
-      
-      output_common$name_resolved <- taxa_resolved$taxa_clean
-      
-      output_common$authority_system <- taxa_resolved$authority
-      
-      output_common$authority_id <- taxa_resolved$authority_id
+        
+        output_common$name_resolved <- taxa_resolved$taxa_clean
+        
+        output_common$authority_system <- taxa_resolved$authority
+        
+        output_common$authority_id <- taxa_resolved$authority_id
+        
+      } else if (class(taxa_resolved) == 'try-error'){
+        
+        warning('Taxonomic authorities are not available at this moment. Please try your call again later.')
+        
+      }
       
     }
     
@@ -289,33 +308,52 @@ template_taxonomic_coverage <- function(
       
       # Resolve and add to output (scientific)
       
-      taxa_resolved <- taxonomyCleanr::resolve_sci_taxa(
-        data.sources = taxa.authority,
-        x = taxonomyCleanr::trim_taxa(
-          x = taxa_raw
-        )
+      taxa_resolved <- try(
+        taxonomyCleanr::resolve_sci_taxa(
+          data.sources = taxa.authority,
+          x = taxonomyCleanr::trim_taxa(
+            x = taxa_raw
+          )
+        ), 
+        silent = TRUE
       )
       
-      output_scientific$name_resolved <- taxa_resolved$taxa_clean
-      
-      output_scientific$authority_system <- taxa_resolved$authority
-      
-      output_scientific$authority_id <- taxa_resolved$authority_id
+      if (is.data.frame(taxa_resolved)){
+        
+        output_scientific$name_resolved <- taxa_resolved$taxa_clean
+        
+        output_scientific$authority_system <- taxa_resolved$authority
+        
+        output_scientific$authority_id <- taxa_resolved$authority_id
+        
+      } else if (class(taxa_resolved) == 'try-error'){
+        
+        warning('Taxonomic authorities are not available at this moment. Please try your call again later.')
+        
+      }
       
       # Resolve and add to output (common)
       
-      taxa_resolved <- taxonomyCleanr::resolve_comm_taxa(
-        data.sources = 3,
-        x = taxonomyCleanr::trim_taxa(
-          x = taxa_raw
+      if (is.data.frame(taxa_resolved)){
+        
+        taxa_resolved <- taxonomyCleanr::resolve_comm_taxa(
+          data.sources = 3,
+          x = taxonomyCleanr::trim_taxa(
+            x = taxa_raw
+          )
         )
-      )
-      
-      output_common$name_resolved <- taxa_resolved$taxa_clean
-      
-      output_common$authority_system <- taxa_resolved$authority
-      
-      output_common$authority_id <- taxa_resolved$authority_id
+        
+        output_common$name_resolved <- taxa_resolved$taxa_clean
+        
+        output_common$authority_system <- taxa_resolved$authority
+        
+        output_common$authority_id <- taxa_resolved$authority_id
+        
+      } else if (class(taxa_resolved) == 'try-error'){
+        
+        warning('Taxonomic authorities are not available at this moment. Please try your call again later.')
+        
+      }
       
     }
     
@@ -372,5 +410,5 @@ template_taxonomic_coverage <- function(
   }
   
   message("Done.")
-
+  
 }
