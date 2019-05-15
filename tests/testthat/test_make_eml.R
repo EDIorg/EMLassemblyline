@@ -1502,7 +1502,7 @@ testthat::test_that('Test usage with x (all templates and 2 data tables)', {
   )
   
   expect_equal(
-    length(output@dataset@coverage@geographicCoverage) > 20,
+    length(output@dataset@coverage@geographicCoverage) > 5,
     TRUE
   )
   
