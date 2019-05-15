@@ -29,44 +29,6 @@ template_directories(
   dir.name = 'pkg_301'
 )
 
-# Add completed templates
-
-file.copy(
-  from = paste0(
-    system.file(
-      '/examples/templates',
-      package = 'EMLassemblyline'
-    ),
-    '/',
-    list.files(
-      system.file(
-        '/examples/templates',
-        package = 'EMLassemblyline'
-      )
-    )
-  ),
-  to = paste0(
-    tempdir(),
-    '/pkg_301/metadata_templates'
-  )
-)
-
-# Remove templates
-
-file.remove(
-  paste0(
-    tempdir(),
-    '/pkg_301/metadata_templates/bounding_boxes.txt'
-  )
-)
-
-file.remove(
-  paste0(
-    tempdir(),
-    '/pkg_301/metadata_templates/taxonomicCoverage.xml'
-  )
-)
-
 # Add a couple tables to "pkg_301"
 
 file.copy(
@@ -77,23 +39,6 @@ file.copy(
 file.copy(
   from = system.file('/examples/data/decomp.csv', package = 'EMLassemblyline'),
   to = paste0(tempdir(), '/pkg_301/data_objects')
-)
-
-# Create templates
-
-template_geographic_coverage(
-  path = paste0(
-    tempdir(),
-    '/pkg_301/metadata_templates'
-  ),
-  data.path = paste0(
-    tempdir(),
-    '/pkg_301/data_objects'
-  ),
-  data.table = 'nitrogen.csv',
-  site.col = 'site_name',
-  lat.col = 'site_lat',
-  lon.col = 'site_lon'
 )
 
 # Set working directory
@@ -113,37 +58,32 @@ The information rich and machine readable EML metadata file should contain all t
 Below are examples of each use case. First set up the working directory with templates and data objects required by these use cases:
 
 ```{r initialize workspace, message = TRUE}
-# Continuing with the data package directory ("pkg_301") developed in the article "Create metadata templates" ... replace partially complete templates with fully completed templates required by make_eml()
-
-# attributes.txt
+# Continuing with the data package directory ("pkg_301") developed in the 
+# article "Create metadata templates" ... replace partially complete templates 
+# with fully completed templates required by make_eml().
 
 file.copy(
-  from = system.file('/examples/templates/attributes_nitrogen.txt', package = 'EMLassemblyline'),
-  to = './pkg_301/metadata_templates',
+  from = paste0(
+    system.file(
+      '/examples/pkg_260/metadata_templates',
+      package = 'EMLassemblyline'
+    ),
+    '/',
+    list.files(
+      system.file(
+        '/examples/pkg_260/metadata_templates',
+        package = 'EMLassemblyline'
+      )
+    )
+  ),
+  to = paste0(
+    tempdir(),
+    '/pkg_301/metadata_templates'
+  ),
   overwrite = TRUE
 )
 
-file.copy(
-  from = system.file('/examples/templates/attributes_decomp.txt', package = 'EMLassemblyline'),
-  to = './pkg_301/metadata_templates',
-  overwrite = TRUE
-)
-
-# catvars.txt
-
-file.copy(
-  from = system.file('/examples/templates/catvars_nitrogen.txt', package = 'EMLassemblyline'),
-  to = './pkg_301/metadata_templates',
-  overwrite = TRUE
-)
-
-file.copy(
-  from = system.file('/examples/templates/catvars_decomp.txt', package = 'EMLassemblyline'),
-  to = './pkg_301/metadata_templates',
-  overwrite = TRUE
-)
-
-# Add a couple data objects
+# Add a couple non-tabular data objects
 
 file.copy(
   from = system.file('/examples/data/ancillary_data.zip', package = 'EMLassemblyline'),
