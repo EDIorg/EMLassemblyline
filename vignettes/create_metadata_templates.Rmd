@@ -186,7 +186,7 @@ file.copy(
 )
 
 file.copy(
-  from = system.file('/examples/templates/attributes_nitrogen.txt', package = 'EMLassemblyline'),
+  from = system.file('/examples/templates/attributes_decomp.txt', package = 'EMLassemblyline'),
   to = './pkg_301/metadata_templates',
   overwrite = TRUE
 )
