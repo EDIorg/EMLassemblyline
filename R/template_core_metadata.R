@@ -9,6 +9,7 @@
 #'     template_core_metadata(
 #'       path,
 #'       license,
+#'       file.type, = '.txt',
 #'       write.file = TRUE,
 #'       x = NULL
 #'     )
@@ -19,6 +20,10 @@
 #'     (character) License to publicly release the data package under. Use
 #'     \href{https://creativecommons.org/publicdomain/zero/1.0/}{"CC0"} or 
 #'     \href{https://creativecommons.org/licenses/by/4.0/}{"CCBY"}.
+#' @param file.type
+#'     (character; optional) File type for abstract, methods, and additional 
+#'     info metadata templates. Can be: '.txt' (plain text), '.docx' (MS Word),
+#'     and '.md' (markdown).
 #' @param write.file
 #'     (logical; optional) Whether to write the template files.
 #' @param x
@@ -28,13 +33,13 @@
 #'
 #' @return 
 #'     \itemize{
-#'         \item{\strong{abstract.txt} The abstract template.}
-#'         \item{\strong{additional_info.txt} The template for miscellaneous
+#'         \item{\strong{abstract} The abstract template.}
+#'         \item{\strong{additional_info} The template for miscellaneous
 #'         information.}
 #'         \item{\strong{intellectual_rights.txt} The intellectual rights 
 #'         license with the text of CC0 or CCBY.}
 #'         \item{\strong{keywords.txt} The tab delimited keywords template.}
-#'         \item{\strong{methods.txt} The methods template.}
+#'         \item{\strong{methods} The methods template.}
 #'         \item{\strong{personnel.txt} The tab delimited personnel template 
 #'         for information on persons and funding involved in the creation of 
 #'         the data package.}
@@ -75,13 +80,46 @@
 #'   license = 'CC0'
 #' )
 #' 
+#' 
+#' # Use .docx files for abstract, methods, and additional_info
+#' # First remove abstract, methods, and additional_info templates
+#' file.remove(
+#'   paste0(
+#'     './metadata_templates/abstract.txt',
+#'     './metadata_templates/methods.txt',
+#'     './metadata_templates/additional_info.txt
+#'   )
+#' )
+#' # Create .docx templates
+#' template_core_metadata(
+#'   path = './metadata_templates',
+#'   license = 'CC0',
+#'   file.type = '.docx
+#' )
+#' 
+#' # Use .md files for abstract, methods, and additional_info
+#' # First remove abstract, methods, and additional_info templates
+#' file.remove(
+#'   paste0(
+#'     './metadata_templates/abstract.docx',
+#'     './metadata_templates/methods.docx',
+#'     './metadata_templates/additional_info.docx
+#'   )
+#' )
+#' # Create .md templates
+#' template_core_metadata(
+#'   path = './metadata_templates',
+#'   license = 'CC0',
+#'   file.type = '.md
+#' )
+#' 
 #' # Clean up
 #' unlink('.', recursive = TRUE)
 #'     
 #' @export     
 #'     
 
-template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
+template_core_metadata <- function(path, license, x = NULL, file.type = '.txt', write.file = TRUE){
   
   message('Templating core metadata ...')
   
@@ -118,63 +156,76 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
     
     data_read_2_x <- TRUE
     
+  } else {
+    
+    write.file <- FALSE
+    
   }
   
-  # Import abstract.txt -------------------------------------------------------
+  # Import abstract -----------------------------------------------------------
   
   # If writing to file ...
   
   if (isTRUE(write.file)){
-    
+
     # Write to path
     
     value <- file.copy(
       from = system.file(
-        '/templates/abstract.txt',
+        paste0(
+          '/templates/abstract',
+          file.type
+        ),
         package = 'EMLassemblyline'
       ),
       to = paste0(
         path,
-        "/abstract.txt"
+        paste0(
+          '/abstract',
+          file.type
+        )
       )
     )
     
     # Send message
     
     if (isTRUE(value)){
-      message("abstract.txt")
+      message(paste0('abstract', file.type))
     } else {
-      message("abstract.txt already exists!")
+      message(paste0('abstract', file.type, ' already exists!'))
     }
     
     # If adding to x ...
     
   } else if (!exists('data_read_2_x')){
     
-    if (any(is.na(x$template$abstract.txt$content))){
+    if (any(is.na(x$template[['abstract']]$content))){
       
       # Add to content
       
-      x$template$abstract.txt$content <- EML103::set_TextType(
+      x$template[['abstract']]$content <- EML::set_TextType(
         file = system.file(
-          '/templates/abstract.txt',
+          paste0(
+            '/templates/abstract',
+            file.type
+          ),
           package = 'EMLassemblyline'
         )
       )
       
       # Send message
       
-      message("abstract.txt")
+      message(paste0('abstract', file.type))
       
     } else {
       
-      message("abstract.txt already exists!")
+      message(paste0('abstract', file.type, ' already exists!'))
       
     }
     
   }
   
-  # Import additional_info.txt ------------------------------------------------
+  # Import additional_info ----------------------------------------------------
   
   # If writing to file ... 
   
@@ -184,45 +235,54 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
     
     value <- file.copy(
       from = system.file(
-        '/templates/additional_info.txt',
+        paste0(
+          '/templates/additional_info',
+          file.type
+        ),
         package = 'EMLassemblyline'
       ),
       to = paste0(
         path,
-        "/additional_info.txt"
+        paste0(
+          '/additional_info',
+          file.type
+        )
       )
     )
     
     # Send message
     
     if (isTRUE(value)){
-      message("additional_info.txt")
+      message(paste0('additional_info', file.type))
     } else {
-      message("additional_info.txt already exists!")
+      message(paste0('additional_info', file.type, ' already exists!'))
     }
     
     # If adding to x ...
     
   } else if (!exists('data_read_2_x')){
     
-    if (any(is.na(x$template$additional_info.txt$content))){
+    if (any(is.na(x$template[['additional_info']]$content))){
       
       # Add to content
       
-      x$template$additional_info.txt$content <- EML103::set_TextType(
+      x$template[['additional_info']]$content <- EML::set_TextType(
         file = system.file(
-          '/templates/additional_info.txt',
+          paste0(
+            '/templates/additional_info',
+            file.type
+          ),
           package = 'EMLassemblyline'
         )
       )
       
       # Send message
       
-      message("additional_info.txt")
+      message(paste0('additional_info', file.type))
       
     } else {
       
-      message("additional_info.txt already exists!")
+      message(paste0('additional_info', file.type, ' already exists!'))
       
     }
     
@@ -267,7 +327,7 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
         
         # Add to content
         
-        x$template$intellectual_rights.txt$content <- EML103::set_TextType(
+        x$template$intellectual_rights.txt$content <- EML::set_TextType(
           file = system.file(
             '/templates/intellectual_rights_cc0.txt',
             package = 'EMLassemblyline'
@@ -323,7 +383,7 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
         
         # Add to content
         
-        x$template$intellectual_rights.txt$content <- EML103::set_TextType(
+        x$template$intellectual_rights.txt$content <- EML::set_TextType(
           file = system.file(
             '/templates/intellectual_rights_ccby4.0.txt',
             package = 'EMLassemblyline'
@@ -401,7 +461,7 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
     
   }
   
-  # Import methods.txt --------------------------------------------------------
+  # Import methods ------------------------------------------------------------
   
   # If writing to file ...
   
@@ -411,45 +471,54 @@ template_core_metadata <- function(path, license, x = NULL, write.file = TRUE){
     
     value <- file.copy(
       from = system.file(
-        '/templates/methods.txt',
+        paste0(
+          '/templates/methods',
+          file.type
+        ),
         package = 'EMLassemblyline'
       ),
       to = paste0(
         path,
-        "/methods.txt"
+        paste0(
+          '/methods',
+          file.type
+        )
       )
     )
     
     # Send message
     
     if (isTRUE(value)){
-      message("methods.txt")
+      message(paste0('methods', file.type))
     } else {
-      message("methods.txt already exists!")
+      message(paste0('methods', file.type, ' already exists!'))
     }
     
     # If adding to x ...
     
   } else if (!exists('data_read_2_x')){
     
-    if (any(is.na(x$template$methods.txt$content))){
+    if (any(is.na(x$template[['methods']]$content))){
       
       # Add to content
       
-      x$template$methods.txt$content <- EML103::set_methods(
+      x$template[['methods']]$content <- EML::set_methods(
         methods_file = system.file(
-          '/templates/methods.txt',
+          paste0(
+            '/templates/methods',
+            file.type
+          ),
           package = 'EMLassemblyline'
         )
       )
       
       # Send message
       
-      message("methods.txt")
+      message(paste0('methods', file.type))
       
     } else {
       
-      message("methods.txt already exists!")
+      message(paste0('methods', file.type, ' already exists!'))
       
     }
     

@@ -244,7 +244,7 @@ template_arguments <- function(
   
   # Parameterize --------------------------------------------------------------
   
-  # Get template file and argument attributes
+  # Get attributes of template files and arguments
   
   attr.templates <- utils::read.table(
     file = system.file(
@@ -416,19 +416,16 @@ template_arguments <- function(
     
     # Read abstract -----------------------------------------------------------
     
-    if (stringr::str_detect(string = templates[i], pattern = 'abstract.txt')){
+    if (stringr::str_detect(string = templates[i], pattern = 'abstract')){
       
       if (file.exists(paste0(path, '/', templates[i]))){
         
-        output$x$template[[i]]$content <- methods::as(
-          EML103::set_TextType(
-            file = paste0(
-              path, 
-              '/', 
-              templates[i]
-            )
-          ),
-          'abstract'
+        output$x$template[[i]]$content <- EML::set_TextType(
+          file = paste0(
+            path, 
+            '/', 
+            templates[i]
+          )
         )
         
       } else {
@@ -441,19 +438,16 @@ template_arguments <- function(
     
     # Read additional information ---------------------------------------------
     
-    if (stringr::str_detect(string = templates[i], pattern = 'additional_info.txt')){
+    if (stringr::str_detect(string = templates[i], pattern = 'additional_info')){
       
       if (file.exists(paste0(path, '/', templates[i]))){
         
-        output$x$template[[i]]$content <- methods::as(
-          EML103::set_TextType(
-            file = paste0(
-              path, 
-              '/', 
-              templates[i]
-            )
-          ),
-          'additionalInfo'
+        output$x$template[[i]]$content <- EML::set_TextType(
+          file = paste0(
+            path, 
+            '/', 
+            templates[i]
+          )
         )
         
       } else {
@@ -692,15 +686,12 @@ template_arguments <- function(
       
       if (file.exists(paste0(path, '/', templates[i]))){
         
-        output$x$template[[i]]$content <- methods::as(
-          EML103::set_TextType(
-            file = paste0(
-              path, 
-              '/', 
-              templates[i]
-            )
-          ),
-          'intellectualRights'
+        output$x$template[[i]]$content <- EML::set_TextType(
+          file = paste0(
+            path, 
+            '/', 
+            templates[i]
+          )
         )
         
       } else {
@@ -749,11 +740,11 @@ template_arguments <- function(
     
     # Read methods ------------------------------------------------------------
     
-    if (stringr::str_detect(string = templates[i], pattern = 'methods.txt')){
+    if (stringr::str_detect(string = templates[i], pattern = 'methods')){
       
       if (file.exists(paste0(path, '/', templates[i]))){
         
-        output$x$template[[i]]$content <- EML103::set_methods(
+        output$x$template[[i]]$content <- EML::set_methods(
           methods_file = paste0(
             path, 
             '/', 

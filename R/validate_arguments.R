@@ -472,6 +472,13 @@ validate_arguments <- function(fun.name, fun.args){
       stop('Invalid value entered for the "license" argument. Please choose "CC0" or "CCBY".')
     }
     
+    # file.type
+    
+    if ((fun.args$file.type != '.txt') & (fun.args$file.type != '.docx') & 
+        (fun.args$file.type != '.md')){
+      stop(paste0('"', fun.args$file.type, '" is not a valid entry to the "file.type" argument.'))
+    }
+    
   }
   
   # Call from template_geographic_coverage() -------------------------------------
