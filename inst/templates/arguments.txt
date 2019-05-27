@@ -7,6 +7,7 @@ data.url
 dataset.title
 dir.name
 eml.path
+file.type
 geographic.coordinates
 geographic.description
 lat.col

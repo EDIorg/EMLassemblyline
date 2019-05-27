@@ -15,17 +15,16 @@ attr_templates <- utils::read.table(
   as.is = T
 )
 
-# File inputs = no data tables ------------------------------------------------
+# Write to path ---------------------------------------------------------------
 
-testthat::test_that('File inputs = no data tables', {
+testthat::test_that('Write to path', {
   
   # Missing path results in error
   
   expect_error(
     suppressMessages(
       template_core_metadata(
-        license = 'CC0',
-        write.file = FALSE
+        license = 'CC0'
       )
     )
   )
@@ -35,11 +34,23 @@ testthat::test_that('File inputs = no data tables', {
   expect_error(
     suppressMessages(
       template_core_metadata(
+        path = tempdir(),
+        write.file = FALSE
+      )
+    )
+  )
+  
+  # Invalid file type results in error
+  
+  expect_error(
+    suppressMessages(
+      template_core_metadata(
         path = system.file(
           '/examples',
           package = 'EMLassemblyline'
         ),
-        write.file = FALSE
+        license = 'CC0',
+        file.type = '.txtdocx'
       )
     )
   )
@@ -53,8 +64,7 @@ testthat::test_that('File inputs = no data tables', {
           '/examples',
           package = 'EMLassemblyline'
         ),
-        license = 'CCzero',
-        write.file = FALSE
+        license = 'CCzero'
       )
     )
   )
@@ -63,23 +73,19 @@ testthat::test_that('File inputs = no data tables', {
   
   expect_message(
     template_core_metadata(
-      path = system.file(
-        '/examples',
-        package = 'EMLassemblyline'
-      ),
-      license = 'CC0',
-      write.file = FALSE
+      path = tempdir(),
+      license = 'CC0'
     )
   )
   
+  # CCBY is supported
+  
+  file.remove(paste0(tempdir(), '/intellectual_rights.txt'))
+
   expect_message(
     template_core_metadata(
-      path = system.file(
-        '/examples',
-        package = 'EMLassemblyline'
-      ),
-      license = 'CCBY',
-      write.file = FALSE
+      path = tempdir(),
+      license = 'CCBY'
     )
   )
   
@@ -87,43 +93,77 @@ testthat::test_that('File inputs = no data tables', {
   
   expect_message(
     template_core_metadata(
-      path = system.file(
-        '/examples/templates',
-        package = 'EMLassemblyline'
-      ),
+      path = tempdir(),
+      license = 'CC0'
+    )
+  )
+  
+  # write.file = FALSE, does not write files to path
+  
+  expect_message(
+    template_core_metadata(
+      path = tempdir(),
       license = 'CC0',
       write.file = FALSE
     )
   )
+
+  # file.type = '.docx' writes MS Word files to path
   
-  # write.file = TRUE writes files to path
+  file.remove(paste0(tempdir(), 
+                     c('/abstract.txt',
+                       '/methods.txt',
+                       '/additional_info.txt')))
   
   expect_message(
     template_core_metadata(
       path = tempdir(),
       license = 'CC0',
+      file.type = '.docx',
       write.file = TRUE
     )
   )
+
+  expect_true(
+    all(
+      c('abstract.docx', 'additional_info.docx', 'methods.docx') %in% 
+        list.files(tempdir())
+    )
+  )
+  
+  # file.type = '.md' writes Markdown files to path
+
+  file.remove(paste0(tempdir(), 
+                     c('/abstract.docx',
+                       '/methods.docx',
+                       '/additional_info.docx')))
   
   expect_message(
     template_core_metadata(
       path = tempdir(),
-      license = 'CCBY',
+      license = 'CC0',
+      file.type = '.md',
       write.file = TRUE
+    )
+  )
+
+  
+  expect_true(
+    all(
+      c('abstract.md', 'additional_info.md', 'methods.md') %in% 
+        list.files(tempdir())
     )
   )
   
 })
 
-# x inputs = NULL -------------------------------------------------------------
+# Write to x ------------------------------------------------------------------
 
-testthat::test_that('x inputs = NULL', {
+testthat::test_that('Write to x', {
   
   # Make function call
   
   x <- template_arguments()
-  
   x <- x$x
   
   # Missing path results in messages
@@ -131,8 +171,7 @@ testthat::test_that('x inputs = NULL', {
   expect_message(
     template_core_metadata(
       license = 'CC0',
-      x = x,
-      write.file = FALSE
+      x = x
     )
   )
   
@@ -141,8 +180,7 @@ testthat::test_that('x inputs = NULL', {
   output <- suppressMessages(
     template_core_metadata(
       license = 'CC0',
-      x = x,
-      write.file = FALSE
+      x = x
     )
   )
   
@@ -150,7 +188,7 @@ testthat::test_that('x inputs = NULL', {
     
     expect_equal(
       class(output$template[[i]]$content)[1] %in% 
-        c('TextType', 'data.frame', 'methods', 'character'),
+        c('list', 'data.frame', 'list', 'character'),
       TRUE
     )
     
@@ -161,12 +199,7 @@ testthat::test_that('x inputs = NULL', {
   expect_error(
     suppressMessages(
       template_core_metadata(
-        path = system.file(
-          '/examples',
-          package = 'EMLassemblyline'
-        ),
-        x = x,
-        write.file = FALSE
+        x = x
       )
     )
   )
@@ -176,13 +209,8 @@ testthat::test_that('x inputs = NULL', {
   expect_error(
     suppressMessages(
       template_core_metadata(
-        path = system.file(
-          '/examples',
-          package = 'EMLassemblyline'
-        ),
         x = x,
-        license = 'CCzero',
-        write.file = FALSE
+        license = 'CCzero'
       )
     )
   )
@@ -191,13 +219,8 @@ testthat::test_that('x inputs = NULL', {
   
   expect_message(
     template_core_metadata(
-      path = system.file(
-        '/examples',
-        package = 'EMLassemblyline'
-      ),
       x = x,
-      license = 'CCBY',
-      write.file = FALSE
+      license = 'CCBY'
     )
   )
   
@@ -210,8 +233,7 @@ testthat::test_that('x inputs = NULL', {
         package = 'EMLassemblyline'
       ),
       x = x,
-      license = 'CC0',
-      write.file = FALSE
+      license = 'CC0'
     )
   )
   
@@ -224,8 +246,7 @@ testthat::test_that('x inputs = NULL', {
         package = 'EMLassemblyline'
       ),
       license = 'CC0',
-      x = x,
-      write.file = FALSE
+      x = x
     )
   )
   
@@ -233,7 +254,7 @@ testthat::test_that('x inputs = NULL', {
     
     expect_equal(
       class(output$template[[i]]$content)[1] %in% 
-        c('TextType', 'data.frame', 'methods', 'character'),
+        c('list', 'data.frame', 'list', 'character'),
       TRUE
     )
     
@@ -243,28 +264,58 @@ testthat::test_that('x inputs = NULL', {
   
   expect_message(
     template_core_metadata(
-      path = system.file(
-        '/examples/templates',
-        package = 'EMLassemblyline'
-      ),
       x = output,
-      license = 'CC0',
-      write.file = FALSE
+      license = 'CC0'
     )
   )
   
   # CCBY is supported
   
+  output$template$intellectual_rights.txt$content <- NA_character_
+  
   expect_message(
     template_core_metadata(
-      path = system.file(
-        '/examples',
-        package = 'EMLassemblyline'
-      ),
       x = output,
-      license = 'CCBY',
-      write.file = FALSE
+      license = 'CCBY'
     )
   )
+  
+  # file.type = '.docx' writes MS Word files to path --------------------------
+  
+  x <- template_arguments()
+  x <- x$x
+
+  output <- template_core_metadata(
+    license = 'CC0',
+    file.type = '.docx',
+    x = x
+  )
+
+  for (i in 1:length(output$template)){
+    expect_equal(
+      class(output$template[[i]]$content)[1] %in% 
+        c('list', 'data.frame', 'character'),
+      TRUE
+    )
+  }
+  
+  # file.type = '.md' writes Markdown files to path ---------------------------
+  
+  x <- template_arguments()
+  x <- x$x
+  
+  output <- template_core_metadata(
+    license = 'CC0',
+    file.type = '.md',
+    x = x
+  )
+  
+  for (i in 1:length(output$template)){
+    expect_equal(
+      class(output$template[[i]]$content)[1] %in% 
+        c('list', 'data.frame', 'character'),
+      TRUE
+    )
+  }
   
 })
