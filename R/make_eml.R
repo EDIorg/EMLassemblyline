@@ -398,194 +398,186 @@ make_eml <- function(
     
   }
   
-  # Compile attributes --------------------------------------------------------
-  
-  if (!is.null(data.table)){
-    attributes_in <- compile_attributes(x = x)
-  }
-  
-  # Initialize data entity storage (tables)
+  # Validate metadata templates -----------------------------------------------
 
-  data_tables_stored <- list()
-
+  # Read personnel file
+  
+  personinfo <- x$template$personnel.txt$content
+  personinfo$role <- tolower(personinfo$role)
+  personinfo <- validate_personnel(x = personinfo)
+  
+  # Load helper funcitions ----------------------------------------------------
+  
   # Load helper function to set personnel roles
-
+  
   set_person <- function(info_row, person_role){
-
+    
     if (person_role == "contact"){
-
+      
+      # If contact only has givenName then contact is an organization ...
+      
       if ((personinfo[info_row, "givenName"] != "") & (personinfo[info_row, "middleInitial"] == "") & (personinfo[info_row, "surName"] == "")){
         
-        contact <- methods::new(
-          "contact",
+        contact <- list(
           organizationName = trimws(personinfo[info_row,"organizationName"]),
           positionName = stringr::str_to_title(trimws(personinfo[info_row,"givenName"])),
-          electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"]))
-        
+          electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"])
+        )
+
         if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
-          userId <- methods::new("userId")
-          userId@directory <- methods::new("xml_attribute", "https://orcid.org")
-          hold <- trimws(personinfo[info_row,"userId"])
-          hold <- paste("https://orcid.org/", hold, sep = "")
-          userId@.Data <- hold
-          contact@userId <- methods::new("ListOfuserId", c(userId))
+          contact$userId <- list(
+            directory = 'https://orcid.org',
+            paste0("https://orcid.org/", trimws(personinfo[info_row,"userId"]))
+          )
         }
+        
+      # ... otherwise contact is a person
         
       } else {
         
-        individualName <- methods::new(
-          "individualName",
-          givenName = c(trimws(personinfo[info_row,"givenName"]),
-                        trimws(personinfo[info_row,"middleInitial"])),
-          surName = trimws(personinfo[info_row,"surName"]))
-        
-        contact <- methods::new(
-          "contact",
-          individualName = individualName,
+        contact <- list(
+          individualName = list(
+            givenName = list(
+              trimws(personinfo[info_row,"givenName"]),
+              trimws(personinfo[info_row,"middleInitial"])
+            ),
+            surName = trimws(personinfo[info_row,"surName"])
+          ),
           organizationName = trimws(personinfo[info_row,"organizationName"]),
-          electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"]))
-        
+          electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"])
+        )
+
         if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
-          userId <- methods::new("userId")
-          userId@directory <- methods::new("xml_attribute", "https://orcid.org")
-          hold <- trimws(personinfo[info_row,"userId"])
-          hold <- paste("https://orcid.org/", hold, sep = "")
-          userId@.Data <- hold
-          contact@userId <- methods::new("ListOfuserId", c(userId))
+          contact$userId <- list(
+            directory = 'https://orcid.org',
+            paste0("https://orcid.org/", trimws(personinfo[info_row,"userId"]))
+          )
         }
         
       }
 
       contact
-
+      
+      # If person is a creator ...
+      
     } else if (person_role == "creator"){
-
-      individualName <- methods::new(
-        "individualName",
-        givenName = c(trimws(personinfo[info_row,"givenName"]),
-                      trimws(personinfo[info_row,"middleInitial"])),
-        surName = trimws(personinfo[info_row,"surName"]))
-
-      creator <- methods::new(
-        "creator",
-        individualName = individualName,
+      
+      creator <- list(
+        individualName = list(
+          givenName = list(
+            trimws(personinfo[info_row,"givenName"]),
+            trimws(personinfo[info_row,"middleInitial"])
+          ),
+          surName = trimws(personinfo[info_row,"surName"])
+        ),
         organizationName = trimws(personinfo[info_row,"organizationName"]),
-        electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"]))
+        electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"])
+      )
 
       if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
-        userId <- methods::new("userId")
-        userId@directory <- methods::new("xml_attribute", "https://orcid.org")
-        hold <- trimws(personinfo[info_row,"userId"])
-        hold <- paste("https://orcid.org/", hold, sep = "")
-        userId@.Data <- hold
-        creator@userId <- methods::new("ListOfuserId", c(userId))
+        creator$userId <- list(
+          directory = 'https://orcid.org',
+          paste0("https://orcid.org/", trimws(personinfo[info_row,"userId"]))
+        )
       }
+
       creator
-
+      
+      # ... otherwise if person is a Principal Investigator ...
+      
     } else if (person_role == "pi"){
-
-      individualName <- methods::new(
-        "individualName",
-        givenName = c(trimws(personinfo[info_row,"givenName"]),
-                      trimws(personinfo[info_row,"middleInitial"])),
-        surName = trimws(personinfo[info_row,"surName"]))
-
-      principal_investigator <- utils::as.person(
-        paste(
-          trimws(personinfo[info_row, "givenName"]),
-          " ",
-          trimws(personinfo[info_row, "surName"]),
-          " <",
-          trimws(personinfo[info_row, "electronicMailAddress"]),
-          ">",
-          sep = ""))
-
-      rp_personnel <- methods::as(principal_investigator, "personnel")
+      
+      rp_personnel <- list(
+        individualName = list(
+          givenName = list(
+            trimws(personinfo[info_row,"givenName"]),
+            trimws(personinfo[info_row,"middleInitial"])
+          ),
+          surName = trimws(personinfo[info_row,"surName"])
+        ),
+        organizationName = trimws(personinfo[info_row,"organizationName"]),
+        electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"]),
+        role = 'Principal Investigator'
+      )
 
       if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
-        rp_userId <- methods::new("userId")
-        rp_userId@directory <- methods::new("xml_attribute", "https://orcid.org")
-        hold <- trimws(personinfo[info_row,"userId"])
-        hold <- paste("https://orcid.org/", hold, sep = "")
-        rp_userId@.Data <- hold
-        rp_personnel@userId <- methods::new("ListOfuserId", c(rp_userId))
+        rp_personnel$userId <- list(
+          directory = 'https://orcid.org',
+          paste0("https://orcid.org/", trimws(personinfo[info_row,"userId"]))
+        )
       }
-      role <- methods::new("role", "Principal Investigator")
-      rp_personnel@role <- methods::new("ListOfrole", c(role))
+      
       rp_personnel
+      
+      # ... otherwise the person is an associatedParty ...
       
     } else {
       
+      # If givenName, middleName, and surName are blank then the 
+      # associatedParty is an organization ...
+      
       if ((personinfo[info_row, "givenName"] == "") & (personinfo[info_row, "middleInitial"] == "") & (personinfo[info_row, "surName"] == "")){
         
-        associated_party <- methods::new(
-          "associatedParty",
+        associated_party = list(
           organizationName = trimws(personinfo[info_row,"organizationName"]),
-          electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"]))
-        
+          electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"]),
+          role = stringr::str_to_title(trimws(personinfo[info_row,"role"]))
+        )
+
         if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
-          userId <- methods::new("userId")
-          userId@directory <- methods::new("xml_attribute", "https://orcid.org")
-          hold <- trimws(personinfo[info_row,"userId"])
-          hold <- paste("https://orcid.org/", hold, sep = "")
-          userId@.Data <- hold
-          associated_party@userId <- methods::new("ListOfuserId", c(userId))
+          associated_party$userId <- list(
+            directory = 'https://orcid.org',
+            paste0("https://orcid.org/", trimws(personinfo[info_row,"userId"]))
+          )
         }
-        role <- methods::new("role", stringr::str_to_title(trimws(personinfo[info_row,"role"])))
-        associated_party@role <- methods::new("role", c(role))
+
         associated_party
         
+        # ... otherwise the associatedParty is a person.
+        
       } else {
-        
-        individualName <- methods::new(
-          "individualName",
-          givenName = c(trimws(personinfo[info_row,"givenName"]),
-                        trimws(personinfo[info_row,"middleInitial"])),
-          surName = trimws(personinfo[info_row,"surName"]))
-        
-        associated_party <- methods::new(
-          "associatedParty",
-          individualName = individualName,
+
+        associated_party <- list(
+          individualName = list(
+            givenName = list(
+              trimws(personinfo[info_row,"givenName"]),
+              trimws(personinfo[info_row,"middleInitial"])
+            ),
+            surName = trimws(personinfo[info_row,"surName"])
+          ),
           organizationName = trimws(personinfo[info_row,"organizationName"]),
-          electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"]))
+          electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"]),
+          role = stringr::str_to_title(trimws(personinfo[info_row,"role"]))
+        )
         
         if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
-          userId <- methods::new("userId")
-          userId@directory <- methods::new("xml_attribute", "https://orcid.org")
-          hold <- trimws(personinfo[info_row,"userId"])
-          hold <- paste("https://orcid.org/", hold, sep = "")
-          userId@.Data <- hold
-          associated_party@userId <- methods::new("ListOfuserId", c(userId))
+          associated_party$userId <- list(
+            directory = 'https://orcid.org',
+            paste0("https://orcid.org/", trimws(personinfo[info_row,"userId"]))
+          )
         }
-        role <- methods::new("role", stringr::str_to_title(trimws(personinfo[info_row,"role"])))
-        associated_party@role <- methods::new("role", c(role))
+
         associated_party
         
       }
-
+      
     }
-
+    
   }
-
-  # Read personnel file
-
-  personinfo <- x$template$personnel.txt$content
   
-  personinfo$role <- tolower(personinfo$role)
-  
-  personinfo <- validate_personnel(x = personinfo)
-  
-  # Build modules--------------------------------------------------------------
+  # Build nodes ---------------------------------------------------------------
   
   message('Creating nodes ...')
-  
+
   # Create EML
   
-  # Build eml-access module ---------------------------------------------------
+  message('<eml>')
   
-  message("<access>")
+  # Create <access> -----------------------------------------------------------
   
-  # Set default user.id and user.domain, if not defined
+  message("  <access>")
+  
+  # Set default user.id and user.domain, if undefined
   
   if (is.null(user.id)){
     warning('No "user.id" was supplied. The default "someuserid" will be used.')
@@ -595,32 +587,27 @@ make_eml <- function(
     user.domain <- 'someuserdomain'
   }
   
-  # Build access
+  # List principals and permissions
   
   list_of_allow_principals <- list()
   list_of_allow_permissions <- list()
+  
   for (i in 1:length(user.id)){
     if (user.domain[i] == 'LTER'){
-      list_of_allow_principals[[i]] <- c(
-        paste0(
-          'uid=',
-          user.id[i],
-          ',o=',
-          user.domain[i],
-          ',dc=ecoinformatics,dc=org'
-        ),
-        "public"
+      list_of_allow_principals[[i]] <- paste0(
+        'uid=',
+        user.id[i],
+        ',o=',
+        user.domain[i],
+        ',dc=ecoinformatics,dc=org'
       )
     } else if (user.domain[i] == 'EDI'){
-      list_of_allow_principals[[i]] <- c(
-        paste0(
-          'uid=',
-          user.id[i],
-          ',o=',
-          user.domain[i],
-          ',dc=edirepository,dc=org'
-        ),
-        "public"
+      list_of_allow_principals[[i]] <- paste0(
+        'uid=',
+        user.id[i],
+        ',o=',
+        user.domain[i],
+        ',dc=edirepository,dc=org'
       )
     }
     list_of_allow_permissions[[i]] <- c(
@@ -630,84 +617,112 @@ make_eml <- function(
   
   list_of_allow_principals[[(length(list_of_allow_principals)+1)]] <- c("public")
   list_of_allow_permissions[[(length(list_of_allow_permissions)+1)]] <- c("read")
+
+  # Create <access>
+
+  access <- list(
+    scope = 'document',
+    order = 'allowFirst',
+    authSystem = 'https://pasta.edirepository.org/authentication',
+    allow = list(
+    )
+  )
   
-  access_order <- "allowFirst"
-  
-  access_scope <- "document"
-  
-  access <- methods::new("access",
-                scope = access_scope,
-                order = access_order,
-                authSystem = "https://pasta.edirepository.org/authentication")
-  
-  allow <- list()
   for (i in 1:length(list_of_allow_principals)){
-    allow[[i]] <- methods::new("allow",
-                      principal = list_of_allow_principals[[i]][1],
-                      permission = list_of_allow_permissions[[i]][1])
+    access$allow[[i]] <- list(
+      principal = list_of_allow_principals[[i]][1],
+      permission = list_of_allow_permissions[[i]][1]
+    )
   }
-  
-  access@allow <- methods::new("ListOfallow",
-                      c(allow))
 
-  # Build dataset module ------------------------------------------------------
+  # Create <dataset> ----------------------------------------------------------
   
-  message("<dataset>")
+  message("  <dataset>")
 
-  dataset <- methods::new("dataset",
-                 title = dataset.title)
+  dataset <- list()
   
-  # Add creators --------------------------------------------------------------
+  # Create <title> ------------------------------------------------------------
   
-  message("<creators>")
+  message('    <title>')
+  
+  dataset$title <- dataset.title
+  
+  # Create <creator> ----------------------------------------------------------
 
   useI <- which(personinfo$role == "creator")
 
-  creator_list <- list()
+  creator <- list()
   for (j in 1:length(useI)){
-    creator_list[[j]] <- set_person(info_row = useI[j],
-                                    person_role = "creator")
+    message('    <creator>')
+    creator[[j]] <- set_person(
+      info_row = useI[j],
+      person_role = "creator"
+    )
   }
 
-  dataset@creator <- methods::as(creator_list, "ListOfcreator")
+  dataset$creator <- creator
 
-  # Add publicaton date -------------------------------------------------------
+  # Create <associatedParty> --------------------------------------------------
   
-  message("<publicationDate>")
+  useI <- which(
+    personinfo$role != "pi" &
+    personinfo$role != "creator" &
+    personinfo$role != "contact"
+  )
+  
+  if (length(useI) != 0){
+    associated_party_list <- list()
+    for (j in 1:length(useI)){
+      message("    <associatedParty>")
+      associated_party_list[[j]] <- suppressWarnings(
+        set_person(
+          info_row = useI[j],
+          person_role = ""
+        )
+      )
+    }
+    dataset$associatedParty <- associated_party_list
+  }
+  
+  # Create <pubDate> ----------------------------------------------------------
+  
+  message("    <pubDate>")
 
-  dataset@pubDate <- methods::as(format(Sys.time(), "%Y-%m-%d"), "pubDate")
+  dataset$pubDate <- format(Sys.time(), "%Y-%m-%d")
 
-  # Add abstract --------------------------------------------------------------
+  # Create <abstract> ---------------------------------------------------------
   
-  message("<abstract>")
+  message("    <abstract>")
   
-  if (!'abstract.txt' %in% names(x$template)){
-    stop("abstract.txt doesn't exist!")
+  if (!any(stringr::str_detect(names(x$template), 'abstract'))){
+    stop("abstract doesn't exist!")
   }
 
-  dataset@abstract <- x$template$abstract.txt$content
+  dataset$abstract <- x$template[[
+    names(x$template)[stringr::str_detect(names(x$template), 'abstract')]]]$content
     
-  # Add keywords --------------------------------------------------------------
+  # Create <keywordSet> ---------------------------------------------------------
   
-  message("<keywordSet>")
+  message("    <keywordSet>")
   
   if (!'keywords.txt' %in% names(x$template)){
-    stop('keywords.txt does not exist! Run import_templates.txt to regenerate this template.')
+    stop('keywords.txt does not exist! Run template_core_metadata.txt to create it.')
   }
   
   keywords <- x$template$keywords.txt$content
   
-  # Edit keywords: Remove blank keyword entries
+  # Remove blank keyword entries
   
   use_i <- keywords$keyword == ""
   if (sum(use_i) > 0){
     keywords <- keywords[!use_i, ]
   } 
   
+  # Try resolving keywords without a listed thesaurus to the LTER Controlled 
+  # Vocabulary
+  
   if (sum(keywords$keywordThesaurus == '') > 0){
-    # Try resolving keywords without a listed thesaurus to the LTER Controlled 
-    # Vocabulary
-    
+
     unresolved_terms <- keywords[keywords$keywordThesaurus == '', 'keyword']
     
     results <- try(
@@ -728,58 +743,77 @@ make_eml <- function(
   
   # Build keywordSet
   
-  list_keywordSet <- list()
-  
+  keywordSet <- list()
   uni_keywordThesaurus <- unique(keywords$keywordThesaurus)
   for (i in 1:length(uni_keywordThesaurus)){
-    keywordSet <- list()
+    
+    keyword <- list()
     use_i <- uni_keywordThesaurus[i] == keywords[["keywordThesaurus"]]
     kws <- keywords$keyword[use_i]
     for (k in 1:length(kws)){
-      keywordSet[[k]] <- methods::as(kws[k], "keyword")
+      message('    <keyword>')
+      keyword[[k]] <- kws[k]
     }
-    list_keywordSet[[i]] <- methods::new("keywordSet",
-                                         keywordSet,
-                                         keywordThesaurus = uni_keywordThesaurus[i])
+
+    keywordSet[[i]] <- list(
+      keyword = keyword,
+      keywordThesaurus = uni_keywordThesaurus[i]
+    )
+    
+    if (keywordSet[[i]]$keywordThesaurus == ''){
+      keywordSet[[i]]$keywordThesaurus <- NULL
+    } else {
+      message('    <keywordThesaurus>')
+    }
+                                         
   }
-  dataset@keywordSet <- methods::as(list_keywordSet, "ListOfkeywordSet")
+  dataset$keywordSet <- keywordSet
 
-  # Add intellectual rights
+  # Create <additionalInfo> ---------------------------------------------------
+  
+  if (any(stringr::str_detect(names(x$template), 'additional_info'))){
+    message("   <additionalInfo>")
+    dataset$additionalInfo <- x$template[[
+      names(x$template)[stringr::str_detect(names(x$template), 'additional_info')]]]$content
+    
+  }
 
-  message("<intellectualRights>")
+  # Create <intellectualRights> -----------------------------------------------
+
+  message("    <intellectualRights>")
   
   if (!'intellectual_rights.txt' %in% names(x$template)){
     stop("intellectual_rights.txt doesn't exist!")
   }
   
-  dataset@intellectualRights <- x$template$intellectual_rights.txt$content
+  dataset$intellectualRights <- x$template$intellectual_rights.txt$content
 
-  # Add coverage --------------------------------------------------------------
+  # Create <coverage> ---------------------------------------------------------
   
-  message("<temporalCoverage>")
+  message('    <coverage>')
   
-  dataset@coverage <- EML103::set_coverage(
-    begin = temporal.coverage[1],
-    end = temporal.coverage[2]
-  )
+  dataset$coverage <- list()
   
-  message("<geographicCoverage>")
+  # Create <geographicCoverage> -----------------------------------------------
   
-  list_of_coverage <- list()
+  geographicCoverage <- list()
   
   # Add coverage defined in arguments of make_eml
   
   if (!missing(geographic.coordinates) & !missing(geographic.description)){
-    geographic_description <- methods::new("geographicDescription", geographic.description)
-    bounding_coordinates <- methods::new("boundingCoordinates",
-                                westBoundingCoordinate = as.character(geographic.coordinates[4]),
-                                eastBoundingCoordinate = as.character(geographic.coordinates[2]),
-                                northBoundingCoordinate = as.character(geographic.coordinates[1]),
-                                southBoundingCoordinate = as.character(geographic.coordinates[3]))
-    geographic_coverage <- methods::new("geographicCoverage",
-                               geographicDescription = geographic_description,
-                               boundingCoordinates = bounding_coordinates)
-    list_of_coverage[[(length(list_of_coverage)+1)]] <- geographic_coverage
+    
+    message("      <geographicCoverage>")
+    
+    geographicCoverage[[(length(geographicCoverage)+1)]] <- list(
+      geographicDescription = geographic.description,
+      boundingCoordinates = list(
+        westBoundingCoordinate = as.character(geographic.coordinates[4]),
+        eastBoundingCoordinate = as.character(geographic.coordinates[2]),
+        northBoundingCoordinate = as.character(geographic.coordinates[1]),
+        southBoundingCoordinate = as.character(geographic.coordinates[3])
+      )
+    )
+    
   }
   
   # Add coverage defined in bounding_boxes.txt ...
@@ -800,16 +834,17 @@ make_eml <- function(
         
         for (i in 1:length(bounding_boxes_2$geographicDescription)){
           
-          geographic_description <- methods::new("geographicDescription", bounding_boxes_2$geographicDescription[i])
-          bounding_coordinates <- methods::new("boundingCoordinates",
-                                               westBoundingCoordinate = bounding_boxes_2$westBoundingCoordinate[i],
-                                               eastBoundingCoordinate = bounding_boxes_2$eastBoundingCoordinate[i],
-                                               northBoundingCoordinate = bounding_boxes_2$northBoundingCoordinate[i],
-                                               southBoundingCoordinate = bounding_boxes_2$southBoundingCoordinate[i])
-          geographic_coverage <- methods::new("geographicCoverage",
-                                              geographicDescription = geographic_description,
-                                              boundingCoordinates = bounding_coordinates)
-          list_of_coverage[[(length(list_of_coverage)+1)]] <- geographic_coverage
+          message("      <geographicCoverage>")
+          
+          geographicCoverage[[(length(geographicCoverage)+1)]] <- list(
+            geographicDescription = bounding_boxes_2$geographicDescription[i],
+            boundingCoordinates = list(
+              westBoundingCoordinate = as.character(bounding_boxes_2$westBoundingCoordinate[i]),
+              eastBoundingCoordinate = as.character(bounding_boxes_2$eastBoundingCoordinate[i]),
+              northBoundingCoordinate = as.character(bounding_boxes_2$northBoundingCoordinate[i]),
+              southBoundingCoordinate = as.character(bounding_boxes_2$southBoundingCoordinate[i])
+            )
+          )
           
         }
         
@@ -839,16 +874,17 @@ make_eml <- function(
           
           for (i in 1:length(bounding_boxes_2$geographicDescription)){
             
-            geographic_description <- methods::new("geographicDescription", bounding_boxes_2$geographicDescription[i])
-            bounding_coordinates <- methods::new("boundingCoordinates",
-                                                 westBoundingCoordinate = bounding_boxes_2$westBoundingCoordinate[i],
-                                                 eastBoundingCoordinate = bounding_boxes_2$eastBoundingCoordinate[i],
-                                                 northBoundingCoordinate = bounding_boxes_2$northBoundingCoordinate[i],
-                                                 southBoundingCoordinate = bounding_boxes_2$southBoundingCoordinate[i])
-            geographic_coverage <- methods::new("geographicCoverage",
-                                                geographicDescription = geographic_description,
-                                                boundingCoordinates = bounding_coordinates)
-            list_of_coverage[[(length(list_of_coverage)+1)]] <- geographic_coverage
+            message("      <geographicCoverage>")
+            
+            geographicCoverage[[(length(geographicCoverage)+1)]] <- list(
+              geographicDescription = bounding_boxes_2$geographicDescription[i],
+              boundingCoordinates = list(
+                westBoundingCoordinate = as.character(bounding_boxes_2$westBoundingCoordinate[i]),
+                eastBoundingCoordinate = as.character(bounding_boxes_2$eastBoundingCoordinate[i]),
+                northBoundingCoordinate = as.character(bounding_boxes_2$northBoundingCoordinate[i]),
+                southBoundingCoordinate = as.character(bounding_boxes_2$southBoundingCoordinate[i])
+              )
+            )
             
           }
           
@@ -864,19 +900,20 @@ make_eml <- function(
           bounding_boxes_2 <- lapply(bounding_boxes, as.character)
           
           
-          for (i in 1:length(bounding_boxes_2$geographicDescription)){
+          for (i in 1:length(bounding_boxes_2$site)){
             
-            geographic_description <- methods::new("geographicDescription", bounding_boxes_2$site[i])
-            bounding_coordinates <- methods::new("boundingCoordinates",
-                                                 westBoundingCoordinate = bounding_boxes_2$longitude[i],
-                                                 eastBoundingCoordinate = bounding_boxes_2$longitude[i],
-                                                 northBoundingCoordinate = bounding_boxes_2$longitude[i],
-                                                 southBoundingCoordinate = bounding_boxes_2$longitude[i])
-            geographic_coverage <- methods::new("geographicCoverage",
-                                                geographicDescription = geographic_description,
-                                                boundingCoordinates = bounding_coordinates)
-            list_of_coverage[[(length(list_of_coverage)+1)]] <- geographic_coverage
+            message("      <geographicCoverage>")
             
+            geographicCoverage[[(length(geographicCoverage)+1)]] <- list(
+              geographicDescription = bounding_boxes_2$geographicDescription[i],
+              boundingCoordinates = list(
+                westBoundingCoordinate = as.character(bounding_boxes_2$longitude[i]),
+                eastBoundingCoordinate = as.character(bounding_boxes_2$longitude[i]),
+                northBoundingCoordinate = as.character(bounding_boxes_2$latitude[i]),
+                southBoundingCoordinate = as.character(bounding_boxes_2$latitude[i])
+              )
+            )
+
           }
           
         }
@@ -887,94 +924,106 @@ make_eml <- function(
     
   }
   
-  dataset@coverage@geographicCoverage <- methods::as(list_of_coverage, "ListOfgeographicCoverage")
+  # Add to dataset
   
-  # Add taxonomicCoverage -----------------------------------------------------
-  
-  if ('taxonomicCoverage.xml' %in% names(x$template)){
-    
-    if (class(x$template$taxonomicCoverage.xml$content)[1] == 'taxonomicCoverage'){
-      
-      message("<taxonomicCoverage>")
-      
-      taxonomic_coverage <- x$template$taxonomicCoverage.xml$content
-      
-      dataset@coverage@taxonomicCoverage <- methods::as(list(taxonomic_coverage), "ListOftaxonomicCoverage")
-      
-    }
-    
-  } 
-  
-  if ('taxonomic_coverage.txt' %in% names(x$template)){
-    
-    if (is.data.frame(x$template$taxonomic_coverage.txt$content)){
+  dataset$coverage$geographicCoverage <- geographicCoverage
 
-      if (sum(is.na(x$template$taxonomic_coverage.txt$content$authority_id)) != nrow(x$template$taxonomic_coverage.txt$content)){
-        
-        message('<taxonomicCoverage>')
-
-        tc <- try(
-          taxonomyCleanr::make_taxonomicCoverage(
-            taxa.clean = x$template$taxonomic_coverage.txt$content$name_resolved,
-            authority = x$template$taxonomic_coverage.txt$content$authority_system,
-            authority.id = x$template$taxonomic_coverage.txt$content$authority_id
-          ),
-          silent = T
-        )
-        
-        if (class(tc)[1] == 'taxonomicCoverage'){
-          
-          dataset@coverage@taxonomicCoverage <- as(
-            list(tc), 
-            "ListOftaxonomicCoverage"
-          )
-          
-        }
-
-      }
-      
-    }
-
-  }
-
-  # Add maintenance -----------------------------------------------------------
+  # Create <temporalCoverage> -------------------------------------------------
   
-  message("<maintenance>")
+  message("      <temporalCoverage>")
+
+  dataset$coverage$temporalCoverage <- list(
+    rangeOfDates = list(
+      beginDate = list(
+        calendarDate = temporal.coverage[1]
+      ),
+      endDate = list(
+        calendarDate = temporal.coverage[2]
+      )
+    )
+  )
   
-  maintenance <- methods::new("maintenance")
-  maintenance@description <- methods::as(maintenance.description, "description")
-  dataset@maintenance <- maintenance
+  # Create <taxonomicCoverage> ------------------------------------------------
+  # 
+  # if ('taxonomicCoverage.xml' %in% names(x$template)){
+  #   
+  #   if (class(x$template$taxonomicCoverage.xml$content)[1] == 'taxonomicCoverage'){
+  #     
+  #     message("      <taxonomicCoverage>")
+  #     
+  #     taxonomic_coverage <- x$template$taxonomicCoverage.xml$content
+  #     
+  #     dataset$coverage[[(length(dataset$coverage)+1)]] <- taxonomic_coverage
+  #     
+  #   }
+  #   
+  # } 
+  # 
+  # if ('taxonomic_coverage.txt' %in% names(x$template)){
+  #   
+  #   if (is.data.frame(x$template$taxonomic_coverage.txt$content)){
+  # 
+  #     if (sum(is.na(x$template$taxonomic_coverage.txt$content$authority_id)) != nrow(x$template$taxonomic_coverage.txt$content)){
+  #       
+  #       message('      <taxonomicCoverage>')
+  # 
+  #       tc <- try(
+  #         taxonomyCleanr::make_taxonomicCoverage(
+  #           taxa.clean = x$template$taxonomic_coverage.txt$content$name_resolved,
+  #           authority = x$template$taxonomic_coverage.txt$content$authority_system,
+  #           authority.id = x$template$taxonomic_coverage.txt$content$authority_id
+  #         ),
+  #         silent = T
+  #       )
+  #       
+  #       if (class(tc)[1] == 'list'){
+  #         
+  #         dataset$coverage[[(length(dataset$coverage)+1)]] <- tc
+  #         
+  #       }
+  # 
+  #     }
+  #     
+  #   }
+  # 
+  # }
+
+  # Create <maintenance> ------------------------------------------------------
   
-  # Add contacts --------------------------------------------------------------
+  message("    <maintenance>")
   
-  message("<contacts>")
+  dataset$maintenance$description <- maintenance.description
+
+  # Create <contact> ----------------------------------------------------------
 
   useI <- which(personinfo$role == "contact")
 
   contact_list <- list()
   for (j in 1:length(useI)){
+    message("    <contact>")
     contact_list[[j]] <- set_person(info_row = useI[j],
                                     person_role = "contact")
   }
 
-  dataset@contact <- methods::as(contact_list, "ListOfcontact")
+  dataset$contact <- contact_list
 
-  # Add methods ---------------------------------------------------------------
+  # Create <methods> ----------------------------------------------------------
   
-  message("<methods>")
+  message("    <methods>")
   
-  if (!'methods.txt' %in% names(x$template)){
-    stop("methods.txt doesn't exist!")
+  if (!any(stringr::str_detect(names(x$template), 'methods'))){
+    stop("methods don't exist!")
   }
+  
+  dataset$methods <- x$template[[
+    names(x$template)[stringr::str_detect(names(x$template), 'methods')]]]$content
 
-  dataset@methods <- x$template$methods.txt$content
-
-  # Add provenance metadata -----------------------------------------------
+  # Create <methodStep> (provenance) ------------------------------------------
   
   if (!is.null(provenance)){
     environment <- 'production'
-    message('<provenance metadata>')
     for (p in 1:length(provenance)){
+      message('      <methodStep> (provenance metadata)')
       prov_pkg_id <- stringr::str_replace_all(provenance[p], '\\.', '/')
       r <- httr::GET(url = paste0(EDIutils::url_env(environment), 
                                   '.lternet.edu/package/provenance/eml/', 
@@ -1023,184 +1072,215 @@ make_eml <- function(
     }
   }
   
-  # Add project and funding ---------------------------------------------------
+  # Create <project> ----------------------------------------------------------
   
   useI <- which(personinfo$role == "pi")
   
   if (!identical(useI, integer(0))){
     
-    message("<project>")
+    message("    <project>")
     
     pi_list <- list()
     pi_list[[1]] <- suppressWarnings(set_person(info_row = useI[1],
                                                 person_role = "pi"))
     
+    # If no projectTitle ...
     if (personinfo$projectTitle[useI[1]] == ""){
+      # If no fundingAgency ...
       if (personinfo$fundingAgency[useI[1]] == ""){
+        # If no fundingNumber ...
         if (personinfo$fundingNumber[useI[1]] == ""){
-          project <- methods::new("project",
-                         title = "No project title to report",
-                         personnel = pi_list,
-                         funding = "No funding to report")
+          project <- list(
+            title = "No project title to report",
+            personnel = pi_list,
+            funding = "No funding to report"
+          )
+        # ... if fundingNumber is present ...
         } else if (personinfo$fundingNumber[useI[1]] != ""){
-          project <- methods::new("project",
-                         title = "No project title to report",
-                         personnel = pi_list,
-                         funding = personinfo$fundingNumber[useI[1]])
+          project <- list(
+            title = "No project title to report",
+            personnel = pi_list,
+            funding = personinfo$fundingNumber[useI[1]]
+          )
         }
+      # ... if fundingAgency is present ...
       } else if (personinfo$fundingAgency[useI[1]] != ""){
+        # ... if fundingNumber is present ...
         if (personinfo$fundingNumber[useI[1]] == ""){
-          project <- methods::new("project",
-                         title = "No project title to report",
-                         personnel = pi_list,
-                         funding = personinfo$fundingAgency[useI[1]])
+          project <- list(
+            title = "No project title to report",
+            personnel = pi_list,
+            funding = personinfo$fundingNumber[useI[1]]
+          )
+        # ... if fundingNumber is missing ...
         } else if (personinfo$fundingNumber[useI[1]] != ""){
-          project <- methods::new("project",
-                         title = "No project title to report",
-                         personnel = pi_list,
-                         funding = paste0(personinfo$fundingAgency[useI[1]],
-                                          ": ",
-                                          personinfo$fundingNumber[useI[1]]))
+          project <- list(
+            title = "No project title to report",
+            personnel = pi_list,
+            funding = paste0(personinfo$fundingAgency[useI[1]],
+                             ": ",
+                             personinfo$fundingNumber[useI[1]])
+          )
         }
       }
+    # ... if projectTitle is present ...
     } else if (personinfo$projectTitle[useI[1]] != ""){
+      # ... if fundingAgency is present ...
       if (personinfo$fundingAgency[useI[1]] == ""){
+        # ... if fundingNumber is present ...
         if (personinfo$fundingNumber[useI[1]] == ""){
-          project <- methods::new("project",
-                         title = personinfo$projectTitle[useI[1]],
-                         personnel = pi_list,
-                         funding = "No funding to report")
+          project <- list(
+            title = personinfo$projectTitle[useI[1]],
+            personnel = pi_list,
+            funding = "No funding to report"
+          )
+        # ... if fundingNumber is missing ...
         } else if (personinfo$fundingNumber[useI[1]] != ""){
-          project <- methods::new("project",
-                         title = personinfo$projectTitle[useI[1]],
-                         personnel = pi_list,
-                         funding = personinfo$fundingNumber[useI[1]])
+          project <- list(
+            title = personinfo$projectTitle[useI[1]],
+            personnel = pi_list,
+            funding = personinfo$fundingNumber[useI[1]]
+          )
         }
+      # ... if fundingAgency is missing ...
       } else if (personinfo$fundingAgency[useI[1]] != ""){
+        # ... if fundingNumber is present ...
         if (personinfo$fundingNumber[useI[1]] == ""){
-          project <- methods::new("project",
-                         title = personinfo$projectTitle[useI[1]],
-                         personnel = pi_list,
-                         funding = personinfo$fundingAgency[useI[1]])
+          project <- list(
+            title = personinfo$projectTitle[useI[1]],
+            personnel = pi_list,
+            funding = personinfo$fundingAgency[useI[1]]
+          )
+        # ... if fundingNumber is missing ...
         } else if (personinfo$fundingNumber[useI[1]] != ""){
-          project <- methods::new("project",
-                         title = personinfo$projectTitle[useI[1]],
-                         personnel = pi_list,
-                         funding = paste0(personinfo$fundingAgency[useI[1]],
-                                          ": ",
-                                          personinfo$fundingNumber[useI[1]]))
+          project <- list(
+            title = personinfo$projectTitle[useI[1]],
+            personnel = pi_list,
+            funding = paste0(personinfo$fundingAgency[useI[1]],
+                             ": ",
+                             personinfo$fundingNumber[useI[1]])
+          )
         }
       }
     }
-    dataset@project <- project
+    dataset$project <- project
     
+    # Related project
     
     if (length(useI) > 1){
       relatedProject_list <- list()
       pi_list <- list()
       for (i in 1:(length(useI)-1)){
+        message('      <relatedProject>')
         pi_list[[1]] <- suppressWarnings(set_person(info_row = useI[i+1],
                                                     person_role = "pi"))
-        
+        # If projectTitle is present ...
         if (personinfo$projectTitle[useI[i+1]] == ""){
+          # If fundingAgency is present ...
           if (personinfo$fundingAgency[useI[i+1]] == ""){
+            # If fundingNumber is present ...
             if (personinfo$fundingNumber[useI[i+1]] == ""){
-              relatedProject_list[[i]] <- methods::new("relatedProject",
-                                              title = "No project title to report",
-                                              personnel = pi_list,
-                                              funding = "No funding to report")
+              relatedProject_list[[i]] <- list(
+                title = "No project title to report",
+                personnel = pi_list,
+                funding = "No funding to report"
+              )
+            # ... if fundingNumber is missing ...  
             } else if (personinfo$fundingNumber[useI[i+1]] != ""){
-              relatedProject_list[[i]] <- methods::new("relatedProject",
-                                              title = "No project title to report",
-                                              personnel = pi_list,
-                                              funding = personinfo$fundingNumber[useI[i+1]])
+              relatedProject_list[[i]] <- list(
+                title = "No project title to report",
+                personnel = pi_list,
+                funding = personinfo$fundingNumber[useI[i+1]]
+              )
             }
+          # ... if fundingAgency is missing ...
           } else if (personinfo$fundingAgency[useI[i+1]] != ""){
+            # ... if fundingNumber is present ...
             if (personinfo$fundingNumber[useI[i+1]] == ""){
-              relatedProject_list[[i]] <- methods::new("relatedProject",
-                                              title = "No project title to report",
-                                              personnel = pi_list,
-                                              funding = personinfo$fundingAgency[useI[i+1]])
+              relatedProject_list[[i]] <- list(
+                title = "No project title to report",
+                personnel = pi_list,
+                funding = personinfo$fundingAgency[useI[i+1]]
+              )
+            # ... if fundingNumber is missing ...
             } else if (personinfo$fundingNumber[useI[i+1]] != ""){
-              relatedProject_list[[i]] <- methods::new("relatedProject",
-                                              title = "No project title to report",
-                                              personnel = pi_list,
-                                              funding = paste0(personinfo$fundingAgency[useI[i+1]],
-                                                               ": ",
-                                                               personinfo$fundingNumber[useI[i+1]]))
+              relatedProject_list[[i]] <- list(
+                title = "No project title to report",
+                personnel = pi_list,
+                funding = paste0(personinfo$fundingAgency[useI[i+1]],
+                                 ": ",
+                                 personinfo$fundingNumber[useI[i+1]])
+              )
             }
           }
+        # ... if projectTitle is missing ...
         } else if (personinfo$projectTitle[useI[i+1]] != ""){
+          # ... if fundingNumber is present ...
           if (personinfo$fundingAgency[useI[i+1]] == ""){
+            # ... if fundingNumber is present ...
             if (personinfo$fundingNumber[useI[i+1]] == ""){
-              relatedProject_list[[i]] <- methods::new("relatedProject",
-                                              title = personinfo$projectTitle[useI[i+1]],
-                                              personnel = pi_list,
-                                              funding = "No funding to report")
+              relatedProject_list[[i]] <- list(
+                title = personinfo$projectTitle[useI[i+1]],
+                personnel = pi_list,
+                funding = "No funding to report"
+              )
+            # ... if fundingNumber is missing ...
             } else if (personinfo$fundingNumber[useI[i+1]] != ""){
-              relatedProject_list[[i]] <- methods::new("relatedProject",
-                                              title = personinfo$projectTitle[useI[i+1]],
-                                              personnel = pi_list,
-                                              funding = personinfo$fundingNumber[useI[i+1]])
+              relatedProject_list[[i]] <- list(
+                title = personinfo$projectTitle[useI[i+1]],
+                personnel = pi_list,
+                funding = personinfo$fundingNumber[useI[i+1]]
+              )
             }
+          # ... if fundingAgency is present ...
           } else if (personinfo$fundingAgency[useI[i+1]] != ""){
+            # ... if fundingNumber is present ...
             if (personinfo$fundingNumber[useI[i+1]] == ""){
-              relatedProject_list[[i]] <- methods::new("relatedProject",
-                                              title = personinfo$projectTitle[useI[i+1]],
-                                              personnel = pi_list,
-                                              funding = personinfo$fundingAgency[useI[i+1]])
+              relatedProject_list[[i]] <- list(
+                title = personinfo$projectTitle[useI[i+1]],
+                personnel = pi_list,
+                funding = personinfo$fundingAgency[useI[i+1]]
+              )
+            # ... if fundingNumber is missing ...
             } else if (personinfo$fundingNumber[useI[i+1]] != ""){
-              relatedProject_list[[i]] <- methods::new("relatedProject",
-                                              title = personinfo$projectTitle[useI[i+1]],
-                                              personnel = pi_list,
-                                              funding = paste0(personinfo$fundingAgency[useI[i+1]],
-                                                               ": ",
-                                                               personinfo$fundingNumber[useI[i+1]]))
+              relatedProject_list[[i]] <- list(
+                title = personinfo$projectTitle[useI[i+1]],
+                personnel = pi_list,
+                funding = paste0(personinfo$fundingAgency[useI[i+1]],
+                                 ": ",
+                                 personinfo$fundingNumber[useI[i+1]])
+              )
             }
           }
         }
       }
-      dataset@project@relatedProject <- methods::as(relatedProject_list, "ListOfrelatedProject")
+      dataset$project$relatedProject <- relatedProject_list
     }
     
   }
   
-  # Add associated parties ----------------------------------------------------
+  # Create <dataTable> --------------------------------------------------------
   
-  useI <- which(personinfo$role != "pi" &
-                  personinfo$role != "creator" &
-                  personinfo$role != "contact")
+  # Compile attributes
   
-  if (length(useI) != 0){
-    message("<associatedParty>")
-    associated_party_list <- list()
-    for (j in 1:length(useI)){
-      associated_party_list[[j]] <- suppressWarnings(set_person(info_row = useI[j],
-                                               person_role = ""))
-    }
-    dataset@associatedParty <- methods::as(associated_party_list, "ListOfassociatedParty")
+  if (!is.null(data.table)){
+    attributes_in <- compile_attributes(x = x)
   }
   
-  # Add additional information ------------------------------------------------
+  # Create dataTable
   
-  if ('additional_info.txt' %in% names(x$template)){
-    
-    message("<additionalInfo>")
-    
-    additional_info <- x$template$additional_info.txt$content
-    
-    dataset@additionalInfo <- methods::as(list(additional_info), "ListOfadditionalInfo")
-    
-  }
-
-  # Loop through tables -------------------------------------------------------
+  data_tables_stored <- list()
   
   if (!is.null(x$data.table)){
     for (i in 1:length(names(x$data.table))){
       
-      message(paste(
-        "<dataTable> ...",
-        names(x$data.table)[i]))
+      message(
+        paste0(
+          '    <dataTable> (',
+          names(x$data.table)[i],
+          ')'
+        )
+      )
       
       attributes <- attributes_in[[1]][[i]]
       
@@ -1264,16 +1344,26 @@ make_eml <- function(
             attributes[ ,j] <- trimws(attributes[ ,j])
           }
         }
-        
-        # Get the column classes into a vector
-        
-        col_classes <- attributes[ ,"columnClasses"]
-        
+
         # Create the attributeList element
         
-        attributeList <- suppressWarnings(EML103::set_attributes(attributes,
-                                                         factors = catvars,
-                                                         col_classes = col_classes))
+        attributeList <- suppressWarnings(
+          EML::set_attributes(
+            attributes[ , c(
+              'attributeName', 
+              'formatString',
+              'unit',
+              'numberType',
+              'definition',
+              'attributeDefinition',
+              'minimum',
+              'maximum',
+              'missingValueCode',
+              'missingValueCodeExplanation')],
+            factors = catvars,
+            col_classes = attributes[ ,"columnClasses"]
+          )
+        )
         
       } else {
         
@@ -1285,171 +1375,72 @@ make_eml <- function(
             attributes[ ,j] <- trimws(attributes[ ,j])
           }
         }
-        
-        # Get the column classes into a vector
-        
-        col_classes <- attributes[ ,"columnClasses"]
-        
+
         # Create the attributeList element
         
-        attributeList <- suppressWarnings(EML103::set_attributes(attributes,
-                                                         col_classes = col_classes))
-        
-      }
-      
-      # Set physical
-      
-      eol <- EDIutils::get_eol(
-        path = data.path,
-        file.name = names(x$data.table)[i],
-        os = EDIutils::detect_os()
-      )
-      
-      if (!is.null(data.table.quote.character)){
-        
-        physical_temp <- EML103::set_physical(
-          paste0(
-            data.path,
-            '/',
-            names(x$data.table)[i]
+        attributeList <- suppressWarnings(
+          EML::set_attributes(
+            attributes[ , c(
+              'attributeName', 
+              'formatString',
+              'unit',
+              'numberType',
+              'definition',
+              'attributeDefinition',
+              'minimum',
+              'maximum',
+              'missingValueCode',
+              'missingValueCodeExplanation')],
+            col_classes = attributes[ ,"columnClasses"]
           )
         )
         
-        physical <- EML103::set_physical(names(x$data.table)[i],
-                                 numHeaderLines = "1",
-                                 recordDelimiter = eol,
-                                 attributeOrientation = "column",
-                                 fieldDelimiter = unlist(EML103::eml_get(physical_temp, 'fieldDelimiter')),
-                                 quoteCharacter = data.table.quote.character[i])
-        
       }
-      
-      if (is.null(data.table.quote.character)) {
-        
-        physical_temp <- EML103::set_physical(
-          paste0(
-            data.path,
-            '/',
-            names(x$data.table)[i]
-          )
-        )
-        
-        physical <- EML103::set_physical(names(x$data.table)[i],
-                                 numHeaderLines = "1",
-                                 recordDelimiter = eol,
-                                 attributeOrientation = "column",
-                                 fieldDelimiter = unlist(EML103::eml_get(physical_temp, 'fieldDelimiter')))
-        
-      }
-      
-      
-      
-      physical@size <- methods::new("size",
-                           unit = "byte",
-                           as.character(
-                             file.size(
-                               paste(data.path,
-                                     "/",
-                                     names(x$data.table)[i],
-                                     sep = ""))))
-      
-      if (!is.null(data.url)){
-        data_table_url <- paste(data.url,
-                                "/",
-                                names(x$data.table)[i],
-                                sep = "")
-        distribution <- methods::new("distribution",
-                            online = methods::new("online",
-                                         url = data_table_url))
-        physical@distribution <- methods::new("ListOfdistribution",
-                                     c(distribution))
-      }
-      
-      
-      if (EDIutils::detect_os() == "mac"){
-        
-        command_certutil <- paste("md5 ",
-                                  "\"",
-                                  data.path,
-                                  "/",
-                                  names(x$data.table)[i],
-                                  "\"",
-                                  sep = "")
-        
-        certutil_output <- system(command_certutil, intern = T)
-        
-        checksum_md5 <- gsub(".*= ", "", certutil_output)
-        
-        authentication <- methods::new("authentication",
-                              method = "MD5",
-                              checksum_md5)
-        
-        physical@authentication <- methods::as(list(authentication),
-                                      "ListOfauthentication")
-        
-      } else if (EDIutils::detect_os() == "win"){
-        
-        command_certutil <- paste("CertUtil -hashfile ",
-                                  "\"",
-                                  data.path,
-                                  "\\",
-                                  names(x$data.table)[i],
-                                  "\"",
-                                  " MD5",
-                                  sep = "")
-        
-        certutil_output <- system(command_certutil, intern = T)
-        
-        checksum_md5 <- gsub(" ", "", certutil_output[2])
-        
-        authentication <- methods::new("authentication",
-                              method = "MD5",
-                              checksum_md5)
-        
-        physical@authentication <- methods::as(list(authentication),
-                                      "ListOfauthentication")
-        
-      } else if (EDIutils::detect_os() == "lin"){
-        
-        command_certutil <- paste0("md5sum ",
-                                   "\"",
-                                   data.path,
-                                   "/",
-                                   names(x$data.table)[i],
-                                   "\"")
-        
-        certutil_output <- system(command_certutil, intern = T)
-        
-        checksum_md5 <- strsplit(certutil_output, split = " ")[[1]][1]
-        
-        authentication <- methods::new("authentication",
-                              method = "MD5",
-                              checksum_md5)
-        
-        physical@authentication <- methods::as(list(authentication),
-                                      "ListOfauthentication")
 
+      # Set physical
+
+      physical <- suppressMessages(
+        EML::set_physical(
+          paste0(data.path, '/', names(x$data.table)[i]),
+          numHeaderLines = "1",
+          recordDelimiter = EDIutils::get_eol(
+            path = data.path,
+            file.name = names(x$data.table)[i],
+            os = EDIutils::detect_os()
+          ),
+          attributeOrientation = "column",
+          url = 'placeholder'
+        )
+      )
+
+      if (!is.null(data.table.quote.character)){
+        physical$dataFormat$textFormat$simpleDelimited$quoteCharacter <- data.table.quote.character[i]
       }
+
+      if (!is.null(data.url)){
+        physical$distribution$online$url[[1]] <- paste0(
+          data.url,
+          "/",
+          names(x$data.table)[i]
+        )
+      } else {
+        physical$distribution <- list()
+      }
+
+       # Pull together information for the data table
       
-      # Get number of records
-      
-      number_of_records <- as.character(dim(df_table)[1])
-      
-      # Pull together information for the data table
-      
-      data_table <- methods::new("dataTable",
-                        entityName = data.table.description[i],
-                        entityDescription = data.table.description[i],
-                        physical = physical,
-                        attributeList = attributeList,
-                        numberOfRecords = number_of_records)
+      data_table <- list(
+        entityName = data.table.description[i],
+        entityDescription = data.table.description[i],
+        physical = physical,
+        attributeList = attributeList,
+        numberOfRecords = as.character(nrow(df_table))
+      )
       
       data_tables_stored[[i]] <- data_table
       
     }
-    
-    # Compile datatables --------------------------------------------------------
-    
+
     # Are custom units present in these tables?
     
     if ('custom_units.txt' %in% names(x$template)){
@@ -1468,7 +1459,7 @@ make_eml <- function(
         
         if (custom_units == "yes"){
           
-          message("<additionalMetadata>")
+          message("    <additionalMetadata>")
           
           for (j in 1:ncol(custom_units_df)){
             if (class(custom_units_df[ ,j]) == "character" ||
@@ -1477,7 +1468,7 @@ make_eml <- function(
             }
           }
           
-          unitsList <- EML103::set_unitList(custom_units_df)
+          unitsList <- EML::set_unitList(custom_units_df)
         }
 
       } else {
@@ -1491,12 +1482,11 @@ make_eml <- function(
     
     # Compile data tables
     
-    dataset@dataTable <- methods::new("ListOfdataTable",
-                             data_tables_stored)
+    dataset$dataTable <- data_tables_stored
     
   }
   
-  # Add other.entity ----------------------------------------------------------
+  # Create <otherEntity> ------------------------------------------------------
   
   if (!is.null(x$other.entity)){
     
@@ -1506,187 +1496,142 @@ make_eml <- function(
       
       for (i in 1:length(other.entity)){
         
-        message(paste0("<otherEntity> ... ", names(x$other.entity)[i]))
+        message(
+          paste0(
+            '    <otherEntity> (', 
+            names(x$other.entity)[i],
+            ')'
+          )
+        )
         
         # Create new other entity element
         
-        other_entity <- methods::new("otherEntity")
+        otherEntity <- list()
         
-        # Add code file names
+        # Add entityName
         
-        other_entity@entityName <- other.entity.description[i]
+        otherEntity$entityName <- list(other.entity.description[i])
+
+        # Add entityDescription
         
-        # Add description
+        otherEntity$entityDescription <- other.entity.description[i]
         
-        description <- other.entity.description[i]
+        # Add physical
         
-        other_entity@entityDescription <- description
-        
-        #  Build physical
-        
-        physical <- methods::new("physical",
-                                 objectName = names(x$other.entity)[i])
-        
-        format_name <- "unknown"
-        entity_type <- "unknown"
-        physical@dataFormat@externallyDefinedFormat@formatName <- format_name
-        
-        physical@size <- methods::new("size", unit = "bytes", methods::as(as.character(file.size(paste(data.path, "/", names(x$other.entity)[i], sep = ""))), "size"))
-        
-        if (!is.null(data.url)){
-          
-          physical@distribution <- methods::new(
-            'ListOfdistribution',
-            c(
-              methods::new(
-                "distribution",
-                online = methods::new(
-                  "online",
-                  url = paste0(
-                    data.url,
-                    '/',
-                    names(x$other.entity)[i]
-                  )
-                )
-              )
-            )
+        physical <- suppressMessages(
+          EML::set_physical(
+            paste0(data.path, '/', names(x$other.entity)[i])
           )
-          
+        )
+        
+        physical$dataFormat$textFormat <- NULL
+
+        physical$dataFormat$externallyDefinedFormat$formatName <- 'unknown'
+
+        if (!is.null(data.url)){
+          physical$distribution$online$url[[1]] <- paste0(
+            data.url,
+            "/",
+            names(x$data.table)[i]
+          )
+        } else {
+          physical$distribution <- list()
         }
 
-        if (EDIutils::detect_os() == "mac"){
-          
-          command_certutil <- paste("md5 ",
-                                    "\"",
-                                    data.path,
-                                    "/",
-                                    names(x$other.entity)[i],
-                                    "\"",
-                                    sep = "")
-          
-          certutil_output <- system(command_certutil, intern = T)
-          
-          checksum_md5 <- gsub(".*= ", "", certutil_output)
-          
-          authentication <- methods::new("authentication",
-                                method = "MD5",
-                                checksum_md5)
-          
-          physical@authentication <- methods::as(list(authentication),
-                                        "ListOfauthentication")
-          
-        } else if (EDIutils::detect_os() == "win"){
-          
-          command_certutil <- paste("CertUtil -hashfile ",
-                                    "\"",
-                                    data.path,
-                                    "\\",
-                                    names(x$other.entity)[i],
-                                    "\"",
-                                    " MD5",
-                                    sep = "")
-          
-          certutil_output <- system(command_certutil, intern = T)
-          
-          checksum_md5 <- gsub(" ", "", certutil_output[2])
-          
-          authentication <- methods::new("authentication",
-                                method = "MD5",
-                                checksum_md5)
-          
-          physical@authentication <- methods::as(list(authentication),
-                                        "ListOfauthentication")
-          
-        } else if (EDIutils::detect_os() == "lin"){
-          
-          command_certutil <- paste0("md5sum ",
-                                     "\"",
-                                     data.path,
-                                     "/",
-                                     names(x$other.entity)[i],
-                                     "\"")
-          
-          certutil_output <- system(command_certutil, intern = T)
-          
-          checksum_md5 <- strsplit(certutil_output, split = " ")[[1]][1]
-          
-          authentication <- methods::new("authentication",
-                                method = "MD5",
-                                checksum_md5)
-          
-          physical@authentication <- methods::as(list(authentication),
-                                        "ListOfauthentication")
+        otherEntity$physical <- physical
 
-        }
+        # Add entityType
         
-        other_entity@physical <- methods::as(c(physical), "ListOfphysical")
+        otherEntity$entityType <- 'unknown'
         
-        # Add entity type
+        # Add otherEntity to list
         
-        other_entity@entityType <- entity_type
-        
-        # Add other entity to list
-        
-        list_of_other_entity[[i]] <- other_entity
+        list_of_other_entity[[i]] <- otherEntity
         
       }
       
-      dataset@otherEntity <- methods::new("ListOfotherEntity",
-                                          list_of_other_entity)
+      dataset$otherEntity <- list_of_other_entity
       
     }
     
     
   }
   
+  # Create <additionalMetadata> -----------------------------------------------
   
+  if (exists('custom_units')){
+    message('  <additionalMetadata>')
+    additionalMetadata <- list()
+    additionalMetadata[[(length(additionalMetadata)+1)]] <- list(metadata = list(unitList = unitsList))
+  }
+
+  # Compile nodes -------------------------------------------------------------
+  
+  # Set default package.id
   
   if (is.null(package.id)){
     package.id <- 'edi.101.1'
   }
-  
-  # Build EML -----------------------------------------------------------------
-  
-  message("Compiling nodes")
+
+  # Compile nodes
   
   if (exists('custom_units')){
+    
     if (custom_units == "yes"){
-      eml <- methods::new("eml",
-                 schemaLocation = "eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd",
-                 packageId = package.id,
-                 system = "edi",
-                 access = access,
-                 dataset = dataset,
-                 additionalMetadata = methods::as(unitsList, "additionalMetadata"))
-    } else {
-      eml <- methods::new("eml",
-                 schemaLocation = "eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd",
-                 packageId = package.id,
-                 system = "edi",
-                 access = access,
-                 dataset = dataset)
-    }
-  } else {
-    eml <- methods::new("eml",
-               schemaLocation = "eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd",
-               packageId = package.id,
-               system = "edi",
-               access = access,
-               dataset = dataset)
-  }
+      
+      eml <- list(
+        schemaLocation = "eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd",
+        packageId = package.id,
+        system = "edi",
+        access = access,
+        dataset = dataset,
+        additionalMetadata = additionalMetadata
+      )
 
-  # Write EML
+    } else {
+      
+      eml <- list(
+        schemaLocation = "eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd",
+        packageId = package.id,
+        system = "edi",
+        access = access,
+        dataset = dataset
+      )
+      
+    }
+    
+  } else {
+    
+    eml <- list(
+      schemaLocation = "eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd",
+      packageId = package.id,
+      system = "edi",
+      access = access,
+      dataset = dataset
+    )
+    
+  }
+  
+  message('</eml>')
+
+  # Write EML -----------------------------------------------------------------
   
   if (isTRUE(write.file)){
-    message(paste0('Writing ', package.id, '.xml'))
-    EML103::write_eml(eml, paste(eml.path, "/", package.id, ".xml", sep = ""))
+    
+    message(paste0('Writing EML (', package.id, '.xml)'))
+    
+    EML::write_eml(
+      eml, 
+      paste0(eml.path, "/", package.id, ".xml")
+    )
+    
   }
   
-  # Validate EML
+  # Validate EML --------------------------------------------------------------
   
   message("Validating EML")
   
-  validation_result <- EML103::eml_validate(eml)
+  validation_result <- EML::eml_validate(eml)
   
   if (validation_result == "TRUE"){
     
@@ -1752,8 +1697,6 @@ compile_attributes <- function(x){
   attributes_stored <- list()
   
   for (i in 1:length(data.table)){
-    
-    message(paste("Compiling", fname_table_attributes[i]))
 
     df_table <- x$data.table[[data.table[i]]]$content
     
