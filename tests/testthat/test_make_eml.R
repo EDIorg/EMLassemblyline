@@ -1,6 +1,5 @@
 context('Make EML')
 library(EMLassemblyline)
-suppressWarnings(library(EML103))
 
 # Parameterize ----------------------------------------------------------------
 

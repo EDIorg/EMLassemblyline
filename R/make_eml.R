@@ -1125,7 +1125,7 @@ make_eml <- function(
         
         # Read provenance file and add to L0 EML
 
-        prov_metadata <- EML103::read_eml(paste0(data.path, '/provenance_metadata.xml'))
+        prov_metadata <- EML::read_eml(paste0(data.path, '/provenance_metadata.xml'))
         methods_step <- dataset@methods@methodStep
         methods_step[[length(methods_step)+1]] <- prov_metadata
         dataset@methods@methodStep <- methods_step

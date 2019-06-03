@@ -141,12 +141,12 @@
 #'         \itemize{
 #'         \item{\strong{abstract.txt} Abstract template}
 #'           \itemize{
-#'           \item{\strong{content} \code{EML103::TextType} containing 
+#'           \item{\strong{content} \code{list} containing 
 #'           abstract, NA otherwise}
 #'           }
 #'         \item{\strong{additional_info.txt} Additional information template}
 #'           \itemize{
-#'           \item{\strong{content} \code{EML103::TextType} containing 
+#'           \item{\strong{content} \code{list} containing 
 #'           additional info, NA otherwise}
 #'           }
 #'         \item{\strong{attributes_name.txt} Attributes template where 
@@ -180,7 +180,7 @@
 #'         \item{\strong{intellectual_rights.txt} Intellectual rights 
 #'           template}
 #'           \itemize{
-#'           \item{\strong{content} \code{EML103::TextType} containing 
+#'           \item{\strong{content} \code{list} containing 
 #'           intellectual rights template, NA otherwise.}
 #'           }
 #'         \item{\strong{keywords.txt} Keywords template}
@@ -190,7 +190,7 @@
 #'           }
 #'         \item{\strong{methods.txt} Methods template}
 #'           \itemize{
-#'           \item{\strong{content} \code{EML103::Methods} containing 
+#'           \item{\strong{content} \code{list} containing 
 #'           methods, NA otherwise.}
 #'           }
 #'         \item{\strong{personnel.txt} Personnel template}
@@ -201,7 +201,7 @@
 #'         \item{\strong{taxonomicCoverage.xml} Taxonomic coverage EML 
 #'           element}
 #'           \itemize{
-#'           \item{\strong{content} \code{EML103::taxonomicCoverage}, 
+#'           \item{\strong{content} \code{list}, 
 #'           NA otherwise}
 #'           }     
 #'           }

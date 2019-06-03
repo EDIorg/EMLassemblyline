@@ -20,8 +20,6 @@ matrix:
   include:
     - os: linux
       r: devel
-    - os: linux
-      r: release
 addons:
   apt:
     sources:
