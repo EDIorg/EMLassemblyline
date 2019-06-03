@@ -11,7 +11,8 @@
 #'       data.table, 
 #'       lat.col, 
 #'       lon.col, 
-#'       site.col, 
+#'       site.col,
+#'       empty = FALSE, 
 #'       write.file = TRUE,
 #'       x = NULL
 #'     )
@@ -140,30 +141,34 @@ template_geographic_coverage <- function(
   
   if (is.null(x)){
     
-    # Validate file name
-    
-    data_file <- EDIutils::validate_file_names(
-      path = data.path, 
-      data.files = data.table
-    )
-    
-    # Validate fields of data.tables
-    
-    EDIutils::validate_fields(
-      path = data.path, 
-      data.files = data_file
-    )
-    
-    # Read data table
-    
-    x <- template_arguments(
-      data.path = data.path,
-      data.table = data_file
-    )
-    
-    x <- x$x
-    
-    data_read_2_x <- NA_character_
+    if (!isTRUE(empty)){
+      
+      # Validate file name
+      
+      data_file <- EDIutils::validate_file_names(
+        path = data.path, 
+        data.files = data.table
+      )
+      
+      # Validate fields of data.tables
+      
+      EDIutils::validate_fields(
+        path = data.path, 
+        data.files = data_file
+      )
+      
+      # Read data table
+      
+      x <- template_arguments(
+        data.path = data.path,
+        data.table = data_file
+      )
+      
+      x <- x$x
+      
+      data_read_2_x <- NA_character_
+      
+    }
 
     # Does file exist?
     
@@ -178,9 +183,13 @@ template_geographic_coverage <- function(
     
   } else if (!is.null(x)){
     
-    # data.table
-    
-    data_file <- data.table
+    if (!isTRUE(empty)){
+      
+      # data.table
+      
+      data_file <- data.table
+
+    }
     
     # write.file
     
@@ -206,75 +215,89 @@ template_geographic_coverage <- function(
     
     message('geographic_coverage.txt')
     
-    df_table <- x$data.table[[data_file]]$content
-    
-    # Validate column names
-    
-    columns <- colnames(df_table)
-    columns_in <- c(lat.col, lon.col, site.col)
-    use_i <- stringr::str_detect(string = columns,
-                                 pattern = stringr::str_c("^", columns_in, "$", collapse = "|"))
-    if (sum(use_i) > 0){
-      use_i2 <- columns[use_i]
-      use_i3 <- columns_in %in% use_i2
-      if (sum(use_i) != 3){
-        stop(paste("Invalid column names entered: ", paste(columns_in[!use_i3], collapse = ", "), sep = ""))
+    if (!isTRUE(empty)){
+      
+      df_table <- x$data.table[[data_file]]$content
+      
+      # Validate column names
+      
+      columns <- colnames(df_table)
+      columns_in <- c(lat.col, lon.col, site.col)
+      use_i <- stringr::str_detect(string = columns,
+                                   pattern = stringr::str_c("^", columns_in, "$", collapse = "|"))
+      if (sum(use_i) > 0){
+        use_i2 <- columns[use_i]
+        use_i3 <- columns_in %in% use_i2
+        if (sum(use_i) != 3){
+          stop(paste("Invalid column names entered: ", paste(columns_in[!use_i3], collapse = ", "), sep = ""))
+        }
       }
+      
+      # Subset table names
+      
+      df_table <- df_table[ ,c(lat.col, lon.col, site.col)]
+      
+      # Remove incomplete lines
+      
+      use_i <- df_table[site.col] == ""
+      df_table[use_i, site.col] <- NA
+      df_table <- df_table[stats::complete.cases(df_table), ]
+      
+      # Get vectors of latitude, longitude, and site
+      
+      latitude <- df_table[lat.col]
+      
+      longitude <- df_table[lon.col]
+      
+      site_name <- unique(unlist(df_table[site.col]))
+      
+      # Output lat and long corresponding to sites
+      
+      latitude_out = c()
+      longitude_out = c() 
+      site_out = c()
+      
+      for (i in 1:length(site_name)){
+        
+        useI <- site_name[i] == df_table[site.col]
+        
+        latitude_out[i] <- latitude[useI][1]
+        
+        longitude_out[i] <- longitude[useI][1]
+        
+        site_out[i] <- site_name[i]
+        
+      }
+      
+      if (class(latitude_out) != "numeric"){
+        stop("Latitude contains non-numeric values. Remove these from your data table, then rerun this function.")
+      }
+      if (class(longitude_out) != "numeric"){
+        stop("Longitude contains non-numeric values. Remove these from your data table, then rerun this function.")
+      }
+      
+      geocoverage_out <- data.frame(
+        geographicDescription = site_out,
+        northBoundingCoordinate = latitude_out,
+        southBoundingCoordinate = latitude_out,
+        eastBoundingCoordinate = longitude_out,
+        westBoundingCoordinate = longitude_out,
+        stringsAsFactors = F)
+      
+    } else {
+      
+      geocoverage_out <- data.frame(
+        geographicDescription = character(0),
+        northBoundingCoordinate = character(0),
+        southBoundingCoordinate = character(0),
+        eastBoundingCoordinate = character(0),
+        westBoundingCoordinate = character(0),
+        stringsAsFactors = F)
+      
     }
+
+    # FIXME: Automatically create bounding coordinates
     
-    # Subset table names
-    
-    df_table <- df_table[ ,c(lat.col, lon.col, site.col)]
-    
-    # Remove incomplete lines
-    
-    use_i <- df_table[site.col] == ""
-    df_table[use_i, site.col] <- NA
-    df_table <- df_table[stats::complete.cases(df_table), ]
-    
-    # Get vectors of latitude, longitude, and site
-    
-    latitude <- df_table[lat.col]
-    
-    longitude <- df_table[lon.col]
-    
-    site_name <- unique(unlist(df_table[site.col]))
-    
-    # Output lat and long corresponding to sites
-    
-    latitude_out = c()
-    longitude_out = c() 
-    site_out = c()
-    
-    for (i in 1:length(site_name)){
-      
-      useI <- site_name[i] == df_table[site.col]
-      
-      latitude_out[i] <- latitude[useI][1]
-      
-      longitude_out[i] <- longitude[useI][1]
-      
-      site_out[i] <- site_name[i]
-      
-    }
-    
-    if (class(latitude_out) != "numeric"){
-      stop("Latitude contains non-numeric values. Remove these from your data table, then rerun this function.")
-    }
-    if (class(longitude_out) != "numeric"){
-      stop("Longitude contains non-numeric values. Remove these from your data table, then rerun this function.")
-    }
-    
-    geocoverage_out <- data.frame(
-      geographicDescription = site_out,
-      northBoundingCoordinate = latitude_out,
-      southBoundingCoordinate = latitude_out,
-      eastBoundingCoordinate = longitude_out,
-      westBoundingCoordinate = longitude_out,
-      stringsAsFactors = F)
-    
-    # # Add bounding coordinates
-    # 
     # geocoverage_out$geographicDescription <- 'Bounding area of sites'
     # geocoverage_out$northBoundingCoordinate <- latitude_out
     # geocoverage_out$southBoundingCoordinate <- latitude_out
