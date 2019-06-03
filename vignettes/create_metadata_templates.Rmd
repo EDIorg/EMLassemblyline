@@ -248,7 +248,7 @@ knitr::kable(
 
 ## template_geographic_coverage()
 
-Use `template_geographic_coverage()` to document the locations of sampling points or areas.
+Use `template_geographic_coverage()` to document the locations of sampling points or areas. _NOTE:_ Use the `empty = TRUE` argument to create a blank version of this template for manual editing.
 
 ```{r call template_geographic_coverage, message = TRUE}
 

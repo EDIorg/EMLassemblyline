@@ -7,7 +7,7 @@
 template_core_metadata(
       path,
       license,
-      file.type, = '.txt',
+      file.type = '.txt',
       write.file = TRUE,
       x = NULL
     )

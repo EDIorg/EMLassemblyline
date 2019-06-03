@@ -2,8 +2,9 @@
 
 ## New features
 
-* __`EML` v2.0.0:__ `EMLassemblyline` has been refactored for the [`EML` v2.0.0](https://cran.r-project.org/web/packages/EML/index.html) dependency.
-* __Create empty geographic_coverage.txt:__ The `empty` argument has been added to `template_geographic_coverage()` so users may create geographic_coverage.txt without reference to a table containing geographic coordinate data.
+* __EML v2.0.0:__ `EMLassemblyline` has been refactored to run with the `EML' v2.0.0 dependency.
+* __Text type metadata may now be supplied in .docx and .md files:__ Support for creating abstract, methods, and additional information metadata has been extended from simple text files to Microsoft Word (.docx) and Markdown (.md) file formats. Formatting of these files are translated to EML via `markdown` > Pandoc > docbook.
+* __Create an empty geographic_coverage.txt:__ Sometimes the geographic coverage of a dataset cannot be extracted from a table and needs to be entered manually. Use the `template_geographic_coverage()` argument `empty = TRUE` to create an empty geographic_coverage.txt template.
 
 # EMLassemblyline 2.5.3
 

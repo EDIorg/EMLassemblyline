@@ -119,7 +119,7 @@ The most common data package only contains tables. To make EML for this package 
 *  **user.domain** (optional) Domain of the `user.id`(s).
 *  **package.id** (optional) Data package identifier in the format expected by the receiving data repository.
 
-```{r make EML for data tables, message = TRUE}
+```{r make EML for data tables, message = FALSE}
 
 # Make EML for data tables
 
@@ -155,6 +155,7 @@ output <- XML::xmlTreeParse('./pkg_301/eml/edi.301.1.xml')
 
 output$doc$children
 
+
 ```
 
 ## Make EML for other entities
@@ -175,7 +176,7 @@ Some data packages only contain non-tabular data (e.g. geospatial vector, NetCDF
 *  **user.domain** (optional) Domain of the `user.id`(s).
 *  **package.id** (optional) Data package identifier in the format expected by the receiving data repository.
 
-```{r make EML for other entities, message = TRUE}
+```{r make EML for other entities, message = FALSE}
 
 # Make EML for other entities
 
@@ -234,7 +235,7 @@ A third type of data package contains both data tables and other entities. To ma
 *  **user.domain** (optional) Domain of the `user.id`(s).
 *  **package.id** (optional) Data package identifier in the format expected by the receiving data repository.
 
-```{r make EML for data tables and other entities, message = TRUE}
+```{r make EML for data tables and other entities, message = FALSE}
 
 # Make EML for data tables and other entities
 
