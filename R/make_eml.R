@@ -454,6 +454,20 @@ make_eml <- function(
           )
         }
         
+        # FIXME Blank entries ('') result in closing tags when EML is written
+        # to file. Need function to set all elements of value = '' to NULL.
+        contact <- rapply(
+          contact,
+          function(x){
+            if (x == ''){
+              x <- NULL
+            } else {
+              x
+            }
+          },
+          how = c('replace')
+        )
+        
       }
 
       contact
@@ -480,6 +494,20 @@ make_eml <- function(
           paste0("https://orcid.org/", trimws(personinfo[info_row,"userId"]))
         )
       }
+      
+      # FIXME Blank entries ('') result in closing tags when EML is written
+      # to file. Need function to set all elements of value = '' to NULL.
+      creator <- rapply(
+        creator,
+        function(x){
+          if (x == ''){
+            x <- NULL
+          } else {
+            x
+          }
+        },
+        how = c('replace')
+      )
 
       creator
       
@@ -506,6 +534,20 @@ make_eml <- function(
           paste0("https://orcid.org/", trimws(personinfo[info_row,"userId"]))
         )
       }
+      
+      # FIXME Blank entries ('') result in closing tags when EML is written
+      # to file. Need function to set all elements of value = '' to NULL.
+      rp_personnel <- rapply(
+        rp_personnel,
+        function(x){
+          if (x == ''){
+            x <- NULL
+          } else {
+            x
+          }
+        },
+        how = c('replace')
+      )
       
       rp_personnel
       
@@ -556,6 +598,20 @@ make_eml <- function(
             paste0("https://orcid.org/", trimws(personinfo[info_row,"userId"]))
           )
         }
+        
+        # FIXME Blank entries ('') result in closing tags when EML is written
+        # to file. Need function to set all elements of value = '' to NULL.
+        associated_party <- rapply(
+          associated_party,
+          function(x){
+            if (x == ''){
+              x <- NULL
+            } else {
+              x
+            }
+          },
+          how = c('replace')
+        )
 
         associated_party
         
@@ -1631,7 +1687,7 @@ make_eml <- function(
   }
   
   message('</eml>')
-
+  
   # Write EML -----------------------------------------------------------------
   
   if (isTRUE(write.file)){
@@ -1668,10 +1724,6 @@ make_eml <- function(
   }
   
 }
-
-
-
-
 
 # Compile attributes ----------------------------------------------------------
 
