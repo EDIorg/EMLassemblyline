@@ -1,8 +1,0 @@
-attributeName	attributeDefinition	class	unit	dateTimeFormatString	missingValueCode	missingValueCodeExplanation
-type		categorical				
-date		Date		!Add datetime specifier here!		
-arm		numeric	!Add units here!			
-ntrt		categorical				
-year		Date		!Add datetime specifier here!		
-percent_loss		numeric	!Add units here!			
-taxa		character				
