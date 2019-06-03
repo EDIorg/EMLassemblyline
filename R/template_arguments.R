@@ -418,6 +418,10 @@ template_arguments <- function(
     
     if (stringr::str_detect(string = templates[i], pattern = 'abstract')){
       
+      if (sum(stringr::str_detect(templates, pattern = 'abstract')) > 1){
+        stop('More than one abstract template found. Please remove others.')
+      }
+      
       if (file.exists(paste0(path, '/', templates[i]))){
         
         output$x$template[[i]]$content <- EML::set_TextType(
@@ -439,6 +443,10 @@ template_arguments <- function(
     # Read additional information ---------------------------------------------
     
     if (stringr::str_detect(string = templates[i], pattern = 'additional_info')){
+      
+      if (sum(stringr::str_detect(templates, pattern = 'additional_info')) > 1){
+        stop('More than one additional_info template found. Please remove others.')
+      }
       
       if (file.exists(paste0(path, '/', templates[i]))){
         
@@ -742,6 +750,10 @@ template_arguments <- function(
     
     if (stringr::str_detect(string = templates[i], pattern = 'methods')){
       
+      if (sum(stringr::str_detect(templates, pattern = 'methods')) > 1){
+        stop('More than one methods template found. Please remove others.')
+      }
+      
       if (file.exists(paste0(path, '/', templates[i]))){
         
         output$x$template[[i]]$content <- EML::set_methods(
@@ -810,15 +822,16 @@ template_arguments <- function(
       
       if (file.exists(paste0(path, '/', templates[i]))){
         
-        output$x$template[[i]]$content <- methods::as(
-          EML103::read_eml(
-            paste0(
-              path, 
-              '/', 
-              templates[i]
-            )
-          ),
-          'taxonomicCoverage'
+        output$x$template[[i]]$content <- EML::read_eml(
+          paste0(
+            path, 
+            '/', 
+            templates[i]
+          )
+        )
+        
+        output$x$template$taxonomicCoverage.xml$content <- list(
+          taxonomicClassification = output$x$template$taxonomicCoverage.xml$content$taxonomicClassification
         )
         
       } else {

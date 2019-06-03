@@ -30,6 +30,8 @@
 #'     degrees, where longitudes west of the prime meridian are negative.
 #' @param site.col
 #'     (character) Column name containing site names.
+#' @param empty
+#'     (logical) Whether to write an empty template file.
 #' @param write.file
 #'     (logical; optional) Whether to write the template file.
 #' @param x
@@ -84,15 +86,31 @@
 #'   lon.col = 'site_lon'
 #' )
 #' 
+#' # Remove template from directory
+#' file.remove('./metadata_templates/geographic_coverage.txt')
+#' 
+#' # Create an empty geographic_coverage.txt template
+#' template_geographic_coverage(
+#'   path = './metadata_templates',
+#'   empty = TRUE
+#' )
+#' 
 #' # Clean up
 #' unlink('.', recursive = TRUE)
 #'
 #' @export
 #'
 
-template_geographic_coverage <- function(path, data.path = path, data.table, 
-                                         lat.col, lon.col, site.col, x = NULL, 
-                                         write.file = TRUE){
+template_geographic_coverage <- function(
+  path, 
+  data.path = path, 
+  data.table, 
+  lat.col, 
+  lon.col, 
+  site.col, 
+  empty = FALSE, 
+  write.file = TRUE, 
+  x = NULL){
   
   message('Templating geographic coverage ...')
   

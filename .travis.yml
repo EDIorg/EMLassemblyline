@@ -11,8 +11,8 @@ r_packages:
   - rmarkdown
   - methods
   - covr
+  - EML
 r_github_packages:
-  - clnsmth/EML103
   - EDIorg/EDIutils
   - EDIorg/taxonomyCleanr
 warnings_are_errors: false

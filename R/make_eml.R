@@ -697,18 +697,28 @@ make_eml <- function(
   if (!any(stringr::str_detect(names(x$template), 'abstract'))){
     stop("abstract doesn't exist!")
   }
-
+  
+  if (isTRUE(
+    is.na(x$template[[
+      names(x$template)[stringr::str_detect(names(x$template), 'abstract')]
+      ]]$content))){
+    stop('The abstract template is missing.')
+  }
+  
   dataset$abstract <- x$template[[
-    names(x$template)[stringr::str_detect(names(x$template), 'abstract')]]]$content
-    
+    names(x$template)[stringr::str_detect(names(x$template), 'abstract')]
+    ]]$content
+  
   # Create <keywordSet> ---------------------------------------------------------
   
   message("    <keywordSet>")
   
-  if (!'keywords.txt' %in% names(x$template)){
-    stop('keywords.txt does not exist! Run template_core_metadata.txt to create it.')
+  if (!is.data.frame(x$template$keywords.txt$content)){
+    if (is.na(x$template$keywords.txt$content)){
+      stop('keywords.txt does not exist! Run template_core_metadata.txt to create it.')
+    }
   }
-  
+
   keywords <- x$template$keywords.txt$content
   
   # Remove blank keyword entries
@@ -781,11 +791,14 @@ make_eml <- function(
   # Create <intellectualRights> -----------------------------------------------
 
   message("    <intellectualRights>")
-  
-  if (!'intellectual_rights.txt' %in% names(x$template)){
-    stop("intellectual_rights.txt doesn't exist!")
+
+  if (isTRUE(
+    is.na(x$template[[
+      names(x$template)[stringr::str_detect(names(x$template), 'intellectual_rights')]
+      ]]$content))){
+    stop('The intellectual_rights template is missing.')
   }
-  
+
   dataset$intellectualRights <- x$template$intellectual_rights.txt$content
 
   # Create <coverage> ---------------------------------------------------------
@@ -905,7 +918,7 @@ make_eml <- function(
             message("      <geographicCoverage>")
             
             geographicCoverage[[(length(geographicCoverage)+1)]] <- list(
-              geographicDescription = bounding_boxes_2$geographicDescription[i],
+              geographicDescription = bounding_boxes_2$site[i],
               boundingCoordinates = list(
                 westBoundingCoordinate = as.character(bounding_boxes_2$longitude[i]),
                 eastBoundingCoordinate = as.character(bounding_boxes_2$longitude[i]),
@@ -944,49 +957,49 @@ make_eml <- function(
   )
   
   # Create <taxonomicCoverage> ------------------------------------------------
-  # 
-  # if ('taxonomicCoverage.xml' %in% names(x$template)){
-  #   
-  #   if (class(x$template$taxonomicCoverage.xml$content)[1] == 'taxonomicCoverage'){
-  #     
-  #     message("      <taxonomicCoverage>")
-  #     
-  #     taxonomic_coverage <- x$template$taxonomicCoverage.xml$content
-  #     
-  #     dataset$coverage[[(length(dataset$coverage)+1)]] <- taxonomic_coverage
-  #     
-  #   }
-  #   
-  # } 
-  # 
-  # if ('taxonomic_coverage.txt' %in% names(x$template)){
-  #   
-  #   if (is.data.frame(x$template$taxonomic_coverage.txt$content)){
-  # 
-  #     if (sum(is.na(x$template$taxonomic_coverage.txt$content$authority_id)) != nrow(x$template$taxonomic_coverage.txt$content)){
-  #       
-  #       message('      <taxonomicCoverage>')
-  # 
-  #       tc <- try(
-  #         taxonomyCleanr::make_taxonomicCoverage(
-  #           taxa.clean = x$template$taxonomic_coverage.txt$content$name_resolved,
-  #           authority = x$template$taxonomic_coverage.txt$content$authority_system,
-  #           authority.id = x$template$taxonomic_coverage.txt$content$authority_id
-  #         ),
-  #         silent = T
-  #       )
-  #       
-  #       if (class(tc)[1] == 'list'){
-  #         
-  #         dataset$coverage[[(length(dataset$coverage)+1)]] <- tc
-  #         
-  #       }
-  # 
-  #     }
-  #     
-  #   }
-  # 
-  # }
+  
+  if ('taxonomicCoverage.xml' %in% names(x$template)){
+
+    if (is.list(x$template$taxonomicCoverage.xml$content)){
+
+      message("      <taxonomicCoverage>")
+
+      dataset$coverage$taxonomicCoverage <- x$template$taxonomicCoverage.xml$content
+
+    }
+
+  }
+  
+  if ('taxonomic_coverage.txt' %in% names(x$template)){
+
+    if (is.data.frame(x$template$taxonomic_coverage.txt$content)){
+
+      if (sum(is.na(x$template$taxonomic_coverage.txt$content$authority_id)) != nrow(x$template$taxonomic_coverage.txt$content)){
+
+        message('      <taxonomicCoverage>')
+
+        tc <- try(
+          suppressMessages(
+            taxonomyCleanr::make_taxonomicCoverage(
+              taxa.clean = x$template$taxonomic_coverage.txt$content$name_resolved,
+              authority = x$template$taxonomic_coverage.txt$content$authority_system,
+              authority.id = x$template$taxonomic_coverage.txt$content$authority_id
+            )
+          ),
+          silent = T
+        )
+
+        if (class(tc)[1] == 'list'){
+
+          dataset$coverage$taxonomicCoverage <- tc
+
+        }
+
+      }
+
+    }
+
+  }
 
   # Create <maintenance> ------------------------------------------------------
   
@@ -1011,8 +1024,11 @@ make_eml <- function(
   
   message("    <methods>")
   
-  if (!any(stringr::str_detect(names(x$template), 'methods'))){
-    stop("methods don't exist!")
+  if (isTRUE(
+    is.na(x$template[[
+      names(x$template)[stringr::str_detect(names(x$template), 'methods')]
+      ]]$content))){
+    stop('The methods template is missing.')
   }
   
   dataset$methods <- x$template[[
@@ -1532,7 +1548,7 @@ make_eml <- function(
           physical$distribution$online$url[[1]] <- paste0(
             data.url,
             "/",
-            names(x$data.table)[i]
+            names(x$other.entity)[i]
           )
         } else {
           physical$distribution <- list()
@@ -1560,9 +1576,11 @@ make_eml <- function(
   # Create <additionalMetadata> -----------------------------------------------
   
   if (exists('custom_units')){
-    message('  <additionalMetadata>')
-    additionalMetadata <- list()
-    additionalMetadata[[(length(additionalMetadata)+1)]] <- list(metadata = list(unitList = unitsList))
+    if (custom_units != 'no'){
+      message('  <additionalMetadata>')
+      additionalMetadata <- list()
+      additionalMetadata[[(length(additionalMetadata)+1)]] <- list(metadata = list(unitList = unitsList))
+    }
   }
 
   # Compile nodes -------------------------------------------------------------
@@ -1630,21 +1648,21 @@ make_eml <- function(
   # Validate EML --------------------------------------------------------------
   
   message("Validating EML")
-  
+
   validation_result <- EML::eml_validate(eml)
-  
+
   if (validation_result == "TRUE"){
-    
+
     message("EML passed validation!")
-    
+
   } else {
-    
+
     message("EML validaton failed. See warnings for details.")
-    
+
   }
-  
+
   message("Done.")
-  
+
   if (isTRUE(return.obj)){
     eml
   }
