@@ -21,11 +21,11 @@ template_table_attributes(
 vector of character strings (e.g. 
 \code{data.table = c('nitrogen.csv', 'decomp.csv')}).}
 
+\item{write.file}{(logical; optional) Whether to write the template file.}
+
 \item{x}{(named list; optional) Alternative input to 
 \code{template_table_attributes()}. Use \code{template_arguments()} 
 to create \code{x}.}
-
-\item{write.file}{(logical; optional) Whether to write the template file.}
 }
 \value{
 \itemize{

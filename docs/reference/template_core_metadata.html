@@ -147,7 +147,7 @@
     <pre class="usage"><span class='fu'>template_core_metadata</span>(
       <span class='no'>path</span>,
       <span class='no'>license</span>,
-      <span class='kw'>file.type</span> <span class='kw'>=</span> <span class='st'>'.txt'</span>,
+      <span class='kw'>file.type</span> <span class='kw'>=</span> <span class='st'>'txt'</span>,
       <span class='kw'>write.file</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
       <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
     )</pre>
@@ -166,20 +166,20 @@
 <a href='https://creativecommons.org/licenses/by/4.0/'>"CCBY"</a>.</p></td>
     </tr>
     <tr>
-      <th>x</th>
-      <td><p>(named list; optional) Alternative input to 
-<code>template_core_metadatta()</code>. Use <code><a href='template_arguments.html'>template_arguments()</a></code> 
-to create <code>x</code>.</p></td>
-    </tr>
-    <tr>
       <th>file.type</th>
       <td><p>(character; optional) File type for abstract, methods, and additional 
-info metadata templates. Can be: '.txt' (plain text), '.docx' (MS Word),
-and '.md' (markdown).</p></td>
+info metadata templates. Can be: 'txt' (plain text), 'docx' (MS Word),
+or 'md' (markdown).</p></td>
     </tr>
     <tr>
       <th>write.file</th>
       <td><p>(logical; optional) Whether to write the template files.</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>(named list; optional) Alternative input to 
+<code>template_core_metadatta()</code>. Use <code><a href='template_arguments.html'>template_arguments()</a></code> 
+to create <code>x</code>.</p></td>
     </tr>
     </table>
     
@@ -238,7 +238,7 @@ template_core_metadata(
 )
 
 
-# Use .docx files for abstract, methods, and additional_info
+# Use docx files for abstract, methods, and additional_info
 # First remove abstract, methods, and additional_info templates
 file.remove(
   paste0(
@@ -247,14 +247,14 @@ file.remove(
     './metadata_templates/additional_info.txt
   )
 )
-# Create .docx templates
+# Create docx templates
 template_core_metadata(
   path = './metadata_templates',
   license = 'CC0',
-  file.type = '.docx
+  file.type = 'docx
 )
 
-# Use .md files for abstract, methods, and additional_info
+# Use md files for abstract, methods, and additional_info
 # First remove abstract, methods, and additional_info templates
 file.remove(
   paste0(
@@ -263,11 +263,11 @@ file.remove(
     './metadata_templates/additional_info.docx
   )
 )
-# Create .md templates
+# Create md templates
 template_core_metadata(
   path = './metadata_templates',
   license = 'CC0',
-  file.type = '.md
+  file.type = 'md
 )
 
 # Clean up

@@ -1349,7 +1349,7 @@ testthat::test_that('Expect equal', {
     (nchar(output$dataset$additionalInfo$para) > 50)
   )
   
-  # .md templates are supported
+  # md templates are supported
   
   output <- suppressWarnings(
     make_eml(

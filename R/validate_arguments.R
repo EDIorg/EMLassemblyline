@@ -474,8 +474,8 @@ validate_arguments <- function(fun.name, fun.args){
     
     # file.type
     
-    if ((fun.args$file.type != '.txt') & (fun.args$file.type != '.docx') & 
-        (fun.args$file.type != '.md')){
+    if ((fun.args$file.type != 'txt') & (fun.args$file.type != 'docx') & 
+        (fun.args$file.type != 'md')){
       stop(paste0('"', fun.args$file.type, '" is not a valid entry to the "file.type" argument.'))
     }
     

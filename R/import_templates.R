@@ -119,7 +119,7 @@
 #'     
 
 import_templates <- function(path, data.path = path, license, 
-                             data.table = NULL, x = NULL, write.file = TRUE,
+                             data.table = NULL, write.file = TRUE, x = NULL,
                              data.files){
   
   message('Importing metadata templates')

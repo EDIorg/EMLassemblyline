@@ -26,10 +26,10 @@ import_templates(
 vector of character strings (e.g. 
 \code{data.table = c('concentrations.csv', 'characteristics.csv')}).}
 
+\item{write.file}{(logical; optional) Whether to write the templates to \code{path}.}
+
 \item{x}{(named list; optional) Alternative input to \code{EMLassemblyline} 
 functions. Use \code{template_arguments()} to create \code{x}.}
-
-\item{write.file}{(logical; optional) Whether to write the templates to \code{path}.}
 }
 \value{
 \itemize{

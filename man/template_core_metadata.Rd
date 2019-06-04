@@ -7,7 +7,7 @@
 template_core_metadata(
       path,
       license,
-      file.type = '.txt',
+      file.type = 'txt',
       write.file = TRUE,
       x = NULL
     )
@@ -19,15 +19,15 @@ template_core_metadata(
 \href{https://creativecommons.org/publicdomain/zero/1.0/}{"CC0"} or 
 \href{https://creativecommons.org/licenses/by/4.0/}{"CCBY"}.}
 
+\item{file.type}{(character; optional) File type for abstract, methods, and additional 
+info metadata templates. Can be: 'txt' (plain text), 'docx' (MS Word),
+or 'md' (markdown).}
+
+\item{write.file}{(logical; optional) Whether to write the template files.}
+
 \item{x}{(named list; optional) Alternative input to 
 \code{template_core_metadatta()}. Use \code{template_arguments()} 
 to create \code{x}.}
-
-\item{file.type}{(character; optional) File type for abstract, methods, and additional 
-info metadata templates. Can be: '.txt' (plain text), '.docx' (MS Word),
-and '.md' (markdown).}
-
-\item{write.file}{(logical; optional) Whether to write the template files.}
 }
 \value{
 \itemize{
@@ -84,7 +84,7 @@ template_core_metadata(
 )
 
 
-# Use .docx files for abstract, methods, and additional_info
+# Use docx files for abstract, methods, and additional_info
 # First remove abstract, methods, and additional_info templates
 file.remove(
   paste0(
@@ -93,14 +93,14 @@ file.remove(
     './metadata_templates/additional_info.txt
   )
 )
-# Create .docx templates
+# Create docx templates
 template_core_metadata(
   path = './metadata_templates',
   license = 'CC0',
-  file.type = '.docx
+  file.type = 'docx
 )
 
-# Use .md files for abstract, methods, and additional_info
+# Use md files for abstract, methods, and additional_info
 # First remove abstract, methods, and additional_info templates
 file.remove(
   paste0(
@@ -109,11 +109,11 @@ file.remove(
     './metadata_templates/additional_info.docx
   )
 )
-# Create .md templates
+# Create md templates
 template_core_metadata(
   path = './metadata_templates',
   license = 'CC0',
-  file.type = '.md
+  file.type = 'md
 )
 
 # Clean up

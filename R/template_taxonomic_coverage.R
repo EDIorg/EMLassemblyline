@@ -117,9 +117,9 @@ template_taxonomic_coverage <- function(
   taxa.table,
   taxa.col,
   taxa.name.type,
-  taxa.authority,
-  x = NULL, 
-  write.file = TRUE
+  taxa.authority, 
+  write.file = TRUE,
+  x = NULL
 ){
   
   message('Templating taxonomic coverage ...')

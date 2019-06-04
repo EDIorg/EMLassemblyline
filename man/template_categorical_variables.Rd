@@ -16,11 +16,11 @@ template_categorical_variables(
 
 \item{data.path}{(character) Path to the data directory.}
 
+\item{write.file}{(logical; optional) Whether to write the template file.}
+
 \item{x}{(named list; optional) Alternative input to 
 \code{template_categorical_variables()}. Use \code{template_arguments()} 
 to create \code{x}.}
-
-\item{write.file}{(logical; optional) Whether to write the template file.}
 }
 \value{
 \strong{catvars_*.txt} The tab delimited categorical variable 

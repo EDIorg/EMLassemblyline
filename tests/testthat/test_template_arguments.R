@@ -224,9 +224,9 @@ testthat::test_that('Template inputs (.txt)', {
   
 })
 
-# Inputs = templates (.docx) --------------------------------------------------
+# Inputs = templates (docx) ---------------------------------------------------
 
-testthat::test_that('Template inputs (.docx)', {
+testthat::test_that('Template inputs (docx)', {
   
   # Make function call
   
@@ -326,9 +326,9 @@ testthat::test_that('Template inputs (.docx)', {
   
 })
 
-# Inputs = templates (.md) ----------------------------------------------------
+# Inputs = templates (md) -----------------------------------------------------
 
-testthat::test_that('Template inputs (.md)', {
+testthat::test_that('Template inputs (md)', {
   
   # Make function call
   
@@ -594,9 +594,9 @@ testthat::test_that('Inputs = templates (.txt) and data tables', {
   
 })
 
-# Inputs = templates (.docx) and data tables ----------------------------------
+# Inputs = templates (docx) and data tables -----------------------------------
 
-testthat::test_that('Inputs = templates (.docx) and data tables', {
+testthat::test_that('Inputs = templates (docx) and data tables', {
   
   # Make function call
   
@@ -760,9 +760,9 @@ testthat::test_that('Inputs = templates (.docx) and data tables', {
   
 })
 
-# Inputs = templates (.md) and data tables ------------------------------------
+# Inputs = templates (md) and data tables -------------------------------------
 
-testthat::test_that('Inputs = templates (.md) and data tables', {
+testthat::test_that('Inputs = templates (md) and data tables', {
   
   # Make function call
   
@@ -1044,9 +1044,9 @@ testthat::test_that('Inputs = templates (.txt) and other entities', {
   
 })
 
-# Inputs = templates (.docx) and other entities -------------------------------
+# Inputs = templates (docx) and other entities --------------------------------
 
-testthat::test_that('Inputs = templates (.docx) and other entities', {
+testthat::test_that('Inputs = templates (docx) and other entities', {
   
   # Make function call
   
@@ -1162,9 +1162,9 @@ testthat::test_that('Inputs = templates (.docx) and other entities', {
   
 })
 
-# Inputs = templates (.md) and other entities ---------------------------------
+# Inputs = templates (md) and other entities ---------------------------------
 
-testthat::test_that('Inputs = templates (.md) and other entities', {
+testthat::test_that('Inputs = templates (md) and other entities', {
   
   # Make function call
   
@@ -1431,9 +1431,9 @@ testthat::test_that('Inputs = templates (.txt), data tables, and other entities'
   
 })
 
-# Inputs = templates (.docx), data tables, and other entities -----------------
+# Inputs = templates (docx), data tables, and other entities -----------------
 
-testthat::test_that('Inputs = templates (.docx), data tables, and other entities', {
+testthat::test_that('Inputs = templates (docx), data tables, and other entities', {
   
   # Make function call
   
@@ -1582,9 +1582,9 @@ testthat::test_that('Inputs = templates (.docx), data tables, and other entities
   
 })
 
-# Inputs = templates (.md), data tables, and other entities -------------------
+# Inputs = templates (md), data tables, and other entities --------------------
 
-testthat::test_that('Inputs = templates (.md), data tables, and other entities', {
+testthat::test_that('Inputs = templates (md), data tables, and other entities', {
   
   # Make function call
   
