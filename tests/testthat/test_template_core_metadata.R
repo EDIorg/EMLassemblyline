@@ -50,7 +50,7 @@ testthat::test_that('Write to path', {
           package = 'EMLassemblyline'
         ),
         license = 'CC0',
-        file.type = 'txtdocx'
+        file.type = '.txtdocx'
       )
     )
   )
@@ -108,7 +108,7 @@ testthat::test_that('Write to path', {
     )
   )
 
-  # file.type = 'docx' writes MS Word files to path
+  # file.type = '.docx' writes MS Word files to path
   
   file.remove(paste0(tempdir(), 
                      c('/abstract.txt',
@@ -119,7 +119,7 @@ testthat::test_that('Write to path', {
     template_core_metadata(
       path = tempdir(),
       license = 'CC0',
-      file.type = 'docx',
+      file.type = '.docx',
       write.file = TRUE
     )
   )
@@ -131,7 +131,7 @@ testthat::test_that('Write to path', {
     )
   )
   
-  # file.type = 'md' writes Markdown files to path
+  # file.type = '.md' writes Markdown files to path
 
   file.remove(paste0(tempdir(), 
                      c('/abstract.docx',
@@ -142,7 +142,7 @@ testthat::test_that('Write to path', {
     template_core_metadata(
       path = tempdir(),
       license = 'CC0',
-      file.type = 'md',
+      file.type = '.md',
       write.file = TRUE
     )
   )
@@ -280,14 +280,14 @@ testthat::test_that('Write to x', {
     )
   )
   
-  # file.type = 'docx' writes MS Word files to path --------------------------
+  # file.type = '.docx' writes MS Word files to path --------------------------
   
   x <- template_arguments()
   x <- x$x
 
   output <- template_core_metadata(
     license = 'CC0',
-    file.type = 'docx',
+    file.type = '.docx',
     x = x
   )
 
@@ -299,14 +299,14 @@ testthat::test_that('Write to x', {
     )
   }
   
-  # file.type = 'md' writes Markdown files to path ---------------------------
+  # file.type = '.md' writes Markdown files to path ---------------------------
   
   x <- template_arguments()
   x <- x$x
   
   output <- template_core_metadata(
     license = 'CC0',
-    file.type = 'md',
+    file.type = '.md',
     x = x
   )
   

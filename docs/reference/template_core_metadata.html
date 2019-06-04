@@ -147,7 +147,7 @@
     <pre class="usage"><span class='fu'>template_core_metadata</span>(
       <span class='no'>path</span>,
       <span class='no'>license</span>,
-      <span class='kw'>file.type</span> <span class='kw'>=</span> <span class='st'>'txt'</span>,
+      <span class='kw'>file.type</span> <span class='kw'>=</span> <span class='st'>'.txt'</span>,
       <span class='kw'>write.file</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
       <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
     )</pre>
@@ -168,8 +168,8 @@
     <tr>
       <th>file.type</th>
       <td><p>(character; optional) File type for abstract, methods, and additional 
-info metadata templates. Can be: 'txt' (plain text), 'docx' (MS Word),
-or 'md' (markdown).</p></td>
+info metadata templates. Can be: '.txt' (plain text), '.docx' (MS Word),
+or '.md' (markdown).</p></td>
     </tr>
     <tr>
       <th>write.file</th>
@@ -209,74 +209,64 @@ to create <code>x</code>.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'># Initialize data package directory for template_core_metadata()
-file.copy(
-  from = system.file('/examples/pkg_250', package = 'EMLassemblyline'),
-  to = tempdir(),
-  recursive = TRUE
-)
+    <pre class="examples"><div class='input'><span class='co'># Initialize data package directory for template_core_metadata()</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/files'>file.copy</a></span>(
+  <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>'/examples/pkg_250'</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'EMLassemblyline'</span>),
+  <span class='kw'>to</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),
+  <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='co'># Set working directory</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/getwd'>setwd</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(), <span class='st'>'/pkg_250'</span>))
 
-# Set working directory
-setwd(paste0(tempdir(), '/pkg_250'))
-
-# View directory contents (NOTE: Directory is empty)
-dir('./metadata_templates')
-
-# Template core metadata
-template_core_metadata(
-  path = './metadata_templates',
-  license = 'CC0'
-)
-
-# View directory contents (NOTE: Templates exist)
-dir('./metadata_templates')
-
-# Rerunning template_core_metadata() does not overwrite files
-template_core_metadata(
-  path = './metadata_templates',
-  license = 'CC0'
-)
-
-
-# Use docx files for abstract, methods, and additional_info
-# First remove abstract, methods, and additional_info templates
-file.remove(
-  paste0(
-    './metadata_templates/abstract.txt',
-    './metadata_templates/methods.txt',
-    './metadata_templates/additional_info.txt
+<span class='co'># View directory contents (NOTE: Directory is empty)</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='st'>'./metadata_templates'</span>)</div><div class='output co'>#&gt; [1] "README.txt"</div><div class='input'>
+<span class='co'># Template core metadata</span>
+<span class='fu'>template_core_metadata</span>(
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./metadata_templates'</span>,
+  <span class='kw'>license</span> <span class='kw'>=</span> <span class='st'>'CC0'</span>
+)</div><div class='output co'>#&gt; <span class='message'>Templating core metadata ...</span></div><div class='output co'>#&gt; <span class='message'>abstract.txt</span></div><div class='output co'>#&gt; <span class='message'>additional_info.txt</span></div><div class='output co'>#&gt; <span class='message'>intellectual_rights.txt</span></div><div class='output co'>#&gt; <span class='message'>keywords.txt.</span></div><div class='output co'>#&gt; <span class='message'>methods.txt</span></div><div class='output co'>#&gt; <span class='message'>personnel.txt</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
+<span class='co'># View directory contents (NOTE: Templates exist)</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='st'>'./metadata_templates'</span>)</div><div class='output co'>#&gt; [1] "abstract.txt"            "additional_info.txt"    
+#&gt; [3] "intellectual_rights.txt" "keywords.txt"           
+#&gt; [5] "methods.txt"             "personnel.txt"          
+#&gt; [7] "README.txt"             </div><div class='input'>
+<span class='co'># Rerunning template_core_metadata() does not overwrite files</span>
+<span class='fu'>template_core_metadata</span>(
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./metadata_templates'</span>,
+  <span class='kw'>license</span> <span class='kw'>=</span> <span class='st'>'CC0'</span>
+)</div><div class='output co'>#&gt; <span class='message'>Templating core metadata ...</span></div><div class='output co'>#&gt; <span class='message'>abstract.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>additional_info.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>intellectual_rights.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>keywords.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>methods.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>personnel.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
+<span class='co'># Use docx files for abstract, methods, and additional_info</span>
+<span class='co'># First remove abstract, methods, and additional_info templates</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/files'>file.remove</a></span>(
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(
+    <span class='st'>'./metadata_templates/abstract.txt'</span>,
+    <span class='st'>'./metadata_templates/methods.txt'</span>,
+    <span class='st'>'./metadata_templates/additional_info.txt'</span>
   )
-)
-# Create docx templates
-template_core_metadata(
-  path = './metadata_templates',
-  license = 'CC0',
-  file.type = 'docx
-)
-
-# Use md files for abstract, methods, and additional_info
-# First remove abstract, methods, and additional_info templates
-file.remove(
-  paste0(
-    './metadata_templates/abstract.docx',
-    './metadata_templates/methods.docx',
-    './metadata_templates/additional_info.docx
+)</div><div class='output co'>#&gt; [1] TRUE TRUE TRUE</div><div class='input'>
+<span class='co'># Create docx templates</span>
+<span class='fu'>template_core_metadata</span>(
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./metadata_templates'</span>,
+  <span class='kw'>license</span> <span class='kw'>=</span> <span class='st'>'CC0'</span>,
+  <span class='kw'>file.type</span> <span class='kw'>=</span> <span class='st'>'.docx'</span>
+)</div><div class='output co'>#&gt; <span class='message'>Templating core metadata ...</span></div><div class='output co'>#&gt; <span class='message'>abstract.docx</span></div><div class='output co'>#&gt; <span class='message'>additional_info.docx</span></div><div class='output co'>#&gt; <span class='message'>intellectual_rights.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>keywords.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>methods.docx</span></div><div class='output co'>#&gt; <span class='message'>personnel.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
+<span class='co'># Use md files for abstract, methods, and additional_info</span>
+<span class='co'># First remove abstract, methods, and additional_info templates</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/files'>file.remove</a></span>(
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(
+    <span class='st'>'./metadata_templates/abstract.docx'</span>,
+    <span class='st'>'./metadata_templates/methods.docx'</span>,
+    <span class='st'>'./metadata_templates/additional_info.docx'</span>
   )
-)
-# Create md templates
-template_core_metadata(
-  path = './metadata_templates',
-  license = 'CC0',
-  file.type = 'md
-)
-
-# Clean up
-unlink('.', recursive = TRUE)
-    
-</div><div class='output co'>#&gt; <span class='error'>Error: &lt;text&gt;:41:11: unexpected symbol</span>
-#&gt; <span class='error'>40: template_core_metadata(</span>
-#&gt; <span class='error'>41:   path = '.</span>
-#&gt; <span class='error'>              ^</span></div></pre>
+)</div><div class='output co'>#&gt; [1] TRUE TRUE TRUE</div><div class='input'>
+<span class='co'># Create md templates</span>
+<span class='fu'>template_core_metadata</span>(
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./metadata_templates'</span>,
+  <span class='kw'>license</span> <span class='kw'>=</span> <span class='st'>'CC0'</span>,
+  <span class='kw'>file.type</span> <span class='kw'>=</span> <span class='st'>'.md'</span>
+)</div><div class='output co'>#&gt; <span class='message'>Templating core metadata ...</span></div><div class='output co'>#&gt; <span class='message'>abstract.md</span></div><div class='output co'>#&gt; <span class='message'>additional_info.md</span></div><div class='output co'>#&gt; <span class='message'>intellectual_rights.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>keywords.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>methods.md</span></div><div class='output co'>#&gt; <span class='message'>personnel.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
+<span class='co'># Clean up</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/unlink'>unlink</a></span>(<span class='st'>'.'</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

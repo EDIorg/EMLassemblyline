@@ -7,7 +7,7 @@
 template_core_metadata(
       path,
       license,
-      file.type = 'txt',
+      file.type = '.txt',
       write.file = TRUE,
       x = NULL
     )
@@ -20,8 +20,8 @@ template_core_metadata(
 \href{https://creativecommons.org/licenses/by/4.0/}{"CCBY"}.}
 
 \item{file.type}{(character; optional) File type for abstract, methods, and additional 
-info metadata templates. Can be: 'txt' (plain text), 'docx' (MS Word),
-or 'md' (markdown).}
+info metadata templates. Can be: '.txt' (plain text), '.docx' (MS Word),
+or '.md' (markdown).}
 
 \item{write.file}{(logical; optional) Whether to write the template files.}
 
@@ -83,37 +83,38 @@ template_core_metadata(
   license = 'CC0'
 )
 
-
 # Use docx files for abstract, methods, and additional_info
 # First remove abstract, methods, and additional_info templates
 file.remove(
-  paste0(
+  c(
     './metadata_templates/abstract.txt',
     './metadata_templates/methods.txt',
-    './metadata_templates/additional_info.txt
+    './metadata_templates/additional_info.txt'
   )
 )
+
 # Create docx templates
 template_core_metadata(
   path = './metadata_templates',
   license = 'CC0',
-  file.type = 'docx
+  file.type = '.docx'
 )
 
 # Use md files for abstract, methods, and additional_info
 # First remove abstract, methods, and additional_info templates
 file.remove(
-  paste0(
+  c(
     './metadata_templates/abstract.docx',
     './metadata_templates/methods.docx',
-    './metadata_templates/additional_info.docx
+    './metadata_templates/additional_info.docx'
   )
 )
+
 # Create md templates
 template_core_metadata(
   path = './metadata_templates',
   license = 'CC0',
-  file.type = 'md
+  file.type = '.md'
 )
 
 # Clean up

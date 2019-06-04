@@ -9,7 +9,7 @@
 #'     template_core_metadata(
 #'       path,
 #'       license,
-#'       file.type = 'txt',
+#'       file.type = '.txt',
 #'       write.file = TRUE,
 #'       x = NULL
 #'     )
@@ -22,8 +22,8 @@
 #'     \href{https://creativecommons.org/licenses/by/4.0/}{"CCBY"}.
 #' @param file.type
 #'     (character; optional) File type for abstract, methods, and additional 
-#'     info metadata templates. Can be: 'txt' (plain text), 'docx' (MS Word),
-#'     or 'md' (markdown).
+#'     info metadata templates. Can be: '.txt' (plain text), '.docx' (MS Word),
+#'     or '.md' (markdown).
 #' @param write.file
 #'     (logical; optional) Whether to write the template files.
 #' @param x
@@ -80,37 +80,38 @@
 #'   license = 'CC0'
 #' )
 #' 
-#' 
 #' # Use docx files for abstract, methods, and additional_info
 #' # First remove abstract, methods, and additional_info templates
 #' file.remove(
-#'   paste0(
+#'   c(
 #'     './metadata_templates/abstract.txt',
 #'     './metadata_templates/methods.txt',
-#'     './metadata_templates/additional_info.txt
+#'     './metadata_templates/additional_info.txt'
 #'   )
 #' )
+#' 
 #' # Create docx templates
 #' template_core_metadata(
 #'   path = './metadata_templates',
 #'   license = 'CC0',
-#'   file.type = 'docx
+#'   file.type = '.docx'
 #' )
 #' 
 #' # Use md files for abstract, methods, and additional_info
 #' # First remove abstract, methods, and additional_info templates
 #' file.remove(
-#'   paste0(
+#'   c(
 #'     './metadata_templates/abstract.docx',
 #'     './metadata_templates/methods.docx',
-#'     './metadata_templates/additional_info.docx
+#'     './metadata_templates/additional_info.docx'
 #'   )
 #' )
+#' 
 #' # Create md templates
 #' template_core_metadata(
 #'   path = './metadata_templates',
 #'   license = 'CC0',
-#'   file.type = 'md
+#'   file.type = '.md'
 #' )
 #' 
 #' # Clean up
@@ -122,7 +123,7 @@
 template_core_metadata <- function(
   path, 
   license, 
-  file.type = 'txt', 
+  file.type = '.txt', 
   write.file = TRUE,
   x = NULL){
   
@@ -178,7 +179,7 @@ template_core_metadata <- function(
     value <- file.copy(
       from = system.file(
         paste0(
-          '/templates/abstract.',
+          '/templates/abstract',
           file.type
         ),
         package = 'EMLassemblyline'
@@ -186,7 +187,7 @@ template_core_metadata <- function(
       to = paste0(
         path,
         paste0(
-          '/abstract.',
+          '/abstract',
           file.type
         )
       )
@@ -195,9 +196,9 @@ template_core_metadata <- function(
     # Send message
     
     if (isTRUE(value)){
-      message(paste0('abstract.', file.type))
+      message(paste0('abstract', file.type))
     } else {
-      message(paste0('abstract.', file.type, ' already exists!'))
+      message(paste0('abstract', file.type, ' already exists!'))
     }
     
     # If adding to x ...
@@ -211,7 +212,7 @@ template_core_metadata <- function(
       x$template[['abstract']]$content <- EML::set_TextType(
         file = system.file(
           paste0(
-            '/templates/abstract.',
+            '/templates/abstract',
             file.type
           ),
           package = 'EMLassemblyline'
@@ -220,11 +221,11 @@ template_core_metadata <- function(
       
       # Send message
       
-      message(paste0('abstract.', file.type))
+      message(paste0('abstract', file.type))
       
     } else {
       
-      message(paste0('abstract.', file.type, ' already exists!'))
+      message(paste0('abstract', file.type, ' already exists!'))
       
     }
     
@@ -241,7 +242,7 @@ template_core_metadata <- function(
     value <- file.copy(
       from = system.file(
         paste0(
-          '/templates/additional_info.',
+          '/templates/additional_info',
           file.type
         ),
         package = 'EMLassemblyline'
@@ -249,7 +250,7 @@ template_core_metadata <- function(
       to = paste0(
         path,
         paste0(
-          '/additional_info.',
+          '/additional_info',
           file.type
         )
       )
@@ -258,9 +259,9 @@ template_core_metadata <- function(
     # Send message
     
     if (isTRUE(value)){
-      message(paste0('additional_info.', file.type))
+      message(paste0('additional_info', file.type))
     } else {
-      message(paste0('additional_info.', file.type, ' already exists!'))
+      message(paste0('additional_info', file.type, ' already exists!'))
     }
     
     # If adding to x ...
@@ -274,7 +275,7 @@ template_core_metadata <- function(
       x$template[['additional_info']]$content <- EML::set_TextType(
         file = system.file(
           paste0(
-            '/templates/additional_info.',
+            '/templates/additional_info',
             file.type
           ),
           package = 'EMLassemblyline'
@@ -283,11 +284,11 @@ template_core_metadata <- function(
       
       # Send message
       
-      message(paste0('additional_info.', file.type))
+      message(paste0('additional_info', file.type))
       
     } else {
       
-      message(paste0('additional_info.', file.type, ' already exists!'))
+      message(paste0('additional_info', file.type, ' already exists!'))
       
     }
     
@@ -477,7 +478,7 @@ template_core_metadata <- function(
     value <- file.copy(
       from = system.file(
         paste0(
-          '/templates/methods.',
+          '/templates/methods',
           file.type
         ),
         package = 'EMLassemblyline'
@@ -485,7 +486,7 @@ template_core_metadata <- function(
       to = paste0(
         path,
         paste0(
-          '/methods.',
+          '/methods',
           file.type
         )
       )
@@ -494,9 +495,9 @@ template_core_metadata <- function(
     # Send message
     
     if (isTRUE(value)){
-      message(paste0('methods.', file.type))
+      message(paste0('methods', file.type))
     } else {
-      message(paste0('methods.', file.type, ' already exists!'))
+      message(paste0('methods', file.type, ' already exists!'))
     }
     
     # If adding to x ...
@@ -510,7 +511,7 @@ template_core_metadata <- function(
       x$template[['methods']]$content <- EML::set_methods(
         methods_file = system.file(
           paste0(
-            '/templates/methods.',
+            '/templates/methods',
             file.type
           ),
           package = 'EMLassemblyline'
@@ -519,11 +520,11 @@ template_core_metadata <- function(
       
       # Send message
       
-      message(paste0('methods.', file.type))
+      message(paste0('methods', file.type))
       
     } else {
       
-      message(paste0('methods.', file.type, ' already exists!'))
+      message(paste0('methods', file.type, ' already exists!'))
       
     }
     
