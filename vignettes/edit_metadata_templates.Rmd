@@ -7,8 +7,8 @@ output: html_document
 
 # Parameterize
 
-dir_path <- '/Users/Colin/Desktop/data_packages'
-data_path <- '/Users/Colin/Desktop/data_packages/pkg_301/data_objects'
+dir_path <- '/Users/csmith/Desktop/data_packages'
+data_path <- '/Users/csmith/Desktop/data_packages/pkg_301/data_objects'
 
 # Initialize .Rmd
 
@@ -19,7 +19,7 @@ library(EMLassemblyline)
 # Clear contents of data package directory
 
 unlink(
-  x = '/Users/Colin/Desktop/data_packages/pkg_301',
+  x = '/Users/csmith/Desktop/data_packages/pkg_301',
   recursive = TRUE
 )
 
@@ -116,7 +116,7 @@ template_geographic_coverage(
 
 # Set working directory
 
-knitr::opts_knit$set(root.dir = 'C:\\Users\\Colin\\Desktop\\data_packages\\pkg_301')
+knitr::opts_knit$set(root.dir = '/Users/csmith/Desktop/data_packages/pkg_301')
 
 ```
 

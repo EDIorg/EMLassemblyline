@@ -83,9 +83,12 @@
 #' @export     
 #'     
 
-template_table_attributes <- function(path, data.path = path, 
-                                      data.table = NULL, x = NULL, 
-                                      write.file = TRUE){
+template_table_attributes <- function(
+  path, 
+  data.path = path, 
+  data.table = NULL, 
+  write.file = TRUE,
+  x = NULL){
   
   message('Templating table attributes ...')
   

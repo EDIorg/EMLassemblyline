@@ -526,3 +526,56 @@ testthat::test_that('Test usage with x inputs', {
   
 })
 
+# Test usage with 'empty = TRUE' ----------------------------------------------
+
+testthat::test_that('Test usage with "empty = TRUE"', {
+  
+  # Clean tempdir() of geographic_coverage.txt
+  
+  unlink(
+    paste0(
+      tempdir(),
+      '/geographic_coverage.txt'
+    ),
+    force = TRUE
+  )
+  
+  # Writing to file results in messages
+  
+  expect_message(
+    template_geographic_coverage(
+      path = tempdir(), 
+      empty = TRUE
+    )
+  )
+  
+  # File has column names and no rows
+  
+  input <- utils::read.table(
+    paste0(
+      tempdir(), 
+      '/geographic_coverage.txt'
+    ),
+    header = T,
+    sep="\t",
+    quote="\"",
+    as.is=TRUE,
+    comment.char = "",
+    fill = T,
+    na.strings = "NA",
+    fileEncoding = "UTF-8"
+  )
+  
+  expect_true(
+    all(colnames(input) %in% 
+          c('geographicDescription', 'northBoundingCoordinate', 
+            'southBoundingCoordinate', 'eastBoundingCoordinate',
+            'westBoundingCoordinate'))
+  )
+  
+  expect_equal(
+    nrow(input),
+    0
+  )
+
+})

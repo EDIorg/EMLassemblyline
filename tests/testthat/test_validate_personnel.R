@@ -1,6 +1,5 @@
 context('Validate personnel')
 library(EMLassemblyline)
-library(EML103)
 
 # Parameterize ----------------------------------------------------------------
 

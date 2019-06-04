@@ -10,7 +10,8 @@ template_geographic_coverage(
       data.table, 
       lat.col, 
       lon.col, 
-      site.col, 
+      site.col,
+      empty = FALSE, 
       write.file = TRUE,
       x = NULL
     )
@@ -30,11 +31,13 @@ degrees, where longitudes west of the prime meridian are negative.}
 
 \item{site.col}{(character) Column name containing site names.}
 
+\item{empty}{(logical) Whether to write an empty template file.}
+
+\item{write.file}{(logical; optional) Whether to write the template file.}
+
 \item{x}{(named list; optional) Alternative input to 
 \code{template_geographical_coverage()}. Use \code{template_arguments()} 
 to create \code{x}.}
-
-\item{write.file}{(logical; optional) Whether to write the template file.}
 }
 \value{
 \strong{geographic_coverage.txt} The tab delimited geographic coverage 
@@ -85,6 +88,15 @@ template_geographic_coverage(
   site.col = 'site_name',
   lat.col = 'site_lat',
   lon.col = 'site_lon'
+)
+
+# Remove template from directory
+file.remove('./metadata_templates/geographic_coverage.txt')
+
+# Create an empty geographic_coverage.txt template
+template_geographic_coverage(
+  path = './metadata_templates',
+  empty = TRUE
 )
 
 # Clean up

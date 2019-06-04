@@ -7,6 +7,7 @@
 template_core_metadata(
       path,
       license,
+      file.type = '.txt',
       write.file = TRUE,
       x = NULL
     )
@@ -18,21 +19,25 @@ template_core_metadata(
 \href{https://creativecommons.org/publicdomain/zero/1.0/}{"CC0"} or 
 \href{https://creativecommons.org/licenses/by/4.0/}{"CCBY"}.}
 
+\item{file.type}{(character; optional) File type for abstract, methods, and additional 
+info metadata templates. Can be: '.txt' (plain text), '.docx' (MS Word),
+or '.md' (markdown).}
+
+\item{write.file}{(logical; optional) Whether to write the template files.}
+
 \item{x}{(named list; optional) Alternative input to 
 \code{template_core_metadatta()}. Use \code{template_arguments()} 
 to create \code{x}.}
-
-\item{write.file}{(logical; optional) Whether to write the template files.}
 }
 \value{
 \itemize{
-        \item{\strong{abstract.txt} The abstract template.}
-        \item{\strong{additional_info.txt} The template for miscellaneous
+        \item{\strong{abstract} The abstract template.}
+        \item{\strong{additional_info} The template for miscellaneous
         information.}
         \item{\strong{intellectual_rights.txt} The intellectual rights 
         license with the text of CC0 or CCBY.}
         \item{\strong{keywords.txt} The tab delimited keywords template.}
-        \item{\strong{methods.txt} The methods template.}
+        \item{\strong{methods} The methods template.}
         \item{\strong{personnel.txt} The tab delimited personnel template 
         for information on persons and funding involved in the creation of 
         the data package.}
@@ -76,6 +81,40 @@ dir('./metadata_templates')
 template_core_metadata(
   path = './metadata_templates',
   license = 'CC0'
+)
+
+# Use docx files for abstract, methods, and additional_info
+# First remove abstract, methods, and additional_info templates
+file.remove(
+  c(
+    './metadata_templates/abstract.txt',
+    './metadata_templates/methods.txt',
+    './metadata_templates/additional_info.txt'
+  )
+)
+
+# Create docx templates
+template_core_metadata(
+  path = './metadata_templates',
+  license = 'CC0',
+  file.type = '.docx'
+)
+
+# Use md files for abstract, methods, and additional_info
+# First remove abstract, methods, and additional_info templates
+file.remove(
+  c(
+    './metadata_templates/abstract.docx',
+    './metadata_templates/methods.docx',
+    './metadata_templates/additional_info.docx'
+  )
+)
+
+# Create md templates
+template_core_metadata(
+  path = './metadata_templates',
+  license = 'CC0',
+  file.type = '.md'
 )
 
 # Clean up

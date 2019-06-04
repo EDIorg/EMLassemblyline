@@ -122,9 +122,9 @@ testthat::test_that('Inputs = NULL', {
 
 })
 
-# Inputs = templates ----------------------------------------------------------
+# Inputs = templates (.txt) ---------------------------------------------------
 
-testthat::test_that('Template inputs', {
+testthat::test_that('Template inputs (.txt)', {
   
   # Make function call
   
@@ -224,9 +224,213 @@ testthat::test_that('Template inputs', {
   
 })
 
-# Inputs = templates and data tables ------------------------------------------
+# Inputs = templates (docx) ---------------------------------------------------
 
-testthat::test_that('Inputs = templates and data tables', {
+testthat::test_that('Template inputs (docx)', {
+  
+  # Make function call
+  
+  output <- template_arguments(
+    path = system.file(
+      '/examples/templates_docx',
+      package = 'EMLassemblyline'
+    )
+  )
+  
+  # Class is list
+  
+  expect_equal(
+    class(output), 
+    'list'
+  )
+  
+  # Level-1 has argument names
+  
+  expect_equal(
+    all(
+      names(output) %in% attr_args$argument_name
+    ),
+    TRUE
+  )
+  
+  # Level-2 has templates, data tables, and other entities
+  
+  expect_equal(
+    all(
+      names(output$x) %in% c('template', 'data.table', 'other.entity')
+    ),
+    TRUE
+  )
+  
+  expect_equal(
+    output$x$data.table,
+    NULL
+  )
+  
+  expect_equal(
+    output$x$other.entity,
+    NULL
+  )
+  
+  # Level-3 has all template possiblities
+  
+  for (i in 1:length(attr_templates$regexpr)){
+    
+    expect_equal(
+      any(
+        stringr::str_detect(
+          string = names(output$x$template),
+          pattern = attr_templates$regexpr[i]
+        )
+      ),
+      TRUE
+    )
+    
+  }
+  
+  # Level-4 has content
+  
+  for (i in 1:length(output$x$template)){
+    
+    expect_equal(
+      all(
+        names(output$x$template[[i]]) %in% 'content'
+      ),
+      TRUE
+    )
+    
+  }
+  
+  for (i in 1:length(output$x$template)){
+    
+    expect_equal(
+      class(output$x$template[[i]]$content)[1] %in% attr_templates$class,
+      TRUE
+    )
+    
+  }
+  
+  # New geographic_coverage.txt is supported
+  
+  expect_equal(
+    class(
+      template_arguments(
+        path = system.file(
+          '/examples/templates_new_geocoverage',
+          package = 'EMLassemblyline'
+        )
+      )
+    ),
+    'list'
+  )
+  
+})
+
+# Inputs = templates (md) -----------------------------------------------------
+
+testthat::test_that('Template inputs (md)', {
+  
+  # Make function call
+  
+  output <- template_arguments(
+    path = system.file(
+      '/examples/templates_md',
+      package = 'EMLassemblyline'
+    )
+  )
+  
+  # Class is list
+  
+  expect_equal(
+    class(output), 
+    'list'
+  )
+  
+  # Level-1 has argument names
+  
+  expect_equal(
+    all(
+      names(output) %in% attr_args$argument_name
+    ),
+    TRUE
+  )
+  
+  # Level-2 has templates, data tables, and other entities
+  
+  expect_equal(
+    all(
+      names(output$x) %in% c('template', 'data.table', 'other.entity')
+    ),
+    TRUE
+  )
+  
+  expect_equal(
+    output$x$data.table,
+    NULL
+  )
+  
+  expect_equal(
+    output$x$other.entity,
+    NULL
+  )
+  
+  # Level-3 has all template possiblities
+  
+  for (i in 1:length(attr_templates$regexpr)){
+    
+    expect_equal(
+      any(
+        stringr::str_detect(
+          string = names(output$x$template),
+          pattern = attr_templates$regexpr[i]
+        )
+      ),
+      TRUE
+    )
+    
+  }
+  
+  # Level-4 has content
+  
+  for (i in 1:length(output$x$template)){
+    
+    expect_equal(
+      all(
+        names(output$x$template[[i]]) %in% 'content'
+      ),
+      TRUE
+    )
+    
+  }
+  
+  for (i in 1:length(output$x$template)){
+    
+    expect_equal(
+      class(output$x$template[[i]]$content)[1] %in% attr_templates$class,
+      TRUE
+    )
+    
+  }
+  
+  # New geographic_coverage.txt is supported
+  
+  expect_equal(
+    class(
+      template_arguments(
+        path = system.file(
+          '/examples/templates_new_geocoverage',
+          package = 'EMLassemblyline'
+        )
+      )
+    ),
+    'list'
+  )
+  
+})
+
+# Inputs = templates (.txt) and data tables -----------------------------------
+
+testthat::test_that('Inputs = templates (.txt) and data tables', {
   
   # Make function call
   
@@ -390,9 +594,341 @@ testthat::test_that('Inputs = templates and data tables', {
   
 })
 
-# Inputs = templates and other entities ---------------------------------------
+# Inputs = templates (docx) and data tables -----------------------------------
 
-testthat::test_that('Inputs = templates and other entities', {
+testthat::test_that('Inputs = templates (docx) and data tables', {
+  
+  # Make function call
+  
+  output <- template_arguments(
+    path = system.file(
+      '/examples/templates_docx',
+      package = 'EMLassemblyline'
+    ),
+    data.path = system.file(
+      '/examples/data',
+      package = 'EMLassemblyline'
+    ),
+    data.table = c(
+      'decomp.csv',
+      'nitrogen.csv'
+    )
+  )
+  
+  # Class is list
+  
+  expect_equal(
+    class(output), 
+    'list'
+  )
+  
+  # Level-1 has argument names
+  
+  expect_equal(
+    all(
+      names(output) %in% attr_args$argument_name
+    ),
+    TRUE
+  )
+  
+  # Level-2 has templates, data tables, and other entities
+  
+  expect_equal(
+    all(
+      names(output$x) %in% c('template', 'data.table', 'other.entity')
+    ),
+    TRUE
+  )
+  
+  expect_equal(
+    !is.null(output$x$data.table),
+    TRUE
+  )
+  
+  expect_equal(
+    output$x$other.entity,
+    NULL
+  )
+  
+  # Level-3 has all template possiblities
+  
+  for (i in 1:length(attr_templates$regexpr)){
+    
+    expect_equal(
+      any(
+        stringr::str_detect(
+          string = names(output$x$template),
+          pattern = attr_templates$regexpr[i]
+        )
+      ),
+      TRUE
+    )
+    
+  }
+  
+  # Level-3 has data table names found at data.path
+  
+  expect_equal(
+    all(
+      names(output$x$data.table) %in% data_path_files
+    ),
+    TRUE
+  )
+  
+  # Level-4 has template content
+  
+  for (i in 1:length(output$x$template)){
+    
+    expect_equal(
+      all(
+        names(output$x$template[[i]]) %in% 'content'
+      ),
+      TRUE
+    )
+    
+    expect_equal(
+      class(output$x$template[[i]]$content)[1] %in% attr_templates$class,
+      TRUE
+    )
+    
+  }
+  
+  # Level-4 has data table content
+  
+  for (i in 1:length(output$x$data.table)){
+    
+    expect_equal(
+      all(
+        names(output$x$data.table[[i]]) %in% 'content'
+      ),
+      TRUE
+    )
+    
+    expect_equal(
+      class(
+        output$x$data.table[[i]]$content
+      ),
+      'data.frame'
+    )
+    
+  }
+  
+  # Use of the sep argument helps read in data tables
+  
+  expect_equal(
+    class(
+      template_arguments(
+        path = system.file(
+          '/examples/templates',
+          package = 'EMLassemblyline'
+        ),
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        data.table = c(
+          'decomp.csv',
+          'nitrogen.csv'
+        ),
+        sep = ','
+      ) 
+    ),
+    'list'
+  )
+  
+  # Missing file extensions are supported
+  
+  output <- template_arguments(
+    path = system.file(
+      '/examples/templates',
+      package = 'EMLassemblyline'
+    ),
+    data.path = system.file(
+      '/examples/data',
+      package = 'EMLassemblyline'
+    ),
+    data.table = c(
+      'decomp',
+      'nitrogen.csv'
+    )
+  )
+  
+  expect_equal(
+    class(output),
+    'list'
+  )
+  
+})
+
+# Inputs = templates (md) and data tables -------------------------------------
+
+testthat::test_that('Inputs = templates (md) and data tables', {
+  
+  # Make function call
+  
+  output <- template_arguments(
+    path = system.file(
+      '/examples/templates_md',
+      package = 'EMLassemblyline'
+    ),
+    data.path = system.file(
+      '/examples/data',
+      package = 'EMLassemblyline'
+    ),
+    data.table = c(
+      'decomp.csv',
+      'nitrogen.csv'
+    )
+  )
+  
+  # Class is list
+  
+  expect_equal(
+    class(output), 
+    'list'
+  )
+  
+  # Level-1 has argument names
+  
+  expect_equal(
+    all(
+      names(output) %in% attr_args$argument_name
+    ),
+    TRUE
+  )
+  
+  # Level-2 has templates, data tables, and other entities
+  
+  expect_equal(
+    all(
+      names(output$x) %in% c('template', 'data.table', 'other.entity')
+    ),
+    TRUE
+  )
+  
+  expect_equal(
+    !is.null(output$x$data.table),
+    TRUE
+  )
+  
+  expect_equal(
+    output$x$other.entity,
+    NULL
+  )
+  
+  # Level-3 has all template possiblities
+  
+  for (i in 1:length(attr_templates$regexpr)){
+    
+    expect_equal(
+      any(
+        stringr::str_detect(
+          string = names(output$x$template),
+          pattern = attr_templates$regexpr[i]
+        )
+      ),
+      TRUE
+    )
+    
+  }
+  
+  # Level-3 has data table names found at data.path
+  
+  expect_equal(
+    all(
+      names(output$x$data.table) %in% data_path_files
+    ),
+    TRUE
+  )
+  
+  # Level-4 has template content
+  
+  for (i in 1:length(output$x$template)){
+    
+    expect_equal(
+      all(
+        names(output$x$template[[i]]) %in% 'content'
+      ),
+      TRUE
+    )
+    
+    expect_equal(
+      class(output$x$template[[i]]$content)[1] %in% attr_templates$class,
+      TRUE
+    )
+    
+  }
+  
+  # Level-4 has data table content
+  
+  for (i in 1:length(output$x$data.table)){
+    
+    expect_equal(
+      all(
+        names(output$x$data.table[[i]]) %in% 'content'
+      ),
+      TRUE
+    )
+    
+    expect_equal(
+      class(
+        output$x$data.table[[i]]$content
+      ),
+      'data.frame'
+    )
+    
+  }
+  
+  # Use of the sep argument helps read in data tables
+  
+  expect_equal(
+    class(
+      template_arguments(
+        path = system.file(
+          '/examples/templates',
+          package = 'EMLassemblyline'
+        ),
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        data.table = c(
+          'decomp.csv',
+          'nitrogen.csv'
+        ),
+        sep = ','
+      ) 
+    ),
+    'list'
+  )
+  
+  # Missing file extensions are supported
+  
+  output <- template_arguments(
+    path = system.file(
+      '/examples/templates',
+      package = 'EMLassemblyline'
+    ),
+    data.path = system.file(
+      '/examples/data',
+      package = 'EMLassemblyline'
+    ),
+    data.table = c(
+      'decomp',
+      'nitrogen.csv'
+    )
+  )
+  
+  expect_equal(
+    class(output),
+    'list'
+  )
+  
+})
+
+# Inputs = templates (.txt) and other entities --------------------------------
+
+testthat::test_that('Inputs = templates (.txt) and other entities', {
   
   # Make function call
   
@@ -508,9 +1044,245 @@ testthat::test_that('Inputs = templates and other entities', {
   
 })
 
-# Inputs = templates, data tables, and other entities -------------------------
+# Inputs = templates (docx) and other entities --------------------------------
 
-testthat::test_that('Inputs = templates, data tables, and other entities', {
+testthat::test_that('Inputs = templates (docx) and other entities', {
+  
+  # Make function call
+  
+  output <- template_arguments(
+    path = system.file(
+      '/examples/templates_docx',
+      package = 'EMLassemblyline'
+    ),
+    data.path = system.file(
+      '/examples/data',
+      package = 'EMLassemblyline'
+    ),
+    other.entity = 'ancillary_data.zip'
+  )
+  
+  # Class is list
+  
+  expect_equal(
+    class(output), 
+    'list'
+  )
+  
+  # Level-1 has argument names
+  
+  expect_equal(
+    all(
+      names(output) %in% attr_args$argument_name
+    ),
+    TRUE
+  )
+  
+  # Level-2 has templates, data tables, and other entities
+  
+  expect_equal(
+    all(
+      names(output$x) %in% c('template', 'data.table', 'other.entity')
+    ),
+    TRUE
+  )
+  
+  expect_equal(
+    is.null(output$x$data.table),
+    TRUE
+  )
+  
+  expect_equal(
+    !is.null(output$x$other.entity),
+    TRUE
+  )
+  
+  # Level-3 has all template possiblities
+  
+  for (i in 1:length(attr_templates$regexpr)){
+    
+    expect_equal(
+      any(
+        stringr::str_detect(
+          string = names(output$x$template),
+          pattern = attr_templates$regexpr[i]
+        )
+      ),
+      TRUE
+    )
+    
+  }
+  
+  # Level-3 has other entity names found at data.path
+  
+  expect_equal(
+    all(
+      names(output$x$other.entity) %in% data_path_files
+    ),
+    TRUE
+  )
+  
+  # Level-4 has template content
+  
+  for (i in 1:length(output$x$template)){
+    
+    expect_equal(
+      all(
+        names(output$x$template[[i]]) %in% 'content'
+      ),
+      TRUE
+    )
+    
+    expect_equal(
+      class(output$x$template[[i]]$content)[1] %in% attr_templates$class,
+      TRUE
+    )
+    
+  }
+  
+  # Level-4 has other entity content
+  
+  for (i in 1:length(output$x$other.entity)){
+    
+    expect_equal(
+      all(
+        names(output$x$other.entity[[i]]) %in% 'content'
+      ),
+      TRUE
+    )
+    
+    expect_equal(
+      is.na(
+        output$x$other.entity[[i]]$content
+      ),
+      TRUE
+    )
+    
+  }
+  
+})
+
+# Inputs = templates (md) and other entities ---------------------------------
+
+testthat::test_that('Inputs = templates (md) and other entities', {
+  
+  # Make function call
+  
+  output <- template_arguments(
+    path = system.file(
+      '/examples/templates_md',
+      package = 'EMLassemblyline'
+    ),
+    data.path = system.file(
+      '/examples/data',
+      package = 'EMLassemblyline'
+    ),
+    other.entity = 'ancillary_data.zip'
+  )
+  
+  # Class is list
+  
+  expect_equal(
+    class(output), 
+    'list'
+  )
+  
+  # Level-1 has argument names
+  
+  expect_equal(
+    all(
+      names(output) %in% attr_args$argument_name
+    ),
+    TRUE
+  )
+  
+  # Level-2 has templates, data tables, and other entities
+  
+  expect_equal(
+    all(
+      names(output$x) %in% c('template', 'data.table', 'other.entity')
+    ),
+    TRUE
+  )
+  
+  expect_equal(
+    is.null(output$x$data.table),
+    TRUE
+  )
+  
+  expect_equal(
+    !is.null(output$x$other.entity),
+    TRUE
+  )
+  
+  # Level-3 has all template possiblities
+  
+  for (i in 1:length(attr_templates$regexpr)){
+    
+    expect_equal(
+      any(
+        stringr::str_detect(
+          string = names(output$x$template),
+          pattern = attr_templates$regexpr[i]
+        )
+      ),
+      TRUE
+    )
+    
+  }
+  
+  # Level-3 has other entity names found at data.path
+  
+  expect_equal(
+    all(
+      names(output$x$other.entity) %in% data_path_files
+    ),
+    TRUE
+  )
+  
+  # Level-4 has template content
+  
+  for (i in 1:length(output$x$template)){
+    
+    expect_equal(
+      all(
+        names(output$x$template[[i]]) %in% 'content'
+      ),
+      TRUE
+    )
+    
+    expect_equal(
+      class(output$x$template[[i]]$content)[1] %in% attr_templates$class,
+      TRUE
+    )
+    
+  }
+  
+  # Level-4 has other entity content
+  
+  for (i in 1:length(output$x$other.entity)){
+    
+    expect_equal(
+      all(
+        names(output$x$other.entity[[i]]) %in% 'content'
+      ),
+      TRUE
+    )
+    
+    expect_equal(
+      is.na(
+        output$x$other.entity[[i]]$content
+      ),
+      TRUE
+    )
+    
+  }
+  
+})
+
+# Inputs = templates (.txt), data tables, and other entities ------------------
+
+testthat::test_that('Inputs = templates (.txt), data tables, and other entities', {
   
   # Make function call
   
@@ -530,6 +1302,308 @@ testthat::test_that('Inputs = templates, data tables, and other entities', {
     other.entity = 'ancillary_data.zip'
   )
     
+  # Class is list
+  
+  expect_equal(
+    class(output), 
+    'list'
+  )
+  
+  # Level-1 has argument names
+  
+  expect_equal(
+    all(
+      names(output) %in% attr_args$argument_name
+    ),
+    TRUE
+  )
+  
+  # Level-2 has templates, data tables, and other entities
+  
+  expect_equal(
+    all(
+      names(output$x) %in% c('template', 'data.table', 'other.entity')
+    ),
+    TRUE
+  )
+  
+  expect_equal(
+    !is.null(output$x$data.table),
+    TRUE
+  )
+  
+  expect_equal(
+    !is.null(output$x$other.entity),
+    TRUE
+  )
+  
+  # Level-3 has all template possiblities
+  
+  for (i in 1:length(attr_templates$regexpr)){
+    
+    expect_equal(
+      any(
+        stringr::str_detect(
+          string = names(output$x$template),
+          pattern = attr_templates$regexpr[i]
+        )
+      ),
+      TRUE
+    )
+    
+  }
+  
+  # Level-3 has data table names found at data.path
+  
+  expect_equal(
+    all(
+      names(output$x$data.table) %in% data_path_files
+    ),
+    TRUE
+  )
+  
+  # Level-3 has other entity names found at data.path
+  
+  expect_equal(
+    all(
+      names(output$x$other.entity) %in% data_path_files
+    ),
+    TRUE
+  )
+  
+  # Level-4 has template content
+  
+  for (i in 1:length(output$x$template)){
+    
+    expect_equal(
+      all(
+        names(output$x$template[[i]]) %in% 'content'
+      ),
+      TRUE
+    )
+    
+    expect_equal(
+      class(output$x$template[[i]]$content)[1] %in% attr_templates$class,
+      TRUE
+    )
+    
+  }
+  
+  # Level-4 has data table content
+  
+  for (i in 1:length(output$x$data.table)){
+    
+    expect_equal(
+      all(
+        names(output$x$data.table[[i]]) %in% 'content'
+      ),
+      TRUE
+    )
+    
+    expect_equal(
+      class(
+        output$x$data.table[[i]]$content
+      ),
+      'data.frame'
+    )
+    
+  }
+  
+  # Level-4 has other entity content
+  
+  for (i in 1:length(output$x$other.entity)){
+    
+    expect_equal(
+      all(
+        names(output$x$other.entity[[i]]) %in% 'content'
+      ),
+      TRUE
+    )
+    
+    expect_equal(
+      is.na(
+        output$x$other.entity[[i]]$content
+      ),
+      TRUE
+    )
+    
+  }
+  
+})
+
+# Inputs = templates (docx), data tables, and other entities -----------------
+
+testthat::test_that('Inputs = templates (docx), data tables, and other entities', {
+  
+  # Make function call
+  
+  output <- template_arguments(
+    path = system.file(
+      '/examples/templates_docx',
+      package = 'EMLassemblyline'
+    ),
+    data.path = system.file(
+      '/examples/data',
+      package = 'EMLassemblyline'
+    ),
+    data.table = c(
+      'decomp.csv',
+      'nitrogen.csv'
+    ),
+    other.entity = 'ancillary_data.zip'
+  )
+  
+  # Class is list
+  
+  expect_equal(
+    class(output), 
+    'list'
+  )
+  
+  # Level-1 has argument names
+  
+  expect_equal(
+    all(
+      names(output) %in% attr_args$argument_name
+    ),
+    TRUE
+  )
+  
+  # Level-2 has templates, data tables, and other entities
+  
+  expect_equal(
+    all(
+      names(output$x) %in% c('template', 'data.table', 'other.entity')
+    ),
+    TRUE
+  )
+  
+  expect_equal(
+    !is.null(output$x$data.table),
+    TRUE
+  )
+  
+  expect_equal(
+    !is.null(output$x$other.entity),
+    TRUE
+  )
+  
+  # Level-3 has all template possiblities
+  
+  for (i in 1:length(attr_templates$regexpr)){
+    
+    expect_equal(
+      any(
+        stringr::str_detect(
+          string = names(output$x$template),
+          pattern = attr_templates$regexpr[i]
+        )
+      ),
+      TRUE
+    )
+    
+  }
+  
+  # Level-3 has data table names found at data.path
+  
+  expect_equal(
+    all(
+      names(output$x$data.table) %in% data_path_files
+    ),
+    TRUE
+  )
+  
+  # Level-3 has other entity names found at data.path
+  
+  expect_equal(
+    all(
+      names(output$x$other.entity) %in% data_path_files
+    ),
+    TRUE
+  )
+  
+  # Level-4 has template content
+  
+  for (i in 1:length(output$x$template)){
+    
+    expect_equal(
+      all(
+        names(output$x$template[[i]]) %in% 'content'
+      ),
+      TRUE
+    )
+    
+    expect_equal(
+      class(output$x$template[[i]]$content)[1] %in% attr_templates$class,
+      TRUE
+    )
+    
+  }
+  
+  # Level-4 has data table content
+  
+  for (i in 1:length(output$x$data.table)){
+    
+    expect_equal(
+      all(
+        names(output$x$data.table[[i]]) %in% 'content'
+      ),
+      TRUE
+    )
+    
+    expect_equal(
+      class(
+        output$x$data.table[[i]]$content
+      ),
+      'data.frame'
+    )
+    
+  }
+  
+  # Level-4 has other entity content
+  
+  for (i in 1:length(output$x$other.entity)){
+    
+    expect_equal(
+      all(
+        names(output$x$other.entity[[i]]) %in% 'content'
+      ),
+      TRUE
+    )
+    
+    expect_equal(
+      is.na(
+        output$x$other.entity[[i]]$content
+      ),
+      TRUE
+    )
+    
+  }
+  
+})
+
+# Inputs = templates (md), data tables, and other entities --------------------
+
+testthat::test_that('Inputs = templates (md), data tables, and other entities', {
+  
+  # Make function call
+  
+  output <- template_arguments(
+    path = system.file(
+      '/examples/templates_md',
+      package = 'EMLassemblyline'
+    ),
+    data.path = system.file(
+      '/examples/data',
+      package = 'EMLassemblyline'
+    ),
+    data.table = c(
+      'decomp.csv',
+      'nitrogen.csv'
+    ),
+    other.entity = 'ancillary_data.zip'
+  )
+  
   # Class is list
   
   expect_equal(

@@ -11,10 +11,23 @@ r_packages:
   - rmarkdown
   - methods
   - covr
+  - EML
 r_github_packages:
-  - clnsmth/EML103
   - EDIorg/EDIutils
   - EDIorg/taxonomyCleanr
 warnings_are_errors: false
+matrix:
+  include:
+    - os: linux
+      r: devel
+addons:
+  apt:
+    sources:
+      - sourceline: 'ppa:opencpu/jq'
+    packages:
+      - librdf0-dev
+      - libv8-dev
+      - libjq-dev
+      - libudunits2-dev
 after_success:
   - Rscript -e 'library(covr); codecov()'

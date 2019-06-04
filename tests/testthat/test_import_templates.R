@@ -402,7 +402,7 @@ testthat::test_that('x inputs = NULL', {
     
     expect_equal(
       class(output$template[[i]]$content)[1] %in% 
-        c('TextType', 'data.frame', 'methods', 'character'),
+        c('list', 'data.frame', 'list', 'character'),
       TRUE
     )
     
@@ -479,7 +479,7 @@ testthat::test_that('x inputs = NULL', {
     
     expect_equal(
       class(output$template[[i]]$content)[1] %in% 
-        c('TextType', 'data.frame', 'methods', 'character'),
+        c('list', 'data.frame', 'list', 'character'),
       TRUE
     )
     
@@ -516,8 +516,6 @@ testthat::test_that('x inputs = NULL', {
       ) 
     )
   )
-  
-  
 
 })
 

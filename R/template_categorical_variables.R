@@ -74,8 +74,11 @@
 #' @export
 #'
 
-template_categorical_variables <- function(path, data.path = path, x = NULL, 
-                           write.file = TRUE) {
+template_categorical_variables <- function(
+  path, 
+  data.path = path, 
+  write.file = TRUE,
+  x = NULL) {
   
   message('Templating categorical variables ...')
   

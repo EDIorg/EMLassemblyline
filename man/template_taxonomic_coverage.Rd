@@ -34,11 +34,11 @@ with \code{taxonomyCleanr::view_taxa_authorities()}. Columns
 "resolve_sci_taxa", and "resolve_comm_taxa" list authorites supporting 
 scientific and common searches, respectively.}
 
+\item{write.file}{(logical; optional) Whether to write the template file.}
+
 \item{x}{(named list; optional) Alternative input to 
 \code{template_taxonomic_coverage()}. Use \code{template_arguments()} 
 to create \code{x}.}
-
-\item{write.file}{(logical; optional) Whether to write the template file.}
 }
 \value{
 \strong{taxonomic_coverage.txt} The tab delimited taxonomic coverage 

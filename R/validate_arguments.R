@@ -472,81 +472,91 @@ validate_arguments <- function(fun.name, fun.args){
       stop('Invalid value entered for the "license" argument. Please choose "CC0" or "CCBY".')
     }
     
+    # file.type
+    
+    if ((fun.args$file.type != '.txt') & (fun.args$file.type != '.docx') & 
+        (fun.args$file.type != '.md')){
+      stop(paste0('"', fun.args$file.type, '" is not a valid entry to the "file.type" argument.'))
+    }
+    
   }
   
   # Call from template_geographic_coverage() -------------------------------------
   
   if (fun.name == 'template_geographic_coverage'){
-    
-    # data.table
-    
-    if (is.null(fun.args$data.table)){
-      stop('Input argument "data.table" is missing! Specify the data file containing the geographic coordinates.')
-    }
-    
-    # lat.col
-    
-    if (is.null(fun.args$lat.col)){
-      stop('Input argument "lat.col" is missing! Specify latitude column name.')
-    }
-    
-    # lon.col
-    
-    if (is.null(fun.args$lon.col)){
-      stop('Input argument "lon.col" is missing! Specify longitude column name.')
-    }
-    
-    # site.col
-    
-    if (is.null(fun.args$site.col)){
-      stop('Input argument "site.col" is missing! Specify site column name.')
-    }
-    
-    if (is.null(fun.args$x)){
+
+    if (!isTRUE(fun.args$empty)){
       
-      # Validate file name
+      # data.table
       
-      data_file <- EDIutils::validate_file_names(
-        path = fun.args$data.path, 
-        data.files = fun.args$data.table
-      )
+      if (is.null(fun.args$data.table)){
+        stop('Input argument "data.table" is missing! Specify the data file containing the geographic coordinates.')
+      }
       
-      # Validate fields of data.tables
+      # lat.col
       
-      EDIutils::validate_fields(
-        path = fun.args$data.path, 
-        data.files = data_file
-      )
+      if (is.null(fun.args$lat.col)){
+        stop('Input argument "lat.col" is missing! Specify latitude column name.')
+      }
       
-      # Read data table
+      # lon.col
       
-      x <- template_arguments(
-        data.path = fun.args$data.path,
-        data.table = data_file
-      )
+      if (is.null(fun.args$lon.col)){
+        stop('Input argument "lon.col" is missing! Specify longitude column name.')
+      }
       
-      x <- x$x
+      # site.col
       
-      data_read_2_x <- NA_character_
+      if (is.null(fun.args$site.col)){
+        stop('Input argument "site.col" is missing! Specify site column name.')
+      }
       
-    }
-    
-    df_table <- fun.args$x$data.table[[fun.args$data.table]]$content
-    
-    # Validate column names
-    
-    columns <- colnames(df_table)
-    columns_in <- c(fun.args$lat.col, fun.args$lon.col, fun.args$site.col)
-    use_i <- stringr::str_detect(string = columns,
-                                 pattern = stringr::str_c("^", columns_in, "$", collapse = "|"))
-    if (sum(use_i) > 0){
-      use_i2 <- columns[use_i]
-      use_i3 <- columns_in %in% use_i2
-      if (sum(use_i) != 3){
-        stop(paste("Invalid column names entered: ", paste(columns_in[!use_i3], collapse = ", "), sep = ""))
+      if (is.null(fun.args$x)){
+        
+        # Validate file name
+        
+        data_file <- EDIutils::validate_file_names(
+          path = fun.args$data.path, 
+          data.files = fun.args$data.table
+        )
+        
+        # Validate fields of data.tables
+        
+        EDIutils::validate_fields(
+          path = fun.args$data.path, 
+          data.files = data_file
+        )
+        
+        # Read data table
+        
+        x <- template_arguments(
+          data.path = fun.args$data.path,
+          data.table = data_file
+        )
+        
+        x <- x$x
+        
+        data_read_2_x <- NA_character_
+        
+      }
+      
+      df_table <- fun.args$x$data.table[[fun.args$data.table]]$content
+      
+      # Validate column names
+      
+      columns <- colnames(df_table)
+      columns_in <- c(fun.args$lat.col, fun.args$lon.col, fun.args$site.col)
+      use_i <- stringr::str_detect(string = columns,
+                                   pattern = stringr::str_c("^", columns_in, "$", collapse = "|"))
+      if (sum(use_i) > 0){
+        use_i2 <- columns[use_i]
+        use_i3 <- columns_in %in% use_i2
+        if (sum(use_i) != 3){
+          stop(paste("Invalid column names entered: ", paste(columns_in[!use_i3], collapse = ", "), sep = ""))
+        }
       }
     }
-    
+
   }
   
   # Call from template_table_attributes() -------------------------------------

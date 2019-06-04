@@ -1,15 +1,23 @@
-# EMLassemblyline (May 2019)
+# EMLassemblyline 2.6.0
 
 ## New features
 
-* __Add function examples__ Add examples to function documentation.
-* __Change template import__ Import custom_units.txt with `template_table_attributes()` instead of with `template_core_metadata()`. This is a more logical pairing.
+* __EML v2.0.0:__ `EMLassemblyline` has been refactored to run with the `EML' v2.0.0 dependency.
+* __Text type metadata may now be supplied in .docx and .md files:__ Support for creating abstract, methods, and additional information metadata has been extended from simple text files to Microsoft Word (.docx) and Markdown (.md) file formats. Formatting of these files are translated to EML via `markdown` > Pandoc > docbook.
+* __Create an empty geographic_coverage.txt:__ Sometimes the geographic coverage of a dataset cannot be extracted from a table and needs to be entered manually. Use the `template_geographic_coverage()` argument `empty = TRUE` to create an empty geographic_coverage.txt template.
+
+# EMLassemblyline 2.5.3
+
+## New features
+
+* __Add function examples:__ Add examples to function documentation.
+* __Change template import:__ Import custom_units.txt with `template_table_attributes()` instead of with `template_core_metadata()`. This is a more logical pairing.
 
 ## Bug fixes
 
-* __The argument validator should not check geographic coverage templates__ This fix moves the presence/absence check for geographic coverage templates to `make_eml()`.
-* __v2.4.6 functions should be accessible__ This fix exports `EMLassemblyline` 2.4.6 functions that should be otherwise accessible for backwards compatibility.
-* __File names should not require extensions__ This fix restores functionality that was lost in the recent refactor.
+* __The argument validator should not check geographic coverage templates:__ This fix moves the presence/absence check for geographic coverage templates to `make_eml()`.
+* __v2.4.6 functions should be accessible:__ This fix exports `EMLassemblyline` 2.4.6 functions that should be otherwise accessible for backwards compatibility.
+* __File names should not require extensions:__ This fix restores functionality that was lost in the recent refactor.
 
 # EMLassemblyline 2.5.0
 
@@ -56,4 +64,4 @@ __Arguments:__
 
 ## Bug fixes
 
-* __otherEntity url__ Add EML element _//otherEntity/physical/distribution/online/url_ via `make_eml()`. This element was missing though documentation implied its existence.
+* __otherEntity url:__ Add EML element _//otherEntity/physical/distribution/online/url_ via `make_eml()`. This element was missing though documentation implied its existence.
