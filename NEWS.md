@@ -1,3 +1,10 @@
+# EMLassemblyline 2.6.1
+
+## Bug fixes
+
+* __Unit dictionary opens in the RStudio source pane:__ The `view_unit_dictionary()` function was opening the unit dictionary in a separate non-searchable window. By removing the `utils` namespace from the function call the unit dictionary now opens within the RStudio source pane where searching is supported.
+* __Missing value codes are not mandatory:__ The `EML` v2.0.0 refactor resulted in changes to how missing value codes are handled. This fix restores the original functionality where empty character strings in the missing value code and explanation fields don't result in validation errors.
+
 # EMLassemblyline 2.6.0
 
 ## New features

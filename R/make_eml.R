@@ -1509,6 +1509,16 @@ make_eml <- function(
         numberOfRecords = as.character(nrow(df_table))
       )
       
+      # FIXME: EML v2.0.0 handles absense of missingValue codes differently
+      # than EML v 1.0.3. This fixes the issue here, though it may be better
+      # to implement the fix in EML v2.0.0.
+      for (i in seq_along(data_table$attributeList$attribute)){
+        if (data_table$attributeList$attribute[[i]]$missingValueCode$code == ''){
+          data_table$attributeList$attribute[[i]]$missingValueCode$code <- NA_character_
+          data_table$attributeList$attribute[[i]]$missingValueCode$codeExplanation <- NA_character_
+        }
+      }
+      
       data_tables_stored[[i]] <- data_table
       
     }

@@ -1789,3 +1789,36 @@ testthat::test_that('Test usage with x (all templates and 1 other entity)', {
   )
   
 })
+
+# Missing value codes should not be mandatory ---------------------------------
+# Methods for handling datasets without missing value codes changed in the 
+# recent EML v2.0.0 dependency.
+
+# Remove missing value codes and explanations in attributes_decomp.csv with 
+# empty fields
+
+x_missing_value_codes_empty <- x_table
+
+x_missing_value_codes_empty$template$attributes_decomp.txt$content$missingValueCode <- ''
+x_missing_value_codes_empty$template$attributes_decomp.txt$content$missingValueCodeExplanation <- ''
+
+expect_warning(
+  suppressMessages(
+    make_eml(
+      data.path = data.path,
+      eml.path = eml.path,
+      dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+      data.table = data.table,
+      data.table.description = c('Decomposition data', 'Nitrogen data'),
+      temporal.coverage = c('2014-05-01', '2015-10-31'),
+      geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
+      geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
+      maintenance.description = 'completed',
+      user.id = user.id,
+      user.domain = user.domain,
+      package.id = 'edi.141.1',
+      write.file = FALSE,
+      x = x_missing_value_codes_empty
+    )
+  )
+)
