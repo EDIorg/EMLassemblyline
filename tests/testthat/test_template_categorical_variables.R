@@ -257,3 +257,68 @@ testthat::test_that('Test usage with x inputs',{
   )
   
 })
+
+# Missing value codes ---------------------------------------------------------
+# Missing value codes should not be listed as categorical variables.
+
+testthat::test_that('Missing value codes', {
+  
+  # Load templates and data, then configure for this test
+  
+  x_list <- template_arguments(
+    path = system.file(
+      '/examples/templates', 
+      package = 'EMLassemblyline'
+    ),
+    data.path = system.file(
+      '/examples/data',
+      package = 'EMLassemblyline'
+    ),
+    data.table = c(
+      'decomp.csv',
+      'nitrogen.csv'
+    )
+  )
+  
+  x_list$x$data.table$decomp.csv$content$type[1:5] <- '-99999'
+  x_list$x$data.table$decomp.csv$content$arm[1:5] <- '-99999'
+  
+  dir.create(paste0(tempdir(), '/catvars_test'))
+
+  write.table(
+    x_list$x$template$attributes_decomp.txt$content,
+    paste0(tempdir(), '/catvars_test/attributes_decomp.txt'),
+    sep = '\t',
+    row.names = FALSE
+  )
+  
+  write.csv(
+    x_list$x$data.table$decomp.csv$content,
+    paste0(tempdir(), '/catvars_test/decomp.csv'),
+    row.names = FALSE
+  )
+  
+  # Call template_categorical_variables()
+  
+  suppressMessages(
+    template_categorical_variables(
+      path = paste0(tempdir(), '/catvars_test')
+    )
+  )
+  
+  # Read catvars.txt template
+  
+  input <- read.table(
+    paste0(tempdir(), '/catvars_test/catvars_decomp.txt'),
+    sep = '\t', 
+    header = TRUE,
+    as.is = TRUE
+  )
+  
+  # Test that missing value codes (-99999) are not included in catvars.txt
+  
+  expect_true(
+    !any('-99999' %in% input$code)
+  )
+
+})
