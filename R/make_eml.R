@@ -867,6 +867,29 @@ make_eml <- function(
   
   geographicCoverage <- list()
   
+  # Error if more than one geographic coverage intput
+  
+  sources <- c(
+    'geographic.coordinates of the make_eml() function',
+    'bounding_boxes.txt template',
+    'geographic_coverage.txt template'
+  )
+  
+  use_i <- c(
+    (!missing(geographic.coordinates) & !missing(geographic.description)),
+    (('bounding_boxes.txt' %in% names(x$template)) & (is.data.frame(x$template$bounding_boxes.txt$content))),
+    (('geographic_coverage.txt' %in% names(x$template)) & (is.data.frame(x$template$geographic_coverage.txt$content)))
+  )
+  
+  if (sum(use_i) > 1){
+    stop(
+      paste0(
+        'Only one source of geographic coverage information is allowed. These sources were found:\n',
+        paste0(sources[use_i], collapse = '\n')
+      )
+    )
+  }
+  
   # Add coverage defined in arguments of make_eml
   
   if (!missing(geographic.coordinates) & !missing(geographic.description)){
@@ -1039,7 +1062,8 @@ make_eml <- function(
             taxonomyCleanr::make_taxonomicCoverage(
               taxa.clean = x$template$taxonomic_coverage.txt$content$name_resolved,
               authority = x$template$taxonomic_coverage.txt$content$authority_system,
-              authority.id = x$template$taxonomic_coverage.txt$content$authority_id
+              authority.id = x$template$taxonomic_coverage.txt$content$authority_id,
+              write.file = FALSE
             )
           ),
           silent = T
