@@ -2,8 +2,11 @@
 
 ## Bug fixes
 
-* __Unit dictionary opens in the RStudio source pane:__ The `view_unit_dictionary()` function was opening the unit dictionary in a separate non-searchable window. By removing the `utils` namespace from the function call the unit dictionary now opens within the RStudio source pane where searching is supported.
-* __Missing value codes are not mandatory:__ The `EML` v2.0.0 refactor resulted in changes to how missing value codes are handled. This fix restores the original functionality where empty character strings in the missing value code and explanation fields don't result in validation errors.
+* __Unit dictionary:__ The `view_unit_dictionary()` function was opening the unit dictionary in a separate non-searchable window. By removing the `utils` namespace from the function call the unit dictionary now opens within the RStudio source pane where searching is supported.
+* __Missing value codes:__ The `EML` v2.0.0 refactor resulted in changes to how missing value codes are handled. This fix restores the original functionality where empty character strings in the missing value code and explanation fields don't result in validation errors.
+* __Intellectual rights character encoding:__ The intellectual rights licenses (CC0 and CC-BY) contained non-UTF-8 encoded quote characters that produced invalid EML. These have been removed.
+* __Geographic coverage sources:__ Only one geographic coverage input is allowed to the `make_eml()` function at a time. Valid sources are the geographic_coverage.txt template, the `geographic.coordinates` and `geographic.description` arguments of `make_eml()`, and the deprecated bounding_boxes.txt template.
+* __Missing value codes as categorical variables:__ Missing value codes were being incorrectly listed as categorical variables by `template_categorical_variables()`. This issue has been fixed.
 
 # EMLassemblyline 2.6.0
 
