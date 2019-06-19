@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.6.1</span>
       </span>
     </div>
 
@@ -217,8 +217,8 @@
 <pre><code>## [1] "edi.301.1.xml"</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View EML</span></code></pre></div>
 <pre><code>$eml
-&lt;eml:eml packageId="edi.301.1" system="edi" schemaLocation="eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd" xmlns:eml="eml://ecoinformatics.org/eml-2.1.1" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
- &lt;access scope="document" order="allowFirst" authSystem="https://pasta.edirepository.org/authentication"&gt;
+&lt;eml:eml packageId="edi.301.1" schemaLocation="eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd" system="edi" xmlns:eml="eml://ecoinformatics.org/eml-2.1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.1"&gt;
+ &lt;access authSystem="https://pasta.edirepository.org/authentication" order="allowFirst" scope="document"&gt;
   &lt;allow&gt;
    &lt;principal&gt;uid=csmith,o=EDI,dc=edirepository,dc=org&lt;/principal&gt;
    &lt;permission&gt;all&lt;/permission&gt;
@@ -361,7 +361,7 @@
   &lt;abstract&gt;
    &lt;para&gt;Development of the oil sands has led to increasing atmospheric N
   deposition, with values as high as 17 kg N ha^-1 yr^-1; regional
-  background levels &amp;lt;2 kg N ha^-1 yr^-1. Bogs, being ombrotrophic,
+  background levels &amp;amp;lt;2 kg N ha^-1 yr^-1. Bogs, being ombrotrophic,
   may be especially susceptible to increasing N deposition. To examine
   responses to N deposition, over five years, we experimentally applied
   N (as NH4NO3) to a bog near Mariana Lakes, Alberta, at rates of 0, 5,
@@ -374,7 +374,7 @@
   vascular plant litter was affected by N inputs, on average losing 8
   and 38 % of initial mass, respectively, over 5 months of
   decomposition. Water addition alone had no significant effect on
-  decomposition of cellulose, Sphagnum, or vascular plant litter (p &amp;gt;
+  decomposition of cellulose, Sphagnum, or vascular plant litter (p &amp;amp;gt;
   0.15).&lt;/para&gt;
   &lt;/abstract&gt;
   &lt;keywordSet&gt;
@@ -392,17 +392,17 @@
    &lt;para&gt;Articles derived from this dataset: Article 1, Article 2, Article 3&lt;/para&gt;
   &lt;/additionalInfo&gt;
   &lt;intellectualRights&gt;
-   &lt;para&gt;This data package is released to the â€œpublic domainâ€ under Creative
-  Commons CC0 1.0 â€œNo Rights Reservedâ€ (see:
+   &lt;para&gt;This data package is released to the “public domain” under Creative
+  Commons CC0 1.0 “No Rights Reserved” (see:
   https://creativecommons.org/publicdomain/zero/1.0/). It is considered
   professional etiquette to provide attribution of the original work if
   this data package is shared in whole or by individual components. A
   generic citation is provided for this data package on the website
-  https://portal.edirepository.org (herein â€œwebsiteâ€) in the summary
+  https://portal.edirepository.org (herein “website”) in the summary
   metadata page. Communication (and collaboration) with the creators of
   this data package is recommended to prevent duplicate research or
   publication. This data package (and its components) is made available
-  â€œas isâ€ and with no warranty of accuracy or fitness for use. The
+  “as is” and with no warranty of accuracy or fitness for use. The
   creators of this data package and the website shall not be liable for
   any damages resulting from misinterpretation or misuse of the data
   package or its components. Periodic updates of this data package may
@@ -509,6 +509,556 @@
      &lt;/endDate&gt;
     &lt;/rangeOfDates&gt;
    &lt;/temporalCoverage&gt;
+   &lt;taxonomicCoverage&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Asteranae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Asterales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Asteraceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Achillea&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Achillea millefolium&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Asteranae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Asterales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Asteraceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Crepis&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Crepis tectorum&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Lilianae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Poales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Cyperaceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Cyperus&lt;/taxonRankValue&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Rosanae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Malpighiales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Euphorbiaceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Euphorbia&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Euphorbia glyptosperma&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Rosanae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Fabales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Fabaceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Lespedeza&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Lespedeza capitata&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Rosanae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Brassicales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Brassicaceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Lepidium&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Lepidium densiflorum&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Lilianae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Poales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Poaceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Poa&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Poa pratensis&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Caryophyllanae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Caryophyllales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Polygonaceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Rumex&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Rumex acetosella&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Lilianae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Poales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Poaceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Schizachyrium&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Schizachyrium scoparium&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Lilianae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Poales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Poaceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Bouteloua&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Bouteloua gracilis&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Koeleria cristata&lt;/taxonRankValue&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Asteranae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Asterales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Asteraceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Liatris&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Liatris aspera&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Bryophyta&lt;/taxonRankValue&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+   &lt;/taxonomicCoverage&gt;
   &lt;/coverage&gt;
   &lt;maintenance&gt;
    &lt;description&gt;completed&lt;/description&gt;
@@ -537,37 +1087,47 @@
   &lt;methods&gt;
    &lt;methodStep&gt;
     &lt;description&gt;
-     &lt;para&gt;
-      In 2014 and 2015, we quantified decomposition of plant litter material
+     &lt;para&gt;In 2014 and 2015, we quantified decomposition of plant litter material
   collected from each plot. In late May, we collected vascular plant
-  litter from the surface of each plot, along with
+  litter from the surface of each plot, along with&lt;/para&gt;
+     &lt;para&gt;
       &lt;emphasis&gt;Sphagnum&lt;/emphasis&gt;
-      peat (
+     &lt;/para&gt;
+     &lt;para&gt;peat (&lt;/para&gt;
+     &lt;para&gt;
       &lt;emphasis&gt;S.
   fuscum&lt;/emphasis&gt;
-      -derived), from roughly 5-15 cm below the capitula.
+     &lt;/para&gt;
+     &lt;para&gt;-derived), from roughly 5-15 cm below the capitula.
   We placed nylon mesh litter bags with mixed vascular plant litter
-  (approx. 1.7 g dry mass; roughly equal masses of
+  (approx. 1.7 g dry mass; roughly equal masses of&lt;/para&gt;
+     &lt;para&gt;
       &lt;emphasis&gt;Rhododendron groenlandicum&lt;/emphasis&gt;
-      ,
+     &lt;/para&gt;
+     &lt;para&gt;,&lt;/para&gt;
+     &lt;para&gt;
       &lt;emphasis&gt;Andromeda
   polifolia&lt;/emphasis&gt;
-      ,
+     &lt;/para&gt;
+     &lt;para&gt;
       &lt;emphasis&gt;Chamaedaphne calyculata&lt;/emphasis&gt;
-      ,
+     &lt;/para&gt;
+     &lt;para&gt;,&lt;/para&gt;
+     &lt;para&gt;
       &lt;emphasis&gt;Smilacina trifolia&lt;/emphasis&gt;
-      , and
+     &lt;/para&gt;
+     &lt;para&gt;, and&lt;/para&gt;
+     &lt;para&gt;
       &lt;emphasis&gt;Rubus
   chamaemorus&lt;/emphasis&gt;
-      ) or peat approximately 10 cm below the peat
+     &lt;/para&gt;
+     &lt;para&gt;) or peat approximately 10 cm below the peat
   surface in early June (in 2014, 3 bags per plot of vascular litter and
-  3 bags of
-      &lt;emphasis&gt;Sphagnum&lt;/emphasis&gt;
-      peat; in 2015, 4 bags of each
+  3 bags of&lt;/para&gt;
+     &lt;para&gt;peat; in 2015, 4 bags of each
   material). Upon retrieval in October of each year, we manually removed
   debris from each retrieved bag before drying at 55 C for a minimum of
-  5 days, and weighing.
-     &lt;/para&gt;
+  5 days, and weighing.&lt;/para&gt;
     &lt;/description&gt;
    &lt;/methodStep&gt;
   &lt;/methods&gt;
@@ -576,8 +1136,10 @@
    &lt;personnel&gt;
     &lt;individualName&gt;
      &lt;givenName&gt;Kelman&lt;/givenName&gt;
+     &lt;givenName&gt;R&lt;/givenName&gt;
      &lt;surName&gt;Wieder&lt;/surName&gt;
     &lt;/individualName&gt;
+    &lt;organizationName&gt;Villanova University&lt;/organizationName&gt;
     &lt;electronicMailAddress&gt;kelman.wieder@villanova.edu&lt;/electronicMailAddress&gt;
     &lt;userId directory="https://orcid.org"&gt;https://orcid.org/0000-0001-5856-8473&lt;/userId&gt;
     &lt;role&gt;Principal Investigator&lt;/role&gt;
@@ -588,8 +1150,10 @@
     &lt;personnel&gt;
      &lt;individualName&gt;
       &lt;givenName&gt;Melanie&lt;/givenName&gt;
+      &lt;givenName&gt;A&lt;/givenName&gt;
       &lt;surName&gt;Vile&lt;/surName&gt;
      &lt;/individualName&gt;
+     &lt;organizationName&gt;Villanova University&lt;/organizationName&gt;
      &lt;electronicMailAddress&gt;mvile@villanova.edu&lt;/electronicMailAddress&gt;
      &lt;role&gt;Principal Investigator&lt;/role&gt;
     &lt;/personnel&gt;
@@ -602,6 +1166,7 @@
       &lt;givenName&gt;Joe&lt;/givenName&gt;
       &lt;surName&gt;Smith&lt;/surName&gt;
      &lt;/individualName&gt;
+     &lt;organizationName&gt;Villanova University&lt;/organizationName&gt;
      &lt;role&gt;Principal Investigator&lt;/role&gt;
     &lt;/personnel&gt;
     &lt;funding&gt;NSF: 101&lt;/funding&gt;
@@ -613,6 +1178,7 @@
       &lt;givenName&gt;Joe&lt;/givenName&gt;
       &lt;surName&gt;Smith&lt;/surName&gt;
      &lt;/individualName&gt;
+     &lt;organizationName&gt;Villanova University&lt;/organizationName&gt;
      &lt;role&gt;Principal Investigator&lt;/role&gt;
     &lt;/personnel&gt;
     &lt;funding&gt;111001&lt;/funding&gt;
@@ -624,6 +1190,7 @@
       &lt;givenName&gt;Chase&lt;/givenName&gt;
       &lt;surName&gt;Gacho&lt;/surName&gt;
      &lt;/individualName&gt;
+     &lt;organizationName&gt;University of New Mexico&lt;/organizationName&gt;
      &lt;electronicMailAddress&gt;gachase@unm.edu&lt;/electronicMailAddress&gt;
      &lt;role&gt;Principal Investigator&lt;/role&gt;
     &lt;/personnel&gt;
@@ -635,7 +1202,7 @@
    &lt;entityDescription&gt;Decomposition data&lt;/entityDescription&gt;
    &lt;physical&gt;
     &lt;objectName&gt;decomp.csv&lt;/objectName&gt;
-    &lt;size unit="byte"&gt;15547&lt;/size&gt;
+    &lt;size unit="bytes"&gt;15547&lt;/size&gt;
     &lt;authentication method="MD5"&gt;2d7897ddbfccc840fddffc4c7d468ba5&lt;/authentication&gt;
     &lt;dataFormat&gt;
      &lt;textFormat&gt;
@@ -658,8 +1225,12 @@
        &lt;nonNumericDomain&gt;
         &lt;enumeratedDomain&gt;
          &lt;codeDefinition&gt;
-          &lt;code&gt;NA&lt;/code&gt;
-          &lt;definition&gt;NA&lt;/definition&gt;
+          &lt;code&gt;Sphagnum&lt;/code&gt;
+          &lt;definition&gt;Sphagnum&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;Vascular&lt;/code&gt;
+          &lt;definition&gt;Vascular&lt;/definition&gt;
          &lt;/codeDefinition&gt;
         &lt;/enumeratedDomain&gt;
        &lt;/nonNumericDomain&gt;
@@ -676,7 +1247,10 @@
      &lt;storageType&gt;date&lt;/storageType&gt;
      &lt;measurementScale&gt;
       &lt;dateTime&gt;
-       &lt;formatString&gt;YYYY-MM-DD&lt;/formatString&gt;
+       &lt;formatString&gt;YYYY-MM-DD&lt;/formatString&gt;</code></pre>
+<pre><code>Warning in structure(x$children, class = "XMLNodeList"): Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.
+  Consider 'structure(list(), *)' instead.</code></pre>
+<pre><code>       &lt;dateTimeDomain/&gt;
       &lt;/dateTime&gt;
      &lt;/measurementScale&gt;
      &lt;missingValueCode&gt;
@@ -693,8 +1267,16 @@
        &lt;nonNumericDomain&gt;
         &lt;enumeratedDomain&gt;
          &lt;codeDefinition&gt;
-          &lt;code&gt;NA&lt;/code&gt;
-          &lt;definition&gt;NA&lt;/definition&gt;
+          &lt;code&gt;1&lt;/code&gt;
+          &lt;definition&gt;Arm 1&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;2&lt;/code&gt;
+          &lt;definition&gt;Arm 2&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;3&lt;/code&gt;
+          &lt;definition&gt;Arm 3&lt;/definition&gt;
          &lt;/codeDefinition&gt;
         &lt;/enumeratedDomain&gt;
        &lt;/nonNumericDomain&gt;
@@ -714,8 +1296,32 @@
        &lt;nonNumericDomain&gt;
         &lt;enumeratedDomain&gt;
          &lt;codeDefinition&gt;
-          &lt;code&gt;NA&lt;/code&gt;
-          &lt;definition&gt;NA&lt;/definition&gt;
+          &lt;code&gt;C&lt;/code&gt;
+          &lt;definition&gt;Control, no water, no N added&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;0&lt;/code&gt;
+          &lt;definition&gt;0 kg N/ha/yr added&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;5&lt;/code&gt;
+          &lt;definition&gt;5 kg N/ha/yr added&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;10&lt;/code&gt;
+          &lt;definition&gt;10 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;15&lt;/code&gt;
+          &lt;definition&gt;15 kg N/ha/yr added&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;20&lt;/code&gt;
+          &lt;definition&gt;20 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;25&lt;/code&gt;
+          &lt;definition&gt;25 kg N/ha/yr added&lt;/definition&gt;
          &lt;/codeDefinition&gt;
         &lt;/enumeratedDomain&gt;
        &lt;/nonNumericDomain&gt;
@@ -732,7 +1338,10 @@
      &lt;storageType&gt;date&lt;/storageType&gt;
      &lt;measurementScale&gt;
       &lt;dateTime&gt;
-       &lt;formatString&gt;YYYY&lt;/formatString&gt;
+       &lt;formatString&gt;YYYY&lt;/formatString&gt;</code></pre>
+<pre><code>Warning in structure(x$children, class = "XMLNodeList"): Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.
+  Consider 'structure(list(), *)' instead.</code></pre>
+<pre><code>       &lt;dateTimeDomain/&gt;
       &lt;/dateTime&gt;
      &lt;/measurementScale&gt;
      &lt;missingValueCode&gt;
@@ -789,7 +1398,7 @@
    &lt;entityDescription&gt;Nitrogen data&lt;/entityDescription&gt;
    &lt;physical&gt;
     &lt;objectName&gt;nitrogen.csv&lt;/objectName&gt;
-    &lt;size unit="byte"&gt;6733&lt;/size&gt;
+    &lt;size unit="bytes"&gt;6733&lt;/size&gt;
     &lt;authentication method="MD5"&gt;2b10baaea5692bf96cafab9ae636f831&lt;/authentication&gt;
     &lt;dataFormat&gt;
      &lt;textFormat&gt;
@@ -809,7 +1418,10 @@
      &lt;storageType&gt;date&lt;/storageType&gt;
      &lt;measurementScale&gt;
       &lt;dateTime&gt;
-       &lt;formatString&gt;YYYY&lt;/formatString&gt;
+       &lt;formatString&gt;YYYY&lt;/formatString&gt;</code></pre>
+<pre><code>Warning in structure(x$children, class = "XMLNodeList"): Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.
+  Consider 'structure(list(), *)' instead.</code></pre>
+<pre><code>       &lt;dateTimeDomain/&gt;
       &lt;/dateTime&gt;
      &lt;/measurementScale&gt;
      &lt;missingValueCode&gt;
@@ -826,8 +1438,32 @@
        &lt;nonNumericDomain&gt;
         &lt;enumeratedDomain&gt;
          &lt;codeDefinition&gt;
-          &lt;code&gt;NA&lt;/code&gt;
-          &lt;definition&gt;NA&lt;/definition&gt;
+          &lt;code&gt;C&lt;/code&gt;
+          &lt;definition&gt;Control, no water, no N added&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;0&lt;/code&gt;
+          &lt;definition&gt;0 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;5&lt;/code&gt;
+          &lt;definition&gt;5 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;10&lt;/code&gt;
+          &lt;definition&gt;10 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;15&lt;/code&gt;
+          &lt;definition&gt;15 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;20&lt;/code&gt;
+          &lt;definition&gt;20 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;25&lt;/code&gt;
+          &lt;definition&gt;25 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
          &lt;/codeDefinition&gt;
         &lt;/enumeratedDomain&gt;
        &lt;/nonNumericDomain&gt;
@@ -847,8 +1483,16 @@
        &lt;nonNumericDomain&gt;
         &lt;enumeratedDomain&gt;
          &lt;codeDefinition&gt;
-          &lt;code&gt;NA&lt;/code&gt;
-          &lt;definition&gt;NA&lt;/definition&gt;
+          &lt;code&gt;1&lt;/code&gt;
+          &lt;definition&gt;Arm 1&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;2&lt;/code&gt;
+          &lt;definition&gt;Arm 2&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;3&lt;/code&gt;
+          &lt;definition&gt;Arm3&lt;/definition&gt;
          &lt;/codeDefinition&gt;
         &lt;/enumeratedDomain&gt;
        &lt;/nonNumericDomain&gt;
@@ -1044,11 +1688,11 @@
  &lt;/dataset&gt;
  &lt;additionalMetadata&gt;
   &lt;metadata&gt;
-   &lt;unitList xmlns:eml="eml://ecoinformatics.org/eml-2.1.1" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
-    &lt;unit id="gramsPerSquaredMeterPerCentimeter" name="gramsPerSquaredMeterPerCentimeter" parentSI="kilogramsPerSquaredMeterPerMeter" unitType="areal mass density per length" multiplierToSI="0.1"&gt;
+   &lt;unitList&gt;
+    &lt;unit id="gramsPerSquaredMeterPerCentimeter" multiplierToSI="0.1" name="gramsPerSquaredMeterPerCentimeter" parentSI="kilogramsPerSquaredMeterPerMeter" unitType="areal mass density per length"&gt;
      &lt;description&gt;grams per meter squared per centimeter&lt;/description&gt;
     &lt;/unit&gt;
-    &lt;unit id="milligramsPerGram" name="milligramsPerGram" parentSI="kilogramsPerSquaredMeterPerMeter" unitType="mass" multiplierToSI="1000"&gt;
+    &lt;unit id="milligramsPerGram" multiplierToSI="1000" name="milligramsPerGram" parentSI="kilogramsPerSquaredMeterPerMeter" unitType="mass"&gt;
      &lt;description&gt;milligrams per gram&lt;/description&gt;
     &lt;/unit&gt;
    &lt;/unitList&gt;
@@ -1113,8 +1757,8 @@
 <pre><code>## [1] "edi.301.1.xml" "edi.301.2.xml"</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View EML</span></code></pre></div>
 <pre><code>$eml
-&lt;eml:eml packageId="edi.301.2" system="edi" schemaLocation="eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd" xmlns:eml="eml://ecoinformatics.org/eml-2.1.1" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
- &lt;access scope="document" order="allowFirst" authSystem="https://pasta.edirepository.org/authentication"&gt;
+&lt;eml:eml packageId="edi.301.2" schemaLocation="eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd" system="edi" xmlns:eml="eml://ecoinformatics.org/eml-2.1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.1"&gt;
+ &lt;access authSystem="https://pasta.edirepository.org/authentication" order="allowFirst" scope="document"&gt;
   &lt;allow&gt;
    &lt;principal&gt;uid=csmith,o=EDI,dc=edirepository,dc=org&lt;/principal&gt;
    &lt;permission&gt;all&lt;/permission&gt;
@@ -1257,7 +1901,7 @@
   &lt;abstract&gt;
    &lt;para&gt;Development of the oil sands has led to increasing atmospheric N
   deposition, with values as high as 17 kg N ha^-1 yr^-1; regional
-  background levels &amp;lt;2 kg N ha^-1 yr^-1. Bogs, being ombrotrophic,
+  background levels &amp;amp;lt;2 kg N ha^-1 yr^-1. Bogs, being ombrotrophic,
   may be especially susceptible to increasing N deposition. To examine
   responses to N deposition, over five years, we experimentally applied
   N (as NH4NO3) to a bog near Mariana Lakes, Alberta, at rates of 0, 5,
@@ -1270,7 +1914,7 @@
   vascular plant litter was affected by N inputs, on average losing 8
   and 38 % of initial mass, respectively, over 5 months of
   decomposition. Water addition alone had no significant effect on
-  decomposition of cellulose, Sphagnum, or vascular plant litter (p &amp;gt;
+  decomposition of cellulose, Sphagnum, or vascular plant litter (p &amp;amp;gt;
   0.15).&lt;/para&gt;
   &lt;/abstract&gt;
   &lt;keywordSet&gt;
@@ -1288,17 +1932,17 @@
    &lt;para&gt;Articles derived from this dataset: Article 1, Article 2, Article 3&lt;/para&gt;
   &lt;/additionalInfo&gt;
   &lt;intellectualRights&gt;
-   &lt;para&gt;This data package is released to the â€œpublic domainâ€ under Creative
-  Commons CC0 1.0 â€œNo Rights Reservedâ€ (see:
+   &lt;para&gt;This data package is released to the “public domain” under Creative
+  Commons CC0 1.0 “No Rights Reserved” (see:
   https://creativecommons.org/publicdomain/zero/1.0/). It is considered
   professional etiquette to provide attribution of the original work if
   this data package is shared in whole or by individual components. A
   generic citation is provided for this data package on the website
-  https://portal.edirepository.org (herein â€œwebsiteâ€) in the summary
+  https://portal.edirepository.org (herein “website”) in the summary
   metadata page. Communication (and collaboration) with the creators of
   this data package is recommended to prevent duplicate research or
   publication. This data package (and its components) is made available
-  â€œas isâ€ and with no warranty of accuracy or fitness for use. The
+  “as is” and with no warranty of accuracy or fitness for use. The
   creators of this data package and the website shall not be liable for
   any damages resulting from misinterpretation or misuse of the data
   package or its components. Periodic updates of this data package may
@@ -1405,6 +2049,556 @@
      &lt;/endDate&gt;
     &lt;/rangeOfDates&gt;
    &lt;/temporalCoverage&gt;
+   &lt;taxonomicCoverage&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Asteranae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Asterales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Asteraceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Achillea&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Achillea millefolium&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Asteranae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Asterales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Asteraceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Crepis&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Crepis tectorum&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Lilianae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Poales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Cyperaceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Cyperus&lt;/taxonRankValue&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Rosanae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Malpighiales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Euphorbiaceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Euphorbia&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Euphorbia glyptosperma&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Rosanae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Fabales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Fabaceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Lespedeza&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Lespedeza capitata&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Rosanae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Brassicales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Brassicaceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Lepidium&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Lepidium densiflorum&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Lilianae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Poales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Poaceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Poa&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Poa pratensis&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Caryophyllanae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Caryophyllales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Polygonaceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Rumex&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Rumex acetosella&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Lilianae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Poales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Poaceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Schizachyrium&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Schizachyrium scoparium&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Lilianae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Poales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Poaceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Bouteloua&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Bouteloua gracilis&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Koeleria cristata&lt;/taxonRankValue&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Asteranae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Asterales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Asteraceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Liatris&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Liatris aspera&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Bryophyta&lt;/taxonRankValue&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+   &lt;/taxonomicCoverage&gt;
   &lt;/coverage&gt;
   &lt;maintenance&gt;
    &lt;description&gt;completed&lt;/description&gt;
@@ -1433,37 +2627,47 @@
   &lt;methods&gt;
    &lt;methodStep&gt;
     &lt;description&gt;
-     &lt;para&gt;
-      In 2014 and 2015, we quantified decomposition of plant litter material
+     &lt;para&gt;In 2014 and 2015, we quantified decomposition of plant litter material
   collected from each plot. In late May, we collected vascular plant
-  litter from the surface of each plot, along with
+  litter from the surface of each plot, along with&lt;/para&gt;
+     &lt;para&gt;
       &lt;emphasis&gt;Sphagnum&lt;/emphasis&gt;
-      peat (
+     &lt;/para&gt;
+     &lt;para&gt;peat (&lt;/para&gt;
+     &lt;para&gt;
       &lt;emphasis&gt;S.
   fuscum&lt;/emphasis&gt;
-      -derived), from roughly 5-15 cm below the capitula.
+     &lt;/para&gt;
+     &lt;para&gt;-derived), from roughly 5-15 cm below the capitula.
   We placed nylon mesh litter bags with mixed vascular plant litter
-  (approx. 1.7 g dry mass; roughly equal masses of
+  (approx. 1.7 g dry mass; roughly equal masses of&lt;/para&gt;
+     &lt;para&gt;
       &lt;emphasis&gt;Rhododendron groenlandicum&lt;/emphasis&gt;
-      ,
+     &lt;/para&gt;
+     &lt;para&gt;,&lt;/para&gt;
+     &lt;para&gt;
       &lt;emphasis&gt;Andromeda
   polifolia&lt;/emphasis&gt;
-      ,
+     &lt;/para&gt;
+     &lt;para&gt;
       &lt;emphasis&gt;Chamaedaphne calyculata&lt;/emphasis&gt;
-      ,
+     &lt;/para&gt;
+     &lt;para&gt;,&lt;/para&gt;
+     &lt;para&gt;
       &lt;emphasis&gt;Smilacina trifolia&lt;/emphasis&gt;
-      , and
+     &lt;/para&gt;
+     &lt;para&gt;, and&lt;/para&gt;
+     &lt;para&gt;
       &lt;emphasis&gt;Rubus
   chamaemorus&lt;/emphasis&gt;
-      ) or peat approximately 10 cm below the peat
+     &lt;/para&gt;
+     &lt;para&gt;) or peat approximately 10 cm below the peat
   surface in early June (in 2014, 3 bags per plot of vascular litter and
-  3 bags of
-      &lt;emphasis&gt;Sphagnum&lt;/emphasis&gt;
-      peat; in 2015, 4 bags of each
+  3 bags of&lt;/para&gt;
+     &lt;para&gt;peat; in 2015, 4 bags of each
   material). Upon retrieval in October of each year, we manually removed
   debris from each retrieved bag before drying at 55 C for a minimum of
-  5 days, and weighing.
-     &lt;/para&gt;
+  5 days, and weighing.&lt;/para&gt;
     &lt;/description&gt;
    &lt;/methodStep&gt;
   &lt;/methods&gt;
@@ -1472,8 +2676,10 @@
    &lt;personnel&gt;
     &lt;individualName&gt;
      &lt;givenName&gt;Kelman&lt;/givenName&gt;
+     &lt;givenName&gt;R&lt;/givenName&gt;
      &lt;surName&gt;Wieder&lt;/surName&gt;
     &lt;/individualName&gt;
+    &lt;organizationName&gt;Villanova University&lt;/organizationName&gt;
     &lt;electronicMailAddress&gt;kelman.wieder@villanova.edu&lt;/electronicMailAddress&gt;
     &lt;userId directory="https://orcid.org"&gt;https://orcid.org/0000-0001-5856-8473&lt;/userId&gt;
     &lt;role&gt;Principal Investigator&lt;/role&gt;
@@ -1484,8 +2690,10 @@
     &lt;personnel&gt;
      &lt;individualName&gt;
       &lt;givenName&gt;Melanie&lt;/givenName&gt;
+      &lt;givenName&gt;A&lt;/givenName&gt;
       &lt;surName&gt;Vile&lt;/surName&gt;
      &lt;/individualName&gt;
+     &lt;organizationName&gt;Villanova University&lt;/organizationName&gt;
      &lt;electronicMailAddress&gt;mvile@villanova.edu&lt;/electronicMailAddress&gt;
      &lt;role&gt;Principal Investigator&lt;/role&gt;
     &lt;/personnel&gt;
@@ -1498,6 +2706,7 @@
       &lt;givenName&gt;Joe&lt;/givenName&gt;
       &lt;surName&gt;Smith&lt;/surName&gt;
      &lt;/individualName&gt;
+     &lt;organizationName&gt;Villanova University&lt;/organizationName&gt;
      &lt;role&gt;Principal Investigator&lt;/role&gt;
     &lt;/personnel&gt;
     &lt;funding&gt;NSF: 101&lt;/funding&gt;
@@ -1509,6 +2718,7 @@
       &lt;givenName&gt;Joe&lt;/givenName&gt;
       &lt;surName&gt;Smith&lt;/surName&gt;
      &lt;/individualName&gt;
+     &lt;organizationName&gt;Villanova University&lt;/organizationName&gt;
      &lt;role&gt;Principal Investigator&lt;/role&gt;
     &lt;/personnel&gt;
     &lt;funding&gt;111001&lt;/funding&gt;
@@ -1520,6 +2730,7 @@
       &lt;givenName&gt;Chase&lt;/givenName&gt;
       &lt;surName&gt;Gacho&lt;/surName&gt;
      &lt;/individualName&gt;
+     &lt;organizationName&gt;University of New Mexico&lt;/organizationName&gt;
      &lt;electronicMailAddress&gt;gachase@unm.edu&lt;/electronicMailAddress&gt;
      &lt;role&gt;Principal Investigator&lt;/role&gt;
     &lt;/personnel&gt;
@@ -1625,8 +2836,8 @@
 <pre><code>## [1] "edi.301.1.xml" "edi.301.2.xml" "edi.301.3.xml"</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View EML</span></code></pre></div>
 <pre><code>$eml
-&lt;eml:eml packageId="edi.301.3" system="edi" schemaLocation="eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd" xmlns:eml="eml://ecoinformatics.org/eml-2.1.1" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
- &lt;access scope="document" order="allowFirst" authSystem="https://pasta.edirepository.org/authentication"&gt;
+&lt;eml:eml packageId="edi.301.3" schemaLocation="eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd" system="edi" xmlns:eml="eml://ecoinformatics.org/eml-2.1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.1"&gt;
+ &lt;access authSystem="https://pasta.edirepository.org/authentication" order="allowFirst" scope="document"&gt;
   &lt;allow&gt;
    &lt;principal&gt;uid=csmith,o=EDI,dc=edirepository,dc=org&lt;/principal&gt;
    &lt;permission&gt;all&lt;/permission&gt;
@@ -1769,7 +2980,7 @@
   &lt;abstract&gt;
    &lt;para&gt;Development of the oil sands has led to increasing atmospheric N
   deposition, with values as high as 17 kg N ha^-1 yr^-1; regional
-  background levels &amp;lt;2 kg N ha^-1 yr^-1. Bogs, being ombrotrophic,
+  background levels &amp;amp;lt;2 kg N ha^-1 yr^-1. Bogs, being ombrotrophic,
   may be especially susceptible to increasing N deposition. To examine
   responses to N deposition, over five years, we experimentally applied
   N (as NH4NO3) to a bog near Mariana Lakes, Alberta, at rates of 0, 5,
@@ -1782,7 +2993,7 @@
   vascular plant litter was affected by N inputs, on average losing 8
   and 38 % of initial mass, respectively, over 5 months of
   decomposition. Water addition alone had no significant effect on
-  decomposition of cellulose, Sphagnum, or vascular plant litter (p &amp;gt;
+  decomposition of cellulose, Sphagnum, or vascular plant litter (p &amp;amp;gt;
   0.15).&lt;/para&gt;
   &lt;/abstract&gt;
   &lt;keywordSet&gt;
@@ -1800,17 +3011,17 @@
    &lt;para&gt;Articles derived from this dataset: Article 1, Article 2, Article 3&lt;/para&gt;
   &lt;/additionalInfo&gt;
   &lt;intellectualRights&gt;
-   &lt;para&gt;This data package is released to the â€œpublic domainâ€ under Creative
-  Commons CC0 1.0 â€œNo Rights Reservedâ€ (see:
+   &lt;para&gt;This data package is released to the “public domain” under Creative
+  Commons CC0 1.0 “No Rights Reserved” (see:
   https://creativecommons.org/publicdomain/zero/1.0/). It is considered
   professional etiquette to provide attribution of the original work if
   this data package is shared in whole or by individual components. A
   generic citation is provided for this data package on the website
-  https://portal.edirepository.org (herein â€œwebsiteâ€) in the summary
+  https://portal.edirepository.org (herein “website”) in the summary
   metadata page. Communication (and collaboration) with the creators of
   this data package is recommended to prevent duplicate research or
   publication. This data package (and its components) is made available
-  â€œas isâ€ and with no warranty of accuracy or fitness for use. The
+  “as is” and with no warranty of accuracy or fitness for use. The
   creators of this data package and the website shall not be liable for
   any damages resulting from misinterpretation or misuse of the data
   package or its components. Periodic updates of this data package may
@@ -1917,6 +3128,556 @@
      &lt;/endDate&gt;
     &lt;/rangeOfDates&gt;
    &lt;/temporalCoverage&gt;
+   &lt;taxonomicCoverage&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Asteranae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Asterales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Asteraceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Achillea&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Achillea millefolium&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Asteranae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Asterales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Asteraceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Crepis&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Crepis tectorum&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Lilianae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Poales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Cyperaceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Cyperus&lt;/taxonRankValue&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Rosanae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Malpighiales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Euphorbiaceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Euphorbia&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Euphorbia glyptosperma&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Rosanae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Fabales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Fabaceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Lespedeza&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Lespedeza capitata&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Rosanae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Brassicales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Brassicaceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Lepidium&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Lepidium densiflorum&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Lilianae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Poales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Poaceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Poa&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Poa pratensis&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Caryophyllanae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Caryophyllales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Polygonaceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Rumex&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Rumex acetosella&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Lilianae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Poales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Poaceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Schizachyrium&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Schizachyrium scoparium&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Lilianae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Poales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Poaceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Bouteloua&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Bouteloua gracilis&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Koeleria cristata&lt;/taxonRankValue&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Tracheophyta&lt;/taxonRankValue&gt;
+         &lt;taxonomicClassification&gt;
+          &lt;taxonRankName&gt;subdivision&lt;/taxonRankName&gt;
+          &lt;taxonRankValue&gt;Spermatophytina&lt;/taxonRankValue&gt;
+          &lt;taxonomicClassification&gt;
+           &lt;taxonRankName&gt;class&lt;/taxonRankName&gt;
+           &lt;taxonRankValue&gt;Magnoliopsida&lt;/taxonRankValue&gt;
+           &lt;taxonomicClassification&gt;
+            &lt;taxonRankName&gt;superorder&lt;/taxonRankName&gt;
+            &lt;taxonRankValue&gt;Asteranae&lt;/taxonRankValue&gt;
+            &lt;taxonomicClassification&gt;
+             &lt;taxonRankName&gt;order&lt;/taxonRankName&gt;
+             &lt;taxonRankValue&gt;Asterales&lt;/taxonRankValue&gt;
+             &lt;taxonomicClassification&gt;
+              &lt;taxonRankName&gt;family&lt;/taxonRankName&gt;
+              &lt;taxonRankValue&gt;Asteraceae&lt;/taxonRankValue&gt;
+              &lt;taxonomicClassification&gt;
+               &lt;taxonRankName&gt;genus&lt;/taxonRankName&gt;
+               &lt;taxonRankValue&gt;Liatris&lt;/taxonRankValue&gt;
+               &lt;taxonomicClassification&gt;
+                &lt;taxonRankName&gt;species&lt;/taxonRankName&gt;
+                &lt;taxonRankValue&gt;Liatris aspera&lt;/taxonRankValue&gt;
+               &lt;/taxonomicClassification&gt;
+              &lt;/taxonomicClassification&gt;
+             &lt;/taxonomicClassification&gt;
+            &lt;/taxonomicClassification&gt;
+           &lt;/taxonomicClassification&gt;
+          &lt;/taxonomicClassification&gt;
+         &lt;/taxonomicClassification&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+    &lt;taxonomicClassification&gt;
+     &lt;taxonRankName&gt;kingdom&lt;/taxonRankName&gt;
+     &lt;taxonRankValue&gt;Plantae&lt;/taxonRankValue&gt;
+     &lt;taxonomicClassification&gt;
+      &lt;taxonRankName&gt;subkingdom&lt;/taxonRankName&gt;
+      &lt;taxonRankValue&gt;Viridiplantae&lt;/taxonRankValue&gt;
+      &lt;taxonomicClassification&gt;
+       &lt;taxonRankName&gt;infrakingdom&lt;/taxonRankName&gt;
+       &lt;taxonRankValue&gt;Streptophyta&lt;/taxonRankValue&gt;
+       &lt;taxonomicClassification&gt;
+        &lt;taxonRankName&gt;superdivision&lt;/taxonRankName&gt;
+        &lt;taxonRankValue&gt;Embryophyta&lt;/taxonRankValue&gt;
+        &lt;taxonomicClassification&gt;
+         &lt;taxonRankName&gt;division&lt;/taxonRankName&gt;
+         &lt;taxonRankValue&gt;Bryophyta&lt;/taxonRankValue&gt;
+        &lt;/taxonomicClassification&gt;
+       &lt;/taxonomicClassification&gt;
+      &lt;/taxonomicClassification&gt;
+     &lt;/taxonomicClassification&gt;
+    &lt;/taxonomicClassification&gt;
+   &lt;/taxonomicCoverage&gt;
   &lt;/coverage&gt;
   &lt;maintenance&gt;
    &lt;description&gt;completed&lt;/description&gt;
@@ -1945,37 +3706,47 @@
   &lt;methods&gt;
    &lt;methodStep&gt;
     &lt;description&gt;
-     &lt;para&gt;
-      In 2014 and 2015, we quantified decomposition of plant litter material
+     &lt;para&gt;In 2014 and 2015, we quantified decomposition of plant litter material
   collected from each plot. In late May, we collected vascular plant
-  litter from the surface of each plot, along with
+  litter from the surface of each plot, along with&lt;/para&gt;
+     &lt;para&gt;
       &lt;emphasis&gt;Sphagnum&lt;/emphasis&gt;
-      peat (
+     &lt;/para&gt;
+     &lt;para&gt;peat (&lt;/para&gt;
+     &lt;para&gt;
       &lt;emphasis&gt;S.
   fuscum&lt;/emphasis&gt;
-      -derived), from roughly 5-15 cm below the capitula.
+     &lt;/para&gt;
+     &lt;para&gt;-derived), from roughly 5-15 cm below the capitula.
   We placed nylon mesh litter bags with mixed vascular plant litter
-  (approx. 1.7 g dry mass; roughly equal masses of
+  (approx. 1.7 g dry mass; roughly equal masses of&lt;/para&gt;
+     &lt;para&gt;
       &lt;emphasis&gt;Rhododendron groenlandicum&lt;/emphasis&gt;
-      ,
+     &lt;/para&gt;
+     &lt;para&gt;,&lt;/para&gt;
+     &lt;para&gt;
       &lt;emphasis&gt;Andromeda
   polifolia&lt;/emphasis&gt;
-      ,
+     &lt;/para&gt;
+     &lt;para&gt;
       &lt;emphasis&gt;Chamaedaphne calyculata&lt;/emphasis&gt;
-      ,
+     &lt;/para&gt;
+     &lt;para&gt;,&lt;/para&gt;
+     &lt;para&gt;
       &lt;emphasis&gt;Smilacina trifolia&lt;/emphasis&gt;
-      , and
+     &lt;/para&gt;
+     &lt;para&gt;, and&lt;/para&gt;
+     &lt;para&gt;
       &lt;emphasis&gt;Rubus
   chamaemorus&lt;/emphasis&gt;
-      ) or peat approximately 10 cm below the peat
+     &lt;/para&gt;
+     &lt;para&gt;) or peat approximately 10 cm below the peat
   surface in early June (in 2014, 3 bags per plot of vascular litter and
-  3 bags of
-      &lt;emphasis&gt;Sphagnum&lt;/emphasis&gt;
-      peat; in 2015, 4 bags of each
+  3 bags of&lt;/para&gt;
+     &lt;para&gt;peat; in 2015, 4 bags of each
   material). Upon retrieval in October of each year, we manually removed
   debris from each retrieved bag before drying at 55 C for a minimum of
-  5 days, and weighing.
-     &lt;/para&gt;
+  5 days, and weighing.&lt;/para&gt;
     &lt;/description&gt;
    &lt;/methodStep&gt;
   &lt;/methods&gt;
@@ -1984,8 +3755,10 @@
    &lt;personnel&gt;
     &lt;individualName&gt;
      &lt;givenName&gt;Kelman&lt;/givenName&gt;
+     &lt;givenName&gt;R&lt;/givenName&gt;
      &lt;surName&gt;Wieder&lt;/surName&gt;
     &lt;/individualName&gt;
+    &lt;organizationName&gt;Villanova University&lt;/organizationName&gt;
     &lt;electronicMailAddress&gt;kelman.wieder@villanova.edu&lt;/electronicMailAddress&gt;
     &lt;userId directory="https://orcid.org"&gt;https://orcid.org/0000-0001-5856-8473&lt;/userId&gt;
     &lt;role&gt;Principal Investigator&lt;/role&gt;
@@ -1996,8 +3769,10 @@
     &lt;personnel&gt;
      &lt;individualName&gt;
       &lt;givenName&gt;Melanie&lt;/givenName&gt;
+      &lt;givenName&gt;A&lt;/givenName&gt;
       &lt;surName&gt;Vile&lt;/surName&gt;
      &lt;/individualName&gt;
+     &lt;organizationName&gt;Villanova University&lt;/organizationName&gt;
      &lt;electronicMailAddress&gt;mvile@villanova.edu&lt;/electronicMailAddress&gt;
      &lt;role&gt;Principal Investigator&lt;/role&gt;
     &lt;/personnel&gt;
@@ -2010,6 +3785,7 @@
       &lt;givenName&gt;Joe&lt;/givenName&gt;
       &lt;surName&gt;Smith&lt;/surName&gt;
      &lt;/individualName&gt;
+     &lt;organizationName&gt;Villanova University&lt;/organizationName&gt;
      &lt;role&gt;Principal Investigator&lt;/role&gt;
     &lt;/personnel&gt;
     &lt;funding&gt;NSF: 101&lt;/funding&gt;
@@ -2021,6 +3797,7 @@
       &lt;givenName&gt;Joe&lt;/givenName&gt;
       &lt;surName&gt;Smith&lt;/surName&gt;
      &lt;/individualName&gt;
+     &lt;organizationName&gt;Villanova University&lt;/organizationName&gt;
      &lt;role&gt;Principal Investigator&lt;/role&gt;
     &lt;/personnel&gt;
     &lt;funding&gt;111001&lt;/funding&gt;
@@ -2032,6 +3809,7 @@
       &lt;givenName&gt;Chase&lt;/givenName&gt;
       &lt;surName&gt;Gacho&lt;/surName&gt;
      &lt;/individualName&gt;
+     &lt;organizationName&gt;University of New Mexico&lt;/organizationName&gt;
      &lt;electronicMailAddress&gt;gachase@unm.edu&lt;/electronicMailAddress&gt;
      &lt;role&gt;Principal Investigator&lt;/role&gt;
     &lt;/personnel&gt;
@@ -2043,7 +3821,7 @@
    &lt;entityDescription&gt;Decomposition data&lt;/entityDescription&gt;
    &lt;physical&gt;
     &lt;objectName&gt;decomp.csv&lt;/objectName&gt;
-    &lt;size unit="byte"&gt;15547&lt;/size&gt;
+    &lt;size unit="bytes"&gt;15547&lt;/size&gt;
     &lt;authentication method="MD5"&gt;2d7897ddbfccc840fddffc4c7d468ba5&lt;/authentication&gt;
     &lt;dataFormat&gt;
      &lt;textFormat&gt;
@@ -2066,8 +3844,12 @@
        &lt;nonNumericDomain&gt;
         &lt;enumeratedDomain&gt;
          &lt;codeDefinition&gt;
-          &lt;code&gt;NA&lt;/code&gt;
-          &lt;definition&gt;NA&lt;/definition&gt;
+          &lt;code&gt;Sphagnum&lt;/code&gt;
+          &lt;definition&gt;Sphagnum&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;Vascular&lt;/code&gt;
+          &lt;definition&gt;Vascular&lt;/definition&gt;
          &lt;/codeDefinition&gt;
         &lt;/enumeratedDomain&gt;
        &lt;/nonNumericDomain&gt;
@@ -2084,7 +3866,10 @@
      &lt;storageType&gt;date&lt;/storageType&gt;
      &lt;measurementScale&gt;
       &lt;dateTime&gt;
-       &lt;formatString&gt;YYYY-MM-DD&lt;/formatString&gt;
+       &lt;formatString&gt;YYYY-MM-DD&lt;/formatString&gt;</code></pre>
+<pre><code>Warning in structure(x$children, class = "XMLNodeList"): Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.
+  Consider 'structure(list(), *)' instead.</code></pre>
+<pre><code>       &lt;dateTimeDomain/&gt;
       &lt;/dateTime&gt;
      &lt;/measurementScale&gt;
      &lt;missingValueCode&gt;
@@ -2101,8 +3886,16 @@
        &lt;nonNumericDomain&gt;
         &lt;enumeratedDomain&gt;
          &lt;codeDefinition&gt;
-          &lt;code&gt;NA&lt;/code&gt;
-          &lt;definition&gt;NA&lt;/definition&gt;
+          &lt;code&gt;1&lt;/code&gt;
+          &lt;definition&gt;Arm 1&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;2&lt;/code&gt;
+          &lt;definition&gt;Arm 2&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;3&lt;/code&gt;
+          &lt;definition&gt;Arm 3&lt;/definition&gt;
          &lt;/codeDefinition&gt;
         &lt;/enumeratedDomain&gt;
        &lt;/nonNumericDomain&gt;
@@ -2122,8 +3915,32 @@
        &lt;nonNumericDomain&gt;
         &lt;enumeratedDomain&gt;
          &lt;codeDefinition&gt;
-          &lt;code&gt;NA&lt;/code&gt;
-          &lt;definition&gt;NA&lt;/definition&gt;
+          &lt;code&gt;C&lt;/code&gt;
+          &lt;definition&gt;Control, no water, no N added&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;0&lt;/code&gt;
+          &lt;definition&gt;0 kg N/ha/yr added&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;5&lt;/code&gt;
+          &lt;definition&gt;5 kg N/ha/yr added&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;10&lt;/code&gt;
+          &lt;definition&gt;10 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;15&lt;/code&gt;
+          &lt;definition&gt;15 kg N/ha/yr added&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;20&lt;/code&gt;
+          &lt;definition&gt;20 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;25&lt;/code&gt;
+          &lt;definition&gt;25 kg N/ha/yr added&lt;/definition&gt;
          &lt;/codeDefinition&gt;
         &lt;/enumeratedDomain&gt;
        &lt;/nonNumericDomain&gt;
@@ -2140,7 +3957,10 @@
      &lt;storageType&gt;date&lt;/storageType&gt;
      &lt;measurementScale&gt;
       &lt;dateTime&gt;
-       &lt;formatString&gt;YYYY&lt;/formatString&gt;
+       &lt;formatString&gt;YYYY&lt;/formatString&gt;</code></pre>
+<pre><code>Warning in structure(x$children, class = "XMLNodeList"): Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.
+  Consider 'structure(list(), *)' instead.</code></pre>
+<pre><code>       &lt;dateTimeDomain/&gt;
       &lt;/dateTime&gt;
      &lt;/measurementScale&gt;
      &lt;missingValueCode&gt;
@@ -2197,7 +4017,7 @@
    &lt;entityDescription&gt;Nitrogen data&lt;/entityDescription&gt;
    &lt;physical&gt;
     &lt;objectName&gt;nitrogen.csv&lt;/objectName&gt;
-    &lt;size unit="byte"&gt;6733&lt;/size&gt;
+    &lt;size unit="bytes"&gt;6733&lt;/size&gt;
     &lt;authentication method="MD5"&gt;2b10baaea5692bf96cafab9ae636f831&lt;/authentication&gt;
     &lt;dataFormat&gt;
      &lt;textFormat&gt;
@@ -2217,7 +4037,10 @@
      &lt;storageType&gt;date&lt;/storageType&gt;
      &lt;measurementScale&gt;
       &lt;dateTime&gt;
-       &lt;formatString&gt;YYYY&lt;/formatString&gt;
+       &lt;formatString&gt;YYYY&lt;/formatString&gt;</code></pre>
+<pre><code>Warning in structure(x$children, class = "XMLNodeList"): Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.
+  Consider 'structure(list(), *)' instead.</code></pre>
+<pre><code>       &lt;dateTimeDomain/&gt;
       &lt;/dateTime&gt;
      &lt;/measurementScale&gt;
      &lt;missingValueCode&gt;
@@ -2234,8 +4057,32 @@
        &lt;nonNumericDomain&gt;
         &lt;enumeratedDomain&gt;
          &lt;codeDefinition&gt;
-          &lt;code&gt;NA&lt;/code&gt;
-          &lt;definition&gt;NA&lt;/definition&gt;
+          &lt;code&gt;C&lt;/code&gt;
+          &lt;definition&gt;Control, no water, no N added&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;0&lt;/code&gt;
+          &lt;definition&gt;0 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;5&lt;/code&gt;
+          &lt;definition&gt;5 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;10&lt;/code&gt;
+          &lt;definition&gt;10 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;15&lt;/code&gt;
+          &lt;definition&gt;15 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;20&lt;/code&gt;
+          &lt;definition&gt;20 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;25&lt;/code&gt;
+          &lt;definition&gt;25 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
          &lt;/codeDefinition&gt;
         &lt;/enumeratedDomain&gt;
        &lt;/nonNumericDomain&gt;
@@ -2255,8 +4102,16 @@
        &lt;nonNumericDomain&gt;
         &lt;enumeratedDomain&gt;
          &lt;codeDefinition&gt;
-          &lt;code&gt;NA&lt;/code&gt;
-          &lt;definition&gt;NA&lt;/definition&gt;
+          &lt;code&gt;1&lt;/code&gt;
+          &lt;definition&gt;Arm 1&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;2&lt;/code&gt;
+          &lt;definition&gt;Arm 2&lt;/definition&gt;
+         &lt;/codeDefinition&gt;
+         &lt;codeDefinition&gt;
+          &lt;code&gt;3&lt;/code&gt;
+          &lt;definition&gt;Arm3&lt;/definition&gt;
          &lt;/codeDefinition&gt;
         &lt;/enumeratedDomain&gt;
        &lt;/nonNumericDomain&gt;
@@ -2482,11 +4337,11 @@
  &lt;/dataset&gt;
  &lt;additionalMetadata&gt;
   &lt;metadata&gt;
-   &lt;unitList xmlns:eml="eml://ecoinformatics.org/eml-2.1.1" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
-    &lt;unit id="gramsPerSquaredMeterPerCentimeter" name="gramsPerSquaredMeterPerCentimeter" parentSI="kilogramsPerSquaredMeterPerMeter" unitType="areal mass density per length" multiplierToSI="0.1"&gt;
+   &lt;unitList&gt;
+    &lt;unit id="gramsPerSquaredMeterPerCentimeter" multiplierToSI="0.1" name="gramsPerSquaredMeterPerCentimeter" parentSI="kilogramsPerSquaredMeterPerMeter" unitType="areal mass density per length"&gt;
      &lt;description&gt;grams per meter squared per centimeter&lt;/description&gt;
     &lt;/unit&gt;
-    &lt;unit id="milligramsPerGram" name="milligramsPerGram" parentSI="kilogramsPerSquaredMeterPerMeter" unitType="mass" multiplierToSI="1000"&gt;
+    &lt;unit id="milligramsPerGram" multiplierToSI="1000" name="milligramsPerGram" parentSI="kilogramsPerSquaredMeterPerMeter" unitType="mass"&gt;
      &lt;description&gt;milligrams per gram&lt;/description&gt;
     &lt;/unit&gt;
    &lt;/unitList&gt;
@@ -2517,7 +4372,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
 </div>
       </footer>
 </div>
