@@ -384,7 +384,7 @@ testthat::test_that('Error out when required arguments are missing', {
   expect_warning(
     suppressMessages(
       make_eml(
-        path = '/Users/csmith/Documents/EDI/r/EMLassemblyline/inst/examples/templates_new_geocoverage',
+        path = system.file('/examples/templates_new_geocoverage', package = 'EMLassemblyline'),
         dataset.title = dataset.title,
         temporal.coverage = temporal.coverage,
         maintenance.description = maintenance.description,
@@ -420,7 +420,7 @@ testthat::test_that('Error out when required arguments are missing', {
   expect_warning(
     suppressMessages(
       make_eml(
-        path = '/Users/csmith/Documents/EDI/r/EMLassemblyline/inst/examples/templates_new_geocoverage',
+        path = system.file('/examples/templates_new_geocoverage', package = 'EMLassemblyline'),
         data.path = data.path,
         eml.path = eml.path,
         dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
@@ -528,7 +528,7 @@ testthat::test_that('Error out when required arguments are missing', {
   expect_warning(
     suppressMessages(
       make_eml(
-        path = '/Users/csmith/Documents/EDI/r/EMLassemblyline/inst/examples/templates_new_geocoverage',
+        path = system.file('/examples/templates_new_geocoverage', package = 'EMLassemblyline'),
         data.path = data.path,
         eml.path = eml.path,
         dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
@@ -866,7 +866,7 @@ testthat::test_that('Expect equal', {
   expect_warning(
     suppressMessages(
       make_eml(
-        path = '/Users/csmith/Documents/EDI/r/EMLassemblyline/inst/examples/templates_bb',
+        path = system.file('/examples/templates_bb', package = 'EMLassemblyline'),
         data.path = data.path,
         eml.path = eml.path,
         dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
@@ -933,7 +933,7 @@ testthat::test_that('Expect equal', {
   
   expect_message(
     make_eml(
-      path = '/Users/csmith/Documents/EDI/r/EMLassemblyline/inst/examples/templates_new_geocoverage',
+      path = system.file('/examples/templates_new_geocoverage', package = 'EMLassemblyline'),
       data.path = data.path,
       eml.path = eml.path,
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
@@ -952,7 +952,7 @@ testthat::test_that('Expect equal', {
   # other.entity
   
   output <- make_eml(
-    path = '/Users/csmith/Documents/EDI/r/EMLassemblyline/inst/examples/templates_new_geocoverage',
+    path = system.file('/examples/templates_new_geocoverage', package = 'EMLassemblyline'),
     data.path = data.path,
     eml.path = eml.path,
     dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
@@ -983,7 +983,7 @@ testthat::test_that('Expect equal', {
   # Using data.url
   
   output <- make_eml(
-    path = '/Users/csmith/Documents/EDI/r/EMLassemblyline/inst/examples/templates_new_geocoverage',
+    path = system.file('/examples/templates_new_geocoverage', package = 'EMLassemblyline'),
     data.path = data.path,
     eml.path = eml.path,
     dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
@@ -1552,7 +1552,7 @@ testthat::test_that('Test usage with x (all templates, 2 data tables, and 1 othe
   
   expect_warning(
     make_eml(
-      path = '/Users/csmith/Documents/EDI/r/EMLassemblyline/inst/examples/templates_new_geocoverage',
+      path = system.file('/examples/templates_new_geocoverage', package = 'EMLassemblyline'),
       data.path = data.path,
       eml.path = eml.path,
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
