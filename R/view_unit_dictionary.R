@@ -16,7 +16,7 @@
 view_unit_dictionary <- function(){
   
   standardUnits <- EML::get_unitList()
-
-  utils::View(standardUnits$units)
+  
+  View(standardUnits$units)
 
 }

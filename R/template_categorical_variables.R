@@ -239,6 +239,17 @@ template_categorical_variables <- function(
           catvars <- catvars[!use_i, ]
         }
         
+        # Remove missing value codes from categorical variables. Only missing
+        # value codes defined in the attribute.txt template are removed.
+        
+        for (k in 1:length(unique(catvars$attributeName))){
+          use_i <- (catvars$attributeName %in% unique(catvars$attributeName)[k]) &
+            (catvars$code %in% df_attributes$missingValueCode[
+              df_attributes$attributeName == unique(catvars$attributeName)[k]
+              ])
+          catvars <- catvars[!use_i, ]
+        }
+
         # Write template to file
         
         if (isTRUE(write.file) & exists('data_read_2_x')){

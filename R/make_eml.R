@@ -140,8 +140,6 @@
 #'   eml.path = './eml',
 #'   dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions',
 #'   temporal.coverage = c('2014-05-01', '2015-10-31'),
-#'   geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
-#'   geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
 #'   maintenance.description = 'completed',
 #'   data.table = c('decomp.csv', 'nitrogen.csv'),
 #'   data.table.description = c('Decomposition data', 'Nitrogen data'),
@@ -161,8 +159,6 @@
 #'   eml.path = './eml',
 #'   dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions',
 #'   temporal.coverage = c('2014-05-01', '2015-10-31'),
-#'   geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
-#'   geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
 #'   maintenance.description = 'completed',
 #'   other.entity = c('ancillary_data.zip', 'processing_and_analysis.R'),
 #'   other.entity.description = c('Ancillary data', 'Data processing and analysis script'),
@@ -182,8 +178,6 @@
 #'   eml.path = './eml',
 #'   dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions',
 #'   temporal.coverage = c('2014-05-01', '2015-10-31'),
-#'   geographic.description = 'Alberta, Canada, 100 km south of Fort McMurray, Canada',
-#'   geographic.coordinates = c('55.895', '112.094','55.895', '112.094'),
 #'   maintenance.description = 'completed',
 #'   data.table = c('decomp.csv', 'nitrogen.csv'),
 #'   data.table.description = c('Decomposition data', 'Nitrogen data'),
@@ -841,7 +835,6 @@ make_eml <- function(
     message("   <additionalInfo>")
     dataset$additionalInfo <- x$template[[
       names(x$template)[stringr::str_detect(names(x$template), 'additional_info')]]]$content
-    
   }
 
   # Create <intellectualRights> -----------------------------------------------
@@ -866,6 +859,29 @@ make_eml <- function(
   # Create <geographicCoverage> -----------------------------------------------
   
   geographicCoverage <- list()
+  
+  # Error if more than one geographic coverage intput
+  
+  sources <- c(
+    'geographic.coordinates of the make_eml() function',
+    'bounding_boxes.txt template',
+    'geographic_coverage.txt template'
+  )
+  
+  use_i <- c(
+    (!missing(geographic.coordinates) & !missing(geographic.description)),
+    (('bounding_boxes.txt' %in% names(x$template)) & (is.data.frame(x$template$bounding_boxes.txt$content))),
+    (('geographic_coverage.txt' %in% names(x$template)) & (is.data.frame(x$template$geographic_coverage.txt$content)))
+  )
+  
+  if (sum(use_i) > 1){
+    stop(
+      paste0(
+        'Only one source of geographic coverage information is allowed. These sources were found:\n',
+        paste0(sources[use_i], collapse = '\n')
+      )
+    )
+  }
   
   # Add coverage defined in arguments of make_eml
   
@@ -1039,7 +1055,8 @@ make_eml <- function(
             taxonomyCleanr::make_taxonomicCoverage(
               taxa.clean = x$template$taxonomic_coverage.txt$content$name_resolved,
               authority = x$template$taxonomic_coverage.txt$content$authority_system,
-              authority.id = x$template$taxonomic_coverage.txt$content$authority_id
+              authority.id = x$template$taxonomic_coverage.txt$content$authority_id,
+              write.file = FALSE
             )
           ),
           silent = T
@@ -1509,6 +1526,16 @@ make_eml <- function(
         numberOfRecords = as.character(nrow(df_table))
       )
       
+      # FIXME: EML v2.0.0 handles absense of missingValue codes differently
+      # than EML v 1.0.3. This fixes the issue here, though it may be better
+      # to implement the fix in EML v2.0.0.
+      for (j in seq_along(data_table$attributeList$attribute)){
+        if (data_table$attributeList$attribute[[j]]$missingValueCode$code == ''){
+          data_table$attributeList$attribute[[j]]$missingValueCode$code <- NA_character_
+          data_table$attributeList$attribute[[j]]$missingValueCode$codeExplanation <- NA_character_
+        }
+      }
+      
       data_tables_stored[[i]] <- data_table
       
     }
@@ -1613,7 +1640,7 @@ make_eml <- function(
         otherEntity$physical <- physical
 
         # Add entityType
-        
+
         otherEntity$entityType <- 'unknown'
         
         # Add otherEntity to list
