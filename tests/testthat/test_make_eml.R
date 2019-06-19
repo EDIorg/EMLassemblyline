@@ -1901,20 +1901,22 @@ testthat::test_that('geographicCoverage', {
   )
   
   output <- suppressMessages(
-    make_eml(
-      data.path = data.path,
-      eml.path = eml.path,
-      dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.table = data.table,
-      data.table.description = c('Decomposition data', 'Nitrogen data'),
-      temporal.coverage = c('2014-05-01', '2015-10-31'),
-      maintenance.description = 'completed',
-      user.id = user.id,
-      user.domain = user.domain,
-      package.id = 'edi.141.1',
-      write.file = FALSE,
-      x = x_geographicCoverage,
-      return.obj = TRUE
+    suppressWarnings(
+      make_eml(
+        data.path = data.path,
+        eml.path = eml.path,
+        dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+        data.table = data.table,
+        data.table.description = c('Decomposition data', 'Nitrogen data'),
+        temporal.coverage = c('2014-05-01', '2015-10-31'),
+        maintenance.description = 'completed',
+        user.id = user.id,
+        user.domain = user.domain,
+        package.id = 'edi.141.1',
+        write.file = FALSE,
+        x = x_geographicCoverage,
+        return.obj = TRUE
+      )
     )
   )
   

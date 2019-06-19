@@ -1483,9 +1483,8 @@ testthat::test_that('Inputs = templates (docx), data tables, and other entities'
     TRUE
   )
   
-  expect_equal(
-    output$x$other.entity,
-    NULL
+  expect_true(
+    !is.null(output$x$other.entity)
   )
   
   # Level-3 has all template possiblities
@@ -1724,7 +1723,7 @@ testthat::test_that('Inputs = templates (md) and data tables', {
     )
     
     expect_equal(
-      class(output$x$template[[i]]$content)[1] %in% attr_templates$class,
+      class(output$x$template[[i]]$content)[1] %in% c(attr_templates$class, 'character'),
       TRUE
     )
     
@@ -2005,7 +2004,7 @@ testthat::test_that('Inputs = templates (docx) and other entities', {
     )
     
     expect_equal(
-      class(output$x$template[[i]]$content)[1] %in% attr_templates$class,
+      class(output$x$template[[i]]$content)[1] %in% c(attr_templates$class, 'character'),
       TRUE
     )
     
@@ -2123,7 +2122,7 @@ testthat::test_that('Inputs = templates (md) and other entities', {
     )
     
     expect_equal(
-      class(output$x$template[[i]]$content)[1] %in% attr_templates$class,
+      class(output$x$template[[i]]$content)[1] %in% c(attr_templates$class, 'character'),
       TRUE
     )
     
