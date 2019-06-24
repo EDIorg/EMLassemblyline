@@ -1,3 +1,13 @@
+# EMLassemblyline 2.7.1
+
+## Enhancements
+
+* __Multiple inputs to `template_taxonomic_coverage()`:__ If the taxa of a dataset are in more than one table, then a user would want to extract the unique taxa from all the tables and compile into the taxonomic_coverage.txt template. Multiple inputs to the `taxa.table` and `taxa.col` arguments is now supported. Please consult function documentation for details on inputting more than one table (i.e. `?template_taxonomic_coverage`).
+
+## Bug fixes
+
+* __Testing `template_taxonomic_coverage()`:__ Travis CI has been failing because of long responses from API calls made by `template_taxonomic_coverage()`. To expedite tests and reduce errors, the example data now contains substantially fewer taxa to be resolved against authority systems.
+
 # EMLassemblyline 2.6.1
 
 ## Bug fixes
@@ -11,7 +21,7 @@
 
 # EMLassemblyline 2.6.0
 
-## New features
+## Enhancements
 
 * __EML v2.0.0:__ `EMLassemblyline` has been refactored to run with the `EML' v2.0.0 dependency.
 * __Text type metadata may now be supplied in .docx and .md files:__ Support for creating abstract, methods, and additional information metadata has been extended from simple text files to Microsoft Word (.docx) and Markdown (.md) file formats. Formatting of these files are translated to EML via `markdown` > Pandoc > docbook.
@@ -19,7 +29,7 @@
 
 # EMLassemblyline 2.5.3
 
-## New features
+## Enhancements
 
 * __Add function examples:__ Add examples to function documentation.
 * __Change template import:__ Import custom_units.txt with `template_table_attributes()` instead of with `template_core_metadata()`. This is a more logical pairing.
@@ -32,7 +42,7 @@
 
 # EMLassemblyline 2.5.0
 
-## New features
+## Enhancements
 
 * __Website:__ Improved documentation with vignettes demonstrating common and advanced use cases. Implemented with `pkgdown`.
 * __Templating functions:__ Functions creating metadata templates are grouped under the prefix `template_*` to simplify user understanding.
