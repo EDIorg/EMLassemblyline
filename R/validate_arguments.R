@@ -622,21 +622,29 @@ validate_arguments <- function(fun.name, fun.args){
       stop('Input argument "taxa.col" is missing.')
     }
     
+    if (length(fun.args$taxa.col) != length(fun.args$taxa.table)){
+      stop('Each "taxa.table" requires a corresponding "taxa.col".')
+    }
+    
     if (is.null(fun.args$x)){
       
       x <- template_arguments(
         data.path = fun.args$data.path,
         data.table = data_files
       )
-
-      if (!isTRUE(fun.args$taxa.col %in% colnames(x$x$data.table[[data_files]]$content))){
-        stop('Input argument "taxa.col" can not be found in "taxa.table".')
+      
+      for (i in seq_along(fun.args$taxa.table)){
+        if (!isTRUE(fun.args$taxa.col[i] %in% colnames(x$x$data.table[[data_files[i]]]$content))){
+          stop('Input argument "taxa.col" can not be found in "taxa.table".')
+        }
       }
       
     } else if (!is.null(fun.args$x)){
       
-      if (!isTRUE(fun.args$taxa.col %in% colnames(fun.args$x$data.table[[fun.args$taxa.table]]$content))){
-        stop('Input argument "taxa.col" can not be found in "taxa.table"')
+      for (i in seq_along(fun.args$taxa.table)){
+        if (!isTRUE(fun.args$taxa.col[i] %in% colnames(fun.args$x$data.table[[fun.args$taxa.table[i]]]$content))){
+          stop('Input argument "taxa.col" can not be found in "taxa.table"')
+        }
       }
       
     }

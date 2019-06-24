@@ -20,10 +20,13 @@ template_taxonomic_coverage(
 
 \item{data.path}{(character) Path to the data directory.}
 
-\item{taxa.table}{(character) Table name containing \code{taxa.col}.}
+\item{taxa.table}{(character) Table name containing \code{taxa.col}. If inputting more 
+than one table, then supply as a list (e.g. 
+\code{c('table.1', 'table.2')}).}
 
 \item{taxa.col}{(character) Column name containing taxa names. Species binomials are
-accepted.}
+accepted. If inputting more than one table, then supply as a list
+\code{c('taxa.col.table.1', 'taxa.col.table.2')}.}
 
 \item{taxa.name.type}{(character) Taxa name type. Can be: 
 \code{scientific}, \code{common}, or \code{both}.}
@@ -92,7 +95,7 @@ template_taxonomic_coverage(
   taxa.table = 'decomp.csv',
   taxa.col = 'taxa',
   taxa.authority = c(3,11),
-  taxa.name.type = 'both'
+  taxa.name.type = 'scientific'
 )
 
 # View directory contents (NOTE: taxonomic_coverage.txt exists)
@@ -105,7 +108,7 @@ template_taxonomic_coverage(
   taxa.table = 'decomp.csv',
   taxa.col = 'taxa',
   taxa.authority = c(3,11),
-  taxa.name.type = 'both'
+  taxa.name.type = 'scientific'
 )
 
 # Clean up

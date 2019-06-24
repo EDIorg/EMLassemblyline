@@ -73,7 +73,7 @@ testthat::test_that('File inputs', {
         ),
         taxa.table = 'decomp.csv',
         taxa.col = 'taxa',
-        taxa.name.type = 'both',
+        taxa.name.type = 'scientific',
         taxa.authority = c(3, 11),
         write.file = FALSE
       ) 
@@ -88,7 +88,7 @@ testthat::test_that('File inputs', {
         path = tempdir(),
         taxa.table = 'decomp.csv',
         taxa.col = 'taxa',
-        taxa.name.type = 'both',
+        taxa.name.type = 'scientific',
         taxa.authority = c(3, 11),
         write.file = FALSE
       ) 
@@ -106,7 +106,7 @@ testthat::test_that('File inputs', {
           package = 'EMLassemblyline'
         ),
         taxa.col = 'taxa',
-        taxa.name.type = 'both',
+        taxa.name.type = 'scientific',
         taxa.authority = c(3, 11),
         write.file = FALSE
       ) 
@@ -125,7 +125,7 @@ testthat::test_that('File inputs', {
         ),
         taxa.table = 'decomppp.csv',
         taxa.col = 'taxa',
-        taxa.name.type = 'both',
+        taxa.name.type = 'scientific',
         taxa.authority = c(3, 11),
         write.file = FALSE
       ) 
@@ -143,7 +143,7 @@ testthat::test_that('File inputs', {
           package = 'EMLassemblyline'
         ),
         taxa.table = 'decomp.csv',
-        taxa.name.type = 'both',
+        taxa.name.type = 'scientific',
         taxa.authority = c(3, 11),
         write.file = FALSE
       ) 
@@ -162,7 +162,7 @@ testthat::test_that('File inputs', {
         ),
         taxa.table = 'decomp.csv',
         taxa.col = 'taxaaa',
-        taxa.name.type = 'both',
+        taxa.name.type = 'scientific',
         taxa.authority = c(3, 11),
         write.file = FALSE
       ) 
@@ -244,7 +244,7 @@ testthat::test_that('File inputs', {
       ),
       taxa.table = 'decomp',
       taxa.col = 'taxa',
-      taxa.name.type = 'both',
+      taxa.name.type = 'scientific',
       taxa.authority = c(3, 11),
       write.file = FALSE
     ) 
@@ -278,7 +278,7 @@ testthat::test_that('x inputs', {
     template_taxonomic_coverage(
       taxa.table = 'decomp.csv',
       taxa.col = 'taxa',
-      taxa.name.type = 'both',
+      taxa.name.type = 'scientific',
       taxa.authority = c(3, 11),
       x = x
     ) 
@@ -311,7 +311,7 @@ testthat::test_that('x inputs', {
           package = 'EMLassemblyline'
         ),
         taxa.col = 'taxa',
-        taxa.name.type = 'both',
+        taxa.name.type = 'scientific',
         taxa.authority = c(3, 11),
         x = output
       ) 
@@ -330,7 +330,7 @@ testthat::test_that('x inputs', {
         ),
         taxa.table = 'decomppp.csv',
         taxa.col = 'taxa',
-        taxa.name.type = 'both',
+        taxa.name.type = 'scientific',
         taxa.authority = c(3, 11),
         x = output
       ) 
@@ -348,7 +348,7 @@ testthat::test_that('x inputs', {
           package = 'EMLassemblyline'
         ),
         taxa.table = 'decomp.csv',
-        taxa.name.type = 'both',
+        taxa.name.type = 'scientific',
         taxa.authority = c(3, 11),
         x = output
       ) 
@@ -367,7 +367,7 @@ testthat::test_that('x inputs', {
         ),
         taxa.table = 'decomp.csv',
         taxa.col = 'taxaaa',
-        taxa.name.type = 'both',
+        taxa.name.type = 'scientific',
         taxa.authority = c(3, 11),
         x = output
       ) 
@@ -428,6 +428,102 @@ testthat::test_that('x inputs', {
         x = output
       ) 
     ) 
+  )
+  
+})
+
+# Multiple table inputs -------------------------------------------------------
+
+testthat::test_that('Multiple table inputs', {
+  
+  # Create temporary directory for test
+  
+  dir.create(
+    paste0(tempdir(), '/pkg')
+  )
+  
+  # Add 2 tables containing taxonomic information (2 copies of the same table)
+  
+  file.copy(
+    from = system.file('/examples/data/decomp.csv', package = 'EMLassemblyline'),
+    to = paste0(tempdir(), '/pkg')
+  )
+  
+  file.copy(
+    from = system.file('/examples/data/decomp.csv', package = 'EMLassemblyline'),
+    to = paste0(tempdir(), '/pkg/decomp2.csv')
+  )
+  
+  # Call template_taxonomic_coverage()
+  # Error if length(taxa.col) != length(taxa.table)
+  
+  expect_error(
+    suppressMessages(
+      template_taxonomic_coverage(
+        path = paste0(tempdir(), '/pkg'),
+        data.path = paste0(tempdir(), '/pkg'),
+        taxa.table = c('decomp.csv', 'decomp2.csv'),
+        taxa.col = 'taxa',
+        taxa.name.type = 'scientific',
+        taxa.authority = 3
+      ) 
+    )
+  )
+  
+  expect_error(
+    suppressMessages(
+      template_taxonomic_coverage(
+        path = paste0(tempdir(), '/pkg'),
+        data.path = paste0(tempdir(), '/pkg'),
+        taxa.table = 'decomp.csv',
+        taxa.col = c('taxa', 'taxa'),
+        taxa.name.type = 'scientific',
+        taxa.authority = 3
+      ) 
+    )
+  )
+  
+  # Call template_taxonomic_coverage()
+  # Correct usage outputs a valid taxonomic_coverage.txt template
+  
+  expect_message(
+    template_taxonomic_coverage(
+      path = paste0(tempdir(), '/pkg'),
+      data.path = paste0(tempdir(), '/pkg'),
+      taxa.table = c('decomp.csv', 'decomp2.csv'),
+      taxa.col = c('taxa', 'taxa'),
+      taxa.name.type = 'scientific',
+      taxa.authority = 3
+    )
+  )
+  
+  expect_true(
+    file.exists(paste0(tempdir(), '/pkg/taxonomic_coverage.txt'))
+  )
+  
+  output <- utils::read.table(
+    file = paste0(tempdir(), '/pkg/taxonomic_coverage.txt'),
+    header = T,
+    sep="\t",
+    quote="\"",
+    as.is=TRUE,
+    comment.char = "",
+    fill = T,
+    na.strings = "NA",
+    fileEncoding = "UTF-8"
+  )
+  
+  expect_equal(
+    class(output),
+    'data.frame'
+  )
+  
+  # Clean up
+  
+  unlink(
+    paste0(tempdir(), '/pkg'),
+    recursive = TRUE,
+    force = TRUE
   )
   
 })

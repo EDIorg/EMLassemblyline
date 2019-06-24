@@ -25,10 +25,13 @@
 #' @param data.path
 #'     (character) Path to the data directory.
 #' @param taxa.table
-#'     (character) Table name containing \code{taxa.col}.
+#'     (character) Table name containing \code{taxa.col}. If inputting more 
+#'     than one table, then supply as a list (e.g. 
+#'     \code{c('table.1', 'table.2')}).
 #' @param taxa.col
 #'     (character) Column name containing taxa names. Species binomials are
-#'     accepted.
+#'     accepted. If inputting more than one table, then supply as a list
+#'     \code{c('taxa.col.table.1', 'taxa.col.table.2')}.
 #' @param taxa.name.type
 #'     (character) Taxa name type. Can be: 
 #'     \code{scientific}, \code{common}, or \code{both}.
@@ -89,7 +92,7 @@
 #'   taxa.table = 'decomp.csv',
 #'   taxa.col = 'taxa',
 #'   taxa.authority = c(3,11),
-#'   taxa.name.type = 'both'
+#'   taxa.name.type = 'scientific'
 #' )
 #' 
 #' # View directory contents (NOTE: taxonomic_coverage.txt exists)
@@ -102,7 +105,7 @@
 #'   taxa.table = 'decomp.csv',
 #'   taxa.col = 'taxa',
 #'   taxa.authority = c(3,11),
-#'   taxa.name.type = 'both'
+#'   taxa.name.type = 'scientific'
 #' )
 #' 
 #' # Clean up
@@ -193,10 +196,19 @@ template_taxonomic_coverage <- function(
     
   } else {
     
-    # Identify unique taxa ----------------------------------------------------
+    # Identify unique taxa of each taxa.table ---------------------------------
     
     taxa_raw <- unique(
-      x$data.table[[taxa.table]]$content[ , taxa.col]
+      unlist(
+        lapply(
+          seq_along(x$data.table),
+          function(i){
+            unique(
+              x$data.table[[taxa.table[i]]]$content[ , taxa.col[i]]
+            )
+          }
+        )
+      )
     )
     
     # Resolve scientific names ------------------------------------------------
