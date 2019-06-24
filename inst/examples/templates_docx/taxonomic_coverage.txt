@@ -14,18 +14,3 @@ Bouteloua gracilis	scientific	Bouteloua gracilis	ITIS	41493
 Koeleria cristata	scientific	Koeleria cristata	ITIS	515476
 Liatris aspera	scientific	Liatris aspera	ITIS	37909
 	scientific	NA	NA	NA
-Mosses	common	Mosses	ITIS	14189
-Unsorted biomass	common	NA	NA	NA
-Achillea millefolium	common	NA	NA	NA
-Crepis tectorum	common	NA	NA	NA
-Cyperus sp.	common	NA	NA	NA
-Euphorbia glyptosperma	common	NA	NA	NA
-Lespedeza capitata	common	NA	NA	NA
-Lepidium densiflorum	common	NA	NA	NA
-Poa pratensis	common	NA	NA	NA
-Rumex acetosella	common	NA	NA	NA
-Schizachyrium scoparium	common	NA	NA	NA
-Bouteloua gracilis	common	NA	NA	NA
-Koeleria cristata	common	NA	NA	NA
-Liatris aspera	common	NA	NA	NA
-	common	NA	NA	NA

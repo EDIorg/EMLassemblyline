@@ -306,7 +306,7 @@ template_taxonomic_coverage(
   taxa.table = 'decomp.csv',
   taxa.col = 'taxa',
   taxa.authority = c(3,11),
-  taxa.name.type = 'both'
+  taxa.name.type = 'scientific'
 )
 
 # The taxonomic coverage template is present
