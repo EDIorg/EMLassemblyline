@@ -68,7 +68,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.6.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.1</span>
       </span>
     </div>
 
@@ -174,12 +174,15 @@
     </tr>
     <tr>
       <th>taxa.table</th>
-      <td><p>(character) Table name containing <code>taxa.col</code>.</p></td>
+      <td><p>(character) Table name containing <code>taxa.col</code>. If inputting more 
+than one table, then supply as a list (e.g. 
+<code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c('table.1', 'table.2')</a></code>).</p></td>
     </tr>
     <tr>
       <th>taxa.col</th>
       <td><p>(character) Column name containing taxa names. Species binomials are
-accepted.</p></td>
+accepted. If inputting more than one table, then supply as a list
+<code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c('taxa.col.table.1', 'taxa.col.table.2')</a></code>.</p></td>
     </tr>
     <tr>
       <th>taxa.name.type</th>
@@ -254,35 +257,14 @@ to create <code>x</code>.</p></td>
   <span class='kw'>taxa.table</span> <span class='kw'>=</span> <span class='st'>'decomp.csv'</span>,
   <span class='kw'>taxa.col</span> <span class='kw'>=</span> <span class='st'>'taxa'</span>,
   <span class='kw'>taxa.authority</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>3</span>,<span class='fl'>11</span>),
-  <span class='kw'>taxa.name.type</span> <span class='kw'>=</span> <span class='st'>'both'</span>
+  <span class='kw'>taxa.name.type</span> <span class='kw'>=</span> <span class='st'>'scientific'</span>
 )</div><div class='output co'>#&gt; <span class='message'>Templating taxonomic coverage ...</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Mosses"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Mosses"</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Unsorted biomass"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Unsorted biomass"</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Achillea millefolium"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Achillea millefolium"</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Retrieving data for taxon 'Achillea millefolium'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Crepis tectorum"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Crepis tectorum"</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Retrieving data for taxon 'Crepis tectorum'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Cyperus"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Cyperus"</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Retrieving data for taxon 'Cyperus'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Euphorbia glyptosperma"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Euphorbia glyptosperma"</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Retrieving data for taxon 'Euphorbia glyptosperma'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Lespedeza capitata"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Lespedeza capitata"</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Retrieving data for taxon 'Lespedeza capitata'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Lepidium densiflorum"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Lepidium densiflorum"</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Retrieving data for taxon 'Lepidium densiflorum'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Poa pratensis"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Poa pratensis"</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Retrieving data for taxon 'Poa pratensis'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Rumex acetosella"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Rumex acetosella"</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Retrieving data for taxon 'Rumex acetosella'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Schizachyrium scoparium"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Schizachyrium scoparium"</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Retrieving data for taxon 'Schizachyrium scoparium'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Bouteloua gracilis"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Bouteloua gracilis"</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Retrieving data for taxon 'Bouteloua gracilis'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Koeleria cristata"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Koeleria cristata"</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Retrieving data for taxon 'Koeleria cristata'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Liatris aspera"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Liatris aspera"</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Retrieving data for taxon 'Liatris aspera'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for ""</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for ""</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Retrieving data for taxon 'Mosses'</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Retrieving data for taxon 'Unsorted biomass'</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Retrieving data for taxon 'Achillea millefolium'</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Retrieving data for taxon 'Crepis tectorum'</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Retrieving data for taxon 'Cyperus'</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Retrieving data for taxon 'Euphorbia glyptosperma'</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Retrieving data for taxon 'Lespedeza capitata'</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Retrieving data for taxon 'Lepidium densiflorum'</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Retrieving data for taxon 'Poa pratensis'</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Retrieving data for taxon 'Rumex acetosella'</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Retrieving data for taxon 'Schizachyrium scoparium'</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Retrieving data for taxon 'Bouteloua gracilis'</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Retrieving data for taxon 'Koeleria cristata'</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Retrieving data for taxon 'Liatris aspera'</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Retrieving data for taxon ''</span></div><div class='output co'>#&gt; <span class='message'>taxonomic_coverage.txt</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
+#&gt; <span class='message'>Retrieving data for taxon 'Achillea millefolium'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Bouteloua gracilis"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Bouteloua gracilis"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Bouteloua gracilis'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Cyperus"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Cyperus"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Cyperus'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Koeleria cristata"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Koeleria cristata"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Koeleria cristata'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Lespedeza capitata"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Lespedeza capitata"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Lespedeza capitata'</span></div><div class='output co'>#&gt; <span class='message'>Searching ITIS for "Liatris aspera"</span></div><div class='output co'>#&gt; <span class='message'>Searching GBIF Backbone Taxonomy for "Liatris aspera"</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Retrieving data for taxon 'Liatris aspera'</span></div><div class='output co'>#&gt; <span class='message'>taxonomic_coverage.txt</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
 <span class='co'># View directory contents (NOTE: taxonomic_coverage.txt exists)</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='st'>'./metadata_templates'</span>)</div><div class='output co'>#&gt;  [1] "abstract.txt"            "additional_info.txt"    
 #&gt;  [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
@@ -298,7 +280,7 @@ to create <code>x</code>.</p></td>
   <span class='kw'>taxa.table</span> <span class='kw'>=</span> <span class='st'>'decomp.csv'</span>,
   <span class='kw'>taxa.col</span> <span class='kw'>=</span> <span class='st'>'taxa'</span>,
   <span class='kw'>taxa.authority</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>3</span>,<span class='fl'>11</span>),
-  <span class='kw'>taxa.name.type</span> <span class='kw'>=</span> <span class='st'>'both'</span>
+  <span class='kw'>taxa.name.type</span> <span class='kw'>=</span> <span class='st'>'scientific'</span>
 )</div><div class='output co'>#&gt; <span class='message'>Templating taxonomic coverage ...</span></div><div class='output co'>#&gt; <span class='message'>taxonomic_coverage.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
 <span class='co'># Clean up</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/unlink'>unlink</a></span>(<span class='st'>'.'</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
