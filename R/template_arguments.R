@@ -246,24 +246,22 @@ template_arguments <- function(
   
   # Get attributes of template files and arguments
   
-  attr.templates <- utils::read.table(
-    file = system.file(
-      '/templates/template_characteristics.txt',
-      package = 'EMLassemblyline'
-    ), 
-    header = T,
-    sep = '\t',
-    as.is = T
+  attr.templates <- as.data.frame(
+    data.table::fread(
+      file = system.file(
+        '/templates/template_characteristics.txt',
+        package = 'EMLassemblyline'
+      )
+    )
   )
   
-  attr.args <- utils::read.table(
-    file = system.file(
-      '/templates/arguments.txt',
-      package = 'EMLassemblyline'
-    ), 
-    header = T,
-    sep = '\t',
-    as.is = T
+  attr.args <- as.data.frame(
+    data.table::fread(
+      file = system.file(
+        '/templates/arguments.txt',
+        package = 'EMLassemblyline'
+      )
+    )
   )
   
   # Initialize arguments ------------------------------------------------------
@@ -472,19 +470,11 @@ template_arguments <- function(
       
       if (file.exists(paste0(path, '/', templates[i]))){
         
-        output$x$template[[i]]$content <- utils::read.table(
-          file = paste0(
-            path, 
-            '/', 
-            templates[i]
-          ), 
-          header = TRUE,
-          sep = '\t',
-          quote = "\"",
-          as.is = TRUE,
-          comment.char = "",
-          fill = T,
-          colClasses = rep("character", 7)
+        output$x$template[[i]]$content <- as.data.frame(
+          data.table::fread(
+            file = paste0(path, '/', templates[i]),
+            colClasses = rep("character", 7)
+          )
         )
         
         output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:7]
@@ -513,19 +503,11 @@ template_arguments <- function(
       
       if (file.exists(paste0(path, '/', templates[i]))){
         
-        output$x$template[[i]]$content <- utils::read.table(
-          paste0(
-            path, 
-            '/', 
-            templates[i]
-          ),
-          header = T,
-          sep="\t",
-          quote="\"",
-          as.is=TRUE,
-          comment.char = "",
-          fill = T,
-          colClasses = rep("character", 3)
+        output$x$template[[i]]$content <- as.data.frame(
+          data.table::fread(
+            file = paste0(path, '/', templates[i]),
+            colClasses = rep("character", 3)
+          )
         )
         
         output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:3]
@@ -550,19 +532,11 @@ template_arguments <- function(
       
       if (file.exists(paste0(path, '/', templates[i]))){
         
-        output$x$template[[i]]$content <- utils::read.table(
-          paste0(
-            path, 
-            '/', 
-            templates[i]
-          ),
-          header = T,
-          sep="\t",
-          quote="\"",
-          as.is=TRUE,
-          comment.char = "",
-          fill = T,
-          colClasses = rep("character", 5)
+        output$x$template[[i]]$content <- as.data.frame(
+          data.table::fread(
+            file = paste0(path, '/', templates[i]),
+            colClasses = rep("character", 5)
+          )
         )
         
         output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:5]
@@ -591,17 +565,8 @@ template_arguments <- function(
         
         output$x$template[[i]]$content <- suppressMessages(
           as.data.frame(
-            utils::read.table(
-              paste0(
-                path, 
-                '/', 
-                templates[i]
-              ), 
-              header = T, 
-              sep = '\t', 
-              quote = "\"", 
-              as.is = T, 
-              comment.char = ''
+            data.table::fread(
+              file = paste0(path, '/', templates[i])
             )
           )
         )
@@ -620,20 +585,10 @@ template_arguments <- function(
       
       if (file.exists(paste0(path, '/', templates[i]))){
         
-        output$x$template[[i]]$content <- utils::read.table(
-          paste0(
-            path, 
-            '/', 
-            templates[i]
-          ),
-          header = T,
-          sep="\t",
-          quote="\"",
-          as.is=TRUE,
-          comment.char = "",
-          fill = T,
-          na.strings = "NA",
-          fileEncoding = "UTF-8"
+        output$x$template[[i]]$content <- as.data.frame(
+          data.table::fread(
+            file = paste0(path, '/', templates[i])
+          )
         )
         
         # If template has old formatting ...
@@ -716,21 +671,13 @@ template_arguments <- function(
       
       if (file.exists(paste0(path, '/', templates[i]))){
         
-        output$x$template[[i]]$content <- utils::read.table(
-          file = paste0(
-            path, 
-            '/', 
-            templates[i]
-          ), 
-          header = T,
-          sep="\t",
-          quote="\"",
-          as.is=TRUE,
-          comment.char = "",
-          fill = T,
-          colClasses = rep("character", 2)
+        output$x$template[[i]]$content <- as.data.frame(
+          data.table::fread(
+            file = paste0(path, '/', templates[i]),
+            colClasses = rep("character", 2)
+          )
         )
-        
+
         output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:2]
         
         colnames(output$x$template[[i]]$content) <- c(
@@ -778,19 +725,11 @@ template_arguments <- function(
       
       if (file.exists(paste0(path, '/', templates[i]))){
         
-        output$x$template[[i]]$content <- utils::read.table(
-          paste0(
-            path, 
-            '/', 
-            templates[i]
-          ),
-          header = T,
-          sep="\t",
-          quote="\"",
-          as.is=TRUE,
-          comment.char = "",
-          fill = T,
-          colClasses = rep("character", 10)
+        output$x$template[[i]]$content <- as.data.frame(
+          data.table::fread(
+            file = paste0(path, '/', templates[i]),
+            colClasses = rep("character", 10)
+          )
         )
         
         output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:10]
@@ -846,23 +785,12 @@ template_arguments <- function(
       
       if (file.exists(paste0(path, '/', templates[i]))){
         
-        output$x$template[[i]]$content <- utils::read.table(
-          paste0(
-            path, 
-            '/', 
-            templates[i]
-          ),
-          header = T,
-          sep="\t",
-          quote="\"",
-          as.is=TRUE,
-          comment.char = "",
-          fill = T,
-          na.strings = "NA",
-          fileEncoding = "UTF-8"
+        output$x$template[[i]]$content <- as.data.frame(
+          data.table::fread(
+            file = paste0(path, '/', templates[i]),
+            colClasses = rep('character', 5)
+          )
         )
-        
-        colClasses = rep('character', 5)
         
         output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:5]
         
@@ -905,17 +833,10 @@ template_arguments <- function(
           os = EDIutils::detect_os()
         )
         
-        output$x$data.table[[i]]$content <- utils::read.table(
-          file = paste0(
-            data.path,
-            '/',
-            names(output$x$data.table[i])
-          ),
-          header = T,
-          sep = delim_guess,
-          quote = "\"",
-          as.is = TRUE,
-          comment.char = ""
+        output$x$data.table[[i]]$content <- as.data.frame(
+          data.table::fread(
+            file = paste0(data.path, '/', names(output$x$data.table[i]))
+          )
         )
         
         # If delimiter is defined ...

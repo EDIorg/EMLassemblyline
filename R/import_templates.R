@@ -346,16 +346,15 @@ import_templates <- function(path, data.path = path, license,
       
       # Add to content
       
-      x$template$bounding_boxes.txt$content <- utils::read.table(
-        file = system.file(
-          '/templates/bounding_boxes.txt',
-          package = 'EMLassemblyline'
-        ), 
-        header = T,
-        sep = '\t',
-        as.is = T
+      x$template$bounding_boxes.txt$content <- as.data.frame(
+        data.table::fread(
+          file = system.file(
+            '/templates/bounding_boxes.txt',
+            package = 'EMLassemblyline'
+          )
+        )
       )
-      
+
       # Send message
       
       message("Importing bounding_boxes.txt.")
@@ -403,14 +402,14 @@ import_templates <- function(path, data.path = path, license,
       
       # Add to content
       
-      x$template$custom_units.txt$content <- utils::read.table(
-        file = system.file(
-          '/templates/custom_units.txt',
-          package = 'EMLassemblyline'
-        ), 
-        header = T,
-        sep = '\t',
-        as.is = T
+      x$template$custom_units.txt$content <- as.data.frame(
+        data.table::fread(
+          file = system.file(
+            '/templates/custom_units.txt',
+            package = 'EMLassemblyline'
+          ),
+          colClasses = rep("character", 5)
+        )
       )
       
       # Send message
@@ -576,14 +575,14 @@ import_templates <- function(path, data.path = path, license,
       
       # Add to content
       
-      x$template$keywords.txt$content <- utils::read.table(
-        file = system.file(
-          '/templates/keywords.txt',
-          package = 'EMLassemblyline'
-        ), 
-        header = T,
-        sep = '\t',
-        as.is = T
+      x$template$keywords.txt$content <- as.data.frame(
+        data.table::fread(
+          file = system.file(
+            '/templates/keywords.txt',
+            package = 'EMLassemblyline'
+          ),
+          colClasses = rep("character", 2)
+        )
       )
      
       # Send message
@@ -687,14 +686,14 @@ import_templates <- function(path, data.path = path, license,
       
       # Add to content
       
-      x$template$personnel.txt$content <- utils::read.table(
-        file = system.file(
-          '/templates/personnel.txt',
-          package = 'EMLassemblyline'
-        ), 
-        header = T,
-        sep = '\t',
-        as.is = T
+      x$template$personnel.txt$content <- as.data.frame(
+        data.table::fread(
+          file = system.file(
+            '/templates/personnel.txt',
+            package = 'EMLassemblyline'
+          ),
+          colClasses = rep("character", 10)
+        )
       )
       
       # Send message

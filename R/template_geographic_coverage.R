@@ -150,13 +150,6 @@ template_geographic_coverage <- function(
         data.files = data.table
       )
       
-      # Validate fields of data.tables
-      
-      EDIutils::validate_fields(
-        path = data.path, 
-        data.files = data_file
-      )
-      
       # Read data table
       
       x <- template_arguments(

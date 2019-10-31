@@ -59,10 +59,6 @@ validate_arguments <- function(fun.name, fun.args){
       if (length(unique(tools::file_path_sans_ext(data_files))) != length(data_files)){
         stop('Duplicate data file names exist in this directory. Please remove duplicates, even if they are a different file type.')
       }
-      
-      # Validate fields of data.files
-      
-      EDIutils::validate_fields(path = fun.args$data.path, data.files = data_files)
     
     # If using x ...
       
@@ -169,14 +165,7 @@ validate_arguments <- function(fun.name, fun.args){
         path = fun.args$data.path, 
         data.files = fun.args$data.table
       )
-      
-      # Validate table fields
-      
-      EDIutils::validate_fields(
-        path = fun.args$data.path, 
-        data.files = data_files
-      )
-      
+
     }
     
   }
@@ -294,12 +283,7 @@ validate_arguments <- function(fun.name, fun.args){
         path = fun.args$data.path, 
         data.files = fun.args$data.table
       )
-      
-      EDIutils::validate_fields(
-        path = fun.args$data.path, 
-        data.files = table_names
-      )
-      
+
     }
     
     # data.table.description
@@ -415,10 +399,6 @@ validate_arguments <- function(fun.name, fun.args){
         stop('Duplicate data file names exist in this directory. Please remove duplicates, even if they are a different file type.')
       }
       
-      # Validate fields of data.files
-      
-      EDIutils::validate_fields(path = fun.args$data.path, data.files = data_files)
-      
       # If using x ...
       
     } else if (!is.null(fun.args$x)){
@@ -520,13 +500,6 @@ validate_arguments <- function(fun.name, fun.args){
           data.files = fun.args$data.table
         )
         
-        # Validate fields of data.tables
-        
-        EDIutils::validate_fields(
-          path = fun.args$data.path, 
-          data.files = data_file
-        )
-        
         # Read data table
         
         x <- template_arguments(
@@ -573,14 +546,7 @@ validate_arguments <- function(fun.name, fun.args){
         path = fun.args$data.path, 
         data.files = fun.args$data.table
       )
-      
-      # Validate table fields
-      
-      EDIutils::validate_fields(
-        path = fun.args$data.path, 
-        data.files = data_files
-      )
-      
+
     }
     
   }
@@ -601,12 +567,7 @@ validate_arguments <- function(fun.name, fun.args){
         path = fun.args$data.path, 
         data.files = fun.args$taxa.table
       )
-      
-      EDIutils::validate_fields(
-        path = fun.args$data.path, 
-        data.files = data_files
-      )
-      
+
     } else if (!is.null(fun.args$x)){
       
       if (!any(fun.args$taxa.table %in% names(fun.args$x$data.table))){

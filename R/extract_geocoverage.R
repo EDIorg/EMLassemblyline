@@ -158,13 +158,6 @@ extract_geocoverage <- function(path, data.path = path, data.table, lat.col,
       data.files = data.table
     )
     
-    # Validate fields of data.tables
-    
-    EDIutils::validate_fields(
-      path = data.path, 
-      data.files = data_file
-    )
-    
     # Read data table
     
     x <- template_arguments(

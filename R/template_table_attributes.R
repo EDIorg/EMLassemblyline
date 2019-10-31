@@ -225,6 +225,7 @@ template_table_attributes <- function(
         logical = "character", 
         factor = "character",
         integer = "numeric",
+        integer64 = "numeric",
         numeric = "numeric"
       )
       
