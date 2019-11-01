@@ -1359,7 +1359,7 @@ make_eml <- function(
   # Create dataTable
   
   data_tables_stored <- list()
-  
+
   if (!is.null(x$data.table)){
     for (i in 1:length(names(x$data.table))){
       
@@ -1516,6 +1516,12 @@ make_eml <- function(
         physical$distribution <- list()
       }
 
+      physical$dataFormat$textFormat$simpleDelimited$fieldDelimiter <- EDIutils::detect_delimeter(
+        path = data.path,
+        data.files = data.table[i],
+        os = EDIutils::detect_os()
+      )
+      
        # Pull together information for the data table
       
       data_table <- list(
