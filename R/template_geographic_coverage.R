@@ -352,7 +352,7 @@ template_geographic_coverage <- function(
   
   message("Done.")
   
-  if (!exists('data_read_2_x')){
+  if (!exists('data_read_2_x') & !isTRUE(empty)){
     
     return(x)
     
