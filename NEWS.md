@@ -1,3 +1,12 @@
+# EMLassemblyline 2.7.2
+
+## Bug fixes
+
+
+* __Support `;` delimiters:__ Data tables with semi-colon delimiters were not supported. This was fixed by updating `EDIutils::detect_delimiter()` ([issue #6](https://github.com/EDIorg/EDIutils/issues/6) of the EDIutils package).
+* __Updated table readers ([issue #41](https://github.com/EDIorg/EMLassemblyline/issues/41)):__ Some user supplied data tables could not be read by `utils::read.table()`. To fix this `data.table::fread()`, a more autonomous and robust reader, replaced `read.table()` for reading both data and metadata templates.
+* __Quotes in license templates:__ Unescaped quotes characters in the license files were being converted to the <quote> element thereby invalidating the EML. This was fixed by adding escape characters to the quotes.
+
 # EMLassemblyline 2.7.1
 
 ## Enhancements
