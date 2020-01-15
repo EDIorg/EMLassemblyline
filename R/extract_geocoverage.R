@@ -153,9 +153,11 @@ extract_geocoverage <- function(path, data.path = path, data.table, lat.col,
     
     # Validate file name
     
-    data_file <- EDIutils::validate_file_names(
-      path = data.path, 
-      data.files = data.table
+    data_file <- suppressWarnings(
+      EDIutils::validate_file_names(
+        path = data.path,
+        data.files = data.table
+      )
     )
     
     # Read data table

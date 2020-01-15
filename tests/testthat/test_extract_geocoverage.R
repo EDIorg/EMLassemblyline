@@ -230,28 +230,6 @@ testthat::test_that('Test usage with file inputs', {
     )
   )
   
-  # Valid arguments result in messages (data.table doesn't need file extension)
-  
-  expect_message(
-    suppressWarnings(
-      extract_geocoverage(
-        path = system.file(
-          '/examples',
-          package = 'EMLassemblyline'
-        ), 
-        data.path = system.file(
-          '/examples/data',
-          package = 'EMLassemblyline'
-        ), 
-        data.table = 'nitrogen', 
-        site.col = 'site_name', 
-        lat.col = 'site_lat',
-        lon.col = 'site_lon',
-        write.file = FALSE
-      ) 
-    )
-  )
-  
   # Deprecated arguments result in warning
   
   expect_warning(

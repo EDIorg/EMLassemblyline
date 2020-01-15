@@ -70,7 +70,7 @@ x_table_other <- template_arguments(
     'decomp.csv',
     'nitrogen.csv'
   ),
-  other.entity = 'ancillary.data.zip'
+  other.entity = 'ancillary_data.zip'
 )
 
 x_table_other_docall <- x_table_other
@@ -86,7 +86,7 @@ x_other <- template_arguments(
     '/examples/data',
     package = 'EMLassemblyline'
   ),
-  other.entity = 'ancillary.data.zip'
+  other.entity = 'ancillary_data.zip'
 )
 
 x_other_docall <- x_other
@@ -937,7 +937,7 @@ testthat::test_that('Expect equal', {
       data.path = data.path,
       eml.path = eml.path,
       dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
-      data.table = c('decomp.csv', 'nitrogen'),
+      data.table = c('decomp.csv', 'nitrogen.csv'),
       data.table.description = c('Decomposition data', 'Nitrogen data'),
       data.table.quote.character = c("\'", "\'"),
       temporal.coverage = c('2014-05-01', '2015-10-31'),

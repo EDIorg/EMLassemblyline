@@ -264,11 +264,11 @@ library(EMLassemblyline)
 #     use_i <- c(
 #       stringr::str_detect(
 #         string = names(x_half_empty$template[i]), 
-#         pattern = 'attributes_[:graph:]*.txt'
+#         pattern = 'attributes_.*.txt'
 #       ),
 #       stringr::str_detect(
 #         string = names(x_half_empty$template[i]), 
-#         pattern = 'catvars_[:graph:]*.txt'
+#         pattern = 'catvars_.*.txt'
 #       ),
 #       (names(x_half_empty$template[i]) %in% 
 #          c('taxonomicCoverage.xml',
@@ -299,7 +299,7 @@ library(EMLassemblyline)
 #       
 #     } else if (stringr::str_detect(
 #       string = names(x_half_empty$template[i]), 
-#       pattern = 'attributes_[:graph:]*.txt'
+#       pattern = 'attributes_.*.txt'
 #     )){
 #       
 #       fregexpr <- stringr::str_extract(
@@ -413,11 +413,11 @@ library(EMLassemblyline)
 #     # use_i <- c(
 #     #   stringr::str_detect(
 #     #     string = names(x_full$template[i]), 
-#     #     pattern = 'attributes_[:graph:]*.txt'
+#     #     pattern = 'attributes_.*.txt'
 #     #   ),
 #     #   stringr::str_detect(
 #     #     string = names(x_full$template[i]), 
-#     #     pattern = 'catvars_[:graph:]*.txt'
+#     #     pattern = 'catvars_.*.txt'
 #     #   )
 #     # )
 #     
@@ -439,7 +439,7 @@ library(EMLassemblyline)
 #     
 #     if (stringr::str_detect(
 #       string = names(x_full$template[i]), 
-#       pattern = 'attributes_[:graph:]*.txt'
+#       pattern = 'attributes_.*.txt'
 #     )){
 #       
 #       # Template name should have a matching data.table
@@ -463,7 +463,7 @@ library(EMLassemblyline)
 #       
 #     } else if (stringr::str_detect(
 #       string = names(x_full$template[i]), 
-#       pattern = 'catvars_[:graph:]*.txt'
+#       pattern = 'catvars_.*.txt'
 #     )){
 #       
 #       # Template name should have a matching data.table

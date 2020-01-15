@@ -188,7 +188,7 @@ testthat::test_that('Test usage with x inputs',{
     sum(
       stringr::str_detect(
         string = names(output$template),
-        pattern = 'catvars_[:graph:]*.txt'
+        pattern = 'catvars_.*.txt'
       )
     ),
     2

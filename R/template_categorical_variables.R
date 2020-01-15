@@ -151,7 +151,7 @@ template_categorical_variables <- function(
   attribute_files <- names(x$template)[
     stringr::str_detect(
       names(x$template),
-      'attributes_[:graph:]*.txt$'
+      'attributes_.*.txt$'
     )
     ]
   

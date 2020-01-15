@@ -347,9 +347,11 @@ make_eml <- function(
       
     } else if (!is.null(data.table) & is.null(other.entity)){
       
-      table_names <- EDIutils::validate_file_names(
-        path = data.path, 
-        data.files = data.table
+      table_names <- suppressWarnings(
+        EDIutils::validate_file_names(
+          path = data.path, 
+          data.files = data.table
+        )
       )
       
       x <- template_arguments(
@@ -362,9 +364,11 @@ make_eml <- function(
       
     } else if (!is.null(data.table) & !is.null(other.entity)){
       
-      table_names <- EDIutils::validate_file_names(
-        path = data.path, 
-        data.files = data.table
+      table_names <- suppressWarnings(
+        EDIutils::validate_file_names(
+          path = data.path, 
+          data.files = data.table
+        )
       )
       
       x <- template_arguments(

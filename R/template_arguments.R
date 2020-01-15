@@ -466,7 +466,7 @@ template_arguments <- function(
     
     # Read attributes (data table) --------------------------------------------
     
-    if (stringr::str_detect(string = templates[i], pattern = 'attributes_[:graph:]*.txt')){
+    if (stringr::str_detect(string = templates[i], pattern = 'attributes_.*.txt')){
       
       if (file.exists(paste0(path, '/', templates[i]))){
         
@@ -499,7 +499,7 @@ template_arguments <- function(
     
     # Read categorical variables ----------------------------------------------
     
-    if (stringr::str_detect(string = templates[i], pattern = 'catvars_[:graph:]*.txt')){
+    if (stringr::str_detect(string = templates[i], pattern = 'catvars_.*.txt')){
       
       if (file.exists(paste0(path, '/', templates[i]))){
         
@@ -827,10 +827,12 @@ template_arguments <- function(
       
       if (is.null(sep)){
         
-        delim_guess <- EDIutils::detect_delimeter(
-          path = data.path, 
-          data.files = names(output$x$data.table[i]), 
-          os = EDIutils::detect_os()
+        delim_guess <- suppressWarnings(
+          EDIutils::detect_delimeter(
+            path = data.path, 
+            data.files = names(output$x$data.table[i]), 
+            os = EDIutils::detect_os()
+          )
         )
         
         output$x$data.table[[i]]$content <- as.data.frame(

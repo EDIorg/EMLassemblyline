@@ -155,9 +155,11 @@ template_taxonomic_coverage <- function(
     
     # Validate file name
     
-    taxa.table <- EDIutils::validate_file_names(
-      path = data.path, 
-      data.files = taxa.table
+    taxa.table <- suppressWarnings(
+      EDIutils::validate_file_names(
+        path = data.path, 
+        data.files = taxa.table
+      )
     )
     
     # Read templates and data.table into list

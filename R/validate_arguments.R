@@ -161,9 +161,11 @@ validate_arguments <- function(fun.name, fun.args){
       
       # Validate table names
       
-      data_files <- EDIutils::validate_file_names(
-        path = fun.args$data.path, 
-        data.files = fun.args$data.table
+      data_files <- suppressWarnings(
+        EDIutils::validate_file_names(
+          path = fun.args$data.path, 
+          data.files = fun.args$data.table
+        )
       )
 
     }
@@ -279,9 +281,11 @@ validate_arguments <- function(fun.name, fun.args){
     
     if (!is.null(fun.args$data.table)){
       
-      table_names <- EDIutils::validate_file_names(
-        path = fun.args$data.path, 
-        data.files = fun.args$data.table
+      table_names <- suppressWarnings(
+        EDIutils::validate_file_names(
+          path = fun.args$data.path, 
+          data.files = fun.args$data.table
+        )
       )
 
     }
@@ -349,18 +353,22 @@ validate_arguments <- function(fun.name, fun.args){
     # data.table
     
     if (!is.null(fun.args$data.table)){
-      output <- EDIutils::validate_file_names(
-        path = fun.args$data.path,
-        data.files = fun.args$data.table
+      output <- suppressWarnings(
+        EDIutils::validate_file_names(
+          path = fun.args$data.path,
+          data.files = fun.args$data.table
+        )
       )
     }
     
     # other.entity
     
     if (!is.null(fun.args$other.entity)){
-      output <- EDIutils::validate_file_names(
-        path = fun.args$data.path,
-        data.files = fun.args$other.entity
+      output <- suppressWarnings(
+        EDIutils::validate_file_names(
+          path = fun.args$data.path,
+          data.files = fun.args$other.entity
+        )
       )
     }
     
@@ -495,9 +503,11 @@ validate_arguments <- function(fun.name, fun.args){
         
         # Validate file name
         
-        data_file <- EDIutils::validate_file_names(
-          path = fun.args$data.path, 
-          data.files = fun.args$data.table
+        data_file <- suppressWarnings(
+          EDIutils::validate_file_names(
+            path = fun.args$data.path, 
+            data.files = fun.args$data.table
+          )
         )
         
         # Read data table
@@ -542,9 +552,11 @@ validate_arguments <- function(fun.name, fun.args){
       
       # Validate table names
       
-      data_files <- EDIutils::validate_file_names(
-        path = fun.args$data.path, 
-        data.files = fun.args$data.table
+      data_files <- suppressWarnings(
+        EDIutils::validate_file_names(
+          path = fun.args$data.path, 
+          data.files = fun.args$data.table
+        )
       )
 
     }
@@ -563,9 +575,11 @@ validate_arguments <- function(fun.name, fun.args){
     
     if (is.null(fun.args$x)){
       
-      data_files <- EDIutils::validate_file_names(
-        path = fun.args$data.path, 
-        data.files = fun.args$taxa.table
+      data_files <- suppressWarnings(
+        EDIutils::validate_file_names(
+          path = fun.args$data.path, 
+          data.files = fun.args$taxa.table
+        )
       )
 
     } else if (!is.null(fun.args$x)){

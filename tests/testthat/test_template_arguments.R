@@ -570,28 +570,6 @@ testthat::test_that('Inputs = templates (.txt) and data tables', {
     'list'
   )
   
-  # Missing file extensions are supported
-  
-  output <- template_arguments(
-    path = system.file(
-      '/examples/templates',
-      package = 'EMLassemblyline'
-    ),
-    data.path = system.file(
-      '/examples/data',
-      package = 'EMLassemblyline'
-    ),
-    data.table = c(
-      'decomp',
-      'nitrogen.csv'
-    )
-  )
-  
-  expect_equal(
-    class(output),
-    'list'
-  )
-  
 })
 
 # Inputs = templates (docx) and data tables -----------------------------------
@@ -736,28 +714,6 @@ testthat::test_that('Inputs = templates (docx) and data tables', {
     'list'
   )
   
-  # Missing file extensions are supported
-  
-  output <- template_arguments(
-    path = system.file(
-      '/examples/templates',
-      package = 'EMLassemblyline'
-    ),
-    data.path = system.file(
-      '/examples/data',
-      package = 'EMLassemblyline'
-    ),
-    data.table = c(
-      'decomp',
-      'nitrogen.csv'
-    )
-  )
-  
-  expect_equal(
-    class(output),
-    'list'
-  )
-  
 })
 
 # Inputs = templates (md) and data tables -------------------------------------
@@ -899,28 +855,6 @@ testthat::test_that('Inputs = templates (md) and data tables', {
         sep = ','
       ) 
     ),
-    'list'
-  )
-  
-  # Missing file extensions are supported
-  
-  output <- template_arguments(
-    path = system.file(
-      '/examples/templates',
-      package = 'EMLassemblyline'
-    ),
-    data.path = system.file(
-      '/examples/data',
-      package = 'EMLassemblyline'
-    ),
-    data.table = c(
-      'decomp',
-      'nitrogen.csv'
-    )
-  )
-  
-  expect_equal(
-    class(output),
     'list'
   )
   
@@ -1606,28 +1540,6 @@ testthat::test_that('Inputs = templates (md), data tables, and other entities', 
     'list'
   )
   
-  # Missing file extensions are supported
-  
-  output <- template_arguments(
-    path = system.file(
-      '/examples/templates_md',
-      package = 'EMLassemblyline'
-    ),
-    data.path = system.file(
-      '/examples/data',
-      package = 'EMLassemblyline'
-    ),
-    data.table = c(
-      'decomp',
-      'nitrogen.csv'
-    )
-  )
-  
-  expect_equal(
-    class(output),
-    'list'
-  )
-  
 })
 
 # Inputs = templates (md) and data tables -------------------------------------
@@ -1769,28 +1681,6 @@ testthat::test_that('Inputs = templates (md) and data tables', {
         sep = ','
       ) 
     ),
-    'list'
-  )
-  
-  # Missing file extensions are supported
-  
-  output <- template_arguments(
-    path = system.file(
-      '/examples/templates',
-      package = 'EMLassemblyline'
-    ),
-    data.path = system.file(
-      '/examples/data',
-      package = 'EMLassemblyline'
-    ),
-    data.table = c(
-      'decomp',
-      'nitrogen.csv'
-    )
-  )
-  
-  expect_equal(
-    class(output),
     'list'
   )
   

@@ -136,9 +136,11 @@ template_table_attributes <- function(
       
       # Validate data.table
       
-      data.table <- EDIutils::validate_file_names(
-        path = data.path, 
-        data.files = data.table
+      data.table <- suppressWarnings(
+        EDIutils::validate_file_names(
+          path = data.path, 
+          data.files = data.table
+        )
       )
       
       # Read data tables
