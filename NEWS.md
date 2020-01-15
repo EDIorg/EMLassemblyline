@@ -1,3 +1,10 @@
+# EMLassemblyline 2.8.0
+
+## Bug fixes
+
+* __File names containing spaces cause template_categorical_variables() crash ([issue #25](https://github.com/EDIorg/EMLassemblyline/issues/25)):__ Errors occurred when input file names contained spaces. Using spaces is still a common practice among users. To accommodate this while continuing to promote best practices, the naming restriction has been relaxed and the best practices have been made a warning. The function checking file presence and naming conventions is EDIutils::validate_file_name(). Implementation in EMLassemblyline has been adjusted. An explicit file name specification (i.e. including extension) is now required, which breaks backwards compatibility but precludes errors when the same file name is used among different file types in the same directory.
+ 
+
 # EMLassemblyline 2.7.2
 
 ## Bug fixes
