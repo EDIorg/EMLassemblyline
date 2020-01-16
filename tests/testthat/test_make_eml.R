@@ -24,6 +24,7 @@ eml.path <- paste0(path, '/eml')
 path <- paste0(path, '/templates')
 dataset.title <- 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015'
 data.table <- c('decomp.csv', 'nitrogen.csv')
+data.table.name <- c("Decomp file name", "Nitrogen file name")
 data.table.description <- c('Decomposition data', 'Nitrogen data')
 temporal.coverage <- c('2014-05-01', '2015-10-31')
 geographic.description <- 'Alberta, Canada, 100 km south of Fort McMurray, Canada'
@@ -35,6 +36,7 @@ package.id <- 'edi.141.1'
 data.table.quote.character <- c("\\'", "\\'")
 data.url <- 'https://lter.limnology.wisc.edu/sites/default/files/data/edi_141/data'
 other.entity <- 'ancillary_data.zip'
+other.entity.name <- 'Ancillary data file name'
 other.entity.description <- 'Ancillary data'
 provenance <- 'edi.100.1'
 
@@ -97,6 +99,7 @@ x_other <- x_other$x
 
 x_table_docall$data.path <- data.path
 x_table_docall$data.table <- data.table
+x_table_docall$data.table.name <- data.table.name
 x_table_docall$data.table.description <- data.table.description
 x_table_docall$data.table.quote.character <- data.table.quote.character
 x_table_docall$data.url <- data.url
@@ -117,9 +120,11 @@ x_table_docall$x$template$bounding_boxes.txt <- NULL
 
 x_table_other_docall$data.path <- data.path
 x_table_other_docall$data.table <- data.table
+x_table_other_docall$data.table.name <- data.table.name
 x_table_other_docall$data.table.description <- data.table.description
 x_table_other_docall$data.table.quote.character <- data.table.quote.character
 x_table_other_docall$other.entity <- other.entity
+x_table_other_docall$other.entity.name <- other.entity.name
 x_table_other_docall$other.entity.description <- other.entity.description
 x_table_other_docall$data.url <- data.url
 x_table_other_docall$dataset.title <- dataset.title
@@ -139,6 +144,7 @@ x_table_other_docall$x$template$bounding_boxes.txt<- NULL
 
 x_other_docall$data.path <- data.path
 x_other_docall$other.entity <- other.entity
+x_other_docall$other.entity.name <- other.entity.name
 x_other_docall$other.entity.description <- other.entity.description
 x_other_docall$data.url <- data.url
 x_other_docall$dataset.title <- dataset.title
@@ -1322,6 +1328,120 @@ testthat::test_that('Expect equal', {
     TRUE
   )
   
+  # data.table.name defaults to data.table
+  
+  output <- expect_warning(
+    suppressMessages(
+      make_eml(
+        path = paste0(tempdir(), '/templates'),
+        data.path = data.path,
+        eml.path = eml.path,
+        dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+        data.table = data.table,
+        data.table.description = data.table.description,
+        temporal.coverage = c('2014-05-01', '2015-10-31'),
+        maintenance.description = 'completed',
+        user.id = user.id,
+        user.domain = user.domain,
+        package.id = 'edi.141.1',
+        return.obj = TRUE,
+        write.file = FALSE
+      )
+    )
+  )
+    
+  for (i in 1:length(output$dataset$dataTable)) {
+    expect_equal(
+      output$dataset$dataTable[[i]]$entityName,
+      output$dataset$dataTable[[i]]$physical$objectName
+    )
+  }
+  
+  # data.table.name
+  
+  output <- suppressMessages(
+    make_eml(
+      path = paste0(tempdir(), '/templates'),
+      data.path = data.path,
+      eml.path = eml.path,
+      dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+      data.table = data.table,
+      data.table.name = data.table.name,
+      data.table.description = data.table.description,
+      temporal.coverage = c('2014-05-01', '2015-10-31'),
+      maintenance.description = 'completed',
+      user.id = user.id,
+      user.domain = user.domain,
+      package.id = 'edi.141.1',
+      return.obj = TRUE,
+      write.file = FALSE
+    )
+  )
+  
+  for (i in 1:length(output$dataset$dataTable)) {
+    expect_equal(
+      output$dataset$dataTable[[i]]$entityName,
+      data.table.name[i]
+    )
+  }
+  
+  # other.entity.name defaults to other.entity
+  
+  output <- expect_warning(
+    suppressMessages(
+      make_eml(
+        path = paste0(tempdir(), '/templates'),
+        data.path = data.path,
+        eml.path = eml.path,
+        dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+        other.entity = other.entity,
+        other.entity.description = other.entity.description,
+        temporal.coverage = c('2014-05-01', '2015-10-31'),
+        maintenance.description = 'completed',
+        user.id = user.id,
+        user.domain = user.domain,
+        package.id = 'edi.141.1',
+        return.obj = TRUE,
+        write.file = FALSE
+      )
+    )
+  )
+  
+  for (i in 1:length(output$dataset$otherEntity)) {
+    expect_equal(
+      output$dataset$otherEntity[[i]]$entityName[[1]],
+      output$dataset$otherEntity[[i]]$physical$objectName
+    )
+  }
+  
+  # other.entity.name
+  
+  output <- suppressMessages(
+    make_eml(
+      path = paste0(tempdir(), '/templates'),
+      data.path = data.path,
+      eml.path = eml.path,
+      dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+      other.entity = other.entity,
+      other.entity.name = other.entity.name,
+      other.entity.description = other.entity.description,
+      temporal.coverage = c('2014-05-01', '2015-10-31'),
+      maintenance.description = 'completed',
+      user.id = user.id,
+      user.domain = user.domain,
+      package.id = 'edi.141.1',
+      return.obj = TRUE,
+      write.file = FALSE
+    )
+  )
+  
+  for (i in 1:length(output$dataset$otherEntity)) {
+    expect_equal(
+      output$dataset$otherEntity[[i]]$entityName[[1]],
+      other.entity.name[i]
+    )
+  }
+
 })
 
 # Test usage with x (all templates and 2 data tables) -------------------------
@@ -1538,6 +1658,8 @@ testthat::test_that('Test usage with x (all templates and 2 data tables)', {
     length(output$dataset$coverage$geographicCoverage) > 5,
     TRUE
   )
+  
+  
   
 })
 

@@ -15,9 +15,11 @@
 #'       geographic.coordinates, 
 #'       maintenance.description, 
 #'       data.table = NULL, 
+#'       data.table.name = data.table,
 #'       data.table.description = NULL, 
 #'       data.table.quote.character = NULL, 
 #'       other.entity = NULL,
+#'       other.entity.name = other.entity,
 #'       other.entity.description = NULL,
 #'       data.url = NULL,
 #'       provenance = NULL,
@@ -54,9 +56,13 @@
 #' @param maintenance.description
 #'     (character) Data collection status ("ongoing" or "complete").
 #' @param data.table
-#'     (character; optional) Table name. If more than one, then supply 
+#'     (character; optional) Table file name. If more than one, then supply 
 #'     as a vector of character strings (e.g. 
 #'     \code{data.table = c("nitrogen.csv", "decomp.csv")}).
+#' @param data.table.name
+#'     (character; optional) A short descriptive name for the table. Defaults
+#'     to \code{data.table}. If more than one, then supply as a vector of 
+#'     character strings in the same order as listed in \code{data.table}.
 #' @param data.table.description
 #'     (character; optional) Table description. If more than one, then supply 
 #'     as a vector of character strings in the same order as listed in 
@@ -73,6 +79,11 @@
 #'     \code{other.entity}(s) should be stored at \code{data.path}. If more 
 #'     than one, then supply as a vector of character strings (e.g. 
 #'     \code{other.entity = c('ancillary_data.zip', 'quality_control.R')}).
+#' @param other.entity.name
+#'     (character; optional) A short descriptive name for the other.entity. 
+#'     Defaults to \code{other.entity}. If more than one, then supply as a 
+#'     vector of character strings in the same order as listed in 
+#'     \code{other.entity}.
 #' @param other.entity.description
 #'     (character; optional) Description(s) of \code{other.entity}(s). If more 
 #'     than one, then supply as a vector of descriptions in the same order as 
@@ -207,9 +218,11 @@ make_eml <- function(
   geographic.coordinates, 
   maintenance.description, 
   data.table = NULL, 
+  data.table.name = data.table,
   data.table.description = NULL, 
   data.table.quote.character = NULL, 
   other.entity = NULL,
+  other.entity.name = other.entity,
   other.entity.description = NULL,
   data.url = NULL,
   provenance = NULL,
@@ -1529,7 +1542,7 @@ make_eml <- function(
        # Pull together information for the data table
       
       data_table <- list(
-        entityName = data.table.description[i],
+        entityName = data.table.name[i],
         entityDescription = data.table.description[i],
         physical = physical,
         attributeList = attributeList,
@@ -1619,7 +1632,7 @@ make_eml <- function(
         
         # Add entityName
         
-        otherEntity$entityName <- list(other.entity.description[i])
+        otherEntity$entityName <- list(other.entity.name[i])
 
         # Add entityDescription
         

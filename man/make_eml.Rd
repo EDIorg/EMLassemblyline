@@ -14,9 +14,11 @@ make_eml(
       geographic.coordinates, 
       maintenance.description, 
       data.table = NULL, 
+      data.table.name = data.table,
       data.table.description = NULL, 
       data.table.quote.character = NULL, 
       other.entity = NULL,
+      other.entity.name = other.entity,
       other.entity.description = NULL,
       data.url = NULL,
       provenance = NULL,
@@ -53,9 +55,13 @@ by geographic_coverage.txt.}
 
 \item{maintenance.description}{(character) Data collection status ("ongoing" or "complete").}
 
-\item{data.table}{(character; optional) Table name. If more than one, then supply 
+\item{data.table}{(character; optional) Table file name. If more than one, then supply 
 as a vector of character strings (e.g. 
 \code{data.table = c("nitrogen.csv", "decomp.csv")}).}
+
+\item{data.table.name}{(character; optional) A short descriptive name for the table. Defaults
+to \code{data.table}. If more than one, then supply as a vector of 
+character strings in the same order as listed in \code{data.table}.}
 
 \item{data.table.description}{(character; optional) Table description. If more than one, then supply 
 as a vector of character strings in the same order as listed in 
@@ -72,6 +78,11 @@ dataset. Use \code{other.entity} for all non-\code{data.table} files.
 \code{other.entity}(s) should be stored at \code{data.path}. If more 
 than one, then supply as a vector of character strings (e.g. 
 \code{other.entity = c('ancillary_data.zip', 'quality_control.R')}).}
+
+\item{other.entity.name}{(character; optional) A short descriptive name for the other.entity. 
+Defaults to \code{other.entity}. If more than one, then supply as a 
+vector of character strings in the same order as listed in 
+\code{other.entity}.}
 
 \item{other.entity.description}{(character; optional) Description(s) of \code{other.entity}(s). If more 
 than one, then supply as a vector of descriptions in the same order as 
