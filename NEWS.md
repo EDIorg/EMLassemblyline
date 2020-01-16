@@ -1,3 +1,9 @@
+# EMLassemblyline 2.8.1
+
+## Bug fixes
+
+* __Entity Name ([issue #24](https://github.com/EDIorg/EMLassemblyline/issues/24)):__ Content from `data.table.description` in `make_eml()` was used to fill in the entity name. However, they are not the same and entity name should be specified separately. This was fixed by adding `data.table.name` and `other.entity.name` as arguments to `make_eml()`. The fix defaults `data.table.name` to `data.table` and `other.entity.name` to `other.entity` with a warning message.
+
 # EMLassemblyline 2.8.0
 
 ## Bug fixes
