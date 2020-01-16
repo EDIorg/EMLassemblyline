@@ -38,7 +38,7 @@ remotes::install_github("EDIorg/EMLassemblyline")
 
 ## Active projects
 
-* Creating a Shiny interface for editing metadata template files, thus eliminating requirements for text and spreadsheet editors while facilitating use of dictionaries, controlled vocabularies, and ontologies. This is currently developped in the [MetaShARK](https://github.com/earnaud/MetaShARK-v2) application, developped by the PNDB (french Bidoversity National Data Hub).
+* Creating a Shiny interface for editing metadata template files, thus eliminating requirements for text and spreadsheet editors while facilitating use of dictionaries, controlled vocabularies, and ontologies. This is currently developped in the [MetaShARK](https://github.com/earnaud/MetaShARK-v2) application, developped by the PNDB (french Biodiversity National Data Hub).
 * Developing an exchange format for environmental metadata so `EMLassemblyline` (and other metadata builders) can be used with any metadata storage/organization system (e.g. [LTER-core-metabase](https://github.com/lter/LTER-core-metabase)).
 
 ## Contributing
