@@ -290,6 +290,20 @@ validate_arguments <- function(fun.name, fun.args){
 
     }
     
+    # data.table.name
+    
+    if (!is.null(fun.args$data.table.name)) {
+      if (all(fun.args$data.table %in% fun.args$data.table.name)) {
+        warning(
+          paste0(
+            "Defaulting argument 'data.table.name' to 'data.table'. Consider ",
+            "providing a brief descriptive name for your file(s)."
+          ),
+          call. = FALSE
+        )
+      }
+    }
+    
     # data.table.description
     
     if (!is.null(fun.args$data.table)){
@@ -321,6 +335,20 @@ validate_arguments <- function(fun.name, fun.args){
     if ((!is.null(fun.args$other.entity.description)) & (!is.null(fun.args$other.entity))){
       if ((length(fun.args$other.entity)) != (length(fun.args$other.entity.description))){
         stop('The number of other.entity and other.entity.descriptions must match.')
+      }
+    }
+    
+    # other.entity.name
+    
+    if (!is.null(fun.args$other.entity.name)) {
+      if (all(fun.args$other.entity %in% fun.args$other.entity.name)) {
+        warning(
+          paste0(
+            "Defaulting argument 'other.entity.name' to 'other.entity'. Consider ",
+            "providing a brief descriptive name for your file(s)."
+          ),
+          call. = FALSE
+        )
       }
     }
     
