@@ -410,6 +410,11 @@ make_eml <- function(
   }
   
   # Validate metadata templates -----------------------------------------------
+  
+  validate_templates(
+    fun.name = "make_eml",
+    x = x
+  )
 
   # Read personnel file
   

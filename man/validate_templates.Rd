@@ -13,8 +13,7 @@ validate_templates(
 \item{fun.name}{(character) Function name passed to `validate_x` with 
 `as.character(match.call()[[1]])`.}
 
-\item{fun.args}{(named list) Function arguments and values passed to `validate_x` with 
-`as.list(environment())`.}
+\item{x}{(named list) Use \code{template_arguments()} to create \code{x}.}
 }
 \description{
 Validate the content of `EMLassembline` metadata templates.
