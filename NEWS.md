@@ -1,12 +1,16 @@
 # EMLassemblyline 2.8.1
 
+## Enhancements
+
+* __Validate units ([issue #38](https://github.com/EDIorg/EMLassemblyline/issues/38)):__ Check that all numeric attributes have corresponding units and these units can be found in the EML standard unit dictionary or the custom_units.txt template. If not, then throw an error along with recommendations for fixing the issue. This check is called from make_eml().
+
 ## Bug fixes
 
 * __Entity Name ([issue #24](https://github.com/EDIorg/EMLassemblyline/issues/24)):__ Content from `data.table.description` in `make_eml()` was used to fill in the entity name. However, they are not the same and entity name should be specified separately. This was fixed by adding `data.table.name` and `other.entity.name` as arguments to `make_eml()`. The fix defaults `data.table.name` to `data.table` and `other.entity.name` to `other.entity` with a warning message.
 
 # EMLassemblyline 2.8.0
 
-## Bug fixes
+## Enhancements
 
 * __File names containing spaces cause template_categorical_variables() crash ([issue #25](https://github.com/EDIorg/EMLassemblyline/issues/25)):__ Errors occurred when input file names contained spaces. Using spaces is still a common practice among users. To accommodate this while continuing to promote best practices, the naming restriction has been relaxed and the best practices have been made a warning. The function checking file presence and naming conventions is EDIutils::validate_file_name(). Implementation in EMLassemblyline has been adjusted. An explicit file name specification (i.e. including extension) is now required, which breaks backwards compatibility but precludes errors when the same file name is used among different file types in the same directory.
  
