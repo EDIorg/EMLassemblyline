@@ -40,12 +40,16 @@ validate_templates <- function(fun.name, x){
     # Run the checks if attribute templates exist
     if (any(use_i)) {
       
+      # Add custom units to the standard unit list
+      u <- EML::get_unitList()$units$id
+      if (is.data.frame(x$template$custom_units.txt$content)) {
+        u <- c(u, x$template$custom_units.txt$content$id)
+      }
+      
       for (i in names(x$template)[use_i]) {
-        
-        # Read attribute template, unit list, and custom_units.txt
+
+        # Read the attributes template
         a <- x$template[[i]]$content
-        u <- EML::get_unitList()$units$id
-        cu <- x$template$custom_units.txt$content
         
         # Numeric classed attributes have units
         if (any((a$class == "numeric") & (a$unit == ""))) {
@@ -73,26 +77,19 @@ validate_templates <- function(fun.name, x){
           missing_units <- unique(a$unit[a$unit != ""])[
             !unique(a$unit[a$unit != ""]) %in% u
           ]
-          if (!is.na(cu)) {
-            if (!all(missing_units %in% cu$id)) {
-              stop(
-                paste0(
-                  "All units require definition. The units '",
-                  paste(
-                    missing_units[!(missing_units %in% cu$id)],
-                    collapse = ", "
-                  ),
-                  "' cannot be found in the standard unit dictionary or the ",
-                  "custom_units.txt template. Please reference the unit ",
-                  "dictionary to define these (run view_unit_dictionary() to",
-                  " access it) or use the custom_units.txt ",
-                  "template to define units that can't be found in the ",
-                  "dictionary."
-                ),
-                call. = FALSE
-              )
-            }
-          }
+          stop(
+            paste0(
+              "All units require definition. The units '",
+              paste(missing_units, collapse = ", "),
+              "' cannot be found in the standard unit dictionary or the ",
+              "custom_units.txt template. Please reference the unit ",
+              "dictionary to define these (run view_unit_dictionary() to",
+              " access it) or use the custom_units.txt ",
+              "template to define units that can't be found in the ",
+              "dictionary."
+            ),
+            call. = FALSE
+          )
         }
 
       }
