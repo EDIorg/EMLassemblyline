@@ -351,7 +351,9 @@ import_templates <- function(path, data.path = path, license,
           file = system.file(
             '/templates/bounding_boxes.txt',
             package = 'EMLassemblyline'
-          )
+          ),
+          fill = TRUE,
+          blank.lines.skip = TRUE
         )
       )
 
@@ -408,7 +410,9 @@ import_templates <- function(path, data.path = path, license,
             '/templates/custom_units.txt',
             package = 'EMLassemblyline'
           ),
-          colClasses = rep("character", 5)
+          colClasses = rep("character", 5),
+          fill = TRUE,
+          blank.lines.skip = TRUE
         )
       )
       
@@ -581,7 +585,9 @@ import_templates <- function(path, data.path = path, license,
             '/templates/keywords.txt',
             package = 'EMLassemblyline'
           ),
-          colClasses = rep("character", 2)
+          colClasses = rep("character", 2),
+          fill = TRUE,
+          blank.lines.skip = TRUE
         )
       )
      
@@ -692,7 +698,9 @@ import_templates <- function(path, data.path = path, license,
             '/templates/personnel.txt',
             package = 'EMLassemblyline'
           ),
-          colClasses = rep("character", 10)
+          colClasses = rep("character", 10),
+          fill = TRUE,
+          blank.lines.skip = TRUE
         )
       )
       

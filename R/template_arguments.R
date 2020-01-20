@@ -251,7 +251,9 @@ template_arguments <- function(
       file = system.file(
         '/templates/template_characteristics.txt',
         package = 'EMLassemblyline'
-      )
+      ),
+      fill = TRUE,
+      blank.lines.skip = TRUE
     )
   )
   
@@ -260,7 +262,9 @@ template_arguments <- function(
       file = system.file(
         '/templates/arguments.txt',
         package = 'EMLassemblyline'
-      )
+      ),
+      fill = TRUE,
+      blank.lines.skip = TRUE
     )
   )
   
@@ -473,7 +477,9 @@ template_arguments <- function(
         output$x$template[[i]]$content <- as.data.frame(
           data.table::fread(
             file = paste0(path, '/', templates[i]),
-            colClasses = rep("character", 7)
+            colClasses = rep("character", 7),
+            fill = TRUE,
+            blank.lines.skip = TRUE
           )
         )
         
@@ -506,7 +512,9 @@ template_arguments <- function(
         output$x$template[[i]]$content <- as.data.frame(
           data.table::fread(
             file = paste0(path, '/', templates[i]),
-            colClasses = rep("character", 3)
+            colClasses = rep("character", 3),
+            fill = TRUE,
+            blank.lines.skip = TRUE
           )
         )
         
@@ -535,7 +543,9 @@ template_arguments <- function(
         output$x$template[[i]]$content <- as.data.frame(
           data.table::fread(
             file = paste0(path, '/', templates[i]),
-            colClasses = rep("character", 5)
+            colClasses = rep("character", 5),
+            fill = TRUE,
+            blank.lines.skip = TRUE
           )
         )
         
@@ -566,7 +576,9 @@ template_arguments <- function(
         output$x$template[[i]]$content <- suppressMessages(
           as.data.frame(
             data.table::fread(
-              file = paste0(path, '/', templates[i])
+              file = paste0(path, '/', templates[i]),
+              fill = TRUE,
+              blank.lines.skip = TRUE
             )
           )
         )
@@ -587,7 +599,9 @@ template_arguments <- function(
         
         output$x$template[[i]]$content <- as.data.frame(
           data.table::fread(
-            file = paste0(path, '/', templates[i])
+            file = paste0(path, '/', templates[i]),
+            fill = TRUE,
+            blank.lines.skip = TRUE
           )
         )
         
@@ -674,7 +688,9 @@ template_arguments <- function(
         output$x$template[[i]]$content <- as.data.frame(
           data.table::fread(
             file = paste0(path, '/', templates[i]),
-            colClasses = rep("character", 2)
+            colClasses = rep("character", 2),
+            fill = TRUE,
+            blank.lines.skip = TRUE
           )
         )
 
@@ -728,7 +744,9 @@ template_arguments <- function(
         output$x$template[[i]]$content <- as.data.frame(
           data.table::fread(
             file = paste0(path, '/', templates[i]),
-            colClasses = rep("character", 10)
+            colClasses = rep("character", 10),
+            fill = TRUE,
+            blank.lines.skip = TRUE
           )
         )
         
@@ -788,7 +806,9 @@ template_arguments <- function(
         output$x$template[[i]]$content <- as.data.frame(
           data.table::fread(
             file = paste0(path, '/', templates[i]),
-            colClasses = rep('character', 5)
+            colClasses = rep('character', 5),
+            fill = TRUE,
+            blank.lines.skip = TRUE
           )
         )
         
@@ -837,7 +857,9 @@ template_arguments <- function(
         
         output$x$data.table[[i]]$content <- as.data.frame(
           data.table::fread(
-            file = paste0(data.path, '/', names(output$x$data.table[i]))
+            file = paste0(data.path, '/', names(output$x$data.table[i])),
+            fill = TRUE,
+            blank.lines.skip = TRUE
           )
         )
         
