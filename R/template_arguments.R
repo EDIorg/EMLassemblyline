@@ -468,6 +468,40 @@ template_arguments <- function(
       
     }
     
+    # Read annotations --------------------------------------------------------
+    
+    if (stringr::str_detect(string = templates[i], pattern = 'annotations.txt')){
+
+      if (file.exists(paste0(path, '/', templates[i]))){
+
+        output$x$template[[i]]$content <- as.data.frame(
+          data.table::fread(
+            file = paste0(path, '/', templates[i]),
+            colClasses = rep("character", 6),
+            fill = TRUE,
+            blank.lines.skip = TRUE
+          )
+        )
+
+        output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:6]
+
+        colnames(output$x$template[[i]]$content) <- c(
+          "id",
+          "context",
+          "predicate_label",
+          "predicate_uri",
+          "object_label",
+          "object_uri"
+        )
+
+      } else {
+
+        output$x$template[[i]]$content <- NA_character_
+
+      }
+
+    }
+    
     # Read attributes (data table) --------------------------------------------
     
     if (stringr::str_detect(string = templates[i], pattern = 'attributes_.*.txt')){
