@@ -410,7 +410,18 @@ import_templates <- function(path, data.path = path, license,
             '/templates/custom_units.txt',
             package = 'EMLassemblyline'
           ),
-          colClasses = rep("character", 5),
+          colClasses = rep(
+            "character",
+            max(
+              utils::count.fields(
+                system.file(
+                  '/templates/custom_units.txt',
+                  package = 'EMLassemblyline'
+                ),
+                sep = "\t"
+              )
+            )
+          ),
           fill = TRUE,
           blank.lines.skip = TRUE
         )
@@ -585,7 +596,18 @@ import_templates <- function(path, data.path = path, license,
             '/templates/keywords.txt',
             package = 'EMLassemblyline'
           ),
-          colClasses = rep("character", 2),
+          colClasses = rep(
+            "character",
+            max(
+              utils::count.fields(
+                system.file(
+                  '/templates/keywords.txt',
+                  package = 'EMLassemblyline'
+                ),
+                sep = "\t"
+              )
+            )
+          ),
           fill = TRUE,
           blank.lines.skip = TRUE
         )
@@ -698,7 +720,18 @@ import_templates <- function(path, data.path = path, license,
             '/templates/personnel.txt',
             package = 'EMLassemblyline'
           ),
-          colClasses = rep("character", 10),
+          colClasses = rep(
+            "character",
+            max(
+              utils::count.fields(
+                system.file(
+                  '/templates/personnel.txt',
+                  package = 'EMLassemblyline'
+                ),
+                sep = "\t"
+              )
+            )
+          ),
           fill = TRUE,
           blank.lines.skip = TRUE
         )

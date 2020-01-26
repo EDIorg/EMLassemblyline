@@ -1,0 +1,70 @@
+id	element	context	subject	predicate_label	predicate_uri	object_label	object_uri
+/dataset	/dataset	eml	dataset	is about	http://purl.obolibrary.org/obo/IAO_0000136	placeholder_object_label	placeholder_object_uri
+/nitrogen.csv	/dataTable	dataset	nitrogen.csv	is about	http://purl.obolibrary.org/obo/IAO_0000136	placeholder_object_label	placeholder_object_uri
+/decomp.csv	/dataTable	dataset	decomp.csv	is about	http://purl.obolibrary.org/obo/IAO_0000136	placeholder_object_label	placeholder_object_uri
+/nitrogen.csv/year	/dataTable/attribute	nitrogen.csv	year	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType	placeholder_object_label	placeholder_object_uri
+/nitrogen.csv/year	/dataTable/attribute	nitrogen.csv	year	has unit	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit	placeholder_object_label	placeholder_object_uri
+/nitrogen.csv/ntrt	/dataTable/attribute	nitrogen.csv	ntrt	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType	placeholder_object_label	placeholder_object_uri
+/nitrogen.csv/ntrt	/dataTable/attribute	nitrogen.csv	ntrt	has unit	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit	placeholder_object_label	placeholder_object_uri
+/nitrogen.csv/arm	/dataTable/attribute	nitrogen.csv	arm	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType	placeholder_object_label	placeholder_object_uri
+/nitrogen.csv/arm	/dataTable/attribute	nitrogen.csv	arm	has unit	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit	placeholder_object_label	placeholder_object_uri
+/nitrogen.csv/net_primary_production	/dataTable/attribute	nitrogen.csv	net_primary_production	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType	placeholder_object_label	placeholder_object_uri
+/nitrogen.csv/net_primary_production	/dataTable/attribute	nitrogen.csv	net_primary_production	has unit	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit	placeholder_object_label	placeholder_object_uri
+/nitrogen.csv/stem_mass_density	/dataTable/attribute	nitrogen.csv	stem_mass_density	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType	placeholder_object_label	placeholder_object_uri
+/nitrogen.csv/stem_mass_density	/dataTable/attribute	nitrogen.csv	stem_mass_density	has unit	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit	placeholder_object_label	placeholder_object_uri
+/nitrogen.csv/plant_density	/dataTable/attribute	nitrogen.csv	plant_density	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType	placeholder_object_label	placeholder_object_uri
+/nitrogen.csv/plant_density	/dataTable/attribute	nitrogen.csv	plant_density	has unit	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit	placeholder_object_label	placeholder_object_uri
+/nitrogen.csv/stem_n_concentration	/dataTable/attribute	nitrogen.csv	stem_n_concentration	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType	placeholder_object_label	placeholder_object_uri
+/nitrogen.csv/stem_n_concentration	/dataTable/attribute	nitrogen.csv	stem_n_concentration	has unit	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit	placeholder_object_label	placeholder_object_uri
+/nitrogen.csv/n_assimilated	/dataTable/attribute	nitrogen.csv	n_assimilated	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType	placeholder_object_label	placeholder_object_uri
+/nitrogen.csv/n_assimilated	/dataTable/attribute	nitrogen.csv	n_assimilated	has unit	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit	placeholder_object_label	placeholder_object_uri
+/nitrogen.csv/site_name	/dataTable/attribute	nitrogen.csv	site_name	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType	placeholder_object_label	placeholder_object_uri
+/nitrogen.csv/site_name	/dataTable/attribute	nitrogen.csv	site_name	has unit	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit	placeholder_object_label	placeholder_object_uri
+/nitrogen.csv/site_lat	/dataTable/attribute	nitrogen.csv	site_lat	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType	placeholder_object_label	placeholder_object_uri
+/nitrogen.csv/site_lat	/dataTable/attribute	nitrogen.csv	site_lat	has unit	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit	placeholder_object_label	placeholder_object_uri
+/nitrogen.csv/site_lon	/dataTable/attribute	nitrogen.csv	site_lon	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType	placeholder_object_label	placeholder_object_uri
+/nitrogen.csv/site_lon	/dataTable/attribute	nitrogen.csv	site_lon	has unit	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit	placeholder_object_label	placeholder_object_uri
+/decomp.csv/type	/dataTable/attribute	decomp.csv	type	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType	placeholder_object_label	placeholder_object_uri
+/decomp.csv/type	/dataTable/attribute	decomp.csv	type	has unit	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit	placeholder_object_label	placeholder_object_uri
+/decomp.csv/date	/dataTable/attribute	decomp.csv	date	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType	placeholder_object_label	placeholder_object_uri
+/decomp.csv/date	/dataTable/attribute	decomp.csv	date	has unit	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit	placeholder_object_label	placeholder_object_uri
+/decomp.csv/arm	/dataTable/attribute	decomp.csv	arm	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType	placeholder_object_label	placeholder_object_uri
+/decomp.csv/arm	/dataTable/attribute	decomp.csv	arm	has unit	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit	placeholder_object_label	placeholder_object_uri
+/decomp.csv/ntrt	/dataTable/attribute	decomp.csv	ntrt	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType	placeholder_object_label	placeholder_object_uri
+/decomp.csv/ntrt	/dataTable/attribute	decomp.csv	ntrt	has unit	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit	placeholder_object_label	placeholder_object_uri
+/decomp.csv/year	/dataTable/attribute	decomp.csv	year	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType	placeholder_object_label	placeholder_object_uri
+/decomp.csv/year	/dataTable/attribute	decomp.csv	year	has unit	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit	placeholder_object_label	placeholder_object_uri
+/decomp.csv/percent_loss	/dataTable/attribute	decomp.csv	percent_loss	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType	placeholder_object_label	placeholder_object_uri
+/decomp.csv/percent_loss	/dataTable/attribute	decomp.csv	percent_loss	has unit	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit	placeholder_object_label	placeholder_object_uri
+/decomp.csv/taxa	/dataTable/attribute	decomp.csv	taxa	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType	placeholder_object_label	placeholder_object_uri
+/decomp.csv/taxa	/dataTable/attribute	decomp.csv	taxa	has unit	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit	placeholder_object_label	placeholder_object_uri
+/ancillary_data.zip	/otherEntity	dataset	ancillary_data.zip	is about	http://purl.obolibrary.org/obo/IAO_0000136	placeholder_object_label	placeholder_object_uri
+/processing_and_analysis.R	/otherEntity	dataset	processing_and_analysis.R	is about	http://purl.obolibrary.org/obo/IAO_0000136	placeholder_object_label	placeholder_object_uri
+/Kelman R Wieder	/ResponsibleParty	dataset	Kelman R Wieder	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Kelman R Wieder	/ResponsibleParty	dataset	Kelman R Wieder	member of	https://schema.org/memberOf	placeholder_object_label	placeholder_object_uri
+/Dale H Vitt	/ResponsibleParty	dataset	Dale H Vitt	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Dale H Vitt	/ResponsibleParty	dataset	Dale H Vitt	member of	https://schema.org/memberOf	placeholder_object_label	placeholder_object_uri
+/Melanie A Vile	/ResponsibleParty	dataset	Melanie A Vile	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Melanie A Vile	/ResponsibleParty	dataset	Melanie A Vile	member of	https://schema.org/memberOf	placeholder_object_label	placeholder_object_uri
+/Jeremy A Graham	/ResponsibleParty	dataset	Jeremy A Graham	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Jeremy A Graham	/ResponsibleParty	dataset	Jeremy A Graham	member of	https://schema.org/memberOf	placeholder_object_label	placeholder_object_uri
+/Jeremy A Hartsock	/ResponsibleParty	dataset	Jeremy A Hartsock	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Jeremy A Hartsock	/ResponsibleParty	dataset	Jeremy A Hartsock	member of	https://schema.org/memberOf	placeholder_object_label	placeholder_object_uri
+/Hope Fillingim	/ResponsibleParty	dataset	Hope Fillingim	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Hope Fillingim	/ResponsibleParty	dataset	Hope Fillingim	member of	https://schema.org/memberOf	placeholder_object_label	placeholder_object_uri
+/Melissa House	/ResponsibleParty	dataset	Melissa House	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Melissa House	/ResponsibleParty	dataset	Melissa House	member of	https://schema.org/memberOf	placeholder_object_label	placeholder_object_uri
+/James C Quinn	/ResponsibleParty	dataset	James C Quinn	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/James C Quinn	/ResponsibleParty	dataset	James C Quinn	member of	https://schema.org/memberOf	placeholder_object_label	placeholder_object_uri
+/Kimberli D Scott	/ResponsibleParty	dataset	Kimberli D Scott	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Kimberli D Scott	/ResponsibleParty	dataset	Kimberli D Scott	member of	https://schema.org/memberOf	placeholder_object_label	placeholder_object_uri
+/Meaghan Petix	/ResponsibleParty	dataset	Meaghan Petix	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Meaghan Petix	/ResponsibleParty	dataset	Meaghan Petix	member of	https://schema.org/memberOf	placeholder_object_label	placeholder_object_uri
+/Kelly J McMillen	/ResponsibleParty	dataset	Kelly J McMillen	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Kelly J McMillen	/ResponsibleParty	dataset	Kelly J McMillen	member of	https://schema.org/memberOf	placeholder_object_label	placeholder_object_uri
+/Jane Doe	/ResponsibleParty	dataset	Jane Doe	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Jane Doe	/ResponsibleParty	dataset	Jane Doe	member of	https://schema.org/memberOf	placeholder_object_label	placeholder_object_uri
+/Joe Smith	/ResponsibleParty	dataset	Joe Smith	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Joe Smith	/ResponsibleParty	dataset	Joe Smith	member of	https://schema.org/memberOf	placeholder_object_label	placeholder_object_uri
+/Chase Gacho	/ResponsibleParty	dataset	Chase Gacho	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Chase Gacho	/ResponsibleParty	dataset	Chase Gacho	member of	https://schema.org/memberOf		

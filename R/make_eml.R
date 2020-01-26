@@ -4,33 +4,6 @@
 #'     Render the contents of metadata templates into EML, validate, and write
 #'     to file.
 #'     
-#' @usage 
-#'     make_eml(
-#'       path,
-#'       data.path = path,
-#'       eml.path = path, 
-#'       dataset.title,
-#'       temporal.coverage,
-#'       geographic.description, 
-#'       geographic.coordinates, 
-#'       maintenance.description, 
-#'       data.table = NULL, 
-#'       data.table.name = data.table,
-#'       data.table.description = NULL, 
-#'       data.table.quote.character = NULL, 
-#'       other.entity = NULL,
-#'       other.entity.name = other.entity,
-#'       other.entity.description = NULL,
-#'       data.url = NULL,
-#'       provenance = NULL,
-#'       user.id = NULL,
-#'       user.domain = NULL,
-#'       package.id = NULL,
-#'       write.file = TRUE,
-#'       return.obj = FALSE,
-#'       x = NULL
-#'     )
-#'     
 #' @param path 
 #'     (character) Path to the metadata template directory.
 #' @param data.path
@@ -342,7 +315,7 @@ make_eml <- function(
     other.entity.description <- zip.dir.description
     
   }
-  
+
   # Read metadata templates and data ------------------------------------------
   
   if (is.null(x)){
@@ -1709,7 +1682,7 @@ make_eml <- function(
     if (custom_units == "yes"){
       
       eml <- list(
-        schemaLocation = "eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd",
+        schemaLocation = "eml://ecoinformatics.org/eml-2.2.0  http://nis.lternet.edu/schemas/EML/eml-2.2.0/xsd/eml.xsd",
         packageId = package.id,
         system = "edi",
         access = access,
@@ -1720,7 +1693,7 @@ make_eml <- function(
     } else {
       
       eml <- list(
-        schemaLocation = "eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd",
+        schemaLocation = "eml://ecoinformatics.org/eml-2.2.0  http://nis.lternet.edu/schemas/EML/eml-2.2.0/xsd/eml.xsd",
         packageId = package.id,
         system = "edi",
         access = access,
@@ -1732,7 +1705,7 @@ make_eml <- function(
   } else {
     
     eml <- list(
-      schemaLocation = "eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd",
+      schemaLocation = "eml://ecoinformatics.org/eml-2.2.0  http://nis.lternet.edu/schemas/EML/eml-2.2.0/xsd/eml.xsd",
       packageId = package.id,
       system = "edi",
       access = access,
@@ -1741,13 +1714,28 @@ make_eml <- function(
     
   }
   
-  message('</eml>')
+  # Create <annotations> ------------------------------------------------------
+  
+  if (any(stringr::str_detect(names(x$template), "annotations.txt"))) {
+    
+    message('  <annotations>')
+    
+    eml <- annotate_eml(
+      annotations = x$template$annotations.txt$content,
+      eml.in = eml
+    )
+    
+  }
   
   # Write EML -----------------------------------------------------------------
+  
+  message('</eml>')
   
   if (isTRUE(write.file)){
     
     message(paste0('Writing EML (', package.id, '.xml)'))
+    
+    emld::eml_version("eml-2.2.0")
     
     EML::write_eml(
       eml, 
@@ -1757,7 +1745,7 @@ make_eml <- function(
   }
   
   # Validate EML --------------------------------------------------------------
-  
+
   message("Validating EML")
 
   validation_result <- EML::eml_validate(eml)
