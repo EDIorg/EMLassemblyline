@@ -35,7 +35,7 @@ validate_templates <- function(fun.name, x){
     #     custom_units.txt.
     
     # Identify attribute templates
-    use_i <- stringr::str_detect(names(x$template), "attributes_.*.txt")
+    use_i <- stringr::str_detect(names(x$template), "attributes_[^dataset].*.txt")
     
     # Run the checks if attribute templates exist
     if (any(use_i)) {
