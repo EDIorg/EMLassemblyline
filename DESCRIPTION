@@ -22,6 +22,7 @@ Imports:
     EML (>= 2.0.0),
     methods,
     taxonomyCleanr,
+    uuid (>= 0.1-2),
     EDIutils
 Suggests: testthat
 License: MIT

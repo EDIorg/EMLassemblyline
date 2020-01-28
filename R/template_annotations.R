@@ -90,7 +90,7 @@ template_annotations <- function(
   
   # Pass remaining arguments to validate_arguments()
   validate_arguments(
-    fun.name = 'template_table_attributes',
+    fun.name = 'template_annotations',
     fun.args = as.list(environment())
   )
   
@@ -98,23 +98,39 @@ template_annotations <- function(
   # Create x if it doesn't exist and indicate it has been created (i.e. 
   # "data_read_2_x <- TRUE").
   
-  if (is.null(x)){
-    if (is.null(data.table)){
-      x <- template_arguments()
-      x <- x$x
-    } else if (!is.null(data.table)){
-      x <- template_arguments(
-        data.path = data.path,
-        data.table = data.table
-      )
-      x <- x$x
-    }
+  if (is.null(x)) {
+    x <- template_arguments(path = path)
+    x <- x$x
     data_read_2_x <- TRUE
   }
   
   # Load annotation search parameters -----------------------------------------
   
+  attr.annotations <- as.data.frame(
+    data.table::fread(
+      file = system.file(
+        '/templates/annotation_characteristics.txt',
+        package = 'EMLassemblyline'
+      ),
+      colClasses = rep(
+        "character",
+        max(
+          utils::count.fields(
+            system.file(
+              '/templates/annotation_characteristics.txt',
+              package = 'EMLassemblyline'
+            ),
+            sep = "\t"
+          )
+        )
+      ),
+      fill = TRUE,
+      blank.lines.skip = TRUE
+    )
+  )
   
+  # Collect annotatable elements ----------------------------------------------
+  # Collect annotatable elements, context, ...
   
   # Create annotations.txt ----------------------------------------------------
   

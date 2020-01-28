@@ -318,7 +318,7 @@ template_core_metadata <- function(
     if (isTRUE(value)){
       message('attributes_dataset.txt')
     } else {
-      message(paste0('/templates/attributes_dataset.txt', ' already exists!'))
+      message(paste0('attributes_dataset.txt', ' already exists!'))
     }
     
     # If adding to x ...
@@ -335,7 +335,18 @@ template_core_metadata <- function(
             '/templates/attributes_dataset.txt',
             package = 'EMLassemblyline'
           ),
-          colClasses = rep("character", 3),
+          colClasses = rep(
+            "character",
+            max(
+              utils::count.fields(
+                system.file(
+                  '/templates/attributes_dataset.txt',
+                  package = 'EMLassemblyline'
+                ),
+                sep = "\t"
+              )
+            )
+          ),
           fill = TRUE,
           blank.lines.skip = TRUE
         )

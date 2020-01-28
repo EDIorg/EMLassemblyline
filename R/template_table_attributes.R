@@ -295,8 +295,11 @@ template_table_attributes <- function(
         attributes[[i]]$dateTimeFormatString[use_i] <- "!Add datetime specifier here!"
       }
       
-      # Assign each attribute a unique identifier
-      
+      # Assign unique identifiers to each attribute
+      attributes[[i]]$id <- replicate(
+        n = nrow(attributes[[i]]), 
+        expr = uuid::UUIDgenerate(use.time = TRUE)
+      )
       
       # Write template to file or add template to x$template$attributes_*.txt$content
       
@@ -467,6 +470,132 @@ template_table_attributes <- function(
     }
     
   }
+  
+  # Import/update attributes_dataset.txt --------------------------------------
+  # The attributes_dataset.txt template may not exist yet, create it if it 
+  # doesn't exist.
+  
+  if (isTRUE(write.file)) {
+    
+    # Write attributes_dataset.txt to file if it doesn't exist
+    
+    if (any(is.na(x$template[['attributes_dataset.txt']]$content))){
+      
+      value <- file.copy(
+        from = system.file(
+          '/templates/attributes_dataset.txt',
+          package = 'EMLassemblyline'
+        ),
+        to = paste0(
+          path,
+          '/attributes_dataset.txt'
+        )
+      )
+
+      if (isTRUE(value)){
+        message('attributes_dataset.txt')
+      } else {
+        message(paste0('attributes_dataset.txt', ' already exists!'))
+      }
+
+    }
+    
+    # Add data tables to attributes_dataset.txt
+    
+    df <- as.data.frame(
+      data.table::fread(
+        file = paste0(path, '/attributes_dataset.txt'),
+        colClasses = rep(
+          "character",
+          max(
+            utils::count.fields(
+              paste0(path, '/attributes_dataset.txt'),
+              sep = "\t"
+            )
+          )
+        ),
+        fill = TRUE,
+        blank.lines.skip = TRUE
+      )
+    )
+    
+    for (i in 1:length(data.table)) {
+      if (!(data.table[i] %in% df$value)) {
+        id <- uuid::UUIDgenerate(use.time = TRUE)
+        df[(nrow(df)+1):(nrow(df)+3), ] <- data.frame(
+          id = rep(id, 3),
+          element = c("data table", "data table name", "data table description"),
+          value = c(data.table[i], "", ""),
+          stringsAsFactors = FALSE
+        )
+      }
+    }
+
+    data.table::fwrite(
+      x = df,
+      file = paste0(path, '/attributes_dataset.txt'),
+      sep = "\t",
+      quote = FALSE
+    )
+    
+    message("Updating attributes_dataset.txt")
+    
+    # If adding to x ...
+    
+  } else if (!exists('data_read_2_x')){
+    
+    if (any(is.na(x$template$attributes_dataset.txt$content))) {
+
+      df <- as.data.frame(
+        data.table::fread(
+          file = system.file(
+            '/templates/attributes_dataset.txt',
+            package = 'EMLassemblyline'
+          ),
+          colClasses = rep(
+            "character",
+            max(
+              utils::count.fields(
+                system.file(
+                  '/templates/attributes_dataset.txt',
+                  package = 'EMLassemblyline'
+                ),
+                sep = "\t"
+              )
+            )
+          ),
+          fill = TRUE,
+          blank.lines.skip = TRUE
+        )
+      )
+      
+      for (i in length(data.table)) {
+        id <- uuid::UUIDgenerate(use.time = TRUE)
+        df <- rbind(
+          df,
+          data.frame(
+            id = rep(id, 3),
+            element = c("data table", "data table name", "data table description"),
+            value = c(data.table[i], "", ""),
+            stringsAsFactors = FALSE
+          )
+        )
+      }
+      
+      x$template$attributes_dataset.txt$content <- df
+
+      # Send message
+      
+      message("attributes_dataset.txt")
+      
+    } else {
+      
+      message("attributes_dataset.txt already exists!")
+      
+    }
+    
+  }
+  
 
   # Return --------------------------------------------------------------------
   

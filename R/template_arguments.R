@@ -477,21 +477,18 @@ template_arguments <- function(
         output$x$template[[i]]$content <- as.data.frame(
           data.table::fread(
             file = paste0(path, '/', templates[i]),
-            colClasses = rep("character", 6),
+            colClasses = rep(
+              "character",
+              max(
+                utils::count.fields(
+                  paste0(path, '/', templates[i]),
+                  sep = "\t"
+                )
+              )
+            ),
             fill = TRUE,
             blank.lines.skip = TRUE
           )
-        )
-
-        output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:6]
-
-        colnames(output$x$template[[i]]$content) <- c(
-          "id",
-          "context",
-          "predicate_label",
-          "predicate_uri",
-          "object_label",
-          "object_uri"
         )
 
       } else {
@@ -511,25 +508,20 @@ template_arguments <- function(
         output$x$template[[i]]$content <- as.data.frame(
           data.table::fread(
             file = paste0(path, '/', templates[i]),
-            colClasses = rep("character", 8),
+            colClasses = rep(
+              "character",
+              max(
+                utils::count.fields(
+                  paste0(path, '/', templates[i]),
+                  sep = "\t"
+                )
+              )
+            ),
             fill = TRUE,
             blank.lines.skip = TRUE
           )
         )
-        
-        output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:8]
-        
-        colnames(output$x$template[[i]]$content) <- c(
-          "id",
-          "attributeName",
-          "attributeDefinition",
-          "class",
-          "unit",
-          "dateTimeFormatString",
-          "missingValueCode",
-          "missingValueCodeExplanation"
-        )
-        
+
       } else {
         
         output$x$template[[i]]$content <- NA_character_
@@ -547,18 +539,18 @@ template_arguments <- function(
         output$x$template[[i]]$content <- as.data.frame(
           data.table::fread(
             file = paste0(path, '/', templates[i]),
-            colClasses = rep("character", 3),
+            colClasses = rep(
+              "character",
+              max(
+                utils::count.fields(
+                  paste0(path, '/', templates[i]),
+                  sep = "\t"
+                )
+              )
+            ),
             fill = TRUE,
             blank.lines.skip = TRUE
           )
-        )
-        
-        output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:3]
-        
-        colnames(output$x$template[[i]]$content) <- c(
-          "id",
-          "element",
-          "value"
         )
         
       } else {
@@ -578,18 +570,18 @@ template_arguments <- function(
         output$x$template[[i]]$content <- as.data.frame(
           data.table::fread(
             file = paste0(path, '/', templates[i]),
-            colClasses = rep("character", 3),
+            colClasses = rep(
+              "character",
+              max(
+                utils::count.fields(
+                  paste0(path, '/', templates[i]),
+                  sep = "\t"
+                )
+              )
+            ),
             fill = TRUE,
             blank.lines.skip = TRUE
           )
-        )
-        
-        output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:3]
-        
-        colnames(output$x$template[[i]]$content) <- c(
-          "attributeName",
-          "code",
-          "definition"
         )
         
       } else {
@@ -609,20 +601,18 @@ template_arguments <- function(
         output$x$template[[i]]$content <- as.data.frame(
           data.table::fread(
             file = paste0(path, '/', templates[i]),
-            colClasses = rep("character", 5),
+            colClasses = rep(
+              "character",
+              max(
+                utils::count.fields(
+                  paste0(path, '/', templates[i]),
+                  sep = "\t"
+                )
+              )
+            ),
             fill = TRUE,
             blank.lines.skip = TRUE
           )
-        )
-        
-        output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:5]
-        
-        colnames(output$x$template[[i]]$content) <- c(
-          "id",
-          "unitType",
-          "parentSI",
-          "multiplierToSI",
-          "description"
         )
         
       } else {
@@ -754,17 +744,18 @@ template_arguments <- function(
         output$x$template[[i]]$content <- as.data.frame(
           data.table::fread(
             file = paste0(path, '/', templates[i]),
-            colClasses = rep("character", 2),
+            colClasses = rep(
+              "character",
+              max(
+                utils::count.fields(
+                  paste0(path, '/', templates[i]),
+                  sep = "\t"
+                )
+              )
+            ),
             fill = TRUE,
             blank.lines.skip = TRUE
           )
-        )
-
-        output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:2]
-        
-        colnames(output$x$template[[i]]$content) <- c(
-          "keyword", 
-          "keywordThesaurus"
         )
         
       } else {
@@ -810,26 +801,18 @@ template_arguments <- function(
         output$x$template[[i]]$content <- as.data.frame(
           data.table::fread(
             file = paste0(path, '/', templates[i]),
-            colClasses = rep("character", 11),
+            colClasses = rep(
+              "character",
+              max(
+                utils::count.fields(
+                  paste0(path, '/', templates[i]),
+                  sep = "\t"
+                )
+              )
+            ),
             fill = TRUE,
             blank.lines.skip = TRUE
           )
-        )
-        
-        output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:11]
-        
-        colnames(output$x$template[[i]]$content) <- c(
-          "id",
-          "givenName",
-          "middleInitial",
-          "surName",
-          "organizationName",
-          "electronicMailAddress",
-          "userId",
-          "role",
-          "projectTitle",
-          "fundingAgency",
-          "fundingNumber"
         )
         
       } else {
@@ -873,23 +856,20 @@ template_arguments <- function(
         output$x$template[[i]]$content <- as.data.frame(
           data.table::fread(
             file = paste0(path, '/', templates[i]),
-            colClasses = rep('character', 5),
+            colClasses = rep(
+              "character",
+              max(
+                utils::count.fields(
+                  paste0(path, '/', templates[i]),
+                  sep = "\t"
+                )
+              )
+            ),
             fill = TRUE,
             blank.lines.skip = TRUE
           )
         )
-        
-        output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:5]
-        
-        colnames(output$x$template[[i]]$content) <- c(
-          'name', 
-          'name_type', 
-          'name_resolved',
-          'authority_system',
-          'authority_id'
-        )
-        
-        
+
       } else {
         
         output$x$template[[i]]$content <- NA_character_
