@@ -184,7 +184,7 @@ template_other_entity_attributes <- function(
         id <- uuid::UUIDgenerate(use.time = TRUE)
         df[(nrow(df)+1):(nrow(df)+3), ] <- data.frame(
           id = rep(id, 3),
-          element = c("other entity", "other entity name", "other entity description"),
+          element = c("otherEntity", "otherEntityName", "otherEntityDescription"),
           value = c(other.entity[i], "", ""),
           stringsAsFactors = FALSE
         )
@@ -204,55 +204,55 @@ template_other_entity_attributes <- function(
     
   } else if (!exists('data_read_2_x')){
     
-    if (any(is.na(x$template$attributes_dataset.txt$content))) {
-      
-      df <- as.data.frame(
-        data.table::fread(
-          file = system.file(
-            '/templates/attributes_dataset.txt',
-            package = 'EMLassemblyline'
-          ),
-          colClasses = rep(
-            "character",
-            max(
-              utils::count.fields(
-                system.file(
-                  '/templates/attributes_dataset.txt',
-                  package = 'EMLassemblyline'
-                ),
-                sep = "\t"
-              )
-            )
-          ),
-          fill = TRUE,
-          blank.lines.skip = TRUE
-        )
-      )
-      
-      for (i in length(other.entity)) {
-        id <- uuid::UUIDgenerate(use.time = TRUE)
-        df <- rbind(
-          df,
-          data.frame(
-            id = rep(id, 3),
-            element = c("data table", "data table name", "data table description"),
-            value = c(other.entity[i], "", ""),
-            stringsAsFactors = FALSE
-          )
-        )
-      }
-      
-      x$template$attributes_dataset.txt$content <- df
-      
-      # Send message
-      
-      message("attributes_dataset.txt")
-      
-    } else {
-      
-      message("attributes_dataset.txt already exists!")
-      
-    }
+    # if (any(is.na(x$template$attributes_dataset.txt$content))) {
+    #   
+    #   df <- as.data.frame(
+    #     data.table::fread(
+    #       file = system.file(
+    #         '/templates/attributes_dataset.txt',
+    #         package = 'EMLassemblyline'
+    #       ),
+    #       colClasses = rep(
+    #         "character",
+    #         max(
+    #           utils::count.fields(
+    #             system.file(
+    #               '/templates/attributes_dataset.txt',
+    #               package = 'EMLassemblyline'
+    #             ),
+    #             sep = "\t"
+    #           )
+    #         )
+    #       ),
+    #       fill = TRUE,
+    #       blank.lines.skip = TRUE
+    #     )
+    #   )
+    #   
+    #   for (i in length(other.entity)) {
+    #     id <- uuid::UUIDgenerate(use.time = TRUE)
+    #     df <- rbind(
+    #       df,
+    #       data.frame(
+    #         id = rep(id, 3),
+    #         element = c("data table", "data table name", "data table description"),
+    #         value = c(other.entity[i], "", ""),
+    #         stringsAsFactors = FALSE
+    #       )
+    #     )
+    #   }
+    #   
+    #   x$template$attributes_dataset.txt$content <- df
+    #   
+    #   # Send message
+    #   
+    #   message("attributes_dataset.txt")
+    #   
+    # } else {
+    #   
+    #   message("attributes_dataset.txt already exists!")
+    #   
+    # }
     
   }
   

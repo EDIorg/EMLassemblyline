@@ -104,9 +104,11 @@ template_annotations <- function(
     data_read_2_x <- TRUE
   }
   
-  # Load annotation search parameters -----------------------------------------
+  # Parameterize --------------------------------------------------------------
   
-  attr.annotations <- as.data.frame(
+  # Load annotation search parameters
+  
+  attr_anno <- as.data.frame(
     data.table::fread(
       file = system.file(
         '/templates/annotation_characteristics.txt',
@@ -129,313 +131,175 @@ template_annotations <- function(
     )
   )
   
-  # Collect annotatable elements ----------------------------------------------
-  # Collect annotatable elements, context, ...
+  # Initialize annotations.txt
   
-  # Create annotations.txt ----------------------------------------------------
-  
-  if (!is.null(data.table)){
-    
-    # Validate column names
-    
-    for (i in 1:length(data.table)){
-      
-      column_names <- colnames(x$data.table[[i]]$content)
-      
-      use_i <- stringr::str_detect(
-        string = column_names,
-        pattern = "\\."
-      )
-      
-      if (sum(use_i) > 0){
-        stop(
-          paste(
-            "Invalid column names detected in ", 
-            names(x$data.table)[i],
-            ":  ",
-            paste(
-              column_names[use_i], 
-              collapse = ", "
-            ), 
-            '  Replace characters located at periods "." in the above listed column names with underscores "_"',
-            sep = ""
-          )
-        )
-      }
-      
-    }
-    
-    # Extract attributes of each data file
-    
-    attributes <- list()
-    
-    for (i in 1:length(data.table)){
-      
-      # Initialize attribute table
-      
-      rows <- ncol(x$data.table[[i]]$content)
-      
-      attributes[[i]] <- data.frame(
-        attributeName = character(rows),
-        attributeDefinition = character(rows),
-        class = character(rows),
-        unit = character(rows),
-        dateTimeFormatString = character(rows),
-        missingValueCode = character(rows),
-        missingValueCodeExplanation = character(rows),
-        stringsAsFactors = FALSE
-      )
-      
-      # Get names
-      
-      attributes[[i]]$attributeName <- colnames(x$data.table[[i]]$content)
-      
-      # Guess character and numeric classes
-      
-      guess <- unname(unlist(lapply(x$data.table[[i]]$content, class)))
-      
-      guess_map <- c(
-        character = "character", 
-        logical = "character", 
-        factor = "character",
-        integer = "numeric",
-        integer64 = "numeric",
-        numeric = "numeric"
-      )
-      
-      guess <- unname(guess_map[guess])
-      
-      # Guess Date class
-      
-      use_i <- guess == "character"
-      
-      if (sum(use_i) > 0){
-        potential_date_cols <- colnames(x$data.table[[i]]$content)[use_i]
-        potential_date_i <- stringr::str_detect(tolower(potential_date_cols), "date|time|day")
-        guess_datetime <- potential_date_cols[potential_date_i]
-        use_i <- match(guess_datetime, attributes[[i]]$attributeName)
-        guess[use_i] <- "Date"
-      }
-      
-      use_i <- guess == "numeric"
-      
-      if (sum(use_i) > 0){
-        potential_date_cols <- colnames(x$data.table[[i]]$content)[use_i]
-        potential_date_i <- stringr::str_detect(tolower(potential_date_cols), "date|time|day|year")
-        guess_datetime <- potential_date_cols[potential_date_i]
-        use_i <- match(guess_datetime, attributes[[i]]$attributeName)
-        guess[use_i] <- "Date"
-      }
-      
-      # Guess factor class
-      
-      use_i <- guess == "character"
-      if (sum(use_i) > 0){
-        potential_fact_cols <- colnames(x$data.table[[i]]$content)[use_i]
-        use_i2 <- match(potential_fact_cols, colnames(x$data.table[[i]]$content))
-        if (length(use_i2) == 1){
-          unique_lengths <- length(unique(x$data.table[[i]]$content[ ,use_i2]))
-        } else {
-          unique_lengths <- apply(x$data.table[[i]]$content[ ,use_i2], 2, function(x)length(unique(x)))
-        }
-        potential_facts <- unique_lengths <= dim(x$data.table[[i]]$content)[1]*0.3
-        if (sum(potential_facts) > 0){
-          potential_facts <- names(potential_facts[potential_facts == TRUE])
-          use_i <- match(potential_facts, attributes[[i]]$attributeName)
-          guess[use_i] <- "categorical"
-        }
-      }
-      
-      # Update attributes class
-      
-      attributes[[i]]$class <- guess
-      
-      # Add unit for numeric data
-      
-      use_i <- attributes[[i]]$class == "numeric"
-      
-      if (sum(use_i) > 0){
-        attributes[[i]]$unit[use_i] <- "!Add units here!"
-      }
-      
-      # Add date time format strings for Date data
-      
-      use_i <- attributes[[i]]$class == "Date"
-      
-      if (sum(use_i) > 0){
-        attributes[[i]]$dateTimeFormatString[use_i] <- "!Add datetime specifier here!"
-      }
-      
-      # Write template to file or add template to x$template$attributes_*.txt$content
-      
-      # If writing to file ...
-      
-      if (isTRUE(write.file)){
-        
-        value <- file.exists(
-          paste0(
-            path,
-            "/",
-            "attributes_",
-            substr(data.table[i], 1, nchar(data.table[i]) - 4),
-            ".txt"
-          )
-        )
-        
-        if (!isTRUE(value)){
-          
-          message(
-            paste0(
-              "attributes_",
-              substr(data.table[i], 1, nchar(data.table[i]) - 4),
-              ".txt."
-            )
-          )
-          
-          utils::write.table(
-            attributes[[i]],
-            paste0(
-              path,
-              "/",
-              "attributes_",
-              substr(data.table[i], 1, nchar(data.table[i]) - 4),
-              ".txt"
-            ),
-            sep = "\t",
-            row.names = F,
-            quote = F,
-            fileEncoding = "UTF-8"
-          )
-          
-        } else {
-          
-          message(
-            paste0(
-              "attributes_",
-              substr(data.table[i], 1, nchar(data.table[i]) - 4),
-              ".txt already exists!"
-            )
-          )
-          
-        }
-        
-        # If adding template to x ...
-        
-      } else if (!exists('data_read_2_x')){
-        
-        value <- stringr::str_detect(
-          paste0(
-            "attributes_",
-            substr(data.table[i], 1, nchar(data.table[i]) - 4),
-            ".txt"
-          ),
-          names(x$template)
-        )
-        
-        if (!any(value)){
-          
-          message(
-            paste0(
-              "attributes_",
-              substr(data.table[i], 1, nchar(data.table[i]) - 4),
-              ".txt."
-            )
-          )
-          
-          missing_template <- list(
-            content = attributes[[i]]
-          )
-          
-          missing_template <- list(
-            missing_template
-          )
-          
-          names(missing_template) <- paste0(
-            'attributes_', 
-            substr(data.table[i], 1, nchar(data.table[i]) - 4), 
-            '.txt'
-          )
-          
-          x$template <- c(
-            x$template, 
-            missing_template
-          )
-          
-        } else {
-          
-          message(
-            paste0(
-              "attributes_",
-              substr(data.table[i], 1, nchar(data.table[i]) - 4),
-              ".txt already exists!"
-            )
-          )
-          
-        }
-        
-      }
-      
-    }
-    
-  }
-  
-  # Import custom_units.txt ---------------------------------------------------
-  
-  # If writing to file ...
-  
-  if (isTRUE(write.file)){
-    
-    # Write to path
-    
-    value <- file.copy(
-      from = system.file(
-        '/templates/custom_units.txt',
+  anno <- as.data.frame(
+    data.table::fread(
+      file = system.file(
+        '/templates/annotations.txt',
         package = 'EMLassemblyline'
       ),
-      to = paste0(
-        path,
-        "/custom_units.txt"
-      )
+      colClasses = rep(
+        "character",
+        max(
+          utils::count.fields(
+            system.file(
+              '/templates/annotations.txt',
+              package = 'EMLassemblyline'
+            ),
+            sep = "\t"
+          )
+        )
+      ),
+      fill = TRUE,
+      blank.lines.skip = TRUE
     )
-    
-    # Send message
-    
-    if (isTRUE(value)){
-      message("custom_units.txt")
-    } else {
-      message("custom_units.txt already exists!")
-    }
-    
-    # If adding to x ...
-    
-  } else if (!exists('data_read_2_x')){
-    
-    if (any(is.na(x$template$custom_units.txt$content))){
-      
-      # Add to content
-      
-      x$template$custom_units.txt$content <- utils::read.table(
-        file = system.file(
-          '/templates/custom_units.txt',
-          package = 'EMLassemblyline'
-        ), 
-        header = T,
-        sep = '\t',
-        as.is = T
+  )
+  
+  # Set default annotations ---------------------------------------------------
+
+  # dataset
+  
+  e <- "dataset"
+  use_i <- attr_anno$element == e
+  anno <- rbind(
+    anno,
+    c(
+      id = uuid::UUIDgenerate(use.time = TRUE),
+      dplyr::select(attr_anno, -"r_list_path")[use_i, ]
+    )
+  )
+
+  # entities
+  
+  collect_entity <- function(element) {
+    use_i <- x$template$attributes_dataset.txt$content$element == element
+    if (any(use_i)) {
+      rbind(
+        anno,
+        suppressWarnings(
+          data.frame(
+            id = x$template$attributes_dataset.txt$content$id[use_i],
+            dplyr::select(attr_anno, "element", "context")[attr_anno$element == element, ],
+            value = x$template$attributes_dataset.txt$content$value[use_i],
+            dplyr::select(attr_anno, -"r_list_path", -"element", -"context", -"value")[attr_anno$element == element, ],
+            stringsAsFactors = FALSE
+          )
+        )
       )
-      
-      # Send message
-      
-      message("custom_units.txt")
-      
     } else {
-      
-      message("custom_units.txt already exists!")
-      
+      anno
     }
-    
   }
   
+  anno <- collect_entity("dataTable")
+  anno <- collect_entity("otherEntity")
+  anno <- collect_entity("spatialRaster")
+  anno <- collect_entity("spatialVector")
+  
+  # attributes
+  
+  collect_attributes <- function(element) {
+    use_i <- x$template$attributes_dataset.txt$content$element == element
+    if (any(use_i)) {
+      f <- names(x$template)[
+        stringr::str_detect(names(x$template), "attributes_[^dataset].*.txt")
+      ]
+      for (i in f) {
+        anno <- rbind(
+          anno,
+          suppressWarnings(
+            data.frame(
+              id = x$template[[i]]$content$id,
+              element = dplyr::select(attr_anno, "element")[attr_anno$element == "attribute", ],
+              context = i,
+              value = x$template[[i]]$content$attributeName,
+              dplyr::select(attr_anno, -"r_list_path", -"element", -"context", -"value")[attr_anno$element == "attribute", ],
+              stringsAsFactors = FALSE
+            )
+          )
+        )
+      }
+      anno
+    } else {
+      anno
+    }
+  }
+  
+  anno <- collect_attributes("dataTable")
+  
+  # units
+  
+  collect_units <- function(element) {
+    use_i <- x$template$attributes_dataset.txt$content$element == element
+    if (any(use_i)) {
+      f <- names(x$template)[
+        stringr::str_detect(names(x$template), "attributes_[^dataset].*.txt")
+      ]
+      for (i in f) {
+        anno <- rbind(
+          anno,
+          suppressWarnings(
+            data.frame(
+              id = x$template[[i]]$content$id,
+              element = dplyr::select(attr_anno, "element")[attr_anno$element == "unit", ],
+              context = i,
+              value = x$template[[i]]$content$attributeName,
+              dplyr::select(attr_anno, -"r_list_path", -"element", -"context", -"value")[attr_anno$element == "unit", ],
+              stringsAsFactors = FALSE
+            )
+          )
+        )
+      }
+      anno
+    } else {
+      anno
+    }
+  }
+  
+  anno <- collect_units("dataTable")
+  
+  # individualName
+  # Assign a UUID to each unique individual within annotations.txt and 
+  # personnel.txt.
+  
+  collect_persons <- function(element) {
+    if (nrow(x$template$personnel.txt$content) != 0) {
+      p <- unique(
+        paste(
+          x$template$personnel.txt$content$givenName,
+          x$template$personnel.txt$content$middleInitial,
+          x$template$personnel.txt$content$surName
+        )
+      )
+      rbind(
+        anno,
+        suppressWarnings(
+          data.frame(
+            id = replicate(
+              n = length(p),
+              expr = uuid::UUIDgenerate(use.time = TRUE)
+            ),
+            dplyr::select(attr_anno, "element", "context")[attr_anno$element == element, ],
+            value = p,
+            dplyr::select(attr_anno, -"r_list_path", -"element", -"context", -"value")[attr_anno$element == element, ],
+            stringsAsFactors = FALSE
+          )
+        )
+      )
+    } else {
+      anno
+    }
+  }
+  
+  anno <- collect_persons("individualName")
+  
+  # Add IDs to personnel.txt
+  
+  # FIXME: Sort anno so attribute description and unit are listed together
+  
+  # Write annotations.txt -----------------------------------------------------
+
   # Return --------------------------------------------------------------------
   
   if ((!isTRUE(write.file)) & is.null(x)){

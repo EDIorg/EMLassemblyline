@@ -1759,23 +1759,23 @@ make_eml <- function(
   }
   
   # Validate EML --------------------------------------------------------------
-  
-  message("Validating EML")
-
-  validation_result <- EML::eml_validate(eml)
-
-  if (validation_result == "TRUE"){
-
-    message("EML passed validation!")
-
-  } else {
-
-    message("EML validaton failed. See warnings for details.")
-
-  }
-
-  message("Done.")
-
+  # 
+  # message("Validating EML")
+  # 
+  # validation_result <- EML::eml_validate(eml)
+  # 
+  # if (validation_result == "TRUE"){
+  # 
+  #   message("EML passed validation!")
+  # 
+  # } else {
+  # 
+  #   message("EML validaton failed. See warnings for details.")
+  # 
+  # }
+  # 
+  # message("Done.")
+  # 
   if (isTRUE(return.obj)){
     eml
   }

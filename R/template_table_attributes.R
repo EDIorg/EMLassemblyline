@@ -524,7 +524,7 @@ template_table_attributes <- function(
         id <- uuid::UUIDgenerate(use.time = TRUE)
         df[(nrow(df)+1):(nrow(df)+3), ] <- data.frame(
           id = rep(id, 3),
-          element = c("data table", "data table name", "data table description"),
+          element = c("dataTable", "dataTableName", "dataTableDescription"),
           value = c(data.table[i], "", ""),
           stringsAsFactors = FALSE
         )
@@ -575,7 +575,7 @@ template_table_attributes <- function(
           df,
           data.frame(
             id = rep(id, 3),
-            element = c("data table", "data table name", "data table description"),
+            element = c("dataTable", "dataTableName", "dataTableDescription"),
             value = c(data.table[i], "", ""),
             stringsAsFactors = FALSE
           )
