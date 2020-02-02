@@ -178,7 +178,7 @@ testthat::test_that('Test usage with x inputs',{
           '/examples/data',
           package = 'EMLassemblyline'
         ),
-        x = x_no_catvars,
+        x = x_list,
         write.file = FALSE
       ) 
     )

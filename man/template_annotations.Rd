@@ -2,69 +2,73 @@
 % Please edit documentation in R/template_annotations.R
 \name{template_annotations}
 \alias{template_annotations}
-\title{Create annotations template}
+\title{Create the annotations template}
 \usage{
 template_annotations(
       path,
-      write.file = TRUE,
-      x = NULL
+      data.path = path,
+      data.table = NULL,
+      other.entity = NULL
     )
 }
 \arguments{
-\item{path}{(character) Path to the metadata template directory.}
+\item{path}{(character) Path to the metadata template directory and where 
+annotations.txt will be written.}
 
-\item{write.file}{(logical; optional) Whether to write the template file.}
+\item{data.path}{(character; optional) Path to the data directory. Defaults to 
+\code{path}.}
 
-\item{x}{(named list; optional) Alternative input to 
-\code{template_annotations()}. Use \code{template_arguments()} 
-to create \code{x}.}
+\item{data.table}{(character; optional) Table name. If more than one, then supply as a 
+vector of character strings (e.g. 
+\code{data.table = c('nitrogen.csv', 'decomp.csv')}).}
+
+\item{other.entity}{(character; optional) Other entity name. If more than one, then supply 
+as a vector of character strings (e.g. 
+\code{other.entity = c('maps.zip', 'analysis_script.R')}).}
 }
 \value{
-\strong{annotations.txt} The tab delimited annotations template. This 
-    file is written to \code{path} unless using \code{x}, in which case the 
-    template is added to \strong{/x/templates/annotations.txt}.
+\strong{annotations.txt} The tab delimited annotations template.
 }
 \description{
-Use this function to extract annotatable elements from completed 
-    metadata templates.
-    \href{https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html}{Instructions for editing this template.}
+Annotate your metadata with terms from an ontology. Run this function 
+    after all your metadata templates are complete
 }
 \details{
-An existing annotations template will not be overwritten by subsequent 
-    calls to \code{template_annotations()}.
+This function extracts annotatable metadata from the template files
+    and assigns default annotations for the predicate labels and URIs. The 
+    user manually assigns the object labels and URIs.
+    
+    \code{data.table} and \code{other.entity} are added to annotations.txt 
+    and assigned UUIDs.
+    
+    Unique persons within personnel.txt are added to annotations.txt and 
+    assigned UUIDs, which are also added to the \code{id} field of 
+    personnel.txt.
 }
 \examples{
-# Initialize data package directory for template_annotations()
+# Add completed metadata templates to a temporary directory
 file.copy(
- from = system.file('/examples/pkg_260', package = 'EMLassemblyline'),
+ from = system.file("/examples/pkg_260/metadata_templates", package = "EMLassemblyline"),
  to = tempdir(),
  recursive = TRUE
 )
+unlink("./metadata_templates/annotations.txt", force = TRUE)
+setwd(paste0(tempdir(), "/metadata_templates"))
 
-# Set working directory
-setwd(paste0(tempdir(), '/pkg_260'))
-
-# View directory contents (NOTE: annotations.txt dosn't exist)
-dir('./metadata_templates')
-
-# Template annotations
+# Create the annotations template
 template_annotations(
-  path = './metadata_templates'
+  path = "."
 )
 
-# View directory contents (NOTE: annotations.txt exists)
-dir('./metadata_templates')
+# View directory contents
+dir(".")
 
 # View template contents
-df <- data.table::fread(./metadata_templates/annotations.txt)
+df <- data.table::fread("./annotations.txt")
 df
 
-# Rerunning template_annotations() does not overwrite files
-template_annotations(
-  path = './metadata_templates'
-)
-
-# Clean up
-unlink('.', recursive = TRUE)
+# Remove the temporary directory
+setwd(tempdir())
+unlink("./metadata_templates", recursive = TRUE, force = TRUE)
     
 }

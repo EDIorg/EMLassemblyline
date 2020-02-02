@@ -151,7 +151,7 @@ template_categorical_variables <- function(
   attribute_files <- names(x$template)[
     stringr::str_detect(
       names(x$template),
-      'attributes_[^dataset].*.txt$'
+      "attributes_(?!dataset).*.txt"
     )
     ]
   

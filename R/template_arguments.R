@@ -501,7 +501,7 @@ template_arguments <- function(
     
     # Read attributes (data table) --------------------------------------------
     
-    if (stringr::str_detect(string = templates[i], pattern = 'attributes_[^dataset].*.txt')){
+    if (stringr::str_detect(string = templates[i], pattern = "attributes_(?!dataset).*.txt")){
       
       if (file.exists(paste0(path, '/', templates[i]))){
         

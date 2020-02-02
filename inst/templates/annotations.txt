@@ -1,1 +1,1 @@
-id	element	context	predicate_label	predicate_uri	object_label	object_uri
+id	element	context	subject	predicate_label	predicate_uri	object_label	object_uri

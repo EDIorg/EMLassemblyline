@@ -362,6 +362,50 @@ validate_arguments <- function(fun.name, fun.args){
 
   }
   
+  # Call from template_annotations() ------------------------------------------
+  
+  if (fun.name == 'template_annotations'){
+    
+    # path
+    
+    if (is.null(fun.args$path)) {
+      stop('Input argument "path" is missing.', call. = FALSE)
+    }
+    
+    if (!is.null(fun.args$path)) {
+      EDIutils::validate_path(fun.args$path)
+    }
+    
+    # data.path
+    
+    if (!is.null(fun.args$data.path)) {
+      EDIutils::validate_path(fun.args$data.path)
+    }
+    
+    # data.table
+    
+    if (!is.null(fun.args$data.table)){
+      table_names <- suppressWarnings(
+        EDIutils::validate_file_names(
+          path = fun.args$data.path, 
+          data.files = fun.args$data.table
+        )
+      )
+    }
+    
+    # other.entity
+    
+    if (!is.null(fun.args$other.entity)){
+      table_names <- suppressWarnings(
+        EDIutils::validate_file_names(
+          path = fun.args$data.path, 
+          data.files = fun.args$other.entity
+        )
+      )
+    }
+    
+  }
+  
   # Call from template_arguments() ------------------------------------------------
   
   if (fun.name == 'template_arguments'){

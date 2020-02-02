@@ -2084,3 +2084,82 @@ testthat::test_that('geographicCoverage', {
 
 })
 
+# annotations -----------------------------------------------------------------
+
+testthat::test_that('annotations', {
+  
+  # Parameterize
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260", 
+      package = "EMLassemblyline"
+    ),
+    to = tempdir(),
+    recursive = TRUE
+  )
+  
+  unlink(
+    paste0(tempdir(), "/pkg_260/metadata_templates/taxonomic_coverage.txt"), 
+    force = TRUE
+  )
+  
+  dir(paste0(tempdir(), "/pkg_260/metadata_templates"))
+
+  # defs <- as.data.frame(
+  #   data.table::fread(
+  #     file = system.file(
+  #       '/templates/annotation_characteristics.txt',
+  #       package = 'EMLassemblyline'
+  #     ),
+  #     colClasses = rep(
+  #       "character",
+  #       max(
+  #         utils::count.fields(
+  #           system.file(
+  #             '/templates/annotation_characteristics.txt',
+  #             package = 'EMLassemblyline'
+  #           ),
+  #           sep = "\t"
+  #         )
+  #       )
+  #     ),
+  #     fill = TRUE,
+  #     blank.lines.skip = TRUE
+  #   )
+  # )
+  
+  #
+  
+  eml <- make_eml(
+    path = paste0(tempdir(), "/pkg_260/metadata_templates"),
+    data.path = paste0(tempdir(), "/pkg_260/data_objects"),
+    eml.path = paste0(tempdir(), "/pkg_260/eml"),
+    dataset.title = "Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015",
+    data.table = c("decomp.csv", "nitrogen.csv"),
+    data.table.name = c("Decomp file name", "Nitrogen file name"),
+    data.table.description = c("Decomposition data description", "Nitrogen data description"),
+    other.entity = c("ancillary_data.zip", "processing_and_analysis.R"),
+    other.entity.name = c("Ancillary data name", "Processing and analysis name"),
+    other.entity.description = c("Ancillary data description", "Processing and analysis description"),
+    temporal.coverage = c('2014-05-01', '2015-10-31'),
+    maintenance.description = 'completed',
+    user.id = "someuserid",
+    user.domain = "LTER",
+    package.id = 'edi.141.1',
+    return.obj = TRUE,
+    write.file = FALSE
+  )
+  
+  # Clean up
+  
+  unlink(
+    paste0(tempdir(), "/pkg_260"), 
+    recursive = TRUE, 
+    force = TRUE
+  )
+  
+  
+  
+})
+

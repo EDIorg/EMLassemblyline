@@ -1,114 +1,117 @@
-#' Create annotations template
+#' Create the annotations template
 #'
 #' @description  
-#'     Use this function to extract annotatable elements from completed 
-#'     metadata templates.
-#'     \href{https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html}{Instructions for editing this template.}
+#'     Annotate your metadata with terms from an ontology. Run this function 
+#'     after all your metadata templates are complete
 #'
 #' @usage 
 #'     template_annotations(
 #'       path,
-#'       write.file = TRUE,
-#'       x = NULL
+#'       data.path = path,
+#'       data.table = NULL,
+#'       other.entity = NULL
 #'     )
 #'
 #' @param path 
-#'     (character) Path to the metadata template directory.
-#' @param write.file
-#'     (logical; optional) Whether to write the template file.
-#' @param x
-#'     (named list; optional) Alternative input to 
-#'     \code{template_annotations()}. Use \code{template_arguments()} 
-#'     to create \code{x}.
+#'     (character) Path to the metadata template directory and where 
+#'     annotations.txt will be written.
+#' @param data.path
+#'     (character; optional) Path to the data directory. Defaults to 
+#'     \code{path}.
+#' @param data.table
+#'     (character; optional) Table name. If more than one, then supply as a 
+#'     vector of character strings (e.g. 
+#'     \code{data.table = c('nitrogen.csv', 'decomp.csv')}).
+#' @param other.entity
+#'     (character; optional) Other entity name. If more than one, then supply 
+#'     as a vector of character strings (e.g. 
+#'     \code{other.entity = c('maps.zip', 'analysis_script.R')}).
 #'
 #' @return 
-#'     \strong{annotations.txt} The tab delimited annotations template. This 
-#'     file is written to \code{path} unless using \code{x}, in which case the 
-#'     template is added to \strong{/x/templates/annotations.txt}.
+#'     \strong{annotations.txt} The tab delimited annotations template.
 #'     
 #' @details 
-#'     An existing annotations template will not be overwritten by subsequent 
-#'     calls to \code{template_annotations()}.
+#'     This function extracts annotatable metadata from the template files
+#'     and assigns default annotations for the predicate labels and URIs. The 
+#'     user manually assigns the object labels and URIs.
+#'     
+#'     \code{data.table} and \code{other.entity} are added to annotations.txt 
+#'     and assigned UUIDs.
+#'     
+#'     Unique persons within personnel.txt are added to annotations.txt and 
+#'     assigned UUIDs, which are also added to the \code{id} field of 
+#'     personnel.txt.
 #'     
 #' @examples 
-#' # Initialize data package directory for template_annotations()
+#' # Add completed metadata templates to a temporary directory
 #' file.copy(
-#'  from = system.file('/examples/pkg_260', package = 'EMLassemblyline'),
+#'  from = system.file("/examples/pkg_260/metadata_templates", package = "EMLassemblyline"),
 #'  to = tempdir(),
 #'  recursive = TRUE
 #' )
+#' unlink("./metadata_templates/annotations.txt", force = TRUE)
+#' setwd(paste0(tempdir(), "/metadata_templates"))
 #' 
-#' # Set working directory
-#' setwd(paste0(tempdir(), '/pkg_260'))
-#' 
-#' # View directory contents (NOTE: annotations.txt dosn't exist)
-#' dir('./metadata_templates')
-#' 
-#' # Template annotations
+#' # Create the annotations template
 #' template_annotations(
-#'   path = './metadata_templates'
+#'   path = "."
 #' )
 #' 
-#' # View directory contents (NOTE: annotations.txt exists)
-#' dir('./metadata_templates')
+#' # View directory contents
+#' dir(".")
 #' 
 #' # View template contents
-#' df <- data.table::fread(./metadata_templates/annotations.txt)
+#' df <- data.table::fread("./annotations.txt")
 #' df
 #' 
-#' # Rerunning template_annotations() does not overwrite files
-#' template_annotations(
-#'   path = './metadata_templates'
-#' )
-#' 
-#' # Clean up
-#' unlink('.', recursive = TRUE)
+#' # Remove the temporary directory
+#' setwd(tempdir())
+#' unlink("./metadata_templates", recursive = TRUE, force = TRUE)
 #'     
 #' @export     
 #'     
 
 template_annotations <- function(
   path,
-  write.file = TRUE,
-  x = NULL) {
-  
-  message('Templating annotations ...')
+  data.path = path,
+  data.table = NULL,
+  other.entity = NULL) {
   
   # Validate arguments --------------------------------------------------------
   
-  # Validate path usage before passing arguments to validate_arguments()
-  # When not using x, inputs are expected from path and data.path. When using x, 
-  # only data.path is required.
-  if (is.null(x) & missing(path)){
-    stop('Input argument "path" is missing.')
-  } else if (!is.null(x) & missing(path)){
-    path <- NULL
-    if (missing(data.path)){
-      data.path <- NULL
-    }
-  }
-  
-  # Pass remaining arguments to validate_arguments()
   validate_arguments(
     fun.name = 'template_annotations',
     fun.args = as.list(environment())
   )
   
-  # Read metadata templates and data ------------------------------------------
-  # Create x if it doesn't exist and indicate it has been created (i.e. 
-  # "data_read_2_x <- TRUE").
+  message('Templating annotations ...')
   
-  if (is.null(x)) {
-    x <- template_arguments(path = path)
-    x <- x$x
-    data_read_2_x <- TRUE
+  # Read metadata templates ---------------------------------------------------
+  
+  x <- template_arguments(
+    path = path, 
+    data.path = data.path,
+    data.table = data.table,
+    other.entity = other.entity
+  )$x
+  
+  # Stop if annotations.txt already exists
+  
+  if (any(names(x$template) == "annotations.txt")) {
+    stop(
+      paste0(
+        "annotations.txt already exists. To create a new annotations ",
+        "template, remove this one from 'path'."
+      ), 
+      call. = FALSE
+    )
   }
   
-  # Parameterize --------------------------------------------------------------
+  # Set parameters ------------------------------------------------------------
   
-  # Load annotation search parameters
+  # Load default annotation definitions
   
-  attr_anno <- as.data.frame(
+  defs <- as.data.frame(
     data.table::fread(
       file = system.file(
         '/templates/annotation_characteristics.txt',
@@ -131,7 +134,7 @@ template_annotations <- function(
     )
   )
   
-  # Initialize annotations.txt
+  # Initialize the annotations.txt data frame
   
   anno <- as.data.frame(
     data.table::fread(
@@ -156,162 +159,163 @@ template_annotations <- function(
     )
   )
   
-  # Set default annotations ---------------------------------------------------
-
-  # dataset
+  # Gather subjects and annotate ----------------------------------------------
   
-  e <- "dataset"
-  use_i <- attr_anno$element == e
-  anno <- rbind(
-    anno,
-    c(
-      id = uuid::UUIDgenerate(use.time = TRUE),
-      dplyr::select(attr_anno, -"r_list_path")[use_i, ]
-    )
-  )
-
-  # entities
-  
-  collect_entity <- function(element) {
-    use_i <- x$template$attributes_dataset.txt$content$element == element
-    if (any(use_i)) {
-      rbind(
-        anno,
-        suppressWarnings(
-          data.frame(
-            id = x$template$attributes_dataset.txt$content$id[use_i],
-            dplyr::select(attr_anno, "element", "context")[attr_anno$element == element, ],
-            value = x$template$attributes_dataset.txt$content$value[use_i],
-            dplyr::select(attr_anno, -"r_list_path", -"element", -"context", -"value")[attr_anno$element == element, ],
-            stringsAsFactors = FALSE
-          )
+  annotate_element <- function(element) {
+    
+    # Gather subjects
+    
+    if (element == "dataset") {
+      s <- "dataset"
+    } else if (element == "dataTable") {
+      s <- data.table
+    } else if (element == "otherEntity") {
+      s <- other.entity
+    } else if (element == "attribute") {
+      s <- unlist(
+        lapply(
+          names(x$template)[
+            stringr::str_detect(
+              names(x$template), 
+              "attributes_(?!dataset).*.txt")
+            ],
+          function(k) {
+            x$template[[k]]$content$attributeName
+          }
         )
       )
-    } else {
-      anno
-    }
-  }
-  
-  anno <- collect_entity("dataTable")
-  anno <- collect_entity("otherEntity")
-  anno <- collect_entity("spatialRaster")
-  anno <- collect_entity("spatialVector")
-  
-  # attributes
-  
-  collect_attributes <- function(element) {
-    use_i <- x$template$attributes_dataset.txt$content$element == element
-    if (any(use_i)) {
-      f <- names(x$template)[
-        stringr::str_detect(names(x$template), "attributes_[^dataset].*.txt")
-      ]
-      for (i in f) {
-        anno <- rbind(
-          anno,
-          suppressWarnings(
-            data.frame(
-              id = x$template[[i]]$content$id,
-              element = dplyr::select(attr_anno, "element")[attr_anno$element == "attribute", ],
-              context = i,
-              value = x$template[[i]]$content$attributeName,
-              dplyr::select(attr_anno, -"r_list_path", -"element", -"context", -"value")[attr_anno$element == "attribute", ],
-              stringsAsFactors = FALSE
-            )
-          )
-        )
-      }
-      anno
-    } else {
-      anno
-    }
-  }
-  
-  anno <- collect_attributes("dataTable")
-  
-  # units
-  
-  collect_units <- function(element) {
-    use_i <- x$template$attributes_dataset.txt$content$element == element
-    if (any(use_i)) {
-      f <- names(x$template)[
-        stringr::str_detect(names(x$template), "attributes_[^dataset].*.txt")
-      ]
-      for (i in f) {
-        anno <- rbind(
-          anno,
-          suppressWarnings(
-            data.frame(
-              id = x$template[[i]]$content$id,
-              element = dplyr::select(attr_anno, "element")[attr_anno$element == "unit", ],
-              context = i,
-              value = x$template[[i]]$content$attributeName,
-              dplyr::select(attr_anno, -"r_list_path", -"element", -"context", -"value")[attr_anno$element == "unit", ],
-              stringsAsFactors = FALSE
-            )
-          )
-        )
-      }
-      anno
-    } else {
-      anno
-    }
-  }
-  
-  anno <- collect_units("dataTable")
-  
-  # individualName
-  # Assign a UUID to each unique individual within annotations.txt and 
-  # personnel.txt.
-  
-  collect_persons <- function(element) {
-    if (nrow(x$template$personnel.txt$content) != 0) {
-      p <- unique(
+    } else if (element == "unit") {
+      s <- anno$subject[anno$element == "attribute"]
+    } else if (element == "individualName") {
+      s <- unique(
         paste(
           x$template$personnel.txt$content$givenName,
           x$template$personnel.txt$content$middleInitial,
           x$template$personnel.txt$content$surName
         )
       )
-      rbind(
-        anno,
-        suppressWarnings(
-          data.frame(
-            id = replicate(
-              n = length(p),
-              expr = uuid::UUIDgenerate(use.time = TRUE)
-            ),
-            dplyr::select(attr_anno, "element", "context")[attr_anno$element == element, ],
-            value = p,
-            dplyr::select(attr_anno, -"r_list_path", -"element", -"context", -"value")[attr_anno$element == element, ],
-            stringsAsFactors = FALSE
-          )
+    } else if (element == "organizationName") {
+      s <- anno$subject[anno$element == "individualName"]
+    }
+    
+    # Add context and default annotations from annotation_characteristics.txt
+    
+    df <- suppressWarnings(
+      data.frame(
+        id = replicate(
+          n = length(s),
+          expr = uuid::UUIDgenerate(use.time = TRUE)
+        ),
+        dplyr::select(
+          defs[match(element, defs$element), ],
+          "element",
+          "context"
+        ),
+        subject = s,
+        dplyr::select(
+          defs[match(element, defs$element), ],
+          -"element",
+          -"context",
+          -"subject",
+          -"r_list_path"
+        ),
+        stringsAsFactors = FALSE
+      )
+    )
+    
+    # Update IDs and context (some context is defined by metadata values)
+    
+    if (element == "attribute") {
+      
+      df$id <- unlist(
+        lapply(
+          names(x$template)[
+            stringr::str_detect(
+              names(x$template), 
+              "attributes_(?!dataset).*.txt"
+            )
+          ],
+          function(k) {
+            x$template[[k]]$content$id
+          }
         )
       )
-    } else {
-      anno
+      
+      df$context <- unlist(
+        mapply(
+          function(i, j) {
+            rep(j, length(x$template[[i]]$content$attributeName))
+          },
+          i = names(x$template)[
+            stringr::str_detect(
+              names(x$template), 
+              "attributes_(?!dataset).*.txt"
+            )
+          ],
+          j = names(x$data.table),
+          USE.NAMES = FALSE
+        )
+      )
+      
+    } else if (element == "unit") {
+      
+      df$id <- anno$id[anno$element == "attribute"]
+      df$context <- anno$context[anno$element == "attribute"]
+      
+    } else if (element == "individualName") {
+      
+      use_i <- match(
+        paste(
+          x$template$personnel.txt$content$givenName,
+          x$template$personnel.txt$content$middleInitial,
+          x$template$personnel.txt$content$surName
+        ),
+        df$subject
+      )
+      x$template$personnel.txt$content$id <- df$id[use_i]
+      
+      data.table::fwrite(
+        x = x$template$personnel.txt$content,
+        file = paste0(path, '/personnel.txt'),
+        sep = "\t",
+        quote = FALSE
+      )
+      
+    } else if (element == "organizationName") {
+      
+      df$id <- anno$id[anno$element == "individualName"]
+      
     }
+    
+    # Return object
+    
+    rbind(anno, df)
+    
   }
   
-  anno <- collect_persons("individualName")
-  
-  # Add IDs to personnel.txt
-  
-  # FIXME: Sort anno so attribute description and unit are listed together
+  anno <- annotate_element("dataset")
+  if (!is.null(data.table)) {
+    anno <- annotate_element("dataTable")
+    anno <- annotate_element("attribute")
+    anno <- annotate_element("unit")
+  }
+  if (!is.null(other.entity)) {
+    anno <- annotate_element("otherEntity")
+  }
+  if (nrow(x$template$personnel.txt$content) != 0) {
+    anno <- annotate_element("individualName")
+    anno <- annotate_element("organizationName")
+  }
   
   # Write annotations.txt -----------------------------------------------------
 
-  # Return --------------------------------------------------------------------
-  
-  if ((!isTRUE(write.file)) & is.null(x)){
-    message('No templates were written to file (write.file = FALSE).')
-  }
+  data.table::fwrite(
+    x = anno,
+    file = paste0(path, '/annotations.txt'),
+    sep = "\t",
+    quote = FALSE
+  )
   
   message("Done.")
   
-  if (!exists('data_read_2_x')){
-    return(x)
-  }
-  
 }
-
-

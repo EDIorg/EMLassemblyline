@@ -172,7 +172,7 @@ testthat::test_that('Template inputs (.txt)', {
   
   # Level-3 has all template possiblities
   
-  for (i in 1:length(attr_templates$regexpr)){
+  for (i in 1:length(attr_templates$regexpr)) {
     
     expect_equal(
       any(
