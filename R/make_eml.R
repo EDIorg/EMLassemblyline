@@ -1701,106 +1701,170 @@ make_eml <- function(
     
     message('  <annotations>')
     
-    # Replace blank cells with NAs
-    # Remove incomplete cases
+    # Replace blank cells with NAs and remove incomplete cases to make 
+    # annotations data easier to use
+    
     anno <- x$template$annotations.txt$content
     anno[anno == ""] <- NA_character_
     anno <- anno[complete.cases(anno), ]
     
-    # Convert annotations into a named list structure expected by the EML library and grouped under the object ID
-    annols <- lapply(
-      anno$id,
+    # Convert annotations into the list structure expected by EML:: and 
+    # assign each item it's corresponding UUID so it can be referenced by it
+    
+    anno_ls <- lapply(
+      seq(length(anno$id)),
       function(k) {
         list(
           propertyURI = list(
-            anno$predicate_uri[anno$id == k],
-            label = anno$predicate_label[anno$id == k]
+            anno$predicate_uri[k],
+            label = anno$predicate_label[k]
           ),
           valueURI = list(
-            anno$object_uri[anno$id == k],
-            label = anno$object_label[anno$id == k]
+            anno$object_uri[k],
+            label = anno$object_label[k]
           )
         )
       }
     )
-    names(annols) <- anno$id
-    
-    browser()
-    
-    # Get indicies of dataTable, otherEntity, attribute, and individualName within the eml list
-    # Use indicies to assign values
-    
-    # Match annotations to their objects
-    uid <- unique(anno$id)
-    for (i in 1:length(uid)) {
-      
-      use_i <- anno$id == uid[i]
-      elm_i <- unique(anno[use_i, "element"])
-      sub_i <- unique(anno[use_i, "subject"])
-      
-      if (elm_i == "dataset") {
-        
-        dataset$id <- uid[i]
-        dataset$annotation <- unname(annols[names(annols) == uid[i]])
-        
-      } else if (elm_i == "dataTable") {
-        
-        ls_i <- sub_i == unlist(
-          lapply(
-            seq(length(dataset$dataTable)),
-            function(k) {
-              dataset$dataTable[[k]]$physical$objectName
-            }
-          )
-        )
-        dataset$dataTable[[seq(length(ls_i))[ls_i]]]$id <- uid[i]
-        dataset$dataTable[[seq(length(ls_i))[ls_i]]]$annotation <- unname(annols[names(annols) == uid[i]])
-        
-      } else if (any(stringr::str_detect(elm_i,"attribute|unit"))) {
-        
-        ls_i <- anno$context[use_i] == unlist(
-          lapply(
-            seq(length(dataset$dataTable)),
-            function(k) {
-              dataset$dataTable[[k]]$physical$objectName
-            }
-          )
-        )
-        dataset$dataTable[[1]]$attributeList$attribute[[1]]$attributeName
-        dataset$dataTable[[seq(length(ls_i))[ls_i]]]$id <- uid[i]
-        dataset$dataTable[[seq(length(ls_i))[ls_i]]]$annotation <- unname(annols[names(annols) == uid[i]])
-        
-      } 
+    names(anno_ls) <- anno$id
 
-      
+    # Match subjects to their annotations. Target EML sub-trees where the 
+    # subjects occur, extract their values and, when not unique, their context,
+    # then use these as keys to annotations.txt from which UUIDs and predicate
+    # + object metadata is retrieved.
+    
+    uid <- unique(anno$id)
+    
+    if (!is.null(dataset)) {
+      sub_i <- "dataset"
+      dataset$id <- anno$id[anno$subject == sub_i]
+      dataset$annotation <- unname(anno_ls[anno$subject == sub_i])
     }
     
-    annotate_element <- function(element, destination) {
-      # Get unique IDs for an element
-      uid <- unique(
-        anno[(anno$element == element), ]$id
-      )
-      # For each unique ID ...
-      # Create a list of all annotations for that ID (because there can be more than one)
-      test <- lapply(
-        uid,
+    # FIXME: Create single function for entity and attribute
+    if (!is.null(dataset$dataTable)) {
+      dataset$dataTable <- lapply(
+        dataset$dataTable,
         function(k) {
-          
-          list(
-            propertyURI = list(
-              anno$predicate_uri[anno$id == k],
-              label = anno$predicate_label[anno$id == k]
-            ),
-            valueURI = list(
-              anno$object_uri[anno$id == k],
-              label = anno$object_label[anno$id == k]
-            )
-          )
+          sub_i <- k$physical$objectName
+          if (sub_i != "") {
+            k$id <- unique(anno$id[anno$subject == sub_i])
+            k$annotation <- unname(anno_ls[anno$subject == sub_i])
+          }
+          k
         }
       )
     }
-    annotate_element("dataTable", "dataset$id")
     
+    if (!is.null(dataset$dataTable)) {
+      dataset$dataTable <- lapply(
+        dataset$dataTable,
+        function(k) {
+          con_i <- k$physical$objectName
+          k$attributeList$attribute <- lapply(
+            k$attributeList$attribute,
+            function(m) {
+              sub_i <- m$attributeName
+              use_i <- (anno$subject == sub_i) & (anno$context == con_i)
+              m$id <- unique(anno$id[use_i])
+              m$annotation <- unname(anno_ls[use_i])
+              m
+            }
+          )
+          k
+        }
+      )
+    }
+
+    if (!is.null(dataset$otherEntity)) {
+      dataset$otherEntity <- lapply(
+        dataset$otherEntity,
+        function(k) {
+          sub_i <- k$physical$objectName
+          if (sub_i != "") {
+            k$id <- unique(anno$id[anno$subject == sub_i])
+            k$annotation <- unname(anno_ls[anno$subject == sub_i])
+          }
+          k
+        }
+      )
+    }
+
+    # FIXME: Create single function for individualName
+    if (!is.null(dataset$creator)) {
+      dataset$creator <- lapply(
+        dataset$creator,
+        function(k) {
+          sub_i <- paste(unlist(k$individualName), collapse = " ")
+          if (sub_i != "") {
+            k$id <- unique(anno$id[anno$subject == sub_i]) 
+          }
+          k
+        }
+      )
+    }
+    
+    if (!is.null(dataset$contact)) {
+      dataset$contact <- lapply(
+        dataset$contact,
+        function(k) {
+          sub_i <- paste(unlist(k$individualName), collapse = " ")
+          if (sub_i != "") {
+            k$id <- unique(anno$id[anno$subject == sub_i]) 
+          }
+          k
+        }
+      )
+    }
+    
+    if (!is.null(dataset$associatedParty)) {
+      dataset$associatedParty <- lapply(
+        dataset$associatedParty,
+        function(k) {
+          sub_i <- paste(unlist(k$individualName), collapse = " ")
+          if (sub_i != "") {
+            k$id <- unique(anno$id[anno$subject == sub_i]) 
+          }
+          k
+        }
+      )
+    }
+    
+    if (!is.null(dataset$project$personnel)) {
+      dataset$project$personnel <- lapply(
+        dataset$project$personnel,
+        function(k) {
+          sub_i <- paste(unlist(k$individualName), collapse = " ")
+          if (sub_i != "") {
+            k$id <- unique(anno$id[anno$subject == sub_i]) 
+          }
+          k
+        }
+      )
+    }
+    
+    if (!is.null(dataset$project$relatedProject)) {
+      dataset$project$relatedProject <- lapply(
+        dataset$project$relatedProject,
+        function(k) {
+          k$personnel <- lapply(
+            k$personnel,
+            function(m) {
+              sub_i <- paste(unlist(m$individualName), collapse = " ")
+              if (sub_i != "") {
+                m$id <- unique(anno$id[anno$subject == sub_i]) 
+              }
+              m
+            }
+          )
+          k
+        }
+      )
+    }
+    
+    # Add all element IDs and annotations to /eml/dataset/annotations
+    dataset$annotations <- somevalue
+
   }
 
   # Compile nodes -------------------------------------------------------------

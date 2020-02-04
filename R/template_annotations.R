@@ -307,8 +307,14 @@ template_annotations <- function(
     anno <- annotate_element("organizationName")
   }
   
+  # Remove double white spaces introduced when collapsing individualName so 
+  # downstream matching isn't affected
+  
+  anno$subject <- trimws(anno$subject)
+  anno$subject <- stringr::str_replace(anno$subject, "[:blank:]{2,}", " ")
+  
   # Write annotations.txt -----------------------------------------------------
-
+  
   data.table::fwrite(
     x = anno,
     file = paste0(path, '/annotations.txt'),

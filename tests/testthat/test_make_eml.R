@@ -2104,7 +2104,7 @@ testthat::test_that('annotations', {
     force = TRUE
   )
   
-  dir(paste0(tempdir(), "/pkg_260/metadata_templates"))
+  # dir(paste0(tempdir(), "/pkg_260/metadata_templates"))
 
   # defs <- as.data.frame(
   #   data.table::fread(

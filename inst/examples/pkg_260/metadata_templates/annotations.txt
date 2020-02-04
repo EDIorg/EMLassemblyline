@@ -42,35 +42,35 @@ c618d422-4512-11ea-9006-07d08fff2d29	otherEntity	dataset	ancillary_data.zip	is a
 c618d423-4512-11ea-9006-07d08fff2d29	otherEntity	dataset	processing_and_analysis.R	is about	http://purl.obolibrary.org/obo/IAO_0000136	placeholder	placeholder
 c61a35ba-4512-11ea-9006-07d08fff2d29	individualName	dataset	Kelman R Wieder	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
 c61a35bb-4512-11ea-9006-07d08fff2d29	individualName	dataset	Melanie A Vile	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
-c61a35bc-4512-11ea-9006-07d08fff2d29	individualName	dataset	Joe  Smith	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
-c61a35bd-4512-11ea-9006-07d08fff2d29	individualName	dataset	Chase  Gacho	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
-c61a35be-4512-11ea-9006-07d08fff2d29	individualName	dataset	Information manager  	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
-c61a35bf-4512-11ea-9006-07d08fff2d29	individualName	dataset	Organization lead  	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+c61a35bc-4512-11ea-9006-07d08fff2d29	individualName	dataset	Joe Smith	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+c61a35bd-4512-11ea-9006-07d08fff2d29	individualName	dataset	Chase Gacho	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+c61a35be-4512-11ea-9006-07d08fff2d29	individualName	dataset	Information manager	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+c61a35bf-4512-11ea-9006-07d08fff2d29	individualName	dataset	Organization lead	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
 c61a35c0-4512-11ea-9006-07d08fff2d29	individualName	dataset	Dale H Vitt	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
 c61a35c1-4512-11ea-9006-07d08fff2d29	individualName	dataset	Jeremy A Graham	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
 c61a35c2-4512-11ea-9006-07d08fff2d29	individualName	dataset	Jeremy A Hartsock	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
-c61a35c3-4512-11ea-9006-07d08fff2d29	individualName	dataset	Hope  Fillingim	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
-c61a35c4-4512-11ea-9006-07d08fff2d29	individualName	dataset	Melissa  House	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+c61a35c3-4512-11ea-9006-07d08fff2d29	individualName	dataset	Hope Fillingim	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+c61a35c4-4512-11ea-9006-07d08fff2d29	individualName	dataset	Melissa House	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
 c61a5ce8-4512-11ea-9006-07d08fff2d29	individualName	dataset	James C Quinn	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
 c61a5ce9-4512-11ea-9006-07d08fff2d29	individualName	dataset	Kimberli D Scott	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
-c61a5cea-4512-11ea-9006-07d08fff2d29	individualName	dataset	Meaghan  Petix	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+c61a5cea-4512-11ea-9006-07d08fff2d29	individualName	dataset	Meaghan Petix	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
 c61a5ceb-4512-11ea-9006-07d08fff2d29	individualName	dataset	Kelly J McMillen	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
-c61a5cec-4512-11ea-9006-07d08fff2d29	individualName	dataset	  	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
-c61a5ced-4512-11ea-9006-07d08fff2d29	individualName	dataset	Jane  Doe	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+c61a5cec-4512-11ea-9006-07d08fff2d29	individualName	dataset		is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+c61a5ced-4512-11ea-9006-07d08fff2d29	individualName	dataset	Jane Doe	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
 c61a35ba-4512-11ea-9006-07d08fff2d29	organizationName	individualName	Kelman R Wieder	member of	https://schema.org/memberOf	placeholder	placeholder
 c61a35bb-4512-11ea-9006-07d08fff2d29	organizationName	individualName	Melanie A Vile	member of	https://schema.org/memberOf	placeholder	placeholder
-c61a35bc-4512-11ea-9006-07d08fff2d29	organizationName	individualName	Joe  Smith	member of	https://schema.org/memberOf	placeholder	placeholder
-c61a35bd-4512-11ea-9006-07d08fff2d29	organizationName	individualName	Chase  Gacho	member of	https://schema.org/memberOf	placeholder	placeholder
-c61a35be-4512-11ea-9006-07d08fff2d29	organizationName	individualName	Information manager  	member of	https://schema.org/memberOf	placeholder	placeholder
-c61a35bf-4512-11ea-9006-07d08fff2d29	organizationName	individualName	Organization lead  	member of	https://schema.org/memberOf	placeholder	placeholder
+c61a35bc-4512-11ea-9006-07d08fff2d29	organizationName	individualName	Joe Smith	member of	https://schema.org/memberOf	placeholder	placeholder
+c61a35bd-4512-11ea-9006-07d08fff2d29	organizationName	individualName	Chase Gacho	member of	https://schema.org/memberOf	placeholder	placeholder
+c61a35be-4512-11ea-9006-07d08fff2d29	organizationName	individualName	Information manager	member of	https://schema.org/memberOf	placeholder	placeholder
+c61a35bf-4512-11ea-9006-07d08fff2d29	organizationName	individualName	Organization lead	member of	https://schema.org/memberOf	placeholder	placeholder
 c61a35c0-4512-11ea-9006-07d08fff2d29	organizationName	individualName	Dale H Vitt	member of	https://schema.org/memberOf	placeholder	placeholder
 c61a35c1-4512-11ea-9006-07d08fff2d29	organizationName	individualName	Jeremy A Graham	member of	https://schema.org/memberOf	placeholder	placeholder
 c61a35c2-4512-11ea-9006-07d08fff2d29	organizationName	individualName	Jeremy A Hartsock	member of	https://schema.org/memberOf	placeholder	placeholder
-c61a35c3-4512-11ea-9006-07d08fff2d29	organizationName	individualName	Hope  Fillingim	member of	https://schema.org/memberOf	placeholder	placeholder
-c61a35c4-4512-11ea-9006-07d08fff2d29	organizationName	individualName	Melissa  House	member of	https://schema.org/memberOf	placeholder	placeholder
+c61a35c3-4512-11ea-9006-07d08fff2d29	organizationName	individualName	Hope Fillingim	member of	https://schema.org/memberOf	placeholder	placeholder
+c61a35c4-4512-11ea-9006-07d08fff2d29	organizationName	individualName	Melissa House	member of	https://schema.org/memberOf	placeholder	placeholder
 c61a5ce8-4512-11ea-9006-07d08fff2d29	organizationName	individualName	James C Quinn	member of	https://schema.org/memberOf	placeholder	placeholder
 c61a5ce9-4512-11ea-9006-07d08fff2d29	organizationName	individualName	Kimberli D Scott	member of	https://schema.org/memberOf	placeholder	placeholder
-c61a5cea-4512-11ea-9006-07d08fff2d29	organizationName	individualName	Meaghan  Petix	member of	https://schema.org/memberOf	placeholder	placeholder
+c61a5cea-4512-11ea-9006-07d08fff2d29	organizationName	individualName	Meaghan Petix	member of	https://schema.org/memberOf	placeholder	placeholder
 c61a5ceb-4512-11ea-9006-07d08fff2d29	organizationName	individualName	Kelly J McMillen	member of	https://schema.org/memberOf	placeholder	placeholder
-c61a5cec-4512-11ea-9006-07d08fff2d29	organizationName	individualName	  	member of	https://schema.org/memberOf	placeholder	placeholder
-c61a5ced-4512-11ea-9006-07d08fff2d29	organizationName	individualName	Jane  Doe	member of	https://schema.org/memberOf	placeholder	placeholder
+c61a5cec-4512-11ea-9006-07d08fff2d29	organizationName	individualName		member of	https://schema.org/memberOf	placeholder	placeholder
+c61a5ced-4512-11ea-9006-07d08fff2d29	organizationName	individualName	Jane Doe	member of	https://schema.org/memberOf	placeholder	placeholder

@@ -8,7 +8,7 @@ testthat::test_that("annotations.txt characteristics", {
   
   file.copy(
     from = system.file(
-      "/examples/pkg_260/metadata_templates", 
+      "/examples/pkg_260", 
       package = "EMLassemblyline"
     ),
     to = tempdir(),
@@ -16,12 +16,15 @@ testthat::test_that("annotations.txt characteristics", {
   )
   
   unlink(
-    paste0(tempdir(), "/metadata_templates/annotations.txt"),
+    paste0(tempdir(), "/pkg_260/metadata_templates/annotations.txt"),
     force = TRUE
   )
   
   template_annotations(
-    path = paste0(tempdir(), "/metadata_templates")
+    path = paste0(tempdir(), "/pkg_260/metadata_templates"),
+    data.path = paste0(tempdir(), "/pkg_260/data_objects"),
+    data.table = c("nitrogen.csv", "decomp.csv"),
+    other.entity = c("ancillary_data.zip", "processing_and_analysis.R")
   )
   
   df <- data.table::fread(
