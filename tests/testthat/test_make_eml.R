@@ -2104,32 +2104,7 @@ testthat::test_that('annotations', {
     force = TRUE
   )
   
-  # dir(paste0(tempdir(), "/pkg_260/metadata_templates"))
-
-  # defs <- as.data.frame(
-  #   data.table::fread(
-  #     file = system.file(
-  #       '/templates/annotation_characteristics.txt',
-  #       package = 'EMLassemblyline'
-  #     ),
-  #     colClasses = rep(
-  #       "character",
-  #       max(
-  #         utils::count.fields(
-  #           system.file(
-  #             '/templates/annotation_characteristics.txt',
-  #             package = 'EMLassemblyline'
-  #           ),
-  #           sep = "\t"
-  #         )
-  #       )
-  #     ),
-  #     fill = TRUE,
-  #     blank.lines.skip = TRUE
-  #   )
-  # )
-  
-  #
+  # Call make_eml() with a completed annotations.txt template
   
   eml <- make_eml(
     path = paste0(tempdir(), "/pkg_260/metadata_templates"),
@@ -2149,6 +2124,12 @@ testthat::test_that('annotations', {
     package.id = 'edi.141.1',
     return.obj = TRUE,
     write.file = FALSE
+  )
+  
+  # EML is schema valid
+  
+  expect_true(
+    EML::eml_validate(eml)
   )
   
   # Clean up

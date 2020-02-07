@@ -28,7 +28,7 @@ testthat::test_that("annotations.txt characteristics", {
   )
   
   df <- data.table::fread(
-    paste0(tempdir(), "/metadata_templates/annotations.txt")
+    paste0(tempdir(), "/pkg_260/metadata_templates/annotations.txt")
   )
   
   # Test for expected characteristics

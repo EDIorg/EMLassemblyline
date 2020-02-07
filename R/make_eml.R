@@ -1731,9 +1731,7 @@ make_eml <- function(
     # Match subjects to their annotations. Target EML sub-trees where the 
     # subjects occur, extract their values and, when not unique, their context,
     # then use these as keys to annotations.txt from which UUIDs and predicate
-    # + object metadata is retrieved.
-    
-    uid <- unique(anno$id)
+    # + object metadata is retrieved and assigned.
     
     if (!is.null(dataset)) {
       sub_i <- "dataset"
@@ -1790,80 +1788,92 @@ make_eml <- function(
       )
     }
 
-    # FIXME: Create single function for individualName
-    if (!is.null(dataset$creator)) {
-      dataset$creator <- lapply(
-        dataset$creator,
-        function(k) {
-          sub_i <- paste(unlist(k$individualName), collapse = " ")
-          if (sub_i != "") {
-            k$id <- unique(anno$id[anno$subject == sub_i]) 
-          }
-          k
-        }
-      )
-    }
+    # FIXME: A WIP for annotating persons
+    # Use the individualName as a key to EML and assign each corresponding 
+    # creator, contact, associatedParty, and project personnel sub-tree a new 
+    # UUID that differs from the one listed in annotations.txt. The id in 
+    # annotations.txt is a key to information within annotations.txt and other
+    # EMLassemblyline templates. While this approach suffers from non-explicit
+    # definition, it bypasses the need to define redundant information.
+    #
+    # FIXME: Additional logic looking for the individualName before assigning
+    # ids etc. is required to allow the use case where a person exists in the 
+    # EML but no annotations are supplied. This issue is the same for other 
+    # annotatable elements and should be addressed therein.
+    # 
+    # if (!is.null(dataset$creator)) {
+    #   dataset$creator <- lapply(
+    #     dataset$creator,
+    #     function(k) {
+    #       browser()
+    #       sub_i <- paste(unlist(k$individualName), collapse = " ")
+    #       if (sub_i != "") {
+    #         k$id <- unique(anno$id[anno$subject == sub_i])
+    #       }
+    #       k
+    #     }
+    #   )
+    # }
+    # 
+    # if (!is.null(dataset$contact)) {
+    #   dataset$contact <- lapply(
+    #     dataset$contact,
+    #     function(k) {
+    #       sub_i <- paste(unlist(k$individualName), collapse = " ")
+    #       if (sub_i != "") {
+    #         k$id <- unique(anno$id[anno$subject == sub_i]) 
+    #       }
+    #       k
+    #     }
+    #   )
+    # }
+    # 
+    # if (!is.null(dataset$associatedParty)) {
+    #   dataset$associatedParty <- lapply(
+    #     dataset$associatedParty,
+    #     function(k) {
+    #       sub_i <- paste(unlist(k$individualName), collapse = " ")
+    #       if (sub_i != "") {
+    #         k$id <- unique(anno$id[anno$subject == sub_i]) 
+    #       }
+    #       k
+    #     }
+    #   )
+    # }
+    # 
+    # if (!is.null(dataset$project$personnel)) {
+    #   dataset$project$personnel <- lapply(
+    #     dataset$project$personnel,
+    #     function(k) {
+    #       sub_i <- paste(unlist(k$individualName), collapse = " ")
+    #       if (sub_i != "") {
+    #         k$id <- unique(anno$id[anno$subject == sub_i]) 
+    #       }
+    #       k
+    #     }
+    #   )
+    # }
+    # 
+    # if (!is.null(dataset$project$relatedProject)) {
+    #   dataset$project$relatedProject <- lapply(
+    #     dataset$project$relatedProject,
+    #     function(k) {
+    #       k$personnel <- lapply(
+    #         k$personnel,
+    #         function(m) {
+    #           sub_i <- paste(unlist(m$individualName), collapse = " ")
+    #           if (sub_i != "") {
+    #             m$id <- unique(anno$id[anno$subject == sub_i]) 
+    #           }
+    #           m
+    #         }
+    #       )
+    #       k
+    #     }
+    #   )
+    # }
     
-    if (!is.null(dataset$contact)) {
-      dataset$contact <- lapply(
-        dataset$contact,
-        function(k) {
-          sub_i <- paste(unlist(k$individualName), collapse = " ")
-          if (sub_i != "") {
-            k$id <- unique(anno$id[anno$subject == sub_i]) 
-          }
-          k
-        }
-      )
-    }
-    
-    if (!is.null(dataset$associatedParty)) {
-      dataset$associatedParty <- lapply(
-        dataset$associatedParty,
-        function(k) {
-          sub_i <- paste(unlist(k$individualName), collapse = " ")
-          if (sub_i != "") {
-            k$id <- unique(anno$id[anno$subject == sub_i]) 
-          }
-          k
-        }
-      )
-    }
-    
-    if (!is.null(dataset$project$personnel)) {
-      dataset$project$personnel <- lapply(
-        dataset$project$personnel,
-        function(k) {
-          sub_i <- paste(unlist(k$individualName), collapse = " ")
-          if (sub_i != "") {
-            k$id <- unique(anno$id[anno$subject == sub_i]) 
-          }
-          k
-        }
-      )
-    }
-    
-    if (!is.null(dataset$project$relatedProject)) {
-      dataset$project$relatedProject <- lapply(
-        dataset$project$relatedProject,
-        function(k) {
-          k$personnel <- lapply(
-            k$personnel,
-            function(m) {
-              sub_i <- paste(unlist(m$individualName), collapse = " ")
-              if (sub_i != "") {
-                m$id <- unique(anno$id[anno$subject == sub_i]) 
-              }
-              m
-            }
-          )
-          k
-        }
-      )
-    }
-    
-    # Add all element IDs and annotations to /eml/dataset/annotations
-    dataset$annotations <- somevalue
+    # Add all element IDs and annotations to /eml/dataset/annotations (below)
 
   }
 
@@ -1914,6 +1924,35 @@ make_eml <- function(
     
   }
   
+  # Add all annotations to /eml/dataset/annotations
+  
+  # eml$annotations$annotation <- lapply(
+  #   seq_along(anno_ls),
+  #   function(k) {
+  #     browser()
+  #     o <- anno_ls[[k]]
+  #     o$references <- names(anno_ls)[k]
+  #     o
+  #   }
+  # )
+  
+  # eml$annotations$annotation <- lapply(
+  #   seq_along(anno_ls),
+  #   function(k) {
+  #     list(
+  #       references = names(anno_ls)[k],
+  #       propertyURI = list(
+  #         label = anno_ls[[k]]$propertyURI$label,
+  #         propertyURI = anno_ls[[k]]$propertyURI[[1]]
+  #       ),
+  #       valueURI = list(
+  #         label = anno_ls[[k]]$valueURI$label,
+  #         valueURI = anno_ls[[k]]$valueURI[[1]]
+  #       )
+  #     )
+  #   }
+  # )
+
   message('</eml>')
   
   # Write EML -----------------------------------------------------------------
@@ -1932,23 +1971,23 @@ make_eml <- function(
   }
   
   # Validate EML --------------------------------------------------------------
-  # 
-  # message("Validating EML")
-  # 
-  # validation_result <- EML::eml_validate(eml)
-  # 
-  # if (validation_result == "TRUE"){
-  # 
-  #   message("EML passed validation!")
-  # 
-  # } else {
-  # 
-  #   message("EML validaton failed. See warnings for details.")
-  # 
-  # }
-  # 
-  # message("Done.")
-  # 
+
+  message("Validating EML")
+
+  validation_result <- EML::eml_validate(eml)
+
+  if (validation_result == "TRUE"){
+
+    message("EML passed validation!")
+
+  } else {
+
+    message("EML validaton failed. See warnings for details.")
+
+  }
+
+  message("Done.")
+
   if (isTRUE(return.obj)){
     eml
   }

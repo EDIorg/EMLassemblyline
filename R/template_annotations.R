@@ -186,17 +186,17 @@ template_annotations <- function(
       )
     } else if (element == "unit") {
       s <- anno$subject[anno$element == "attribute"]
-    } else if (element == "individualName") {
-      s <- unique(
-        paste(
-          x$template$personnel.txt$content$givenName,
-          x$template$personnel.txt$content$middleInitial,
-          x$template$personnel.txt$content$surName
-        )
-      )
-    } else if (element == "organizationName") {
-      s <- anno$subject[anno$element == "individualName"]
     }
+    # FIXME: A WIP for annotating persons
+    # else if (element == "individualName") {
+    #   s <- paste(
+    #     x$template$personnel.txt$content$givenName,
+    #     x$template$personnel.txt$content$middleInitial,
+    #     x$template$personnel.txt$content$surName
+    #   )
+    # } else if (element == "organizationName") {
+    #   s <- anno$subject[anno$element == "individualName"]
+    # }
     
     # Add context and default annotations from annotation_characteristics.txt
     
@@ -234,7 +234,7 @@ template_annotations <- function(
               names(x$template), 
               "attributes_(?!dataset).*.txt"
             )
-          ],
+            ],
           function(k) {
             x$template[[k]]$content$id
           }
@@ -242,18 +242,24 @@ template_annotations <- function(
       )
       
       df$context <- unlist(
-        mapply(
-          function(i, j) {
-            rep(j, length(x$template[[i]]$content$attributeName))
-          },
-          i = names(x$template)[
+        lapply(
+          names(x$template)[
             stringr::str_detect(
               names(x$template), 
               "attributes_(?!dataset).*.txt"
             )
-          ],
-          j = names(x$data.table),
-          USE.NAMES = FALSE
+            ],
+          function(k) {
+            rep(
+              names(x$data.table)[
+                stringr::str_detect(
+                  names(x$data.table), 
+                  stringr::str_extract(k, "[^(attributes_)].*[^(.txt)]")
+                )
+              ],
+              length(x$template[[k]]$content$id)
+            )
+          }
         )
       )
       
@@ -262,30 +268,36 @@ template_annotations <- function(
       df$id <- anno$id[anno$element == "attribute"]
       df$context <- anno$context[anno$element == "attribute"]
       
-    } else if (element == "individualName") {
-      
-      use_i <- match(
-        paste(
-          x$template$personnel.txt$content$givenName,
-          x$template$personnel.txt$content$middleInitial,
-          x$template$personnel.txt$content$surName
-        ),
-        df$subject
-      )
-      x$template$personnel.txt$content$id <- df$id[use_i]
-      
-      data.table::fwrite(
-        x = x$template$personnel.txt$content,
-        file = paste0(path, '/personnel.txt'),
-        sep = "\t",
-        quote = FALSE
-      )
-      
-    } else if (element == "organizationName") {
-      
-      df$id <- anno$id[anno$element == "individualName"]
-      
-    }
+    } 
+    
+    # FIXME: A WIP for annotating persons
+    # else if (element == "individualName") {
+    #   
+    #   df$context <- tolower(x$template$personnel.txt$content$role)
+    #   df$context[df$context == "pi"] <- "project"
+    #   df$context[
+    #     (df$context != "project") & 
+    #       (df$context != "creator") & 
+    #       (df$context != "contact")
+    #   ] <- "associatedParty"
+    #   
+    #   
+    #   x$template$personnel.txt$content$id <- df$id
+    #   data.table::fwrite(
+    #     x = x$template$personnel.txt$content,
+    #     file = paste0(path, '/personnel.txt'),
+    #     sep = "\t",
+    #     quote = FALSE
+    #   )
+    #   
+    #   df <- df[trimws(df$subject) != "", ]
+    #   
+    # } else if (element == "organizationName") {
+    #   
+    #   df$context <- anno$context[anno$element == "individualName"]
+    #   df$id <- anno$id[anno$element == "individualName"]
+    #   
+    # }
     
     # Return object
     
@@ -302,16 +314,19 @@ template_annotations <- function(
   if (!is.null(other.entity)) {
     anno <- annotate_element("otherEntity")
   }
-  if (nrow(x$template$personnel.txt$content) != 0) {
-    anno <- annotate_element("individualName")
-    anno <- annotate_element("organizationName")
-  }
+  
+  # FIXME: A WIP for annotating persons
+  # if (nrow(x$template$personnel.txt$content) != 0) {
+  #   anno <- annotate_element("individualName")
+  #   anno <- annotate_element("organizationName")
+  # }
   
   # Remove double white spaces introduced when collapsing individualName so 
   # downstream matching isn't affected
   
-  anno$subject <- trimws(anno$subject)
-  anno$subject <- stringr::str_replace(anno$subject, "[:blank:]{2,}", " ")
+  # FIXME: A WIP for annotating persons
+  # anno$subject <- trimws(anno$subject)
+  # anno$subject <- stringr::str_replace(anno$subject, "[:blank:]{2,}", " ")
   
   # Write annotations.txt -----------------------------------------------------
   

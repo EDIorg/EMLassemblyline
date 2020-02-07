@@ -199,37 +199,38 @@ validate_templates <- function(fun.name, x){
       
       # make_eml() - annotations - individualName -----------------------------
       
-      if (!is.null(x$template$personnel.txt)) {
-        
-        # Missing individualName results in warning
-        
-        if (!any(anno$element == "individualName")) {
-          warning(
-            paste0(
-              "The individualName annotation is missing. Consider adding an ",
-              "annotation that identifies the creator(s) of these data as a ",
-              "person. Add this to annotations.txt."
-            ),
-            call. = FALSE
-          )
-        }
-        
-        # make_eml() - annotations - organizationName -------------------------
-        
-        # Missing organizationName results in warning
-        
-        if (!any(anno$element == "organizationName")) {
-          warning(
-            paste0(
-              "The organizationName annotation is missing. Consider adding ",
-              "an annotation that describes the organization the creator(s) ",
-              " is associated with. Add this to annotations.txt."
-            ),
-            call. = FALSE
-          )
-        }
-        
-      }
+      # FIXME: A WIP for annotating persons
+      # if (!is.null(x$template$personnel.txt)) {
+      #   
+      #   # Missing individualName results in warning
+      #   
+      #   if (!any(anno$element == "individualName")) {
+      #     warning(
+      #       paste0(
+      #         "The individualName annotation is missing. Consider adding an ",
+      #         "annotation that identifies the creator(s) of these data as a ",
+      #         "person. Add this to annotations.txt."
+      #       ),
+      #       call. = FALSE
+      #     )
+      #   }
+      #   
+      #   # make_eml() - annotations - organizationName -------------------------
+      #   
+      #   # Missing organizationName results in warning
+      #   
+      #   if (!any(anno$element == "organizationName")) {
+      #     warning(
+      #       paste0(
+      #         "The organizationName annotation is missing. Consider adding ",
+      #         "an annotation that describes the organization the creator(s) ",
+      #         " is associated with. Add this to annotations.txt."
+      #       ),
+      #       call. = FALSE
+      #     )
+      #   }
+      #   
+      # }
       
     }
 
