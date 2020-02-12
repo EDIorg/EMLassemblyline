@@ -29,8 +29,9 @@ validate_templates <- function(fun.name, x){
     # make_eml() - annotations ------------------------------------------------
     # General criteria:
     # 1.) If no annotations.txt then send a best practice alert as a warning.
-    # 2.) Incomplete annotations results in warning.
-    # 3.) Missing dataset annotation results in warning (every data package
+    # 2.) annotations.txt should have at least one row
+    # 3.) Incomplete annotations results in warning.
+    # 4.) Missing dataset annotation results in warning (every data package
     #     should have one).
     # 4.) URIs are resolvable
     #
@@ -63,6 +64,18 @@ validate_templates <- function(fun.name, x){
       )
       
     } else if (!is.null(x$template$annotations.txt)) {
+      
+      # annotations.txt should have at least one row
+      
+      if (nrow(x$template$annotations.txt$content) != 0) {
+        stop(
+          paste0(
+            "annotations.txt cannot be empty. Remove this file from path or ",
+            "complete it."
+          ), 
+          call. = FALSE
+        )
+      }
       
       # Parameterize the annotations checks with a data frame of annotations.txt 
       # but with "" filled with NA_character_. This streamlines the code.

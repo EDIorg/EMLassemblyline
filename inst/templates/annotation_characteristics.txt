@@ -1,6 +1,0 @@
-element	context	subject	r_list_path	predicate_label	predicate_uri	object_label	object_uri
-dataset	eml	NA	x$dataset	is about	http://purl.obolibrary.org/obo/IAO_0000136	NA	NA
-dataTable	dataset	NA	x$dataset$dataTable[[i]]	is about	http://purl.obolibrary.org/obo/IAO_0000136	NA	NA
-otherEntity	dataset	NA	x$dataset$otherEntity[[i]]	is about	http://purl.obolibrary.org/obo/IAO_0000136	NA	NA
-attribute	dataTable	NA	x$dataset$dataTable[[i]]$attributeList$attribute[[j]]	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType	NA	NA
-unit	attribute	NA	x$dataset$dataTable[[i]]$attributeList$attribute[[j]]	has unit	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit	NA	NA

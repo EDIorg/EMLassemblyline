@@ -1696,8 +1696,7 @@ make_eml <- function(
   
   # Create <annotations> ------------------------------------------------------
   
-  if (any(stringr::str_detect(names(x$template), "annotations.txt")) &
-      (nrow(x$template$annotations.txt$content) != 0)) {
+  if (any(stringr::str_detect(names(x$template), "annotations.txt"))) {
     
     message('  <annotations>')
     

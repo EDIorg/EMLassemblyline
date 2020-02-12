@@ -404,6 +404,31 @@ validate_arguments <- function(fun.name, fun.args){
       )
     }
     
+    # default.annotations
+    
+    if (!is.null(fun.args$default.annotations)){
+      
+      if (!is.data.frame(fun.args$default.annotations)) {
+        stop(
+          "Input argument 'default.annotations' is not a data frame.", 
+          call. = FALSE
+        )
+      }
+      
+      if (!all(c("element", "predicate_label", "predicate_uri", "object_label", 
+          "object_uri") %in% colnames(fun.args$default.annotations))) {
+        stop(
+          paste0(
+            "The 'default.annotations' data frame is missing one or more of ",
+            "these columns: 'element', 'predicate_label', 'predicate_uri', ",
+            "'object_label', 'object_uri'"
+          ),
+          call. = FALSE
+        )
+      }
+      
+    }
+
   }
   
   # Call from template_arguments() ------------------------------------------------

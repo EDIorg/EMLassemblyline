@@ -8,7 +8,8 @@ template_annotations(
       path,
       data.path = path,
       data.table = NULL,
-      other.entity = NULL
+      other.entity = NULL,
+      default.annotations = NULL
     )
 }
 \arguments{
@@ -25,25 +26,55 @@ vector of character strings (e.g.
 \item{other.entity}{(character; optional) Other entity name. If more than one, then supply 
 as a vector of character strings (e.g. 
 \code{other.entity = c('maps.zip', 'analysis_script.R')}).}
+
+\item{default.annotations}{(data frame; optional) Default annotations to be used within the 
+annotations.txt template. EMLassemblyline defaults are used unless 
+supplying your own (see details).}
 }
 \value{
-\strong{annotations.txt} The tab delimited annotations template.
+\strong{annotations.txt} The tab delimited annotations template with
+    the fields:
+    \describe{
+      \item{id}{A unique identifier assigned to the elements within the EML,
+      except in the case of ResponsibleParty sub-trees where a UUID is 
+      assigned to each corresponding occurence within the EML (e.g. under
+      creator, contact)}.
+      \item{element}{The EML element being annotated as a relative path to 
+      the element.}
+      \item{context}{The context of the subject to be annotated (e.g. If the
+      same field name is used in more than one data table, you will need 
+      to know which table it came from. In this example the file name is 
+      the context.)}
+      \item{subject}{The subject being annotated.}
+      \item{predicate_label}{The label of the predicate (a.k.a. property) 
+      obtained from an ontology.}
+      \item{predicate_uri}{The URI of the predicate (a.k.a. property) 
+      obtained from an ontology.}
+      \item{object_label}{The label of the object (a.k.a. value) obtained 
+      from an ontology.}
+      \item{predicate_uri}{The URI of the object (a.k.a. value) obtained 
+      from an ontology.}
+    
+    }
 }
 \description{
 Annotate your metadata with terms from an ontology. Run this function 
-    after all your metadata templates are complete
+    after all your metadata templates are complete.
 }
 \details{
 This function extracts annotatable metadata from the template files
-    and assigns default annotations for the predicate labels and URIs. The 
-    user manually assigns the object labels and URIs.
+    and assigns default annotations for the predicate labels and URIs. You 
+    manually select object labels and URIs from the ontology of your choice
+    and add them to annotations.txt.
     
-    \code{data.table} and \code{other.entity} are added to annotations.txt 
-    and assigned UUIDs.
+    \code{data.table} and \code{other.entity} are added to annotations.txt.
     
-    Unique persons within personnel.txt are added to annotations.txt and 
-    assigned UUIDs, which are also added to the \code{id} field of 
-    personnel.txt.
+    To set your own annotation defaults, copy the EMLassemblyline defaults file 
+    (\code{file.copy(from = system.file("/templates/annotation_defaults.txt", package = "EMLassemblyline"), to = path)}, where path is where you want the file written to)
+    then change the values in the predicate_label, predicate_uri, 
+    object_label, and object_uri fields, save the file, and then read this 
+    file into a data frame and supply to the \code{default.annotations} 
+    argument when calling \code{template_annotations()}.
 }
 \examples{
 # Add completed metadata templates to a temporary directory

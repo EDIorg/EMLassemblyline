@@ -29,7 +29,7 @@ testthat::test_that("annotations.txt", {
   defs <- as.data.frame(
     data.table::fread(
       file = system.file(
-        '/templates/annotation_characteristics.txt',
+        '/templates/annotation_defaults.txt',
         package = 'EMLassemblyline'
       ),
       colClasses = rep(
@@ -37,7 +37,7 @@ testthat::test_that("annotations.txt", {
         max(
           utils::count.fields(
             system.file(
-              '/templates/annotation_characteristics.txt',
+              '/templates/annotation_defaults.txt',
               package = 'EMLassemblyline'
             ),
             sep = "\t"
@@ -99,7 +99,7 @@ testthat::test_that("annotations.txt", {
   
   # annotations - elements ----------------------------------------------------
   # Current list of supported elements 
-  # (see /inst/templates/annotation_characteristics.txt)
+  # (see /inst/templates/annotation_defaults.txt)
   
   test_elements <- function(element, x) {
     
