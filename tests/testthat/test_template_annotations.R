@@ -58,3 +58,57 @@ testthat::test_that("annotations.txt characteristics", {
   )
   
 })
+
+
+testthat::test_that("legacy EML", {
+  
+  # Read an EML record and create annotations.txt for it
+  
+  eml <- EML::read_eml(
+    system.file(
+      "/examples/eml/edi.260.3.xml", 
+      package = "EMLassemblyline"
+    )
+  )
+  
+  # Testing list lengths
+  # eml <- EML::read_eml(
+  #   "C:\\Users\\Colin\\Documents\\EDI\\data_sets\\eml22\\creators.xml"
+  # )
+  
+  template_annotations(
+    path = paste0(tempdir()),
+    eml = eml
+  )
+  
+  df <- data.table::fread(
+    paste0(tempdir(), "/pkg_260/metadata_templates/annotations.txt")
+  )
+  
+  # Test for expected characteristics
+  
+  expect_true(
+    is.data.frame(df)
+  )
+  
+  expect_true(
+    all(
+      colnames(df) %in% c("id", "element", "context", "subject", 
+                          "predicate_label", "predicate_uri",
+                          "object_label", "object_uri")
+    )
+  )
+  
+  expect_true(
+    nrow(df) != 0
+  )
+  
+  # Clean up
+  
+  unlink(
+    paste0(tempdir(), "/metadata_templates"), 
+    recursive = TRUE, 
+    force = TRUE
+  )
+  
+})

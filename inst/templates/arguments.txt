@@ -8,6 +8,7 @@ data.url
 dataset.title
 default.annotations
 dir.name
+eml
 eml.path
 empty
 file.type

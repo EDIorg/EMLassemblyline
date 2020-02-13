@@ -428,6 +428,23 @@ validate_arguments <- function(fun.name, fun.args){
       }
       
     }
+    
+    # eml
+    
+    if (!is.null(fun.args$eml)) {
+      
+      if (!all(class(fun.args$eml) == c("emld", "list"))) {
+        stop(
+          paste0(
+            "Input argument 'eml' is not the required 'emld' 'list' class. ",
+            "Use the function EML::read_eml() to create the proper intput ",
+            "to the 'eml' argument."
+          ),
+          call. = FALSE
+        )
+      }
+      
+    }
 
   }
   

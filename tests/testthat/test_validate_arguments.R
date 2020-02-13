@@ -78,5 +78,18 @@ testthat::test_that('template_annotations()', {
   
   rm(df2)
   rm(df)
+  
+  # eml (legacy eml)
+  
+  expect_error(
+    validate_arguments(
+      fun.name = 'template_annotations',
+      fun.args = list(
+        path = tempdir(),
+        eml = "This is not the expected emld list object."
+      )
+    )
+  )
+  
 
 })

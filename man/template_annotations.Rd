@@ -9,7 +9,8 @@ template_annotations(
       data.path = path,
       data.table = NULL,
       other.entity = NULL,
-      default.annotations = NULL
+      default.annotations = NULL,
+      eml = NULL
     )
 }
 \arguments{
@@ -25,26 +26,32 @@ vector of character strings (e.g.
 
 \item{other.entity}{(character; optional) Other entity name. If more than one, then supply 
 as a vector of character strings (e.g. 
-\code{other.entity = c('maps.zip', 'analysis_script.R')}).}
+\code{other.entity = c('maps.zip', 'analysis.R')}).}
 
 \item{default.annotations}{(data frame; optional) Default annotations to be used within the 
-annotations.txt template. EMLassemblyline defaults are used unless 
-supplying your own (see details).}
+annotations.txt template. EMLassemblyline presets are used unless 
+supplying your own (see details below).}
+
+\item{eml}{(emld list; optional) An EML record read into R using 
+\code{EML::read_eml()}. Use this argument if annotating legacy EML.
+Once you've completed annotations.txt then run 
+\code{EMLassemblyline::annotate_legacy_eml()} to create an annotated
+version of your legacy EML.}
 }
 \value{
 \strong{annotations.txt} The tab delimited annotations template with
     the fields:
     \describe{
-      \item{id}{A unique identifier assigned to the elements within the EML,
-      except in the case of ResponsibleParty sub-trees where a UUID is 
-      assigned to each corresponding occurence within the EML (e.g. under
-      creator, contact)}.
-      \item{element}{The EML element being annotated as a relative path to 
-      the element.}
-      \item{context}{The context of the subject to be annotated (e.g. If the
-      same field name is used in more than one data table, you will need 
-      to know which table it came from. In this example the file name is 
-      the context.)}
+      \item{id}{A unique identifier to be assigned to the subject element
+      when the EML is created, except in the case of ResponsibleParty 
+      where a UUID is assigned to each recurring instance (e.g. creator, 
+      contact) in order to maintain the "uniquenes" required by EML IDs.
+      See details below for rules on creating IDs for annotations.txt.}
+      \item{element}{The EML element being annotated as a relative path.
+      See details below for rules on creating elements for annotations.txt.}
+      \item{context}{The context of the subject being annotated (e.g. If the
+      same column name is used in more than one of your data tables, you 
+      will need to know which table it came from.).}
       \item{subject}{The subject being annotated.}
       \item{predicate_label}{The label of the predicate (a.k.a. property) 
       obtained from an ontology.}
@@ -52,54 +59,56 @@ supplying your own (see details).}
       obtained from an ontology.}
       \item{object_label}{The label of the object (a.k.a. value) obtained 
       from an ontology.}
-      \item{predicate_uri}{The URI of the object (a.k.a. value) obtained 
+      \item{object_uri}{The URI of the object (a.k.a. value) obtained 
       from an ontology.}
-    
     }
+    Only the predicate_label, predicate_uri, object_label, and 
+    object_uri fields should be edited. If you want to add an annotation
+    to any of the subjects, simply replicate the subjects row and modify
+    the predicate and object fields.
 }
 \description{
 Annotate your metadata with terms from an ontology. Run this function 
-    after all your metadata templates are complete.
-}
-\details{
-This function extracts annotatable metadata from the template files
-    and assigns default annotations for the predicate labels and URIs. You 
-    manually select object labels and URIs from the ontology of your choice
-    and add them to annotations.txt.
-    
-    \code{data.table} and \code{other.entity} are added to annotations.txt.
-    
-    To set your own annotation defaults, copy the EMLassemblyline defaults file 
-    (\code{file.copy(from = system.file("/templates/annotation_defaults.txt", package = "EMLassemblyline"), to = path)}, where path is where you want the file written to)
-    then change the values in the predicate_label, predicate_uri, 
-    object_label, and object_uri fields, save the file, and then read this 
-    file into a data frame and supply to the \code{default.annotations} 
-    argument when calling \code{template_annotations()}.
+    after all your metadata templates are complete, or if you're annotating
+    a legacy EML record.
 }
 \examples{
-# Add completed metadata templates to a temporary directory
+# Initialize a temporary directory with a set of completed metadata templates,
+# data tables, and other entities
+
 file.copy(
- from = system.file("/examples/pkg_260/metadata_templates", package = "EMLassemblyline"),
+ from = system.file("/examples/pkg_260", package = "EMLassemblyline"),
  to = tempdir(),
  recursive = TRUE
 )
-unlink("./metadata_templates/annotations.txt", force = TRUE)
-setwd(paste0(tempdir(), "/metadata_templates"))
 
-# Create the annotations template
-template_annotations(
-  path = "."
+unlink(
+  paste0(tempdir(), "/pkg_260/metadata_templates/annotations.txt"),
+  force = TRUE
 )
 
-# View directory contents
-dir(".")
+# Create the annotations.txt template
 
-# View template contents
-df <- data.table::fread("./annotations.txt")
+template_annotations(
+  path = paste0(tempdir(), "/pkg_260/metadata_templates"),
+  data.path = paste0(tempdir(), "/pkg_260/data_objects"),
+  data.table = c("nitrogen.csv", "decomp.csv"),
+  other.entity = c("ancillary_data.zip", "processing_and_analysis.R")
+)
+
+# View the contents of annotations.txt
+
+df <- data.table::fread(
+  paste0(tempdir(), "/pkg_260/metadata_templates/annotations.txt")
+)
 df
 
 # Remove the temporary directory
-setwd(tempdir())
-unlink("./metadata_templates", recursive = TRUE, force = TRUE)
+
+unlink(
+  paste0(tempdir(), "/pkg_260"), 
+  recursive = TRUE, 
+  force = TRUE
+)
     
 }
