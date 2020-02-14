@@ -376,6 +376,16 @@ validate_arguments <- function(fun.name, fun.args){
       EDIutils::validate_path(fun.args$path)
     }
     
+    if (file.exists(paste0(fun.args$path, "/annotations.txt"))) {
+      stop(
+        paste0(
+          "annotations.txt already exists. To create a new annotations ",
+          "template, remove this one from 'path'."
+        ), 
+        call. = FALSE
+      )
+    }
+    
     # data.path
     
     if (!is.null(fun.args$data.path)) {
@@ -432,14 +442,9 @@ validate_arguments <- function(fun.name, fun.args){
     # eml
     
     if (!is.null(fun.args$eml)) {
-      
-      if (!all(class(fun.args$eml) == c("emld", "list"))) {
+      if (file.exists(paste0(fun.args$path, "/", eml))) {
         stop(
-          paste0(
-            "Input argument 'eml' is not the required 'emld' 'list' class. ",
-            "Use the function EML::read_eml() to create the proper intput ",
-            "to the 'eml' argument."
-          ),
+          paste0("The file ", fun.args$eml, "cannot be found at 'path'."),
           call. = FALSE
         )
       }

@@ -64,21 +64,13 @@ testthat::test_that("legacy EML", {
   
   # Read an EML record and create annotations.txt for it
   
-  eml <- EML::read_eml(
-    system.file(
-      "/examples/eml/edi.260.3.xml", 
-      package = "EMLassemblyline"
-    )
-  )
-  
-  # Testing list lengths
-  # eml <- EML::read_eml(
-  #   "C:\\Users\\Colin\\Documents\\EDI\\data_sets\\eml22\\creators.xml"
-  # )
   
   template_annotations(
     path = paste0(tempdir()),
-    eml = eml
+    eml = system.file(
+      "/examples/eml/edi.260.3.xml", 
+      package = "EMLassemblyline"
+    )
   )
   
   df <- data.table::fread(

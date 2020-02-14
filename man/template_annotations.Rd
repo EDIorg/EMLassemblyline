@@ -32,11 +32,10 @@ as a vector of character strings (e.g.
 annotations.txt template. EMLassemblyline presets are used unless 
 supplying your own (see details below).}
 
-\item{eml}{(emld list; optional) An EML record read into R using 
-\code{EML::read_eml()}. Use this argument if annotating legacy EML.
-Once you've completed annotations.txt then run 
-\code{EMLassemblyline::annotate_legacy_eml()} to create an annotated
-version of your legacy EML.}
+\item{eml}{(eml .xml file; optional) An EML .xml file located at \code{path}. 
+Use this argument if annotating legacy EML. Once you've completed 
+annotations.txt then run \code{EMLassemblyline::annotate_legacy_eml()} 
+to create an annotated version of your legacy EML.}
 }
 \value{
 \strong{annotations.txt} The tab delimited annotations template with
@@ -71,6 +70,49 @@ version of your legacy EML.}
 Annotate your metadata with terms from an ontology. Run this function 
     after all your metadata templates are complete, or if you're annotating
     a legacy EML record.
+}
+\details{
+This function runs \code{EMLassemblyline::make_eml()} to get the EML
+    R list object from which annotatable metadata is extracted, assigned 
+    default predicate labels and URIs (in some cases object labels and URIs 
+    as well), then written to annotations.txt. You will have to add object 
+    labels and URIs from an ontology of your choice.
+    
+    If creating annotations.txt for legacy EML, then 
+    \code{EMLassemblyline::make_eml()} isn't run, and the arguments 
+    \code{data.path}, \code{data.table}, and \code{other.entity} are not 
+    used.
+    
+    To set your own annotation defaults, copy the EMLassemblyline defaults 
+    file 
+    (\code{file.copy(from = system.file("/templates/annotation_defaults.txt", package = "EMLassemblyline"), to = path)}, where path is where you want the file written to)
+    then change the values in the predicate_label, predicate_uri, 
+    object_label, and object_uri fields, save the file, and then read this 
+    file into a data frame and supply to the \code{default.annotations} 
+    argument of \code{template_annotations()}.
+    
+    The id and element fields of annotations.txt are keys to locate the 
+    subjects within the EML and to annotate them with the corresponding 
+    predicate and object information. To create the id and element fields 
+    use these rules:
+    \describe{
+      \item{dataset}{Use "/dataset" for both the id and element.}
+      \item{dataTable}{Use \code{paste0("/", file.name)} for the id (where 
+      file.name is the name of your dataTable file) and use "/dataTable" for
+      the element.}
+      \item{otherEntity}{Use \code{paste0("/", file.name)} for the id (where 
+      file.name is the name of your otherEntity file) and use "/otherEntity" 
+      for the element.}
+      \item{attribute of a dataTable}{Use 
+      \code{paste0("/", file.name, "/", column.name)} for the id (where 
+      file.name is the name of your dataTable file and column.name is the 
+      name of the column in the file.name) and use "/dataTable/attribute" 
+      for the element.}
+      \item{ResponsibleParty}{Use \code{paste0("/", paste(first.name, middle.name, last.name, collapse = " "))}
+      for the id (where first.name and middle.name are the persons first and 
+      middle given names, respectively (more than one middle name works too
+      ), and last.name is the persons surname).}
+    }
 }
 \examples{
 # Initialize a temporary directory with a set of completed metadata templates,

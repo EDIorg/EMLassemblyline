@@ -34,11 +34,10 @@
 #'     annotations.txt template. EMLassemblyline presets are used unless 
 #'     supplying your own (see details below).
 #' @param eml
-#'     (emld list; optional) An EML record read into R using 
-#'     \code{EML::read_eml()}. Use this argument if annotating legacy EML.
-#'     Once you've completed annotations.txt then run 
-#'     \code{EMLassemblyline::annotate_legacy_eml()} to create an annotated
-#'     version of your legacy EML.
+#'     (eml .xml file; optional) An EML .xml file located at \code{path}. 
+#'     Use this argument if annotating legacy EML. Once you've completed 
+#'     annotations.txt then run \code{EMLassemblyline::annotate_legacy_eml()} 
+#'     to create an annotated version of your legacy EML.
 #'
 #' @return 
 #'     \strong{annotations.txt} The tab delimited annotations template with
@@ -77,9 +76,9 @@
 #'     labels and URIs from an ontology of your choice.
 #'     
 #'     If creating annotations.txt for legacy EML, then 
-#'     \code{EMLassemblyline::make_eml() isn't run, and the arguments 
+#'     \code{EMLassemblyline::make_eml()} isn't run, and the arguments 
 #'     \code{data.path}, \code{data.table}, and \code{other.entity} are not 
-#'     used.}
+#'     used.
 #'     
 #'     To set your own annotation defaults, copy the EMLassemblyline defaults 
 #'     file 
@@ -109,7 +108,7 @@
 #'       \item{ResponsibleParty}{Use \code{paste0("/", paste(first.name, middle.name, last.name, collapse = " "))}
 #'       for the id (where first.name and middle.name are the persons first and 
 #'       middle given names, respectively (more than one middle name works too
-#'       ), and last.name is the persons surname).
+#'       ), and last.name is the persons surname).}
 #'     }
 #'     
 #' @examples 
@@ -173,9 +172,9 @@ template_annotations <- function(
   
   # Create EML ----------------------------------------------------------------
   
-  # If not supplying an emld list object through the eml argument, then run 
-  # EMLassemblyline::make_eml() to create one, from which annotatable metadata 
-  # will be extracted.
+  # Create the emld list object from which annotatable metadata will be 
+  # extracted. Create this object with EMLassemblyline::make_eml() or
+  # EML::read_eml().
   
   if (is.null(eml)) {
     
@@ -188,19 +187,7 @@ template_annotations <- function(
       other.entity = other.entity
     )
     
-    # Stop if annotations.txt already exists
-    
-    if (any(names(x$x$template) == "annotations.txt")) {
-      stop(
-        paste0(
-          "annotations.txt already exists. To create a new annotations ",
-          "template, remove this one from 'path'."
-        ), 
-        call. = FALSE
-      )
-    }
-    
-    # Reduce the make_eml() inputs to expedite processing
+    # Call make_eml() with minimal inputs to expedite processing
     
     for (i in c("additional_info", "taxonomic_coverage.txt", 
                 "bounding_boxes.txt", "geographic_coverage.txt", 
@@ -234,8 +221,6 @@ template_annotations <- function(
     x$return.obj <- TRUE
     x$write.file <- FALSE
     
-    # Call make_eml()
-    
     eml <- suppressMessages(
       suppressWarnings(
         do.call(
@@ -246,20 +231,7 @@ template_annotations <- function(
     )
     
   } else {
-    
-    # If using the eml argument, then ensure an existing annotations.txt won't 
-    # be overwritten.
-    
-    if (file.exists(paste0(path, "/annotations.txt"))) {
-      stop(
-        paste0(
-          "annotations.txt already exists. To create a new annotations ",
-          "template, remove this one from 'path'."
-        ), 
-        call. = FALSE
-      )
-    }
-    
+
   }
 
   # Set parameters ------------------------------------------------------------
@@ -445,31 +417,19 @@ template_annotations <- function(
           lapply(
             eval(parse(text = x)),
             function(k) {
-              # FIXME: Single lists aren't consistently referenceable. Add logic to check for 
-              # list length and whether "individualName" can be found within it. If so, you can simply put the
-              # list within list().
-              #
-              # Turn the below into a function
-              if ((length(k) > 1) & (is.null(names(k)))) {
-                # then process as normal
-              } else if ((length(k) > 1) & (!is.null(names(k)))) {
-                # then wrap in a list()
-              } else {
-                # don't process because it doesn't exist
-              }
               sub_i <- trimws(paste(unlist(k$individualName), collapse = " "))
               stringr::str_replace(sub_i, "[:blank:]{2,}", " ")
             }
           )
         )
       }
-      # c("eml$dataset$creator", "eml$dataset$contact", 
-      #   "eml$dataset$associatedParty", "eml$dataset$project$personnel",
-      #   "eml$dataset$project$relatedProject")
+      
       s <- unique(
         unlist(
           lapply(
-            c("eml$dataset$contact"),
+            c("eml$dataset$creator", "eml$dataset$contact",
+              "eml$dataset$associatedParty", "eml$dataset$project$personnel",
+              "eml$dataset$project$relatedProject"),
             get_individualName
           )
         )
@@ -508,5 +468,113 @@ template_annotations <- function(
   )
   
   message("Done.")
+  
+}
+
+
+
+
+
+#' Read EML into an emld list object
+#'
+#' @description  
+#'     This function wraps \code{EML::read_eml()} with a layer of quality 
+#'     control ensuring the returned emld list object has the same structure 
+#'     as output by \code{EMLassemblyline::make_eml()} and can be used in 
+#'     EMLassemblyline workflows.
+#'
+#' @usage 
+#'     read_eml(
+#'       path,
+#'       eml
+#'     )
+#'
+#' @param path 
+#'     (character) Path to the metadata template directory and where 
+#'     annotations.txt will be written.
+#' @param eml
+#'     (file) An EML .xml file located at \code{path}.
+#'
+#' @return 
+#'     An emld list object as similarly created by \code{EML::read_eml()}.
+#'     
+#' @details
+#'     When representing EML in the emld list structure, nodes that have 
+#'     1 or more children are structured as a list of unnamed lists 
+#'     (e.g. \code{list(dataTable = list("dataTable1", "dataTable2"))}) and
+#'     this is the structure output by EMLassemblyline::make_eml(). However,
+#'     EML::read_eml() removes the unnamed list when the node has only 1 child
+#'     (e.g. \code{list(dataTable = "dataTable1")}), thereby breaking 
+#'     EMLassemblyline code using \code{lapply()} to parse nodes that can have 
+#'     1 or more children because the path to the child element has changed. 
+#'     
+#'     This function fixes this issue for the following EML elements:
+#'     \describe{
+#'       \item{eml/dataset/dataTable}{}
+#'       \item{eml/dataset/dataTable/attributeList/attribute}{}
+#'       \item{eml/dataset/otherEntity}{}
+#'       \item{eml/dataset/creator}{}
+#'       \item{eml/dataset/contact}{}
+#'       \item{eml/dataset/associatedParty}{}
+#'       \item{eml/dataset/project/personnel}{}
+#'       \item{eml/dataset/project/relatedProject}{}
+#'       \item{eml/dataset/project/relatedProject/personnel}{}
+#'     }
+#'     
+#' @examples 
+#'     
+read_eml <- function(path, eml) {
+  
+  # Create the emld list object
+  
+  eml <- EML::read_eml(
+    paste0(path, "/", eml)
+  )
+  
+  # A helper function to wrap target elements in list()
+  # Arguments:
+  # eml = emld list object
+  # address = path of element using the "$" subsetting character
+  # child = path of child element after nodes containing 1 or more parents (e.g. "$attributeList")
+  
+  list_it <- function(eml, address, child = NULL) {
+    
+    if (is.null(child)) {
+      
+      e <- eval(parse(text = address))
+      if ((length(e) > 1) & (!is.null(names(e)))) {
+        eval(parse(text = paste0(address, " <- list(e)")))
+      }
+      
+    } else if (!is.null(child)) {
+      
+      lapply(
+        seq_along(eval(parse(text = address))),
+        function(k) {
+          if ((length(eval(parse(text = paste0(address, "[[", k, "]]", child)))) > 1) & (!is.null(names(eval(parse(text = paste0(address, "[[", k, "]]", child))))))) {
+            eval(parse(text = paste0(address, "[[", k, "]]", child, " <<- list(",paste0(address, "[[", k, "]]", child), ")")))
+          }
+        }
+      )
+      
+    }
+    
+    eml
+    
+  }
+  
+  # Fix emld list object
+  
+  eml <- list_it(eml, "eml$dataset$dataTable")
+  eml <- list_it(eml, "eml$dataset$otherEntity")
+  eml <- list_it(eml, "eml$dataset$creator")
+  eml <- list_it(eml, "eml$dataset$contact")
+  eml <- list_it(eml, "eml$dataset$associatedParty")
+  eml <- list_it(eml, "eml$dataset$project$personnel")
+  eml <- list_it(eml, "eml$dataset$project$relatedProject")
+  eml <- list_it(eml, "eml$dataset$project$relatedProject", "$personnel")
+  eml <- list_it(eml, "eml$dataset$dataTable", "$attributeList$attribute")
+  
+  eml
   
 }
