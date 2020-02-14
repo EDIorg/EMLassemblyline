@@ -90,6 +90,5 @@ testthat::test_that('template_annotations()', {
       )
     )
   )
-  
 
 })

@@ -112,8 +112,8 @@
 #'     }
 #'     
 #' @examples 
-#' # Initialize a temporary directory with a set of completed metadata templates,
-#' # data tables, and other entities
+#' # Create annotations.txt from a set of completed metadata templates, 
+#' # data tables and other entities
 #' 
 #' file.copy(
 #'  from = system.file("/examples/pkg_260", package = "EMLassemblyline"),
@@ -126,8 +126,6 @@
 #'   force = TRUE
 #' )
 #' 
-#' # Create the annotations.txt template
-#' 
 #' template_annotations(
 #'   path = paste0(tempdir(), "/pkg_260/metadata_templates"),
 #'   data.path = paste0(tempdir(), "/pkg_260/data_objects"),
@@ -135,21 +133,47 @@
 #'   other.entity = c("ancillary_data.zip", "processing_and_analysis.R")
 #' )
 #' 
-#' # View the contents of annotations.txt
-#' 
 #' df <- data.table::fread(
 #'   paste0(tempdir(), "/pkg_260/metadata_templates/annotations.txt")
 #' )
 #' df
-#' 
-#' # Remove the temporary directory
 #' 
 #' unlink(
 #'   paste0(tempdir(), "/pkg_260"), 
 #'   recursive = TRUE, 
 #'   force = TRUE
 #' )
-#'     
+#' 
+#' # Create annotations.txt for an existing EML file
+#' 
+#' file.copy(
+#'   from = system.file(
+#'     "/examples/eml/edi.260.3.xml", 
+#'     package = "EMLassemblyline"
+#'   ),
+#'   to = tempdir(),
+#'   recursive = TRUE
+#' )
+#' 
+#' template_annotations(
+#'   path = tempdir(),
+#'   eml = "edi.260.3.xml"
+#' )
+#' 
+#' df <- data.table::fread(
+#'   paste0(tempdir(), "/annotations.txt")
+#' )
+#' df
+#' 
+#' unlink(
+#'   paste0(tempdir(), "/edi.260.3.xml"),
+#'   force = TRUE
+#' )
+#' unlink(
+#'   paste0(tempdir(), "/annotations.txt"),
+#'   force = TRUE
+#' )   
+#' 
 #' @export     
 #'     
 
@@ -173,8 +197,9 @@ template_annotations <- function(
   # Create EML ----------------------------------------------------------------
   
   # Create the emld list object from which annotatable metadata will be 
-  # extracted. Create this object with EMLassemblyline::make_eml() or
-  # EML::read_eml().
+  # extracted. Create this object from metadata templates 
+  # (i.e. EMLassemblyline::make_eml()) or from an EML file (i.e. 
+  # EMLassemblyline::read_eml()).
   
   if (is.null(eml)) {
     
@@ -231,7 +256,9 @@ template_annotations <- function(
     )
     
   } else {
-
+    
+    eml <- EMLassemblyline::read_eml(path, eml)
+    
   }
 
   # Set parameters ------------------------------------------------------------
@@ -341,95 +368,134 @@ template_annotations <- function(
 
       # /dataTable
       
-      s <- unlist(
-        lapply(
-          eml$dataset$dataTable,
-          function(k) {
-            k$physical$objectName
-          }
+      if (!is.null(eml$dataset$dataTable)) {
+        
+        s <- unlist(
+          lapply(
+            eml$dataset$dataTable,
+            function(k) {
+              k$physical$objectName
+            }
+          )
         )
-      )
-      
-      anno <- append_anno(
-        id = paste0("/", s),
-        element = "/dataTable",
-        context = rep("dataset", length(s)),
-        subject = s
-      )
-
-      # /dataTable/attribute
-      
-      sc <- data.table::rbindlist(
-        lapply(
-          eml$dataset$dataTable,
-          function(k) {
-            suppressWarnings(
-              data.frame(
-                context = k$physical$objectName,
-                subject = unlist(
-                  lapply(
-                    k$attributeList$attribute,
-                    function(m) {
-                      m$attributeName
-                    }
-                  )
-                ), 
-                stringsAsFactors = FALSE
+        
+        anno <- append_anno(
+          id = paste0("/", s),
+          element = "/dataTable",
+          context = rep("dataset", length(s)),
+          subject = s
+        )
+        
+        # /dataTable/attribute
+        
+        sc <- data.table::rbindlist(
+          lapply(
+            eml$dataset$dataTable,
+            function(k) {
+              suppressWarnings(
+                data.frame(
+                  context = k$physical$objectName,
+                  subject = unlist(
+                    lapply(
+                      k$attributeList$attribute,
+                      function(m) {
+                        m$attributeName
+                      }
+                    )
+                  ), 
+                  stringsAsFactors = FALSE
+                )
               )
-            )
-          }
+            }
+          )
         )
-      )
-      
-      anno <- append_anno(
-        id = paste0("/", sc$context, "/", sc$subject),
-        element = "/dataTable/attribute",
-        context = sc$context,
-        subject = sc$subject
-      )
+        
+        anno <- append_anno(
+          id = paste0("/", sc$context, "/", sc$subject),
+          element = "/dataTable/attribute",
+          context = sc$context,
+          subject = sc$subject
+        )
+        
+      }
       
     } else if (element == "otherEntity") {
       
       # /otherEntity
       
-      s <- unlist(
-        lapply(
-          eml$dataset$otherEntity,
-          function(k) {
-            k$physical$objectName
-          }
+      if (!is.null(eml$dataset$otherEntity)) {
+        
+        s <- unlist(
+          lapply(
+            eml$dataset$otherEntity,
+            function(k) {
+              k$physical$objectName
+            }
+          )
         )
-      )
-      anno <- append_anno(
-        id = paste0("/", s),
-        element = "/otherEntity",
-        context = rep("dataset", length(s)),
-        subject = s
-      )
+        
+        anno <- append_anno(
+          id = paste0("/", s),
+          element = "/otherEntity",
+          context = rep("dataset", length(s)),
+          subject = s
+        )
+        
+      }
       
     } else if (element == "ResponsibleParty") {
       
       # /ResponsibleParty
 
       get_individualName <- function(x) {
-        browser()
-        unlist(
-          lapply(
-            eval(parse(text = x)),
-            function(k) {
-              sub_i <- trimws(paste(unlist(k$individualName), collapse = " "))
-              stringr::str_replace(sub_i, "[:blank:]{2,}", " ")
-            }
+        
+        if (x == "eml$dataset$project$relatedProject") {
+          
+          unlist(
+            lapply(
+              eval(parse(text = x)),
+              function(k) {
+                lapply(
+                  k$personnel,
+                  function(m) {
+                    sub_i <- trimws(
+                      paste(unlist(m$individualName), collapse = " ")
+                    )
+                    stringr::str_replace(sub_i, "[:blank:]{2,}", " ")
+                  }
+                )
+              }
+            )
           )
-        )
+          
+        } else {
+          
+          unlist(
+            lapply(
+              eval(parse(text = x)),
+              function(k) {
+                sub_i <- trimws(
+                  paste(unlist(k$individualName), collapse = " ")
+                )
+                stringr::str_replace(sub_i, "[:blank:]{2,}", " ")
+              }
+            )
+          )
+          
+        }
+        
       }
       
       s <- unique(
         unlist(
           lapply(
-            c("eml$dataset$creator", "eml$dataset$contact",
-              "eml$dataset$associatedParty", "eml$dataset$project$personnel",
-              "eml$dataset$project$relatedProject"),
+            c(
+              "eml$dataset$creator",
+              "eml$dataset$contact",
+              "eml$dataset$associatedParty",
+              "eml$dataset$project$personnel",
+              "eml$dataset$project$relatedProject"
+              ),
             get_individualName
           )
         )
@@ -445,19 +511,17 @@ template_annotations <- function(
       
     }
     
+    anno
+    
   }
   
   # Annotate elements
   
   anno <- annotate_element("dataset")
-  if (!is.null(data.table)) {
-    anno <- annotate_element("dataTable")
-  }
-  if (!is.null(other.entity)) {
-    anno <- annotate_element("otherEntity")
-  }
+  anno <- annotate_element("dataTable")
+  anno <- annotate_element("otherEntity")
   anno <- annotate_element("ResponsibleParty")
-  browser()
+  
   # Write annotations.txt -----------------------------------------------------
   
   data.table::fwrite(
@@ -505,10 +569,10 @@ template_annotations <- function(
 #'     this is the structure output by EMLassemblyline::make_eml(). However,
 #'     EML::read_eml() removes the unnamed list when the node has only 1 child
 #'     (e.g. \code{list(dataTable = "dataTable1")}), thereby breaking 
-#'     EMLassemblyline code using \code{lapply()} to parse nodes that can have 
-#'     1 or more children because the path to the child element has changed. 
+#'     EMLassemblyline code using \code{lapply()} to parse such nodes. 
+#'     Currently this QC is selectively applied to annotatable nodes targeted
+#'     by \code{template_annotations()}:
 #'     
-#'     This function fixes this issue for the following EML elements:
 #'     \describe{
 #'       \item{eml/dataset/dataTable}{}
 #'       \item{eml/dataset/dataTable/attributeList/attribute}{}
@@ -521,8 +585,19 @@ template_annotations <- function(
 #'       \item{eml/dataset/project/relatedProject/personnel}{}
 #'     }
 #'     
-#' @examples 
+#'     Extending support to all nodes capable of having 1 or more children is
+#'     welcomed.
 #'     
+#' @examples 
+#' eml <- EMLassemblyline::read_eml(
+#'   path = system.file(
+#'     "/examples/eml", 
+#'     package = "EMLassemblyline"
+#'   ),
+#'   eml = "edi.260.3.xml"
+#' )
+#' 
+#' 
 read_eml <- function(path, eml) {
   
   # Create the emld list object
@@ -531,39 +606,42 @@ read_eml <- function(path, eml) {
     paste0(path, "/", eml)
   )
   
-  # A helper function to wrap target elements in list()
+  # A helper function to wrap target nodes in list(). There are two 
+  # implementations, one for target nodes and a second for nested target nodes.
+  #
   # Arguments:
   # eml = emld list object
-  # address = path of element using the "$" subsetting character
-  # child = path of child element after nodes containing 1 or more parents (e.g. "$attributeList")
+  # path.parent = path of the parent node using the "$" subsetting character
+  # path.child = path of child node
   
-  list_it <- function(eml, address, child = NULL) {
-    
-    if (is.null(child)) {
-      
-      e <- eval(parse(text = address))
+  list_it <- function(eml, path.parent, path.child = NULL) {
+
+    if (is.null(path.child)) {
+
+      e <- eval(parse(text = path.parent))
       if ((length(e) > 1) & (!is.null(names(e)))) {
-        eval(parse(text = paste0(address, " <- list(e)")))
+        eval(parse(text = paste0(path.parent, " <- list(e)")))
       }
-      
-    } else if (!is.null(child)) {
-      
+
+    } else if (!is.null(path.child)) {
+
       lapply(
-        seq_along(eval(parse(text = address))),
+        seq_along(eval(parse(text = path.parent))),
         function(k) {
-          if ((length(eval(parse(text = paste0(address, "[[", k, "]]", child)))) > 1) & (!is.null(names(eval(parse(text = paste0(address, "[[", k, "]]", child))))))) {
-            eval(parse(text = paste0(address, "[[", k, "]]", child, " <<- list(",paste0(address, "[[", k, "]]", child), ")")))
+          if ((length(eval(parse(text = paste0(path.parent, "[[", k, "]]", path.child)))) > 1) & 
+              (!is.null(names(eval(parse(text = paste0(path.parent, "[[", k, "]]", path.child))))))) {
+            eval(parse(text = paste0(path.parent, "[[", k, "]]", path.child, " <<- list(",paste0(path.parent, "[[", k, "]]", path.child), ")")))
           }
         }
       )
-      
+
     }
-    
+
     eml
-    
+
   }
   
-  # Fix emld list object
+  # Fix the emld list object
   
   eml <- list_it(eml, "eml$dataset$dataTable")
   eml <- list_it(eml, "eml$dataset$otherEntity")

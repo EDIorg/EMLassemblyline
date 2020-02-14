@@ -115,8 +115,8 @@ This function runs \code{EMLassemblyline::make_eml()} to get the EML
     }
 }
 \examples{
-# Initialize a temporary directory with a set of completed metadata templates,
-# data tables, and other entities
+# Create annotations.txt from a set of completed metadata templates, 
+# data tables and other entities
 
 file.copy(
  from = system.file("/examples/pkg_260", package = "EMLassemblyline"),
@@ -129,8 +129,6 @@ unlink(
   force = TRUE
 )
 
-# Create the annotations.txt template
-
 template_annotations(
   path = paste0(tempdir(), "/pkg_260/metadata_templates"),
   data.path = paste0(tempdir(), "/pkg_260/data_objects"),
@@ -138,19 +136,45 @@ template_annotations(
   other.entity = c("ancillary_data.zip", "processing_and_analysis.R")
 )
 
-# View the contents of annotations.txt
-
 df <- data.table::fread(
   paste0(tempdir(), "/pkg_260/metadata_templates/annotations.txt")
 )
 df
-
-# Remove the temporary directory
 
 unlink(
   paste0(tempdir(), "/pkg_260"), 
   recursive = TRUE, 
   force = TRUE
 )
-    
+
+# Create annotations.txt for an existing EML file
+
+file.copy(
+  from = system.file(
+    "/examples/eml/edi.260.3.xml", 
+    package = "EMLassemblyline"
+  ),
+  to = tempdir(),
+  recursive = TRUE
+)
+
+template_annotations(
+  path = tempdir(),
+  eml = "edi.260.3.xml"
+)
+
+df <- data.table::fread(
+  paste0(tempdir(), "/annotations.txt")
+)
+df
+
+unlink(
+  paste0(tempdir(), "/edi.260.3.xml"),
+  force = TRUE
+)
+unlink(
+  paste0(tempdir(), "/annotations.txt"),
+  force = TRUE
+)   
+
 }

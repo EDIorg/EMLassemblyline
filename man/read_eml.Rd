@@ -31,10 +31,10 @@ When representing EML in the emld list structure, nodes that have
     this is the structure output by EMLassemblyline::make_eml(). However,
     EML::read_eml() removes the unnamed list when the node has only 1 child
     (e.g. \code{list(dataTable = "dataTable1")}), thereby breaking 
-    EMLassemblyline code using \code{lapply()} to parse nodes that can have 
-    1 or more children because the path to the child element has changed. 
+    EMLassemblyline code using \code{lapply()} to parse such nodes. 
+    Currently this QC is selectively applied to annotatable nodes targeted
+    by \code{template_annotations()}:
     
-    This function fixes this issue for the following EML elements:
     \describe{
       \item{eml/dataset/dataTable}{}
       \item{eml/dataset/dataTable/attributeList/attribute}{}
@@ -46,7 +46,18 @@ When representing EML in the emld list structure, nodes that have
       \item{eml/dataset/project/relatedProject}{}
       \item{eml/dataset/project/relatedProject/personnel}{}
     }
+    
+    Extending support to all nodes capable of having 1 or more children is
+    welcomed.
 }
 \examples{
-    
+eml <- EMLassemblyline::read_eml(
+  path = system.file(
+    "/examples/eml", 
+    package = "EMLassemblyline"
+  ),
+  eml = "edi.260.3.xml"
+)
+
+
 }

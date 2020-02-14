@@ -59,22 +59,26 @@ testthat::test_that("annotations.txt characteristics", {
   
 })
 
-
-testthat::test_that("legacy EML", {
+testthat::test_that("from EML.xml", {
   
-  # Read an EML record and create annotations.txt for it
+  # Read an EML record and create annotations.txt
   
-  
-  template_annotations(
-    path = paste0(tempdir()),
-    eml = system.file(
+  file.copy(
+    from = system.file(
       "/examples/eml/edi.260.3.xml", 
       package = "EMLassemblyline"
-    )
+    ),
+    to = tempdir(),
+    recursive = TRUE
+  )
+  
+  template_annotations(
+    path = tempdir(),
+    eml = "edi.260.3.xml"
   )
   
   df <- data.table::fread(
-    paste0(tempdir(), "/pkg_260/metadata_templates/annotations.txt")
+    paste0(tempdir(), "/annotations.txt")
   )
   
   # Test for expected characteristics
@@ -98,8 +102,12 @@ testthat::test_that("legacy EML", {
   # Clean up
   
   unlink(
-    paste0(tempdir(), "/metadata_templates"), 
-    recursive = TRUE, 
+    paste0(tempdir(), "/edi.260.3.xml"),
+    force = TRUE
+  )
+  
+  unlink(
+    paste0(tempdir(), "/annotations.txt"),
     force = TRUE
   )
   
