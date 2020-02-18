@@ -67,4 +67,4 @@ id	element	context	subject	predicate_label	predicate_uri	object_label	object_uri
 /Joe Smith	/ResponsibleParty	dataset	Joe Smith	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
 /Joe Smith	/ResponsibleParty	dataset	Joe Smith	member of	https://schema.org/memberOf	placeholder_object_label	placeholder_object_uri
 /Chase Gacho	/ResponsibleParty	dataset	Chase Gacho	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
-/Chase Gacho	/ResponsibleParty	dataset	Chase Gacho	member of	https://schema.org/memberOf		
+/Chase Gacho	/ResponsibleParty	dataset	Chase Gacho	member of	https://schema.org/memberOf	placeholder_object_label	placeholder_object_uri

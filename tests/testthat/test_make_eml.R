@@ -2109,7 +2109,8 @@ testthat::test_that('annotations', {
   eml <- make_eml(
     path = paste0(tempdir(), "/pkg_260/metadata_templates"),
     data.path = paste0(tempdir(), "/pkg_260/data_objects"),
-    eml.path = paste0(tempdir(), "/pkg_260/eml"),
+    # eml.path = paste0(tempdir(), "/pkg_260/eml"),
+    eml.path = "C:\\Users\\Colin\\Documents\\EDI\\data_sets\\eml22\\eml",
     dataset.title = "Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015",
     data.table = c("decomp.csv", "nitrogen.csv"),
     data.table.name = c("Decomp file name", "Nitrogen file name"),
@@ -2123,7 +2124,7 @@ testthat::test_that('annotations', {
     user.domain = "LTER",
     package.id = 'edi.141.1',
     return.obj = TRUE,
-    write.file = FALSE
+    write.file = TRUE
   )
   
   # EML is schema valid

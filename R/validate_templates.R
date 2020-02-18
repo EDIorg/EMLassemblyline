@@ -29,23 +29,20 @@ validate_templates <- function(fun.name, x){
     # make_eml() - annotations ------------------------------------------------
     # General criteria:
     # 1.) If no annotations.txt then send a best practice alert as a warning.
-    # 2.) annotations.txt should have at least one row
-    # 3.) Incomplete annotations results in warning.
-    # 4.) Missing dataset annotation results in warning (every data package
+    # 2.) Incomplete annotations results in warning.
+    # 3.) Missing dataset annotation results in warning (every data package
     #     should have one).
     # 4.) URIs are resolvable
     #
     # When dataTable is present:
     # 1.) Missing dataTable annotations results in warning
-    # 2.) Missing attribute annotations results in warning
-    # 3.) Missing unit annotations results in warning
+    # 2.) Missing dataTable attribute annotations results in warning
     #
     # When otherEntity is present:
     # 1.) Missing otherEntity annotations result in warning
     #
-    # When individualName is present:
-    # 1.) Missing individualName results in warning
-    # 2.) Missing organizationName results in warning
+    # When ResponsibleParty is present:
+    # 1.) Missing ResponsibleParty results in warning
     
     # make_eml() - annotations - general --------------------------------------
     
@@ -63,19 +60,8 @@ validate_templates <- function(fun.name, x){
         call. = FALSE
       )
       
-    } else if (!is.null(x$template$annotations.txt)) {
-      
-      # annotations.txt should have at least one row
-      
-      if (nrow(x$template$annotations.txt$content) != 0) {
-        stop(
-          paste0(
-            "annotations.txt cannot be empty. Remove this file from path or ",
-            "complete it."
-          ), 
-          call. = FALSE
-        )
-      }
+    } else if (!is.null(x$template$annotations.txt) & 
+               (nrow(x$template$annotations.txt$content) > 0)) {
       
       # Parameterize the annotations checks with a data frame of annotations.txt 
       # but with "" filled with NA_character_. This streamlines the code.
@@ -112,7 +98,7 @@ validate_templates <- function(fun.name, x){
       # Missing dataset annotation results in warning (every data package
       # should have one).
       
-      if (!any((anno$element == "dataset") & complete.cases(anno))) {
+      if (!any((anno$element == "/dataset") & complete.cases(anno))) {
         warning(
           paste0(
             "The dataset annotation is missing. Consider adding a highlevel ",
@@ -152,7 +138,7 @@ validate_templates <- function(fun.name, x){
         
         # Missing dataTable annotations results in warning
         
-        if (!any(anno$element == "dataTable")) {
+        if (!any(anno$element == "/dataTable")) {
           warning(
             paste0(
               "The dataTable annotation is missing. Consider adding an ",
@@ -163,27 +149,15 @@ validate_templates <- function(fun.name, x){
           )
         }
         
-        # Missing attribute annotations results in warning
+        # Missing dataTable attribute annotations results in warning
         
-        if (!any(anno$element == "attribute")) {
+        if (!any(anno$element == "/dataTable/attribute")) {
           warning(
             paste0(
-              "The attribute annotation is missing. Consider adding ",
-              "annotations that describe the columns of your data table(s). ",
-              "Add these to annotations.txt."
-            ),
-            call. = FALSE
-          )
-        }
-        
-        # Missing unit annotations results in warning
-        
-        if (!any(anno$element == "unit")) {
-          warning(
-            paste0(
-              "The unit annotation is missing. Consider adding annotations ",
-              "that describe the units of each column of your data table(s). ",
-              "Add these to annotations.txt."
+              "The dataTable attribute annotation is missing. Consider ",
+              "adding annotations that describe the columns of your data ",
+              "table(s) and the corresponding units. Add these to ",
+              "annotations.txt."
             ),
             call. = FALSE
           )
@@ -197,7 +171,7 @@ validate_templates <- function(fun.name, x){
         
         # Missing otherEntity annotations result in warning
         
-        if (!any(anno$element == "otherEntity")) {
+        if (!any(anno$element == "/otherEntity")) {
           warning(
             paste0(
               "The otherEntity annotation is missing. Consider adding an ",
@@ -210,40 +184,25 @@ validate_templates <- function(fun.name, x){
         
       }
       
-      # make_eml() - annotations - individualName -----------------------------
+      # make_eml() - annotations - ResponsibleParty ---------------------------
       
-      # FIXME: A WIP for annotating persons
-      # if (!is.null(x$template$personnel.txt)) {
-      #   
-      #   # Missing individualName results in warning
-      #   
-      #   if (!any(anno$element == "individualName")) {
-      #     warning(
-      #       paste0(
-      #         "The individualName annotation is missing. Consider adding an ",
-      #         "annotation that identifies the creator(s) of these data as a ",
-      #         "person. Add this to annotations.txt."
-      #       ),
-      #       call. = FALSE
-      #     )
-      #   }
-      #   
-      #   # make_eml() - annotations - organizationName -------------------------
-      #   
-      #   # Missing organizationName results in warning
-      #   
-      #   if (!any(anno$element == "organizationName")) {
-      #     warning(
-      #       paste0(
-      #         "The organizationName annotation is missing. Consider adding ",
-      #         "an annotation that describes the organization the creator(s) ",
-      #         " is associated with. Add this to annotations.txt."
-      #       ),
-      #       call. = FALSE
-      #     )
-      #   }
-      #   
-      # }
+      if (!is.null(x$template$personnel.txt)) {
+
+        # Missing ResponsibleParty results in warning
+
+        if (!any(anno$element == "/ResponsibleParty")) {
+          warning(
+            paste0(
+              "The ResponsibleParty annotation is missing. Consider adding ",
+              "an annotation that identifies the persons associated with ", 
+              "these data and the organizations they belong to. Add these to ",
+              "annotations.txt."
+            ),
+            call. = FALSE
+          )
+        }
+
+      }
       
     }
 

@@ -490,6 +490,14 @@ template_arguments <- function(
             blank.lines.skip = TRUE
           )
         )
+        
+        # FIXME: Remove the template if there's no content. This logic should 
+        # be applied to all tabular templates, perhaps at the end of
+        # template_arguments() after all templates have been read.
+        
+        if (nrow(output$x$template[[i]]$content) == 0) {
+          output$x$template[[i]] <- NULL
+        }
 
       } else {
 
