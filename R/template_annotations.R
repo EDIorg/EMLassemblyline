@@ -194,6 +194,67 @@ template_annotations <- function(
   
   message('Templating annotations ...')
   
+  # Set parameters ------------------------------------------------------------
+  
+  # Load default annotations to be added to the subjects found in eml
+  
+  if (!is.null(default.annotations)) {
+    
+    defs <- default.annotations
+    
+  } else {
+    
+    defs <- as.data.frame(
+      data.table::fread(
+        file = system.file(
+          '/templates/annotation_defaults.txt',
+          package = 'EMLassemblyline'
+        ),
+        colClasses = rep(
+          "character",
+          max(
+            utils::count.fields(
+              system.file(
+                '/templates/annotation_defaults.txt',
+                package = 'EMLassemblyline'
+              ),
+              sep = "\t"
+            )
+          )
+        ),
+        fill = TRUE,
+        blank.lines.skip = TRUE
+      )
+    )
+    
+  }
+  
+  # Initialize the annotations data frame that will be written to the 
+  # annotations.txt template file
+  
+  anno <- as.data.frame(
+    data.table::fread(
+      file = system.file(
+        '/templates/annotations.txt',
+        package = 'EMLassemblyline'
+      ),
+      colClasses = rep(
+        "character",
+        max(
+          utils::count.fields(
+            system.file(
+              '/templates/annotations.txt',
+              package = 'EMLassemblyline'
+            ),
+            sep = "\t"
+          )
+        )
+      ),
+      fill = TRUE,
+      blank.lines.skip = TRUE
+    )
+  )
+  
   # Create EML ----------------------------------------------------------------
   
   # Create the emld list object from which annotatable metadata will be 
@@ -260,75 +321,16 @@ template_annotations <- function(
     eml <- EMLassemblyline::read_eml(path, eml)
     
   }
-
-  # Set parameters ------------------------------------------------------------
   
-  # Load default annotations to be added to the subjects found in eml
-  
-  if (!is.null(default.annotations)) {
-
-    defs <- default.annotations
-    
-  } else {
-    
-    defs <- as.data.frame(
-      data.table::fread(
-        file = system.file(
-          '/templates/annotation_defaults.txt',
-          package = 'EMLassemblyline'
-        ),
-        colClasses = rep(
-          "character",
-          max(
-            utils::count.fields(
-              system.file(
-                '/templates/annotation_defaults.txt',
-                package = 'EMLassemblyline'
-              ),
-              sep = "\t"
-            )
-          )
-        ),
-        fill = TRUE,
-        blank.lines.skip = TRUE
-      )
-    )
-    
-  }
-
-  # Initialize the annotations data frame that will be written to the 
-  # annotations.txt template file
-  
-  anno <- as.data.frame(
-    data.table::fread(
-      file = system.file(
-        '/templates/annotations.txt',
-        package = 'EMLassemblyline'
-      ),
-      colClasses = rep(
-        "character",
-        max(
-          utils::count.fields(
-            system.file(
-              '/templates/annotations.txt',
-              package = 'EMLassemblyline'
-            ),
-            sep = "\t"
-          )
-        )
-      ),
-      fill = TRUE,
-      blank.lines.skip = TRUE
-    )
-  )
-  
-  # Gather annotatable elements and set default annotations -------------------
+  # Create annotations template -----------------------------------------------
   
   # A function for adding subjects to the annotations data frame (anno)
   
-  annotate_element <- function(element) {
+  create_anno <- function(element) {
     
-    # A helper function for adding rows to anno
+    # Helper functions --------------------------------------------------------
+    
+    # Add rows to anno
     
     append_anno <- function(id, element, context, subject) {
       for (i in 1:length(subject)) {
@@ -349,178 +351,154 @@ template_annotations <- function(
       anno
     }
     
-    # Gather subjects from the EML R list object (eml). NOTE: Annotatable 
+    # Create ids for anno
+    
+    create_id <- function(subject, context = NULL) {
+      if (is.null(context)) {
+        paste0("/", subject)
+      } else if (!is.null(context)) {
+        paste0("/", context, "/", subject)
+      }
+    }
+    
+    # Add ResponsibleParty to anno
+    
+    get_individualName <- function(x) {
+      
+      if (x == "eml$dataset$project$relatedProject"){
+        
+        lapply(
+          eval(parse(text = x)),
+          function(k) {
+            lapply(
+              k$personnel,
+              function(m) {
+                sub_i <- trimws(
+                  paste(unlist(m$individualName), collapse = " ")
+                )
+                sub_i <- stringr::str_replace(sub_i, "[:blank:]{2,}", " ")
+                anno <<- append_anno(
+                  id = create_id(sub_i),
+                  element = "/ResponsibleParty",
+                  context = "dataset",
+                  subject = sub_i
+                )
+              }
+            )
+          }
+        )
+        
+      } else {
+        
+        lapply(
+          eval(parse(text = x)),
+          function(k) {
+            sub_i <- trimws(
+              paste(unlist(k$individualName), collapse = " ")
+            )
+            sub_i <- stringr::str_replace(sub_i, "[:blank:]{2,}", " ")
+            anno <<- append_anno(
+              id = create_id(sub_i),
+              element = "/ResponsibleParty",
+              context = "dataset",
+              subject = sub_i
+            )
+          }
+        )
+        
+      }
+      
+    }
+    
+    # Gather subjects and set default annotations -----------------------------
+    
+    # Gather subjects from the emld list object (eml). NOTE: Annotatable 
     # children of a parent subject are gathered if supported (e.g. When a 
     # dataTable is present so are its attributes.).
     
     if (element == "dataset") {
       
-      # /dataset
-      
       anno <- append_anno(
-        id = "/dataset",
-        element = "/dataset",
+        id = create_id(element),
+        element = create_id(element),
         context = "eml",
-        subject = "dataset"
+        subject = element
       )
 
     } else if (element == "dataTable") {
-
-      # /dataTable
       
       if (!is.null(eml$dataset$dataTable)) {
-        
-        s <- unlist(
-          lapply(
-            eml$dataset$dataTable,
-            function(k) {
-              k$physical$objectName
-            }
-          )
-        )
-        
-        anno <- append_anno(
-          id = paste0("/", s),
-          element = "/dataTable",
-          context = rep("dataset", length(s)),
-          subject = s
-        )
-        
-        # /dataTable/attribute
-        
-        sc <- data.table::rbindlist(
-          lapply(
-            eml$dataset$dataTable,
-            function(k) {
-              suppressWarnings(
-                data.frame(
+        lapply(
+          eml$dataset$dataTable,
+          function(k) {
+            anno <<- append_anno(
+              id = create_id(k$physical$objectName),
+              element = "/dataTable",
+              context = "dataset",
+              subject = k$physical$objectName
+            )
+            lapply(
+              k$attributeList$attribute,
+              function(m) {
+                anno <<- append_anno(
+                  id = create_id(m$attributeName, k$physical$objectName),
+                  element = "/dataTable/attribute",
                   context = k$physical$objectName,
-                  subject = unlist(
-                    lapply(
-                      k$attributeList$attribute,
-                      function(m) {
-                        m$attributeName
-                      }
-                    )
-                  ), 
-                  stringsAsFactors = FALSE
+                  subject = m$attributeName
                 )
-              )
-            }
-          )
+              }
+            )
+          }
         )
-        
-        anno <- append_anno(
-          id = paste0("/", sc$context, "/", sc$subject),
-          element = "/dataTable/attribute",
-          context = sc$context,
-          subject = sc$subject
-        )
-        
       }
       
     } else if (element == "otherEntity") {
-      
-      # /otherEntity
-      
+
       if (!is.null(eml$dataset$otherEntity)) {
-        
-        s <- unlist(
-          lapply(
-            eml$dataset$otherEntity,
-            function(k) {
-              k$physical$objectName
-            }
-          )
+        lapply(
+          eml$dataset$otherEntity,
+          function(k) {
+            anno <<- append_anno(
+              id = create_id(k$physical$objectName),
+              element = "/otherEntity",
+              context = "dataset",
+              subject = k$physical$objectName
+            )
+          }
         )
-        
-        anno <- append_anno(
-          id = paste0("/", s),
-          element = "/otherEntity",
-          context = rep("dataset", length(s)),
-          subject = s
-        )
-        
+
       }
       
     } else if (element == "ResponsibleParty") {
       
-      # /ResponsibleParty
+      lapply(
+        c(
+          "eml$dataset$creator",
+          "eml$dataset$contact",
+          "eml$dataset$associatedParty",
+          "eml$dataset$project$personnel",
+          "eml$dataset$project$relatedProject"
+        ),
+        get_individualName
+      )
+      rp <- unique(anno[anno$element == "/ResponsibleParty", ])
+      anno <- rbind(
+        anno[anno$element != "/ResponsibleParty", ],
+        rp[rp$id != "/", ]
+      )
 
-      get_individualName <- function(x) {
-        
-        if (x == "eml$dataset$project$relatedProject") {
-          
-          unlist(
-            lapply(
-              eval(parse(text = x)),
-              function(k) {
-                lapply(
-                  k$personnel,
-                  function(m) {
-                    sub_i <- trimws(
-                      paste(unlist(m$individualName), collapse = " ")
-                    )
-                    stringr::str_replace(sub_i, "[:blank:]{2,}", " ")
-                  }
-                )
-              }
-            )
-          )
-          
-        } else {
-          
-          unlist(
-            lapply(
-              eval(parse(text = x)),
-              function(k) {
-                sub_i <- trimws(
-                  paste(unlist(k$individualName), collapse = " ")
-                )
-                stringr::str_replace(sub_i, "[:blank:]{2,}", " ")
-              }
-            )
-          )
-          
-        }
-        
-      }
-      
-      s <- unique(
-        unlist(
-          lapply(
-            c(
-              "eml$dataset$creator",
-              "eml$dataset$contact",
-              "eml$dataset$associatedParty",
-              "eml$dataset$project$personnel",
-              "eml$dataset$project$relatedProject"
-              ),
-            get_individualName
-          )
-        )
-      )
-      s <- s[s != ""]
-      
-      anno <- append_anno(
-        id = paste0("/", s),
-        element = "/ResponsibleParty",
-        context = rep("dataset", length(s)),
-        subject = s
-      )
-      
     }
     
     anno
     
   }
   
-  # Annotate elements
+  # Run create_anno() for each supported element ------------------------------
   
-  anno <- annotate_element("dataset")
-  anno <- annotate_element("dataTable")
-  anno <- annotate_element("otherEntity")
-  anno <- annotate_element("ResponsibleParty")
+  anno <- create_anno("dataset")
+  anno <- create_anno("dataTable")
+  anno <- create_anno("otherEntity")
+  anno <- create_anno("ResponsibleParty")
   
   # Write annotations.txt -----------------------------------------------------
   

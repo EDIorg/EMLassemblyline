@@ -1710,176 +1710,13 @@ make_eml <- function(
     anno[anno == ""] <- NA_character_
     anno <- anno[complete.cases(anno), ]
     
-    # FIXME: Consolidate ResponsibleParty annotation into a single function.
-    # Also ensure the ID creation rules are accurately represented in 
-    # template_annotations(). Furthermore, this section of code needs a title
-    # and explanation.
+    # Create ResponsibleParty data frame using the same structure as anno and
+    # which will be used to replace any existing ResponsibleParty in anno
+    # after unique IDs have been assigned to the corresponding elements and
+    # which will be converted to the anno_ls structure for inclusion in the
+    # /eml/dataset/annotations node.
     
     rp <- anno[0, ]
-    
-    if (!is.null(dataset$creator)) {
-      dataset$creator <- lapply(
-        dataset$creator,
-        function(k) {
-          sub_i <- paste(unlist(k$individualName), collapse = " ")
-          if (sub_i != "") {
-            k$id <- paste0(
-              unique(anno$id[anno$subject == sub_i]),
-              " ",
-              uuid::UUIDgenerate(use.time = TRUE)
-            )
-            rp <<- rbind(
-              rp,
-              suppressWarnings(
-                data.frame(
-                  id = k$id,
-                  anno[
-                    anno$subject == sub_i, 
-                    c("element", "context", "subject", "predicate_label", 
-                      "predicate_uri", "object_label", "object_uri")
-                  ]
-                  
-                )
-              )
-            )
-          }
-          k
-        }
-      )
-    }
-    
-    if (!is.null(dataset$contact)) {
-      dataset$contact <- lapply(
-        dataset$contact,
-        function(k) {
-          sub_i <- paste(unlist(k$individualName), collapse = " ")
-          if (sub_i != "") {
-            k$id <- paste0(
-              unique(anno$id[anno$subject == sub_i]),
-              " ",
-              uuid::UUIDgenerate(use.time = TRUE)
-            )
-            rp <<- rbind(
-              rp,
-              suppressWarnings(
-                data.frame(
-                  id = k$id,
-                  anno[
-                    anno$subject == sub_i, 
-                    c("element", "context", "subject", "predicate_label", 
-                      "predicate_uri", "object_label", "object_uri")
-                    ]
-                  
-                )
-              )
-            )
-          }
-          k
-        }
-      )
-    }
-    
-    if (!is.null(dataset$associatedParty)) {
-      dataset$associatedParty <- lapply(
-        dataset$associatedParty,
-        function(k) {
-          sub_i <- paste(unlist(k$individualName), collapse = " ")
-          if (sub_i != "") {
-            k$id <- paste0(
-              unique(anno$id[anno$subject == sub_i]),
-              " ",
-              uuid::UUIDgenerate(use.time = TRUE)
-            )
-            rp <<- rbind(
-              rp,
-              suppressWarnings(
-                data.frame(
-                  id = k$id,
-                  anno[
-                    anno$subject == sub_i, 
-                    c("element", "context", "subject", "predicate_label", 
-                      "predicate_uri", "object_label", "object_uri")
-                    ]
-                  
-                )
-              )
-            )
-          }
-          k
-        }
-      )
-    }
-    
-    if (!is.null(dataset$project$personnel)) {
-      dataset$project$personnel <- lapply(
-        dataset$project$personnel,
-        function(k) {
-          sub_i <- paste(unlist(k$individualName), collapse = " ")
-          if (sub_i != "") {
-            k$id <- paste0(
-              unique(anno$id[anno$subject == sub_i]),
-              " ",
-              uuid::UUIDgenerate(use.time = TRUE)
-            )
-            rp <<- rbind(
-              rp,
-              suppressWarnings(
-                data.frame(
-                  id = k$id,
-                  anno[
-                    anno$subject == sub_i, 
-                    c("element", "context", "subject", "predicate_label", 
-                      "predicate_uri", "object_label", "object_uri")
-                    ]
-                  
-                )
-              )
-            )
-          }
-          k
-        }
-      )
-    }
-    
-    if (!is.null(dataset$project$relatedProject)) {
-      dataset$project$relatedProject <- lapply(
-        dataset$project$relatedProject,
-        function(k) {
-          k$personnel <- lapply(
-            k$personnel,
-            function(m) {
-              sub_i <- paste(unlist(m$individualName), collapse = " ")
-              if (sub_i != "") {
-                m$id <- paste0(
-                  unique(anno$id[anno$subject == sub_i]),
-                  " ",
-                  uuid::UUIDgenerate(use.time = TRUE)
-                )
-                rp <<- rbind(
-                  rp,
-                  suppressWarnings(
-                    data.frame(
-                      id = m$id,
-                      anno[
-                        anno$subject == sub_i, 
-                        c("element", "context", "subject", "predicate_label", 
-                          "predicate_uri", "object_label", "object_uri")
-                        ]
-                      
-                    )
-                  )
-                )
-              }
-              m
-            }
-          )
-          k
-        }
-      )
-    }
-    
-    anno <- anno[anno$element != "/ResponsibleParty", ]
-    anno <- rbind(anno, rp)
     
     # Convert annotations into the list structure expected by EML::
     
@@ -1898,69 +1735,294 @@ make_eml <- function(
         )
       }
     )
-
+    
     # Match subjects to their annotations. Target EML sub-trees where the 
     # subjects occur, extract their values and, when not unique, their context,
     # then use these as keys to annotations.txt from which UUIDs and predicate
     # + object metadata is retrieved and assigned.
-
-    if (!is.null(dataset)) {
-      sub_i <- "dataset"
-      dataset$id <- anno$id[anno$subject == sub_i]
-      dataset$annotation <- anno_ls[anno$subject == sub_i]
-    }
     
-    # FIXME: Create single function for entity and attribute
-    if (!is.null(dataset$dataTable)) {
-      dataset$dataTable <- lapply(
-        dataset$dataTable,
-        function(k) {
-          sub_i <- k$physical$objectName
-          if (sub_i != "") {
-            k$id <- unique(anno$id[anno$subject == sub_i])
-            k$annotation <- anno_ls[anno$subject == sub_i]
-          }
-          k
+    annotate_element <- function(element) {
+      
+      if (element == "dataset") {
+        
+        if (!is.null(dataset)) {
+          sub_i <- element
+          dataset$id <- unique(anno$id[anno$subject == sub_i])
+          dataset$annotation <- anno_ls[anno$subject == sub_i]
         }
-      )
-    }
-    
-    if (!is.null(dataset$dataTable)) {
-      dataset$dataTable <- lapply(
-        dataset$dataTable,
-        function(k) {
-          con_i <- k$physical$objectName
-          k$attributeList$attribute <- lapply(
-            k$attributeList$attribute,
-            function(m) {
-              sub_i <- m$attributeName
-              use_i <- (anno$subject == sub_i) & (anno$context == con_i)
-              m$id <- unique(anno$id[use_i])
-              m$annotation <- anno_ls[use_i]
-              m
+        
+      } else if (element == "dataTable") {
+        
+        if (!is.null(dataset$dataTable)) {
+          lapply(
+            seq_along(dataset$dataTable),
+            function(k) {
+              sub_i <- dataset$dataTable[[k]]$physical$objectName
+              if (sub_i != "") {
+                dataset$dataTable[[k]]$id <<- unique(anno$id[anno$subject == sub_i])
+                dataset$dataTable[[k]]$annotation <<- anno_ls[anno$subject == sub_i]
+              }
+              lapply(
+                seq_along(dataset$dataTable[[k]]$attributeList$attribute), 
+                function(m) {
+                  sub_i <- dataset$dataTable[[k]]$attributeList$attribute[[m]]$attributeName
+                  con_i <- dataset$dataTable[[k]]$physical$objectName
+                  use_i <- (anno$subject == sub_i) & (anno$context == con_i)
+                  dataset$dataTable[[k]]$attributeList$attribute[[m]]$id <<- unique(anno$id[use_i])
+                  dataset$dataTable[[k]]$attributeList$attribute[[m]]$annotation <<- anno_ls[use_i]
+                }
+              )
+              
             }
           )
-          k
         }
-      )
-    }
-
-    if (!is.null(dataset$otherEntity)) {
-      dataset$otherEntity <- lapply(
-        dataset$otherEntity,
-        function(k) {
-          sub_i <- k$physical$objectName
-          if (sub_i != "") {
-            k$id <- unique(anno$id[anno$subject == sub_i])
-            k$annotation <- anno_ls[anno$subject == sub_i]
-          }
-          k
+        
+      } else if (element == "otherEntity") {
+        
+        if (!is.null(dataset$otherEntity)) {
+          lapply(
+            seq_along(dataset$otherEntity),
+            function(k) {
+              sub_i <- dataset$otherEntity[[k]]$physical$objectName
+              if (sub_i != "") {
+                dataset$otherEntity[[k]]$id <<- unique(anno$id[anno$subject == sub_i])
+                dataset$otherEntity[[k]]$annotation <<- anno_ls[anno$subject == sub_i]
+              }
+              k
+            }
+          )
         }
-      )
+        
+      } else if (element == "ResponsibleParty") {
+        
+        # FIXME: Consolidate ResponsibleParty annotation into a single function.
+        # Also ensure the ID creation rules are accurately represented in 
+        # template_annotations(). Furthermore, this section of code needs a title
+        # and explanation.
+        
+        if (!is.null(dataset$creator)) {
+          dataset$creator <- lapply(
+            dataset$creator,
+            function(k) {
+              sub_i <- paste(unlist(k$individualName), collapse = " ")
+              if (sub_i != "") {
+                k$id <- paste0(
+                  unique(anno$id[anno$subject == sub_i]),
+                  " ",
+                  uuid::UUIDgenerate(use.time = TRUE)
+                )
+                rp <<- rbind(
+                  rp,
+                  suppressWarnings(
+                    data.frame(
+                      id = k$id,
+                      anno[
+                        anno$subject == sub_i, 
+                        c("element", "context", "subject", "predicate_label", 
+                          "predicate_uri", "object_label", "object_uri")
+                        ]
+                      
+                    )
+                  )
+                )
+              }
+              k
+            }
+          )
+        }
+        
+        if (!is.null(dataset$contact)) {
+          dataset$contact <- lapply(
+            dataset$contact,
+            function(k) {
+              sub_i <- paste(unlist(k$individualName), collapse = " ")
+              if (sub_i != "") {
+                k$id <- paste0(
+                  unique(anno$id[anno$subject == sub_i]),
+                  " ",
+                  uuid::UUIDgenerate(use.time = TRUE)
+                )
+                rp <<- rbind(
+                  rp,
+                  suppressWarnings(
+                    data.frame(
+                      id = k$id,
+                      anno[
+                        anno$subject == sub_i, 
+                        c("element", "context", "subject", "predicate_label", 
+                          "predicate_uri", "object_label", "object_uri")
+                        ]
+                      
+                    )
+                  )
+                )
+              }
+              k
+            }
+          )
+        }
+        
+        if (!is.null(dataset$associatedParty)) {
+          dataset$associatedParty <- lapply(
+            dataset$associatedParty,
+            function(k) {
+              sub_i <- paste(unlist(k$individualName), collapse = " ")
+              if (sub_i != "") {
+                k$id <- paste0(
+                  unique(anno$id[anno$subject == sub_i]),
+                  " ",
+                  uuid::UUIDgenerate(use.time = TRUE)
+                )
+                rp <<- rbind(
+                  rp,
+                  suppressWarnings(
+                    data.frame(
+                      id = k$id,
+                      anno[
+                        anno$subject == sub_i, 
+                        c("element", "context", "subject", "predicate_label", 
+                          "predicate_uri", "object_label", "object_uri")
+                        ]
+                      
+                    )
+                  )
+                )
+              }
+              k
+            }
+          )
+        }
+        
+        if (!is.null(dataset$project$personnel)) {
+          dataset$project$personnel <- lapply(
+            dataset$project$personnel,
+            function(k) {
+              sub_i <- paste(unlist(k$individualName), collapse = " ")
+              if (sub_i != "") {
+                k$id <- paste0(
+                  unique(anno$id[anno$subject == sub_i]),
+                  " ",
+                  uuid::UUIDgenerate(use.time = TRUE)
+                )
+                rp <<- rbind(
+                  rp,
+                  suppressWarnings(
+                    data.frame(
+                      id = k$id,
+                      anno[
+                        anno$subject == sub_i, 
+                        c("element", "context", "subject", "predicate_label", 
+                          "predicate_uri", "object_label", "object_uri")
+                        ]
+                      
+                    )
+                  )
+                )
+              }
+              k
+            }
+          )
+        }
+        
+        if (!is.null(dataset$project$relatedProject)) {
+          dataset$project$relatedProject <- lapply(
+            dataset$project$relatedProject,
+            function(k) {
+              k$personnel <- lapply(
+                k$personnel,
+                function(m) {
+                  sub_i <- paste(unlist(m$individualName), collapse = " ")
+                  if (sub_i != "") {
+                    m$id <- paste0(
+                      unique(anno$id[anno$subject == sub_i]),
+                      " ",
+                      uuid::UUIDgenerate(use.time = TRUE)
+                    )
+                    rp <<- rbind(
+                      rp,
+                      suppressWarnings(
+                        data.frame(
+                          id = m$id,
+                          anno[
+                            anno$subject == sub_i, 
+                            c("element", "context", "subject", "predicate_label", 
+                              "predicate_uri", "object_label", "object_uri")
+                            ]
+                          
+                        )
+                      )
+                    )
+                  }
+                  m
+                }
+              )
+              k
+            }
+          )
+        }
+        
+      }
+      
+      dataset
+      
     }
     
+    # Annotate elements
+    
+    dataset <- annotate_element("dataset")
+    dataset <- annotate_element("dataTable")
+    dataset <- annotate_element("otherEntity")
+    dataset <- annotate_element("ResponsibleParty")
+    
+    # Replace ResponsibleParty in anno with expanded ResponsibleParty in rp and 
+    # update anno_ls so all annotations listed in /eml/dataset/annotations will
+    # have the correct ID pairing
+    
+    anno <- anno[anno$element != "/ResponsibleParty", ]
+    anno <- rbind(anno, rp)
+    
+    # FIXME: A patch for EML:: which fails to include "/" of the id attribute
+    # of EML elements within /eml/dataset but includes it in 
+    # /eml/dataset/annotations    
+    anno$id <- stringr::str_remove(anno$id, "^/")
+    
+    anno_ls <- lapply(
+      seq(length(anno$id)),
+      function(k) {
+        list(
+          propertyURI = list(
+            anno$predicate_uri[k],
+            label = anno$predicate_label[k]
+          ),
+          valueURI = list(
+            anno$object_uri[k],
+            label = anno$object_label[k]
+          )
+        )
+      }
+    )
+    
     # Create the /dataset/annotations node and append below.
-
+    
+    annotations <- list(
+      annotation = lapply(
+        seq_along(anno_ls),
+        function(k) {
+          list(
+            references = anno$id[k],
+            propertyURI = list(
+              label = anno_ls[[k]]$propertyURI$label,
+              propertyURI = anno_ls[[k]]$propertyURI[[1]]
+            ),
+            valueURI = list(
+              label = anno_ls[[k]]$valueURI$label,
+              valueURI = anno_ls[[k]]$valueURI[[1]]
+            )
+          )
+        }
+      )
+    )
+    
   }
 
   # Compile nodes -------------------------------------------------------------
@@ -2010,34 +2072,11 @@ make_eml <- function(
     
   }
   
-  # Add all annotations to /eml/dataset/annotations
+  # Add the annotations element created above
   
-  # eml$annotations$annotation <- lapply(
-  #   seq_along(anno_ls),
-  #   function(k) {
-  #     browser()
-  #     o <- anno_ls[[k]]
-  #     o$references <- names(anno_ls)[k]
-  #     o
-  #   }
-  # )
-  
-  # eml$annotations$annotation <- lapply(
-  #   seq_along(anno_ls),
-  #   function(k) {
-  #     list(
-  #       references = names(anno_ls)[k],
-  #       propertyURI = list(
-  #         label = anno_ls[[k]]$propertyURI$label,
-  #         propertyURI = anno_ls[[k]]$propertyURI[[1]]
-  #       ),
-  #       valueURI = list(
-  #         label = anno_ls[[k]]$valueURI$label,
-  #         valueURI = anno_ls[[k]]$valueURI[[1]]
-  #       )
-  #     )
-  #   }
-  # )
+  if (any(stringr::str_detect(names(x$template), "annotations.txt"))) {
+    eml$annotations <- annotations
+  }
 
   message('</eml>')
   

@@ -204,7 +204,6 @@ template_table_attributes <- function(
       rows <- ncol(x$data.table[[i]]$content)
       
       attributes[[i]] <- data.frame(
-        id = character(rows),
         attributeName = character(rows),
         attributeDefinition = character(rows),
         class = character(rows),
@@ -294,12 +293,6 @@ template_table_attributes <- function(
       if (sum(use_i) > 0){
         attributes[[i]]$dateTimeFormatString[use_i] <- "!Add datetime specifier here!"
       }
-      
-      # Assign unique identifiers to each attribute
-      attributes[[i]]$id <- replicate(
-        n = nrow(attributes[[i]]), 
-        expr = uuid::UUIDgenerate(use.time = TRUE)
-      )
       
       # Write template to file or add template to x$template$attributes_*.txt$content
       
