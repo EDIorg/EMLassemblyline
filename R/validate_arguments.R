@@ -27,6 +27,75 @@ validate_arguments <- function(fun.name, fun.args){
   use_i <- sapply(fun.args, function(X) identical(X, quote(expr=)))
   fun.args[use_i] <- list(NULL)
   
+  # Call from annotate_eml() --------------------------------------------------
+  
+  if (fun.name == 'annotate_eml'){
+    
+    # annotations
+    
+    if (is.null(fun.args$annotations)) {
+      stop('Input argument "annotations" is missing.', call. = FALSE)
+    }
+    
+    if (is.character(fun.args$annotations)) {
+      if (!file.exists(fun.args$annotations)) {
+        stop(
+          paste0(
+            "The file specified by the input argument 'annotations' doesn't ",
+            "exist."
+          ), 
+          call. = FALSE
+        )
+      } 
+    } else if (!is.data.frame(fun.args$annotations)) {
+      stop(
+        "Input argument 'annotations' is not one of the two supported types.", 
+        call. = FALSE
+      )
+    }
+    
+    # eml.in
+    
+    if (is.null(fun.args$eml.in)) {
+      stop('Input argument "eml.in" is missing.', call. = FALSE)
+    }
+    
+    if (is.character(fun.args$eml.in)) {
+      if (!file.exists(fun.args$eml.in)) {
+        stop(
+          paste0(
+            "The file specified by the input argument 'eml.in' doesn't ",
+            "exist."
+          ), 
+          call. = FALSE
+        )
+      } else {
+        eml <- EML::read_eml(eml.in)
+        if (!EML::eml_validate(eml)) {
+          stop(
+            "Input argument 'eml.in' is not a valid EML record.", 
+            call. = FALSE
+          )
+        }
+      }
+    } else if (!any(class(fun.args$eml.in) %in% c("emld", "list"))) {
+      stop(
+        "Input argument 'eml.in' is not one of the two supported types.", 
+        call. = FALSE
+      )
+    }
+    
+    # eml.out
+    
+    if (!dir.exists(dirname(eml.out))) {
+      stop(
+        "Input argument 'eml.out' uses a non-existant path.", 
+        call. = FALSE
+      )
+    }
+    
+  }
+  
   # Call from define_catvars() ------------------------------------------------
   
   if (fun.name == 'define_catvars'){
@@ -775,6 +844,5 @@ validate_arguments <- function(fun.name, fun.args){
     }
   
   }
-  
-  
+
 }

@@ -82,11 +82,12 @@
 #'     
 #'     To set your own annotation defaults, copy the EMLassemblyline defaults 
 #'     file 
-#'     (\code{file.copy(from = system.file("/templates/annotation_defaults.txt", package = "EMLassemblyline"), to = path)}, where path is where you want the file written to)
-#'     then change the values in the predicate_label, predicate_uri, 
-#'     object_label, and object_uri fields, save the file, and then read this 
-#'     file into a data frame and supply to the \code{default.annotations} 
-#'     argument of \code{template_annotations()}.
+#'     (\code{file.copy(from = system.file("/templates/annotation_defaults.txt", package = "EMLassemblyline"), to = path)}, 
+#'     where path is where you want the file written to) then change the values 
+#'     in the predicate_label, predicate_uri, object_label, and object_uri 
+#'     fields, save the file, and then read this file into a data frame and 
+#'     supply to the \code{default.annotations} argument of 
+#'     \code{template_annotations()}.
 #'     
 #'     The id and element fields of annotations.txt are keys to locate the 
 #'     subjects within the EML and to annotate them with the corresponding 
@@ -105,7 +106,8 @@
 #'       file.name is the name of your dataTable file and column.name is the 
 #'       name of the column in the file.name) and use "/dataTable/attribute" 
 #'       for the element.}
-#'       \item{ResponsibleParty}{Use \code{paste0("/", paste(first.name, middle.name, last.name, collapse = " "))}
+#'       \item{ResponsibleParty}{Use 
+#'       \code{paste0("/", paste(first.name, middle.name, last.name, collapse = " "))}
 #'       for the id (where first.name and middle.name are the persons first and 
 #'       middle given names, respectively (more than one middle name works too
 #'       ), and last.name is the persons surname).}
@@ -230,7 +232,8 @@ template_annotations <- function(
   }
   
   # Initialize the annotations data frame that will be written to the 
-  # annotations.txt template file
+  # annotations.txt template file. Each annotatable element will be
+  # added to this data frame as they are gathered.
   
   anno <- as.data.frame(
     data.table::fread(
@@ -257,8 +260,8 @@ template_annotations <- function(
   
   # Create EML ----------------------------------------------------------------
   
-  # Create the emld list object from which annotatable metadata will be 
-  # extracted. Create this object from metadata templates 
+  # Create the emld list object from which annotatable elements will be 
+  # extracted. Create this object from either the metadata templates 
   # (i.e. EMLassemblyline::make_eml()) or from an EML file (i.e. 
   # EMLassemblyline::read_eml()).
   
@@ -318,13 +321,16 @@ template_annotations <- function(
     
   } else {
     
+    # Read an EML file
+    
     eml <- EMLassemblyline::read_eml(path, eml)
     
   }
   
   # Create annotations template -----------------------------------------------
   
-  # A function for adding subjects to the annotations data frame (anno)
+  # A function for adding annotatable elements to the annotations data frame 
+  # (anno)
   
   create_anno <- function(element) {
     
@@ -410,11 +416,15 @@ template_annotations <- function(
       
     }
     
-    # Gather subjects and set default annotations -----------------------------
+    # Gather annotatable elements and set default annotations -----------------
     
-    # Gather subjects from the emld list object (eml). NOTE: Annotatable 
-    # children of a parent subject are gathered if supported (e.g. When a 
-    # dataTable is present so are its attributes.).
+    # Gather annotatable elements from the emld list object (eml). NOTE: 
+    # Annotatable children elements of a parent are gathered if supported (e.g. 
+    # When a dataTable is present so are its attributes.). Currently supported
+    # elements are: dataset, dataTable, dataTable/attribute, otherEntity and
+    # ResponsibleParty. Unique responsible parties are added to anno so the 
+    # user doesn't have to expend superfluous effort annotating these multiple
+    # times when recurring throughout the EML.
     
     if (element == "dataset") {
       
@@ -500,7 +510,7 @@ template_annotations <- function(
   anno <- create_anno("otherEntity")
   anno <- create_anno("ResponsibleParty")
   
-  # Write annotations.txt -----------------------------------------------------
+  # Write to file -------------------------------------------------------------
   
   data.table::fwrite(
     x = anno,
@@ -608,7 +618,17 @@ read_eml <- function(path, eml) {
         function(k) {
           if ((length(eval(parse(text = paste0(path.parent, "[[", k, "]]", path.child)))) > 1) & 
               (!is.null(names(eval(parse(text = paste0(path.parent, "[[", k, "]]", path.child))))))) {
-            eval(parse(text = paste0(path.parent, "[[", k, "]]", path.child, " <<- list(",paste0(path.parent, "[[", k, "]]", path.child), ")")))
+            
+            eval(
+              parse(
+                text = paste0(
+                  path.parent, "[[", k, "]]", path.child, 
+                  " <<- list(", 
+                  paste0(path.parent, "[[", k, "]]", path.child), ")"
+                )
+              )
+            )
+            
           }
         }
       )

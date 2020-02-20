@@ -85,11 +85,12 @@ This function runs \code{EMLassemblyline::make_eml()} to get the EML
     
     To set your own annotation defaults, copy the EMLassemblyline defaults 
     file 
-    (\code{file.copy(from = system.file("/templates/annotation_defaults.txt", package = "EMLassemblyline"), to = path)}, where path is where you want the file written to)
-    then change the values in the predicate_label, predicate_uri, 
-    object_label, and object_uri fields, save the file, and then read this 
-    file into a data frame and supply to the \code{default.annotations} 
-    argument of \code{template_annotations()}.
+    (\code{file.copy(from = system.file("/templates/annotation_defaults.txt", package = "EMLassemblyline"), to = path)}, 
+    where path is where you want the file written to) then change the values 
+    in the predicate_label, predicate_uri, object_label, and object_uri 
+    fields, save the file, and then read this file into a data frame and 
+    supply to the \code{default.annotations} argument of 
+    \code{template_annotations()}.
     
     The id and element fields of annotations.txt are keys to locate the 
     subjects within the EML and to annotate them with the corresponding 
@@ -108,7 +109,8 @@ This function runs \code{EMLassemblyline::make_eml()} to get the EML
       file.name is the name of your dataTable file and column.name is the 
       name of the column in the file.name) and use "/dataTable/attribute" 
       for the element.}
-      \item{ResponsibleParty}{Use \code{paste0("/", paste(first.name, middle.name, last.name, collapse = " "))}
+      \item{ResponsibleParty}{Use 
+      \code{paste0("/", paste(first.name, middle.name, last.name, collapse = " "))}
       for the id (where first.name and middle.name are the persons first and 
       middle given names, respectively (more than one middle name works too
       ), and last.name is the persons surname).}

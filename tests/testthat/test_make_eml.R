@@ -2086,7 +2086,7 @@ testthat::test_that('geographicCoverage', {
 
 # annotations -----------------------------------------------------------------
 
-testthat::test_that('annotations', {
+testthat::test_that('annotation characteristics', {
   
   # Parameterize
   
@@ -2102,6 +2102,148 @@ testthat::test_that('annotations', {
   unlink(
     paste0(tempdir(), "/pkg_260/metadata_templates/taxonomic_coverage.txt"), 
     force = TRUE
+  )
+  
+  # Call make_eml() with a completed annotations.txt template
+  
+  eml <- make_eml(
+    path = paste0(tempdir(), "/pkg_260/metadata_templates"),
+    data.path = paste0(tempdir(), "/pkg_260/data_objects"),
+    eml.path = paste0(tempdir(), "/pkg_260/eml"),
+    dataset.title = "Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015",
+    data.table = c("decomp.csv", "nitrogen.csv"),
+    data.table.name = c("Decomp file name", "Nitrogen file name"),
+    data.table.description = c("Decomposition data description", "Nitrogen data description"),
+    other.entity = c("ancillary_data.zip", "processing_and_analysis.R"),
+    other.entity.name = c("Ancillary data name", "Processing and analysis name"),
+    other.entity.description = c("Ancillary data description", "Processing and analysis description"),
+    temporal.coverage = c('2014-05-01', '2015-10-31'),
+    maintenance.description = 'completed',
+    user.id = "someuserid",
+    user.domain = "LTER",
+    package.id = 'edi.141.1',
+    return.obj = TRUE,
+    write.file = FALSE
+  )
+  
+  # EML is schema valid
+  
+  expect_true(
+    EML::eml_validate(eml)
+  )
+  
+  # Clean up
+  
+  unlink(
+    paste0(tempdir(), "/pkg_260"), 
+    recursive = TRUE, 
+    force = TRUE
+  )
+
+})
+
+testthat::test_that("annotation of annotatable elements is not required", {
+  
+  # Parameterize
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260", 
+      package = "EMLassemblyline"
+    ),
+    to = tempdir(),
+    recursive = TRUE
+  )
+  
+  unlink(
+    paste0(tempdir(), "/pkg_260/metadata_templates/taxonomic_coverage.txt"), 
+    force = TRUE
+  )
+  
+  # Randomly remove annotations from the annotations template
+  
+  df <- data.table::fread(
+    paste0(tempdir(), "/pkg_260/metadata_templates/annotations.txt")
+  )
+  
+  df <- df[sample(seq(nrow(df)), round(nrow(df)/2)), ]
+  
+  data.table::fwrite(
+    df, 
+    paste0(tempdir(), "/pkg_260/metadata_templates/annotations.txt"), 
+    sep = "\t"
+  )
+  
+  # Call make_eml() with a completed annotations.txt template
+  
+  eml <- make_eml(
+    path = paste0(tempdir(), "/pkg_260/metadata_templates"),
+    data.path = paste0(tempdir(), "/pkg_260/data_objects"),
+    eml.path = paste0(tempdir(), "/pkg_260/eml"),
+    dataset.title = "Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015",
+    data.table = c("decomp.csv", "nitrogen.csv"),
+    data.table.name = c("Decomp file name", "Nitrogen file name"),
+    data.table.description = c("Decomposition data description", "Nitrogen data description"),
+    other.entity = c("ancillary_data.zip", "processing_and_analysis.R"),
+    other.entity.name = c("Ancillary data name", "Processing and analysis name"),
+    other.entity.description = c("Ancillary data description", "Processing and analysis description"),
+    temporal.coverage = c('2014-05-01', '2015-10-31'),
+    maintenance.description = 'completed',
+    user.id = "someuserid",
+    user.domain = "LTER",
+    package.id = 'edi.141.1',
+    return.obj = TRUE,
+    write.file = FALSE
+  )
+  
+  # EML is schema valid
+  
+  expect_true(
+    EML::eml_validate(eml)
+  )
+  
+  # Clean up
+  
+  unlink(
+    paste0(tempdir(), "/pkg_260"), 
+    recursive = TRUE, 
+    force = TRUE
+  )
+  
+})
+
+testthat::test_that("multiple annotations to one element is supported", {
+  
+  # Parameterize
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260", 
+      package = "EMLassemblyline"
+    ),
+    to = tempdir(),
+    recursive = TRUE
+  )
+  
+  unlink(
+    paste0(tempdir(), "/pkg_260/metadata_templates/taxonomic_coverage.txt"), 
+    force = TRUE
+  )
+  
+  # Add > 1 annotation to all unique elements within the annotations template
+  
+  df <- data.table::fread(
+    paste0(tempdir(), "/pkg_260/metadata_templates/annotations.txt")
+  )
+  
+  for (i in unique(df$element)) {
+    df <- rbind(df, df[match(i, df$element)[1], ])
+  }
+  
+  data.table::fwrite(
+    df, 
+    paste0(tempdir(), "/pkg_260/metadata_templates/annotations.txt"), 
+    sep = "\t"
   )
   
   # Call make_eml() with a completed annotations.txt template
@@ -2140,8 +2282,6 @@ testthat::test_that('annotations', {
     recursive = TRUE, 
     force = TRUE
   )
-  
-  
   
 })
 

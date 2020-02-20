@@ -18,15 +18,15 @@
 #' @details
 #'     Validation checks are function specific.
 #'
-
+#'
 validate_templates <- function(fun.name, x){
   
-  # make_eml() ----------------------------------------------------------------
-  # If called from make_eml()
   
-  if (fun.name == 'make_eml'){
+  
+  # Helper functions ----------------------------------------------------------
+  
+  validate_annotations <- function(x) {
     
-    # make_eml() - annotations ------------------------------------------------
     # General criteria:
     # 1.) If no annotations.txt then send a best practice alert as a warning.
     # 2.) Incomplete annotations results in warning.
@@ -44,7 +44,7 @@ validate_templates <- function(fun.name, x){
     # When ResponsibleParty is present:
     # 1.) Missing ResponsibleParty results in warning
     
-    # make_eml() - annotations - general --------------------------------------
+    # general -----------------------------------------------------------------
     
     if (is.null(x$template$annotations.txt)) {
       
@@ -132,7 +132,7 @@ validate_templates <- function(fun.name, x){
       # resolve_uri(anno$predicate_uri, "predicate_uri")
       # resolve_uri(anno$object_uri, "object_uri")
       
-      # make_eml() - annotations - dataTable ----------------------------------
+      # dataTable -------------------------------------------------------------
       
       if (!is.null(names(x$data.table))) {
         
@@ -165,7 +165,7 @@ validate_templates <- function(fun.name, x){
         
       }
       
-      # make_eml() - annotations - otherEntity ------------------------------
+      # otherEntity -----------------------------------------------------------
       
       if (!is.null(names(x$other.entity))) {
         
@@ -184,12 +184,12 @@ validate_templates <- function(fun.name, x){
         
       }
       
-      # make_eml() - annotations - ResponsibleParty ---------------------------
+      # ResponsibleParty ------------------------------------------------------
       
       if (!is.null(x$template$personnel.txt)) {
-
+        
         # Missing ResponsibleParty results in warning
-
+        
         if (!any(anno$element == "/ResponsibleParty")) {
           warning(
             paste0(
@@ -201,11 +201,25 @@ validate_templates <- function(fun.name, x){
             call. = FALSE
           )
         }
-
+        
       }
       
     }
-
+  }
+  
+  if (fun.name == "annotate_eml") {
+    
+    # annotate_eml() - annotations --------------------------------------------
+    
+    validate_annotations(x)
+    
+  }
+  
+  if (fun.name == 'make_eml'){
+    
+    # make_eml() - annotations ------------------------------------------------
+    
+    validate_annotations(x)
         
     # make_eml() - units ------------------------------------------------------
     
