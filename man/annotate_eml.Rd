@@ -25,13 +25,12 @@ Accepted versions of the emld list object can be created by
 Annotate an EML file (.xml) or an emld list object.
 }
 \note{
-All annotatable elements are assigned IDs and their annotations are 
+All annotated elements are assigned ids and their annotations are 
     placed both immediately under the parent element (subject) when 
-    supported and within the /eml/dataset/annotations node through 
-    references. This redundant approach supports variation in where EML 
-    metadata consumers harvest this information and supports the 
-    extensibility of annotating elements requiring 
-    /eml/dataset/annotations references.
+    supported and within the /eml/annotations node through id+reference 
+    pairs. This redundant approach supports variation in where EML metadata 
+    consumers harvest this information and supports annotation of EML 
+    elements requiring id+references.
 }
 \examples{
 
