@@ -1,38 +1,20 @@
-# EMLassemblyline 2.8.1
+# EMLassemblyline 2.7.0
 
 ## Enhancements
 
-* __Validate units ([issue #38](https://github.com/EDIorg/EMLassemblyline/issues/38)):__ Check that all numeric attributes have corresponding units and these units can be found in the EML standard unit dictionary or the custom_units.txt template. If not, then throw an error along with recommendations for fixing the issue. This check is called from make_eml().
+* __File names containing spaces caused `template_categorical_variables()` to crash ([issue #25](https://github.com/EDIorg/EMLassemblyline/issues/25)):__ Errors occurred when input file names contained spaces. Using spaces is still a common practice among users. To accommodate this while continuing to promote best practices, the naming restriction has been relaxed and the best practices have been made a warning. The function checking file presence and naming conventions is `EDIutils::validate_file_name()`. An explicit file name specification (i.e. including extension) is now required, which precludes errors when the same file name is used among different file types in the same directory.
+* __Validate units ([issue #38](https://github.com/EDIorg/EMLassemblyline/issues/38)):__ Check that all numeric attributes have corresponding units and these units can be found in the EML standard unit dictionary or the custom_units.txt template. If not, then throw an error along with directions for fixing the issue. This check is called from make_eml().
+* __Multiple inputs to `template_taxonomic_coverage()`:__ If the taxa of a dataset are in more than one table, then a user would want to extract the unique taxa from all the tables and compile into the taxonomic_coverage.txt template. Multiple inputs to the `taxa.table` and `taxa.col` arguments is now supported.
 
 ## Bug fixes
 
-* __Entity Name ([issue #24](https://github.com/EDIorg/EMLassemblyline/issues/24)):__ Content from `data.table.description` in `make_eml()` was used to fill in the entity name. However, they are not the same and entity name should be specified separately. This was fixed by adding `data.table.name` and `other.entity.name` as arguments to `make_eml()`. The fix defaults `data.table.name` to `data.table` and `other.entity.name` to `other.entity` with a warning message.
-
-# EMLassemblyline 2.8.0
-
-## Enhancements
-
-* __File names containing spaces cause template_categorical_variables() crash ([issue #25](https://github.com/EDIorg/EMLassemblyline/issues/25)):__ Errors occurred when input file names contained spaces. Using spaces is still a common practice among users. To accommodate this while continuing to promote best practices, the naming restriction has been relaxed and the best practices have been made a warning. The function checking file presence and naming conventions is EDIutils::validate_file_name(). Implementation in EMLassemblyline has been adjusted. An explicit file name specification (i.e. including extension) is now required, which breaks backwards compatibility but precludes errors when the same file name is used among different file types in the same directory.
- 
-
-# EMLassemblyline 2.7.2
-
-## Bug fixes
-
-* __NULL output from `template_geographic_coverage()` ([issue #32](https://github.com/EDIorg/EMLassemblyline/issues/32)):__ NULL was output from this function when `empty = TRUE`, which is mostly a cosmetic issue. This was fixed by implementing some simple logic.
-* __geographic_coverage.txt fields mixed up when translated to EML ([issue #43](https://github.com/EDIorg/EMLassemblyline/issues/43)):__ Further testing revealed the bug didn't exist.
+* __EML schema validation:__ Schema validation in `make_eml()` began failing with release of the dependency libary EML 2.0.2. This has been fixed.
 * __Support `;` delimiters:__ Data tables with semi-colon delimiters were not supported. This was fixed by updating `EDIutils::detect_delimiter()` ([issue #6](https://github.com/EDIorg/EDIutils/issues/6) of the EDIutils package).
+* __Entity Name ([issue #24](https://github.com/EDIorg/EMLassemblyline/issues/24)):__ Content from `data.table.description` in `make_eml()` was used to fill in the entity name. However, they are not the same and entity name should be specified separately. This was fixed by adding `data.table.name` and `other.entity.name` as arguments to `make_eml()`. The fix defaults `data.table.name` to `data.table` and `other.entity.name` to `other.entity` with a warning message.
+* __NULL output from `template_geographic_coverage()` ([issue #32](https://github.com/EDIorg/EMLassemblyline/issues/32)):__ NULL was output from this function when `empty = TRUE`, which is mostly a cosmetic issue. This was fixed by implementing some simple logic.
 * __Updated table readers ([issue #41](https://github.com/EDIorg/EMLassemblyline/issues/41)):__ Some user supplied data tables could not be read by `utils::read.table()`. To fix this `data.table::fread()`, a more autonomous and robust reader, replaced `read.table()` for reading both data and metadata templates.
+* __geographic_coverage.txt fields mixed up when translated to EML ([issue #43](https://github.com/EDIorg/EMLassemblyline/issues/43)):__ Further testing revealed the bug doesn't exist.
 * __Quotes in license templates:__ Unescaped quotes characters in the license files were being converted to the <quote> element thereby invalidating the EML. This was fixed by adding escape characters to the quotes.
-
-# EMLassemblyline 2.7.1
-
-## Enhancements
-
-* __Multiple inputs to `template_taxonomic_coverage()`:__ If the taxa of a dataset are in more than one table, then a user would want to extract the unique taxa from all the tables and compile into the taxonomic_coverage.txt template. Multiple inputs to the `taxa.table` and `taxa.col` arguments is now supported. Please consult function documentation for details on inputting more than one table (i.e. `?template_taxonomic_coverage`).
-
-## Bug fixes
-
 * __Testing `template_taxonomic_coverage()`:__ Travis CI has been failing because of long responses from API calls made by `template_taxonomic_coverage()`. To expedite tests and reduce errors, the example data now contains substantially fewer taxa to be resolved against authority systems.
 
 # EMLassemblyline 2.6.1

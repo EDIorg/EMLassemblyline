@@ -1688,6 +1688,9 @@ make_eml <- function(
   
   if (exists('custom_units')){
     if (custom_units != 'no'){
+      if (!exists("unitsList")) {
+        unitsList <- EML::set_unitList(x$template$custom_units.txt$content)
+      }
       message('  <additionalMetadata>')
       additionalMetadata <- list()
       additionalMetadata[[(length(additionalMetadata)+1)]] <- list(metadata = list(unitList = unitsList))
