@@ -4,10 +4,7 @@
 \alias{read_eml}
 \title{Read EML into an emld list object}
 \usage{
-read_eml(
-      path,
-      eml
-    )
+read_eml(path, eml)
 }
 \arguments{
 \item{path}{(character) Path to the metadata template directory and where 
@@ -35,16 +32,16 @@ When representing EML in the emld list structure, nodes that have
     Currently this QC is selectively applied to annotatable nodes targeted
     by \code{template_annotations()}:
     
-    \describe{
-      \item{eml/dataset/dataTable}{}
-      \item{eml/dataset/dataTable/attributeList/attribute}{}
-      \item{eml/dataset/otherEntity}{}
-      \item{eml/dataset/creator}{}
-      \item{eml/dataset/contact}{}
-      \item{eml/dataset/associatedParty}{}
-      \item{eml/dataset/project/personnel}{}
-      \item{eml/dataset/project/relatedProject}{}
-      \item{eml/dataset/project/relatedProject/personnel}{}
+    \itemize{
+      \item eml/dataset/dataTable
+      \item eml/dataset/dataTable/attributeList/attribute
+      \item eml/dataset/otherEntity
+      \item eml/dataset/creator
+      \item eml/dataset/contact
+      \item eml/dataset/associatedParty
+      \item eml/dataset/project/personnel
+      \item eml/dataset/project/relatedProject
+      \item eml/dataset/project/relatedProject/personnel
     }
     
     Extending support to all nodes capable of having 1 or more children is
@@ -52,10 +49,7 @@ When representing EML in the emld list structure, nodes that have
 }
 \examples{
 eml <- EMLassemblyline::read_eml(
-  path = system.file(
-    "/examples/eml", 
-    package = "EMLassemblyline"
-  ),
+  path = system.file("/examples/eml", package = "EMLassemblyline"),
   eml = "edi.260.3.xml"
 )
 

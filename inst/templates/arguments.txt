@@ -1,4 +1,5 @@
 argument_name
+annotations
 data.path
 data.table
 data.table.name
@@ -9,7 +10,9 @@ dataset.title
 default.annotations
 dir.name
 eml
+eml.in
 eml.path
+eml.out
 empty
 file.type
 geographic.coordinates

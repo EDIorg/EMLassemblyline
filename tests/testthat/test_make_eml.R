@@ -2139,7 +2139,7 @@ testthat::test_that('annotation characteristics', {
     recursive = TRUE, 
     force = TRUE
   )
-
+  
 })
 
 testthat::test_that("annotation of annotatable elements is not required", {
@@ -2251,8 +2251,7 @@ testthat::test_that("multiple annotations to one element is supported", {
   eml <- make_eml(
     path = paste0(tempdir(), "/pkg_260/metadata_templates"),
     data.path = paste0(tempdir(), "/pkg_260/data_objects"),
-    # eml.path = paste0(tempdir(), "/pkg_260/eml"),
-    eml.path = "C:\\Users\\Colin\\Documents\\EDI\\data_sets\\eml22\\eml",
+    eml.path = paste0(tempdir(), "/pkg_260/eml"),
     dataset.title = "Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015",
     data.table = c("decomp.csv", "nitrogen.csv"),
     data.table.name = c("Decomp file name", "Nitrogen file name"),
@@ -2266,7 +2265,7 @@ testthat::test_that("multiple annotations to one element is supported", {
     user.domain = "LTER",
     package.id = 'edi.141.1',
     return.obj = TRUE,
-    write.file = TRUE
+    write.file = FALSE
   )
   
   # EML is schema valid

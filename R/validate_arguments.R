@@ -70,7 +70,7 @@ validate_arguments <- function(fun.name, fun.args){
           call. = FALSE
         )
       } else {
-        eml <- EML::read_eml(eml.in)
+        eml <- EML::read_eml(fun.args$eml.in)
         if (!EML::eml_validate(eml)) {
           stop(
             "Input argument 'eml.in' is not a valid EML record.", 
@@ -87,11 +87,20 @@ validate_arguments <- function(fun.name, fun.args){
     
     # eml.out
     
-    if (!dir.exists(dirname(eml.out))) {
+    if (is.character(fun.args$eml.in) & is.null(fun.args$eml.out)) {
       stop(
-        "Input argument 'eml.out' uses a non-existant path.", 
+        "Input argument 'eml.out' is missing.",
         call. = FALSE
       )
+    }
+    
+    if (!is.null(fun.args$eml.out) & is.character(fun.args$eml.out)) {
+      if (!dir.exists(dirname(fun.args$eml.out))) {
+        stop(
+          "Input argument 'eml.out' is a non-existant path.", 
+          call. = FALSE
+        )
+      }
     }
     
   }

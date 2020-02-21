@@ -1,43 +1,52 @@
-#' Annotate an EML document
+#' Annotate EML
 #'
 #' @description  
-#'     Annotate an EML document.
-#'
-#' @usage 
-#'     annotate_eml(
-#'       annotations = NULL,
-#'       eml.in = NULL,
-#'       eml.out = NULL,
-#'       x = NULL
-#'     )
+#'     Annotate an EML file (.xml) or an emld list object.
 #'
 #' @param annotations
-#'     (character; data frame) Path to the annotations.txt metadata template 
-#'     for the EML document being annotated. Create annotations.txt with 
-#'     \code{template_annotations()}. Alternatively input to this argument
-#'     can be a data frame of the annotations.txt template.
+#'     (character; data frame) Path or data frame of the annotations.txt 
+#'     template for annotating \code{eml.in}. Create annotations.txt with 
+#'     \code{template_annotations()}.
 #' @param eml.in
-#'     (character; emld list) Path to the EML document being annotated. 
-#'     Alternatively this input can be supplied as an emld list object created 
-#'     by \code{make_eml()} or \code{EMLassemblyline::read_eml()}.
+#'     (EML; emld list) Path to, or emld list of, the EML file to be annotated. 
+#'     Accepted versions of the emld list object can be created by
+#'     \code{EMLassemblyline::read_eml()} or \code{make_eml()}.
 #' @param eml.out
-#'     (character) Path to which the annotated EML should be written.
+#'     (character) Path of the annotated EML file to be written.
 #'
 #' @return
-#'     If the input to \code{eml.in} is a path to an EML document (.xml) then 
-#'     the output will be the annotated EML document written to \code{eml.out}.
-#'     If the input to \code{eml.in} is an emld list object then the output 
-#'     will be the annotated version of the emld list object.
+#'     (EML; emld list) If the input to \code{eml.in} is an EML file then the
+#'     output will be an EML file. The emld list object is always returned.
 #'     
-#' @details 
+#' @note 
 #'     All annotatable elements are assigned IDs and their annotations are 
-#'     located both immediately under the parent element (subject) within
-#'     /eml/dataset when supported and within /eml/dataset/annotations 
-#'     node through references. This redundant approach supports variation 
-#'     in where EML metadata consumers harvest this information and supports 
-#'     the extensibility of annotating elements requiring 
+#'     placed both immediately under the parent element (subject) when 
+#'     supported and within the /eml/dataset/annotations node through 
+#'     references. This redundant approach supports variation in where EML 
+#'     metadata consumers harvest this information and supports the 
+#'     extensibility of annotating elements requiring 
 #'     /eml/dataset/annotations references.
 #'
+#' @examples
+#' 
+#' # Annotate an EML file --------------------------------------------------------
+#' #
+#' # Annotate an existing EML file (edi.260.3.xml) and write a new version 
+#' # (edi.260.4.xml)
+#' 
+#' eml <- annotate_eml(
+#'  annotations = system.file("/examples/pkg_260/metadata_templates/annotations.txt", package = "EMLassemblyline"),
+#'  eml.in = system.file("/examples/eml/edi.260.3.xml", package = "EMLassemblyline"),
+#'  eml.out = paste0(tempdir(), "/edi.260.4.xml")
+#' )
+#' eml
+#' 
+#' # Remove the EML files from the temporary directory
+#' 
+#' unlink(paste0(tempdir(), "/edi.260.3.xml"))
+#' unlink(paste0(tempdir(), "/edi.260.4.xml"))
+#'
+#' @export
 #'
 annotate_eml <- function(
   annotations = NULL, 
@@ -50,6 +59,10 @@ annotate_eml <- function(
     fun.name = 'annotate_eml',
     fun.args = as.list(environment())
   )
+  
+  if (is.character(eml.in)) {
+    message("Annotating EML ...")
+  }
   
   # Read metadata templates ---------------------------------------------------
   
@@ -74,7 +87,10 @@ annotate_eml <- function(
   # Read EML
   
   if (is.character(eml.in)) {
-    eml <- EMLassemblyline::read_eml(eml.in)
+    eml <- EMLassemblyline::read_eml(
+      path = dirname(eml.in),
+      eml = basename(eml.in)
+    )
   } else {
     eml <- eml.in
   }
@@ -324,12 +340,21 @@ annotate_eml <- function(
   
   eml$annotations <- annotations
   
-  # Return
+  # Return --------------------------------------------------------------------
+  
+  # If writing to file, then update packageId, schemaLocation, and EML version.
   
   if (is.character(eml.in)) {
+    eml$packageId <- basename(tools::file_path_sans_ext(eml.out))
+    eml$schemaLocation <- "eml://ecoinformatics.org/eml-2.2.0  http://nis.lternet.edu/schemas/EML/eml-2.2.0/xsd/eml.xsd"
+    emld::eml_version("eml-2.2.0")
     EML::write_eml(eml, eml.out)
-  } else {
-    eml
   }
+  
+  if (is.character(eml.in)) {
+    message("Done.")
+  }
+  
+  eml
   
 }

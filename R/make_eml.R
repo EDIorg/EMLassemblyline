@@ -4,33 +4,6 @@
 #'     Render the contents of metadata templates into EML, validate, and write
 #'     to file.
 #'     
-#' @usage 
-#'     make_eml(
-#'       path,
-#'       data.path = path,
-#'       eml.path = path, 
-#'       dataset.title,
-#'       temporal.coverage,
-#'       geographic.description, 
-#'       geographic.coordinates, 
-#'       maintenance.description, 
-#'       data.table = NULL, 
-#'       data.table.name = data.table,
-#'       data.table.description = NULL, 
-#'       data.table.quote.character = NULL, 
-#'       other.entity = NULL,
-#'       other.entity.name = other.entity,
-#'       other.entity.description = NULL,
-#'       data.url = NULL,
-#'       provenance = NULL,
-#'       user.id = NULL,
-#'       user.domain = NULL,
-#'       package.id = NULL,
-#'       write.file = TRUE,
-#'       return.obj = FALSE,
-#'       x = NULL
-#'     )
-#'     
 #' @param path 
 #'     (character) Path to the metadata template directory.
 #' @param data.path

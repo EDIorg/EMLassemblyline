@@ -2,42 +2,54 @@
 % Please edit documentation in R/annotate_eml.R
 \name{annotate_eml}
 \alias{annotate_eml}
-\title{Annotate an EML document}
+\title{Annotate EML}
 \usage{
-annotate_eml(
-      annotations = NULL,
-      eml.in = NULL,
-      eml.out = NULL,
-      x = NULL
-    )
+annotate_eml(annotations = NULL, eml.in = NULL, eml.out = NULL)
 }
 \arguments{
-\item{annotations}{(character; data frame) Path to the annotations.txt metadata template 
-for the EML document being annotated. Create annotations.txt with 
-\code{template_annotations()}. Alternatively input to this argument
-can be a data frame of the annotations.txt template.}
+\item{annotations}{(character; data frame) Path or data frame of the annotations.txt 
+template for annotating \code{eml.in}. Create annotations.txt with 
+\code{template_annotations()}.}
 
-\item{eml.in}{(character; emld list) Path to the EML document being annotated. 
-Alternatively this input can be supplied as an emld list object created 
-by \code{make_eml()} or \code{EMLassemblyline::read_eml()}.}
+\item{eml.in}{(EML; emld list) Path to, or emld list of, the EML file to be annotated. 
+Accepted versions of the emld list object can be created by
+\code{EMLassemblyline::read_eml()} or \code{make_eml()}.}
 
-\item{eml.out}{(character) Path to which the annotated EML should be written.}
+\item{eml.out}{(character) Path of the annotated EML file to be written.}
 }
 \value{
-If the input to \code{eml.in} is a path to an EML document (.xml) then 
-    the output will be the annotated EML document written to \code{eml.out}.
-    If the input to \code{eml.in} is an emld list object then the output 
-    will be the annotated version of the emld list object.
+(EML; emld list) If the input to \code{eml.in} is an EML file then the
+    output will be an EML file. The emld list object is always returned.
 }
 \description{
-Annotate an EML document.
+Annotate an EML file (.xml) or an emld list object.
 }
-\details{
+\note{
 All annotatable elements are assigned IDs and their annotations are 
-    located both immediately under the parent element (subject) within
-    /eml/dataset when supported and within /eml/dataset/annotations 
-    node through references. This redundant approach supports variation 
-    in where EML metadata consumers harvest this information and supports 
-    the extensibility of annotating elements requiring 
+    placed both immediately under the parent element (subject) when 
+    supported and within the /eml/dataset/annotations node through 
+    references. This redundant approach supports variation in where EML 
+    metadata consumers harvest this information and supports the 
+    extensibility of annotating elements requiring 
     /eml/dataset/annotations references.
+}
+\examples{
+
+# Annotate an EML file --------------------------------------------------------
+#
+# Annotate an existing EML file (edi.260.3.xml) and write a new version 
+# (edi.260.4.xml)
+
+eml <- annotate_eml(
+ annotations = system.file("/examples/pkg_260/metadata_templates/annotations.txt", package = "EMLassemblyline"),
+ eml.in = system.file("/examples/eml/edi.260.3.xml", package = "EMLassemblyline"),
+ eml.out = paste0(tempdir(), "/edi.260.4.xml")
+)
+eml
+
+# Remove the EML files from the temporary directory
+
+unlink(paste0(tempdir(), "/edi.260.3.xml"))
+unlink(paste0(tempdir(), "/edi.260.4.xml"))
+
 }

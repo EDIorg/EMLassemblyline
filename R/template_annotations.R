@@ -1,19 +1,13 @@
 #' Create the annotations template
 #'
 #' @description  
-#'     Annotate your metadata with terms from an ontology. Run this function 
-#'     after all your metadata templates are complete, or if you're annotating
-#'     a legacy EML record.
-#'
-#' @usage 
-#'     template_annotations(
-#'       path,
-#'       data.path = path,
-#'       data.table = NULL,
-#'       other.entity = NULL,
-#'       default.annotations = NULL,
-#'       eml = NULL
-#'     )
+#'     The annotations template (annotations.txt) lists the elements and 
+#'     corresponding ontology terms for annotating your EML. Run this function 
+#'     after all your EMLassemblyline metadata templates are complete or if 
+#'     you're annotating an existing EML file. This function gathers 
+#'     annotatable elements from your EML and assigns default predicate labels 
+#'     and URIs. You must provide object labels and URIs from the ontology of 
+#'     your choosing.
 #'
 #' @param path 
 #'     (character) Path to the metadata template directory and where 
@@ -30,151 +24,135 @@
 #'     as a vector of character strings (e.g. 
 #'     \code{other.entity = c('maps.zip', 'analysis.R')}).
 #' @param default.annotations
-#'     (data frame; optional) Default annotations to be used within the 
-#'     annotations.txt template. EMLassemblyline presets are used unless 
-#'     supplying your own (see details below).
+#'     (data frame; optional) Default annotations added to annotations.txt. 
+#'     EMLassemblyline specified defaults are used unless specifying your own 
+#'     (see note below). You can manually change these after annotations.txt
+#'     has been created.
+#' @param eml.path
+#'     (character; optional) Path to the EML directory. Use this if creating
+#'     annotations.txt for an EML file. Defaults to \code{path}.
 #' @param eml
-#'     (eml .xml file; optional) An EML .xml file located at \code{path}. 
-#'     Use this argument if annotating legacy EML. Once you've completed 
-#'     annotations.txt then run \code{EMLassemblyline::annotate_legacy_eml()} 
-#'     to create an annotated version of your legacy EML.
+#'     (EML file; optional) An EML file located at \code{eml.path}. 
+#'     Use this if annotating an existing EML file.
 #'
 #' @return 
-#'     \strong{annotations.txt} The tab delimited annotations template with
-#'     the fields:
-#'     \describe{
-#'       \item{id}{A unique identifier to be assigned to the subject element
-#'       when the EML is created, except in the case of ResponsibleParty 
-#'       where a UUID is assigned to each recurring instance (e.g. creator, 
-#'       contact) in order to maintain the "uniquenes" required by EML IDs.
-#'       See details below for rules on creating IDs for annotations.txt.}
-#'       \item{element}{The EML element being annotated as a relative path.
-#'       See details below for rules on creating elements for annotations.txt.}
-#'       \item{context}{The context of the subject being annotated (e.g. If the
-#'       same column name is used in more than one of your data tables, you 
-#'       will need to know which table it came from.).}
-#'       \item{subject}{The subject being annotated.}
-#'       \item{predicate_label}{The label of the predicate (a.k.a. property) 
-#'       obtained from an ontology.}
-#'       \item{predicate_uri}{The URI of the predicate (a.k.a. property) 
-#'       obtained from an ontology.}
-#'       \item{object_label}{The label of the object (a.k.a. value) obtained 
-#'       from an ontology.}
-#'       \item{object_uri}{The URI of the object (a.k.a. value) obtained 
-#'       from an ontology.}
+#'     \strong{annotations.txt} The tab delimited annotations template, 
+#'     pre-populated with default annotations, and containing the fields:
+#'     \itemize{
+#'       \item id - A unique identifier for the element being annotated.
+#'       \item element - The element being annotated.
+#'       \item context - The context of the subject (i.e. element value) being 
+#'       annotated (e.g. If the same column name occurs in more than one data 
+#'       tables, you will need to know which table it came from.).
+#'       \item subject - The element value to be annotated.
+#'       \item predicate_label - The predicate label (a.k.a. property) 
+#'       describing the relation of the subject to the object. This label 
+#'       should be copied directly from an ontology.
+#'       \item predicate_uri - The predicate label URI copied directly from an 
+#'       ontology.
+#'       \item object_label - The object label (a.k.a. value) describing the 
+#'       subject. This label should be copied directly from an ontology.
+#'       \item object_uri - The object URI copied from an ontology.
 #'     }
-#'     Only the predicate_label, predicate_uri, object_label, and 
-#'     object_uri fields should be edited. If you want to add an annotation
-#'     to any of the subjects, simply replicate the subjects row and modify
-#'     the predicate and object fields.
+#'     The general user should ignore the id and element fields and focus on
+#'     the subject, context predicate_label, predicate_uri, object_label, and 
+#'     object_uri fields. Only the predicate and object fields should be 
+#'     modified. If you want to add an annotation to any of the listed 
+#'     subjects, simply copy the full row containing the subject, paste it in 
+#'     as new line, and modify the predicate and object fields.
 #'     
-#' @details 
-#'     This function runs \code{EMLassemblyline::make_eml()} to get the EML
-#'     R list object from which annotatable metadata is extracted, assigned 
-#'     default predicate labels and URIs (in some cases object labels and URIs 
-#'     as well), then written to annotations.txt. You will have to add object 
-#'     labels and URIs from an ontology of your choice.
-#'     
-#'     If creating annotations.txt for legacy EML, then 
-#'     \code{EMLassemblyline::make_eml()} isn't run, and the arguments 
-#'     \code{data.path}, \code{data.table}, and \code{other.entity} are not 
-#'     used.
-#'     
-#'     To set your own annotation defaults, copy the EMLassemblyline defaults 
-#'     file 
+#' @note  
+#'     To set your own default annotations, copy the EMLassemblyline defaults 
 #'     (\code{file.copy(from = system.file("/templates/annotation_defaults.txt", package = "EMLassemblyline"), to = path)}, 
 #'     where path is where you want the file written to) then change the values 
 #'     in the predicate_label, predicate_uri, object_label, and object_uri 
-#'     fields, save the file, and then read this file into a data frame and 
-#'     supply to the \code{default.annotations} argument of 
-#'     \code{template_annotations()}.
+#'     fields, save the file, read it in to R as a data frame and use it with 
+#'     the \code{default.annotations} argument.
 #'     
-#'     The id and element fields of annotations.txt are keys to locate the 
-#'     subjects within the EML and to annotate them with the corresponding 
-#'     predicate and object information. To create the id and element fields 
-#'     use these rules:
-#'     \describe{
-#'       \item{dataset}{Use "/dataset" for both the id and element.}
-#'       \item{dataTable}{Use \code{paste0("/", file.name)} for the id (where 
-#'       file.name is the name of your dataTable file) and use "/dataTable" for
-#'       the element.}
-#'       \item{otherEntity}{Use \code{paste0("/", file.name)} for the id (where 
-#'       file.name is the name of your otherEntity file) and use "/otherEntity" 
-#'       for the element.}
-#'       \item{attribute of a dataTable}{Use 
-#'       \code{paste0("/", file.name, "/", column.name)} for the id (where 
-#'       file.name is the name of your dataTable file and column.name is the 
-#'       name of the column in the file.name) and use "/dataTable/attribute" 
-#'       for the element.}
-#'       \item{ResponsibleParty}{Use 
-#'       \code{paste0("/", paste(first.name, middle.name, last.name, collapse = " "))}
-#'       for the id (where first.name and middle.name are the persons first and 
-#'       middle given names, respectively (more than one middle name works too
-#'       ), and last.name is the persons surname).}
+#'     Some users may want to build annotations.txt from scratch. A few rules 
+#'     to follow when doing this:
+#'     \itemize{
+#'       \item id - IDs must be unique for each unique subject.
+#'       \item element - Supported elements and the required syntax is listed 
+#'       under the element column of annotation_defaults.txt. View this file
+#'       with \code{View(system.file("/templates/annotation_defaults.txt", package = "EMLassemblyline"))}
+#'       \item context - Context values are only required for elements that are 
+#'       nested within other elements. Currently only /dataTable/attribute 
+#'       elements require context where the dataTable objectName is the context
+#'       (e.g. nitrogen.csv).
+#'       \item subject - Subjects are required for each annotation. For /dataset
+#'       the subject is "dataset". For /dataTable the subject is the file name.
+#'       For /dataTable/attribute the subjects are the dataTable field names. 
+#'       For /otherEntity the subject is the file name. For /ResponsibleParty
+#'       the subject is created with 
+#'       \code{paste(first.name, middle.name, last.name, collapse = " ")}
 #'     }
 #'     
 #' @examples 
-#' # Create annotations.txt from a set of completed metadata templates, 
-#' # data tables and other entities
+#' # From a set of EMLassemblyline metadata templates ----------------------------
+#' #
+#' # Create annotations.txt for a dataset of data tables, other entities, and 
+#' # described by EMLassemblyline metadata templates
+#' 
+#' # Copy templates and data objects to a temporary directory
 #' 
 #' file.copy(
-#'  from = system.file("/examples/pkg_260", package = "EMLassemblyline"),
-#'  to = tempdir(),
-#'  recursive = TRUE
+#'   from = system.file("/examples/pkg_260", package = "EMLassemblyline"),
+#'   to = tempdir(),
+#'   recursive = TRUE
 #' )
+#' unlink(paste0(tempdir(), "/pkg_260/metadata_templates/annotations.txt"))
 #' 
-#' unlink(
-#'   paste0(tempdir(), "/pkg_260/metadata_templates/annotations.txt"),
-#'   force = TRUE
-#' )
+#' # Create annotations.txt
 #' 
 #' template_annotations(
-#'   path = paste0(tempdir(), "/pkg_260/metadata_templates"),
-#'   data.path = paste0(tempdir(), "/pkg_260/data_objects"),
-#'   data.table = c("nitrogen.csv", "decomp.csv"),
-#'   other.entity = c("ancillary_data.zip", "processing_and_analysis.R")
+#'  path = paste0(tempdir(), "/pkg_260/metadata_templates"),
+#'  data.path = paste0(tempdir(), "/pkg_260/data_objects"),
+#'  data.table = c("nitrogen.csv", "decomp.csv"),
+#'  other.entity = c("ancillary_data.zip", "processing_and_analysis.R")
 #' )
+#' 
+#' # View contents
 #' 
 #' df <- data.table::fread(
 #'   paste0(tempdir(), "/pkg_260/metadata_templates/annotations.txt")
 #' )
 #' df
 #' 
-#' unlink(
-#'   paste0(tempdir(), "/pkg_260"), 
-#'   recursive = TRUE, 
-#'   force = TRUE
-#' )
+#' # Clean up temporary directory
 #' 
-#' # Create annotations.txt for an existing EML file
+#' unlink(paste0(tempdir(), "/pkg_260"), recursive = TRUE, force = TRUE)
+#' 
+#' # From an EML file ------------------------------------------------------------
+#' #
+#' # Create annotations.txt for an EML file
+#' 
+#' # Copy an EML file to a temporary directory
 #' 
 #' file.copy(
-#'   from = system.file(
-#'     "/examples/eml/edi.260.3.xml", 
-#'     package = "EMLassemblyline"
-#'   ),
+#'   from = system.file("/examples/eml/edi.260.3.xml", package = "EMLassemblyline"),
 #'   to = tempdir(),
 #'   recursive = TRUE
 #' )
 #' 
+#' # Create annotations.txt
+#' 
 #' template_annotations(
-#'   path = tempdir(),
-#'   eml = "edi.260.3.xml"
+#'  path = tempdir(),
+#'  eml = "edi.260.3.xml"
 #' )
 #' 
+#' # View contents
+#' 
 #' df <- data.table::fread(
-#'   paste0(tempdir(), "/annotations.txt")
+#'  paste0(tempdir(), "/annotations.txt")
 #' )
 #' df
 #' 
-#' unlink(
-#'   paste0(tempdir(), "/edi.260.3.xml"),
-#'   force = TRUE
-#' )
-#' unlink(
-#'   paste0(tempdir(), "/annotations.txt"),
-#'   force = TRUE
-#' )   
+#' # Clean up temporary directory
+#' 
+#' unlink(paste0(tempdir(), "/edi.260.3.xml"), force = TRUE)
+#' unlink(paste0(tempdir(), "/annotations.txt"), force = TRUE)   
 #' 
 #' @export     
 #'     
@@ -185,6 +163,7 @@ template_annotations <- function(
   data.table = NULL,
   other.entity = NULL,
   default.annotations = NULL,
+  eml.path = path,
   eml = NULL) {
   
   # Validate arguments --------------------------------------------------------
@@ -514,7 +493,7 @@ template_annotations <- function(
   
   data.table::fwrite(
     x = anno,
-    file = paste0(path, '/annotations.txt'),
+    file = paste0(eml.path, '/annotations.txt'),
     sep = "\t",
     quote = FALSE
   )
@@ -534,12 +513,6 @@ template_annotations <- function(
 #'     control ensuring the returned emld list object has the same structure 
 #'     as output by \code{EMLassemblyline::make_eml()} and can be used in 
 #'     EMLassemblyline workflows.
-#'
-#' @usage 
-#'     read_eml(
-#'       path,
-#'       eml
-#'     )
 #'
 #' @param path 
 #'     (character) Path to the metadata template directory and where 
@@ -561,16 +534,16 @@ template_annotations <- function(
 #'     Currently this QC is selectively applied to annotatable nodes targeted
 #'     by \code{template_annotations()}:
 #'     
-#'     \describe{
-#'       \item{eml/dataset/dataTable}{}
-#'       \item{eml/dataset/dataTable/attributeList/attribute}{}
-#'       \item{eml/dataset/otherEntity}{}
-#'       \item{eml/dataset/creator}{}
-#'       \item{eml/dataset/contact}{}
-#'       \item{eml/dataset/associatedParty}{}
-#'       \item{eml/dataset/project/personnel}{}
-#'       \item{eml/dataset/project/relatedProject}{}
-#'       \item{eml/dataset/project/relatedProject/personnel}{}
+#'     \itemize{
+#'       \item eml/dataset/dataTable
+#'       \item eml/dataset/dataTable/attributeList/attribute
+#'       \item eml/dataset/otherEntity
+#'       \item eml/dataset/creator
+#'       \item eml/dataset/contact
+#'       \item eml/dataset/associatedParty
+#'       \item eml/dataset/project/personnel
+#'       \item eml/dataset/project/relatedProject
+#'       \item eml/dataset/project/relatedProject/personnel
 #'     }
 #'     
 #'     Extending support to all nodes capable of having 1 or more children is
@@ -578,10 +551,7 @@ template_annotations <- function(
 #'     
 #' @examples 
 #' eml <- EMLassemblyline::read_eml(
-#'   path = system.file(
-#'     "/examples/eml", 
-#'     package = "EMLassemblyline"
-#'   ),
+#'   path = system.file("/examples/eml", package = "EMLassemblyline"),
 #'   eml = "edi.260.3.xml"
 #' )
 #' 

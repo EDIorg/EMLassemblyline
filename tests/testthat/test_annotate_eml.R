@@ -2,60 +2,44 @@
 context("annotate_eml()")
 library(EMLassemblyline)
 
-testthat::test_that("from EML.xml", {
-  
-  # new -------
-  annotations <- "C:\\Users\\Colin\\Documents\\EDI\\data_sets\\eml22\\metadata_templates\\annotations.txt"
-  
-  # old ------
-  
-  # Read an EML record and create annotations.txt
+# Testing of other annotation characteristics is implemented in the annotations
+# section of test_make_eml.R
+
+testthat::test_that("from .xml", {
   
   file.copy(
     from = system.file(
-      "/examples/eml/edi.260.3.xml", 
+      "/examples/pkg_260", 
       package = "EMLassemblyline"
     ),
     to = tempdir(),
     recursive = TRUE
   )
   
-  template_annotations(
-    path = tempdir(),
-    eml = "edi.260.3.xml"
-  )
-  
-  df <- data.table::fread(
-    paste0(tempdir(), "/annotations.txt")
-  )
-  
-  # Test for expected characteristics
-  
-  expect_true(
-    is.data.frame(df)
-  )
-  
-  expect_true(
-    all(
-      colnames(df) %in% c("id", "element", "context", "subject", 
-                          "predicate_label", "predicate_uri",
-                          "object_label", "object_uri")
+  eml <- annotate_eml(
+    annotations = paste0(
+      tempdir(),
+      "/pkg_260/metadata_templates/annotations.txt"
+    ),
+    eml.in = system.file(
+      "/examples/eml/edi.260.3.xml", 
+      package = "EMLassemblyline"
+    ),
+    eml.out = paste0(
+      tempdir(),
+      "/pkg_260/eml/edi.260.4.xml"
     )
   )
   
   expect_true(
-    nrow(df) != 0
+    EML::eml_validate(eml)
   )
   
   # Clean up
   
   unlink(
-    paste0(tempdir(), "/edi.260.3.xml"),
-    force = TRUE
-  )
-  
-  unlink(
-    paste0(tempdir(), "/annotations.txt"),
+    paste0(tempdir(), "/pkg_260"), 
+    recursive = TRUE, 
     force = TRUE
   )
   
