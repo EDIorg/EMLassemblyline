@@ -1,1 +1,0 @@
-attributeName	code	definitiontype	Sphagnum	Sphagnumtype	Vascular	Vasculararm	1	Arm 1arm	2	Arm 2arm	3	Arm 3ntrt	C	"Control, no water, no N added"ntrt	0	0 kg N/ha/yr addedntrt	5	5 kg N/ha/yr addedntrt	10	10 kg N/ha/yr added as NH4NO3ntrt	15	15 kg N/ha/yr addedntrt	20	20 kg N/ha/yr added as NH4NO3ntrt	25	25 kg N/ha/yr added

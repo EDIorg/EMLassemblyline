@@ -5,15 +5,7 @@ library(EMLassemblyline)
 # 
 # # Get template file attributes
 # 
-# attr.templates <- utils::read.table(
-#   file = system.file(
-#     '/templates/template_characteristics.txt',
-#     package = 'EMLassemblyline'
-#   ), 
-#   header = T,
-#   sep = '\t',
-#   as.is = T
-# )
+# attr_tmp <- read_template_attributes()
 # 
 # # Test usage with file inputs -------------------------------------------------
 # 
@@ -175,7 +167,7 @@ library(EMLassemblyline)
 #   for (i in 1:length(x_empty$template)){
 #     
 #     expect_equal(
-#       any(names(x_empty$template[i]) %in% attr.templates$regexpr),
+#       any(names(x_empty$template[i]) %in% attr_tmp$regexpr),
 #       TRUE
 #     )
 #     
@@ -281,7 +273,7 @@ library(EMLassemblyline)
 #     if (!any(use_i)){
 #       
 #       expect_equal(
-#         any(names(x_half_empty$template[i]) %in% attr.templates$regexpr),
+#         any(names(x_half_empty$template[i]) %in% attr_tmp$regexpr),
 #         TRUE
 #       )
 #       

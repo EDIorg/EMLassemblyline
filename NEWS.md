@@ -1,12 +1,18 @@
+# EMLassemblyline 2.9.0
+
+### Enhancements
+
+* __Template checks:__ A new suite of checks on metadata template content have been added to more effectively communicate issues and reduce errors. Fixes [issue #6](https://github.com/EDIorg/EMLassemblyline/issues/6), [issue #35](https://github.com/EDIorg/EMLassemblyline/issues/35), [issue #37](https://github.com/EDIorg/EMLassemblyline/issues/37), and [issue # 53](https://github.com/EDIorg/EMLassemblyline/issues/53).
+
 # EMLassemblyline 2.8.0
 
 ### Enhancements
 
-* __Online distribution ([issue #56](https://github.com/EDIorg/EMLassemblyline/issues/56)):__ The previous implementation for providing URLs by which the data can be publicly downloaded required all data objects to be co-located in the same directory, which is too restrictive. Now URLs can be explicitly listed for each data object.
+* __Online distribution:__ The previous implementation for providing URLs by which the data can be publicly downloaded required all data objects to be co-located in the same directory, which is too restrictive. Now URLs can be explicitly listed for each data object. Fixes [issue #56](https://github.com/EDIorg/EMLassemblyline/issues/56).
 
 ### Deprecation
 
-* __data.url ([issue #56](https://github.com/EDIorg/EMLassemblyline/issues/56)):__ The `data.url` argument has been deprecated in favor of `data.table.url` and `other.entity.url` but will be supported until March 11, 2021.
+* __data.url:__ The `data.url` argument has been deprecated in favor of `data.table.url` and `other.entity.url` but will be supported until March 11, 2021.
 
 # EMLassemblyline 2.7.1
 
@@ -18,18 +24,18 @@
 
 ### Enhancements
 
-* __File names containing spaces caused `template_categorical_variables()` to crash ([issue #25](https://github.com/EDIorg/EMLassemblyline/issues/25)):__ Errors occurred when input file names contained spaces. Using spaces is still a common practice among users. To accommodate this while continuing to promote best practices, the naming restriction has been relaxed and the best practices have been made a warning. The function checking file presence and naming conventions is `EDIutils::validate_file_name()`. An explicit file name specification (i.e. including extension) is now required, which precludes errors when the same file name is used among different file types in the same directory.
-* __Validate units ([issue #38](https://github.com/EDIorg/EMLassemblyline/issues/38)):__ Check that all numeric attributes have corresponding units and these units can be found in the EML standard unit dictionary or the custom_units.txt template. If not, then throw an error along with directions for fixing the issue. This check is called from make_eml().
+* __File names containing spaces caused `template_categorical_variables()` to crash:__ Errors occurred when input file names contained spaces. Using spaces is still a common practice among users. To accommodate this while continuing to promote best practices, the naming restriction has been relaxed and the best practices have been made a warning. The function checking file presence and naming conventions is `EDIutils::validate_file_name()`. An explicit file name specification (i.e. including extension) is now required, which precludes errors when the same file name is used among different file types in the same directory. Fixes [issue #25](https://github.com/EDIorg/EMLassemblyline/issues/25).
+* __Validate units:__ Check that all numeric attributes have corresponding units and these units can be found in the EML standard unit dictionary or the custom_units.txt template. If not, then throw an error along with directions for fixing the issue. This check is called from make_eml(). Fixes [issue #38](https://github.com/EDIorg/EMLassemblyline/issues/38).
 * __Multiple inputs to `template_taxonomic_coverage()`:__ If the taxa of a dataset are in more than one table, then a user would want to extract the unique taxa from all the tables and compile into the taxonomic_coverage.txt template. Multiple inputs to the `taxa.table` and `taxa.col` arguments is now supported.
 
 ### Bug fixes
 
 * __EML schema validation:__ Schema validation in `make_eml()` began failing with release of the dependency libary EML 2.0.2. This has been fixed.
 * __Support `;` delimiters:__ Data tables with semi-colon delimiters were not supported. This was fixed by updating `EDIutils::detect_delimiter()` ([issue #6](https://github.com/EDIorg/EDIutils/issues/6) of the EDIutils package).
-* __Entity Name ([issue #24](https://github.com/EDIorg/EMLassemblyline/issues/24)):__ Content from `data.table.description` in `make_eml()` was used to fill in the entity name. However, they are not the same and entity name should be specified separately. This was fixed by adding `data.table.name` and `other.entity.name` as arguments to `make_eml()`. The fix defaults `data.table.name` to `data.table` and `other.entity.name` to `other.entity` with a warning message.
-* __NULL output from `template_geographic_coverage()` ([issue #32](https://github.com/EDIorg/EMLassemblyline/issues/32)):__ NULL was output from this function when `empty = TRUE`, which is mostly a cosmetic issue. This was fixed by implementing some simple logic.
-* __Updated table readers ([issue #41](https://github.com/EDIorg/EMLassemblyline/issues/41)):__ Some user supplied data tables could not be read by `utils::read.table()`. To fix this `data.table::fread()`, a more autonomous and robust reader, replaced `read.table()` for reading both data and metadata templates.
-* __geographic_coverage.txt fields mixed up when translated to EML ([issue #43](https://github.com/EDIorg/EMLassemblyline/issues/43)):__ Further testing revealed the bug doesn't exist.
+* __Entity Name:__ Content from `data.table.description` in `make_eml()` was used to fill in the entity name. However, they are not the same and entity name should be specified separately. This was fixed by adding `data.table.name` and `other.entity.name` as arguments to `make_eml()`. The fix defaults `data.table.name` to `data.table` and `other.entity.name` to `other.entity` with a warning message. Fixes [issue #24](https://github.com/EDIorg/EMLassemblyline/issues/24).
+* __NULL output from `template_geographic_coverage()`:__ NULL was output from this function when `empty = TRUE`, which is mostly a cosmetic issue. This was fixed by implementing some simple logic. Fixes [issue #32](https://github.com/EDIorg/EMLassemblyline/issues/32).
+* __Updated table readers:__ Some user supplied data tables could not be read by `utils::read.table()`. To fix this `data.table::fread()`, a more autonomous and robust reader, replaced `read.table()` for reading both data and metadata templates. Fixes [issue #41](https://github.com/EDIorg/EMLassemblyline/issues/41).
+* __geographic_coverage.txt fields mixed up when translated to EML:__ Further testing revealed the bug doesn't exist. Fixes [issue #43](https://github.com/EDIorg/EMLassemblyline/issues/43).
 * __Quotes in license templates:__ Unescaped quotes characters in the license files were being converted to the <quote> element thereby invalidating the EML. This was fixed by adding escape characters to the quotes.
 * __Testing `template_taxonomic_coverage()`:__ Travis CI has been failing because of long responses from API calls made by `template_taxonomic_coverage()`. To expedite tests and reduce errors, the example data now contains substantially fewer taxa to be resolved against authority systems.
 

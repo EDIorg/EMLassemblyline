@@ -64,7 +64,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.9.0</span>
       </span>
     </div>
 
@@ -133,15 +133,27 @@
       <small>Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="emlassemblyline-280" class="section level1">
+    <div id="emlassemblyline-290" class="section level1">
 <h1 class="page-header">
-<a href="#emlassemblyline-280" class="anchor"></a>EMLassemblyline 2.8.0</h1>
+<a href="#emlassemblyline-290" class="anchor"></a>EMLassemblyline 2.9.0</h1>
 <div id="enhancements" class="section level3">
 <h3 class="hasAnchor">
 <a href="#enhancements" class="anchor"></a>Enhancements</h3>
 <ul>
 <li>
-<strong>Online distribution (<a href="https://github.com/EDIorg/EMLassemblyline/issues/56">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/56'>#56</a></a>):</strong> The previous implementation for providing URLs by which the data can be publicly downloaded required all data objects to be co-located in the same directory, which is too restrictive. Now URLs can be explicitly listed for each data object.</li>
+<strong>Template checks:</strong> A new suite of checks on metadata template content have been added to more effectively communicate issues and reduce errors. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/6">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/6'>#6</a></a>, <a href="https://github.com/EDIorg/EMLassemblyline/issues/35">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/35'>#35</a></a>, <a href="https://github.com/EDIorg/EMLassemblyline/issues/37">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/37'>#37</a></a>, and <a href="https://github.com/EDIorg/EMLassemblyline/issues/53">issue # 53</a>.</li>
+</ul>
+</div>
+</div>
+    <div id="emlassemblyline-280" class="section level1">
+<h1 class="page-header">
+<a href="#emlassemblyline-280" class="anchor"></a>EMLassemblyline 2.8.0</h1>
+<div id="enhancements-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#enhancements-1" class="anchor"></a>Enhancements</h3>
+<ul>
+<li>
+<strong>Online distribution:</strong> The previous implementation for providing URLs by which the data can be publicly downloaded required all data objects to be co-located in the same directory, which is too restrictive. Now URLs can be explicitly listed for each data object. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/56">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/56'>#56</a></a>.</li>
 </ul>
 </div>
 <div id="deprecation" class="section level3">
@@ -149,7 +161,7 @@
 <a href="#deprecation" class="anchor"></a>Deprecation</h3>
 <ul>
 <li>
-<strong>data.url (<a href="https://github.com/EDIorg/EMLassemblyline/issues/56">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/56'>#56</a></a>):</strong> The <code>data.url</code> argument has been deprecated in favor of <code>data.table.url</code> and <code>other.entity.url</code> but will be supported until March 11, 2021.</li>
+<strong>data.url:</strong> The <code>data.url</code> argument has been deprecated in favor of <code>data.table.url</code> and <code>other.entity.url</code> but will be supported until March 11, 2021.</li>
 </ul>
 </div>
 </div>
@@ -168,14 +180,14 @@
     <div id="emlassemblyline-270" class="section level1">
 <h1 class="page-header">
 <a href="#emlassemblyline-270" class="anchor"></a>EMLassemblyline 2.7.0</h1>
-<div id="enhancements-1" class="section level3">
+<div id="enhancements-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#enhancements-1" class="anchor"></a>Enhancements</h3>
+<a href="#enhancements-2" class="anchor"></a>Enhancements</h3>
 <ul>
 <li>
-<strong>File names containing spaces caused <code><a href="../reference/template_categorical_variables.html">template_categorical_variables()</a></code> to crash (<a href="https://github.com/EDIorg/EMLassemblyline/issues/25">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/25'>#25</a></a>):</strong> Errors occurred when input file names contained spaces. Using spaces is still a common practice among users. To accommodate this while continuing to promote best practices, the naming restriction has been relaxed and the best practices have been made a warning. The function checking file presence and naming conventions is <code>EDIutils::validate_file_name()</code>. An explicit file name specification (i.e. including extension) is now required, which precludes errors when the same file name is used among different file types in the same directory.</li>
+<strong>File names containing spaces caused <code><a href="../reference/template_categorical_variables.html">template_categorical_variables()</a></code> to crash:</strong> Errors occurred when input file names contained spaces. Using spaces is still a common practice among users. To accommodate this while continuing to promote best practices, the naming restriction has been relaxed and the best practices have been made a warning. The function checking file presence and naming conventions is <code>EDIutils::validate_file_name()</code>. An explicit file name specification (i.e. including extension) is now required, which precludes errors when the same file name is used among different file types in the same directory. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/25">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/25'>#25</a></a>.</li>
 <li>
-<strong>Validate units (<a href="https://github.com/EDIorg/EMLassemblyline/issues/38">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/38'>#38</a></a>):</strong> Check that all numeric attributes have corresponding units and these units can be found in the EML standard unit dictionary or the custom_units.txt template. If not, then throw an error along with directions for fixing the issue. This check is called from make_eml().</li>
+<strong>Validate units:</strong> Check that all numeric attributes have corresponding units and these units can be found in the EML standard unit dictionary or the custom_units.txt template. If not, then throw an error along with directions for fixing the issue. This check is called from make_eml(). Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/38">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/38'>#38</a></a>.</li>
 <li>
 <strong>Multiple inputs to <code><a href="../reference/template_taxonomic_coverage.html">template_taxonomic_coverage()</a></code>:</strong> If the taxa of a dataset are in more than one table, then a user would want to extract the unique taxa from all the tables and compile into the taxonomic_coverage.txt template. Multiple inputs to the <code>taxa.table</code> and <code>taxa.col</code> arguments is now supported.</li>
 </ul>
@@ -189,13 +201,13 @@
 <li>
 <strong>Support <code>;</code> delimiters:</strong> Data tables with semi-colon delimiters were not supported. This was fixed by updating <code>EDIutils::detect_delimiter()</code> (<a href="https://github.com/EDIorg/EDIutils/issues/6">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/6'>#6</a></a> of the EDIutils package).</li>
 <li>
-<strong>Entity Name (<a href="https://github.com/EDIorg/EMLassemblyline/issues/24">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/24'>#24</a></a>):</strong> Content from <code>data.table.description</code> in <code><a href="../reference/make_eml.html">make_eml()</a></code> was used to fill in the entity name. However, they are not the same and entity name should be specified separately. This was fixed by adding <code>data.table.name</code> and <code>other.entity.name</code> as arguments to <code><a href="../reference/make_eml.html">make_eml()</a></code>. The fix defaults <code>data.table.name</code> to <code>data.table</code> and <code>other.entity.name</code> to <code>other.entity</code> with a warning message.</li>
+<strong>Entity Name:</strong> Content from <code>data.table.description</code> in <code><a href="../reference/make_eml.html">make_eml()</a></code> was used to fill in the entity name. However, they are not the same and entity name should be specified separately. This was fixed by adding <code>data.table.name</code> and <code>other.entity.name</code> as arguments to <code><a href="../reference/make_eml.html">make_eml()</a></code>. The fix defaults <code>data.table.name</code> to <code>data.table</code> and <code>other.entity.name</code> to <code>other.entity</code> with a warning message. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/24">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/24'>#24</a></a>.</li>
 <li>
-<strong>NULL output from <code><a href="../reference/template_geographic_coverage.html">template_geographic_coverage()</a></code> (<a href="https://github.com/EDIorg/EMLassemblyline/issues/32">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/32'>#32</a></a>):</strong> NULL was output from this function when <code>empty = TRUE</code>, which is mostly a cosmetic issue. This was fixed by implementing some simple logic.</li>
+<strong>NULL output from <code><a href="../reference/template_geographic_coverage.html">template_geographic_coverage()</a></code>:</strong> NULL was output from this function when <code>empty = TRUE</code>, which is mostly a cosmetic issue. This was fixed by implementing some simple logic. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/32">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/32'>#32</a></a>.</li>
 <li>
-<strong>Updated table readers (<a href="https://github.com/EDIorg/EMLassemblyline/issues/41">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/41'>#41</a></a>):</strong> Some user supplied data tables could not be read by <code><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">utils::read.table()</a></code>. To fix this <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html">data.table::fread()</a></code>, a more autonomous and robust reader, replaced <code><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.table()</a></code> for reading both data and metadata templates.</li>
+<strong>Updated table readers:</strong> Some user supplied data tables could not be read by <code><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">utils::read.table()</a></code>. To fix this <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html">data.table::fread()</a></code>, a more autonomous and robust reader, replaced <code><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.table()</a></code> for reading both data and metadata templates. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/41">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/41'>#41</a></a>.</li>
 <li>
-<strong>geographic_coverage.txt fields mixed up when translated to EML (<a href="https://github.com/EDIorg/EMLassemblyline/issues/43">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/43'>#43</a></a>):</strong> Further testing revealed the bug doesn’t exist.</li>
+<strong>geographic_coverage.txt fields mixed up when translated to EML:</strong> Further testing revealed the bug doesn’t exist. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/43">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/43'>#43</a></a>.</li>
 <li>
 <strong>Quotes in license templates:</strong> Unescaped quotes characters in the license files were being converted to the <quote> element thereby invalidating the EML. This was fixed by adding escape characters to the quotes.</quote>
 </li>
@@ -229,9 +241,9 @@
     <div id="emlassemblyline-260" class="section level1">
 <h1 class="page-header">
 <a href="#emlassemblyline-260" class="anchor"></a>EMLassemblyline 2.6.0</h1>
-<div id="enhancements-2" class="section level3">
+<div id="enhancements-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#enhancements-2" class="anchor"></a>Enhancements</h3>
+<a href="#enhancements-3" class="anchor"></a>Enhancements</h3>
 <ul>
 <li>
 <strong>EML v2.0.0:</strong> <code>EMLassemblyline</code> has been refactored to run with the `EML’ v2.0.0 dependency.</li>
@@ -245,9 +257,9 @@
     <div id="emlassemblyline-253" class="section level1">
 <h1 class="page-header">
 <a href="#emlassemblyline-253" class="anchor"></a>EMLassemblyline 2.5.3</h1>
-<div id="enhancements-3" class="section level3">
+<div id="enhancements-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#enhancements-3" class="anchor"></a>Enhancements</h3>
+<a href="#enhancements-4" class="anchor"></a>Enhancements</h3>
 <ul>
 <li>
 <strong>Add function examples:</strong> Add examples to function documentation.</li>
@@ -271,9 +283,9 @@
     <div id="emlassemblyline-250" class="section level1">
 <h1 class="page-header">
 <a href="#emlassemblyline-250" class="anchor"></a>EMLassemblyline 2.5.0</h1>
-<div id="enhancements-4" class="section level3">
+<div id="enhancements-5" class="section level3">
 <h3 class="hasAnchor">
-<a href="#enhancements-4" class="anchor"></a>Enhancements</h3>
+<a href="#enhancements-5" class="anchor"></a>Enhancements</h3>
 <ul>
 <li>
 <strong>Website:</strong> Improved documentation with vignettes demonstrating common and advanced use cases. Implemented with <code>pkgdown</code>.</li>
@@ -365,6 +377,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#emlassemblyline-290">2.9.0</a></li>
         <li><a href="#emlassemblyline-280">2.8.0</a></li>
         <li><a href="#emlassemblyline-271">2.7.1</a></li>
         <li><a href="#emlassemblyline-270">2.7.0</a></li>
