@@ -1,6 +1,68 @@
 context('Validate templates')
 library(EMLassemblyline)
 
+# Core templates --------------------------------------------------------------
+
+testthat::test_that("Core templates are present", {
+  
+  x <- template_arguments(
+    path = system.file(
+      '/examples/templates', 
+      package = 'EMLassemblyline'))$x
+  
+  x$template$attributes_decomp.txt <- NULL
+  x$template$attributes_nitrogen.txt <- NULL
+  x$template$bounding_boxes.txt <- NULL
+  x$template$catvars_decomp.txt <- NULL
+  x$template$catvars_nitrogen.txt <- NULL
+  x$template$additional_info.txt <- NULL
+  x$template$custom_units.txt <- NULL
+  x$template$geographic_coverage.txt <- NULL
+  x$template$taxonomic_coverage.txt <- NULL
+  x$template$taxonomicCoverage.xml <- NULL
+  
+  x2 <- x
+  x2$template$abstract.txt <- NULL
+  expect_error(
+    validate_templates(
+      fun.name = "make_eml",
+      x = x2))
+  rm(x2)
+  
+  x2 <- x
+  x2$template$intellectual_rights.txt <- NULL
+  expect_error(
+    validate_templates(
+      fun.name = "make_eml",
+      x = x2))
+  rm(x2)
+  
+  x2 <- x
+  x2$template$keywords.txt <- NULL
+  expect_error(
+    validate_templates(
+      fun.name = "make_eml",
+      x = x2))
+  rm(x2)
+  
+  x2 <- x
+  x2$template$methods.txt <- NULL
+  expect_error(
+    validate_templates(
+      fun.name = "make_eml",
+      x = x2))
+  rm(x2)
+  
+  x2 <- x
+  x2$template$personnel.txt <- NULL
+  expect_error(
+    validate_templates(
+      fun.name = "make_eml",
+      x = x2))
+  rm(x2)
+
+})
+
 # Units -----------------------------------------------------------------------
 
 testthat::test_that('Units of table attributes', {

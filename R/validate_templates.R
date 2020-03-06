@@ -26,6 +26,19 @@ validate_templates <- function(fun.name, x){
   
   if (fun.name == 'make_eml'){
     
+    # make_eml() - core templates ---------------------------------------------
+    
+    # The minimal set of core templates are required for make_eml() to work.
+    # FIXME: This requires an additional check for content
+    rtmp <- c("abstract", "intellectual_rights", "keywords", "methods", "personnel")
+    ftmp <- stringr::str_detect(names(x$template), paste(rtmp, collapse = "|"))
+    if (!all(ftmp)) {
+      stop(
+        paste0("These required templates are missing: ",
+          paste(rtmp[!ftmp], collapse = ", "), 
+          call. = FALSE))
+    }
+    
     # make_eml() - units ------------------------------------------------------
     
     # make_eml() - units - data tables ----------------------------------------
