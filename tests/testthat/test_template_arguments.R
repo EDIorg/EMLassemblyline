@@ -1,124 +1,52 @@
 
-context('Make arguments')
+context('Template arguments')
 library(EMLassemblyline)
 
 # Parameterize ----------------------------------------------------------------
 
-# Read argument attributes
+# Read attributes of EMLassemblyline function arguments and templates
 
-attr_args <- utils::read.table(
+attr_args <- data.table::fread(
   file = system.file(
     '/templates/arguments.txt',
-    package = 'EMLassemblyline'
-  ), 
-  header = T,
-  sep = '\t',
-  as.is = T
-)
+    package = 'EMLassemblyline'),
+  fill = TRUE,
+  blank.lines.skip = TRUE)
 
-# Read template attributes
-
-attr_templates <- utils::read.table(
-  file = system.file(
+attr_templates <- data.table::fread(
+  system.file(
     '/templates/template_characteristics.txt',
-    package = 'EMLassemblyline'
-  ), 
-  header = T,
-  sep = '\t',
-  as.is = T
-)
+    package = 'EMLassemblyline'), 
+  fill = TRUE,
+  blank.lines.skip = TRUE)
 
-# List files at path
+# List files at path and data.path
 
 path_files <- list.files(
   system.file(
     '/examples/templates',
-    package = 'EMLassemblyline'
-  )
-)
-
-# List files at data.path
+    package = 'EMLassemblyline'))
 
 data_path_files <- list.files(
   system.file(
     '/examples/data',
-    package = 'EMLassemblyline'
-  )
-)
+    package = 'EMLassemblyline'))
 
 # Inputs = NULL ---------------------------------------------------------------
+# NULL inputs should assign NULL values to arguments names and the template 
+# node.
 
-testthat::test_that('Inputs = NULL', {
-  
-  # Make function call
+testthat::test_that("Inputs = NULL", {
   
   output <- template_arguments()
   
-  # Class is list
-  
-  expect_equal(
-    class(output), 
-    'list'
-  )
-  
-  # Level-1 has argument names
-  
-  expect_equal(
-    all(
-      names(output) %in% attr_args$argument_name
-    ),
-    TRUE
-  )
-  
-  # Level-2 has templates, data tables, and other entities
-  
-  expect_equal(
-    all(
-      names(output$x) %in% c('template', 'data.table', 'other.entity')
-    ),
-    TRUE
-  )
-  
-  expect_equal(
-    output$x$data.table,
-    NULL
-  )
-  
-  expect_equal(
-    output$x$other.entity,
-    NULL
-  )
-  
-  # Level-3 has core templates
-  
-  expect_equal(
-    all(
-      names(output$x$template) %in% attr_templates$regexpr
-    ),
-    TRUE
-  )
-  
-  # Level-4 has content
-
-  for (i in 1:length(output$x$template)){
-    
-    expect_equal(
-      all(
-        names(output$x$template[[i]]) %in% 'content'
-      ),
-      TRUE
-    )
-    
-  }
-  
-  for (i in 1:length(output$x$template)){
-    
-    expect_equal(
-      is.na(output$x$template[[i]]$content),
-      TRUE
-    )
-    
-  }
+  expect_true(class(output) == "list")
+  expect_true(all(names(output) %in% attr_args$argument_name))
+  expect_true(
+    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+  expect_true(is.null(output$x$template))
+  expect_true(is.null(output$x$data.table))
+  expect_true(is.null(output$x$other.entity))
 
 })
 

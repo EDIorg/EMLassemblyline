@@ -239,80 +239,53 @@ template_arguments <- function(
   
   validate_arguments(
     fun.name = 'template_arguments',
-    fun.args = as.list(environment())
-  )
+    fun.args = as.list(environment()))
   
   # Parameterize --------------------------------------------------------------
   
   # Get attributes of template files and arguments
   
-  attr.templates <- as.data.frame(
-    data.table::fread(
-      file = system.file(
-        '/templates/template_characteristics.txt',
-        package = 'EMLassemblyline'
-      ),
-      fill = TRUE,
-      blank.lines.skip = TRUE
-    )
-  )
+  attr.args <- data.table::fread(
+    file = system.file(
+      '/templates/arguments.txt',
+      package = 'EMLassemblyline'),
+    fill = TRUE,
+    blank.lines.skip = TRUE)
   
-  attr.args <- as.data.frame(
-    data.table::fread(
-      file = system.file(
-        '/templates/arguments.txt',
-        package = 'EMLassemblyline'
-      ),
-      fill = TRUE,
-      blank.lines.skip = TRUE
-    )
-  )
+  attr.templates <- data.table::fread(
+    system.file(
+      '/templates/template_characteristics.txt',
+      package = 'EMLassemblyline'), 
+    fill = TRUE,
+    blank.lines.skip = TRUE)
   
   # Initialize arguments ------------------------------------------------------
   
-  arguments <- vector(
-    'list',
-    nrow(attr.args)
-  )
-  
+  arguments <- vector('list', nrow(attr.args))
   names(arguments) <- attr.args$argument_name
 
   # Initialize data tables ----------------------------------------------------
   
   if (!is.null(data.table)){
-    
       data_table <- EDIutils::validate_file_names(
         path = data.path,
-        data.files = data.table
-      )
-      
+        data.files = data.table)
       data_tables <- vector('list', length(data_table))
-      
       names(data_tables) <- data_table
-      
   } else {
-    
     data_tables <- NULL
-    
   }
   
   # Initialize other entities -------------------------------------------------
   
   if (!is.null(other.entity)){
-    
     other_entity <- EDIutils::validate_file_names(
       path = data.path,
-      data.files = other.entity
-    )
-    
+      data.files = other.entity)
     other_entities <- vector('list', length(other_entity))
-    
     names(other_entities) <- other_entity
-    
   } else {
-    
     other_entities <- NULL
-    
   }
   
   # Initialize templates ------------------------------------------------------
@@ -353,57 +326,57 @@ template_arguments <- function(
     
   }
   
-  # Add missing core templates
-  
-  missing_core_templates <- c()
-  
-  i_core <- seq(nrow(attr.templates))[
-    attr.templates$core_template == TRUE
-    ]
-  
-  for (i in 1:length(i_core)){
-    
-    use_i <- stringr::str_detect(
-      path_files,
-      attr.templates$regexpr[i_core[i]]
-    )
-    
-    # If missing then add it
-    
-    if (!any(use_i)){
-      
-      missing_template <- vector('list', 1)
-      
-      names(missing_template) <- attr.templates$regexpr[i_core[i]]
-      
-      missing_core_templates <- c(missing_core_templates, missing_template)
-      
-    }
-    
-  }
-  
-  if (length(missing_core_templates) > 0){
-    
-    if (exists('templates')){
-      
-      templates <- c(templates, missing_core_templates)
-      
-    } else {
-      
-      templates <- missing_core_templates
-      
-    }
-    
-  }
+  # FIXME: NULL templates should not read in blank templates. But if initialize == TRUE,
+  # then blank versions of each template should be read.
+  # # Add missing core templates
+  # 
+  # missing_core_templates <- c()
+  # 
+  # i_core <- seq(nrow(attr.templates))[
+  #   attr.templates$core_template == TRUE
+  #   ]
+  # 
+  # for (i in 1:length(i_core)){
+  #   
+  #   use_i <- stringr::str_detect(
+  #     path_files,
+  #     attr.templates$regexpr[i_core[i]]
+  #   )
+  #   
+  #   # If missing then add it
+  #   
+  #   if (!any(use_i)){
+  #     
+  #     missing_template <- vector('list', 1)
+  #     
+  #     names(missing_template) <- attr.templates$regexpr[i_core[i]]
+  #     
+  #     missing_core_templates <- c(missing_core_templates, missing_template)
+  #     
+  #   }
+  #   
+  # }
+  # 
+  # if (length(missing_core_templates) > 0){
+  #   
+  #   if (exists('templates')){
+  #     
+  #     templates <- c(templates, missing_core_templates)
+  #     
+  #   } else {
+  #     
+  #     templates <- missing_core_templates
+  #     
+  #   }
+  #   
+  # }
   
   # Combine initialized components --------------------------------------------
   
   arguments$x <- list(
-    template = templates,
+    template = NULL,
     data.table = data_tables,
-    other.entity = other_entities
-  )
-  
+    other.entity = other_entities)
   output <- arguments
   
   # Read templates ------------------------------------------------------------
@@ -412,11 +385,14 @@ template_arguments <- function(
   
   templates <- names(output$x$template)
   
-  # For all templates ...
+  if (is.null(templates)) {
+    return(output)
+  }
   
   for (i in 1:length(templates)){
     
     # Read abstract -----------------------------------------------------------
+    browser()
     
     if (stringr::str_detect(string = templates[i], pattern = 'abstract')){
       
