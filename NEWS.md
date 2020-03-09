@@ -1,3 +1,9 @@
+# EMLassemblyline 2.7.1
+
+## Bug fixes
+
+* __Delimiter guessing:__ Occasionally the content of tabular templates leads `data.table::fread()` to guessing a delimiter other than "\t". This issue has been fixed by explicitly stating the expected field delimiter.
+
 # EMLassemblyline 2.7.0
 
 ## Enhancements

@@ -479,9 +479,8 @@ template_arguments <- function(
             file = paste0(path, '/', templates[i]),
             colClasses = rep("character", 7),
             fill = TRUE,
-            blank.lines.skip = TRUE
-          )
-        )
+            blank.lines.skip = TRUE,
+            sep = "\t"))
         
         output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:7]
         
@@ -514,9 +513,8 @@ template_arguments <- function(
             file = paste0(path, '/', templates[i]),
             colClasses = rep("character", 3),
             fill = TRUE,
-            blank.lines.skip = TRUE
-          )
-        )
+            blank.lines.skip = TRUE,
+            sep = "\t"))
         
         output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:3]
         
@@ -545,9 +543,8 @@ template_arguments <- function(
             file = paste0(path, '/', templates[i]),
             colClasses = rep("character", 5),
             fill = TRUE,
-            blank.lines.skip = TRUE
-          )
-        )
+            blank.lines.skip = TRUE,
+            sep = "\t"))
         
         output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:5]
         
@@ -578,10 +575,8 @@ template_arguments <- function(
             data.table::fread(
               file = paste0(path, '/', templates[i]),
               fill = TRUE,
-              blank.lines.skip = TRUE
-            )
-          )
-        )
+              blank.lines.skip = TRUE,
+              sep = "\t")))
         
       } else {
         
@@ -601,9 +596,8 @@ template_arguments <- function(
           data.table::fread(
             file = paste0(path, '/', templates[i]),
             fill = TRUE,
-            blank.lines.skip = TRUE
-          )
-        )
+            blank.lines.skip = TRUE,
+            sep = "\t"))
         
         # If template has old formatting ...
         
@@ -690,9 +684,8 @@ template_arguments <- function(
             file = paste0(path, '/', templates[i]),
             colClasses = rep("character", 2),
             fill = TRUE,
-            blank.lines.skip = TRUE
-          )
-        )
+            blank.lines.skip = TRUE,
+            sep = "\t"))
 
         output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:2]
         
@@ -746,9 +739,8 @@ template_arguments <- function(
             file = paste0(path, '/', templates[i]),
             colClasses = rep("character", 10),
             fill = TRUE,
-            blank.lines.skip = TRUE
-          )
-        )
+            blank.lines.skip = TRUE,
+            sep = "\t"))
         
         output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:10]
         
@@ -808,9 +800,8 @@ template_arguments <- function(
             file = paste0(path, '/', templates[i]),
             colClasses = rep('character', 5),
             fill = TRUE,
-            blank.lines.skip = TRUE
-          )
-        )
+            blank.lines.skip = TRUE,
+            sep = "\t"))
         
         output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:5]
         

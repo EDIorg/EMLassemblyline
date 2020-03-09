@@ -8,11 +8,13 @@
 
 <title>Changelog • EMLassemblyline</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -30,7 +32,9 @@
 
 
 
+
 <meta property="og:title" content="Changelog" />
+
 
 
 
@@ -60,7 +64,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.1</span>
       </span>
     </div>
 
@@ -106,7 +110,6 @@
   <a href="../news/index.html">News</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/EDIorg/EMLassemblyline">
@@ -130,6 +133,18 @@
       <small>Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="emlassemblyline-271" class="section level1">
+<h1 class="page-header">
+<a href="#emlassemblyline-271" class="anchor"></a>EMLassemblyline 2.7.1</h1>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>
+<strong>Delimiter guessing:</strong> Occasionally the content of tabular templates leads <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html">data.table::fread()</a></code> to guessing a delimiter other than “\t”. This issue has been fixed by explicitly stating the expected field delimiter.</li>
+</ul>
+</div>
+</div>
     <div id="emlassemblyline-270" class="section level1">
 <h1 class="page-header">
 <a href="#emlassemblyline-270" class="anchor"></a>EMLassemblyline 2.7.0</h1>
@@ -145,9 +160,9 @@
 <strong>Multiple inputs to <code><a href="../reference/template_taxonomic_coverage.html">template_taxonomic_coverage()</a></code>:</strong> If the taxa of a dataset are in more than one table, then a user would want to extract the unique taxa from all the tables and compile into the taxonomic_coverage.txt template. Multiple inputs to the <code>taxa.table</code> and <code>taxa.col</code> arguments is now supported.</li>
 </ul>
 </div>
-<div id="bug-fixes" class="section level2">
+<div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <strong>EML schema validation:</strong> Schema validation in <code><a href="../reference/make_eml.html">make_eml()</a></code> began failing with release of the dependency libary EML 2.0.2. This has been fixed.</li>
@@ -172,9 +187,9 @@
     <div id="emlassemblyline-261" class="section level1">
 <h1 class="page-header">
 <a href="#emlassemblyline-261" class="anchor"></a>EMLassemblyline 2.6.1</h1>
-<div id="bug-fixes-1" class="section level2">
+<div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <strong>Unit dictionary:</strong> The <code><a href="../reference/view_unit_dictionary.html">view_unit_dictionary()</a></code> function was opening the unit dictionary in a separate non-searchable window. By removing the <code>utils</code> namespace from the function call the unit dictionary now opens within the RStudio source pane where searching is supported.</li>
@@ -220,9 +235,9 @@
 <strong>Change template import:</strong> Import custom_units.txt with <code><a href="../reference/template_table_attributes.html">template_table_attributes()</a></code> instead of with <code><a href="../reference/template_core_metadata.html">template_core_metadata()</a></code>. This is a more logical pairing.</li>
 </ul>
 </div>
-<div id="bug-fixes-2" class="section level2">
+<div id="bug-fixes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <strong>The argument validator should not check geographic coverage templates:</strong> This fix moves the presence/absence check for geographic coverage templates to <code><a href="../reference/make_eml.html">make_eml()</a></code>.</li>
@@ -315,9 +330,9 @@
 </li>
 </ul>
 </div>
-<div id="bug-fixes-3" class="section level2">
+<div id="bug-fixes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <strong>otherEntity url:</strong> Add EML element <em>//otherEntity/physical/distribution/online/url</em> via <code><a href="../reference/make_eml.html">make_eml()</a></code>. This element was missing though documentation implied its existence.</li>
@@ -330,6 +345,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#emlassemblyline-271">2.7.1</a></li>
         <li><a href="#emlassemblyline-270">2.7.0</a></li>
         <li><a href="#emlassemblyline-261">2.6.1</a></li>
         <li><a href="#emlassemblyline-260">2.6.0</a></li>
