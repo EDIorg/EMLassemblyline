@@ -50,6 +50,29 @@ testthat::test_that("Inputs = NULL", {
 
 })
 
+# Inputs = empty templates ----------------------------------------------------
+# Empty templates should be read into x
+
+testthat::test_that("Inputs = empty templates", {
+  
+  file.copy(
+    from  = system.file('/examples/templates', package = 'EMLassemblyline'),
+    to = tempdir())
+  
+  output <- template_arguments(path = paste0(tempdir(), "/templates"))
+  
+  # output <- template_arguments()
+  # 
+  # expect_true(class(output) == "list")
+  # expect_true(all(names(output) %in% attr_args$argument_name))
+  # expect_true(
+  #   all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+  # expect_true(is.null(output$x$template))
+  # expect_true(is.null(output$x$data.table))
+  # expect_true(is.null(output$x$other.entity))
+  
+})
+
 # Inputs = templates (.txt) ---------------------------------------------------
 
 testthat::test_that('Template inputs (.txt)', {

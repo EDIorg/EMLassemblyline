@@ -290,32 +290,20 @@ template_arguments <- function(
   
   # Initialize templates ------------------------------------------------------
   
-  if (!is.null(path)){
+  if (!is.null(path)) {
     
     path_files <- list.files(path)
-    
-    # If template files exist ...
-    
-    if (!length(path_files) == 0){
+
+    if (!length(path_files) == 0) {
       
       is_template <- rep(FALSE, length(path_files))
       
       for (i in 1:length(path_files)){
-        
         is_template[i] <- any(
-          stringr::str_detect(
-            path_files[i], 
-            attr.templates$regexpr
-          )
-        )
-        
+          stringr::str_detect(path_files[i], attr.templates$regexpr))
       }
       
-      templates <- vector(
-        'list', 
-        length(path_files[is_template])
-      )
-      
+      templates <- vector('list', length(path_files[is_template]))
       names(templates) <- path_files[is_template]
       
     }
@@ -326,58 +314,19 @@ template_arguments <- function(
     
   }
   
-  # FIXME: NULL templates should not read in blank templates. But if initialize == TRUE,
-  # then blank versions of each template should be read.
-  # # Add missing core templates
-  # 
-  # missing_core_templates <- c()
-  # 
-  # i_core <- seq(nrow(attr.templates))[
-  #   attr.templates$core_template == TRUE
-  #   ]
-  # 
-  # for (i in 1:length(i_core)){
-  #   
-  #   use_i <- stringr::str_detect(
-  #     path_files,
-  #     attr.templates$regexpr[i_core[i]]
-  #   )
-  #   
-  #   # If missing then add it
-  #   
-  #   if (!any(use_i)){
-  #     
-  #     missing_template <- vector('list', 1)
-  #     
-  #     names(missing_template) <- attr.templates$regexpr[i_core[i]]
-  #     
-  #     missing_core_templates <- c(missing_core_templates, missing_template)
-  #     
-  #   }
-  #   
-  # }
-  # 
-  # if (length(missing_core_templates) > 0){
-  #   
-  #   if (exists('templates')){
-  #     
-  #     templates <- c(templates, missing_core_templates)
-  #     
-  #   } else {
-  #     
-  #     templates <- missing_core_templates
-  #     
-  #   }
-  #   
-  # }
-  
   # Combine initialized components --------------------------------------------
+  # Combine initialized arguments, data tables, and other entities. Return the
+  # list object if there are no templates to add.
   
   arguments$x <- list(
     template = NULL,
     data.table = data_tables,
     other.entity = other_entities)
   output <- arguments
+  
+  if (is.null(path)) {
+    return(output)
+  }
   
   # Read templates ------------------------------------------------------------
   # Most templates require unique read calls, therefore we don't have
@@ -392,7 +341,6 @@ template_arguments <- function(
   for (i in 1:length(templates)){
     
     # Read abstract -----------------------------------------------------------
-    browser()
     
     if (stringr::str_detect(string = templates[i], pattern = 'abstract')){
       
