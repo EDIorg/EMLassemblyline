@@ -50,15 +50,29 @@ testthat::test_that("Inputs = NULL", {
 
 })
 
+# Inputs = missing templates --------------------------------------------------
+# A path without templates results in error.
+
+testthat::test_that("Inputs = missing templates", {
+  
+  dir.create(paste0(tempdir(), "/empty"))
+  file.create(paste0(tempdir(), "/empty/my.csv"))
+  expect_error(template_arguments(path = paste0(tempdir(), "/empty")))
+  unlink(paste0(tempdir(), "/empty/my.csv"))
+  expect_error(template_arguments(path = paste0(tempdir(), "/empty")))
+  unlink(paste0(tempdir(), "/empty"), force = T, recursive = T)
+
+})
+
 # Inputs = empty templates ----------------------------------------------------
 # Empty templates should be read into x
 
 testthat::test_that("Inputs = empty templates", {
   
   file.copy(
-    from  = system.file('/examples/templates', package = 'EMLassemblyline'),
-    to = tempdir())
-  
+    from  = system.file('/templates', package = 'EMLassemblyline'),
+    to = tempdir(),
+    recursive = T)
   output <- template_arguments(path = paste0(tempdir(), "/templates"))
   
   # output <- template_arguments()

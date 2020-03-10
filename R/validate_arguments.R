@@ -385,7 +385,29 @@ validate_arguments <- function(fun.name, fun.args){
     # path
     
     if (!is.null(fun.args$path)){
+      
       EDIutils::validate_path(fun.args$path)
+      
+      attr.templates <- data.table::fread(
+        system.file(
+          '/templates/template_characteristics.txt',
+          package = 'EMLassemblyline'), 
+        fill = TRUE,
+        blank.lines.skip = TRUE)
+      path_files <- list.files(fun.args$path)
+      if (!length(path_files) == 0) {
+        is_template <- rep(FALSE, length(path_files))
+        for (i in 1:length(path_files)){
+          is_template[i] <- any(
+            stringr::str_detect(path_files[i], attr.templates$regexpr))
+        }
+        if (!any(is_template)) {
+          stop("No metadata templates found at 'path'.", call. = F)
+        }
+      } else {
+        stop("No metadata templates found at 'path'.", call. = F)
+      }
+      
     }
     
     # data.path

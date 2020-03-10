@@ -261,8 +261,8 @@ template_arguments <- function(
   
   # Initialize arguments ------------------------------------------------------
   
-  arguments <- vector('list', nrow(attr.args))
-  names(arguments) <- attr.args$argument_name
+  output <- vector('list', nrow(attr.args))
+  names(output) <- attr.args$argument_name
 
   # Initialize data tables ----------------------------------------------------
   
@@ -289,140 +289,83 @@ template_arguments <- function(
   }
   
   # Initialize templates ------------------------------------------------------
+  # Distinguish metadata templates from other files located at path.
   
   if (!is.null(path)) {
-    
     path_files <- list.files(path)
-
     if (!length(path_files) == 0) {
-      
       is_template <- rep(FALSE, length(path_files))
-      
       for (i in 1:length(path_files)){
         is_template[i] <- any(
           stringr::str_detect(path_files[i], attr.templates$regexpr))
       }
-      
       templates <- vector('list', length(path_files[is_template]))
       names(templates) <- path_files[is_template]
-      
     }
-    
-  } else {
-    
-    path_files <- ''
-    
   }
   
   # Combine initialized components --------------------------------------------
   # Combine initialized arguments, data tables, and other entities. Return the
   # list object if there are no templates to add.
   
-  arguments$x <- list(
-    template = NULL,
-    data.table = data_tables,
-    other.entity = other_entities)
-  output <- arguments
-  
   if (is.null(path)) {
+    output$x <- list(
+      template = NULL,
+      data.table = data_tables,
+      other.entity = other_entities)
     return(output)
+  } else {
+    output$x <- list(
+      template = templates,
+      data.table = data_tables,
+      other.entity = other_entities)
   }
   
   # Read templates ------------------------------------------------------------
-  # Most templates require unique read calls, therefore we don't have
-  # generalized read functions (yet).
+  # Most templates require unique read calls.
   
   templates <- names(output$x$template)
-  
-  if (is.null(templates)) {
-    return(output)
-  }
   
   for (i in 1:length(templates)){
     
     # Read abstract -----------------------------------------------------------
     
     if (stringr::str_detect(string = templates[i], pattern = 'abstract')){
-      
-      if (sum(stringr::str_detect(templates, pattern = 'abstract')) > 1){
-        stop('More than one abstract template found. Please remove others.')
-      }
-      
-      if (file.exists(paste0(path, '/', templates[i]))){
-        
-        output$x$template[[i]]$content <- EML::set_TextType(
-          file = paste0(
-            path, 
-            '/', 
-            templates[i]
-          )
-        )
-        
-      } else {
-        
-        output$x$template[[i]]$content <- NA_character_
-        
-      }
-
+      output$x$template[[i]]$content <- EML::set_TextType(
+        file = paste0(path, '/', templates[i]))
     }
     
     # Read additional information ---------------------------------------------
     
     if (stringr::str_detect(string = templates[i], pattern = 'additional_info')){
-      
-      if (sum(stringr::str_detect(templates, pattern = 'additional_info')) > 1){
-        stop('More than one additional_info template found. Please remove others.')
-      }
-      
-      if (file.exists(paste0(path, '/', templates[i]))){
-        
-        output$x$template[[i]]$content <- EML::set_TextType(
-          file = paste0(
-            path, 
-            '/', 
-            templates[i]
-          )
-        )
-        
-      } else {
-        
-        output$x$template[[i]]$content <- NA_character_
-        
-      }
-      
+      output$x$template[[i]]$content <- EML::set_TextType(
+        file = paste0(path, '/', templates[i]))
     }
     
     # Read attributes (data table) --------------------------------------------
     
     if (stringr::str_detect(string = templates[i], pattern = 'attributes_.*.txt')){
       
-      if (file.exists(paste0(path, '/', templates[i]))){
-        
-        output$x$template[[i]]$content <- as.data.frame(
-          data.table::fread(
-            file = paste0(path, '/', templates[i]),
-            colClasses = rep("character", 7),
-            fill = TRUE,
-            blank.lines.skip = TRUE,
-            sep = "\t"))
-        
-        output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:7]
-        
-        colnames(output$x$template[[i]]$content) <- c(
-          "attributeName",
-          "attributeDefinition",
-          "class",
-          "unit",
-          "dateTimeFormatString",
-          "missingValueCode",
-          "missingValueCodeExplanation"
+      output$x$template[[i]]$content <- as.data.frame(
+        data.table::fread(
+          file = paste0(path, '/', templates[i]),
+          colClasses = rep("character", 7),
+          fill = TRUE,
+          blank.lines.skip = TRUE
         )
-        
-      } else {
-        
-        output$x$template[[i]]$content <- NA_character_
-        
-      }
+      )
+      
+      output$x$template[[i]]$content <- output$x$template[[i]]$content[ ,1:7]
+      
+      colnames(output$x$template[[i]]$content) <- c(
+        "attributeName",
+        "attributeDefinition",
+        "class",
+        "unit",
+        "dateTimeFormatString",
+        "missingValueCode",
+        "missingValueCodeExplanation"
+      )
       
     }
     
@@ -459,7 +402,7 @@ template_arguments <- function(
     # Read custom units -------------------------------------------------------
     
     if (stringr::str_detect(string = templates[i], pattern = 'custom_units.txt')){
-      
+      browser()
       if (file.exists(paste0(path, '/', templates[i]))){
         
         output$x$template[[i]]$content <- as.data.frame(
