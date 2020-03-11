@@ -39,7 +39,6 @@ data_path_files <- list.files(
 testthat::test_that("Inputs = NULL", {
   
   output <- template_arguments()
-  
   expect_true(class(output) == "list")
   expect_true(all(names(output) %in% attr_args$argument_name))
   expect_true(
@@ -74,16 +73,30 @@ testthat::test_that("Inputs = empty templates", {
     to = tempdir(),
     recursive = T)
   output <- template_arguments(path = paste0(tempdir(), "/templates"))
+  expect_true(class(output) == "list")
+  expect_true(all(names(output) %in% attr_args$argument_name))
+  expect_true(
+    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+  # FIXME: Continue here ...
+  for (i in 1:length(names(output$x$template))) {
+    if (stringr::str_detect(names(output$x$template[i]), "abstract|methods|additional_info|intellectual_rights")) {
+      expect_true(is.list(output$x$template[[i]]$content))
+    } else if (stringr::str_detect(names(output$x$template[i]), "attributes, catvars")) {
+      
+    }
+    
+  }
   
-  # output <- template_arguments()
-  # 
-  # expect_true(class(output) == "list")
-  # expect_true(all(names(output) %in% attr_args$argument_name))
-  # expect_true(
-  #   all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
   # expect_true(is.null(output$x$template))
-  # expect_true(is.null(output$x$data.table))
-  # expect_true(is.null(output$x$other.entity))
+  expect_true(is.null(output$x$data.table))
+  expect_true(is.null(output$x$other.entity))
+  
+  
+  
+  unlink(paste0(tempdir(), "/templates"), force = T, recursive = T)
+  
+  
+  
   
 })
 

@@ -1,1 +1,14 @@
-template_name	regexpr	delimiter	core_template	classabstract	abstract	NA	TRUE	listadditional_info	additional_info	NA	TRUE	listattributes	attributes_.*.txt	\t	FALSE	data.framebounding_boxes	bounding_boxes.txt	\t	TRUE	data.framecatvars	catvars_.*.txt	\t	FALSE	data.framecustom_units	custom_units.txt	\t	TRUE	data.framegeographic_coverage	geographic_coverage.txt	\t	TRUE	data.frameintellectual_rights	intellectual_rights.txt	NA	TRUE	listkeywords	keywords.txt	\t	TRUE	data.framemethods	methods	NA	TRUE	listpersonnel	personnel.txt	\t	TRUE	data.frametaxonomicCoverage	taxonomicCoverage.xml	NA	TRUE	taxonomicCoveragetaxonomic_coverage	taxonomic_coverage.txt	\t	TRUE	data.frame
+template_name	regexpr	delimiter	core_template	class	type
+abstract	abstract.(docx|md|txt)	NA	TRUE	list	text
+additional_info	additional_info.(docx|md|txt)	NA	TRUE	list	text
+attributes	attributes_.*.txt	\t	FALSE	data.frame	table
+bounding_boxes	bounding_boxes.txt	\t	TRUE	data.frame	table
+catvars	catvars_.*.txt	\t	FALSE	data.frame	table
+custom_units	custom_units.txt	\t	TRUE	data.frame	table
+geographic_coverage	geographic_coverage.txt	\t	TRUE	data.frame	table
+intellectual_rights	intellectual_rights.txt	NA	TRUE	list	text
+keywords	keywords.txt	\t	TRUE	data.frame	table
+methods	methods.(docx|md|txt)	NA	TRUE	list	text
+personnel	personnel.txt	\t	TRUE	data.frame	table
+taxonomicCoverage	taxonomicCoverage.xml	NA	TRUE	taxonomicCoverage	xml
+taxonomic_coverage	taxonomic_coverage.txt	\t	TRUE	data.frame	table
