@@ -1,18 +1,28 @@
+# EMLassemblyline 2.8.0
+
+### Enhancements
+
+* __Online distribution ([issue #56](https://github.com/EDIorg/EMLassemblyline/issues/56)):__ The previous implementation for providing URLs by which the data can be publicly downloaded required all data objects to be co-located in the same directory, which is too restrictive. Now URLs can be explicitly listed for each data object.
+
+### Deprecation
+
+* __data.url ([issue #56](https://github.com/EDIorg/EMLassemblyline/issues/56)):__ The `data.url` argument has been deprecated in favor of `data.table.url` and `other.entity.url` but will be supported until March 11, 2021.
+
 # EMLassemblyline 2.7.1
 
-## Bug fixes
+### Bug fixes
 
-* __Delimiter guessing:__ Occasionally the content of tabular templates leads `data.table::fread()` to guessing a delimiter other than "\t". This issue has been fixed by explicitly stating the expected field delimiter.
+* __Delimiter guessing:__ Occasionally the content of tabular templates leads `data.table::fread()` to guessing a delimiter other than "\\t". This issue has been fixed by explicitly stating the expected field delimiter.
 
 # EMLassemblyline 2.7.0
 
-## Enhancements
+### Enhancements
 
 * __File names containing spaces caused `template_categorical_variables()` to crash ([issue #25](https://github.com/EDIorg/EMLassemblyline/issues/25)):__ Errors occurred when input file names contained spaces. Using spaces is still a common practice among users. To accommodate this while continuing to promote best practices, the naming restriction has been relaxed and the best practices have been made a warning. The function checking file presence and naming conventions is `EDIutils::validate_file_name()`. An explicit file name specification (i.e. including extension) is now required, which precludes errors when the same file name is used among different file types in the same directory.
 * __Validate units ([issue #38](https://github.com/EDIorg/EMLassemblyline/issues/38)):__ Check that all numeric attributes have corresponding units and these units can be found in the EML standard unit dictionary or the custom_units.txt template. If not, then throw an error along with directions for fixing the issue. This check is called from make_eml().
 * __Multiple inputs to `template_taxonomic_coverage()`:__ If the taxa of a dataset are in more than one table, then a user would want to extract the unique taxa from all the tables and compile into the taxonomic_coverage.txt template. Multiple inputs to the `taxa.table` and `taxa.col` arguments is now supported.
 
-## Bug fixes
+### Bug fixes
 
 * __EML schema validation:__ Schema validation in `make_eml()` began failing with release of the dependency libary EML 2.0.2. This has been fixed.
 * __Support `;` delimiters:__ Data tables with semi-colon delimiters were not supported. This was fixed by updating `EDIutils::detect_delimiter()` ([issue #6](https://github.com/EDIorg/EDIutils/issues/6) of the EDIutils package).
@@ -25,7 +35,7 @@
 
 # EMLassemblyline 2.6.1
 
-## Bug fixes
+### Bug fixes
 
 * __Unit dictionary:__ The `view_unit_dictionary()` function was opening the unit dictionary in a separate non-searchable window. By removing the `utils` namespace from the function call the unit dictionary now opens within the RStudio source pane where searching is supported.
 * __Missing value codes:__ The `EML` v2.0.0 refactor resulted in changes to how missing value codes are handled. This fix restores the original functionality where empty character strings in the missing value code and explanation fields don't result in validation errors.
@@ -36,7 +46,7 @@
 
 # EMLassemblyline 2.6.0
 
-## Enhancements
+### Enhancements
 
 * __EML v2.0.0:__ `EMLassemblyline` has been refactored to run with the `EML' v2.0.0 dependency.
 * __Text type metadata may now be supplied in .docx and .md files:__ Support for creating abstract, methods, and additional information metadata has been extended from simple text files to Microsoft Word (.docx) and Markdown (.md) file formats. Formatting of these files are translated to EML via `markdown` > Pandoc > docbook.
@@ -44,12 +54,12 @@
 
 # EMLassemblyline 2.5.3
 
-## Enhancements
+### Enhancements
 
 * __Add function examples:__ Add examples to function documentation.
 * __Change template import:__ Import custom_units.txt with `template_table_attributes()` instead of with `template_core_metadata()`. This is a more logical pairing.
 
-## Bug fixes
+### Bug fixes
 
 * __The argument validator should not check geographic coverage templates:__ This fix moves the presence/absence check for geographic coverage templates to `make_eml()`.
 * __v2.4.6 functions should be accessible:__ This fix exports `EMLassemblyline` 2.4.6 functions that should be otherwise accessible for backwards compatibility.
@@ -57,7 +67,7 @@
 
 # EMLassemblyline 2.5.0
 
-## Enhancements
+### Enhancements
 
 * __Website:__ Improved documentation with vignettes demonstrating common and advanced use cases. Implemented with `pkgdown`.
 * __Templating functions:__ Functions creating metadata templates are grouped under the prefix `template_*` to simplify user understanding.
@@ -73,7 +83,7 @@
 * __Make EML for other data repositories:__ Arguments requiring EDI specific content (i.e. `user.id`, `user.domain`, `package.id`) have been relaxed to enable creation of EML for other data repositories.
 * __Better entity descriptions:__ Use arguments `data.table.description` and `other.entity.description` for _//dataTable/entityName_ and _//otherEntity/entityName_, respectively. This provides a more meaningful file description than the file name it self.
 
-## Deprecation
+### Deprecation
 
 Several templating functions, templates, and arguments have been deprecated. Full backwards compatibility of these functions, templates, and arguments will be supported for the next year (i.e. until May 1, 2020).
 
@@ -98,6 +108,6 @@ __Arguments:__
 * `zip.dir.description` is deprecated in favor of `other.entity.description`
 * `affiliation` is deprecated in favor of `user.domain`
 
-## Bug fixes
+### Bug fixes
 
 * __otherEntity url:__ Add EML element _//otherEntity/physical/distribution/online/url_ via `make_eml()`. This element was missing though documentation implied its existence.

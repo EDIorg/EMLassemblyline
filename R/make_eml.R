@@ -18,10 +18,11 @@
 #'       data.table.name = data.table,
 #'       data.table.description = NULL, 
 #'       data.table.quote.character = NULL, 
+#'       data.table.url = NULL,
 #'       other.entity = NULL,
 #'       other.entity.name = other.entity,
 #'       other.entity.description = NULL,
-#'       data.url = NULL,
+#'       other.entity.url = NULL,
 #'       provenance = NULL,
 #'       user.id = NULL,
 #'       user.domain = NULL,
@@ -73,6 +74,11 @@
 #'     order as listed in \code{data.table}. If the quote character is a quotation, 
 #'     then enter \code{"\\""}. If the quote character is an apostrophe, then 
 #'     enter \code{"\\'"}.
+#' @param data.table.url
+#'     (character; optional) The publicly accessible URL from which 
+#'     \code{data.table} can be downloaded. If more than one, then supply as 
+#'     a vector of character strings in the same order as listed in 
+#'     \code{data.table}.
 #' @param other.entity
 #'     (character; optional) Name of \code{other.entity}(s) in this 
 #'     dataset. Use \code{other.entity} for all non-\code{data.table} files. 
@@ -88,11 +94,11 @@
 #'     (character; optional) Description(s) of \code{other.entity}(s). If more 
 #'     than one, then supply as a vector of descriptions in the same order as 
 #'     listed in \code{other.entity}.
-#' @param data.url
+#' @param other.entity.url
 #'     (character; optional) The publicly accessible URL from which 
-#'     \code{data.table}s or \code{other.entity}s can be downloaded.
-#'     This argument is not required, if the data will be 
-#'     uploaded manually to the data repository.
+#'     \code{other.entity} can be downloaded. If more than one, then supply as 
+#'     a vector of character strings in the same order as listed in 
+#'     \code{other.entity}.
 #' @param provenance
 #'     (character; optional) EDI Data Repository Data package ID(s) 
 #'     corresponding to parent datasets from which this dataset was created 
@@ -221,10 +227,11 @@ make_eml <- function(
   data.table.name = data.table,
   data.table.description = NULL, 
   data.table.quote.character = NULL, 
+  data.table.url = NULL,
   other.entity = NULL,
   other.entity.name = other.entity,
   other.entity.description = NULL,
-  data.url = NULL,
+  other.entity.url = NULL,
   provenance = NULL,
   user.id = NULL,
   user.domain = NULL,
@@ -237,6 +244,7 @@ make_eml <- function(
   data.files.description,
   data.files.quote.character,
   data.files.url,
+  data.url = NULL,
   zip.dir,
   zip.dir.description
   ){
@@ -321,6 +329,13 @@ make_eml <- function(
     
     data.url <- data.files.url
     
+  }
+  
+  if (!missing(data.url)){
+    warning(
+      paste0("Argument 'data.url' is deprecated; please use 'data.table.url' ",
+             "and 'other.entity.url' instead."),
+      call. = FALSE)
   }
   
   if (!missing(zip.dir)){
@@ -1528,12 +1543,12 @@ make_eml <- function(
         physical$dataFormat$textFormat$simpleDelimited$quoteCharacter <- data.table.quote.character[i]
       }
 
+      # FIXME: data.url is deprecated. Remove support for this argument after (11 March 2021)
       if (!is.null(data.url)){
         physical$distribution$online$url[[1]] <- paste0(
-          data.url,
-          "/",
-          names(x$data.table)[i]
-        )
+          data.url, "/", names(x$data.table)[i])
+      } else if (!is.null(data.table.url)) {
+        physical$distribution$online$url <- data.table.url[i]
       } else {
         physical$distribution <- list()
       }
@@ -1655,13 +1670,13 @@ make_eml <- function(
 
         physical$dataFormat$externallyDefinedFormat$formatName <- 'unknown'
 
+        # FIXME: data.url is deprecated. Remove support for this argument after (11 March 2021)
         if (!is.null(data.url)){
           physical$distribution$online$url[[1]] <- paste0(
-            data.url,
-            "/",
-            names(x$other.entity)[i]
-          )
-        } else {
+            data.url, "/", names(x$other.entity)[i])
+        } else if (!is.null(other.entity.url)) {
+          physical$distribution$online$url <- other.entity.url[i]
+        }else {
           physical$distribution <- list()
         }
 

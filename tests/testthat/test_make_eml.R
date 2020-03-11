@@ -2084,3 +2084,100 @@ testthat::test_that('geographicCoverage', {
 
 })
 
+
+# data.table.url & other.entity.url -------------------------------------------
+
+testthat::test_that('data.table.url and other.entity.url', {
+  
+  file.copy(
+    from  = system.file('/examples/pkg_260', package = 'EMLassemblyline'),
+    to = tempdir(),
+    recursive = TRUE)
+  
+  expect_error(
+    make_eml(
+      path = paste0(tempdir(), "/pkg_260/metadata_templates"),
+      data.path = paste0(tempdir(), "/pkg_260/data_objects"),
+      eml.path = paste0(tempdir(), "/pkg_260/eml"),
+      dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+      data.table = c("decomp.csv", "nitrogen.csv"),
+      data.table.name = c("decomp table name", "nitrogen table name"),
+      data.table.description = c('Decomposition data', 'Nitrogen data'),
+      data.table.url = c("https://datatableurl_1"),
+      other.entity = c("ancillary_data.zip", "processing_and_analysis.R"),
+      other.entity.name = c("Ancillary data", "Processing and analysis script"),
+      other.entity.description = c("Ancillary data description", "Processing and analysis script description"),
+      other.entity.url = c("https://otherentityurl_1", "https://otherentityurl_2"),
+      temporal.coverage = c('2014-05-01', '2015-10-31'),
+      maintenance.description = 'completed',
+      user.id = "userid",
+      user.domain = "user.domain",
+      package.id = 'edi.141.1',
+      write.file = F,
+      return.obj = F
+    )
+  )
+  
+  expect_error(
+    make_eml(
+      path = paste0(tempdir(), "/pkg_260/metadata_templates"),
+      data.path = paste0(tempdir(), "/pkg_260/data_objects"),
+      eml.path = paste0(tempdir(), "/pkg_260/eml"),
+      dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+      data.table = c("decomp.csv", "nitrogen.csv"),
+      data.table.name = c("decomp table name", "nitrogen table name"),
+      data.table.description = c('Decomposition data', 'Nitrogen data'),
+      data.table.url = c("https://datatableurl_1", "https://datatableurl_2"),
+      other.entity = c("ancillary_data.zip", "processing_and_analysis.R"),
+      other.entity.name = c("Ancillary data", "Processing and analysis script"),
+      other.entity.description = c("Ancillary data description", "Processing and analysis script description"),
+      other.entity.url = c("https://otherentityurl_1"),
+      temporal.coverage = c('2014-05-01', '2015-10-31'),
+      maintenance.description = 'completed',
+      user.id = "userid",
+      user.domain = "user.domain",
+      package.id = 'edi.141.1',
+      write.file = F,
+      return.obj = F
+    )
+  )
+  
+  output <- make_eml(
+    path = paste0(tempdir(), "/pkg_260/metadata_templates"),
+    data.path = paste0(tempdir(), "/pkg_260/data_objects"),
+    eml.path = paste0(tempdir(), "/pkg_260/eml"),
+    dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015',
+    data.table = c("decomp.csv", "nitrogen.csv"),
+    data.table.name = c("decomp table name", "nitrogen table name"),
+    data.table.description = c('Decomposition data', 'Nitrogen data'),
+    data.table.url = c("https://datatableurl_1", "https://datatableurl_2"),
+    other.entity = c("ancillary_data.zip", "processing_and_analysis.R"),
+    other.entity.name = c("Ancillary data", "Processing and analysis script"),
+    other.entity.description = c("Ancillary data description", "Processing and analysis script description"),
+    other.entity.url = c("https://otherentityurl_1", "https://otherentityurl_2"),
+    temporal.coverage = c('2014-05-01', '2015-10-31'),
+    maintenance.description = 'completed',
+    user.id = "userid",
+    user.domain = "user.domain",
+    package.id = 'edi.141.1',
+    write.file = F,
+    return.obj = T
+  )
+  
+  expect_true(
+    output$dataset$dataTable[[1]]$physical$distribution$online$url ==
+      "https://datatableurl_1")
+  expect_true(
+    output$dataset$dataTable[[2]]$physical$distribution$online$url ==
+      "https://datatableurl_2")
+  expect_true(
+    output$dataset$otherEntity[[1]]$physical$distribution$online$url ==
+      "https://otherentityurl_1")
+  expect_true(
+    output$dataset$otherEntity[[2]]$physical$distribution$online$url ==
+      "https://otherentityurl_2")
+  
+  unlink(paste0(tempdir(), "/pkg_260/metadata_templates"), recursive = T, force = T)
+  
+})
+

@@ -322,6 +322,14 @@ validate_arguments <- function(fun.name, fun.args){
       }
     }
     
+    # data.table.url
+    
+    if (!is.null(fun.args$data.table.url)) {
+      if (length(fun.args$data.table.url) != length(fun.args$data.table)) {
+        stop('The number of URLs listed in the argument "data.table.url" does not match the number of files listed in the argument "data.table". These must match.', call. = F)
+      }
+    }
+    
     # other.entity and other.entity.description
     
     if ((!is.null(fun.args$other.entity)) & (is.null(fun.args$other.entity.description))){
@@ -349,6 +357,14 @@ validate_arguments <- function(fun.name, fun.args){
           ),
           call. = FALSE
         )
+      }
+    }
+    
+    # other.entity.url
+    
+    if (!is.null(fun.args$other.entity.url)) {
+      if (length(fun.args$other.entity.url) != length(fun.args$other.entity)) {
+        stop('The number of URLs listed in the argument "other.entity.url" does not match the number of files listed in the argument "other.entity". These must match.', call. = F)
       }
     }
     

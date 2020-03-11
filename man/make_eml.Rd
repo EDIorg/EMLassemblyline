@@ -17,10 +17,11 @@ make_eml(
       data.table.name = data.table,
       data.table.description = NULL, 
       data.table.quote.character = NULL, 
+      data.table.url = NULL,
       other.entity = NULL,
       other.entity.name = other.entity,
       other.entity.description = NULL,
-      data.url = NULL,
+      other.entity.url = NULL,
       provenance = NULL,
       user.id = NULL,
       user.domain = NULL,
@@ -73,6 +74,11 @@ order as listed in \code{data.table}. If the quote character is a quotation,
 then enter \code{"\\""}. If the quote character is an apostrophe, then 
 enter \code{"\\'"}.}
 
+\item{data.table.url}{(character; optional) The publicly accessible URL from which 
+\code{data.table} can be downloaded. If more than one, then supply as 
+a vector of character strings in the same order as listed in 
+\code{data.table}.}
+
 \item{other.entity}{(character; optional) Name of \code{other.entity}(s) in this 
 dataset. Use \code{other.entity} for all non-\code{data.table} files. 
 \code{other.entity}(s) should be stored at \code{data.path}. If more 
@@ -88,10 +94,10 @@ vector of character strings in the same order as listed in
 than one, then supply as a vector of descriptions in the same order as 
 listed in \code{other.entity}.}
 
-\item{data.url}{(character; optional) The publicly accessible URL from which 
-\code{data.table}s or \code{other.entity}s can be downloaded.
-This argument is not required, if the data will be 
-uploaded manually to the data repository.}
+\item{other.entity.url}{(character; optional) The publicly accessible URL from which 
+\code{other.entity} can be downloaded. If more than one, then supply as 
+a vector of character strings in the same order as listed in 
+\code{other.entity}.}
 
 \item{provenance}{(character; optional) EDI Data Repository Data package ID(s) 
 corresponding to parent datasets from which this dataset was created 
