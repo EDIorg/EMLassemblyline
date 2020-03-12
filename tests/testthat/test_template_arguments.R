@@ -64,7 +64,7 @@ testthat::test_that("Inputs = missing templates", {
 })
 
 # Inputs = empty templates ----------------------------------------------------
-# Empty templates should be read into x
+# Empty templates at path should be read into x
 
 testthat::test_that("Inputs = empty templates", {
   
@@ -116,6 +116,47 @@ testthat::test_that("Inputs = empty templates", {
   
   unlink(paste0(tempdir(), "/templates"), force = T, recursive = T)
 
+})
+
+# Inputs = the 'empty' argument -----------------------------------------------
+# All templates should be added to the list object with empty values when the 
+# argument empty = TRUE.
+
+testthat::test_that("Inputs = the 'empty' argument", {
+  
+  output <- template_arguments(empty = T)
+  
+  expect_true(class(output) == "list")
+  expect_true(all(names(output) %in% attr_args$argument_name))
+  expect_true(
+    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+  
+  expected_templates <- c(
+    "abstract.txt", "additional_info.txt", "custom_units.txt", 
+    "geographic_coverage.txt", "intellectual_rights.txt", "keywords.txt", 
+    "methods.txt", "personnel.txt", "taxonomic_coverage.txt")
+  for (i in 1:length(names(output$x$template))) {
+    is_text <- FALSE
+    is_dataframe <- FALSE
+    is_text <- stringr::str_detect(
+      names(output$x$template)[i], 
+      paste(
+        attr_templates$regexpr[
+          (attr_templates$type == "text")],
+        collapse = "|"))
+    is_dataframe <- stringr::str_detect(
+      names(output$x$template)[i], 
+      paste(
+        attr_templates$regexpr[
+          (attr_templates$type == "table")],
+        collapse = "|"))
+    if (is_text) {
+      expect_true(is.list(output$x$template[[i]]$content))
+    } else if (isTRUE(is_dataframe)) {
+      expect_true(is.data.frame(output$x$template[[i]]$content))
+    }
+  }
+  
 })
 
 # Inputs = completed templates ------------------------------------------------

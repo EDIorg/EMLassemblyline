@@ -2,228 +2,66 @@
 % Please edit documentation in R/template_arguments.R
 \name{template_arguments}
 \alias{template_arguments}
-\title{Initialize list of arguments and contents to \code{EMLassemblyline} functions}
+\title{Initialize inputs to \code{EMLassemblyline} functions}
 \usage{
 template_arguments(
-      path = NULL,
-      data.path = NULL,
-      data.table = NULL,
-      other.entity = NULL,
-      sep = NULL
-    )
+  path = NULL,
+  data.path = NULL,
+  data.table = NULL,
+  other.entity = NULL,
+  sep = NULL,
+  empty = FALSE
+)
 }
 \arguments{
 \item{path}{(character) Path to the directory containing \code{EMLassemblyline} 
 metadata templates.}
 
 \item{data.path}{(character) Path to the directory containing \code{data.table} and 
-\code{other.entity}.}
+\code{other.entity} data objects.}
 
-\item{data.table}{(character) Data table name. If more than one, then supply as a vector 
-of character strings (e.g. 
-\code{data.table = c('concentrations.csv', 'characteristics.csv')}).}
+\item{data.table}{(character) File names of data tables. If more than one, then supply as 
+a vector (e.g. \code{data.table = c('decomp.csv', 'nitrogen.csv')}).}
 
-\item{other.entity}{(character) Other entity name. If more than one, then supply as a vector 
-of character strings (e.g. 
-\code{other.entity = c('ancillary_data.zip', 'quality_control.R')}).}
+\item{other.entity}{(character) File names of other entity data objects. If more than one, 
+then supply as a vector (e.g. 
+\code{other.entity = c('ancillary_data.zip', 'processing_and_analysis.R')}).}
 
-\item{sep}{(character) Data table field delimiter. Use this argument if 
-\code{template_arguments} fails to automatically identify field delimiters of 
-\code{data.table}.}
+\item{sep}{(character) Data table field delimiter. Use this if this function fails
+to read your \code{data.table}.}
+
+\item{empty}{(logical) Initialize the output with a set of empty metadata templates?
+This option is useful when wanting to transfer metadata directly into
+the template files without having to call the templating functions.}
 }
 \value{
-(named list) A list of all \code{EMLassemblyline} arguments with this
-    structure:
-    \itemize{
-    \item{\strong{data.path} (character) Path to where the data 
-    files are stored.}
-    \item{\strong{data.table} (character) Data table name. If more 
-    than one, supply as a vector of character strings (e.g. 
-    \code{data.table = c('concentrations.csv', 'characteristics.csv')}).}
-    \item{\strong{data.table.description} (character) Data table 
-    description. Brief description of data tables. If more than 
-    one data table, then supply as a vector of character strings in 
-    the same order as listed in \code{data.table}.}
-    \item{\strong{data.table.quote.character} (character) Quote 
-    character used in data tables. If more than one, then supply as 
-    a vector of character strings in the same order as listed in 
-    \code{data.table}. This argument is required only if 
-    \code{data.table} contain quotations. If the quote character is 
-    a quotation, then enter \code{"\\""}. If the quote character is an 
-    apostrophe, then enter \code{"\\'"}.}
-    \item{\strong{data.url} (character) A publicly accessible URL to 
-    data tables and other entities of this dataset.}
-    \item{\strong{dataset.title} (character) Dataset title.}
-    \item{\strong{dir.name} (character) Name of parent directory. 
-    Subdirectories have predefined names.}
-    \item{\strong{eml.path} (character) Path to where EML will be 
-    written.}
-    \item{\strong{geographic.coordinates} (character) Geographic coordinates 
-    delineating the bounding area or point of a dataset, in decimal 
-    degrees. This argument is not required if using 
-    bounding_boxes.txt. Values must be listed in this order: 
-    North, East, South, West. Longitudes West of the prime meridian 
-    and latitudes South of the equator are negative. If representing 
-    a point, repeat the latitude for North and South, and repeat the 
-    longitude for East and West (e.g. 
-    \code{geographic.coordinates = c('28.38', '-119.95', '28.38', '-119.95')}).}
-    \item{\strong{geographic.description} (character) Geographic 
-    description. Don't use this argument if using the 
-    geographic_coverage.txt template.}
-    \item{\strong{lat.col} (character) Name of latitude column.}
-    \item{\strong{license} (character) License under which the data 
-    will be released.}
-    \item{\strong{lon.col} (character) Name of longitude column.}
-    \item{\strong{maintenance.description} (character) Data collection 
-    status. Can be "ongoing" or "completed".}
-    \item{\strong{other.entity} (character) Other entity name. If 
-    more than one, then supply as a vector of character strings. 
-    Other entities should be located at \code{data.path}.}
-    \item{\strong{other.entity.description} (character) Other entity 
-    description. If more than one, then supply as a vector of 
-    descriptions in the same order as listed in \code{other.entity}.}
-    \item{\strong{package.id} (character) Data package identifier. 
-    Missing \code{package.id} is assigned a default value of 
-    'edi.101.1'. Any data repository package ID may be used.}
-    \item{\strong{path} (character) Path to where template files are
-    stored.}
-    \item{\strong{provenance} (character) EDI Data Repository Data 
-    package ID(s) corresponding to parent datasets from which this 
-    dataset was created (e.g. 'knb-lter-cap.46.3'). If more than one, 
-    then supply as a vector of character strings.}
-    \item{\strong{return.obj} (logical) Return the EML as an R 
-    object of class EML object.}
-    \item{\strong{sep} (character) Field delimiter to be used when 
-    reading data tables.}
-    \item{\strong{site.col} (character) Name of site column, where
-    site is the name of the location specified by \code{lat.col} and 
-    \code{lon.col}.}
-    \item{\strong{taxa.authority} (integer) An ordered numeric vector of 
-    ID's corresponding to data sources (i.e. taxonomic authorities) 
-    you'd like to query, in the order of decreasing preference. Run 
-    \code{view_taxa_authorities()} to see supported data sources. Columns 
-    "resolve_sci_taxa", and "resolve_comm_taxa" correspond to scientific 
-    and common searches.}
-    \item{\strong{taxa.col} (character) Name of column in 
-    \code{taxa.table}containing taxonomic names.}
-    \item{\strong{taxa.name.type} (character) Taxonomic name type. Can be: 
-    "scientific", "common", or "both".}
-    \item{\strong{taxa.table} (character) Name of data table containing 
-    \code{taxa.col}.}
-    \item{\strong{temporal.coverage} (character) Beginning and ending 
-    dates of the dataset as a vector of character strings in the 
-    format \strong{YYYY-MM-DD}.}
-    \item{\strong{user.domain} (character) Domain of the 
-    \code{user.id}. If more than one, then supply as a vector of 
-    character strings in the same order corresponding to listed under
-    \code{user.id}. Valid options for EDI are "LTER" and "EDI". Other 
-    data repository IDs may be used. NULL user.domain defaults to 
-    "someuserdomain".}
-    \item{\strong{user.id} (character) ID of data repository user 
-    account. If more than one, supply as a vector of character 
-    strings. NULL user.id defaults to "someuserid".}
-    \item{\strong{write.file} (logical) Write file to 
-    \code{eml.path}.}
-    \item{\strong{x} (named list) List of metadata template, data 
-    tables, and other entities.}
-      \itemize{
-      \item{\strong{template} - Metadata template files}
-        \itemize{
-        \item{\strong{abstract.txt} Abstract template}
-          \itemize{
-          \item{\strong{content} \code{list} containing 
-          abstract, NA otherwise}
-          }
-        \item{\strong{additional_info.txt} Additional information template}
-          \itemize{
-          \item{\strong{content} \code{list} containing 
-          additional info, NA otherwise}
-          }
-        \item{\strong{attributes_name.txt} Attributes template where 
-        "name" is the corresponding \code{data.table}.}
-          \itemize{
-          \item{\strong{content} Data frame of attributes template, 
-          NA otherwise.}
-          }
-        \item{\strong{bounding_boxes.txt} Bounding boxes template}
-          \itemize{
-          \item{\strong{content} Data frame of bounding boxes 
-          template, NA otherwise.}
-          }
-        \item{\strong{catvars_name.txt} Categorical variables template 
-          where "name" is the corresponding \code{data.table}.}
-          \itemize{
-          \item{\strong{content} Data frame of categorical variables 
-          template, NA otherwise.}
-          }
-        \item{\strong{custom_units.txt} Custom units template}
-          \itemize{
-          \item{\strong{content} Data frame of custom units template, 
-          NA otherwise.}
-          }
-        \item{\strong{geographic_coverage.txt} Geographic coverage 
-          template}
-          \itemize{
-          \item{\strong{content} Data frame of geographic coverage 
-          template, NA otherwise.}
-          }
-        \item{\strong{intellectual_rights.txt} Intellectual rights 
-          template}
-          \itemize{
-          \item{\strong{content} \code{list} containing 
-          intellectual rights template, NA otherwise.}
-          }
-        \item{\strong{keywords.txt} Keywords template}
-          \itemize{
-          \item{\strong{content} Data frame of keywords template, 
-          NA otherwise.}
-          }
-        \item{\strong{methods.txt} Methods template}
-          \itemize{
-          \item{\strong{content} \code{list} containing 
-          methods, NA otherwise.}
-          }
-        \item{\strong{personnel.txt} Personnel template}
-          \itemize{
-          \item{\strong{content} Data frame of personnel template, 
-          NA otherwise.}
-          }
-        \item{\strong{taxonomicCoverage.xml} Taxonomic coverage EML 
-          element}
-          \itemize{
-          \item{\strong{content} \code{list}, 
-          NA otherwise}
-          }     
-          }
-       \item{\strong{data.table} Data tables}
-       \itemize{
-          \item{\strong{data.table.name.ext} Name of data table including 
-          file extension, NULL otherwise.}
-          \itemize{
-                \item{\strong{content} Data frame of data table.}
-           }
-         }
-       \item{\strong{other.entity} Other entities}
-       \itemize{
-           \item{\strong{other.entity.name.ext} Name of other entity 
-           including file extension, NULL otherwise.}
-           \itemize{
-                \item{\strong{content} NA}
-           }
-       }
-     }
-    }
+(named list) A list of all \code{EMLassemblyline} arguments, specified 
+    metadata templates and data objects.
 }
 \description{
-Initialize the list of arguments for EMLassemblyline functions including
-    \code{x}, an argument containing metadata template and data file 
-    contents. This approach enables programatic interfacing of upstream 
-    metadata sources (e.g. 
-    \href{https://github.com/lter/LTER-core-metabase}{LTER-core-metabase}) 
-    to \code{EMLassemblyline} functions.
+Initialize the full list of possible inputs to \code{EMLassemblyline}
+    functions (i.e. function arguments, metadata templates, and data 
+    objects). This enables bridging of upstream metadata and data sources 
+    (e.g. metabases, databases, Excel files, web forms, etc.).
 }
-\details{
-The full named list structure is returned irrespective of NULL inputs,
-    so content can be added downstream (e.g. \code{EMLassemblyline} templating 
-    functions).
+\examples{
+# Output arguments and empty versions of metadata templates
+
+r <- template_arguments(empty = TRUE)
+
+# Output arguments, completed versions of metadata templates, and data objects
+
+mydir <- file.copy(
+  system.file('/examples/pkg_260', package = 'EMLassemblyline'), 
+  tempdir(),
+  recursive = TRUE)
+
+setwd(paste0(tempdir(), "/pkg_260"))
+
+r <- template_arguments(
+  path = "./metadata_templates",
+  data.path = "./data_objects",
+  data.table = c("decomp.csv", "nitrogen.csv"),
+  other.entity = c("ancillary_data.zip", "processing_and_analysis.R"))
+    
 }
