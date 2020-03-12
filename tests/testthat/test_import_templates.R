@@ -367,49 +367,49 @@ testthat::test_that('Test usage with file inputs', {
 # x inputs = NULL -------------------------------------------------------------
 
 testthat::test_that('x inputs = NULL', {
-  
+
   # Make function call
-  
+
   x <- template_arguments()
-  
+
   x <- x$x
-  
+
   # Missing path results in messages
-  
+
   expect_message(
     suppressWarnings(
       import_templates(
         license = 'CC0',
         x = x,
         write.file = FALSE
-      ) 
+      )
     )
   )
-  
+
   # Missing path results in expected content classes with empty values
-  
+
   output <- suppressMessages(
     suppressWarnings(
       import_templates(
         license = 'CC0',
         x = x,
         write.file = FALSE
-      ) 
+      )
     )
   )
-  
+
   for (i in 1:length(output$template)){
-    
+
     expect_equal(
-      class(output$template[[i]]$content)[1] %in% 
+      class(output$template[[i]]$content)[1] %in%
         c('list', 'data.frame', 'list', 'character'),
       TRUE
     )
-    
+
   }
-  
+
   # Missing license results in error
-  
+
   expect_error(
     suppressMessages(
       suppressWarnings(
@@ -420,13 +420,13 @@ testthat::test_that('x inputs = NULL', {
           ),
           x = x,
           write.file = FALSE
-        ) 
+        )
       )
     )
   )
-  
+
   # Unsupported license results in error
-  
+
   expect_error(
     suppressMessages(
       suppressWarnings(
@@ -438,13 +438,13 @@ testthat::test_that('x inputs = NULL', {
           x = x,
           license = 'CCzero',
           write.file = FALSE
-        ) 
+        )
       )
     )
   )
-  
+
   # Valid path results in messages
-  
+
   expect_message(
     suppressWarnings(
       import_templates(
@@ -455,12 +455,12 @@ testthat::test_that('x inputs = NULL', {
         x = x,
         license = 'CC0',
         write.file = FALSE
-      ) 
+      )
     )
   )
-  
+
   # Valid path results in expected content classes with empty values
-  
+
   output <- suppressMessages(
     suppressWarnings(
       import_templates(
@@ -471,22 +471,22 @@ testthat::test_that('x inputs = NULL', {
         license = 'CC0',
         x = x,
         write.file = FALSE
-      ) 
+      )
     )
   )
-  
+
   for (i in 1:length(output$template)){
-    
+
     expect_equal(
-      class(output$template[[i]]$content)[1] %in% 
+      class(output$template[[i]]$content)[1] %in%
         c('list', 'data.frame', 'list', 'character'),
       TRUE
     )
-    
+
   }
-  
+
   # Attempt to import templates when they already exist results in messages
-  
+
   expect_message(
     suppressWarnings(
       import_templates(
@@ -497,12 +497,12 @@ testthat::test_that('x inputs = NULL', {
         x = output,
         license = 'CC0',
         write.file = FALSE
-      ) 
+      )
     )
   )
-  
+
   # CCBY is supported
-  
+
   expect_message(
     suppressWarnings(
       import_templates(
@@ -513,7 +513,7 @@ testthat::test_that('x inputs = NULL', {
         x = x,
         license = 'CCBY',
         write.file = FALSE
-      ) 
+      )
     )
   )
 
@@ -522,9 +522,9 @@ testthat::test_that('x inputs = NULL', {
 # x inputs = data tables ------------------------------------------------------
 
 testthat::test_that('x inputs = data tables', {
-  
+
   # Make function call
-  
+
   x <- template_arguments(
     data.path = system.file(
       '/examples/data',
@@ -535,23 +535,23 @@ testthat::test_that('x inputs = data tables', {
       'nitrogen.csv'
     )
   )
-  
+
   x <- x$x
-  
+
   # Missing path and data path results in messages
-  
+
   expect_message(
     suppressWarnings(
       import_templates(
         license = 'CC0',
         x = x,
         write.file = FALSE
-      ) 
+      )
     )
   )
-  
+
   # Missing path results in messages
-  
+
   expect_message(
     suppressWarnings(
       import_templates(
@@ -562,12 +562,12 @@ testthat::test_that('x inputs = data tables', {
         license = 'CC0',
         x = x,
         write.file = FALSE
-      ) 
+      )
     )
   )
-  
+
   # Missing data path results in messages
-  
+
   expect_message(
     suppressWarnings(
       import_templates(
@@ -578,12 +578,12 @@ testthat::test_that('x inputs = data tables', {
         license = 'CC0',
         x = x,
         write.file = FALSE
-      ) 
+      )
     )
   )
-  
+
   # Missing license results in error
-  
+
   expect_error(
     suppressMessages(
       suppressWarnings(
@@ -594,13 +594,13 @@ testthat::test_that('x inputs = data tables', {
           ),
           x = x,
           write.file = FALSE
-        ) 
+        )
       )
     )
   )
-  
+
   # Unsupported license results in error
-  
+
   expect_error(
     suppressMessages(
       suppressWarnings(
@@ -612,13 +612,13 @@ testthat::test_that('x inputs = data tables', {
           x = x,
           license = 'CCzero',
           write.file = FALSE
-        ) 
+        )
       )
     )
   )
-  
+
   # Valid data path and data tables results in messages
-  
+
   expect_message(
     suppressWarnings(
       import_templates(
@@ -633,12 +633,12 @@ testthat::test_that('x inputs = data tables', {
         x = x,
         license = 'CC0',
         write.file = FALSE
-      ) 
+      )
     )
   )
-  
+
   # Deprecated argument results in warning
-  
+
   expect_warning(
     suppressMessages(
       import_templates(
@@ -653,13 +653,13 @@ testthat::test_that('x inputs = data tables', {
         x = x,
         license = 'CC0',
         write.file = FALSE
-      ) 
+      )
     )
   )
-  
+
   # Valid data path and data tables result in addition of attributes templates
   # with expected names, class, column names, and nrows > 1
-  
+
   output <- suppressMessages(
     suppressWarnings(
       import_templates(
@@ -674,10 +674,10 @@ testthat::test_that('x inputs = data tables', {
         x = x,
         license = 'CC0',
         write.file = FALSE
-      ) 
+      )
     )
   )
-  
+
   attr_names <- paste0(
     'attributes_',
     stringr::str_remove(
@@ -686,38 +686,38 @@ testthat::test_that('x inputs = data tables', {
     ),
     '.txt'
   )
-  
+
   for (i in 1:length(attr_names)){
-    
+
     expect_equal(
       attr_names[i] %in% names(output$template),
       TRUE
     )
-    
+
     expect_equal(
       class(output$template[[attr_names[i]]]$content),
       'data.frame'
     )
-    
+
     expect_equal(
       all(
         colnames(output$template[[attr_names[i]]]$content) %in%
-          c('attributeName', 'attributeDefinition', 'class', 'unit', 
-            'dateTimeFormatString', 'missingValueCode', 
+          c('attributeName', 'attributeDefinition', 'class', 'unit',
+            'dateTimeFormatString', 'missingValueCode',
             'missingValueCodeExplanation')
       ),
       TRUE
     )
-    
+
     expect_equal(
       nrow(output$template[[attr_names[i]]]$content) > 1,
       TRUE
     )
-    
+
   }
-  
+
   # Attempt to import templates when they already exist results in messages
-  
+
   expect_message(
     suppressWarnings(
       import_templates(
@@ -732,18 +732,18 @@ testthat::test_that('x inputs = data tables', {
         x = output,
         license = 'CC0',
         write.file = FALSE
-      ) 
+      )
     )
   )
-  
+
   # Invalid column names result in error
-  
+
   input <- x
-  
+
   colnames(input$data.table$nitrogen.csv$content)[
     colnames(input$data.table$nitrogen.csv$content) == 'stem_mass_density'
     ] <- 'stem.mass.density'
-  
+
   expect_error(
     suppressMessages(
       suppressWarnings(
@@ -759,8 +759,8 @@ testthat::test_that('x inputs = data tables', {
           x = input,
           license = 'CC0',
           write.file = FALSE
-        ) 
-      ) 
+        )
+      )
     )
   )
 
@@ -769,9 +769,9 @@ testthat::test_that('x inputs = data tables', {
 # x inputs = data tables and templates ----------------------------------------
 
 testthat::test_that('x inputs = data tables and templates', {
-  
+
   # Make function call
-  
+
   x <- template_arguments(
     path = system.file(
       '/examples/templates',
@@ -786,29 +786,29 @@ testthat::test_that('x inputs = data tables and templates', {
       'nitrogen.csv'
     )
   )
-  
+
   x <- x$x
-  
+
   # Remove attributes_*txt templates
-  
+
   x$template$attributes_decomp.txt <- NULL
-  
+
   x$template$attributes_nitrogen.txt <- NULL
-  
+
   # Missing path and data path results in messages
-  
+
   expect_message(
     suppressWarnings(
       import_templates(
         license = 'CC0',
         x = x,
         write.file = FALSE
-      ) 
+      )
     )
   )
-  
+
   # Missing path results in messages
-  
+
   expect_message(
     suppressWarnings(
       import_templates(
@@ -819,12 +819,12 @@ testthat::test_that('x inputs = data tables and templates', {
         license = 'CC0',
         x = x,
         write.file = FALSE
-      ) 
+      )
     )
   )
-  
+
   # Missing data path results in messages
-  
+
   expect_message(
     suppressWarnings(
       import_templates(
@@ -835,12 +835,12 @@ testthat::test_that('x inputs = data tables and templates', {
         license = 'CC0',
         x = x,
         write.file = FALSE
-      ) 
+      )
     )
   )
-  
+
   # Missing license results in error
-  
+
   expect_error(
     suppressMessages(
       suppressWarnings(
@@ -851,13 +851,13 @@ testthat::test_that('x inputs = data tables and templates', {
           ),
           x = x,
           write.file = FALSE
-        ) 
+        )
       )
     )
   )
-  
+
   # Unsupported license results in error
-  
+
   expect_error(
     suppressMessages(
       suppressWarnings(
@@ -869,13 +869,13 @@ testthat::test_that('x inputs = data tables and templates', {
           x = x,
           license = 'CCzero',
           write.file = FALSE
-        ) 
+        )
       )
     )
   )
-  
+
   # Valid data path and data tables results in messages
-  
+
   expect_message(
     suppressWarnings(
       import_templates(
@@ -890,12 +890,12 @@ testthat::test_that('x inputs = data tables and templates', {
         x = x,
         license = 'CC0',
         write.file = FALSE
-      ) 
+      )
     )
   )
-  
+
   # Deprecated argument results in warning
-  
+
   expect_warning(
     suppressMessages(
       import_templates(
@@ -910,13 +910,13 @@ testthat::test_that('x inputs = data tables and templates', {
         x = x,
         license = 'CC0',
         write.file = FALSE
-      ) 
+      )
     )
   )
-  
+
   # Valid data path and data tables result in addition of attributes templates
   # with expected names, class, column names, and nrows > 1
-  
+
   output <- suppressMessages(
     suppressWarnings(
       import_templates(
@@ -931,10 +931,10 @@ testthat::test_that('x inputs = data tables and templates', {
         x = x,
         license = 'CC0',
         write.file = FALSE
-      ) 
+      )
     )
   )
-  
+
   attr_names <- paste0(
     'attributes_',
     stringr::str_remove(
@@ -943,38 +943,38 @@ testthat::test_that('x inputs = data tables and templates', {
     ),
     '.txt'
   )
-  
+
   for (i in 1:length(attr_names)){
-    
+
     expect_equal(
       attr_names[i] %in% names(output$template),
       TRUE
     )
-    
+
     expect_equal(
       class(output$template[[attr_names[i]]]$content),
       'data.frame'
     )
-    
+
     expect_equal(
       all(
         colnames(output$template[[attr_names[i]]]$content) %in%
-          c('attributeName', 'attributeDefinition', 'class', 'unit', 
-            'dateTimeFormatString', 'missingValueCode', 
+          c('attributeName', 'attributeDefinition', 'class', 'unit',
+            'dateTimeFormatString', 'missingValueCode',
             'missingValueCodeExplanation')
       ),
       TRUE
     )
-    
+
     expect_equal(
       nrow(output$template[[attr_names[i]]]$content) > 1,
       TRUE
     )
-    
+
   }
-  
+
   # Attempt to import templates when they already exist results in messages
-  
+
   expect_message(
     suppressWarnings(
       import_templates(
@@ -989,9 +989,9 @@ testthat::test_that('x inputs = data tables and templates', {
         x = output,
         license = 'CC0',
         write.file = FALSE
-      ) 
+      )
     )
   )
-  
+
 })
 

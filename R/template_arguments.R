@@ -262,15 +262,33 @@ template_arguments <- function(
   
   output <- vector('list', nrow(attr_arg))
   names(output) <- attr_arg$argument_name
-
+  
+  # Initialize templates ------------------------------------------------------
+  # Distinguish metadata templates from other files located at path.
+  
+  if (!is.null(path)) {
+    path_files <- list.files(path)
+    if (!length(path_files) == 0) {
+      is_template <- rep(FALSE, length(path_files))
+      for (i in 1:length(path_files)){
+        is_template[i] <- any(
+          stringr::str_detect(path_files[i], attr_tmp$regexpr))
+      }
+      templates <- vector('list', length(path_files[is_template]))
+      names(templates) <- path_files[is_template]
+    }
+  } else {
+    templates <- NULL
+  }
+  
   # Initialize data tables ----------------------------------------------------
   
   if (!is.null(data.table)){
-      data_table <- EDIutils::validate_file_names(
-        path = data.path,
-        data.files = data.table)
-      data_tables <- vector('list', length(data_table))
-      names(data_tables) <- data_table
+    data_table <- EDIutils::validate_file_names(
+      path = data.path,
+      data.files = data.table)
+    data_tables <- vector('list', length(data_table))
+    names(data_tables) <- data_table
   } else {
     data_tables <- NULL
   }
@@ -287,262 +305,199 @@ template_arguments <- function(
     other_entities <- NULL
   }
   
-  # Initialize templates ------------------------------------------------------
-  # Distinguish metadata templates from other files located at path.
-  
-  if (!is.null(path)) {
-    path_files <- list.files(path)
-    if (!length(path_files) == 0) {
-      is_template <- rep(FALSE, length(path_files))
-      for (i in 1:length(path_files)){
-        is_template[i] <- any(
-          stringr::str_detect(path_files[i], attr_tmp$regexpr))
-      }
-      templates <- vector('list', length(path_files[is_template]))
-      names(templates) <- path_files[is_template]
-    }
-  }
-  
-  # Combine initialized components --------------------------------------------
-  # Combine initialized arguments, data tables, and other entities. Return the
-  # list object if there are no templates to add.
-  
-  if (is.null(path)) {
-    output$x <- list(
-      template = NULL,
-      data.table = data_tables,
-      other.entity = other_entities)
-    return(output)
-  } else {
-    output$x <- list(
-      template = templates,
-      data.table = data_tables,
-      other.entity = other_entities)
-  }
-  
   # Read templates ------------------------------------------------------------
   
-  # Helper functions for reading templates
-  
-  read_tbl <- function(f) {
-    as.data.frame(
-      data.table::fread(
-        file = f,
-        fill = TRUE,
-        blank.lines.skip = TRUE,
-        sep = "\t",
-        colClasses = rep(
-          "character", 
-          max(utils::count.fields(f, sep = "\t")))))
-  }
-  
-  read_txt <- function(f) {
-    if (stringr::str_detect(
-      basename(f), 
-      paste(
-        attr_tmp$regexpr[
-          (attr_tmp$type == "text") & (attr_tmp$template_name != "methods")],
-        collapse = "|"))) {
-      EML::set_TextType(file = f)
-    } else if (stringr::str_detect(
-      basename(f), 
-      attr_tmp$regexpr[attr_tmp$template_name == "methods"])) {
-      EML::set_methods(methods_file = f)
-    }
-  }
-
-  # Loop through each metadata template found at path
-  
-  templates <- names(output$x$template)
-  for (i in 1:length(templates)){
+  if (!is.null(path)) {
     
-    # Read abstract -----------------------------------------------------------
+    # Helper functions for reading templates
     
-    if (stringr::str_detect(
-      templates[i], 
-      attr_tmp$regexpr[attr_tmp$template_name == "abstract"])) {
-      output$x$template[[i]]$content <- read_txt(
-        paste0(path, '/', templates[i]))
+    read_tbl <- function(f) {
+      as.data.frame(
+        data.table::fread(
+          file = f,
+          fill = TRUE,
+          blank.lines.skip = TRUE,
+          sep = "\t",
+          colClasses = rep(
+            "character", 
+            max(utils::count.fields(f, sep = "\t")))))
     }
     
-    # Read additional information ---------------------------------------------
-    
-    if (stringr::str_detect(
-      templates[i], 
-      attr_tmp$regexpr[attr_tmp$template_name == "additional_info"])) {
-      output$x$template[[i]]$content <- read_txt(
-        paste0(path, '/', templates[i]))
+    read_txt <- function(f) {
+      if (stringr::str_detect(
+        basename(f), 
+        paste(
+          attr_tmp$regexpr[
+            (attr_tmp$type == "text") & (attr_tmp$template_name != "methods")],
+          collapse = "|"))) {
+        EML::set_TextType(file = f)
+      } else if (stringr::str_detect(
+        basename(f), 
+        attr_tmp$regexpr[attr_tmp$template_name == "methods"])) {
+        EML::set_methods(methods_file = f)
+      }
     }
     
-    # Read attributes (data table) --------------------------------------------
+    # Loop through each metadata template found at path
     
-    if (stringr::str_detect(
-      templates[i], 
-      attr_tmp$regexpr[attr_tmp$template_name == "attributes"])) {
-      output$x$template[[i]]$content <- read_tbl(
-        paste0(path, "/", templates[i]))
+    tfound <- names(templates)
+    for (i in 1:length(tfound)){
+      
+      # Read abstract ---------------------------------------------------------
+      
+      if (stringr::str_detect(
+        tfound[i], 
+        attr_tmp$regexpr[attr_tmp$template_name == "abstract"])) {
+        templates[[i]]$content <- read_txt(
+          paste0(path, '/', tfound[i]))
+      }
+      
+      # Read additional information -------------------------------------------
+      
+      if (stringr::str_detect(
+        tfound[i], 
+        attr_tmp$regexpr[attr_tmp$template_name == "additional_info"])) {
+        templates[[i]]$content <- read_txt(
+          paste0(path, '/', tfound[i]))
+      }
+      
+      # Read attributes (data table) ------------------------------------------
+      
+      if (stringr::str_detect(
+        tfound[i], 
+        attr_tmp$regexpr[attr_tmp$template_name == "attributes"])) {
+        templates[[i]]$content <- read_tbl(
+          paste0(path, "/", tfound[i]))
+      }
+      
+      # Read categorical variables --------------------------------------------
+      
+      if (stringr::str_detect(
+        tfound[i], 
+        attr_tmp$regexpr[attr_tmp$template_name == "catvars"])) {
+        templates[[i]]$content <- read_tbl(
+          paste0(path, "/", tfound[i]))
+      }
+      
+      # Read custom units -----------------------------------------------------
+      
+      if (stringr::str_detect(
+        tfound[i], 
+        attr_tmp$regexpr[attr_tmp$template_name == "custom_units"])) {
+        templates[[i]]$content <- read_tbl(
+          paste0(path, "/", tfound[i]))
+      }
+      
+      # Read geographic bounding boxes ----------------------------------------
+      
+      if (stringr::str_detect(
+        tfound[i], 
+        attr_tmp$regexpr[attr_tmp$template_name == "bounding_boxes"])) {
+        templates[[i]]$content <- read_tbl(
+          paste0(path, "/", tfound[i]))
+      }
+      
+      # Read geographic coverage ----------------------------------------------
+      
+      if (stringr::str_detect(
+        tfound[i], 
+        attr_tmp$regexpr[attr_tmp$template_name == "geographic_coverage"])) {
+        templates[[i]]$content <- read_tbl(
+          paste0(path, "/", tfound[i]))
+      }
+      
+      # Read intellectual rights ----------------------------------------------
+      
+      if (stringr::str_detect(
+        tfound[i], 
+        attr_tmp$regexpr[attr_tmp$template_name == "intellectual_rights"])) {
+        templates[[i]]$content <- read_txt(
+          paste0(path, '/', tfound[i]))
+      }
+      
+      # Read keywords ---------------------------------------------------------
+      
+      if (stringr::str_detect(
+        tfound[i], 
+        attr_tmp$regexpr[attr_tmp$template_name == "keywords"])) {
+        templates[[i]]$content <- read_tbl(
+          paste0(path, "/", tfound[i]))
+      }
+      
+      # Read methods ----------------------------------------------------------
+      
+      if (stringr::str_detect(
+        tfound[i], 
+        attr_tmp$regexpr[attr_tmp$template_name == "methods"])) {
+        templates[[i]]$content <- read_txt(
+          paste0(path, '/', tfound[i]))
+      }
+      
+      # Read personnel --------------------------------------------------------
+      
+      if (stringr::str_detect(
+        tfound[i], 
+        attr_tmp$regexpr[attr_tmp$template_name == "personnel"])) {
+        templates[[i]]$content <- read_tbl(
+          paste0(path, "/", tfound[i]))
+      }
+      
+      # Read taxonomic coverage -----------------------------------------------
+      
+      if (stringr::str_detect(
+        tfound[i], 
+        attr_tmp$regexpr[attr_tmp$template_name == "taxonomicCoverage"])) {
+        templates[[i]]$content <- EML::read_eml(
+          paste0(path, '/', tfound[i]))
+        output$x$template$taxonomicCoverage.xml$content <- list(
+          taxonomicClassification = output$x$template$taxonomicCoverage.xml$content$taxonomicClassification)
+      } else if (stringr::str_detect(
+        tfound[i], 
+        attr_tmp$regexpr[attr_tmp$template_name == "taxonomic_coverage"])) {
+        templates[[i]]$content <- read_tbl(
+          paste0(path, "/", tfound[i]))
+      }
+      
     }
     
-    # Read categorical variables ----------------------------------------------
-    
-    if (stringr::str_detect(
-      templates[i], 
-      attr_tmp$regexpr[attr_tmp$template_name == "catvars"])) {
-      output$x$template[[i]]$content <- read_tbl(
-        paste0(path, "/", templates[i]))
-    }
-    
-    # Read custom units -------------------------------------------------------
-    
-    if (stringr::str_detect(
-      templates[i], 
-      attr_tmp$regexpr[attr_tmp$template_name == "custom_units"])) {
-      output$x$template[[i]]$content <- read_tbl(
-        paste0(path, "/", templates[i]))
-    }
-
-    # Read geographic bounding boxes ------------------------------------------
-    
-    if (stringr::str_detect(
-      templates[i], 
-      attr_tmp$regexpr[attr_tmp$template_name == "bounding_boxes"])) {
-      output$x$template[[i]]$content <- read_tbl(
-        paste0(path, "/", templates[i]))
-    }
-
-    # Read geographic coverage ------------------------------------------------
-    
-    if (stringr::str_detect(
-      templates[i], 
-      attr_tmp$regexpr[attr_tmp$template_name == "geographic_coverage"])) {
-      output$x$template[[i]]$content <- read_tbl(
-        paste0(path, "/", templates[i]))
-    }
-    
-    # Read intellectual rights ------------------------------------------------
-    
-    if (stringr::str_detect(
-      templates[i], 
-      attr_tmp$regexpr[attr_tmp$template_name == "intellectual_rights"])) {
-      output$x$template[[i]]$content <- read_txt(
-        paste0(path, '/', templates[i]))
-    }
-    
-    # Read keywords -----------------------------------------------------------
-    
-    if (stringr::str_detect(
-      templates[i], 
-      attr_tmp$regexpr[attr_tmp$template_name == "keywords"])) {
-      output$x$template[[i]]$content <- read_tbl(
-        paste0(path, "/", templates[i]))
-    }
-    
-    # Read methods ------------------------------------------------------------
-    
-    if (stringr::str_detect(
-      templates[i], 
-      attr_tmp$regexpr[attr_tmp$template_name == "methods"])) {
-      output$x$template[[i]]$content <- read_txt(
-        paste0(path, '/', templates[i]))
-    }
-    
-    # Read personnel ----------------------------------------------------------
-    
-    if (stringr::str_detect(
-      templates[i], 
-      attr_tmp$regexpr[attr_tmp$template_name == "personnel"])) {
-      output$x$template[[i]]$content <- read_tbl(
-        paste0(path, "/", templates[i]))
-    }
-    
-    # Read taxonomic coverage -------------------------------------------------
-    
-    if (stringr::str_detect(
-      templates[i], 
-      attr_tmp$regexpr[attr_tmp$template_name == "taxonomicCoverage"])) {
-      output$x$template[[i]]$content <- EML::read_eml(
-        paste0(path, '/', templates[i]))
-      output$x$template$taxonomicCoverage.xml$content <- list(
-        taxonomicClassification = output$x$template$taxonomicCoverage.xml$content$taxonomicClassification)
-    } else if (stringr::str_detect(
-      templates[i], 
-      attr_tmp$regexpr[attr_tmp$template_name == "taxonomic_coverage"])) {
-      output$x$template[[i]]$content <- read_tbl(
-        paste0(path, "/", templates[i]))
-    }
-
   }
   
   # Read data tables ----------------------------------------------------------
-  # FIXME: Update table readers
-  # If data tables exist ...
   
-  if (!is.null(data.table)){
-    
-    # For all data tables ...
-    
-    for (i in 1:length(output$x$data.table)){
-      
-      # If delimiter is undefined ...
-      
+  if (!is.null(data.table)) {
+    for (i in 1:length(data.table)) {
       if (is.null(sep)){
-        
-        delim_guess <- suppressWarnings(
-          EDIutils::detect_delimeter(
-            path = data.path, 
-            data.files = names(output$x$data.table[i]), 
-            os = EDIutils::detect_os()
-          )
-        )
-        
-        output$x$data.table[[i]]$content <- as.data.frame(
+        data_tables[[i]]$content <- as.data.frame(
           data.table::fread(
-            file = paste0(data.path, '/', names(output$x$data.table[i])),
+            file = paste0(data.path, "/", data.table[i]),
             fill = TRUE,
-            blank.lines.skip = TRUE
-          )
-        )
-        
-        # If delimiter is defined ...
-        
+            blank.lines.skip = TRUE))
       } else {
-        
-        output$x$data.table[[i]]$content <- utils::read.table(
-          file = paste0(
-            data.path,
-            '/',
-            names(output$x$data.table[i])
-          ),
+        data_tables[[i]]$content <- utils::read.table(
+          file = paste0(data.path, "/", data.table[i]),
           header = T,
           sep = sep,
           quote = "\"",
           as.is = TRUE,
-          comment.char = ""
-        )
-        
+          comment.char = "")
       }
-      
     }
-
   }
   
   # Read other entities -------------------------------------------------------
   
-  # If other entities exist ...
-  
-  if (!is.null(other.entity)){
-    
-    # For all other entities ...
-    
-    for (i in 1:length(output$x$other.entity)){
-      
-      output$x$other.entity[[i]]$content <- NA
-      
+  if (!is.null(other.entity)) {
+    for (i in 1:length(other.entity)) {
+      other_entities[[i]]$content <- NA
     }
-    
   }
   
-  # Return --------------------------------------------------------------------
+  # Combine components & return -----------------------------------------------
+  
+  output$x <- list(
+    template = templates,
+    data.table = data_tables,
+    other.entity = other_entities)
   
   output
   

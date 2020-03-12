@@ -160,42 +160,42 @@ testthat::test_that('Write to path', {
 # Write to x ------------------------------------------------------------------
 
 testthat::test_that('Write to x', {
-  
+
   # Make function call
-  
+
   x <- template_arguments()
   x <- x$x
-  
+
   # Missing path results in messages
-  
+
   expect_message(
     template_core_metadata(
       license = 'CC0',
       x = x
     )
   )
-  
+
   # Missing path results in expected content classes with empty values
-  
+
   output <- suppressMessages(
     template_core_metadata(
       license = 'CC0',
       x = x
     )
   )
-  
+
   for (i in 1:length(output$template)){
-    
+
     expect_equal(
-      class(output$template[[i]]$content)[1] %in% 
+      class(output$template[[i]]$content)[1] %in%
         c('list', 'data.frame', 'list', 'character'),
       TRUE
     )
-    
+
   }
-  
+
   # Missing license results in error
-  
+
   expect_error(
     suppressMessages(
       template_core_metadata(
@@ -203,9 +203,9 @@ testthat::test_that('Write to x', {
       )
     )
   )
-  
+
   # Unsupported license results in error
-  
+
   expect_error(
     suppressMessages(
       template_core_metadata(
@@ -214,18 +214,18 @@ testthat::test_that('Write to x', {
       )
     )
   )
-  
+
   # CCBY is a supported license
-  
+
   expect_message(
     template_core_metadata(
       x = x,
       license = 'CCBY'
     )
   )
-  
+
   # Valid path results in messages
-  
+
   expect_message(
     template_core_metadata(
       path = system.file(
@@ -236,9 +236,9 @@ testthat::test_that('Write to x', {
       license = 'CC0'
     )
   )
-  
+
   # Valid path results in expected content classes with empty values
-  
+
   output <- suppressMessages(
     template_core_metadata(
       path = system.file(
@@ -249,39 +249,39 @@ testthat::test_that('Write to x', {
       x = x
     )
   )
-  
+
   for (i in 1:length(output$template)){
-    
+
     expect_equal(
-      class(output$template[[i]]$content)[1] %in% 
+      class(output$template[[i]]$content)[1] %in%
         c('list', 'data.frame', 'list', 'character'),
       TRUE
     )
-    
+
   }
-  
+
   # Attempt to import templates when they already exist results in messages
-  
+
   expect_message(
     template_core_metadata(
       x = output,
       license = 'CC0'
     )
   )
-  
+
   # CCBY is supported
-  
+
   output$template$intellectual_rights.txt$content <- NA_character_
-  
+
   expect_message(
     template_core_metadata(
       x = output,
       license = 'CCBY'
     )
   )
-  
+
   # file.type = '.docx' writes MS Word files to path --------------------------
-  
+
   x <- template_arguments()
   x <- x$x
 
@@ -293,29 +293,29 @@ testthat::test_that('Write to x', {
 
   for (i in 1:length(output$template)){
     expect_equal(
-      class(output$template[[i]]$content)[1] %in% 
+      class(output$template[[i]]$content)[1] %in%
         c('list', 'data.frame', 'character'),
       TRUE
     )
   }
-  
+
   # file.type = '.md' writes Markdown files to path ---------------------------
-  
+
   x <- template_arguments()
   x <- x$x
-  
+
   output <- template_core_metadata(
     license = 'CC0',
     file.type = '.md',
     x = x
   )
-  
+
   for (i in 1:length(output$template)){
     expect_equal(
-      class(output$template[[i]]$content)[1] %in% 
+      class(output$template[[i]]$content)[1] %in%
         c('list', 'data.frame', 'character'),
       TRUE
     )
   }
-  
+
 })
