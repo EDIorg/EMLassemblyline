@@ -205,28 +205,15 @@ template_core_metadata <- function(
     
   } else if (!exists('data_read_2_x')){
     
-    if (any(is.na(x$template[['abstract']]$content))){
-      
-      # Add to content
-      
-      x$template[['abstract']]$content <- EML::set_TextType(
+    if (is.null(x$template[["abstract"]]$content) |
+        (length(x$template[["abstract"]]$content$para) == 0)) {
+      x$template[["abstract"]]$content <- EML::set_TextType(
         file = system.file(
-          paste0(
-            '/templates/abstract',
-            file.type
-          ),
-          package = 'EMLassemblyline'
-        )
-      )
-      
-      # Send message
-      
+          paste0('/templates/abstract', file.type),
+          package = 'EMLassemblyline'))
       message(paste0('abstract', file.type))
-      
     } else {
-      
       message(paste0('abstract', file.type, ' already exists!'))
-      
     }
     
   }
@@ -268,28 +255,15 @@ template_core_metadata <- function(
     
   } else if (!exists('data_read_2_x')){
     
-    if (any(is.na(x$template[['additional_info']]$content))){
-      
-      # Add to content
-      
-      x$template[['additional_info']]$content <- EML::set_TextType(
+    if (is.null(x$template[["additional_info"]]$content) |
+        (length(x$template[["additional_info"]]$content$para) == 0)) {
+      x$template[["additional_info"]]$content <- EML::set_TextType(
         file = system.file(
-          paste0(
-            '/templates/additional_info',
-            file.type
-          ),
-          package = 'EMLassemblyline'
-        )
-      )
-      
-      # Send message
-      
+          paste0('/templates/additional_info', file.type),
+          package = 'EMLassemblyline'))
       message(paste0('additional_info', file.type))
-      
     } else {
-      
       message(paste0('additional_info', file.type, ' already exists!'))
-      
     }
     
   }
@@ -329,25 +303,15 @@ template_core_metadata <- function(
       
     } else if (!exists('data_read_2_x')){
       
-      if (any(is.na(x$template$intellectual_rights.txt$content))){
-        
-        # Add to content
-        
+      if (is.null(x$template$intellectual_rights.txt$content) |
+          (length(x$template$intellectual_rights.txt$content$para) == 0)) {
         x$template$intellectual_rights.txt$content <- EML::set_TextType(
           file = system.file(
             '/templates/intellectual_rights_cc0.txt',
-            package = 'EMLassemblyline'
-          )
-        )
-        
-        # Send message
-        
+            package = 'EMLassemblyline'))
         message("intellectual_rights.txt")
-        
       } else {
-        
         message("intellectual_rights.txt already exists!")
-        
       }
       
     }
@@ -385,25 +349,15 @@ template_core_metadata <- function(
       
     } else if (!exists('data_read_2_x')){
       
-      if (any(is.na(x$template$intellectual_rights.txt$content))){
-        
-        # Add to content
-        
+      if (is.null(x$template$intellectual_rights.txt$content) |
+          (length(x$template$intellectual_rights.txt$content$para) == 0)) {
         x$template$intellectual_rights.txt$content <- EML::set_TextType(
           file = system.file(
             '/templates/intellectual_rights_ccby4.0.txt',
-            package = 'EMLassemblyline'
-          )
-        )
-        
-        # Send message
-        
+            package = 'EMLassemblyline'))
         message("intellectual_rights.txt")
-        
       } else {
-        
         message("intellectual_rights.txt already exists!")
-        
       }
       
     }
@@ -441,28 +395,21 @@ template_core_metadata <- function(
     
   } else if (!exists('data_read_2_x')){
     
-    if (any(is.na(x$template$keywords.txt$content))){
-      
-      # Add to content
-      
-      x$template$keywords.txt$content <- utils::read.table(
-        file = system.file(
-          '/templates/keywords.txt',
-          package = 'EMLassemblyline'
-        ), 
-        header = T,
-        sep = '\t',
-        as.is = T
-      )
-      
-      # Send message
-      
+    if (is.null(x$template$keywords.txt$content) |
+        ((is.data.frame(x$template$keywords.txt$content)) &
+         (length(x$template$keywords.txt$content) != 0))) {
+      x$template$keywords.txt$content <- as.data.frame(
+        data.table::fread(
+          file = system.file(
+            '/templates/keywords.txt',
+            package = 'EMLassemblyline'
+          ),
+          colClasses = rep("character", 2),
+          fill = TRUE,
+          blank.lines.skip = TRUE))
       message("keywords.txt")
-      
     } else {
-      
       message("keywords.txt already exists!")
-      
     }
     
   }
@@ -504,28 +451,15 @@ template_core_metadata <- function(
     
   } else if (!exists('data_read_2_x')){
     
-    if (any(is.na(x$template[['methods']]$content))){
-      
-      # Add to content
-      
-      x$template[['methods']]$content <- EML::set_methods(
-        methods_file = system.file(
-          paste0(
-            '/templates/methods',
-            file.type
-          ),
-          package = 'EMLassemblyline'
-        )
-      )
-      
-      # Send message
-      
+    if (is.null(x$template[["methods"]]$content) |
+        (length(x$template[["methods"]]$content$methodStep$description$para) == 0)) {
+      x$template[["methods"]]$content <- EML::set_methods(
+        file = system.file(
+          paste0('/templates/methods', file.type),
+          package = 'EMLassemblyline'))
       message(paste0('methods', file.type))
-      
     } else {
-      
       message(paste0('methods', file.type, ' already exists!'))
-      
     }
     
   }
@@ -561,28 +495,20 @@ template_core_metadata <- function(
     
   } else if (!exists('data_read_2_x')){
     
-    if (any(is.na(x$template$personnel.txt$content))){
-      
-      # Add to content
-      
-      x$template$personnel.txt$content <- utils::read.table(
-        file = system.file(
-          '/templates/personnel.txt',
-          package = 'EMLassemblyline'
-        ), 
-        header = T,
-        sep = '\t',
-        as.is = T
-      )
-      
-      # Send message
-      
+    if (is.null(x$template$personnel.txt$content) |
+        ((is.data.frame(x$template$personnel.txt$content)) &
+         (length(x$template$personnel.txt$content) != 0))) {
+      x$template$personnel.txt$content <- as.data.frame(
+        data.table::fread(
+          file = system.file(
+            '/templates/personnel.txt',
+            package = 'EMLassemblyline'
+          ),
+          fill = TRUE,
+          blank.lines.skip = TRUE))
       message("personnel.txt")
-      
     } else {
-      
       message("personnel.txt already exists!")
-      
     }
     
   }

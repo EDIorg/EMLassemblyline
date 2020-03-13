@@ -134,7 +134,8 @@ testthat::test_that("Inputs = the 'empty' argument", {
   expected_templates <- c(
     "abstract.txt", "additional_info.txt", "custom_units.txt", 
     "geographic_coverage.txt", "intellectual_rights.txt", "keywords.txt", 
-    "methods.txt", "personnel.txt", "taxonomic_coverage.txt")
+    "methods.txt", "personnel.txt", "taxonomic_coverage.txt", 
+    "bounding_boxes.txt")
   for (i in 1:length(names(output$x$template))) {
     is_text <- FALSE
     is_dataframe <- FALSE
