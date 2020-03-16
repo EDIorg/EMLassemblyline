@@ -113,3 +113,40 @@ validate_templates <- function(fun.name, x){
   }
   
 }
+
+
+
+
+# Helper functions ------------------------------------------------------------
+
+# path = Path to the directory containing metadata templates
+check_duplicate_templates <- function(path) {
+  attr_tmp <- data.table::fread(
+    system.file(
+      '/templates/template_characteristics.txt',
+      package = 'EMLassemblyline'), 
+    fill = TRUE,
+    blank.lines.skip = TRUE)
+  # FIXME: Remove the next line of code once table attributes and categorical 
+  # variables have been consolidated into their respective single templates
+  # (i.e. "table_attributes.txt" and "table_categorical_variables.txt")
+  attr_tmp <- attr_tmp[
+    !stringr::str_detect(attr_tmp$template_name, "attributes|catvars"), ]
+  #
+  for (i in 1:length(attr_tmp$template_name)) {
+    use_i <- stringr::str_detect(
+      list.files(path), 
+      attr_tmp$regexpr[
+        attr_tmp$template_name == attr_tmp$template_name[i]])
+    if (sum(use_i) > 1) {
+      stop(
+        paste0(
+          "Duplicate '", 
+          attr_tmp$template_name[i], 
+          "' templates found. There can be only one."),
+        call. = F)
+    }
+  }
+}
+
+
