@@ -298,10 +298,9 @@ template_arguments <- function(
       if (stringr::str_detect(
         tfound[i], 
         attr_tmp$regexpr[attr_tmp$template_name == "taxonomicCoverage"])) {
-        templates[[i]]$content <- EML::read_eml(
-          paste0(path, '/', tfound[i]))
-        output$x$template$taxonomicCoverage.xml$content <- list(
-          taxonomicClassification = output$x$template$taxonomicCoverage.xml$content$taxonomicClassification)
+        templates[[i]]$content <- list(
+          taxonomicClassification = EML::read_eml(
+            paste0(path, '/', tfound[i]))$taxonomicClassification)
       } else if (stringr::str_detect(
         tfound[i], 
         attr_tmp$regexpr[attr_tmp$template_name == "taxonomic_coverage"])) {
