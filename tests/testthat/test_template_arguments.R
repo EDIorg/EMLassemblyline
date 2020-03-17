@@ -64,7 +64,7 @@ testthat::test_that("Inputs = missing templates", {
 })
 
 # Inputs = duplicate templates ------------------------------------------------
-# Duplicate templates result in errors.
+# Duplicate templates result in error.
 
 testthat::test_that("Inputs = duplicate templates", {
   
@@ -74,13 +74,6 @@ testthat::test_that("Inputs = duplicate templates", {
     recursive = T)
   expect_error(template_arguments(path = paste0(tempdir(), "/templates")))
   unlink(paste0(tempdir(), "/templates"), force = T, recursive = T)
-  
-})
-
-# Inputs = empty templates ----------------------------------------------------
-# Empty templates at path should be read into x
-
-testthat::test_that("Inputs = empty templates", {
   
   file.copy(
     from  = system.file('/templates', package = 'EMLassemblyline'),
@@ -104,6 +97,26 @@ testthat::test_that("Inputs = empty templates", {
   file.copy(
     from  = system.file('/examples/pkg_260/metadata_templates/catvars_decomp.txt', package = 'EMLassemblyline'),
     to = paste0(tempdir(), "/templates"))
+  output <- template_arguments(path = paste0(tempdir(), "/templates"))
+  unlink(paste0(tempdir(), "/templates"), force = T, recursive = T)
+  
+})
+
+# Inputs = empty templates ----------------------------------------------------
+# Empty templates at path should be read into x
+
+testthat::test_that("Inputs = empty templates", {
+  
+  file.copy(
+    from  = system.file('/templates', package = 'EMLassemblyline'),
+    to = tempdir(),
+    recursive = T)
+  file.remove(paste0(tempdir(), "/templates/abstract.docx"))
+  file.remove(paste0(tempdir(), "/templates/abstract.md"))
+  file.remove(paste0(tempdir(), "/templates/additional_info.docx"))
+  file.remove(paste0(tempdir(), "/templates/additional_info.md"))
+  file.remove(paste0(tempdir(), "/templates/methods.docx"))
+  file.remove(paste0(tempdir(), "/templates/methods.md"))
   output <- template_arguments(path = paste0(tempdir(), "/templates"))
   
   expect_true(class(output) == "list")

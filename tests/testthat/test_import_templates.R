@@ -1,20 +1,6 @@
 context('Import templates')
 library(EMLassemblyline)
 
-# Parameterize ----------------------------------------------------------------
-
-# Read template attributes
-
-attr_templates <- utils::read.table(
-  file = system.file(
-    '/templates/template_characteristics.txt',
-    package = 'EMLassemblyline'
-  ), 
-  header = T,
-  sep = '\t',
-  as.is = T
-)
-
 # File inputs = no data tables ------------------------------------------------
 
 testthat::test_that('File inputs = no data tables', {

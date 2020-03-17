@@ -205,8 +205,7 @@ template_core_metadata <- function(
     
   } else if (!exists('data_read_2_x')){
     
-    if (is.null(x$template[["abstract"]]$content) |
-        (length(x$template[["abstract"]]$content$para) == 0)) {
+    if (is.null(x$template[["abstract"]]$content)) {
       x$template[["abstract"]]$content <- EML::set_TextType(
         file = system.file(
           paste0('/templates/abstract', file.type),
@@ -303,8 +302,7 @@ template_core_metadata <- function(
       
     } else if (!exists('data_read_2_x')){
       
-      if (is.null(x$template$intellectual_rights.txt$content) |
-          (length(x$template$intellectual_rights.txt$content$para) == 0)) {
+      if (is.null(x$template$intellectual_rights.txt$content)) {
         x$template$intellectual_rights.txt$content <- EML::set_TextType(
           file = system.file(
             '/templates/intellectual_rights_cc0.txt',
@@ -349,8 +347,7 @@ template_core_metadata <- function(
       
     } else if (!exists('data_read_2_x')){
       
-      if (is.null(x$template$intellectual_rights.txt$content) |
-          (length(x$template$intellectual_rights.txt$content$para) == 0)) {
+      if (is.null(x$template$intellectual_rights.txt$content)) {
         x$template$intellectual_rights.txt$content <- EML::set_TextType(
           file = system.file(
             '/templates/intellectual_rights_ccby4.0.txt',
@@ -395,9 +392,7 @@ template_core_metadata <- function(
     
   } else if (!exists('data_read_2_x')){
     
-    if (is.null(x$template$keywords.txt$content) |
-        ((is.data.frame(x$template$keywords.txt$content)) &
-         (length(x$template$keywords.txt$content) != 0))) {
+    if (is.null(x$template$keywords.txt$content)) {
       x$template$keywords.txt$content <- as.data.frame(
         data.table::fread(
           file = system.file(
@@ -451,10 +446,9 @@ template_core_metadata <- function(
     
   } else if (!exists('data_read_2_x')){
     
-    if (is.null(x$template[["methods"]]$content) |
-        (length(x$template[["methods"]]$content$methodStep$description$para) == 0)) {
+    if (is.null(x$template[["methods"]]$content)) {
       x$template[["methods"]]$content <- EML::set_methods(
-        file = system.file(
+        methods_file = system.file(
           paste0('/templates/methods', file.type),
           package = 'EMLassemblyline'))
       message(paste0('methods', file.type))
@@ -495,9 +489,7 @@ template_core_metadata <- function(
     
   } else if (!exists('data_read_2_x')){
     
-    if (is.null(x$template$personnel.txt$content) |
-        ((is.data.frame(x$template$personnel.txt$content)) &
-         (length(x$template$personnel.txt$content) != 0))) {
+    if (is.null(x$template$personnel.txt$content)) {
       x$template$personnel.txt$content <- as.data.frame(
         data.table::fread(
           file = system.file(

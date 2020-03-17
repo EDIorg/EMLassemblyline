@@ -380,12 +380,11 @@ validate_arguments <- function(fun.name, fun.args){
   
   # Call from template_arguments() ------------------------------------------------
   
-  if (fun.name == 'template_arguments'){
+  if (fun.name == 'template_arguments') {
     
     # path
     
     if (!is.null(fun.args$path)) {
-      
       EDIutils::validate_path(fun.args$path)
       attr.templates <- data.table::fread(
         system.file(
@@ -394,7 +393,6 @@ validate_arguments <- function(fun.name, fun.args){
         fill = TRUE,
         blank.lines.skip = TRUE)
       path_files <- list.files(fun.args$path)
-      
       if (!length(path_files) == 0) {
         is_template <- rep(FALSE, length(path_files))
         for (i in 1:length(path_files)){
@@ -407,9 +405,7 @@ validate_arguments <- function(fun.name, fun.args){
       } else {
         stop("No metadata templates found at 'path'.", call. = F)
       }
-      
       check_duplicate_templates(fun.args$path)
-      
     }
     
     # data.path

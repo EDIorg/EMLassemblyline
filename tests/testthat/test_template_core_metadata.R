@@ -1,20 +1,6 @@
 context('Create core metadata templates')
 library(EMLassemblyline)
 
-# Parameterize ----------------------------------------------------------------
-
-# Read template attributes
-
-attr_templates <- utils::read.table(
-  file = system.file(
-    '/templates/template_characteristics.txt',
-    package = 'EMLassemblyline'
-  ), 
-  header = T,
-  sep = '\t',
-  as.is = T
-)
-
 # Write to path ---------------------------------------------------------------
 
 testthat::test_that('Write to path', {
@@ -166,11 +152,12 @@ testthat::test_that('Write to x', {
   x <- template_arguments()
   x <- x$x
 
-  # Missing path results in messages
+  # # Missing path results in messages
 
   expect_message(
     template_core_metadata(
       license = 'CC0',
+      file.type = ".docx",
       x = x
     )
   )
