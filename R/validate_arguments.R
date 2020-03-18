@@ -386,12 +386,7 @@ validate_arguments <- function(fun.name, fun.args){
     
     if (!is.null(fun.args$path)) {
       EDIutils::validate_path(fun.args$path)
-      attr.templates <- data.table::fread(
-        system.file(
-          '/templates/template_characteristics.txt',
-          package = 'EMLassemblyline'), 
-        fill = TRUE,
-        blank.lines.skip = TRUE)
+      attr.templates <- read_template_attributes()
       path_files <- list.files(fun.args$path)
       if (!length(path_files) == 0) {
         is_template <- rep(FALSE, length(path_files))

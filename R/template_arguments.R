@@ -86,12 +86,7 @@ template_arguments <- function(
     fill = TRUE,
     blank.lines.skip = TRUE)
   
-  attr_tmp <- data.table::fread(
-    system.file(
-      '/templates/template_characteristics.txt',
-      package = 'EMLassemblyline'), 
-    fill = TRUE,
-    blank.lines.skip = TRUE)
+  attr_tmp <- read_template_attributes()
   
   # Initialize arguments ------------------------------------------------------
   

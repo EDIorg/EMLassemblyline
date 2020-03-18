@@ -119,14 +119,9 @@ validate_templates <- function(fun.name, x){
 
 # Helper functions ------------------------------------------------------------
 
-# path = Path to the directory containing metadata templates
 check_duplicate_templates <- function(path) {
-  attr_tmp <- data.table::fread(
-    system.file(
-      '/templates/template_characteristics.txt',
-      package = 'EMLassemblyline'), 
-    fill = TRUE,
-    blank.lines.skip = TRUE)
+  # path = Path to the directory containing metadata templates
+  attr_tmp <- read_template_attributes()
   # FIXME: Remove the next line of code once table attributes and categorical 
   # variables have been consolidated into their respective single templates
   # (i.e. "table_attributes.txt" and "table_categorical_variables.txt")
@@ -150,3 +145,45 @@ check_duplicate_templates <- function(path) {
 }
 
 
+
+ 
+read_template_attributes <- function() {
+  data.table::fread(
+    system.file(
+      '/templates/template_characteristics.txt',
+      package = 'EMLassemblyline'), 
+    fill = TRUE,
+    blank.lines.skip = TRUE)
+}
+
+
+
+
+remove_empty_templates <- function(x) {
+  # x = the level-2 sub-list "template" created  object created by the template_arguments() function
+  attr_tmp <- read_template_attributes()
+  use_i <- rep(F, length(x$template))
+  for (i in 1:length(x$template)) {
+    if (is.null(x$template[[i]]$content)) {
+      use_i[i] <- T
+    } else {
+      if (any(attr_tmp$template_name == tools::file_path_sans_ext(names(x$template[i])))) {
+        if ((attr_tmp$type[attr_tmp$template_name == tools::file_path_sans_ext(names(x$template[i]))]) == "text") {
+          if (sum(nchar(unlist(x$template[[i]]))) == 0) {
+            use_i[i] <- T
+          }
+        } else if ((attr_tmp$type[attr_tmp$template_name == tools::file_path_sans_ext(names(x$template[i]))]) == "xml") {
+          if (length(x$template[[i]]$content$taxonomicClassification) == 0) {
+            use_i[i] <- T
+          }
+        }
+      } else {
+        if (nrow(x$template[[i]]$content) == 0) {
+          use_i[i] <- T
+        }
+      }
+    }
+  }
+  x$template[use_i] <- NULL
+  x
+}

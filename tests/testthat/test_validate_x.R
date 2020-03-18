@@ -5,15 +5,7 @@ library(EMLassemblyline)
 # 
 # # Get template file attributes
 # 
-# attr.templates <- utils::read.table(
-#   file = system.file(
-#     '/templates/template_characteristics.txt',
-#     package = 'EMLassemblyline'
-#   ), 
-#   header = T,
-#   sep = '\t',
-#   as.is = T
-# )
+# attr.templates <- read_template_attributes()
 # 
 # # Test usage with file inputs -------------------------------------------------
 # 

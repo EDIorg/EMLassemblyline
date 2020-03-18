@@ -13,12 +13,7 @@ attr_args <- data.table::fread(
   fill = TRUE,
   blank.lines.skip = TRUE)
 
-attr_templates <- data.table::fread(
-  system.file(
-    '/templates/template_characteristics.txt',
-    package = 'EMLassemblyline'), 
-  fill = TRUE,
-  blank.lines.skip = TRUE)
+attr_templates <- read_template_attributes()
 
 # List files at path and data.path
 
