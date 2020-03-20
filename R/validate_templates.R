@@ -161,6 +161,7 @@ read_template_attributes <- function() {
 
 remove_empty_templates <- function(x) {
   # x = the level-2 sub-list "template" created  object created by the template_arguments() function
+  # (i.e. output$x$template)
   attr_tmp <- read_template_attributes()
   use_i <- rep(F, length(x$template))
   for (i in 1:length(x$template)) {
@@ -176,14 +177,18 @@ remove_empty_templates <- function(x) {
           if (length(x$template[[i]]$content$taxonomicClassification) == 0) {
             use_i[i] <- T
           }
-        }
-      } else {
-        if (nrow(x$template[[i]]$content) == 0) {
-          use_i[i] <- T
+        } else {
+          if (nrow(x$template[[i]]$content) == 0) {
+            use_i[i] <- T
+          }
         }
       }
     }
   }
-  x$template[use_i] <- NULL
+  if (all(use_i)) {
+    x["template"] <-list(NULL)
+  } else {
+    x$template[use_i] <- NULL
+  }
   x
 }

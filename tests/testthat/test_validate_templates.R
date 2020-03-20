@@ -153,3 +153,26 @@ testthat::test_that('Units of table attributes', {
   )
 
 })
+
+
+# remove_empty_templates() ----------------------------------------------------
+
+testthat::test_that("remove_empty_templates()", {
+  
+  x <- template_arguments(
+    path = system.file(
+      '/examples/templates', 
+      package = 'EMLassemblyline'))$x
+  for (i in 1:length(x$template)) {
+    x1 <- x
+    n <- names(x1$template[i])
+    x1$template[[i]]$content <- NULL
+    x1 <- remove_empty_templates(x1)
+    expect_true(!any(stringr::str_detect(names(x1$template), n)))
+  }
+  
+  x <- template_arguments(empty = T)$x
+  x <- remove_empty_templates(x)
+  expect_true(is.null(x$template))
+
+})

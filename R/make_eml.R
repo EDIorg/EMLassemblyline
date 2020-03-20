@@ -427,12 +427,7 @@ make_eml <- function(
   # Validate metadata templates -----------------------------------------------
   
   x <- remove_empty_templates(x)
-  browser()
-  
-  validate_templates(
-    fun.name = "make_eml",
-    x = x
-  )
+  validate_templates("make_eml", x)
 
   # Read personnel file
   

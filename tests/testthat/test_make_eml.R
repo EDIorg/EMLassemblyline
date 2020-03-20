@@ -1274,16 +1274,9 @@ testthat::test_that('Expect equal', {
     )
   )
   
-  expect_equal(
-    output$dataset$additionalInfo$section,
-    list()
-  )
-  
-  expect_equal(
-    output$dataset$additionalInfo$para,
-    list()
-  )
-  
+  expect_true(is.null(output$dataset$additionalInfo$section))
+  expect_true(is.null(output$dataset$additionalInfo$para))
+
   # .docx templates are supported
   
   output <- suppressWarnings(
