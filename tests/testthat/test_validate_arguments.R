@@ -1,7 +1,8 @@
 context('Validate arguments')
 library(EMLassemblyline)
 
-testthat::test_that('Validate arguments', {
+testthat::test_that("", {
+  
   
   
 })

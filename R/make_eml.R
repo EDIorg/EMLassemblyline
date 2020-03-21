@@ -276,61 +276,46 @@ make_eml <- function(
   
   validate_arguments(
     fun.name = 'make_eml',
-    fun.args = as.list(environment())
-  )
+    fun.args = as.list(environment()))
   
   # Handle deprecated arguments
   
   if (!missing(affiliation)){
-    
     warning(
       'Argument "affiliation" is deprecated; please use "user.domain" instead.',
       call. = FALSE)
-    
     user.domain <- affiliation
-    
   }
   
   if (!missing(data.files)){
-    
     warning(
       'Argument "data.files" is deprecated; please use "data.table" instead.',
       call. = FALSE)
-    
     data.table <- data.files
-    
   }
   
   if (!missing(data.files.description)){
-    
     warning(
       'Argument "data.files.description" is deprecated; please use "data.table.description" instead.',
       call. = FALSE)
-    
     data.table.description <- data.files.description
-    
   }
   
   if (!missing(data.files.quote.character)){
-    
     warning(
       'Argument "data.files.quote.character" is deprecated; please use "data.table.quote.character" instead.',
       call. = FALSE)
-    
     data.table.quote.character <- data.files.quote.character
-    
   }
   
   if (!missing(data.files.url)){
-    
     warning(
       'Argument "data.files.url" is deprecated; please use "data.url" instead.',
       call. = FALSE)
-    
     data.url <- data.files.url
-    
   }
   
+  # FIXME: Do not remove until March 2021
   if (!missing(data.url)){
     warning(
       paste0("Argument 'data.url' is deprecated; please use 'data.table.url' ",
@@ -339,23 +324,17 @@ make_eml <- function(
   }
   
   if (!missing(zip.dir)){
-    
     warning(
       'Argument "zip.dir" is deprecated; please use "other.entity" instead.',
       call. = FALSE)
-    
     other.entity <- zip.dir
-    
   }
   
   if (!missing(zip.dir.description)){
-    
     warning(
       'Argument "zip.dir.description" is deprecated; please use "other.entity.description" instead.',
       call. = FALSE)
-    
     other.entity.description <- zip.dir.description
-    
   }
   
   # Read metadata templates and data ------------------------------------------
@@ -777,92 +756,80 @@ make_eml <- function(
 
   # Create <abstract> ---------------------------------------------------------
   
-  message("    <abstract>")
-  
-  if (!any(stringr::str_detect(names(x$template), 'abstract'))){
-    stop("abstract doesn't exist!")
-  }
-  
-  if (isTRUE(
-    is.na(x$template[[
+  if (any(stringr::str_detect(names(x$template), 'abstract'))) {
+    message("    <abstract>")
+    dataset$abstract <- x$template[[
       names(x$template)[stringr::str_detect(names(x$template), 'abstract')]
-      ]]$content))){
-    stop('The abstract template is missing.')
+      ]]$content
   }
   
-  dataset$abstract <- x$template[[
-    names(x$template)[stringr::str_detect(names(x$template), 'abstract')]
-    ]]$content
+  # Create <keywordSet> -------------------------------------------------------
   
-  # Create <keywordSet> ---------------------------------------------------------
-  
-  message("    <keywordSet>")
-  
-  if (!is.data.frame(x$template$keywords.txt$content)){
-    if (is.na(x$template$keywords.txt$content)){
-      stop('keywords.txt does not exist! Run template_core_metadata.txt to create it.')
+  if (!is.null(x$template$keywords.txt)){
+    
+    message("    <keywordSet>")
+    keywords <- x$template$keywords.txt$content
+    
+    # Remove blank keyword entries
+    
+    use_i <- keywords$keyword == ""
+    if (sum(use_i) > 0){
+      keywords <- keywords[!use_i, ]
+    } 
+    
+    # Try resolving keywords without a listed thesaurus to the LTER Controlled 
+    # Vocabulary
+    
+    if (sum(keywords$keywordThesaurus == '') > 0){
+      
+      unresolved_terms <- keywords[keywords$keywordThesaurus == '', 'keyword']
+      
+      results <- try(
+        EDIutils::vocab_resolve_terms(
+          x = unresolved_terms,
+          cv = 'lter'
+        ),
+        silent = T
+      )
+      
+      if (is.data.frame(results)){
+        results <- results[results$controlled_vocabulary != '', ]
+        use_i <- match(results$term, keywords$keyword)
+        keywords[use_i, 'keywordThesaurus'] <- results[ , 'controlled_vocabulary']
+      }
+      
     }
+    
+    # Build keywordSet
+    
+    keywordSet <- list()
+    uni_keywordThesaurus <- unique(keywords$keywordThesaurus)
+    for (i in 1:length(uni_keywordThesaurus)){
+      
+      keyword <- list()
+      use_i <- uni_keywordThesaurus[i] == keywords[["keywordThesaurus"]]
+      kws <- keywords$keyword[use_i]
+      for (k in 1:length(kws)){
+        message('    <keyword>')
+        keyword[[k]] <- kws[k]
+      }
+      
+      keywordSet[[i]] <- list(
+        keyword = keyword,
+        keywordThesaurus = uni_keywordThesaurus[i]
+      )
+      
+      if (keywordSet[[i]]$keywordThesaurus == ''){
+        keywordSet[[i]]$keywordThesaurus <- NULL
+      } else {
+        message('    <keywordThesaurus>')
+      }
+      
+    }
+    dataset$keywordSet <- keywordSet
   }
-
-  keywords <- x$template$keywords.txt$content
   
-  # Remove blank keyword entries
   
-  use_i <- keywords$keyword == ""
-  if (sum(use_i) > 0){
-    keywords <- keywords[!use_i, ]
-  } 
-  
-  # Try resolving keywords without a listed thesaurus to the LTER Controlled 
-  # Vocabulary
-  
-  if (sum(keywords$keywordThesaurus == '') > 0){
-
-    unresolved_terms <- keywords[keywords$keywordThesaurus == '', 'keyword']
-    
-    results <- try(
-      EDIutils::vocab_resolve_terms(
-        x = unresolved_terms,
-        cv = 'lter'
-      ),
-      silent = T
-    )
-    
-    if (is.data.frame(results)){
-      results <- results[results$controlled_vocabulary != '', ]
-      use_i <- match(results$term, keywords$keyword)
-      keywords[use_i, 'keywordThesaurus'] <- results[ , 'controlled_vocabulary']
-    }
-    
-  }
-  
-  # Build keywordSet
-  
-  keywordSet <- list()
-  uni_keywordThesaurus <- unique(keywords$keywordThesaurus)
-  for (i in 1:length(uni_keywordThesaurus)){
-    
-    keyword <- list()
-    use_i <- uni_keywordThesaurus[i] == keywords[["keywordThesaurus"]]
-    kws <- keywords$keyword[use_i]
-    for (k in 1:length(kws)){
-      message('    <keyword>')
-      keyword[[k]] <- kws[k]
-    }
-
-    keywordSet[[i]] <- list(
-      keyword = keyword,
-      keywordThesaurus = uni_keywordThesaurus[i]
-    )
-    
-    if (keywordSet[[i]]$keywordThesaurus == ''){
-      keywordSet[[i]]$keywordThesaurus <- NULL
-    } else {
-      message('    <keywordThesaurus>')
-    }
-                                         
-  }
-  dataset$keywordSet <- keywordSet
 
   # Create <additionalInfo> ---------------------------------------------------
   
@@ -874,16 +841,10 @@ make_eml <- function(
 
   # Create <intellectualRights> -----------------------------------------------
 
-  message("    <intellectualRights>")
-
-  if (isTRUE(
-    is.na(x$template[[
-      names(x$template)[stringr::str_detect(names(x$template), 'intellectual_rights')]
-      ]]$content))){
-    stop('The intellectual_rights template is missing.')
+  if (!is.null(stringr::str_detect(names(x$template), 'intellectual_rights'))) {
+    message("    <intellectualRights>")
+    dataset$intellectualRights <- x$template$intellectual_rights.txt$content
   }
-
-  dataset$intellectualRights <- x$template$intellectual_rights.txt$content
 
   # Create <coverage> ---------------------------------------------------------
   
@@ -893,30 +854,17 @@ make_eml <- function(
   
   # Create <geographicCoverage> -----------------------------------------------
   
-  geographicCoverage <- list()
-  
-  # Error if more than one geographic coverage intput
-  
-  sources <- c(
-    'geographic.coordinates of the make_eml() function',
-    'bounding_boxes.txt template',
-    'geographic_coverage.txt template'
-  )
-  
-  use_i <- c(
-    (!missing(geographic.coordinates) & !missing(geographic.description)),
-    (('bounding_boxes.txt' %in% names(x$template)) & (is.data.frame(x$template$bounding_boxes.txt$content))),
-    (('geographic_coverage.txt' %in% names(x$template)) & (is.data.frame(x$template$geographic_coverage.txt$content)))
-  )
-  
-  if (sum(use_i) > 1){
+  if (missing(geographic.coordinates) & 
+      !any(stringr::str_detect(names(x$template), "geographic_coverage.txt|bounding_boxes.txt"))) {
     stop(
-      paste0(
-        'Only one source of geographic coverage information is allowed. These sources were found:\n',
-        paste0(sources[use_i], collapse = '\n')
-      )
-    )
+      paste0("No geographic coverage found. Please add using the ",
+        "'geographic.coordinates' and 'geographic.description' arguments to ",
+        "make_eml(), or the bounding_boxes.txt or ",
+        "geographic_coverage.txt templates."), 
+      call. = F)
   }
+  
+  geographicCoverage <- list()
   
   # Add coverage defined in arguments of make_eml
   
@@ -938,7 +886,7 @@ make_eml <- function(
   
   # Add coverage defined in bounding_boxes.txt ...
   
-  if ('bounding_boxes.txt' %in% names(x$template)){
+  if (!is.null(x$template$bounding_boxes.txt)){
     
     bounding_boxes <- x$template$bounding_boxes.txt$content
     
@@ -976,7 +924,7 @@ make_eml <- function(
   
   # If geographic_coverage.txt exists ...
   
-  if ('geographic_coverage.txt' %in% names(x$template)){
+  if (!is.null(x$template$geographic_coverage.txt)){
     
     # Add coverage defined in new version of geographic_coverage.txt ...
     
@@ -1130,17 +1078,11 @@ make_eml <- function(
 
   # Create <methods> ----------------------------------------------------------
   
-  message("    <methods>")
-  
-  if (isTRUE(
-    is.na(x$template[[
-      names(x$template)[stringr::str_detect(names(x$template), 'methods')]
-      ]]$content))){
-    stop('The methods template is missing.')
+  if (any(stringr::str_detect(names(x$template), 'methods'))) {
+    message("    <methods>")
+    dataset$methods <- x$template[[
+      names(x$template)[stringr::str_detect(names(x$template), 'methods')]]]$content
   }
-  
-  dataset$methods <- x$template[[
-    names(x$template)[stringr::str_detect(names(x$template), 'methods')]]]$content
 
   # Create <methodStep> (provenance) ------------------------------------------
   
@@ -1424,17 +1366,6 @@ make_eml <- function(
       if (fname_table_catvars %in% names(x$template)){
         
         catvars <- x$template[[fname_table_catvars]]$content
-        
-        # Validate catvars: Definitions for each code
-        
-        use_i <- sum(catvars$attributeName != "") ==  sum(catvars$definition != "")
-        
-        if (!isTRUE(use_i)){
-          hold <- catvars$code[catvars$definition == ""]
-          stop(paste(fname_table_catvars, 
-                     " contains codes without definition. Please add definitions to these codes: ",
-                     paste(hold, collapse = ", ")))
-        }
         
         # If content is present
         
@@ -1849,128 +1780,8 @@ compile_attributes <- function(x){
     
     # Validate attributes -----------------------------------------------------
     
-    # Validate attributes: Remaining prompts in units field
-    
     df_attributes$unit[is.na(df_attributes$unit)] <- ""
-    
-    use_i <- stringr::str_detect(string = df_attributes$unit,
-                        pattern = "^!.*!$")
-    
-    if (sum(use_i) > 0){
-      hold <- df_attributes$attributeName[use_i]
-      stop(paste(fname_table_attributes[i], 
-                 " contains invalid units. Please edit the units of these attributes: ",
-                 paste(hold, collapse = ", ")))
-    }
-    
-    # Validate attributes: Remaining prompts in dateTimeFormatString field
-    
     df_attributes$dateTimeFormatString[is.na(df_attributes$dateTimeFormatString)] <- ""
-    
-    use_i <- stringr::str_detect(string = df_attributes$dateTimeFormatString,
-                        pattern = "^!.*!$")
-    
-    if (sum(use_i) > 0){
-      hold <- df_attributes$attributeName[use_i]
-      stop(paste(fname_table_attributes[i], 
-                 " contains invalid dateTimeFormatString(s). Please edit the dateTimeFormatString(s) of these attributes: ",
-                 paste(hold, collapse = ", ")))
-    }
-    
-    # Validate attributes: Each attribute has a definition
-    
-    use_i <- sum(df_attributes$attributeName != "") ==  sum(df_attributes$attributeDefinition != "")
-    
-    if (!isTRUE(use_i)){
-      hold <- df_attributes$attributeName[df_attributes$attributeDefinition == ""]
-      stop(paste(fname_table_attributes[i], 
-                 " contains attributes without defintions. Please add definitions to these attributes: ",
-                 paste(hold, collapse = ", ")))
-    }
-    
-    # Validate attributes: Each attribute has a class
-    
-    use_i <- sum(df_attributes$attributeName != "") ==  sum(df_attributes$class != "")
-    
-    if (!isTRUE(use_i)){
-      hold <- df_attributes$attributeName[df_attributes$class == ""]
-      stop(paste(fname_table_attributes[i], 
-                 " contains attributes without a class. Please add a class to these attributes: ",
-                 paste(hold, collapse = ", ")))
-    }
-    
-    # Validate attributes: Each Date class has an entry
-    
-    use_i <- df_attributes$class == "date"
-    use_i2 <- df_attributes$dateTimeFormatString != ""
-    use_i3 <- use_i2 == use_i
-    
-    if (sum(!use_i3) > 0){
-      hold <- df_attributes$attributeName[!use_i3]
-      stop(paste(fname_table_attributes[i], 
-                 " has Date attributes without a dateTimeFormatString. Please add format strings to these attributes: ",
-                 paste(hold, collapse = ", ")))
-    }
-    
-    # Validate attributes: class == numeric has non-blank units
-    
-    use_i <- df_attributes$class == "numeric"
-    use_i2 <- df_attributes$unit != ""
-    use_i3 <- use_i2 == use_i
-    
-    if (sum(use_i3) < length(use_i3)){
-      hold <- df_attributes$attributeName[!use_i3]
-      stop(paste(fname_table_attributes[i], 
-                 " has numeric attributes without units. Please add units to these attributes: ",
-                 paste(hold, collapse = ", ")))
-    }
-    
-    # Validate attributes: missingValueCodes have missingValueCodeExplanations
-    
-    use_i <- df_attributes$missingValueCode %in% ""
-    use_i2 <- df_attributes$missingValueCodeExplanation == ""
-    use_i3 <- use_i2 != use_i
-    
-    if (sum(is.na(use_i3)) > 0){
-      stop(paste(fname_table_attributes[i], 
-                 " missingValueCodeExplanation(s) are absent for the missingValueCodes you have entered. Please fix this.",
-                 "NA's listed in the missingValueCode column are interpreted as missingValueCodes and are expecting explanation."))
-    }
-    
-    if (sum(use_i3) > 0){
-      hold <- df_attributes$attributeName[use_i3]
-      stop(paste(fname_table_attributes[i], 
-                 " has missingValueCode(s) without missingValueCodeExplanation(s). Please fix this for these attributes: ",
-                 paste(hold, collapse = ", ")))
-    }
-    
-    # Validate attributes: missingValueCodeExplanations have non-blank missingValuecodeExplanations
-    
-    use_i <- df_attributes$missingValueCodeExplanation != ""
-    use_i2 <- df_attributes$missingValueCode %in% ""
-    use_i3 <- use_i2 == use_i
-    
-    if (sum(use_i3) > 0){
-      hold <- df_attributes$attributeName[use_i3]
-      stop(paste(fname_table_attributes[i], 
-                 " has blank missingValueCode(s). Blank missing value codes are not allowed. Please fix your data and metadata for these attributes: ",
-                 paste(hold, collapse = ", ")))
-    }
-    
-    # Validate attributes: missingValueCodes only have 1 entry per column
-    
-    vec <- df_attributes$missingValueCode
-    vec[is.na(df_attributes$missingValueCode)] <- "NA"
-    use_i <- stringr::str_count(vec, '[,]|[\\s]') > 0
-    if (sum(use_i) > 0){
-      hold <- df_attributes$attributeName[use_i]
-      stop(paste0(fname_table_attributes[i], 
-                  ' has more than one missingValueCode.', 
-                  '\nOnly one missingValueCode per attribute is allowed.', 
-                  'Please fix your data and metadata for these attributes:\n',
-                  paste(hold, collapse = ", ")))
-    }
-    
     
     # Modify attributes -------------------------------------------------------
     
@@ -1999,18 +1810,6 @@ compile_attributes <- function(x){
                              missingValueCode = character(rows),
                              missingValueCodeExplanation = character(rows),
                              stringsAsFactors = FALSE)
-    
-    # Set attribute names
-    
-    if (length(attributes$attributeName) != length(df_attributes$attributeName)){
-      stop(
-        paste(
-          'The number of attributes listed in ',
-          fname_table_attributes[i],
-          ' does not match the number of columns listed in the corresponding data table. Please correct this. '
-        )
-      )
-    }
     
     attributes$attributeName <- df_attributes$attributeName
     
@@ -2060,14 +1859,14 @@ compile_attributes <- function(x){
           raw <- as.numeric(raw[!useI])
         }
         
-        if ((class(raw) == "character") | (class(raw) == "factor")){
-          stop(paste0('Characters strings found in the column "',
-                      colnames(df_table)[is_numeric[j]],
-                      '" of the file "',
-                      table_names[i],
-                      '". ',
-                      'Please remove these non-numeric characters and try again.'))
-        }
+        # if ((class(raw) == "character") | (class(raw) == "factor")){
+        #   stop(paste0('Characters strings found in the column "',
+        #               colnames(df_table)[is_numeric[j]],
+        #               '" of the file "',
+        #               table_names[i],
+        #               '". ',
+        #               'Please remove these non-numeric characters and try again.'))
+        # }
         
         
         rounded <- floor(raw)

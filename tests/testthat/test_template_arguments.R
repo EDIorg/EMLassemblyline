@@ -13,7 +13,7 @@ attr_args <- data.table::fread(
   fill = TRUE,
   blank.lines.skip = TRUE)
 
-attr_templates <- read_template_attributes()
+attr_tmp <- read_template_attributes()
 
 # List files at path and data.path
 
@@ -128,20 +128,20 @@ testthat::test_that("Inputs = empty templates", {
     is_text <- stringr::str_detect(
       tnames[i], 
       paste(
-        attr_templates$regexpr[
-          (attr_templates$type == "text")],
+        attr_tmp$regexpr[
+          (attr_tmp$type == "text")],
         collapse = "|"))
     is_dataframe <- stringr::str_detect(
       tnames[i], 
       paste(
-        attr_templates$regexpr[
-          (attr_templates$type == "table")],
+        attr_tmp$regexpr[
+          (attr_tmp$type == "table")],
         collapse = "|"))
     is_taxonomicCoverage <- stringr::str_detect(
       tnames[i], 
       paste(
-        attr_templates$regexpr[
-          (attr_templates$type == "xml")],
+        attr_tmp$regexpr[
+          (attr_tmp$type == "xml")],
         collapse = "|"))
     
     if (is_text) {
@@ -182,14 +182,14 @@ testthat::test_that("Inputs = the 'empty' argument", {
     is_text <- stringr::str_detect(
       names(output$x$template)[i], 
       paste(
-        attr_templates$regexpr[
-          (attr_templates$type == "text")],
+        attr_tmp$regexpr[
+          (attr_tmp$type == "text")],
         collapse = "|"))
     is_dataframe <- stringr::str_detect(
       names(output$x$template)[i], 
       paste(
-        attr_templates$regexpr[
-          (attr_templates$type == "table")],
+        attr_tmp$regexpr[
+          (attr_tmp$type == "table")],
         collapse = "|"))
     if (is_text) {
       expect_true(is.list(output$x$template[[i]]$content))
@@ -226,20 +226,20 @@ testthat::test_that("Inputs = empty templates", {
     is_text <- stringr::str_detect(
       tnames[i], 
       paste(
-        attr_templates$regexpr[
-          (attr_templates$type == "text")],
+        attr_tmp$regexpr[
+          (attr_tmp$type == "text")],
         collapse = "|"))
     is_dataframe <- stringr::str_detect(
       tnames[i], 
       paste(
-        attr_templates$regexpr[
-          (attr_templates$type == "table")],
+        attr_tmp$regexpr[
+          (attr_tmp$type == "table")],
         collapse = "|"))
     is_taxonomicCoverage <- stringr::str_detect(
       tnames[i], 
       paste(
-        attr_templates$regexpr[
-          (attr_templates$type == "xml")],
+        attr_tmp$regexpr[
+          (attr_tmp$type == "xml")],
         collapse = "|"))
     
     if (isTRUE(is_text)) {
