@@ -248,8 +248,6 @@ make_eml <- function(
   zip.dir,
   zip.dir.description
   ){
-
-  message("Making EML ...")
   
   # Validate arguments --------------------------------------------------------
   
@@ -631,6 +629,7 @@ make_eml <- function(
   
   # Build nodes ---------------------------------------------------------------
   
+  message("Making EML ...")
   message('Creating nodes ...')
 
   # Create EML

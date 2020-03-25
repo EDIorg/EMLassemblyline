@@ -41,10 +41,30 @@ testthat::test_that("make_eml()", {
   x$user.id <- c("userid1", "userid2")
   x$write.file <- F
   
-  # dataset.title - dataset.title is required
+  # dataset.title - required
 
   x1 <- x
   x1$dataset.title <- NULL
+  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  
+  # geographic.corrdinates - required when using the geographic.description 
+  # argument
+  
+  x1 <- x
+  x1$geographic.coordinates <- NULL
+  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  
+  # geographic.description - required when using the geographic.coordinates 
+  # argument
+  
+  x1 <- x
+  x1$geographic.description <- NULL
+  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  
+  # maintenance.description
+  
+  x1 <- x
+  x1$maintenance.description <- NULL
   expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   
   # temporal.coverage - temporal.coverage is required
@@ -52,6 +72,83 @@ testthat::test_that("make_eml()", {
   x1 <- x
   x1$temporal.coverage <- NULL
   expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  
+  # temporal.coverage - temporal.coverage requires both a start date and an
+  # end date
+  
+  x1 <- x
+  x1$temporal.coverage <- x1$temporal.coverage[1]
+  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  
+  # user.domain - required for each user.id
+  
+  expect_error(
+    make_eml(
+      path = path,
+      dataset.title = dataset.title,
+      temporal.coverage = temporal.coverage,
+      geographic.description = geographic.description,
+      geographic.coordinates = geographic.coordinates,
+      maintenance.description = maintenance.description,
+      write.file = FALSE,
+      user.id = c('csmith', 'nosuchuser'),
+      user.domain = 'LTER'
+    )
+  )
+  
+  expect_error(
+    make_eml(
+      path = path,
+      dataset.title = dataset.title,
+      temporal.coverage = temporal.coverage,
+      geographic.description = geographic.description,
+      geographic.coordinates = geographic.coordinates,
+      maintenance.description = maintenance.description,
+      write.file = FALSE,
+      user.id = 'csmith',
+      user.domain = c('LTER', 'EDI')
+    )
+  )
+  
+  # user.domain - is required
+  
+  expect_error(
+    make_eml(
+      path = path,
+      dataset.title = dataset.title,
+      temporal.coverage = temporal.coverage,
+      geographic.description = geographic.description,
+      geographic.coordinates = geographic.coordinates,
+      maintenance.description = maintenance.description,
+      write.file = FALSE,
+      user.id = user.id
+    )
+  )
+  
+  # user.domain (unsupported user.domain)
+  
+  expect_warning(
+    suppressMessages(
+      make_eml(
+        path = system.file('/examples/templates_new_geocoverage', package = 'EMLassemblyline'),
+        dataset.title = dataset.title,
+        temporal.coverage = temporal.coverage,
+        maintenance.description = maintenance.description,
+        write.file = FALSE,
+        user.id = 'csmith',
+        user.domain = 'EDEYE'
+      )
+    )
+  )
+  
+  # user.id - is required
+  
+  x1 <- x
+  x1$user.id <- NULL
+  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  
+  
+  
   
   
 })
