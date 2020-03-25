@@ -1859,16 +1859,6 @@ compile_attributes <- function(x){
           raw <- as.numeric(raw[!useI])
         }
         
-        # if ((class(raw) == "character") | (class(raw) == "factor")){
-        #   stop(paste0('Characters strings found in the column "',
-        #               colnames(df_table)[is_numeric[j]],
-        #               '" of the file "',
-        #               table_names[i],
-        #               '". ',
-        #               'Please remove these non-numeric characters and try again.'))
-        # }
-        
-        
         rounded <- floor(raw)
         if (length(raw) - sum(raw == rounded, na.rm = T) > 0){
           attributes$numberType[is_numeric[j]] <- "real"

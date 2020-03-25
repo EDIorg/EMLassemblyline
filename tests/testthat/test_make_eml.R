@@ -199,6 +199,9 @@ test <- file.remove(
 
 testthat::test_that('Error out when required arguments are missing', {
   
+  # NOTE: These tests verify validation checks implemented within the 
+  # make_eml() function. The remainder are handled by validate_arguments().
+  
   # path
   
   expect_error(
@@ -211,36 +214,6 @@ testthat::test_that('Error out when required arguments are missing', {
       user.id = user.id,
       user.domain = user.domain,
       write.file = FALSE
-    )
-  )
-  
-  # dataset.title
-  
-  expect_error(
-    make_eml(
-      path = path,
-      temporal.coverage = temporal.coverage,
-      geographic.description = geographic.description,
-      geographic.coordinates = geographic.coordinates,
-      maintenance.description = maintenance.description,
-      write.file = FALSE,
-      user.id = user.id,
-      user.domain = user.domain
-    )
-  )
-  
-  # temporal.coverage
-  
-  expect_error(
-    make_eml(
-      path = path,
-      dataset.title = dataset.title,
-      geographic.description = geographic.description,
-      geographic.coordinates = geographic.coordinates,
-      maintenance.description = maintenance.description,
-      write.file = FALSE,
-      user.id = user.id,
-      user.domain = user.domain
     )
   )
   
