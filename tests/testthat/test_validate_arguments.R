@@ -15,12 +15,13 @@ testthat::test_that("make_eml()", {
     data.path = system.file(
       '/examples/pkg_260/data_objects',
       package = 'EMLassemblyline'),
-    data.table = c("decomp.csv", "nitrogen.csv"))
+    data.table = c("decomp.csv", "nitrogen.csv"),
+    other.entity = c("ancillary_data.zip", "processing_and_analysis.R"))
   
   x$data.path <- system.file('/examples/pkg_260/data_objects', package = 'EMLassemblyline')
   x$data.table <- c("decomp.csv", "nitrogen.csv")
   x$data.table.name <- c("Decomp file name", "Nitrogen file name")
-  x$data.table.description <- c("Decomp file description", "Nitrogen file description")
+  x$cription <- c("Decomp file description", "Nitrogen file description")
   x$data.table.quote.character  <- c("\\'", "\\'")
   x$data.table.url <- c("https://url/to/decomp.csv", "https://url/to/nitrogen.csv")
   x$dataset.title <- 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015'
@@ -47,6 +48,24 @@ testthat::test_that("make_eml()", {
   x1$dataset.title <- NULL
   expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   
+  # data.table.description - required
+  
+  x1 <- x
+  x1$data.table.description <- NULL
+  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  
+  # data.table.description - required for each data.table
+  
+  x1 <- x
+  x1$data.table.description <- x1$data.table.description[1]
+  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  
+  # data.table.quote.character - required for each data.table
+  
+  x1 <- x
+  x1$data.table.quote.character <- x1$data.table.quote.character[1]
+  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  
   # geographic.corrdinates - required when using the geographic.description 
   # argument
   
@@ -67,6 +86,31 @@ testthat::test_that("make_eml()", {
   x1$maintenance.description <- NULL
   expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   
+  # other.entity - required if other.entity.name or other.entity.description
+  # is in use
+  
+  x1 <- x
+  x1$other.entity <- NULL
+  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  
+  # other.entity - required for each other.entity.description
+  
+  x1 <- x
+  x1$other.entity <- x1$other.entity[1]
+  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  
+  # other.entity.description - required
+  
+  x1 <- x
+  x1$other.entity.description <- NULL
+  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  
+  # package.id - unrecognized package.id results in warning
+  
+  x1 <- x
+  x1$package.id <- "edi.141"
+  expect_warning(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  
   # temporal.coverage - temporal.coverage is required
   
   x1 <- x
@@ -82,64 +126,27 @@ testthat::test_that("make_eml()", {
   
   # user.domain - required for each user.id
   
-  expect_error(
-    make_eml(
-      path = path,
-      dataset.title = dataset.title,
-      temporal.coverage = temporal.coverage,
-      geographic.description = geographic.description,
-      geographic.coordinates = geographic.coordinates,
-      maintenance.description = maintenance.description,
-      write.file = FALSE,
-      user.id = c('csmith', 'nosuchuser'),
-      user.domain = 'LTER'
-    )
-  )
-  
-  expect_error(
-    make_eml(
-      path = path,
-      dataset.title = dataset.title,
-      temporal.coverage = temporal.coverage,
-      geographic.description = geographic.description,
-      geographic.coordinates = geographic.coordinates,
-      maintenance.description = maintenance.description,
-      write.file = FALSE,
-      user.id = 'csmith',
-      user.domain = c('LTER', 'EDI')
-    )
-  )
+  x1 <- x
+  x1$user.domain <- x1$user.domain[1]
+  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   
   # user.domain - is required
   
-  expect_error(
-    make_eml(
-      path = path,
-      dataset.title = dataset.title,
-      temporal.coverage = temporal.coverage,
-      geographic.description = geographic.description,
-      geographic.coordinates = geographic.coordinates,
-      maintenance.description = maintenance.description,
-      write.file = FALSE,
-      user.id = user.id
-    )
-  )
+  x1 <- x
+  x1$user.domain <- NULL
+  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   
-  # user.domain (unsupported user.domain)
+  # user.domain - unrecognized user.domain results in warning
   
-  expect_warning(
-    suppressMessages(
-      make_eml(
-        path = system.file('/examples/templates_new_geocoverage', package = 'EMLassemblyline'),
-        dataset.title = dataset.title,
-        temporal.coverage = temporal.coverage,
-        maintenance.description = maintenance.description,
-        write.file = FALSE,
-        user.id = 'csmith',
-        user.domain = 'EDEYE'
-      )
-    )
-  )
+  x1 <- x
+  x1$user.domain[1] <- "EDEYE"
+  expect_warning(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  
+  # user.id - required for each user.domain
+  
+  x1 <- x
+  x1$user.id <- x1$user.id[1]
+  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   
   # user.id - is required
   

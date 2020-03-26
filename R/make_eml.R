@@ -337,70 +337,50 @@ make_eml <- function(
   
   # Read metadata templates and data ------------------------------------------
   
-  if (is.null(x)){
-
-    # Read templates and data into x
+  if (is.null(x)) {
     
-    if (is.null(data.table) & is.null(other.entity)){
+    if (is.null(data.table) & is.null(other.entity)) {      
       
       x <- template_arguments(
         path = path,
-        data.path = data.path
-      )
+        data.path = data.path)$x
       
-      x <- x$x
-      
-    } else if (!is.null(data.table) & is.null(other.entity)){
+    } else if (!is.null(data.table) & is.null(other.entity)) {
       
       table_names <- suppressWarnings(
         EDIutils::validate_file_names(
           path = data.path, 
-          data.files = data.table
-        )
-      )
-      
+          data.files = data.table))
       x <- template_arguments(
         path = path,
         data.path = data.path,
-        data.table = table_names
-      )
+        data.table = table_names)$x
       
-      x <- x$x
-      
-    } else if (!is.null(data.table) & !is.null(other.entity)){
+    } else if (!is.null(data.table) & !is.null(other.entity)) {
       
       table_names <- suppressWarnings(
         EDIutils::validate_file_names(
           path = data.path, 
-          data.files = data.table
-        )
-      )
-      
+          data.files = data.table))
       x <- template_arguments(
         path = path,
         data.path = data.path,
         data.table = table_names,
-        other.entity = other.entity
-      )
-      
-      x <- x$x
-      
-    } else if (is.null(data.table) & !is.null(other.entity)){
+        other.entity = other.entity)$x
+
+    } else if (is.null(data.table) & !is.null(other.entity)) {
       
       x <- template_arguments(
         path = path,
         data.path = data.path,
-        other.entity = other.entity
-      )
-      
-      x <- x$x
-      
+        other.entity = other.entity)$x
+
     }
     
     data_read_2_x <- TRUE
     
   }
-  
+
   # Validate metadata templates -----------------------------------------------
   
   x <- remove_empty_templates(x)
@@ -1170,14 +1150,14 @@ make_eml <- function(
         }
       # ... if fundingAgency is present ...
       } else if (personinfo$fundingAgency[useI[1]] != ""){
-        # ... if fundingNumber is present ...
+        # ... if fundingNumber is missing ...
         if (personinfo$fundingNumber[useI[1]] == ""){
           project <- list(
             title = "No project title to report",
             personnel = pi_list,
-            funding = personinfo$fundingNumber[useI[1]]
+            funding = personinfo$fundingAgency[useI[1]]
           )
-        # ... if fundingNumber is missing ...
+        # ... if fundingNumber is present ...
         } else if (personinfo$fundingNumber[useI[1]] != ""){
           project <- list(
             title = "No project title to report",
@@ -1239,11 +1219,11 @@ make_eml <- function(
         message('      <relatedProject>')
         pi_list[[1]] <- suppressWarnings(set_person(info_row = useI[i+1],
                                                     person_role = "pi"))
-        # If projectTitle is present ...
+        # If projectTitle is absent ...
         if (personinfo$projectTitle[useI[i+1]] == ""){
-          # If fundingAgency is present ...
+          # If fundingAgency is absent ...
           if (personinfo$fundingAgency[useI[i+1]] == ""){
-            # If fundingNumber is present ...
+            # If fundingNumber is absent ...
             if (personinfo$fundingNumber[useI[i+1]] == ""){
               relatedProject_list[[i]] <- list(
                 title = "No project title to report",
@@ -1258,16 +1238,16 @@ make_eml <- function(
                 funding = personinfo$fundingNumber[useI[i+1]]
               )
             }
-          # ... if fundingAgency is missing ...
+          # ... if fundingAgency is present ...
           } else if (personinfo$fundingAgency[useI[i+1]] != ""){
-            # ... if fundingNumber is present ...
+            # ... if fundingNumber is missing ...
             if (personinfo$fundingNumber[useI[i+1]] == ""){
               relatedProject_list[[i]] <- list(
                 title = "No project title to report",
                 personnel = pi_list,
                 funding = personinfo$fundingAgency[useI[i+1]]
               )
-            # ... if fundingNumber is missing ...
+            # ... if fundingNumber is present ...
             } else if (personinfo$fundingNumber[useI[i+1]] != ""){
               relatedProject_list[[i]] <- list(
                 title = "No project title to report",
@@ -1278,35 +1258,37 @@ make_eml <- function(
               )
             }
           }
-        # ... if projectTitle is missing ...
+        # ... if projectTitle is present ...
         } else if (personinfo$projectTitle[useI[i+1]] != ""){
-          # ... if fundingNumber is present ...
-          if (personinfo$fundingAgency[useI[i+1]] == ""){
+          # ... if fundingAgency is present ...
+          if (personinfo$fundingAgency[useI[i+1]] != ""){
             # ... if fundingNumber is present ...
+            if (personinfo$fundingNumber[useI[i+1]] != ""){
+              relatedProject_list[[i]] <- list(
+                title = personinfo$projectTitle[useI[i+1]],
+                personnel = pi_list,
+                funding = paste0(personinfo$fundingAgency[useI[i+1]],
+                                 ": ",
+                                 personinfo$fundingNumber[useI[i+1]])
+              )
+            # ... if fundingNumber is missing ...
+            } else if (personinfo$fundingNumber[useI[i+1]] == ""){
+              relatedProject_list[[i]] <- list(
+                title = personinfo$projectTitle[useI[i+1]],
+                personnel = pi_list,
+                funding = personinfo$fundingAgency[useI[i+1]]
+              )
+            }
+          # ... if fundingAgency is missing ...
+          } else if (personinfo$fundingAgency[useI[i+1]] == ""){
+            # ... if fundingNumber is missing ...
             if (personinfo$fundingNumber[useI[i+1]] == ""){
               relatedProject_list[[i]] <- list(
                 title = personinfo$projectTitle[useI[i+1]],
                 personnel = pi_list,
                 funding = "No funding to report"
               )
-            # ... if fundingNumber is missing ...
-            } else if (personinfo$fundingNumber[useI[i+1]] != ""){
-              relatedProject_list[[i]] <- list(
-                title = personinfo$projectTitle[useI[i+1]],
-                personnel = pi_list,
-                funding = personinfo$fundingNumber[useI[i+1]]
-              )
-            }
-          # ... if fundingAgency is present ...
-          } else if (personinfo$fundingAgency[useI[i+1]] != ""){
             # ... if fundingNumber is present ...
-            if (personinfo$fundingNumber[useI[i+1]] == ""){
-              relatedProject_list[[i]] <- list(
-                title = personinfo$projectTitle[useI[i+1]],
-                personnel = pi_list,
-                funding = personinfo$fundingAgency[useI[i+1]]
-              )
-            # ... if fundingNumber is missing ...
             } else if (personinfo$fundingNumber[useI[i+1]] != ""){
               relatedProject_list[[i]] <- list(
                 title = personinfo$projectTitle[useI[i+1]],

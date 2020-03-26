@@ -296,7 +296,7 @@ testthat::test_that("Inputs = other entities", {
   expect_true(
     all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
   for (i in 1:length(names(output$x$other.entity))) {
-    expect_true(is.na(output$x$other.entity[[i]]$content))
+    expect_true(is.null(output$x$other.entity[[i]]$content))
   }
   unlink(paste0(tempdir(), "/pkg_260/data_objects"), force = T, recursive = T)
   

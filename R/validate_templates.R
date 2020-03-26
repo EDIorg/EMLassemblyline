@@ -361,6 +361,7 @@ check_table <- function(x, template.name, column.a, column.b, column.ref, test.e
   # message.text = Error text to return to the user, prefixed with the table name
   #                and followed by the values of the secondary column that are 
   #                indexed by test.expression.
+  attr_tmp <- read_template_attributes()
   use_i <- stringr::str_detect(
     names(x$template), 
     attr_tmp$regexpr[attr_tmp$template_name == template.name])

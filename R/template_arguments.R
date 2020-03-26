@@ -331,11 +331,11 @@ template_arguments <- function(
   
   # Read other entities -------------------------------------------------------
   
-  if (!is.null(other.entity)) {
-    for (i in 1:length(other.entity)) {
-      other_entities[[i]]$content <- NA
-    }
-  }
+  # if (!is.null(other.entity)) {
+  #   # for (i in 1:length(other.entity)) {
+  #   #   other_entities[[i]]$content <- NA
+  #   # }
+  # }
   
   # Combine components & return -----------------------------------------------
   

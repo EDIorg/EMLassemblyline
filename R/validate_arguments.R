@@ -330,6 +330,9 @@ validate_arguments <- function(fun.name, fun.args){
       }
     }
     
+    # FIXME: other.entity - listed file names should match with those listed 
+    # in x$other.entity
+    
     # other.entity and other.entity.description
     
     if ((!is.null(fun.args$other.entity)) & (is.null(fun.args$other.entity.description))){

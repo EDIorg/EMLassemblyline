@@ -49,7 +49,8 @@ testthat::test_that("attributes.txt", {
     data.path = system.file(
       '/examples/pkg_260/data_objects',
       package = 'EMLassemblyline'),
-    data.table = c("decomp.csv", "nitrogen.csv"))$x
+    data.table = c("decomp.csv", "nitrogen.csv"),
+    other.entity = c("ancillary_data.zip", "processing_and_analysis.R"))$x
   
   # attributes.txt - attributes.txt should be present for each data table
   
