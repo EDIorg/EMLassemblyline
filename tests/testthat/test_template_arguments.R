@@ -201,9 +201,11 @@ testthat::test_that("Inputs = the 'empty' argument", {
 })
 
 # Inputs = completed templates ------------------------------------------------
-# Empty templates should be read into x
+# Completed templates should be read into x
 
 testthat::test_that("Inputs = empty templates", {
+  
+  # .txt abstract, methods, and additional_info
   
   file.copy(
     from  = system.file('/examples/pkg_260', package = 'EMLassemblyline'),
@@ -253,6 +255,108 @@ testthat::test_that("Inputs = empty templates", {
   }
   
   unlink(paste0(tempdir(), "/pkg_260/metadata_templates"), force = T, recursive = T)
+  
+  # abstract.docx, methods.docx, and additional_info.docx
+  
+  file.copy(
+    from  = system.file('/examples/templates_docx', package = 'EMLassemblyline'),
+    to = tempdir(),
+    recursive = T)
+  output <- template_arguments(
+    path = paste0(tempdir(), "/templates_docx"))
+  
+  expect_true(class(output) == "list")
+  expect_true(all(names(output) %in% attr_args$argument_name))
+  expect_true(
+    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+  
+  tnames <- names(output$x$template)
+  for (i in 1:length(tnames)) {
+    
+    is_text <- FALSE
+    is_dataframe <- FALSE
+    is_taxonomicCoverage <- FALSE
+    is_text <- stringr::str_detect(
+      tnames[i], 
+      paste(
+        attr_tmp$regexpr[
+          (attr_tmp$type == "text")],
+        collapse = "|"))
+    is_dataframe <- stringr::str_detect(
+      tnames[i], 
+      paste(
+        attr_tmp$regexpr[
+          (attr_tmp$type == "table")],
+        collapse = "|"))
+    is_taxonomicCoverage <- stringr::str_detect(
+      tnames[i], 
+      paste(
+        attr_tmp$regexpr[
+          (attr_tmp$type == "xml")],
+        collapse = "|"))
+    
+    if (isTRUE(is_text)) {
+      expect_true(is.list(output$x$template[[i]]$content))
+    } else if (isTRUE(is_dataframe)) {
+      expect_true(is.data.frame(output$x$template[[i]]$content))
+    } else if (isTRUE(is_taxonomicCoverage)) {
+      expect_true(is.data.frame(output$x$template[[i]]$content))
+    }
+    
+  }
+  
+  unlink(paste0(tempdir(), "/templates_docx"), force = T, recursive = T)
+  
+  # abstract.md, methods.md, and additional_info.md
+  
+  file.copy(
+    from  = system.file('/examples/templates_md', package = 'EMLassemblyline'),
+    to = tempdir(),
+    recursive = T)
+  output <- template_arguments(
+    path = paste0(tempdir(), "/templates_md"))
+  
+  expect_true(class(output) == "list")
+  expect_true(all(names(output) %in% attr_args$argument_name))
+  expect_true(
+    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+  
+  tnames <- names(output$x$template)
+  for (i in 1:length(tnames)) {
+    
+    is_text <- FALSE
+    is_dataframe <- FALSE
+    is_taxonomicCoverage <- FALSE
+    is_text <- stringr::str_detect(
+      tnames[i], 
+      paste(
+        attr_tmp$regexpr[
+          (attr_tmp$type == "text")],
+        collapse = "|"))
+    is_dataframe <- stringr::str_detect(
+      tnames[i], 
+      paste(
+        attr_tmp$regexpr[
+          (attr_tmp$type == "table")],
+        collapse = "|"))
+    is_taxonomicCoverage <- stringr::str_detect(
+      tnames[i], 
+      paste(
+        attr_tmp$regexpr[
+          (attr_tmp$type == "xml")],
+        collapse = "|"))
+    
+    if (isTRUE(is_text)) {
+      expect_true(is.list(output$x$template[[i]]$content))
+    } else if (isTRUE(is_dataframe)) {
+      expect_true(is.data.frame(output$x$template[[i]]$content))
+    } else if (isTRUE(is_taxonomicCoverage)) {
+      expect_true(is.data.frame(output$x$template[[i]]$content))
+    }
+    
+  }
+  
+  unlink(paste0(tempdir(), "/templates_md"), force = T, recursive = T)
   
 })
 

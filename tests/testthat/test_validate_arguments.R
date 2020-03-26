@@ -21,7 +21,7 @@ testthat::test_that("make_eml()", {
   x$data.path <- system.file('/examples/pkg_260/data_objects', package = 'EMLassemblyline')
   x$data.table <- c("decomp.csv", "nitrogen.csv")
   x$data.table.name <- c("Decomp file name", "Nitrogen file name")
-  x$cription <- c("Decomp file description", "Nitrogen file description")
+  x$data.table.description <- c("Decomp file description", "Nitrogen file description")
   x$data.table.quote.character  <- c("\\'", "\\'")
   x$data.table.url <- c("https://url/to/decomp.csv", "https://url/to/nitrogen.csv")
   x$dataset.title <- 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015'
@@ -66,6 +66,12 @@ testthat::test_that("make_eml()", {
   x1$data.table.quote.character <- x1$data.table.quote.character[1]
   expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   
+  # data.table.url - required for each data.table
+  
+  x1 <- x
+  x1$data.table.url <- x1$data.table.url[1]
+  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  
   # geographic.corrdinates - required when using the geographic.description 
   # argument
   
@@ -103,6 +109,12 @@ testthat::test_that("make_eml()", {
   
   x1 <- x
   x1$other.entity.description <- NULL
+  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  
+  # other.entity.url - required for each other.entity
+  
+  x1 <- x
+  x1$other.entity.url <- x1$other.entity.url[1]
   expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   
   # package.id - unrecognized package.id results in warning
@@ -153,9 +165,13 @@ testthat::test_that("make_eml()", {
   x1 <- x
   x1$user.id <- NULL
   expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+
+  # write.file - eml.path is required
   
-  
-  
-  
+  x1 <- x
+  x1$path <- NULL
+  x1$eml.path <- NULL
+  x1$write.file <- T
+  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   
 })
