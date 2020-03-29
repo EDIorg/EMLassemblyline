@@ -51,6 +51,8 @@ testthat::test_that("attributes.txt", {
       package = 'EMLassemblyline'),
     data.table = c("decomp.csv", "nitrogen.csv"),
     other.entity = c("ancillary_data.zip", "processing_and_analysis.R"))$x
+  x1 <- x
+  expect_null(validate_templates("make_eml", x1))
   
   # attributes.txt - attributes.txt should be present for each data table
   
@@ -58,8 +60,6 @@ testthat::test_that("attributes.txt", {
   x1$template$attributes_decomp.txt <- NULL
   x1$template$attributes_nitrogen.txt <- NULL
   expect_error(validate_templates("make_eml", x1))
-  x1 <- x
-  expect_null(validate_templates("make_eml", x1))
   
   # attributeName - All table columns are listed as attributeName
   
@@ -67,8 +67,15 @@ testthat::test_that("attributes.txt", {
   x1$template$attributes_decomp.txt$content <- x1$template$attributes_decomp.txt$content[1:2, ]
   x1$template$attributes_nitrogen.txt$content <- x1$template$attributes_nitrogen.txt$content[1:2, ]
   expect_error(validate_templates("make_eml", x1))
+  
+  # attributeName - Names follow best practices
+  
   x1 <- x
-  expect_null(validate_templates("make_eml", x1))
+  n <- stringr::str_replace(names(x1$data.table$decomp.csv$content), "_", " ")
+  n <- stringr::str_replace(n, "t", "%")
+  names(x1$data.table$decomp.csv$content) <- n
+  x1$template$attributes_decomp.txt$content$attributeName <- n
+  expect_warning(validate_templates("make_eml", x1))
   
   # definition- Each attribute has a definition
   
@@ -76,8 +83,6 @@ testthat::test_that("attributes.txt", {
   x1$template$attributes_decomp.txt$content$attributeDefinition[1] <- ""
   x1$template$attributes_nitrogen.txt$content$attributeDefinition[1] <- ""
   expect_error(validate_templates("make_eml", x1))
-  x1 <- x
-  expect_null(validate_templates("make_eml", x1))
   
   # class - Each attribute has a class
   
@@ -85,8 +90,13 @@ testthat::test_that("attributes.txt", {
   x1$template$attributes_decomp.txt$content$class[1] <- ""
   x1$template$attributes_nitrogen.txt$content$class[1] <- ""
   expect_error(validate_templates("make_eml", x1))
+  
+  # class - Each class is numeric, Date, character, or categorical
+  
   x1 <- x
-  expect_null(validate_templates("make_eml", x1))
+  x1$template$attributes_decomp.txt$content$class[1] <- "dateagorical"
+  x1$template$attributes_nitrogen.txt$content$class[1] <- "numerecter"
+  expect_error(validate_templates("make_eml", x1))
   
   # class - Each Date class has a dateTimeformatString
   
@@ -95,8 +105,6 @@ testthat::test_that("attributes.txt", {
     tolower(x1$template$attributes_decomp.txt$content$class) == "date"
     ] <- ""
   expect_error(validate_templates("make_eml", x1))
-  x1 <- x
-  expect_null(validate_templates("make_eml", x1))
   
   # unit - Numeric classed attributes have units
   
@@ -127,8 +135,6 @@ testthat::test_that("attributes.txt", {
   x1$template$attributes_nitrogen.txt$content$dateTimeFormatString[1] <- 
     "!Add datetime specifier here!"
   expect_error(validate_templates("make_eml", x1))
-  x1 <- x
-  expect_null(validate_templates("make_eml", x1))
   
   # missingValueCode - Each missingValueCode has a missingValueCodeExplanation
   
@@ -136,8 +142,6 @@ testthat::test_that("attributes.txt", {
   x1$template$attributes_decomp.txt$content$missingValueCodeExplanation[1] <- ""
   x1$template$attributes_nitrogen.txt$content$missingValueCodeExplanation[1] <- ""
   expect_error(validate_templates("make_eml", x1))
-  x1 <- x
-  expect_null(validate_templates("make_eml", x1))
   
   # missingValueCode - Each missingValueCode only has 1 entry per column
   
@@ -145,8 +149,6 @@ testthat::test_that("attributes.txt", {
   x1$template$attributes_decomp.txt$content$missingValueCode[1] <- "NA, -99999"
   x1$template$attributes_nitrogen.txt$content$missingValueCode[1] <- "NA -99999"
   expect_error(validate_templates("make_eml", x1))
-  x1 <- x
-  expect_null(validate_templates("make_eml", x1))
   
   # missingValueCodeExplanation - Each missingValueCodeExplanation has a 
   # non-blank missingValueCode
@@ -155,8 +157,6 @@ testthat::test_that("attributes.txt", {
   x1$template$attributes_decomp.txt$content$missingValueCode[1] <- ""
   x1$template$attributes_nitrogen.txt$content$missingValueCode[1] <- ""
   expect_error(validate_templates("make_eml", x1))
-  x1 <- x
-  expect_null(validate_templates("make_eml", x1))
   
 })
 
@@ -168,14 +168,28 @@ testthat::test_that("Categorical variables", {
   
   attr_tmp <- read_template_attributes()
   x <- template_arguments(
-    system.file(
+    path = system.file(
       '/examples/pkg_260/metadata_templates',
-      package = 'EMLassemblyline'))$x
+      package = 'EMLassemblyline'),
+    data.path = system.file(
+      '/examples/pkg_260/data_objects',
+      package = 'EMLassemblyline'),
+    data.table = c("decomp.csv", "nitrogen.csv"),
+    other.entity = c("ancillary_data.zip", "processing_and_analysis.R"))$x
+  x1 <- x
+  expect_null(validate_templates("make_eml", x1))
   
-  # FIXME: Categorical variable templates are expected when table attributes are listed
-  # as "categorical"
+  # catvars.txt - Required when table attributes are listed as 
+  # "categorical"
   
-  # All listed categorical variables should have definitions
+  x1 <- x
+  x1$template$attributes_decomp.txt$content$class[1] <- "categorical"
+  x1$template$attributes_nitrogen.txt$content$class[1] <- "categorical"
+  x1$template$catvars_decomp.txt <- NULL
+  x1$template$catvars_nitrogen.txt <- NULL
+  expect_error(validate_templates("make_eml", x1))
+  
+  # codes - All codes require definition
   
   use_i <- seq(
     length(names(x$template)))[
@@ -190,6 +204,70 @@ testthat::test_that("Categorical variables", {
   
 })
 
+# geographic_coverage ---------------------------------------------------------
+
+testthat::test_that("geographic_coverage", {
+  
+  # Parameterize
+  
+  attr_tmp <- read_template_attributes()
+  x <- template_arguments(
+    system.file(
+      '/examples/pkg_260/metadata_templates',
+      package = 'EMLassemblyline'))$x
+  x1 <- x
+  expect_null(validate_templates("make_eml", x1))
+  
+  # geographicDescription - Each entry requires a north, south, east, and west 
+  # bounding coordinate
+  
+  x1 <- x
+  x1$template$geographic_coverage.txt$content$northBoundingCoordinate[1] <- ""
+  x1$template$geographic_coverage.txt$content$southBoundingCoordinate[2] <- ""
+  expect_error(validate_templates("make_eml", x1))
+  
+  # coordinates - Decimal degree is expected
+  
+  x1 <- x
+  x1$template$geographic_coverage.txt$content$northBoundingCoordinate[1] <- "45 23'"
+  x1$template$geographic_coverage.txt$content$southBoundingCoordinate[2] <- "23 degrees 23 minutes"
+  expect_error(validate_templates("make_eml", x1))
+
+})
+
+# personnel -------------------------------------------------------------------
+
+testthat::test_that("personnel", {
+  
+  # Parameterize
+  
+  attr_tmp <- read_template_attributes()
+  x <- template_arguments(
+    system.file(
+      '/examples/pkg_260/metadata_templates',
+      package = 'EMLassemblyline'))$x
+  x1 <- x
+  expect_null(validate_templates("make_eml", x1))
+  
+  # role - At least one creator and contact is listed
+  
+  x1 <- x
+  x1$template$personnel.txt$content$role[
+    stringr::str_detect(
+      x1$template$personnel.txt$content$role, 
+      "creator|contact")] <- "creontact"
+  expect_error(validate_templates("make_eml", x1))
+  
+  # role - All personnel have roles
+  
+  x1 <- x
+  x1$template$personnel.txt$content$role[
+    stringr::str_detect(
+      x1$template$personnel.txt$content$role, 
+      "PI|pi")] <- ""
+  expect_error(validate_templates("make_eml", x1))
+
+})
 
 # remove_empty_templates() ----------------------------------------------------
 

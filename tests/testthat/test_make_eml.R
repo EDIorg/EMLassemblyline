@@ -140,7 +140,7 @@ testthat::test_that('Expect argument values in EML', {
 # Expect template values in EML -----------------------------------------------
 
 testthat::test_that('Expect template values in EML', {
-  
+
   # custom_units.txt
   
   x1 <- x

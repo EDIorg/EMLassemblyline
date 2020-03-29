@@ -1380,7 +1380,7 @@ make_eml <- function(
             attributes[ ,j] <- trimws(attributes[ ,j])
           }
         }
-
+        
         # Create the attributeList element
         
         attributeList <- suppressWarnings(
@@ -1743,6 +1743,12 @@ compile_attributes <- function(x){
     ),
     '.txt'
   )
+  
+  # FIXME: Clean up attributes and catvars.
+  # - Ignore units when not numeric
+  # - Ignore date time format strings when not classified as date
+  # - Ignore blank (i.e. "") categorical codes (implement this in the metadata 
+  # quality check functions to be developed? See GitHub issue #46)
   
   
   # Loop through data tables --------------------------------------------------

@@ -158,6 +158,9 @@ template_arguments <- function(
     # Helper functions for reading templates
     
     read_tbl <- function(f) {
+      # FIXME: Convert NA to "" expected by EAL funcitons. Assume NA listed
+      # under missingValueCode of the attributes template is "" unless 
+      # accompanied by a missingValueCodeExplanation
       as.data.frame(
         data.table::fread(
           file = f,
@@ -263,6 +266,8 @@ template_arguments <- function(
       
       # Read keywords ---------------------------------------------------------
       
+      # FIXME: Remove rows with empty keywords
+      
       if (stringr::str_detect(
         tfound[i], 
         attr_tmp$regexpr[attr_tmp$template_name == "keywords"])) {
@@ -280,6 +285,8 @@ template_arguments <- function(
       }
       
       # Read personnel --------------------------------------------------------
+      
+      # FIXME: Homogenize case of the 'role' field (i.e. use tolower())
       
       if (stringr::str_detect(
         tfound[i], 
@@ -309,6 +316,7 @@ template_arguments <- function(
   
   # Read data tables ----------------------------------------------------------
   
+  # FIXME: Warn user of possible empty columns (i.e. "V([:digit:])*")
   if (!is.null(data.table)) {
     for (i in 1:length(data.table)) {
       if (is.null(sep)){
