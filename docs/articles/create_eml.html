@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.10.0</span>
       </span>
     </div>
 
@@ -220,7 +220,7 @@
 <pre><code>## [1] "edi.301.1.xml"</code></pre>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co"># View EML</span></a></code></pre></div>
 <pre><code>$eml
-&lt;eml:eml packageId="edi.301.1" schemaLocation="eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd" system="edi" xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2"&gt;
+&lt;eml:eml packageId="edi.301.1" schemaLocation="eml://ecoinformatics.org/eml-2.2.0  https://nis.lternet.edu/schemas/EML/eml-2.2.0/eml.xsd" system="edi" xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2"&gt;
  &lt;access authSystem="https://pasta.edirepository.org/authentication" order="allowFirst" scope="document"&gt;
   &lt;allow&gt;
    &lt;principal&gt;uid=csmith,o=EDI,dc=edirepository,dc=org&lt;/principal&gt;
@@ -360,7 +360,7 @@
    &lt;userId directory="https://orcid.org"&gt;https://orcid.org/0000-0001-5856-8473&lt;/userId&gt;
    &lt;role&gt;Equipment Lead&lt;/role&gt;
   &lt;/associatedParty&gt;
-  &lt;pubDate&gt;2020-02-21&lt;/pubDate&gt;
+  &lt;pubDate&gt;2020-03-30&lt;/pubDate&gt;
   &lt;abstract&gt;
    &lt;para&gt;Development of the oil sands has led to increasing atmospheric N
   deposition, with values as high as 17 kg N ha^-1 yr^-1; regional
@@ -395,33 +395,18 @@
    &lt;para&gt;Articles derived from this dataset: Article 1, Article 2, Article 3&lt;/para&gt;
   &lt;/additionalInfo&gt;
   &lt;intellectualRights&gt;
-   &lt;para&gt;This data package is released to the&lt;/para&gt;
-   &lt;para&gt;
-    &lt;quote&gt;public domain&lt;/quote&gt;
-   &lt;/para&gt;
-   &lt;para&gt;under Creative Commons CC0 1.0&lt;/para&gt;
-   &lt;para&gt;
-    &lt;quote&gt;No Rights Reserved&lt;/quote&gt;
-   &lt;/para&gt;
-   &lt;para&gt;(see:
+   &lt;para&gt;This data package is released to the &amp;quot;public domain&amp;quot; under
+  Creative Commons CC0 1.0 &amp;quot;No Rights Reserved&amp;quot; (see:
   https://creativecommons.org/publicdomain/zero/1.0/). It is considered
   professional etiquette to provide attribution of the original work if
   this data package is shared in whole or by individual components. A
   generic citation is provided for this data package on the website
-  https://portal.edirepository.org (herein&lt;/para&gt;
-   &lt;para&gt;
-    &lt;quote&gt;website&lt;/quote&gt;
-   &lt;/para&gt;
-   &lt;para&gt;) in
-  the summary metadata page. Communication (and collaboration) with the
+  https://portal.edirepository.org (herein &amp;quot;website&amp;quot;) in the
+  summary metadata page. Communication (and collaboration) with the
   creators of this data package is recommended to prevent duplicate
   research or publication. This data package (and its components) is
-  made available&lt;/para&gt;
-   &lt;para&gt;
-    &lt;quote&gt;as is&lt;/quote&gt;
-   &lt;/para&gt;
-   &lt;para&gt;and with no warranty of accuracy
-  or fitness for use. The creators of this data package and the website
+  made available &amp;quot;as is&amp;quot; and with no warranty of accuracy or
+  fitness for use. The creators of this data package and the website
   shall not be liable for any damages resulting from misinterpretation
   or misuse of the data package or its components. Periodic updates of
   this data package may be available from the website. Thank you.&lt;/para&gt;
@@ -1265,10 +1250,8 @@
      &lt;storageType&gt;date&lt;/storageType&gt;
      &lt;measurementScale&gt;
       &lt;dateTime&gt;
-       &lt;formatString&gt;YYYY-MM-DD&lt;/formatString&gt;</code></pre>
-<pre><code>Warning in structure(x$children, class = "XMLNodeList"): Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.
-  Consider 'structure(list(), *)' instead.</code></pre>
-<pre><code>       &lt;dateTimeDomain/&gt;
+       &lt;formatString&gt;YYYY-MM-DD&lt;/formatString&gt;
+       &lt;dateTimeDomain/&gt;
       &lt;/dateTime&gt;
      &lt;/measurementScale&gt;
      &lt;missingValueCode&gt;
@@ -1356,10 +1339,8 @@
      &lt;storageType&gt;date&lt;/storageType&gt;
      &lt;measurementScale&gt;
       &lt;dateTime&gt;
-       &lt;formatString&gt;YYYY&lt;/formatString&gt;</code></pre>
-<pre><code>Warning in structure(x$children, class = "XMLNodeList"): Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.
-  Consider 'structure(list(), *)' instead.</code></pre>
-<pre><code>       &lt;dateTimeDomain/&gt;
+       &lt;formatString&gt;YYYY&lt;/formatString&gt;
+       &lt;dateTimeDomain/&gt;
       &lt;/dateTime&gt;
      &lt;/measurementScale&gt;
      &lt;missingValueCode&gt;
@@ -1431,15 +1412,13 @@
    &lt;/physical&gt;
    &lt;attributeList&gt;
     &lt;attribute&gt;
-     &lt;attributeName&gt;year&lt;/attributeName&gt;
+     &lt;attributeName&gt;date&lt;/attributeName&gt;
      &lt;attributeDefinition&gt;Year of growth: 2011-2015&lt;/attributeDefinition&gt;
      &lt;storageType&gt;date&lt;/storageType&gt;
      &lt;measurementScale&gt;
       &lt;dateTime&gt;
-       &lt;formatString&gt;YYYY&lt;/formatString&gt;</code></pre>
-<pre><code>Warning in structure(x$children, class = "XMLNodeList"): Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.
-  Consider 'structure(list(), *)' instead.</code></pre>
-<pre><code>       &lt;dateTimeDomain/&gt;
+       &lt;formatString&gt;YYYY&lt;/formatString&gt;
+       &lt;dateTimeDomain/&gt;
       &lt;/dateTime&gt;
      &lt;/measurementScale&gt;
      &lt;missingValueCode&gt;
@@ -1755,30 +1734,30 @@
 <li>
 <strong>package.id</strong> (optional) Data package identifier in the format expected by the receiving data repository.</li>
 </ul>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="co"># Make EML for other entities</span></a>
-<a class="sourceLine" id="cb17-2" title="2"></a>
-<a class="sourceLine" id="cb17-3" title="3"><span class="kw"><a href="../reference/make_eml.html">make_eml</a></span>(</a>
-<a class="sourceLine" id="cb17-4" title="4">  <span class="dt">path =</span> <span class="st">'./pkg_301/metadata_templates'</span>,</a>
-<a class="sourceLine" id="cb17-5" title="5">  <span class="dt">data.path =</span> <span class="st">'./pkg_301/data_objects'</span>,</a>
-<a class="sourceLine" id="cb17-6" title="6">  <span class="dt">eml.path =</span> <span class="st">'./pkg_301/eml'</span>,</a>
-<a class="sourceLine" id="cb17-7" title="7">  <span class="dt">dataset.title =</span> <span class="st">'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions'</span>,</a>
-<a class="sourceLine" id="cb17-8" title="8">  <span class="dt">temporal.coverage =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'2014-05-01'</span>, <span class="st">'2015-10-31'</span>),</a>
-<a class="sourceLine" id="cb17-9" title="9">  <span class="dt">maintenance.description =</span> <span class="st">'completed'</span>,</a>
-<a class="sourceLine" id="cb17-10" title="10">  <span class="dt">other.entity =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'ancillary_data.zip'</span>, <span class="st">'processing_and_analysis.R'</span>),</a>
-<a class="sourceLine" id="cb17-11" title="11">  <span class="dt">other.entity.name =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'Ancillary data'</span>, <span class="st">'R script'</span>),</a>
-<a class="sourceLine" id="cb17-12" title="12">  <span class="dt">other.entity.description =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'Ancillary data including schematics and images'</span>, <span class="st">'Data processing and analysis script written in the R Language'</span>),</a>
-<a class="sourceLine" id="cb17-13" title="13">  <span class="dt">user.id =</span> <span class="st">'csmith'</span>,</a>
-<a class="sourceLine" id="cb17-14" title="14">  <span class="dt">user.domain =</span> <span class="st">'EDI'</span>,</a>
-<a class="sourceLine" id="cb17-15" title="15">  <span class="dt">package.id =</span> <span class="st">'edi.301.2'</span></a>
-<a class="sourceLine" id="cb17-16" title="16">)</a>
-<a class="sourceLine" id="cb17-17" title="17"></a>
-<a class="sourceLine" id="cb17-18" title="18"><span class="co"># View directory</span></a>
-<a class="sourceLine" id="cb17-19" title="19"></a>
-<a class="sourceLine" id="cb17-20" title="20"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/eml'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="co"># Make EML for other entities</span></a>
+<a class="sourceLine" id="cb11-2" title="2"></a>
+<a class="sourceLine" id="cb11-3" title="3"><span class="kw"><a href="../reference/make_eml.html">make_eml</a></span>(</a>
+<a class="sourceLine" id="cb11-4" title="4">  <span class="dt">path =</span> <span class="st">'./pkg_301/metadata_templates'</span>,</a>
+<a class="sourceLine" id="cb11-5" title="5">  <span class="dt">data.path =</span> <span class="st">'./pkg_301/data_objects'</span>,</a>
+<a class="sourceLine" id="cb11-6" title="6">  <span class="dt">eml.path =</span> <span class="st">'./pkg_301/eml'</span>,</a>
+<a class="sourceLine" id="cb11-7" title="7">  <span class="dt">dataset.title =</span> <span class="st">'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions'</span>,</a>
+<a class="sourceLine" id="cb11-8" title="8">  <span class="dt">temporal.coverage =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'2014-05-01'</span>, <span class="st">'2015-10-31'</span>),</a>
+<a class="sourceLine" id="cb11-9" title="9">  <span class="dt">maintenance.description =</span> <span class="st">'completed'</span>,</a>
+<a class="sourceLine" id="cb11-10" title="10">  <span class="dt">other.entity =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'ancillary_data.zip'</span>, <span class="st">'processing_and_analysis.R'</span>),</a>
+<a class="sourceLine" id="cb11-11" title="11">  <span class="dt">other.entity.name =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'Ancillary data'</span>, <span class="st">'R script'</span>),</a>
+<a class="sourceLine" id="cb11-12" title="12">  <span class="dt">other.entity.description =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'Ancillary data including schematics and images'</span>, <span class="st">'Data processing and analysis script written in the R Language'</span>),</a>
+<a class="sourceLine" id="cb11-13" title="13">  <span class="dt">user.id =</span> <span class="st">'csmith'</span>,</a>
+<a class="sourceLine" id="cb11-14" title="14">  <span class="dt">user.domain =</span> <span class="st">'EDI'</span>,</a>
+<a class="sourceLine" id="cb11-15" title="15">  <span class="dt">package.id =</span> <span class="st">'edi.301.2'</span></a>
+<a class="sourceLine" id="cb11-16" title="16">)</a>
+<a class="sourceLine" id="cb11-17" title="17"></a>
+<a class="sourceLine" id="cb11-18" title="18"><span class="co"># View directory</span></a>
+<a class="sourceLine" id="cb11-19" title="19"></a>
+<a class="sourceLine" id="cb11-20" title="20"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/eml'</span>)</a></code></pre></div>
 <pre><code>## [1] "edi.301.1.xml" "edi.301.2.xml"</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="co"># View EML</span></a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="co"># View EML</span></a></code></pre></div>
 <pre><code>$eml
-&lt;eml:eml packageId="edi.301.2" schemaLocation="eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd" system="edi" xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2"&gt;
+&lt;eml:eml packageId="edi.301.2" schemaLocation="eml://ecoinformatics.org/eml-2.2.0  https://nis.lternet.edu/schemas/EML/eml-2.2.0/eml.xsd" system="edi" xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2"&gt;
  &lt;access authSystem="https://pasta.edirepository.org/authentication" order="allowFirst" scope="document"&gt;
   &lt;allow&gt;
    &lt;principal&gt;uid=csmith,o=EDI,dc=edirepository,dc=org&lt;/principal&gt;
@@ -1918,7 +1897,7 @@
    &lt;userId directory="https://orcid.org"&gt;https://orcid.org/0000-0001-5856-8473&lt;/userId&gt;
    &lt;role&gt;Equipment Lead&lt;/role&gt;
   &lt;/associatedParty&gt;
-  &lt;pubDate&gt;2020-02-21&lt;/pubDate&gt;
+  &lt;pubDate&gt;2020-03-30&lt;/pubDate&gt;
   &lt;abstract&gt;
    &lt;para&gt;Development of the oil sands has led to increasing atmospheric N
   deposition, with values as high as 17 kg N ha^-1 yr^-1; regional
@@ -1953,33 +1932,18 @@
    &lt;para&gt;Articles derived from this dataset: Article 1, Article 2, Article 3&lt;/para&gt;
   &lt;/additionalInfo&gt;
   &lt;intellectualRights&gt;
-   &lt;para&gt;This data package is released to the&lt;/para&gt;
-   &lt;para&gt;
-    &lt;quote&gt;public domain&lt;/quote&gt;
-   &lt;/para&gt;
-   &lt;para&gt;under Creative Commons CC0 1.0&lt;/para&gt;
-   &lt;para&gt;
-    &lt;quote&gt;No Rights Reserved&lt;/quote&gt;
-   &lt;/para&gt;
-   &lt;para&gt;(see:
+   &lt;para&gt;This data package is released to the &amp;quot;public domain&amp;quot; under
+  Creative Commons CC0 1.0 &amp;quot;No Rights Reserved&amp;quot; (see:
   https://creativecommons.org/publicdomain/zero/1.0/). It is considered
   professional etiquette to provide attribution of the original work if
   this data package is shared in whole or by individual components. A
   generic citation is provided for this data package on the website
-  https://portal.edirepository.org (herein&lt;/para&gt;
-   &lt;para&gt;
-    &lt;quote&gt;website&lt;/quote&gt;
-   &lt;/para&gt;
-   &lt;para&gt;) in
-  the summary metadata page. Communication (and collaboration) with the
+  https://portal.edirepository.org (herein &amp;quot;website&amp;quot;) in the
+  summary metadata page. Communication (and collaboration) with the
   creators of this data package is recommended to prevent duplicate
   research or publication. This data package (and its components) is
-  made available&lt;/para&gt;
-   &lt;para&gt;
-    &lt;quote&gt;as is&lt;/quote&gt;
-   &lt;/para&gt;
-   &lt;para&gt;and with no warranty of accuracy
-  or fitness for use. The creators of this data package and the website
+  made available &amp;quot;as is&amp;quot; and with no warranty of accuracy or
+  fitness for use. The creators of this data package and the website
   shall not be liable for any damages resulting from misinterpretation
   or misuse of the data package or its components. Periodic updates of
   this data package may be available from the website. Thank you.&lt;/para&gt;
@@ -2852,33 +2816,33 @@
 <li>
 <strong>package.id</strong> (optional) Data package identifier in the format expected by the receiving data repository.</li>
 </ul>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="co"># Make EML for data tables and other entities</span></a>
-<a class="sourceLine" id="cb21-2" title="2"></a>
-<a class="sourceLine" id="cb21-3" title="3"><span class="kw"><a href="../reference/make_eml.html">make_eml</a></span>(</a>
-<a class="sourceLine" id="cb21-4" title="4">  <span class="dt">path =</span> <span class="st">'./pkg_301/metadata_templates'</span>,</a>
-<a class="sourceLine" id="cb21-5" title="5">  <span class="dt">data.path =</span> <span class="st">'./pkg_301/data_objects'</span>,</a>
-<a class="sourceLine" id="cb21-6" title="6">  <span class="dt">eml.path =</span> <span class="st">'./pkg_301/eml'</span>,</a>
-<a class="sourceLine" id="cb21-7" title="7">  <span class="dt">dataset.title =</span> <span class="st">'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions'</span>,</a>
-<a class="sourceLine" id="cb21-8" title="8">  <span class="dt">temporal.coverage =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'2014-05-01'</span>, <span class="st">'2015-10-31'</span>),</a>
-<a class="sourceLine" id="cb21-9" title="9">  <span class="dt">maintenance.description =</span> <span class="st">'completed'</span>,</a>
-<a class="sourceLine" id="cb21-10" title="10">  <span class="dt">data.table =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'decomp.csv'</span>, <span class="st">'nitrogen.csv'</span>),</a>
-<a class="sourceLine" id="cb21-11" title="11">  <span class="dt">data.table.name =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'Decomposition data'</span>, <span class="st">'Nitrogen data'</span>),</a>
-<a class="sourceLine" id="cb21-12" title="12">  <span class="dt">data.table.description =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'Decomposition rates monitored throughout the experiment'</span>, <span class="st">'Nitrogen species measured near the study site'</span>),</a>
-<a class="sourceLine" id="cb21-13" title="13">  <span class="dt">other.entity =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'ancillary_data.zip'</span>, <span class="st">'processing_and_analysis.R'</span>),</a>
-<a class="sourceLine" id="cb21-14" title="14">  <span class="dt">other.entity.name =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'Ancillary data'</span>, <span class="st">'R script'</span>),</a>
-<a class="sourceLine" id="cb21-15" title="15">  <span class="dt">other.entity.description =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'Ancillary data including schematics and images'</span>, <span class="st">'Data processing and analysis script written in the R Language'</span>),</a>
-<a class="sourceLine" id="cb21-16" title="16">  <span class="dt">user.id =</span> <span class="st">'csmith'</span>,</a>
-<a class="sourceLine" id="cb21-17" title="17">  <span class="dt">user.domain =</span> <span class="st">'EDI'</span>,</a>
-<a class="sourceLine" id="cb21-18" title="18">  <span class="dt">package.id =</span> <span class="st">'edi.301.3'</span></a>
-<a class="sourceLine" id="cb21-19" title="19">)</a>
-<a class="sourceLine" id="cb21-20" title="20"></a>
-<a class="sourceLine" id="cb21-21" title="21"><span class="co"># View directory</span></a>
-<a class="sourceLine" id="cb21-22" title="22"></a>
-<a class="sourceLine" id="cb21-23" title="23"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/eml'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="co"># Make EML for data tables and other entities</span></a>
+<a class="sourceLine" id="cb15-2" title="2"></a>
+<a class="sourceLine" id="cb15-3" title="3"><span class="kw"><a href="../reference/make_eml.html">make_eml</a></span>(</a>
+<a class="sourceLine" id="cb15-4" title="4">  <span class="dt">path =</span> <span class="st">'./pkg_301/metadata_templates'</span>,</a>
+<a class="sourceLine" id="cb15-5" title="5">  <span class="dt">data.path =</span> <span class="st">'./pkg_301/data_objects'</span>,</a>
+<a class="sourceLine" id="cb15-6" title="6">  <span class="dt">eml.path =</span> <span class="st">'./pkg_301/eml'</span>,</a>
+<a class="sourceLine" id="cb15-7" title="7">  <span class="dt">dataset.title =</span> <span class="st">'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions'</span>,</a>
+<a class="sourceLine" id="cb15-8" title="8">  <span class="dt">temporal.coverage =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'2014-05-01'</span>, <span class="st">'2015-10-31'</span>),</a>
+<a class="sourceLine" id="cb15-9" title="9">  <span class="dt">maintenance.description =</span> <span class="st">'completed'</span>,</a>
+<a class="sourceLine" id="cb15-10" title="10">  <span class="dt">data.table =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'decomp.csv'</span>, <span class="st">'nitrogen.csv'</span>),</a>
+<a class="sourceLine" id="cb15-11" title="11">  <span class="dt">data.table.name =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'Decomposition data'</span>, <span class="st">'Nitrogen data'</span>),</a>
+<a class="sourceLine" id="cb15-12" title="12">  <span class="dt">data.table.description =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'Decomposition rates monitored throughout the experiment'</span>, <span class="st">'Nitrogen species measured near the study site'</span>),</a>
+<a class="sourceLine" id="cb15-13" title="13">  <span class="dt">other.entity =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'ancillary_data.zip'</span>, <span class="st">'processing_and_analysis.R'</span>),</a>
+<a class="sourceLine" id="cb15-14" title="14">  <span class="dt">other.entity.name =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'Ancillary data'</span>, <span class="st">'R script'</span>),</a>
+<a class="sourceLine" id="cb15-15" title="15">  <span class="dt">other.entity.description =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'Ancillary data including schematics and images'</span>, <span class="st">'Data processing and analysis script written in the R Language'</span>),</a>
+<a class="sourceLine" id="cb15-16" title="16">  <span class="dt">user.id =</span> <span class="st">'csmith'</span>,</a>
+<a class="sourceLine" id="cb15-17" title="17">  <span class="dt">user.domain =</span> <span class="st">'EDI'</span>,</a>
+<a class="sourceLine" id="cb15-18" title="18">  <span class="dt">package.id =</span> <span class="st">'edi.301.3'</span></a>
+<a class="sourceLine" id="cb15-19" title="19">)</a>
+<a class="sourceLine" id="cb15-20" title="20"></a>
+<a class="sourceLine" id="cb15-21" title="21"><span class="co"># View directory</span></a>
+<a class="sourceLine" id="cb15-22" title="22"></a>
+<a class="sourceLine" id="cb15-23" title="23"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/eml'</span>)</a></code></pre></div>
 <pre><code>## [1] "edi.301.1.xml" "edi.301.2.xml" "edi.301.3.xml"</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="co"># View EML</span></a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="co"># View EML</span></a></code></pre></div>
 <pre><code>$eml
-&lt;eml:eml packageId="edi.301.3" schemaLocation="eml://ecoinformatics.org/eml-2.1.1  http://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd" system="edi" xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2"&gt;
+&lt;eml:eml packageId="edi.301.3" schemaLocation="eml://ecoinformatics.org/eml-2.2.0  https://nis.lternet.edu/schemas/EML/eml-2.2.0/eml.xsd" system="edi" xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2"&gt;
  &lt;access authSystem="https://pasta.edirepository.org/authentication" order="allowFirst" scope="document"&gt;
   &lt;allow&gt;
    &lt;principal&gt;uid=csmith,o=EDI,dc=edirepository,dc=org&lt;/principal&gt;
@@ -3018,7 +2982,7 @@
    &lt;userId directory="https://orcid.org"&gt;https://orcid.org/0000-0001-5856-8473&lt;/userId&gt;
    &lt;role&gt;Equipment Lead&lt;/role&gt;
   &lt;/associatedParty&gt;
-  &lt;pubDate&gt;2020-02-21&lt;/pubDate&gt;
+  &lt;pubDate&gt;2020-03-30&lt;/pubDate&gt;
   &lt;abstract&gt;
    &lt;para&gt;Development of the oil sands has led to increasing atmospheric N
   deposition, with values as high as 17 kg N ha^-1 yr^-1; regional
@@ -3053,33 +3017,18 @@
    &lt;para&gt;Articles derived from this dataset: Article 1, Article 2, Article 3&lt;/para&gt;
   &lt;/additionalInfo&gt;
   &lt;intellectualRights&gt;
-   &lt;para&gt;This data package is released to the&lt;/para&gt;
-   &lt;para&gt;
-    &lt;quote&gt;public domain&lt;/quote&gt;
-   &lt;/para&gt;
-   &lt;para&gt;under Creative Commons CC0 1.0&lt;/para&gt;
-   &lt;para&gt;
-    &lt;quote&gt;No Rights Reserved&lt;/quote&gt;
-   &lt;/para&gt;
-   &lt;para&gt;(see:
+   &lt;para&gt;This data package is released to the &amp;quot;public domain&amp;quot; under
+  Creative Commons CC0 1.0 &amp;quot;No Rights Reserved&amp;quot; (see:
   https://creativecommons.org/publicdomain/zero/1.0/). It is considered
   professional etiquette to provide attribution of the original work if
   this data package is shared in whole or by individual components. A
   generic citation is provided for this data package on the website
-  https://portal.edirepository.org (herein&lt;/para&gt;
-   &lt;para&gt;
-    &lt;quote&gt;website&lt;/quote&gt;
-   &lt;/para&gt;
-   &lt;para&gt;) in
-  the summary metadata page. Communication (and collaboration) with the
+  https://portal.edirepository.org (herein &amp;quot;website&amp;quot;) in the
+  summary metadata page. Communication (and collaboration) with the
   creators of this data package is recommended to prevent duplicate
   research or publication. This data package (and its components) is
-  made available&lt;/para&gt;
-   &lt;para&gt;
-    &lt;quote&gt;as is&lt;/quote&gt;
-   &lt;/para&gt;
-   &lt;para&gt;and with no warranty of accuracy
-  or fitness for use. The creators of this data package and the website
+  made available &amp;quot;as is&amp;quot; and with no warranty of accuracy or
+  fitness for use. The creators of this data package and the website
   shall not be liable for any damages resulting from misinterpretation
   or misuse of the data package or its components. Periodic updates of
   this data package may be available from the website. Thank you.&lt;/para&gt;
@@ -3923,10 +3872,8 @@
      &lt;storageType&gt;date&lt;/storageType&gt;
      &lt;measurementScale&gt;
       &lt;dateTime&gt;
-       &lt;formatString&gt;YYYY-MM-DD&lt;/formatString&gt;</code></pre>
-<pre><code>Warning in structure(x$children, class = "XMLNodeList"): Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.
-  Consider 'structure(list(), *)' instead.</code></pre>
-<pre><code>       &lt;dateTimeDomain/&gt;
+       &lt;formatString&gt;YYYY-MM-DD&lt;/formatString&gt;
+       &lt;dateTimeDomain/&gt;
       &lt;/dateTime&gt;
      &lt;/measurementScale&gt;
      &lt;missingValueCode&gt;
@@ -4014,10 +3961,8 @@
      &lt;storageType&gt;date&lt;/storageType&gt;
      &lt;measurementScale&gt;
       &lt;dateTime&gt;
-       &lt;formatString&gt;YYYY&lt;/formatString&gt;</code></pre>
-<pre><code>Warning in structure(x$children, class = "XMLNodeList"): Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.
-  Consider 'structure(list(), *)' instead.</code></pre>
-<pre><code>       &lt;dateTimeDomain/&gt;
+       &lt;formatString&gt;YYYY&lt;/formatString&gt;
+       &lt;dateTimeDomain/&gt;
       &lt;/dateTime&gt;
      &lt;/measurementScale&gt;
      &lt;missingValueCode&gt;
@@ -4089,15 +4034,13 @@
    &lt;/physical&gt;
    &lt;attributeList&gt;
     &lt;attribute&gt;
-     &lt;attributeName&gt;year&lt;/attributeName&gt;
+     &lt;attributeName&gt;date&lt;/attributeName&gt;
      &lt;attributeDefinition&gt;Year of growth: 2011-2015&lt;/attributeDefinition&gt;
      &lt;storageType&gt;date&lt;/storageType&gt;
      &lt;measurementScale&gt;
       &lt;dateTime&gt;
-       &lt;formatString&gt;YYYY&lt;/formatString&gt;</code></pre>
-<pre><code>Warning in structure(x$children, class = "XMLNodeList"): Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.
-  Consider 'structure(list(), *)' instead.</code></pre>
-<pre><code>       &lt;dateTimeDomain/&gt;
+       &lt;formatString&gt;YYYY&lt;/formatString&gt;
+       &lt;dateTimeDomain/&gt;
       &lt;/dateTime&gt;
      &lt;/measurementScale&gt;
      &lt;missingValueCode&gt;
@@ -4409,6 +4352,7 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
