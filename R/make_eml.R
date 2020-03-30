@@ -1637,7 +1637,7 @@ make_eml <- function(
     if (custom_units == "yes"){
       
       eml <- list(
-        schemaLocation = "eml://ecoinformatics.org/eml-2.1.1  https://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd",
+        schemaLocation = "eml://ecoinformatics.org/eml-2.2.0  https://nis.lternet.edu/schemas/EML/eml-2.2.0/eml.xsd",
         packageId = package.id,
         system = "edi",
         access = access,
@@ -1648,7 +1648,7 @@ make_eml <- function(
     } else {
       
       eml <- list(
-        schemaLocation = "eml://ecoinformatics.org/eml-2.1.1  https://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd",
+        schemaLocation = "eml://ecoinformatics.org/eml-2.2.0  https://nis.lternet.edu/schemas/EML/eml-2.2.0/eml.xsd",
         packageId = package.id,
         system = "edi",
         access = access,
@@ -1660,7 +1660,7 @@ make_eml <- function(
   } else {
     
     eml <- list(
-      schemaLocation = "eml://ecoinformatics.org/eml-2.1.1  https://nis.lternet.edu/schemas/EML/eml-2.1.1/eml.xsd",
+      schemaLocation = "eml://ecoinformatics.org/eml-2.2.0  https://nis.lternet.edu/schemas/EML/eml-2.2.0/eml.xsd",
       packageId = package.id,
       system = "edi",
       access = access,
@@ -1676,7 +1676,7 @@ make_eml <- function(
   if (isTRUE(write.file)){
     
     message(paste0('Writing EML (', package.id, '.xml)'))
-    emld::eml_version("eml-2.1.1")
+    emld::eml_version("eml-2.2.0")
     EML::write_eml(
       eml, 
       paste0(eml.path, "/", package.id, ".xml")

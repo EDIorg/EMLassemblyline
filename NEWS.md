@@ -1,12 +1,18 @@
+# EMLassemblyline 2.10.0
+
+### Enhancement
+
+* __Schema validation:__ A schema validation error sporadically occurs under EML 2.1.1. Upgrading to EML 2.2.0 fixes this ([issue #59](https://github.com/EDIorg/EMLassemblyline/issues/59)).
+
 # EMLassemblyline 2.9.0
 
-### Enhancements
+### Enhancement
 
 * __Template checks:__ A new suite of checks on metadata template content have been added to more effectively communicate issues and reduce errors. Fixes [issue #6](https://github.com/EDIorg/EMLassemblyline/issues/6), [issue #35](https://github.com/EDIorg/EMLassemblyline/issues/35), [issue #37](https://github.com/EDIorg/EMLassemblyline/issues/37), and [issue # 53](https://github.com/EDIorg/EMLassemblyline/issues/53).
 
 # EMLassemblyline 2.8.0
 
-### Enhancements
+### Enhancement
 
 * __Online distribution:__ The previous implementation for providing URLs by which the data can be publicly downloaded required all data objects to be co-located in the same directory, which is too restrictive. Now URLs can be explicitly listed for each data object. Fixes [issue #56](https://github.com/EDIorg/EMLassemblyline/issues/56).
 
@@ -16,7 +22,7 @@
 
 # EMLassemblyline 2.7.1
 
-### Bug fixes
+### Bug fix
 
 * __Delimiter guessing:__ Occasionally the content of tabular templates leads `data.table::fread()` to guessing a delimiter other than "\\t". This issue has been fixed by explicitly stating the expected field delimiter.
 
@@ -114,6 +120,6 @@ __Arguments:__
 * `zip.dir.description` is deprecated in favor of `other.entity.description`
 * `affiliation` is deprecated in favor of `user.domain`
 
-### Bug fixes
+### Bug fix
 
 * __otherEntity url:__ Add EML element _//otherEntity/physical/distribution/online/url_ via `make_eml()`. This element was missing though documentation implied its existence.
