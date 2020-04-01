@@ -1,3 +1,9 @@
+# EMLassemblyline 2.10.1
+
+### Bug fix
+
+* __Schema validation:__ The referenced schema location was not correct. Now it is ([issue #59](https://github.com/EDIorg/EMLassemblyline/issues/59)).
+
 # EMLassemblyline 2.10.0
 
 ### Enhancement
