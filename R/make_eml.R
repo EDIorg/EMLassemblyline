@@ -1637,7 +1637,7 @@ make_eml <- function(
     if (custom_units == "yes"){
       
       eml <- list(
-        schemaLocation = "eml://ecoinformatics.org/eml-2.2.0  https://nis.lternet.edu/schemas/EML/eml-2.2.0/eml.xsd",
+        schemaLocation = "eml://ecoinformatics.org/eml-2.2.0  https://nis.lternet.edu/schemas/EML/eml-2.2.0/xsd/eml.xsd",
         packageId = package.id,
         system = "edi",
         access = access,
@@ -1648,7 +1648,7 @@ make_eml <- function(
     } else {
       
       eml <- list(
-        schemaLocation = "eml://ecoinformatics.org/eml-2.2.0  https://nis.lternet.edu/schemas/EML/eml-2.2.0/eml.xsd",
+        schemaLocation = "eml://ecoinformatics.org/eml-2.2.0  https://nis.lternet.edu/schemas/EML/eml-2.2.0/xsd/eml.xsd",
         packageId = package.id,
         system = "edi",
         access = access,
@@ -1660,7 +1660,7 @@ make_eml <- function(
   } else {
     
     eml <- list(
-      schemaLocation = "eml://ecoinformatics.org/eml-2.2.0  https://nis.lternet.edu/schemas/EML/eml-2.2.0/eml.xsd",
+      schemaLocation = "eml://ecoinformatics.org/eml-2.2.0  https://nis.lternet.edu/schemas/EML/eml-2.2.0/xsd/eml.xsd",
       packageId = package.id,
       system = "edi",
       access = access,
