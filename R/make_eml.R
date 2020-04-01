@@ -143,49 +143,10 @@
 #' file.copy(
 #'   from = system.file('/examples/pkg_260', package = 'EMLassemblyline'),
 #'   to = tempdir(),
-#'   recursive = TRUE
-#' )
+#'   recursive = TRUE)
 #' 
 #' # Set working directory
 #' setwd(paste0(tempdir(), '/pkg_260'))
-#' 
-#' # Make EML (for data package with data tables)
-#' 
-#' make_eml(
-#'   path = './metadata_templates',
-#'   data.path = './data_objects',
-#'   eml.path = './eml',
-#'   dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions',
-#'   temporal.coverage = c('2014-05-01', '2015-10-31'),
-#'   maintenance.description = 'completed',
-#'   data.table = c('decomp.csv', 'nitrogen.csv'),
-#'   data.table.description = c('Decomposition data', 'Nitrogen data'),
-#'   user.id = 'csmith',
-#'   user.domain = 'EDI',
-#'   package.id = 'edi.260.1'
-#' )
-#' 
-#' # View EML directory contents (NOTE: edi.260.1 exists)
-#' dir('./eml')
-#' 
-#' # Make EML (for data package with other entities)
-#' 
-#' make_eml(
-#'   path = './metadata_templates',
-#'   data.path = './data_objects',
-#'   eml.path = './eml',
-#'   dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions',
-#'   temporal.coverage = c('2014-05-01', '2015-10-31'),
-#'   maintenance.description = 'completed',
-#'   other.entity = c('ancillary_data.zip', 'processing_and_analysis.R'),
-#'   other.entity.description = c('Ancillary data', 'Data processing and analysis script'),
-#'   user.id = 'csmith',
-#'   user.domain = 'EDI',
-#'   package.id = 'edi.260.2'
-#' )
-#' 
-#' # View EML directory contents (NOTE: edi.260.2 exists)
-#' dir('./eml')
 #' 
 #' # Make EML (for data package with data tables and other entities)
 #' 
@@ -202,10 +163,9 @@
 #'   other.entity.description = c('Ancillary data', 'Data processing and analysis script'),
 #'   user.id = 'csmith',
 #'   user.domain = 'EDI',
-#'   package.id = 'edi.260.3'
-#' )
+#'   package.id = 'edi.260.3')
 #' 
-#' # View EML directory contents (NOTE: edi.260.3 exists)
+#' # View EML directory contents
 #' dir('./eml')
 #' 
 #' # Clean up
@@ -213,7 +173,6 @@
 #'
 #' @export
 #'
-
 make_eml <- function(
   path,
   data.path = path,
@@ -247,106 +206,102 @@ make_eml <- function(
   data.url = NULL,
   zip.dir,
   zip.dir.description
-  ){
+  ) {
   
   # Validate arguments --------------------------------------------------------
   
-  # Validate path usage before passing arguments to validate_arguments()
+  # Validate path usage before passing arguments to validate_arguments().
   # When not using x, inputs are expected from path, data.path, and 
   # eml.path. When using x, only data.path is required unless write.file = TRUE
   # in which case eml.path is required.
   
-  if (is.null(x) & missing(path)){
-    stop('Input argument "path" is missing.')
-  } else if (!is.null(x) & missing(path)){
+  if (is.null(x) & missing(path)) {
+    stop("Input argument 'path' is missing.")
+  } else if (!is.null(x) & missing(path)) {
     path <- NULL
-    if (missing(data.path)){
-      stop('Input argument "data.path" is missing.')
+    if (missing(data.path)) {
+      stop("Input argument 'data.path' is missing.")
     }
-    if (isTRUE(write.file) & missing(eml.path)){
-      stop('Input argument "write.file = TRUE" but "eml.path" is missing.')
-    } else if (!isTRUE(write.file) & missing(eml.path)){
+    if (isTRUE(write.file) & missing(eml.path)) {
+      stop("Input argument 'write.file = TRUE' but 'eml.path' is missing.")
+    } else if (!isTRUE(write.file) & missing(eml.path)) {
       eml.path <- NULL
     }
   }
   
-  # Pass remaining arguments to validate_arguments().
+  # Pass remaining arguments to validate_arguments()
   
   validate_arguments(
-    fun.name = 'make_eml',
+    fun.name = "make_eml",
     fun.args = as.list(environment()))
   
   # Handle deprecated arguments
   
-  if (!missing(affiliation)){
+  # FIXME: Remove May 2020
+  if (!missing(affiliation)) {
     warning(
-      'Argument "affiliation" is deprecated; please use "user.domain" instead.',
-      call. = FALSE)
+      "Argument 'affiliation' is deprecated; please use 'user.domain' instead.",
+      call. = F)
     user.domain <- affiliation
   }
-  
+  # FIXME: Remove May 2020
   if (!missing(data.files)){
     warning(
-      'Argument "data.files" is deprecated; please use "data.table" instead.',
-      call. = FALSE)
+      "Argument 'data.files' is deprecated; please use 'data.table' instead.",
+      call. = F)
     data.table <- data.files
   }
-  
+  # FIXME: Remove May 2020
   if (!missing(data.files.description)){
     warning(
-      'Argument "data.files.description" is deprecated; please use "data.table.description" instead.',
-      call. = FALSE)
+      "Argument 'data.files.description' is deprecated; please use 'data.table.description' instead.",
+      call. = F)
     data.table.description <- data.files.description
   }
-  
+  # FIXME: Remove May 2020
   if (!missing(data.files.quote.character)){
     warning(
-      'Argument "data.files.quote.character" is deprecated; please use "data.table.quote.character" instead.',
-      call. = FALSE)
+      "Argument 'data.files.quote.character' is deprecated; please use 'data.table.quote.character' instead.",
+      call. = F)
     data.table.quote.character <- data.files.quote.character
   }
-  
+  # FIXME: Remove May 2020
   if (!missing(data.files.url)){
     warning(
-      'Argument "data.files.url" is deprecated; please use "data.url" instead.',
-      call. = FALSE)
+      "Argument 'data.files.url' is deprecated; please use 'data.url' instead.",
+      call. = F)
     data.url <- data.files.url
   }
-  
   # FIXME: Do not remove until March 2021
   if (!missing(data.url)){
     warning(
       paste0("Argument 'data.url' is deprecated; please use 'data.table.url' ",
              "and 'other.entity.url' instead."),
-      call. = FALSE)
+      call. = F)
   }
-  
+  # FIXME: Remove May 2020
   if (!missing(zip.dir)){
     warning(
-      'Argument "zip.dir" is deprecated; please use "other.entity" instead.',
-      call. = FALSE)
+      "Argument 'zip.dir' is deprecated; please use 'other.entity' instead.",
+      call. = F)
     other.entity <- zip.dir
   }
-  
+  # FIXME: Remove May 2020
   if (!missing(zip.dir.description)){
     warning(
-      'Argument "zip.dir.description" is deprecated; please use "other.entity.description" instead.',
-      call. = FALSE)
+      "Argument 'zip.dir.description' is deprecated; please use 'other.entity.description' instead.",
+      call. = F)
     other.entity.description <- zip.dir.description
   }
   
-  # Read metadata templates and data ------------------------------------------
+  # Read templates and data ---------------------------------------------------
   
   if (is.null(x)) {
-    
     if (is.null(data.table) & is.null(other.entity)) {      
-      
       x <- template_arguments(
         path = path,
         data.path = data.path)$x
-      
     } else if (!is.null(data.table) & is.null(other.entity)) {
-      
       table_names <- suppressWarnings(
         EDIutils::validate_file_names(
           path = data.path, 
@@ -355,9 +310,7 @@ make_eml <- function(
         path = path,
         data.path = data.path,
         data.table = table_names)$x
-      
     } else if (!is.null(data.table) & !is.null(other.entity)) {
-      
       table_names <- suppressWarnings(
         EDIutils::validate_file_names(
           path = data.path, 
@@ -367,316 +320,266 @@ make_eml <- function(
         data.path = data.path,
         data.table = table_names,
         other.entity = other.entity)$x
-
     } else if (is.null(data.table) & !is.null(other.entity)) {
-      
       x <- template_arguments(
         path = path,
         data.path = data.path,
         other.entity = other.entity)$x
-
     }
-    
     data_read_2_x <- TRUE
-    
   }
 
-  # Validate metadata templates -----------------------------------------------
+  # Validate templates --------------------------------------------------------
   
   x <- remove_empty_templates(x)
   validate_templates("make_eml", x)
 
-  # Read personnel file
+  # Modify templates ----------------------------------------------------------
+  # Modification of some template content helps with downstream processes.
   
-  personinfo <- x$template$personnel.txt$content
-  personinfo$role <- tolower(personinfo$role)
-  personinfo <- validate_personnel(x = personinfo)
+  # personnel.txt - Make all roles lowercase for string matching and remove
+  # mistankenly entered white spaces.
+  
+  x$template$personnel.txt$content$role <- tolower(
+    x$template$personnel.txt$content$role)
+  x$template$personnel.txt$content <- as.data.frame(
+    lapply(
+      x$template$personnel.txt$content,
+      trimws), 
+    stringsAsFactors = F)
   
   # Load helper funcitions ----------------------------------------------------
   
-  # Load helper function to set personnel roles
+  # A function to set personnel roles: contact, creator, Principal 
+  # investigator, associated party (other)
   
-  set_person <- function(info_row, person_role){
+  set_person <- function(info_row, person_role) {
     
-    if (person_role == "contact"){
+    if (person_role == "contact") {
       
-      # If contact only has givenName then contact is an organization ...
-      
-      if ((personinfo[info_row, "givenName"] != "") & (personinfo[info_row, "middleInitial"] == "") & (personinfo[info_row, "surName"] == "")){
-        
+      # If the contact only has givenName then the contact is an organization, 
+      # otherwise it is a person.
+      if ((x$template$personnel.txt$content[info_row, "givenName"] != "") & 
+          (x$template$personnel.txt$content[info_row, "middleInitial"] == "") & 
+          (x$template$personnel.txt$content[info_row, "surName"] == "")) {
         contact <- list(
-          organizationName = trimws(personinfo[info_row,"organizationName"]),
-          positionName = stringr::str_to_title(trimws(personinfo[info_row,"givenName"])),
-          electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"])
-        )
-
-        if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
+          organizationName = x$template$personnel.txt$content[info_row,"organizationName"],
+          positionName = stringr::str_to_title(x$template$personnel.txt$content[info_row,"givenName"]),
+          electronicMailAddress = x$template$personnel.txt$content[info_row,"electronicMailAddress"])
+        if (nchar(x$template$personnel.txt$content[info_row,"userId"]) == 19) {
           contact$userId <- list(
-            directory = 'https://orcid.org',
-            paste0("https://orcid.org/", trimws(personinfo[info_row,"userId"]))
-          )
+            directory = "https://orcid.org",
+            paste0(
+              "https://orcid.org/", 
+              x$template$personnel.txt$content[info_row,"userId"]))
         }
-        
-      # ... otherwise contact is a person
-        
       } else {
-        
         contact <- list(
           individualName = list(
             givenName = list(
-              trimws(personinfo[info_row,"givenName"]),
-              trimws(personinfo[info_row,"middleInitial"])
-            ),
-            surName = trimws(personinfo[info_row,"surName"])
-          ),
-          organizationName = trimws(personinfo[info_row,"organizationName"]),
-          electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"])
-        )
-
-        if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
+              x$template$personnel.txt$content[info_row,"givenName"],
+              x$template$personnel.txt$content[info_row,"middleInitial"]),
+            surName = x$template$personnel.txt$content[info_row,"surName"]),
+          organizationName = x$template$personnel.txt$content[info_row,"organizationName"],
+          electronicMailAddress = x$template$personnel.txt$content[info_row,"electronicMailAddress"])
+        if (nchar(x$template$personnel.txt$content[info_row,"userId"]) == 19){
           contact$userId <- list(
             directory = 'https://orcid.org',
-            paste0("https://orcid.org/", trimws(personinfo[info_row,"userId"]))
-          )
+            paste0(
+              "https://orcid.org/", 
+              x$template$personnel.txt$content[info_row,"userId"]))
         }
-        
         # FIXME Blank entries ('') result in closing tags when EML is written
         # to file. Need function to set all elements of value = '' to NULL.
         contact <- rapply(
           contact,
           function(x){
-            if (x == ''){
+            if (x == ""){
               x <- NULL
             } else {
               x
             }
           },
-          how = c('replace')
-        )
-        
+          how = c("replace"))
       }
-
       contact
       
-      # If person is a creator ...
-      
-    } else if (person_role == "creator"){
+    } else if (person_role == "creator") {
       
       creator <- list(
         individualName = list(
           givenName = list(
-            trimws(personinfo[info_row,"givenName"]),
-            trimws(personinfo[info_row,"middleInitial"])
-          ),
-          surName = trimws(personinfo[info_row,"surName"])
-        ),
-        organizationName = trimws(personinfo[info_row,"organizationName"]),
-        electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"])
-      )
-
-      if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
+            x$template$personnel.txt$content[info_row,"givenName"],
+            x$template$personnel.txt$content[info_row,"middleInitial"]),
+          surName = x$template$personnel.txt$content[info_row,"surName"]),
+        organizationName = x$template$personnel.txt$content[info_row,"organizationName"],
+        electronicMailAddress = x$template$personnel.txt$content[info_row,"electronicMailAddress"])
+      if (nchar(x$template$personnel.txt$content[info_row,"userId"]) == 19){
         creator$userId <- list(
           directory = 'https://orcid.org',
-          paste0("https://orcid.org/", trimws(personinfo[info_row,"userId"]))
-        )
+          paste0(
+            "https://orcid.org/", 
+            x$template$personnel.txt$content[info_row,"userId"]))
       }
-      
       # FIXME Blank entries ('') result in closing tags when EML is written
       # to file. Need function to set all elements of value = '' to NULL.
       creator <- rapply(
         creator,
         function(x){
-          if (x == ''){
+          if (x == ""){
             x <- NULL
           } else {
             x
           }
         },
-        how = c('replace')
-      )
-
+        how = c("replace"))
       creator
       
-      # ... otherwise if person is a Principal Investigator ...
-      
-    } else if (person_role == "pi"){
+    } else if (person_role == "pi") {
       
       rp_personnel <- list(
         individualName = list(
           givenName = list(
-            trimws(personinfo[info_row,"givenName"]),
-            trimws(personinfo[info_row,"middleInitial"])
-          ),
-          surName = trimws(personinfo[info_row,"surName"])
-        ),
-        organizationName = trimws(personinfo[info_row,"organizationName"]),
-        electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"]),
-        role = 'Principal Investigator'
-      )
-
-      if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
+            x$template$personnel.txt$content[info_row,"givenName"],
+            x$template$personnel.txt$content[info_row,"middleInitial"]),
+          surName = x$template$personnel.txt$content[info_row,"surName"]),
+        organizationName = x$template$personnel.txt$content[info_row,"organizationName"],
+        electronicMailAddress = x$template$personnel.txt$content[info_row,"electronicMailAddress"],
+        role = 'Principal Investigator')
+      if (nchar(x$template$personnel.txt$content[info_row,"userId"]) == 19){
         rp_personnel$userId <- list(
           directory = 'https://orcid.org',
-          paste0("https://orcid.org/", trimws(personinfo[info_row,"userId"]))
-        )
+          paste0(
+            "https://orcid.org/", 
+            x$template$personnel.txt$content[info_row,"userId"]))
       }
-      
       # FIXME Blank entries ('') result in closing tags when EML is written
       # to file. Need function to set all elements of value = '' to NULL.
       rp_personnel <- rapply(
         rp_personnel,
         function(x){
-          if (x == ''){
+          if (x == ""){
             x <- NULL
           } else {
             x
           }
         },
-        how = c('replace')
-      )
-      
+        how = c("replace"))
       rp_personnel
-      
-      # ... otherwise the person is an associatedParty ...
       
     } else {
       
       # If givenName, middleName, and surName are blank then the 
-      # associatedParty is an organization ...
-      
-      if ((personinfo[info_row, "givenName"] == "") & (personinfo[info_row, "middleInitial"] == "") & (personinfo[info_row, "surName"] == "")){
-        
+      # associatedParty is an organization, otherwise the associatedParty 
+      # is a person
+      if ((x$template$personnel.txt$content[info_row, "givenName"] == "") & 
+          (x$template$personnel.txt$content[info_row, "middleInitial"] == "") & 
+          (x$template$personnel.txt$content[info_row, "surName"] == "")) {
         associated_party = list(
-          organizationName = trimws(personinfo[info_row,"organizationName"]),
-          electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"]),
-          role = stringr::str_to_title(trimws(personinfo[info_row,"role"]))
-        )
-
-        if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
+          organizationName = x$template$personnel.txt$content[info_row,"organizationName"],
+          electronicMailAddress = x$template$personnel.txt$content[info_row,"electronicMailAddress"],
+          role = stringr::str_to_title(x$template$personnel.txt$content[info_row,"role"]))
+        if (nchar(x$template$personnel.txt$content[info_row,"userId"]) == 19){
           associated_party$userId <- list(
             directory = 'https://orcid.org',
-            paste0("https://orcid.org/", trimws(personinfo[info_row,"userId"]))
-          )
+            paste0(
+              "https://orcid.org/", 
+              x$template$personnel.txt$content[info_row,"userId"]))
         }
-
         associated_party
-        
-        # ... otherwise the associatedParty is a person.
-        
       } else {
-
         associated_party <- list(
           individualName = list(
             givenName = list(
-              trimws(personinfo[info_row,"givenName"]),
-              trimws(personinfo[info_row,"middleInitial"])
+              x$template$personnel.txt$content[info_row,"givenName"],
+              x$template$personnel.txt$content[info_row,"middleInitial"]
             ),
-            surName = trimws(personinfo[info_row,"surName"])
+            surName = x$template$personnel.txt$content[info_row,"surName"]
           ),
-          organizationName = trimws(personinfo[info_row,"organizationName"]),
-          electronicMailAddress = trimws(personinfo[info_row,"electronicMailAddress"]),
-          role = stringr::str_to_title(trimws(personinfo[info_row,"role"]))
+          organizationName = x$template$personnel.txt$content[info_row,"organizationName"],
+          electronicMailAddress = x$template$personnel.txt$content[info_row,"electronicMailAddress"],
+          role = stringr::str_to_title(x$template$personnel.txt$content[info_row,"role"])
         )
         
-        if (nchar(trimws(personinfo[info_row,"userId"])) == 19){
+        if (nchar(x$template$personnel.txt$content[info_row,"userId"]) == 19){
           associated_party$userId <- list(
             directory = 'https://orcid.org',
-            paste0("https://orcid.org/", trimws(personinfo[info_row,"userId"]))
-          )
+            paste0(
+              "https://orcid.org/", 
+              x$template$personnel.txt$content[info_row,"userId"]))
         }
-        
         # FIXME Blank entries ('') result in closing tags when EML is written
         # to file. Need function to set all elements of value = '' to NULL.
         associated_party <- rapply(
           associated_party,
           function(x){
-            if (x == ''){
+            if (x == ""){
               x <- NULL
             } else {
               x
             }
           },
-          how = c('replace')
-        )
-
+          how = c("replace"))
         associated_party
-        
       }
       
     }
     
   }
   
-  # Build nodes ---------------------------------------------------------------
+  # Create EML nodes ----------------------------------------------------------
   
-  message("Making EML ...")
-  message('Creating nodes ...')
-
-  # Create EML
-  
-  message('<eml>')
+  message("Creating EML ...")
+  message("<eml>")
   
   # Create <access> -----------------------------------------------------------
   
+  # FIXME: Support other user.id, user.domain, authSystem,
+  
   message("  <access>")
   
-  # Set default user.id and user.domain, if undefined
+  # Set default user.id and user.domain
   
-  if (is.null(user.id)){
-    warning('No "user.id" was supplied. The default "someuserid" will be used.')
-    user.id <- 'someuserid'
-  } else if (is.null(user.domain)){
-    warning('No "user.domain" was supplied. The default "user.domain" will be used.')
-    user.domain <- 'someuserdomain'
+  if (is.null(user.id)) {
+    warning(
+      "No 'user.id' was supplied. The default 'someuserid' will be used.",
+      call. = F)
+    user.id <- "someuserid"
+  } else if (is.null(user.domain)) {
+    warning(
+      "No 'user.domain' was supplied. The default 'user.domain' will be used.",
+      call. = F)
+    user.domain <- "someuserdomain"
   }
   
-  # List principals and permissions
+  # Initialize the <access> node
   
-  list_of_allow_principals <- list()
-  list_of_allow_permissions <- list()
-  
-  for (i in 1:length(user.id)){
-    if (user.domain[i] == 'LTER'){
-      list_of_allow_principals[[i]] <- paste0(
-        'uid=',
-        user.id[i],
-        ',o=',
-        user.domain[i],
-        ',dc=ecoinformatics,dc=org'
-      )
-    } else if (user.domain[i] == 'EDI'){
-      list_of_allow_principals[[i]] <- paste0(
-        'uid=',
-        user.id[i],
-        ',o=',
-        user.domain[i],
-        ',dc=edirepository,dc=org'
-      )
-    }
-    list_of_allow_permissions[[i]] <- c(
-      "all",
-      "read")
-  }
-  
-  list_of_allow_principals[[(length(list_of_allow_principals)+1)]] <- c("public")
-  list_of_allow_permissions[[(length(list_of_allow_permissions)+1)]] <- c("read")
-
-  # Create <access>
-
   access <- list(
-    scope = 'document',
-    order = 'allowFirst',
-    authSystem = 'https://pasta.edirepository.org/authentication',
-    allow = list(
-    )
-  )
+    scope = "document",
+    order = "allowFirst",
+    authSystem = "https://pasta.edirepository.org/authentication",
+    allow = list())
   
-  for (i in 1:length(list_of_allow_principals)){
-    access$allow[[i]] <- list(
-      principal = list_of_allow_principals[[i]][1],
-      permission = list_of_allow_permissions[[i]][1]
-    )
-  }
+  # Set permissions to "all" for the EML creator/manager and "read" for 
+  # everyone else
+  
+  r <- lapply(
+    seq_along(user.id),
+    function(k) {
+      if (user.domain[k] == "LTER") {
+        principal <- paste0(
+          "uid=", user.id[k], ",o=", user.domain[k], ",dc=ecoinformatics,dc=org")
+      } else if (user.domain[k] == "EDI") {
+        principal <- paste0(
+          "uid=", user.id[k], ",o=", user.domain[k], ",dc=edirepository,dc=org")
+      } else {
+        principal <- user.id
+      }
+      list(principal = principal, permission = "all")
+    }
+  )
+  r[[length(r)+1]] <- list(principal = "public", permission = "read")
+  access$allow <- r
 
   # Create <dataset> ----------------------------------------------------------
   
@@ -692,7 +595,7 @@ make_eml <- function(
   
   # Create <creator> ----------------------------------------------------------
 
-  useI <- which(personinfo$role == "creator")
+  useI <- which(x$template$personnel.txt$content$role == "creator")
 
   creator <- list()
   for (j in 1:length(useI)){
@@ -708,9 +611,9 @@ make_eml <- function(
   # Create <associatedParty> --------------------------------------------------
   
   useI <- which(
-    personinfo$role != "pi" &
-    personinfo$role != "creator" &
-    personinfo$role != "contact"
+    x$template$personnel.txt$content$role != "pi" &
+    x$template$personnel.txt$content$role != "creator" &
+    x$template$personnel.txt$content$role != "contact"
   )
   
   if (length(useI) != 0){
@@ -1044,7 +947,7 @@ make_eml <- function(
 
   # Create <contact> ----------------------------------------------------------
 
-  useI <- which(personinfo$role == "contact")
+  useI <- which(x$template$personnel.txt$content$role == "contact")
 
   contact_list <- list()
   for (j in 1:length(useI)){
@@ -1119,7 +1022,7 @@ make_eml <- function(
   
   # Create <project> ----------------------------------------------------------
   
-  useI <- which(personinfo$role == "pi")
+  useI <- which(x$template$personnel.txt$content$role == "pi")
   
   if (!identical(useI, integer(0))){
     
@@ -1130,80 +1033,80 @@ make_eml <- function(
                                                 person_role = "pi"))
     
     # If no projectTitle ...
-    if (personinfo$projectTitle[useI[1]] == ""){
+    if (x$template$personnel.txt$content$projectTitle[useI[1]] == ""){
       # If no fundingAgency ...
-      if (personinfo$fundingAgency[useI[1]] == ""){
+      if (x$template$personnel.txt$content$fundingAgency[useI[1]] == ""){
         # If no fundingNumber ...
-        if (personinfo$fundingNumber[useI[1]] == ""){
+        if (x$template$personnel.txt$content$fundingNumber[useI[1]] == ""){
           project <- list(
             title = "No project title to report",
             personnel = pi_list,
             funding = "No funding to report"
           )
         # ... if fundingNumber is present ...
-        } else if (personinfo$fundingNumber[useI[1]] != ""){
+        } else if (x$template$personnel.txt$content$fundingNumber[useI[1]] != ""){
           project <- list(
             title = "No project title to report",
             personnel = pi_list,
-            funding = personinfo$fundingNumber[useI[1]]
+            funding = x$template$personnel.txt$content$fundingNumber[useI[1]]
           )
         }
       # ... if fundingAgency is present ...
-      } else if (personinfo$fundingAgency[useI[1]] != ""){
+      } else if (x$template$personnel.txt$content$fundingAgency[useI[1]] != ""){
         # ... if fundingNumber is missing ...
-        if (personinfo$fundingNumber[useI[1]] == ""){
+        if (x$template$personnel.txt$content$fundingNumber[useI[1]] == ""){
           project <- list(
             title = "No project title to report",
             personnel = pi_list,
-            funding = personinfo$fundingAgency[useI[1]]
+            funding = x$template$personnel.txt$content$fundingAgency[useI[1]]
           )
         # ... if fundingNumber is present ...
-        } else if (personinfo$fundingNumber[useI[1]] != ""){
+        } else if (x$template$personnel.txt$content$fundingNumber[useI[1]] != ""){
           project <- list(
             title = "No project title to report",
             personnel = pi_list,
-            funding = paste0(personinfo$fundingAgency[useI[1]],
+            funding = paste0(x$template$personnel.txt$content$fundingAgency[useI[1]],
                              ": ",
-                             personinfo$fundingNumber[useI[1]])
+                             x$template$personnel.txt$content$fundingNumber[useI[1]])
           )
         }
       }
     # ... if projectTitle is present ...
-    } else if (personinfo$projectTitle[useI[1]] != ""){
+    } else if (x$template$personnel.txt$content$projectTitle[useI[1]] != ""){
       # ... if fundingAgency is present ...
-      if (personinfo$fundingAgency[useI[1]] == ""){
+      if (x$template$personnel.txt$content$fundingAgency[useI[1]] == ""){
         # ... if fundingNumber is present ...
-        if (personinfo$fundingNumber[useI[1]] == ""){
+        if (x$template$personnel.txt$content$fundingNumber[useI[1]] == ""){
           project <- list(
-            title = personinfo$projectTitle[useI[1]],
+            title = x$template$personnel.txt$content$projectTitle[useI[1]],
             personnel = pi_list,
             funding = "No funding to report"
           )
         # ... if fundingNumber is missing ...
-        } else if (personinfo$fundingNumber[useI[1]] != ""){
+        } else if (x$template$personnel.txt$content$fundingNumber[useI[1]] != ""){
           project <- list(
-            title = personinfo$projectTitle[useI[1]],
+            title = x$template$personnel.txt$content$projectTitle[useI[1]],
             personnel = pi_list,
-            funding = personinfo$fundingNumber[useI[1]]
+            funding = x$template$personnel.txt$content$fundingNumber[useI[1]]
           )
         }
       # ... if fundingAgency is missing ...
-      } else if (personinfo$fundingAgency[useI[1]] != ""){
+      } else if (x$template$personnel.txt$content$fundingAgency[useI[1]] != ""){
         # ... if fundingNumber is present ...
-        if (personinfo$fundingNumber[useI[1]] == ""){
+        if (x$template$personnel.txt$content$fundingNumber[useI[1]] == ""){
           project <- list(
-            title = personinfo$projectTitle[useI[1]],
+            title = x$template$personnel.txt$content$projectTitle[useI[1]],
             personnel = pi_list,
-            funding = personinfo$fundingAgency[useI[1]]
+            funding = x$template$personnel.txt$content$fundingAgency[useI[1]]
           )
         # ... if fundingNumber is missing ...
-        } else if (personinfo$fundingNumber[useI[1]] != ""){
+        } else if (x$template$personnel.txt$content$fundingNumber[useI[1]] != ""){
           project <- list(
-            title = personinfo$projectTitle[useI[1]],
+            title = x$template$personnel.txt$content$projectTitle[useI[1]],
             personnel = pi_list,
-            funding = paste0(personinfo$fundingAgency[useI[1]],
+            funding = paste0(x$template$personnel.txt$content$fundingAgency[useI[1]],
                              ": ",
-                             personinfo$fundingNumber[useI[1]])
+                             x$template$personnel.txt$content$fundingNumber[useI[1]])
           )
         }
       }
@@ -1220,82 +1123,82 @@ make_eml <- function(
         pi_list[[1]] <- suppressWarnings(set_person(info_row = useI[i+1],
                                                     person_role = "pi"))
         # If projectTitle is absent ...
-        if (personinfo$projectTitle[useI[i+1]] == ""){
+        if (x$template$personnel.txt$content$projectTitle[useI[i+1]] == ""){
           # If fundingAgency is absent ...
-          if (personinfo$fundingAgency[useI[i+1]] == ""){
+          if (x$template$personnel.txt$content$fundingAgency[useI[i+1]] == ""){
             # If fundingNumber is absent ...
-            if (personinfo$fundingNumber[useI[i+1]] == ""){
+            if (x$template$personnel.txt$content$fundingNumber[useI[i+1]] == ""){
               relatedProject_list[[i]] <- list(
                 title = "No project title to report",
                 personnel = pi_list,
                 funding = "No funding to report"
               )
             # ... if fundingNumber is missing ...  
-            } else if (personinfo$fundingNumber[useI[i+1]] != ""){
+            } else if (x$template$personnel.txt$content$fundingNumber[useI[i+1]] != ""){
               relatedProject_list[[i]] <- list(
                 title = "No project title to report",
                 personnel = pi_list,
-                funding = personinfo$fundingNumber[useI[i+1]]
+                funding = x$template$personnel.txt$content$fundingNumber[useI[i+1]]
               )
             }
           # ... if fundingAgency is present ...
-          } else if (personinfo$fundingAgency[useI[i+1]] != ""){
+          } else if (x$template$personnel.txt$content$fundingAgency[useI[i+1]] != ""){
             # ... if fundingNumber is missing ...
-            if (personinfo$fundingNumber[useI[i+1]] == ""){
+            if (x$template$personnel.txt$content$fundingNumber[useI[i+1]] == ""){
               relatedProject_list[[i]] <- list(
                 title = "No project title to report",
                 personnel = pi_list,
-                funding = personinfo$fundingAgency[useI[i+1]]
+                funding = x$template$personnel.txt$content$fundingAgency[useI[i+1]]
               )
             # ... if fundingNumber is present ...
-            } else if (personinfo$fundingNumber[useI[i+1]] != ""){
+            } else if (x$template$personnel.txt$content$fundingNumber[useI[i+1]] != ""){
               relatedProject_list[[i]] <- list(
                 title = "No project title to report",
                 personnel = pi_list,
-                funding = paste0(personinfo$fundingAgency[useI[i+1]],
+                funding = paste0(x$template$personnel.txt$content$fundingAgency[useI[i+1]],
                                  ": ",
-                                 personinfo$fundingNumber[useI[i+1]])
+                                 x$template$personnel.txt$content$fundingNumber[useI[i+1]])
               )
             }
           }
         # ... if projectTitle is present ...
-        } else if (personinfo$projectTitle[useI[i+1]] != ""){
+        } else if (x$template$personnel.txt$content$projectTitle[useI[i+1]] != ""){
           # ... if fundingAgency is present ...
-          if (personinfo$fundingAgency[useI[i+1]] != ""){
+          if (x$template$personnel.txt$content$fundingAgency[useI[i+1]] != ""){
             # ... if fundingNumber is present ...
-            if (personinfo$fundingNumber[useI[i+1]] != ""){
+            if (x$template$personnel.txt$content$fundingNumber[useI[i+1]] != ""){
               relatedProject_list[[i]] <- list(
-                title = personinfo$projectTitle[useI[i+1]],
+                title = x$template$personnel.txt$content$projectTitle[useI[i+1]],
                 personnel = pi_list,
-                funding = paste0(personinfo$fundingAgency[useI[i+1]],
+                funding = paste0(x$template$personnel.txt$content$fundingAgency[useI[i+1]],
                                  ": ",
-                                 personinfo$fundingNumber[useI[i+1]])
+                                 x$template$personnel.txt$content$fundingNumber[useI[i+1]])
               )
             # ... if fundingNumber is missing ...
-            } else if (personinfo$fundingNumber[useI[i+1]] == ""){
+            } else if (x$template$personnel.txt$content$fundingNumber[useI[i+1]] == ""){
               relatedProject_list[[i]] <- list(
-                title = personinfo$projectTitle[useI[i+1]],
+                title = x$template$personnel.txt$content$projectTitle[useI[i+1]],
                 personnel = pi_list,
-                funding = personinfo$fundingAgency[useI[i+1]]
+                funding = x$template$personnel.txt$content$fundingAgency[useI[i+1]]
               )
             }
           # ... if fundingAgency is missing ...
-          } else if (personinfo$fundingAgency[useI[i+1]] == ""){
+          } else if (x$template$personnel.txt$content$fundingAgency[useI[i+1]] == ""){
             # ... if fundingNumber is missing ...
-            if (personinfo$fundingNumber[useI[i+1]] == ""){
+            if (x$template$personnel.txt$content$fundingNumber[useI[i+1]] == ""){
               relatedProject_list[[i]] <- list(
-                title = personinfo$projectTitle[useI[i+1]],
+                title = x$template$personnel.txt$content$projectTitle[useI[i+1]],
                 personnel = pi_list,
                 funding = "No funding to report"
               )
             # ... if fundingNumber is present ...
-            } else if (personinfo$fundingNumber[useI[i+1]] != ""){
+            } else if (x$template$personnel.txt$content$fundingNumber[useI[i+1]] != ""){
               relatedProject_list[[i]] <- list(
-                title = personinfo$projectTitle[useI[i+1]],
+                title = x$template$personnel.txt$content$projectTitle[useI[i+1]],
                 personnel = pi_list,
-                funding = paste0(personinfo$fundingAgency[useI[i+1]],
+                funding = paste0(x$template$personnel.txt$content$fundingAgency[useI[i+1]],
                                  ": ",
-                                 personinfo$fundingNumber[useI[i+1]])
+                                 x$template$personnel.txt$content$fundingNumber[useI[i+1]])
               )
             }
           }

@@ -456,6 +456,24 @@ validate_templates <- function(fun.name, x){
                  "each person in this template has a defined role."), 
           call. = F)
       }
+      
+      # projectTitle, fundingAgency, fundingNumber - Project info is associated 
+      # with first listed PI
+      
+      use_i <- tolower(x$template$personnel.txt$content$role) == "pi"
+      if (any(use_i)) {
+        pis <- x$template$personnel.txt$content[use_i, ]
+        pi_proj <- pis[ , c("projectTitle", "fundingAgency", "fundingNumber")]
+        if ((sum(pi_proj != "") > 0) & (sum(pi_proj[1, ] == "") == 3)) {
+          stop(
+            paste0(
+              "The first Principal Investigator listed in personnel.txt is ",
+              "missing a projectTitle, fundingAgency, or fundingNumber. The ",
+              "first listed PI represents the major project and requires ",
+              "this. Please add one."),
+            call. = F)
+        }
+      }
 
     }
 
