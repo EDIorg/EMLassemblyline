@@ -1,3 +1,9 @@
+# EMLassemblyline 2.12.0
+
+### Enhancement
+
+* __`make_eml()` code:__ (For developers) The underlying code of `make_eml()` is now more concise and understandable.
+
 # EMLassemblyline 2.10.1
 
 ### Bug fix

@@ -41,6 +41,13 @@ x$user.domain <- c("EDI", "LTER")
 x$user.id <- c("userid1", "userid2")
 x$write.file <- F
 
+# Default test inputs create schema valid EML
+
+x1 <- x
+r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+expect_true(
+  EML::eml_validate(r))
+
 # Expect argument errors ------------------------------------------------------
 
 testthat::test_that('Error out when required arguments are missing', {
@@ -135,6 +142,24 @@ testthat::test_that('Expect argument values in EML', {
       x1$other.entity.url[i])
   }
   
+  # provenance - Get provenance metadata for EDI data packages and place under
+  # /eml/dataset/methods/methodStep/dataSource
+  
+  x1 <- x
+  x1$provenance <- "edi.100.1"
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_true(EML::eml_validate(r))
+  expect_true(
+    r$dataset$methods$methodStep[[2]]$description$para[[1]] == 
+      "This method step describes provenance-based metadata as specified in the LTER EML Best Practices.")
+  expect_true(
+    r$dataset$methods$methodStep[[2]]$description$para[[2]] == 
+      "This provenance metadata does not contain entity specific information.")
+  expect_true(
+    all(
+      c("title", "contact", "distribution", "creator") %in% 
+        names(r$dataset$methods$methodStep[[2]]$dataSource)))
+  
 })
 
 # Expect template values in EML -----------------------------------------------
@@ -227,10 +252,9 @@ testthat::test_that('Expect template values in EML', {
       x1$x$template$personnel.txt$content$role == "PI"][1])
   expect_equal(
     r$dataset$project$funding,
-    paste0(
+    paste(
       x1$x$template$personnel.txt$content$fundingAgency[
         x1$x$template$personnel.txt$content$role == "PI"][1],
-      ": ",
       x1$x$template$personnel.txt$content$fundingNumber[
         x1$x$template$personnel.txt$content$role == "PI"][1]))
   expect_equal(
@@ -238,13 +262,13 @@ testthat::test_that('Expect template values in EML', {
     "Decomposition in the real world")
   expect_equal(
     r$dataset$project$relatedProject[[1]]$funding,
-    "NSF: 111001")
+    "NSF 111001")
   expect_equal(
     r$dataset$project$relatedProject[[2]]$title,
     "No project title to report")
   expect_equal(
     r$dataset$project$relatedProject[[2]]$funding,
-    "NSF: 101")
+    "NSF 101")
   expect_equal(
     r$dataset$project$relatedProject[[3]]$title,
     "No project title to report")

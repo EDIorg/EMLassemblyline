@@ -208,6 +208,12 @@ make_eml <- function(
   zip.dir.description
   ) {
   
+  # Parameterize --------------------------------------------------------------
+  
+  # Get attributes of template files
+  
+  attr_tmp <- read_template_attributes()
+  
   # Validate arguments --------------------------------------------------------
   
   # Validate path usage before passing arguments to validate_arguments().
@@ -295,6 +301,8 @@ make_eml <- function(
   }
   
   # Read templates and data ---------------------------------------------------
+  # The reading function (template_arguments()) ignores empty templates located
+  # at path, thereby simplifying logic required to populate EML nodes below.
   
   if (is.null(x)) {
     if (is.null(data.table) & is.null(other.entity)) {      
@@ -337,8 +345,51 @@ make_eml <- function(
   # Modify templates ----------------------------------------------------------
   # Modification of some template content helps with downstream processes.
   
-  # personnel.txt - Make all roles lowercase for string matching and remove
-  # mistankenly entered white spaces.
+  # catvars.txt:
+  # - Remove incomplete cases
+  # - Remove white space
+  # FIXME: Ignore blank (i.e. "") categorical codes (implement this in 
+  # the metadata quality check functions to be developed? See GitHub 
+  # issue #46)
+  
+  use_i <- stringr::str_detect(
+    names(x$template), 
+    attr_tmp$regexpr[attr_tmp$template_name == "catvars"])
+  if (any(use_i)) {
+    for (i in which(use_i)) {
+      use_i <- (x$template[[i]]$content$attributeName == "") |
+        (x$template[[i]]$content$code == "") |
+        (x$template[[i]]$content$definition == "")
+      x$template[[i]]$content <- x$template[[i]]$content[!use_i, ]
+      x$template[[i]]$content <- as.data.frame(
+        lapply(
+          x$template[[i]]$content,
+          trimws), 
+        stringsAsFactors = F)
+    }
+  }
+  
+  # custom_units.txt:
+  # - Remove white space
+  
+  if (!is.null(x$template$custom_units.txt)) {
+    x$template$custom_units.txt$content <- as.data.frame(
+      lapply(
+        x$template$custom_units.txt$content,
+        trimws), 
+      stringsAsFactors = F)
+  }
+  
+  # keywords.txt: 
+  # - Remove blank keywords to reduce errors when matching to controlled 
+  # vocabularies
+  
+  x$template$keywords.txt$content <- x$template$keywords.txt$content[
+    x$template$keywords.txt$content$keyword != "", ]
+  
+  # personnel.txt:
+  # - Make all roles lowercase for string matching and remove mistankenly 
+  # entered white spaces
   
   x$template$personnel.txt$content$role <- tolower(
     x$template$personnel.txt$content$role)
@@ -347,6 +398,44 @@ make_eml <- function(
       x$template$personnel.txt$content,
       trimws), 
     stringsAsFactors = F)
+  
+  # personnel.txt: 
+  # - Set default project title and funding elements when none are provided 
+  # - Combine projectTitle and fundingNumber into new "funding" field
+  
+  x$template$personnel.txt$content$projectTitle[
+    x$template$personnel.txt$content$projectTitle == ""] <- 
+    "No project title to report"
+  x$template$personnel.txt$content$funding <- trimws(
+    paste(
+      x$template$personnel.txt$content$fundingAgency,
+      x$template$personnel.txt$content$fundingNumber))
+  x$template$personnel.txt$content$funding[
+    x$template$personnel.txt$content$funding == ""] <- "No funding to report"
+  
+  # table_attributes.txt:
+  # - Convert contents in the class field to a consistent case
+  # - Set units in non-numeric classes to ""
+  # - Ignore dateTimeFormatString when not classified as date
+  # - Remove white space
+  
+  use_i <- stringr::str_detect(
+    names(x$template), 
+    attr_tmp$regexpr[attr_tmp$template_name == "attributes"])
+  if (any(use_i)) {
+    for (i in which(use_i)) {
+      x$template[[i]]$content$class <- tolower(x$template[[i]]$content$class)
+      x$template[[i]]$content$unit[
+        x$template[[i]]$content$class != "numeric"] <- ""
+      x$template[[i]]$content$dateTimeFormatString[
+        x$template[[i]]$content$class != "date"] <- ""
+      x$template[[i]]$content <- as.data.frame(
+        lapply(
+          x$template[[i]]$content,
+          trimws), 
+        stringsAsFactors = F)
+    }
+  }
   
   # Load helper funcitions ----------------------------------------------------
   
@@ -527,10 +616,21 @@ make_eml <- function(
     
   }
   
-  # Create EML nodes ----------------------------------------------------------
+  # Create <eml> --------------------------------------------------------------
   
-  message("Creating EML ...")
+  # FIXME: Support other system values
+  
+  message("Making EML ...")
   message("<eml>")
+  
+  if (is.null(package.id)){
+    package.id <- 'edi.101.1'
+  }
+  
+  eml <- list(
+    schemaLocation = "eml://ecoinformatics.org/eml-2.2.0  https://nis.lternet.edu/schemas/EML/eml-2.2.0/xsd/eml.xsd",
+    packageId = package.id,
+    system = "edi")
   
   # Create <access> -----------------------------------------------------------
   
@@ -582,162 +682,127 @@ make_eml <- function(
   access$allow <- r
 
   # Create <dataset> ----------------------------------------------------------
+  # Initialize the dataset list to which sub-nodes will be added
   
   message("  <dataset>")
-
   dataset <- list()
   
   # Create <title> ------------------------------------------------------------
   
-  message('    <title>')
-  
-  dataset$title <- dataset.title
+  message("    <title>")
+  eml$dataset$title <- dataset.title
   
   # Create <creator> ----------------------------------------------------------
 
-  useI <- which(x$template$personnel.txt$content$role == "creator")
-
-  creator <- list()
-  for (j in 1:length(useI)){
-    message('    <creator>')
-    creator[[j]] <- set_person(
-      info_row = useI[j],
-      person_role = "creator"
-    )
-  }
-
-  dataset$creator <- creator
+  eml$dataset$creator <- lapply(
+    which(x$template$personnel.txt$content$role == "creator"),
+    function(k) {
+      message("    <creator>")
+      set_person(info_row = k, person_role = "creator")
+    })
 
   # Create <associatedParty> --------------------------------------------------
   
-  useI <- which(
-    x$template$personnel.txt$content$role != "pi" &
-    x$template$personnel.txt$content$role != "creator" &
-    x$template$personnel.txt$content$role != "contact"
-  )
-  
-  if (length(useI) != 0){
-    associated_party_list <- list()
-    for (j in 1:length(useI)){
+  eml$dataset$associatedParty <- lapply(
+    which(
+      stringr::str_detect(
+        x$template$personnel.txt$content$role,
+        "[^pi|^creator|^contact]")),
+    function(k) {
       message("    <associatedParty>")
-      associated_party_list[[j]] <- suppressWarnings(
-        set_person(
-          info_row = useI[j],
-          person_role = ""
-        )
-      )
-    }
-    dataset$associatedParty <- associated_party_list
-  }
+      set_person(info_row = k, person_role = "")
+    })
   
   # Create <pubDate> ----------------------------------------------------------
   
   message("    <pubDate>")
-
-  dataset$pubDate <- format(Sys.time(), "%Y-%m-%d")
+  eml$dataset$pubDate <- format(Sys.time(), "%Y-%m-%d")
 
   # Create <abstract> ---------------------------------------------------------
   
   if (any(stringr::str_detect(names(x$template), 'abstract'))) {
     message("    <abstract>")
-    dataset$abstract <- x$template[[
+    eml$dataset$abstract <- x$template[[
       names(x$template)[stringr::str_detect(names(x$template), 'abstract')]
       ]]$content
   }
   
   # Create <keywordSet> -------------------------------------------------------
+  # Try resolving keywords without a listed thesaurus to the LTER Controlled 
+  # Vocabulary, then create a separate keywordSet for each thesaurus + keyword
+  # group.
   
-  if (!is.null(x$template$keywords.txt)){
+  if (!is.null(x$template$keywords.txt)) {
     
-    message("    <keywordSet>")
-    keywords <- x$template$keywords.txt$content
-    
-    # Remove blank keyword entries
-    
-    use_i <- keywords$keyword == ""
-    if (sum(use_i) > 0){
-      keywords <- keywords[!use_i, ]
-    } 
-    
-    # Try resolving keywords without a listed thesaurus to the LTER Controlled 
-    # Vocabulary
-    
-    if (sum(keywords$keywordThesaurus == '') > 0){
-      
-      unresolved_terms <- keywords[keywords$keywordThesaurus == '', 'keyword']
-      
-      results <- try(
+    use_i <- x$template$keywords.txt$content$keywordThesaurus == ""
+    if (any(use_i)) {
+      r <- try(
         EDIutils::vocab_resolve_terms(
-          x = unresolved_terms,
-          cv = 'lter'
-        ),
-        silent = T
-      )
-      
-      if (is.data.frame(results)){
-        results <- results[results$controlled_vocabulary != '', ]
-        use_i <- match(results$term, keywords$keyword)
-        keywords[use_i, 'keywordThesaurus'] <- results[ , 'controlled_vocabulary']
+          x = x$template$keywords.txt$content$keyword[use_i],
+          cv = "lter"),
+        silent = T)
+      if (is.data.frame(r)) {
+        x$template$keywords.txt$content[
+          match(
+            r[r$controlled_vocabulary != "", ]$term, 
+            x$template$keywords.txt$content$keyword), ] <- 
+          r[r$controlled_vocabulary != "", ]
       }
-      
     }
     
-    # Build keywordSet
+    eml$dataset$keywordSet <- lapply(
+      unique(x$template$keywords.txt$content$keywordThesaurus),
+      function(k) {
+        message("    <keywordSet>")
+        if (k == "") {
+          list(
+            keyword = as.list(
+              x$template$keywords.txt$content$keyword[
+                x$template$keywords.txt$content$keywordThesaurus == k]))
+        } else {
+          list(
+            keyword = as.list(
+              x$template$keywords.txt$content$keyword[
+                x$template$keywords.txt$content$keywordThesaurus == k]),
+            keywordThesaurus = unique(
+              x$template$keywords.txt$content$keywordThesaurus[
+                x$template$keywords.txt$content$keywordThesaurus == k]))
+        }
+      })
     
-    keywordSet <- list()
-    uni_keywordThesaurus <- unique(keywords$keywordThesaurus)
-    for (i in 1:length(uni_keywordThesaurus)){
-      
-      keyword <- list()
-      use_i <- uni_keywordThesaurus[i] == keywords[["keywordThesaurus"]]
-      kws <- keywords$keyword[use_i]
-      for (k in 1:length(kws)){
-        message('    <keyword>')
-        keyword[[k]] <- kws[k]
-      }
-      
-      keywordSet[[i]] <- list(
-        keyword = keyword,
-        keywordThesaurus = uni_keywordThesaurus[i]
-      )
-      
-      if (keywordSet[[i]]$keywordThesaurus == ''){
-        keywordSet[[i]]$keywordThesaurus <- NULL
-      } else {
-        message('    <keywordThesaurus>')
-      }
-      
-    }
-    dataset$keywordSet <- keywordSet
   }
-  
-  
 
   # Create <additionalInfo> ---------------------------------------------------
   
-  if (any(stringr::str_detect(names(x$template), 'additional_info'))){
+  if (any(stringr::str_detect(names(x$template), "additional_info"))) {
     message("   <additionalInfo>")
-    dataset$additionalInfo <- x$template[[
-      names(x$template)[stringr::str_detect(names(x$template), 'additional_info')]]]$content
+    eml$dataset$additionalInfo <- x$template[[
+      names(x$template)[
+        stringr::str_detect(names(x$template), "additional_info")]]]$content
   }
 
   # Create <intellectualRights> -----------------------------------------------
 
-  if (!is.null(stringr::str_detect(names(x$template), 'intellectual_rights'))) {
+  if (!is.null(stringr::str_detect(names(x$template), "intellectual_rights"))) {
     message("    <intellectualRights>")
-    dataset$intellectualRights <- x$template$intellectual_rights.txt$content
+    eml$dataset$intellectualRights <- x$template$intellectual_rights.txt$content
   }
 
   # Create <coverage> ---------------------------------------------------------
   
   message('    <coverage>')
   
-  dataset$coverage <- list()
+  eml$dataset$coverage <- list()
   
   # Create <geographicCoverage> -----------------------------------------------
   
+  # Check for multiple geographic coverage inputs.
+  # FIXME: On May 1, 2020 remove support for bounding_boxes.txt
+  
   if (missing(geographic.coordinates) & 
-      !any(stringr::str_detect(names(x$template), "geographic_coverage.txt|bounding_boxes.txt"))) {
+      !any(stringr::str_detect(
+        names(x$template), 
+        "geographic_coverage.txt|bounding_boxes.txt"))) {
     stop(
       paste0("No geographic coverage found. Please add using the ",
         "'geographic.coordinates' and 'geographic.description' arguments to ",
@@ -746,1064 +811,440 @@ make_eml <- function(
       call. = F)
   }
   
-  geographicCoverage <- list()
+  # Combine multiple sources of geographic coverage and remove duplicate entries
   
-  # Add coverage defined in arguments of make_eml
+  o <- unique.data.frame(
+    rbind(
+      data.frame(
+        geographicDescription = character(0),
+        northBoundingCoordinate = character(0),
+        southBoundingCoordinate = character(0),
+        eastBoundingCoordinate = character(0),
+        westBoundingCoordinate = character(0),
+        stringsAsFactors = F),
+      if (!missing(geographic.description) & !missing(geographic.coordinates)) {
+        data.frame(
+          geographicDescription = as.character(geographic.description),
+          northBoundingCoordinate = as.character(geographic.coordinates[1]),
+          southBoundingCoordinate = as.character(geographic.coordinates[3]),
+          eastBoundingCoordinate = as.character(geographic.coordinates[2]),
+          westBoundingCoordinate = as.character(geographic.coordinates[4]),
+          stringsAsFactors = F)
+      },
+      data.frame(
+        geographicDescription = x$template$bounding_boxes.txt$content$geographicDescription,
+        northBoundingCoordinate = x$template$bounding_boxes.txt$content$northBoundingCoordinate,
+        southBoundingCoordinate = x$template$bounding_boxes.txt$content$southBoundingCoordinate,
+        eastBoundingCoordinate = x$template$bounding_boxes.txt$content$eastBoundingCoordinate,
+        westBoundingCoordinate = x$template$bounding_boxes.txt$content$westBoundingCoordinate,
+        stringsAsFactors = F),
+      data.frame(
+        geographicDescription = x$template$geographic_coverage.txt$content$geographicDescription,
+        northBoundingCoordinate = x$template$geographic_coverage.txt$content$northBoundingCoordinate,
+        southBoundingCoordinate = x$template$geographic_coverage.txt$content$southBoundingCoordinate,
+        eastBoundingCoordinate = x$template$geographic_coverage.txt$content$eastBoundingCoordinate,
+        westBoundingCoordinate = x$template$geographic_coverage.txt$content$westBoundingCoordinate,
+        stringsAsFactors = F)))
   
-  if (!missing(geographic.coordinates) & !missing(geographic.description)){
-    
-    message("      <geographicCoverage>")
-    
-    geographicCoverage[[(length(geographicCoverage)+1)]] <- list(
-      geographicDescription = geographic.description,
-      boundingCoordinates = list(
-        westBoundingCoordinate = as.character(geographic.coordinates[4]),
-        eastBoundingCoordinate = as.character(geographic.coordinates[2]),
-        northBoundingCoordinate = as.character(geographic.coordinates[1]),
-        southBoundingCoordinate = as.character(geographic.coordinates[3])
-      )
-    )
-    
-  }
+  # Create the geographicCoverage node
   
-  # Add coverage defined in bounding_boxes.txt ...
-  
-  if (!is.null(x$template$bounding_boxes.txt)){
-    
-    bounding_boxes <- x$template$bounding_boxes.txt$content
-    
-    if (is.data.frame(bounding_boxes)){
-      
-      warning(
-        'Template "bounding_boxes.txt" is deprecated; please use "geographic_coverage.txt" instead.',
-        call. = FALSE)
-      
-      if (nrow(bounding_boxes) != 0){
-        
-        bounding_boxes_2 <- lapply(bounding_boxes, as.character)
-        
-        for (i in 1:length(bounding_boxes_2$geographicDescription)){
-          
-          message("      <geographicCoverage>")
-          
-          geographicCoverage[[(length(geographicCoverage)+1)]] <- list(
-            geographicDescription = bounding_boxes_2$geographicDescription[i],
-            boundingCoordinates = list(
-              westBoundingCoordinate = as.character(bounding_boxes_2$westBoundingCoordinate[i]),
-              eastBoundingCoordinate = as.character(bounding_boxes_2$eastBoundingCoordinate[i]),
-              northBoundingCoordinate = as.character(bounding_boxes_2$northBoundingCoordinate[i]),
-              southBoundingCoordinate = as.character(bounding_boxes_2$southBoundingCoordinate[i])
-            )
-          )
-          
-        }
-        
-      }
-      
+  eml$dataset$coverage$geographicCoverage <- lapply(
+    seq_len(nrow(o)),
+    function(k) {
+      message('        <geographicCoverage>')
+      list(
+        geographicDescription = o$geographicDescription[k],
+        boundingCoordinates = list(
+          westBoundingCoordinate = o$westBoundingCoordinate[k],
+          eastBoundingCoordinate = o$eastBoundingCoordinate[k],
+          northBoundingCoordinate = o$northBoundingCoordinate[k],
+          southBoundingCoordinate = o$southBoundingCoordinate[k]))
     }
-
-  }
-  
-  # If geographic_coverage.txt exists ...
-  
-  if (!is.null(x$template$geographic_coverage.txt)){
-    
-    # Add coverage defined in new version of geographic_coverage.txt ...
-    
-    bounding_boxes <- x$template$geographic_coverage.txt$content
-    
-    if (is.data.frame(bounding_boxes)){
-      
-      if (all(colnames(bounding_boxes) %in% 
-              c('northBoundingCoordinate', 'southBoundingCoordinate', 'eastBoundingCoordinate', 
-                'westBoundingCoordinate', 'geographicDescription'))){
-        
-        if (nrow(bounding_boxes) != 0){
-          
-          bounding_boxes_2 <- lapply(bounding_boxes, as.character)
-          
-          for (i in 1:length(bounding_boxes_2$geographicDescription)){
-            
-            message("      <geographicCoverage>")
-            
-            geographicCoverage[[(length(geographicCoverage)+1)]] <- list(
-              geographicDescription = bounding_boxes_2$geographicDescription[i],
-              boundingCoordinates = list(
-                westBoundingCoordinate = as.character(bounding_boxes_2$westBoundingCoordinate[i]),
-                eastBoundingCoordinate = as.character(bounding_boxes_2$eastBoundingCoordinate[i]),
-                northBoundingCoordinate = as.character(bounding_boxes_2$northBoundingCoordinate[i]),
-                southBoundingCoordinate = as.character(bounding_boxes_2$southBoundingCoordinate[i])
-              )
-            )
-            
-          }
-          
-        }
-        
-        # Add coverage defined in old version of geographic_coverage.txt ...
-        
-      } else if (all(colnames(bounding_boxes) %in% 
-                     c('site', 'latitude', 'longitude'))){
-        
-        if (nrow(bounding_boxes) != 0){
-          
-          bounding_boxes_2 <- lapply(bounding_boxes, as.character)
-          
-          
-          for (i in 1:length(bounding_boxes_2$site)){
-            
-            message("      <geographicCoverage>")
-            
-            geographicCoverage[[(length(geographicCoverage)+1)]] <- list(
-              geographicDescription = bounding_boxes_2$site[i],
-              boundingCoordinates = list(
-                westBoundingCoordinate = as.character(bounding_boxes_2$longitude[i]),
-                eastBoundingCoordinate = as.character(bounding_boxes_2$longitude[i]),
-                northBoundingCoordinate = as.character(bounding_boxes_2$latitude[i]),
-                southBoundingCoordinate = as.character(bounding_boxes_2$latitude[i])
-              )
-            )
-
-          }
-          
-        }
-        
-      }
-
-    }
-    
-  }
-  
-  # Add to dataset
-  
-  dataset$coverage$geographicCoverage <- geographicCoverage
+  )
 
   # Create <temporalCoverage> -------------------------------------------------
   
   message("      <temporalCoverage>")
-
-  dataset$coverage$temporalCoverage <- list(
+  eml$dataset$coverage$temporalCoverage <- list(
     rangeOfDates = list(
-      beginDate = list(
-        calendarDate = temporal.coverage[1]
-      ),
-      endDate = list(
-        calendarDate = temporal.coverage[2]
-      )
-    )
-  )
+      beginDate = list(calendarDate = temporal.coverage[1]),
+      endDate = list(calendarDate = temporal.coverage[2])))
   
   # Create <taxonomicCoverage> ------------------------------------------------
-  
-  if ('taxonomicCoverage.xml' %in% names(x$template)){
+  # Two sources of taxonomic coverage are supported: 
+  #
+  # 1.) The taxonomicCoverage EML node as an .xml file, which is read and 
+  # inserted into the emld list object that make_eml() creates.
+  #
+  # 2.) The taxonomic_coverage.txt template listing taxa and authorities. 
+  # Attempts are made to get the full hierarchy of taxonomic rank values for 
+  # each taxa and render to EML.
+  # FIXME: Ensure this second option includes unresolvable taxa within the EML.
+  # FIXME: Create methods for adding taxonomic authorities. Only ITIS is 
+  # currently supported.
+  # FIXME: Allow taxonomic hierarchies to be supplied as a table (i.e. align
+  # taxonomic_coverage.txt with the taxonomicCoverage option of 
+  # EML::set_coverage()).
 
-    if (is.list(x$template$taxonomicCoverage.xml$content)){
-
-      message("      <taxonomicCoverage>")
-
-      dataset$coverage$taxonomicCoverage <- x$template$taxonomicCoverage.xml$content
-
+  if (!is.null(x$template$taxonomicCoverage.xml)) {
+    message("      <taxonomicCoverage>")
+    eml$dataset$coverage$taxonomicCoverage <- 
+      x$template$taxonomicCoverage.xml$content
+  } else if (!is.null(x$template$taxonomic_coverage.txt)) {
+    message("      <taxonomicCoverage>")
+    tc <- try(
+      suppressMessages(
+        taxonomyCleanr::make_taxonomicCoverage(
+          taxa.clean = x$template$taxonomic_coverage.txt$content$name_resolved,
+          authority = x$template$taxonomic_coverage.txt$content$authority_system,
+          authority.id = x$template$taxonomic_coverage.txt$content$authority_id,
+          write.file = F)),
+      silent = T)
+    if (class(tc) != "try-error") {
+      eml$dataset$coverage$taxonomicCoverage <- tc
     }
-
-  }
-  
-  if ('taxonomic_coverage.txt' %in% names(x$template)){
-
-    if (is.data.frame(x$template$taxonomic_coverage.txt$content)){
-
-      if (sum(is.na(x$template$taxonomic_coverage.txt$content$authority_id)) != nrow(x$template$taxonomic_coverage.txt$content)){
-
-        message('      <taxonomicCoverage>')
-
-        tc <- try(
-          suppressMessages(
-            taxonomyCleanr::make_taxonomicCoverage(
-              taxa.clean = x$template$taxonomic_coverage.txt$content$name_resolved,
-              authority = x$template$taxonomic_coverage.txt$content$authority_system,
-              authority.id = x$template$taxonomic_coverage.txt$content$authority_id,
-              write.file = FALSE
-            )
-          ),
-          silent = T
-        )
-
-        if (class(tc)[1] == 'list'){
-
-          dataset$coverage$taxonomicCoverage <- tc
-
-        }
-
-      }
-
-    }
-
   }
 
   # Create <maintenance> ------------------------------------------------------
   
   message("    <maintenance>")
-  
-  dataset$maintenance$description <- maintenance.description
+  eml$dataset$maintenance$description <- maintenance.description
 
   # Create <contact> ----------------------------------------------------------
 
-  useI <- which(x$template$personnel.txt$content$role == "contact")
-
-  contact_list <- list()
-  for (j in 1:length(useI)){
-    message("    <contact>")
-    contact_list[[j]] <- set_person(info_row = useI[j],
-                                    person_role = "contact")
-  }
-
-  dataset$contact <- contact_list
+  eml$dataset$contact <- lapply(
+    which(x$template$personnel.txt$content$role == "contact"),
+    function(k) {
+      message("    <contact>")
+      set_person(info_row = k, person_role = "contact")
+    })
 
   # Create <methods> ----------------------------------------------------------
   
-  if (any(stringr::str_detect(names(x$template), 'methods'))) {
+  if (any(stringr::str_detect(names(x$template), "methods"))) {
     message("    <methods>")
-    dataset$methods <- x$template[[
-      names(x$template)[stringr::str_detect(names(x$template), 'methods')]]]$content
+    eml$dataset$methods$methodStep <- list(
+      x$template[[
+        names(x$template)[stringr::str_detect(names(x$template), "methods")]
+        ]]$content$methodStep)
   }
 
   # Create <methodStep> (provenance) ------------------------------------------
+  # Get provenance metadata for a data package in the EDI data repository.
+  # FIXME: Support inputs from the provenance.txt metadata template
+  # FIXME: Support provenance metadata models used by other EML based 
+  # repositories
   
-  if (!is.null(provenance)){
-    environment <- 'production'
-    for (p in 1:length(provenance)){
-      message('      <methodStep> (provenance metadata)')
-      prov_pkg_id <- stringr::str_replace_all(provenance[p], '\\.', '/')
-      r <- httr::GET(url = paste0(EDIutils::url_env(environment), 
-                                  '.lternet.edu/package/provenance/eml/', 
-                                  prov_pkg_id))
-      if (r$status_code == 200){
-        prov_metadata <- httr::content(r, encoding = 'UTF-8')
-        # Remove IDs from creator and contact
-        xml2::xml_set_attr(
-          xml2::xml_find_all(prov_metadata, './/dataSource/creator'),
-          'id', NULL
-        )
-        xml2::xml_set_attr(
-          xml2::xml_find_all(prov_metadata, './/dataSource/contact'),
-          'id', NULL
-        )
-        
-        # Write to data.path
-        lib_path <- system.file('/examples/templates/abstract.txt', package = 'EMLassemblyline')
-        lib_path <- substr(lib_path, 1, nchar(lib_path) - 32)
-        if (!stringr::str_detect(stringr::str_replace_all(data.path, '\\\\', '/'), lib_path)){
-          xml2::write_xml(
-            prov_metadata,
-            paste0(data.path,
-                   '/provenance_metadata.xml')
-          )
+  if (!is.null(provenance)) {
+    o <- lapply(
+      provenance,
+      function(k) {
+        message("      <methodStep> (provenance metadata)")
+        r <- httr::GET(
+          paste0(
+            EDIutils::url_env("production"), 
+            ".lternet.edu/package/provenance/eml/", 
+            stringr::str_replace_all(k, '\\.', '/')))
+        if (r$status_code == 200) {
+          prov <- httr::content(r, encoding = 'UTF-8')
+          # Remove IDs from creator and contact to preempt ID + reference 
+          # errors
+          xml2::xml_set_attr(
+            xml2::xml_find_all(prov, './/dataSource/creator'),
+            'id', NULL)
+          xml2::xml_set_attr(
+            xml2::xml_find_all(prov, './/dataSource/contact'),
+            'id', NULL)
+          # Write .xml to tempdir() and read back in as an emld list object
+          # to be added to the dataset emld list under construction here
+          xml2::write_xml(prov, paste0(tempdir(), "/provenance_metadata.xml"))
+          prov <- EML::read_eml(paste0(tempdir(), "/provenance_metadata.xml"))
+          prov$`@context` <- NULL
+          prov$`@type` <- NULL
+          eml$dataset$methods$methodStep[[
+            length(eml$dataset$methods$methodStep)+1]] <<- prov
+          suppressMessages(file.remove(paste0(tempdir(), "/provenance_metadata.xml")))
+        } else {
+          message("Unable to get provenance metadata.")
         }
-        
-        # Read provenance file and add to L0 EML
-
-        prov_metadata <- EML::read_eml(paste0(data.path, '/provenance_metadata.xml'))
-        methods_step <- dataset@methods@methodStep
-        methods_step[[length(methods_step)+1]] <- prov_metadata
-        dataset@methods@methodStep <- methods_step
-        
-        # Delete provenance_metadata.xml (a temporary file)
-        lib_path <- system.file('/examples/templates/abstract.txt', package = 'EMLassemblyline')
-        lib_path <- substr(lib_path, 1, nchar(lib_path) - 32)
-        if (!stringr::str_detect(stringr::str_replace_all(data.path, '\\\\', '/'), lib_path)){
-          file.remove(
-            paste0(data.path, '/provenance_metadata.xml')
-          )
-        }
-      } else {
-        message('Unable to get provenance metadata.')
-      }
-    }
+      })
   }
   
   # Create <project> ----------------------------------------------------------
+  # The project metadata corresponding to the first "pi" listed in 
+  # personnel.txt will become the primary project. Project metadata listed 
+  # under supbsequent "pi" will become related projects in the order they are 
+  # listed.
   
-  useI <- which(x$template$personnel.txt$content$role == "pi")
-  
-  if (!identical(useI, integer(0))){
-    
-    message("    <project>")
-    
-    pi_list <- list()
-    pi_list[[1]] <- suppressWarnings(set_person(info_row = useI[1],
-                                                person_role = "pi"))
-    
-    # If no projectTitle ...
-    if (x$template$personnel.txt$content$projectTitle[useI[1]] == ""){
-      # If no fundingAgency ...
-      if (x$template$personnel.txt$content$fundingAgency[useI[1]] == ""){
-        # If no fundingNumber ...
-        if (x$template$personnel.txt$content$fundingNumber[useI[1]] == ""){
-          project <- list(
-            title = "No project title to report",
-            personnel = pi_list,
-            funding = "No funding to report"
-          )
-        # ... if fundingNumber is present ...
-        } else if (x$template$personnel.txt$content$fundingNumber[useI[1]] != ""){
-          project <- list(
-            title = "No project title to report",
-            personnel = pi_list,
-            funding = x$template$personnel.txt$content$fundingNumber[useI[1]]
-          )
+  use_i <- x$template$personnel.txt$content$role == "pi"
+  if (any(use_i)){
+    lapply(
+      which(use_i),
+      function(k) {
+        if (k == min(which(use_i))) {
+          message("    <project>")
+          eml$dataset$project <<- list(
+            title = x$template$personnel.txt$content$projectTitle[k],
+            personnel = set_person(info_row = k, person_role = "pi"),
+            funding = x$template$personnel.txt$content$funding[k])
+        } else {
+          message("      <relatedProject>")
+          eml$dataset$project$relatedProject[[
+            length(eml$dataset$project$relatedProject)+1]] <<- list(
+              title = x$template$personnel.txt$content$projectTitle[k],
+              personnel = set_person(info_row = k, person_role = "pi"),
+              funding = x$template$personnel.txt$content$funding[k])
         }
-      # ... if fundingAgency is present ...
-      } else if (x$template$personnel.txt$content$fundingAgency[useI[1]] != ""){
-        # ... if fundingNumber is missing ...
-        if (x$template$personnel.txt$content$fundingNumber[useI[1]] == ""){
-          project <- list(
-            title = "No project title to report",
-            personnel = pi_list,
-            funding = x$template$personnel.txt$content$fundingAgency[useI[1]]
-          )
-        # ... if fundingNumber is present ...
-        } else if (x$template$personnel.txt$content$fundingNumber[useI[1]] != ""){
-          project <- list(
-            title = "No project title to report",
-            personnel = pi_list,
-            funding = paste0(x$template$personnel.txt$content$fundingAgency[useI[1]],
-                             ": ",
-                             x$template$personnel.txt$content$fundingNumber[useI[1]])
-          )
-        }
-      }
-    # ... if projectTitle is present ...
-    } else if (x$template$personnel.txt$content$projectTitle[useI[1]] != ""){
-      # ... if fundingAgency is present ...
-      if (x$template$personnel.txt$content$fundingAgency[useI[1]] == ""){
-        # ... if fundingNumber is present ...
-        if (x$template$personnel.txt$content$fundingNumber[useI[1]] == ""){
-          project <- list(
-            title = x$template$personnel.txt$content$projectTitle[useI[1]],
-            personnel = pi_list,
-            funding = "No funding to report"
-          )
-        # ... if fundingNumber is missing ...
-        } else if (x$template$personnel.txt$content$fundingNumber[useI[1]] != ""){
-          project <- list(
-            title = x$template$personnel.txt$content$projectTitle[useI[1]],
-            personnel = pi_list,
-            funding = x$template$personnel.txt$content$fundingNumber[useI[1]]
-          )
-        }
-      # ... if fundingAgency is missing ...
-      } else if (x$template$personnel.txt$content$fundingAgency[useI[1]] != ""){
-        # ... if fundingNumber is present ...
-        if (x$template$personnel.txt$content$fundingNumber[useI[1]] == ""){
-          project <- list(
-            title = x$template$personnel.txt$content$projectTitle[useI[1]],
-            personnel = pi_list,
-            funding = x$template$personnel.txt$content$fundingAgency[useI[1]]
-          )
-        # ... if fundingNumber is missing ...
-        } else if (x$template$personnel.txt$content$fundingNumber[useI[1]] != ""){
-          project <- list(
-            title = x$template$personnel.txt$content$projectTitle[useI[1]],
-            personnel = pi_list,
-            funding = paste0(x$template$personnel.txt$content$fundingAgency[useI[1]],
-                             ": ",
-                             x$template$personnel.txt$content$fundingNumber[useI[1]])
-          )
-        }
-      }
-    }
-    dataset$project <- project
-    
-    # Related project
-    
-    if (length(useI) > 1){
-      relatedProject_list <- list()
-      pi_list <- list()
-      for (i in 1:(length(useI)-1)){
-        message('      <relatedProject>')
-        pi_list[[1]] <- suppressWarnings(set_person(info_row = useI[i+1],
-                                                    person_role = "pi"))
-        # If projectTitle is absent ...
-        if (x$template$personnel.txt$content$projectTitle[useI[i+1]] == ""){
-          # If fundingAgency is absent ...
-          if (x$template$personnel.txt$content$fundingAgency[useI[i+1]] == ""){
-            # If fundingNumber is absent ...
-            if (x$template$personnel.txt$content$fundingNumber[useI[i+1]] == ""){
-              relatedProject_list[[i]] <- list(
-                title = "No project title to report",
-                personnel = pi_list,
-                funding = "No funding to report"
-              )
-            # ... if fundingNumber is missing ...  
-            } else if (x$template$personnel.txt$content$fundingNumber[useI[i+1]] != ""){
-              relatedProject_list[[i]] <- list(
-                title = "No project title to report",
-                personnel = pi_list,
-                funding = x$template$personnel.txt$content$fundingNumber[useI[i+1]]
-              )
-            }
-          # ... if fundingAgency is present ...
-          } else if (x$template$personnel.txt$content$fundingAgency[useI[i+1]] != ""){
-            # ... if fundingNumber is missing ...
-            if (x$template$personnel.txt$content$fundingNumber[useI[i+1]] == ""){
-              relatedProject_list[[i]] <- list(
-                title = "No project title to report",
-                personnel = pi_list,
-                funding = x$template$personnel.txt$content$fundingAgency[useI[i+1]]
-              )
-            # ... if fundingNumber is present ...
-            } else if (x$template$personnel.txt$content$fundingNumber[useI[i+1]] != ""){
-              relatedProject_list[[i]] <- list(
-                title = "No project title to report",
-                personnel = pi_list,
-                funding = paste0(x$template$personnel.txt$content$fundingAgency[useI[i+1]],
-                                 ": ",
-                                 x$template$personnel.txt$content$fundingNumber[useI[i+1]])
-              )
-            }
-          }
-        # ... if projectTitle is present ...
-        } else if (x$template$personnel.txt$content$projectTitle[useI[i+1]] != ""){
-          # ... if fundingAgency is present ...
-          if (x$template$personnel.txt$content$fundingAgency[useI[i+1]] != ""){
-            # ... if fundingNumber is present ...
-            if (x$template$personnel.txt$content$fundingNumber[useI[i+1]] != ""){
-              relatedProject_list[[i]] <- list(
-                title = x$template$personnel.txt$content$projectTitle[useI[i+1]],
-                personnel = pi_list,
-                funding = paste0(x$template$personnel.txt$content$fundingAgency[useI[i+1]],
-                                 ": ",
-                                 x$template$personnel.txt$content$fundingNumber[useI[i+1]])
-              )
-            # ... if fundingNumber is missing ...
-            } else if (x$template$personnel.txt$content$fundingNumber[useI[i+1]] == ""){
-              relatedProject_list[[i]] <- list(
-                title = x$template$personnel.txt$content$projectTitle[useI[i+1]],
-                personnel = pi_list,
-                funding = x$template$personnel.txt$content$fundingAgency[useI[i+1]]
-              )
-            }
-          # ... if fundingAgency is missing ...
-          } else if (x$template$personnel.txt$content$fundingAgency[useI[i+1]] == ""){
-            # ... if fundingNumber is missing ...
-            if (x$template$personnel.txt$content$fundingNumber[useI[i+1]] == ""){
-              relatedProject_list[[i]] <- list(
-                title = x$template$personnel.txt$content$projectTitle[useI[i+1]],
-                personnel = pi_list,
-                funding = "No funding to report"
-              )
-            # ... if fundingNumber is present ...
-            } else if (x$template$personnel.txt$content$fundingNumber[useI[i+1]] != ""){
-              relatedProject_list[[i]] <- list(
-                title = x$template$personnel.txt$content$projectTitle[useI[i+1]],
-                personnel = pi_list,
-                funding = paste0(x$template$personnel.txt$content$fundingAgency[useI[i+1]],
-                                 ": ",
-                                 x$template$personnel.txt$content$fundingNumber[useI[i+1]])
-              )
-            }
-          }
-        }
-      }
-      dataset$project$relatedProject <- relatedProject_list
-    }
-    
+      })
   }
   
   # Create <dataTable> --------------------------------------------------------
   
-  # Compile attributes
-  
-  if (!is.null(data.table)){
-    attributes_in <- compile_attributes(x = x)
-  }
-  
-  # Create dataTable
-  
-  data_tables_stored <- list()
-
-  if (!is.null(x$data.table)){
-    for (i in 1:length(names(x$data.table))){
-      
-      message(
-        paste0(
-          '    <dataTable> (',
-          names(x$data.table)[i],
-          ')'
-        )
-      )
-      
-      attributes <- attributes_in[[1]][[i]]
-      
-      df_table <- x$data.table[[i]]$content
-      
-      # Get catvars
-      
-      fname_table_catvars <- paste0(
-        'catvars_',
-        stringr::str_remove(
-          string = names(x$data.table)[i],
-          pattern = '\\.[:alpha:]*$'
-        ),
-        '.txt'
-      )
-      
-      if (fname_table_catvars %in% names(x$template)){
-        
-        catvars <- x$template[[fname_table_catvars]]$content
-        
-        # If content is present
-        
-        if (dim(catvars)[1] > 0){
-          
-          for (j in 1:dim(catvars)[2]){
-            catvars[ ,j] <- as.character(catvars[ ,j])
-          }
-          
-          non_blank_rows <- nrow(catvars) - sum(catvars$attributeName == "")
-          catvars <- catvars[1:non_blank_rows, 1:3]
-          
-          # Clean extraneous white spaces from catvars tables
-          
-          if (dim(catvars)[1] != 0){
-            for (j in 1:ncol(catvars)){
-              if (class(catvars[ ,j]) == "character" ||
-                  (class(catvars[ ,j]) == "factor")){
-                catvars[ ,j] <- trimws(catvars[ ,j])
-              }
-            }
-          }
-          
-        }
-        
-        # Clean extraneous white spaces from attributes
-        
-        for (j in 1:ncol(attributes)){
-          if (class(attributes[ ,j]) == "character" ||
-              (class(attributes[ ,j]) == "factor")){
-            attributes[ ,j] <- trimws(attributes[ ,j])
-          }
-        }
-        
-        # Create the attributeList element
-        
-        attributeList <- suppressWarnings(
-          EML::set_attributes(
-            attributes[ , c(
-              'attributeName', 
-              'formatString',
-              'unit',
-              'numberType',
-              'definition',
-              'attributeDefinition',
-              'minimum',
-              'maximum',
-              'missingValueCode',
-              'missingValueCodeExplanation')],
-            factors = catvars,
-            col_classes = attributes[ ,"columnClasses"]
-          )
-        )
-        
-      } else {
-        
-        # Clean extraneous white spaces from attributes
-        
-        for (j in 1:ncol(attributes)){
-          if (class(attributes[ ,j]) == "character" ||
-              (class(attributes[ ,j]) == "categorical")){
-            attributes[ ,j] <- trimws(attributes[ ,j])
-          }
-        }
-
-        # Create the attributeList element
-        
-        attributeList <- suppressWarnings(
-          EML::set_attributes(
-            attributes[ , c(
-              'attributeName', 
-              'formatString',
-              'unit',
-              'numberType',
-              'definition',
-              'attributeDefinition',
-              'minimum',
-              'maximum',
-              'missingValueCode',
-              'missingValueCodeExplanation')],
-            col_classes = attributes[ ,"columnClasses"]
-          )
-        )
-        
-      }
-
-      # Set physical
-
-      physical <- suppressMessages(
-        EML::set_physical(
-          paste0(data.path, '/', names(x$data.table)[i]),
-          numHeaderLines = "1",
-          recordDelimiter = EDIutils::get_eol(
-            path = data.path,
-            file.name = names(x$data.table)[i],
-            os = EDIutils::detect_os()
-          ),
-          attributeOrientation = "column",
-          url = 'placeholder'
-        )
-      )
-
-      if (!is.null(data.table.quote.character)){
-        physical$dataFormat$textFormat$simpleDelimited$quoteCharacter <- data.table.quote.character[i]
-      }
-
-      # FIXME: data.url is deprecated. Remove support for this argument after (11 March 2021)
-      if (!is.null(data.url)){
-        physical$distribution$online$url[[1]] <- paste0(
-          data.url, "/", names(x$data.table)[i])
-      } else if (!is.null(data.table.url)) {
-        physical$distribution$online$url <- data.table.url[i]
-      } else {
-        physical$distribution <- list()
-      }
-
-      physical$dataFormat$textFormat$simpleDelimited$fieldDelimiter <- EDIutils::detect_delimeter(
-        path = data.path,
-        data.files = data.table[i],
-        os = EDIutils::detect_os()
-      )
-      
-       # Pull together information for the data table
-      
-      data_table <- list(
-        entityName = data.table.name[i],
-        entityDescription = data.table.description[i],
-        physical = physical,
-        attributeList = attributeList,
-        numberOfRecords = as.character(nrow(df_table))
-      )
-      
-      # FIXME: EML v2.0.0 handles absense of missingValue codes differently
-      # than EML v 1.0.3. This fixes the issue here, though it may be better
-      # to implement the fix in EML v2.0.0.
-      for (j in seq_along(data_table$attributeList$attribute)){
-        if (data_table$attributeList$attribute[[j]]$missingValueCode$code == ''){
-          data_table$attributeList$attribute[[j]]$missingValueCode$code <- NA_character_
-          data_table$attributeList$attribute[[j]]$missingValueCode$codeExplanation <- NA_character_
-        }
-      }
-      
-      data_tables_stored[[i]] <- data_table
-      
-    }
-
-    # Are custom units present in these tables?
+  if (!is.null(x$data.table)) {
     
-    if ('custom_units.txt' %in% names(x$template)){
-      
-      custom_units_df <- x$template$custom_units.txt$content
-      
-      if (is.data.frame(custom_units_df)){
+    eml$dataset$dataTable <- lapply(
+      names(x$data.table),
+      function(k) {
+        message(paste0("    <dataTable> (", k, ")"))
         
-        if (nrow(custom_units_df) < 1){
-          custom_units <- "no"
+        # Get corresponding table_attributes.txt
+        
+        tbl_attr <- x$template[[
+          paste0("attributes_", tools::file_path_sans_ext(k), ".txt")]]$content
+        
+        # Add attributes.txt contents to the data frame input expected by 
+        # EML::set_attributes().
+        
+        attributes <- data.frame(
+          attributeName = tbl_attr$attributeName,
+          formatString = tbl_attr$dateTimeFormatString,
+          unit = tbl_attr$unit,
+          numberType = "",
+          definition = "",
+          attributeDefinition = tbl_attr$attributeDefinition,
+          columnClasses = tbl_attr$class,
+          minimum = NA,
+          maximum = NA,
+          missingValueCode = tbl_attr$missingValueCode,
+          missingValueCodeExplanation = tbl_attr$missingValueCodeExplanation,
+          stringsAsFactors = F)
+        
+        # Update missingValueCode - NA must be "NA" otherwise it will not be 
+        # listed in the EML
+        
+        attributes$missingValueCode[is.na(attributes$missingValueCode)] <- "NA"
+        
+        # Update non-numeric attributes - categorical and character classes must 
+        # have a numberType of "character" and their attributeDefinition must be 
+        # listed under "defintion. date and categorical classes must be listed as 
+        # "Date" and "factor" respectively
+        
+        use_i <- (attributes$columnClasses == "categorical") | 
+          (attributes$columnClasses == "character")
+        attributes$numberType[use_i] <- "character"
+        attributes$definition[use_i] <- attributes$attributeDefinition[use_i]
+        attributes$columnClasses[
+          attributes$columnClasses == "date"] <- "Date"
+        attributes$columnClasses[
+          attributes$columnClasses == "categorical"] <- "factor"
+        
+        # Update numeric attributes - Remove NA and missingValueCode for 
+        # calculations. Get minimum and maximum values. Infer numberType
+        
+        for (i in which(tbl_attr$class == "numeric")) {
+          a <- x$data.table[[k]]$content[[tbl_attr$attributeName[i]]][
+            !is.na(x$data.table[[k]]$content[[tbl_attr$attributeName[i]]])]
+          a <- a[a != tbl_attr$missingValueCode[i]]
+          if (all(is.na(a))) {
+            attributes$minimum[i] <- NA
+            attributes$maximum[i] <- NA
+          } else {
+            attributes$minimum[i] <- as.numeric(min(a, na.rm = T))
+            attributes$maximum[i] <- as.numeric(max(a, na.rm = T))
+          }
+          is_integer <-function(x, tol = .Machine$double.eps^0.5) {
+            abs(x - round(x)) < tol
+          }
+          if (any(!is_integer(a))) {
+            attributes$numberType[i] <- "real"
+          } else if (!any(a < 1)) {
+            attributes$numberType[i] <- "natural"
+          } else if (any(a < 0)) {
+            attributes$numberType[i] <- "integer"
+          } else {
+            attributes$numberType[i] <- "whole"
+          }
+          # FIXME: Calculate precision for numeric attributes. Alternatively
+          # this should be added to the attributes template so precision can
+          # be manually defined by the metadata creator.
+        }
+        
+        # Create attributeList
+        
+        if (paste0("catvars_", tools::file_path_sans_ext(k), ".txt") %in% 
+            names(x$template)) {
+          attributeList <- suppressWarnings(
+            EML::set_attributes(
+              attributes[ , c(
+                "attributeName", 
+                "formatString",
+                "unit",
+                "numberType",
+                "definition",
+                "attributeDefinition",
+                "minimum",
+                "maximum",
+                "missingValueCode",
+                "missingValueCodeExplanation")],
+              factors = x$template[[
+                paste0(
+                  "catvars_", 
+                  tools::file_path_sans_ext(k), 
+                  ".txt")]]$content,
+              col_classes = attributes$columnClasses))
         } else {
-          custom_units <- "yes"
+          attributeList <- suppressWarnings(
+            EML::set_attributes(
+              attributes[ , c(
+                'attributeName', 
+                'formatString',
+                'unit',
+                'numberType',
+                'definition',
+                'attributeDefinition',
+                'minimum',
+                'maximum',
+                'missingValueCode',
+                'missingValueCodeExplanation')],
+              col_classes = attributes$columnClasses))
         }
         
-        # Clean white spaces from custom_units and units_types
-        
-        if (custom_units == "yes"){
-          
-          message("    <additionalMetadata>")
-          
-          for (j in 1:ncol(custom_units_df)){
-            if (class(custom_units_df[ ,j]) == "character" ||
-                (class(custom_units_df[ ,j]) == "factor")){
-              custom_units_df[ ,j] <- trimws(custom_units_df[ ,j])
-            }
-          }
-          
-          unitsList <- EML::set_unitList(custom_units_df)
-        }
-
-      } else {
-      
-      custom_units <- "no"
-      
-      }
-      
-    }
-    
-    
-    # Compile data tables
-    
-    dataset$dataTable <- data_tables_stored
-    
-  }
-  
-  # Create <otherEntity> ------------------------------------------------------
-  
-  if (!is.null(x$other.entity)){
-    
-    if (length(names(x$other.entity)) > 0){
-      
-      list_of_other_entity <- list()
-      
-      for (i in 1:length(other.entity)){
-        
-        message(
-          paste0(
-            '    <otherEntity> (', 
-            names(x$other.entity)[i],
-            ')'
-          )
-        )
-        
-        # Create new other entity element
-        
-        otherEntity <- list()
-        
-        # Add entityName
-        
-        otherEntity$entityName <- list(other.entity.name[i])
-
-        # Add entityDescription
-        
-        otherEntity$entityDescription <- other.entity.description[i]
-        
-        # Add physical
+        # Set physical
+        # FIXME: Auto-detect numHeaderLines
+        # FIXME: Move EDIutils::get_eol() to EMLassemblyline?
         
         physical <- suppressMessages(
           EML::set_physical(
-            paste0(data.path, '/', names(x$other.entity)[i])
-          )
-        )
+            paste0(data.path, "/", k),
+            numHeaderLines = "1",
+            recordDelimiter = EDIutils::get_eol(
+              path = data.path,
+              file.name = k,
+              os = EDIutils::detect_os()),
+            attributeOrientation = "column",
+            url = "placeholder"))
         
-        physical$dataFormat$textFormat <- NULL
-
-        physical$dataFormat$externallyDefinedFormat$formatName <- 'unknown'
-
+        if (!is.null(data.table.quote.character)) {
+          physical$dataFormat$textFormat$simpleDelimited$quoteCharacter <- 
+            data.table.quote.character[which(k == names(x$data.table))]
+        }
+        
         # FIXME: data.url is deprecated. Remove support for this argument after (11 March 2021)
-        if (!is.null(data.url)){
-          physical$distribution$online$url[[1]] <- paste0(
-            data.url, "/", names(x$other.entity)[i])
+        if (!is.null(data.url)) {
+          physical$distribution$online$url[[1]] <- paste0(data.url, "/", k)
+        } else if (!is.null(data.table.url)) {
+          physical$distribution$online$url <- data.table.url[
+            which(k == names(x$data.table))]
+        } else {
+          physical$distribution <- list()
+        }
+        
+        physical$dataFormat$textFormat$simpleDelimited$fieldDelimiter <- 
+          EDIutils::detect_delimeter(
+            path = data.path,
+            data.files = k,
+            os = EDIutils::detect_os())
+        
+        # Create dataTable
+        
+        data_table <- list(
+          entityName = data.table.name[which(k == names(x$data.table))],
+          entityDescription = data.table.description[which(k == names(x$data.table))],
+          physical = physical,
+          attributeList = attributeList,
+          numberOfRecords = as.character(nrow(x$data.table[[k]]$content)))
+        
+        # FIXME: EML v2.0.0 handles absense of missingValue codes differently
+        # than EML v 1.0.3. This fixes the issue here, though it may be better
+        # to implement the fix in EML v2.0.0.
+        for (j in seq_along(data_table$attributeList$attribute)){
+          if (data_table$attributeList$attribute[[j]]$missingValueCode$code == ''){
+            data_table$attributeList$attribute[[j]]$missingValueCode$code <- NA_character_
+            data_table$attributeList$attribute[[j]]$missingValueCode$codeExplanation <- NA_character_
+          }
+        }
+        
+        data_table
+
+      }
+    )
+  }
+  
+  # Create <otherEntity> ------------------------------------------------------
+  # FIXME: Need methods for inferring entity type, format, and other metadata
+  
+  if (!is.null(x$other.entity)) {
+    eml$dataset$otherEntity <- lapply(
+      names(x$other.entity),
+      function(k) {
+        message(paste0("    <otherEntity> (", k, ")"))
+        # Set physical
+        physical <- suppressMessages(
+          EML::set_physical(
+            paste0(data.path, "/", k)))
+        physical$dataFormat$textFormat <- NULL
+        physical$dataFormat$externallyDefinedFormat$formatName <- "unknown"
+        # FIXME: data.url is deprecated. Remove support for this argument after (11 March 2021)
+        if (!is.null(data.url)) {
+          physical$distribution$online$url[[1]] <- paste0(data.url, "/", k)
         } else if (!is.null(other.entity.url)) {
-          physical$distribution$online$url <- other.entity.url[i]
+          physical$distribution$online$url <- other.entity.url[
+            which(k == names(x$other.entity))]
         }else {
           physical$distribution <- list()
         }
-
-        otherEntity$physical <- physical
-
-        # Add entityType
-
-        otherEntity$entityType <- 'unknown'
-        
-        # Add otherEntity to list
-        
-        list_of_other_entity[[i]] <- otherEntity
-        
-      }
-      
-      dataset$otherEntity <- list_of_other_entity
-      
-    }
-    
-    
+        # Create otherEntity
+        list(
+          entityName = other.entity.name[
+            which(k == names(x$other.entity))],
+          entityDescription = other.entity.description[
+            which(k == names(x$other.entity))],
+          physical = physical,
+          entityType = "unknown")
+      })
   }
   
   # Create <additionalMetadata> -----------------------------------------------
   
-  if (exists('custom_units')){
-    if (custom_units != 'no'){
-      if (!exists("unitsList")) {
-        unitsList <- EML::set_unitList(x$template$custom_units.txt$content)
-      }
-      message('  <additionalMetadata>')
-      additionalMetadata <- list()
-      additionalMetadata[[(length(additionalMetadata)+1)]] <- list(metadata = list(unitList = unitsList))
-    }
+  if (!is.null(x$template$custom_units.txt)) {
+    message("  <additionalMetadata>")
+    eml$additionalMetadata[[
+      length(eml$dataset$additionalMetadata)+1]]$metadata$unitList <- EML::set_unitList(
+        x$template$custom_units.txt$content)
   }
-
-  # Compile nodes -------------------------------------------------------------
-  
-  # Set default package.id
-  
-  if (is.null(package.id)){
-    package.id <- 'edi.101.1'
-  }
-
-  # Compile nodes
-  
-  if (exists('custom_units')){
-    
-    if (custom_units == "yes"){
-      
-      eml <- list(
-        schemaLocation = "eml://ecoinformatics.org/eml-2.2.0  https://nis.lternet.edu/schemas/EML/eml-2.2.0/xsd/eml.xsd",
-        packageId = package.id,
-        system = "edi",
-        access = access,
-        dataset = dataset,
-        additionalMetadata = additionalMetadata
-      )
-
-    } else {
-      
-      eml <- list(
-        schemaLocation = "eml://ecoinformatics.org/eml-2.2.0  https://nis.lternet.edu/schemas/EML/eml-2.2.0/xsd/eml.xsd",
-        packageId = package.id,
-        system = "edi",
-        access = access,
-        dataset = dataset
-      )
-      
-    }
-    
-  } else {
-    
-    eml <- list(
-      schemaLocation = "eml://ecoinformatics.org/eml-2.2.0  https://nis.lternet.edu/schemas/EML/eml-2.2.0/xsd/eml.xsd",
-      packageId = package.id,
-      system = "edi",
-      access = access,
-      dataset = dataset
-    )
-    
-  }
-  
-  message('</eml>')
   
   # Write EML -----------------------------------------------------------------
   
-  if (isTRUE(write.file)){
-    
-    message(paste0('Writing EML (', package.id, '.xml)'))
+  message("</eml>")
+  if (isTRUE(write.file)) {
+    message(paste0("Writing EML (", package.id, ".xml)"))
     emld::eml_version("eml-2.2.0")
-    EML::write_eml(
-      eml, 
-      paste0(eml.path, "/", package.id, ".xml")
-    )
-    
+    EML::write_eml(eml, paste0(eml.path, "/", package.id, ".xml"))
   }
   
   # Validate EML --------------------------------------------------------------
   
   message("Validating EML")
-
-  validation_result <- EML::eml_validate(eml)
-
-  if (validation_result == "TRUE"){
-
-    message("EML passed validation!")
-
+  r <- EML::eml_validate(eml)
+  if (isTRUE(r)) {
+    message("  Validation passed :)")
   } else {
-
-    message("EML validaton failed. See warnings for details.")
-
+    message("  Validation failed :(")
   }
-
   message("Done.")
-
-  if (isTRUE(return.obj)){
+  
+  if (isTRUE(return.obj)) {
     eml
   }
   
 }
-
-# Compile attributes ----------------------------------------------------------
-
-# This is a helper function for make_eml.R. 
-# It compiles attributes, retrieves minimum and maximum values for numeric data
-# and reformats the attributes table.
-
-
-compile_attributes <- function(x){
-  
-  data.table <- names(x$data.table)
-  
-  # Get names of data files with associated attribute files
-  
-  # files <- names(x$template)
-  # use_i <- stringr::str_detect(string = files,
-  #                     pattern = "^attributes")
-  # attribute_files <- files[use_i]
-  # fname_table_attributes <- attribute_files
-  # # table_names_base <- stringr::str_sub(string = attribute_files,
-  # #                             start = 12,
-  # #                             end = nchar(attribute_files)-4)
-  # # use_i <- stringr::str_detect(string = names(x$data.table),
-  # #                     pattern = stringr::str_c("^", table_names_base, collapse = "|"))
-  # # table_names <- names(x$data.table)
-  # 
-  # # Synchronize ordering of data files and attribute files
-  # 
-  fname_table_attributes <- paste0(
-    'attributes_',
-    stringr::str_remove(
-      string = data.table,
-      pattern = '\\.[:alpha:]*$'
-    ),
-    '.txt'
-  )
-  
-  # FIXME: Clean up attributes and catvars.
-  # - Ignore units when not numeric
-  # - Ignore date time format strings when not classified as date
-  # - Ignore blank (i.e. "") categorical codes (implement this in the metadata 
-  # quality check functions to be developed? See GitHub issue #46)
-  
-  
-  # Loop through data tables --------------------------------------------------
-  
-  attributes_stored <- list()
-  
-  for (i in 1:length(data.table)){
-
-    df_table <- x$data.table[[data.table[i]]]$content
-    
-    df_attributes <- x$template[[fname_table_attributes[i]]]$content
-
-    # Convert user inputs to consistent case
-    
-    df_attributes$class <- tolower(df_attributes$class)
-    
-    # Validate attributes -----------------------------------------------------
-    
-    df_attributes$unit[is.na(df_attributes$unit)] <- ""
-    df_attributes$dateTimeFormatString[is.na(df_attributes$dateTimeFormatString)] <- ""
-    
-    # Modify attributes -------------------------------------------------------
-    
-    # Modify attributes: remove units class != numeric
-    
-    use_i <- df_attributes$class != "numeric"
-    use_i2 <- df_attributes$unit == ""
-    use_i3 <- use_i2 != use_i
-    
-    if (sum(use_i3) > 0){
-      df_attributes$unit[use_i3] <- ""
-    }
-
-    # Initialize outgoing attribute table 
-    
-    rows <- ncol(df_table)
-    attributes <- data.frame(attributeName = character(rows),
-                             formatString = character(rows),
-                             unit = character(rows),
-                             numberType = character(rows),
-                             definition = character(rows),
-                             attributeDefinition = character(rows),
-                             columnClasses = character(rows),
-                             minimum = character(rows),
-                             maximum = character(rows),
-                             missingValueCode = character(rows),
-                             missingValueCodeExplanation = character(rows),
-                             stringsAsFactors = FALSE)
-    
-    attributes$attributeName <- df_attributes$attributeName
-    
-    # Set attribute definition (i.e. "attributeDefinition")
-    
-    attributes$attributeDefinition <- df_attributes$attributeDefinition
-    
-    # Set attribute class
-    
-    attributes$columnClasses <- df_attributes$class
-    
-    # Set attribute units
-    
-    attributes$unit <- df_attributes$unit
-    
-    # Set attribute date time format string
-    
-    attributes$formatString <- df_attributes$dateTimeFormatString
-    
-    # Set attribute missing value code
-    
-    attributes$missingValueCode <- df_attributes$missingValueCode
-    
-    use_i <- is.na(attributes$missingValueCode)
-    attributes$missingValueCode[use_i] <- "NA"
-    
-    # Set attribute missing value code explanation
-    
-    attributes$missingValueCodeExplanation <- df_attributes$missingValueCodeExplanation
-    
-    # Remove missing value codes, set attribute number type, then minimumm and 
-    # maximum values. Throw an error if non-numeric values are found.
-    
-    is_numeric <- which(attributes$columnClasses == "numeric")
-    attributes$minimum <- as.numeric(attributes$minimum)
-    attributes$maximum <- as.numeric(attributes$maximum)
-    
-    if (!identical(is_numeric, integer(0))){
-      
-      for (j in 1:length(is_numeric)){
-        
-        raw <- df_table[ ,is_numeric[j]]
-        
-        
-        if (attributes$missingValueCode[is_numeric[j]] != ""){
-          useI <- raw == attributes$missingValueCode[is_numeric[j]]
-          raw <- as.numeric(raw[!useI])
-        }
-        
-        rounded <- floor(raw)
-        if (length(raw) - sum(raw == rounded, na.rm = T) > 0){
-          attributes$numberType[is_numeric[j]] <- "real"
-        } else if (min(raw, na.rm = T) > 0){
-          attributes$numberType[is_numeric[j]] <- "natural"
-        } else if (min(raw, na.rm = T) < 0){
-          attributes$numberType[is_numeric[j]] <- "integer"
-        } else {
-          attributes$numberType[is_numeric[j]] <- "whole"
-        }
-        
-        # If all numeric values are NA then set min and max to NA
-        
-        if (length(raw) == sum(is.na(raw))){
-          attributes$minimum[is_numeric[j]] <- NA
-          attributes$maximum[is_numeric[j]] <- NA
-        } else {
-          attributes$minimum[is_numeric[j]] <- round(min(raw,
-                                                         na.rm = TRUE),
-                                                     digits = 2)
-          attributes$maximum[is_numeric[j]] <- round(max(raw,
-                                                         na.rm = TRUE),
-                                                     digits = 2)
-        }
-        
-      }
-      
-    }
-    
-    
-    
-    is_character <- which(attributes$columnClasses == "character") 
-    is_catvar <- which(attributes$columnClasses == "categorical")
-    is_date <- which(attributes$columnClasses == "date")
-    use_i <- c(is_character, is_catvar)
-    
-    attributes$numberType[use_i] <- "character"
-    
-    attributes$columnClasses[is_catvar] <- "factor"
-    
-    attributes$columnClasses[is_date] <- "Date"
-    
-    # Set attribute definition (i.e. "definition")
-    
-    use_i <- c(is_character, is_catvar)
-    
-    if (length(use_i) > 0){
-      attributes$definition[use_i] <- attributes$attributeDefinition[use_i]
-    }
-    
-    attributes_stored[[i]] <- attributes
-    
-  }
-  
-  list("attributes" = attributes_stored)
-  
-}
-

@@ -370,6 +370,16 @@ validate_templates <- function(fun.name, x){
     
     # make_eml() - geographic_coverage ----------------------------------------
     
+    # bounding_boxes.txt - This template is deprecated
+    
+    if (any(names(x$template) == "bounding_boxes.txt")) {
+      warning(
+        paste0(
+          "Template 'bounding_boxes.txt' is deprecated; please use ", 
+          "'geographic_coverage.txt' instead."),
+        call. = F)
+    }
+    
     # template options - Only one geographic coverage template is allowed
     
     use_i <- stringr::str_detect(names(x$template), "bounding_boxes.txt|geographic_coverage.txt")
