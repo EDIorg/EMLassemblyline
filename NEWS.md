@@ -1,3 +1,9 @@
+# EMLassemblyline 2.10.2
+
+### Bug fix
+
+* __Missing value codes:__ Recent changes broke the proper handling of "NA" missing value codes. This has been fixed.
+
 # EMLassemblyline 2.10.1
 
 ### Bug fix
