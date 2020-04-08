@@ -259,3 +259,38 @@ testthat::test_that('Expect template values in EML', {
     "No funding to report")
 
 })
+
+# NA values -------------------------------------------------------------------
+
+testthat::test_that("NA values", {
+  
+  # Users often add NAs to templates where EMLassemblyline expects "". Such 
+  # behavior use to cause make_eml() to crash, now it doesn't.
+
+  x1 <- x
+  x1$x$template$attributes_decomp.txt$content$unit[1] <- NA
+  x1$x$template$attributes_decomp.txt$content$dateTimeFormatString[1] <- NA
+  x1$x$template$custom_units.txt$content$description[1] <- NA
+  x1$x$template$keywords.txt$content$keywordThesaurus[1] <- NA
+  x1$x$template$personnel.txt$content$middleInitial[1] <- NA
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_true(
+    EML::eml_validate(r))
+  
+  # NA in the missingValueCode field of attribtues templates should be 
+  # converted "NA" so make_eml() knows this is a missing value code and not
+  # NA introduced through other means.
+  
+  x1 <- x
+  x1$x$template$attributes_decomp.txt$content$missingValueCode <- NA
+  x1$x$template$attributes_decomp.txt$content$missingValueCode[2] <- "-99999"
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_true(
+    r$dataset$dataTable[[1]]$attributeList$attribute[[1]]$missingValueCode$code == "NA")
+  expect_true(
+    r$dataset$dataTable[[1]]$attributeList$attribute[[2]]$missingValueCode$code == "-99999")
+  
+})
+
+
+

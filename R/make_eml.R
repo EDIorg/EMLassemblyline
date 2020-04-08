@@ -380,6 +380,24 @@ make_eml <- function(
     data_read_2_x <- TRUE
     
   }
+  
+  # Clean templates of extraneous NA values -----------------------------------
+  # Users often add NAs to templates where EMLassemblyline expects "". This 
+  # removes NAs from where they shouldn't be and replaces them with "".
+  
+  for (k in names(x$template)) {
+    if (is.data.frame(x$template[[k]]$content)) {
+      for (m in names(x$template[[k]]$content)) {
+        if (m == "missingValueCode") {
+          x$template[[k]]$content[[m]][
+            is.na(x$template[[k]]$content[[m]])] <- "NA"
+        } else {
+          x$template[[k]]$content[[m]][
+            is.na(x$template[[k]]$content[[m]])] <- ""
+        }
+      }
+    }
+  }
 
   # Validate metadata templates -----------------------------------------------
   
