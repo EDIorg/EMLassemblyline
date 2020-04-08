@@ -1,3 +1,9 @@
+# EMLassemblyline 2.11.0
+
+### Enhancement
+
+* __NAs in templates:__ Users often add NAs to templates where EMLassemblyline expects "". This enhancement ignores these extraneous NAs.
+
 # EMLassemblyline 2.10.2
 
 ### Bug fix
