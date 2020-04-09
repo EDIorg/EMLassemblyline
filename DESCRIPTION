@@ -1,6 +1,6 @@
 Package: EMLassemblyline
 Title: A workflow for creating EML
-Version: 2.11.0
+Version: 2.11.1
 Authors@R: person("Colin", "Smith", email = "colin.smith@wisc.edu", role = c("aut", "cre"), comment = "https://orcid.org/0000-0003-2261-9931")
 Description: 
     For scientists and data managers who need to easily create high quality 

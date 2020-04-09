@@ -438,7 +438,7 @@ validate_templates <- function(fun.name, x){
       # role - At least one creator and contact is listed
       
       use_i <- stringr::str_detect(
-        x$template$personnel.txt$content$role, 
+        tolower(x$template$personnel.txt$content$role), 
         "creator|contact")
       if (!any(use_i)) {
         stop(
