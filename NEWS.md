@@ -1,3 +1,10 @@
+# EMLassemblyline 2.11.1
+
+### Bug fixes
+
+* __NAs in templates:__ Revised logic to distinguish the difference between NAs listed in the missingValueCode field of the table attribute template when supplied to `make_eml()` via files or the input argument `x`.
+* __Validate personnel roles:__ Revised logic to interpret personnel roles.
+
 # EMLassemblyline 2.11.0
 
 ### Enhancement

@@ -277,18 +277,33 @@ testthat::test_that("NA values", {
   expect_true(
     EML::eml_validate(r))
   
-  # NA in the missingValueCode field of attribtues templates should be 
-  # converted "NA" so make_eml() knows this is a missing value code and not
-  # NA introduced through other means.
+  # "NA" in the missingValueCode field of attribtues templates should be 
+  # should be interpreted as a missing value code by make_eml() and ultimately
+  # be listed as such in the EML.
   
   x1 <- x
-  x1$x$template$attributes_decomp.txt$content$missingValueCode <- NA
-  x1$x$template$attributes_decomp.txt$content$missingValueCode[2] <- "-99999"
+  x1$x$template$attributes_decomp.txt$content$missingValueCode[1] <- "NA"
   r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
   expect_true(
     r$dataset$dataTable[[1]]$attributeList$attribute[[1]]$missingValueCode$code == "NA")
   expect_true(
     r$dataset$dataTable[[1]]$attributeList$attribute[[2]]$missingValueCode$code == "-99999")
+  
+  # NA in the missingValueCode field of attribtues templates input with the 
+  # argument "x" should be interpreted as "".
+  
+  x1 <- x
+  x1$x$template$attributes_decomp.txt$content$missingValueCode[1] <- NA_character_
+  x1$x$template$attributes_decomp.txt$content$missingValueCodeExplanation[1] <- NA_character_
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_true(
+    is.na(r$dataset$dataTable[[1]]$attributeList$attribute[[1]]$missingValueCode$code))
+  expect_true(
+    is.na(r$dataset$dataTable[[1]]$attributeList$attribute[[1]]$missingValueCode$codeExplanation))
+  expect_true(
+    r$dataset$dataTable[[1]]$attributeList$attribute[[2]]$missingValueCode$code == "-99999")
+  expect_true(
+    r$dataset$dataTable[[1]]$attributeList$attribute[[2]]$missingValueCode$codeExplanation == "Missing value")
   
 })
 
