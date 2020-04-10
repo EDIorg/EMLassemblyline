@@ -8,14 +8,14 @@
   "description": "\n    For scientists and data managers who need to easily create high quality \n    metadata for data publication. EMLassemblyline is a metadata builder that \n    emphasizes auto-extraction of metadata, appends value added content, and \n    inputs user supplied information through common interfaces thereby \n    minimizing user effort while maximizing metadata features for data \n    discovery and reuse.",
   "name": "EMLassemblyline: A workflow for creating EML",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "2.6.1",
+  "version": "2.12.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.4.0",
+    "version": "3.5.2",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.4.0 (2017-04-21)",
+  "runtimePlatform": "R version 3.5.2 (2018-12-20)",
   "author": [
     {
       "@type": "Person",
@@ -49,6 +49,19 @@
     }
   ],
   "softwareRequirements": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "data.table",
+      "name": "data.table",
+      "version": ">= 1.12.2",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=data.table"
+    },
     {
       "@type": "SoftwareApplication",
       "identifier": "stringr",
@@ -186,11 +199,14 @@
   ],
   "codeRepository": "https://github.com/EDIorg/EMLassemblyline",
   "readme": "https://github.com/EDIorg/EMLassemblyline/blob/master/README.md",
-  "fileSize": "533.543KB",
+  "fileSize": "522.095KB",
   "contIntegration": [
     "https://travis-ci.org/clnsmth/EMLassemblyline",
     "https://codecov.io/github/clnsmth/EMLassemblyline?branch=master"
   ],
   "issueTracker": "https://github.com/EDIorg/EMLassemblyline/issues",
-  "releaseNotes": "https://github.com/EDIorg/EMLassemblyline/blob/master/NEWS.md"
+  "releaseNotes": "https://github.com/EDIorg/EMLassemblyline/blob/master/NEWS.md",
+  "contributor": {},
+  "copyrightHolder": {},
+  "funder": {}
 }
