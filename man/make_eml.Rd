@@ -146,49 +146,10 @@ Render the contents of metadata templates into EML, validate, and write
 file.copy(
   from = system.file('/examples/pkg_260', package = 'EMLassemblyline'),
   to = tempdir(),
-  recursive = TRUE
-)
+  recursive = TRUE)
 
 # Set working directory
 setwd(paste0(tempdir(), '/pkg_260'))
-
-# Make EML (for data package with data tables)
-
-make_eml(
-  path = './metadata_templates',
-  data.path = './data_objects',
-  eml.path = './eml',
-  dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions',
-  temporal.coverage = c('2014-05-01', '2015-10-31'),
-  maintenance.description = 'completed',
-  data.table = c('decomp.csv', 'nitrogen.csv'),
-  data.table.description = c('Decomposition data', 'Nitrogen data'),
-  user.id = 'csmith',
-  user.domain = 'EDI',
-  package.id = 'edi.260.1'
-)
-
-# View EML directory contents (NOTE: edi.260.1 exists)
-dir('./eml')
-
-# Make EML (for data package with other entities)
-
-make_eml(
-  path = './metadata_templates',
-  data.path = './data_objects',
-  eml.path = './eml',
-  dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions',
-  temporal.coverage = c('2014-05-01', '2015-10-31'),
-  maintenance.description = 'completed',
-  other.entity = c('ancillary_data.zip', 'processing_and_analysis.R'),
-  other.entity.description = c('Ancillary data', 'Data processing and analysis script'),
-  user.id = 'csmith',
-  user.domain = 'EDI',
-  package.id = 'edi.260.2'
-)
-
-# View EML directory contents (NOTE: edi.260.2 exists)
-dir('./eml')
 
 # Make EML (for data package with data tables and other entities)
 
@@ -205,10 +166,9 @@ make_eml(
   other.entity.description = c('Ancillary data', 'Data processing and analysis script'),
   user.id = 'csmith',
   user.domain = 'EDI',
-  package.id = 'edi.260.3'
-)
+  package.id = 'edi.260.3')
 
-# View EML directory contents (NOTE: edi.260.3 exists)
+# View EML directory contents
 dir('./eml')
 
 # Clean up

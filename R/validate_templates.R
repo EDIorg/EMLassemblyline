@@ -370,6 +370,16 @@ validate_templates <- function(fun.name, x){
     
     # make_eml() - geographic_coverage ----------------------------------------
     
+    # bounding_boxes.txt - This template is deprecated
+    
+    if (any(names(x$template) == "bounding_boxes.txt")) {
+      warning(
+        paste0(
+          "Template 'bounding_boxes.txt' is deprecated; please use ", 
+          "'geographic_coverage.txt' instead."),
+        call. = F)
+    }
+    
     # template options - Only one geographic coverage template is allowed
     
     use_i <- stringr::str_detect(names(x$template), "bounding_boxes.txt|geographic_coverage.txt")
@@ -455,6 +465,24 @@ validate_templates <- function(fun.name, x){
           paste0("personnel.txt is missing one or more 'role'. Ensure ",
                  "each person in this template has a defined role."), 
           call. = F)
+      }
+      
+      # projectTitle, fundingAgency, fundingNumber - Project info is associated 
+      # with first listed PI
+      
+      use_i <- tolower(x$template$personnel.txt$content$role) == "pi"
+      if (any(use_i)) {
+        pis <- x$template$personnel.txt$content[use_i, ]
+        pi_proj <- pis[ , c("projectTitle", "fundingAgency", "fundingNumber")]
+        if ((sum(pi_proj != "") > 0) & (sum(pi_proj[1, ] == "") == 3)) {
+          stop(
+            paste0(
+              "The first Principal Investigator listed in personnel.txt is ",
+              "missing a projectTitle, fundingAgency, or fundingNumber. The ",
+              "first listed PI represents the major project and requires ",
+              "this. Please add one."),
+            call. = F)
+        }
       }
 
     }
