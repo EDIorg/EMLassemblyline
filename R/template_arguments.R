@@ -169,7 +169,7 @@ template_arguments <- function(
           sep = "\t",
           colClasses = rep(
             "character", 
-            max(utils::count.fields(f, sep = "\t")))))
+            max(utils::count.fields(f, sep = "\t"), na.rm = T))))
     }
     
     read_txt <- function(f) {

@@ -1,4 +1,8 @@
-# EMLassemblyline 2.12.0
+# EMLassemblyline 2.12.1
+
+### Bug fix
+
+* __`Template reader`:__ A bug in the tabular template reader has been fixed ([see commit for details](https://github.com/EDIorg/EMLassemblyline/issues/59)).
 
 ### Enhancement
 
