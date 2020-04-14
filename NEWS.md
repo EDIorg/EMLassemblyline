@@ -2,7 +2,7 @@
 
 ### Bug fix
 
-* __`Template reader`:__ A bug in the tabular template reader has been fixed ([see commit for details](https://github.com/EDIorg/EMLassemblyline/issues/59)).
+* __`Template reader`:__ A bug in the tabular template reader has been fixed ([see commit for details](https://github.com/EDIorg/EMLassemblyline/commit/42276a0a696a8c6e743cc15e28f4e9c22df1100e)).
 
 ### Enhancement
 

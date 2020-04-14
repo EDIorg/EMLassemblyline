@@ -64,7 +64,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.12.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.12.1</span>
       </span>
     </div>
 
@@ -133,9 +133,17 @@
       <small>Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="emlassemblyline-2120" class="section level1">
+    <div id="emlassemblyline-2121" class="section level1">
 <h1 class="page-header">
-<a href="#emlassemblyline-2120" class="anchor"></a>EMLassemblyline 2.12.0</h1>
+<a href="#emlassemblyline-2121" class="anchor"></a>EMLassemblyline 2.12.1</h1>
+<div id="bug-fix" class="section level3">
+<h3 class="hasAnchor">
+<a href="#bug-fix" class="anchor"></a>Bug fix</h3>
+<ul>
+<li>
+<strong><code>Template reader</code>:</strong> A bug in the tabular template reader has been fixed (<a href="https://github.com/EDIorg/EMLassemblyline/commit/42276a0a696a8c6e743cc15e28f4e9c22df1100e">see commit for details</a>).</li>
+</ul>
+</div>
 <div id="enhancement" class="section level3">
 <h3 class="hasAnchor">
 <a href="#enhancement" class="anchor"></a>Enhancement</h3>
@@ -174,9 +182,9 @@
     <div id="emlassemblyline-2102" class="section level1">
 <h1 class="page-header">
 <a href="#emlassemblyline-2102" class="anchor"></a>EMLassemblyline 2.10.2</h1>
-<div id="bug-fix" class="section level3">
+<div id="bug-fix-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-1" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>Missing value codes:</strong> Recent changes broke the proper handling of âNAâ missing value codes. This has been fixed.</li>
@@ -186,9 +194,9 @@
     <div id="emlassemblyline-2101" class="section level1">
 <h1 class="page-header">
 <a href="#emlassemblyline-2101" class="anchor"></a>EMLassemblyline 2.10.1</h1>
-<div id="bug-fix-1" class="section level3">
+<div id="bug-fix-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-1" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-2" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>Schema validation:</strong> The referenced schema location was not correct. Now it is (<a href="https://github.com/EDIorg/EMLassemblyline/issues/59">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/59'>#59</a></a>).</li>
@@ -242,9 +250,9 @@
     <div id="emlassemblyline-271" class="section level1">
 <h1 class="page-header">
 <a href="#emlassemblyline-271" class="anchor"></a>EMLassemblyline 2.7.1</h1>
-<div id="bug-fix-2" class="section level3">
+<div id="bug-fix-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-2" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-3" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>Delimiter guessing:</strong> Occasionally the content of tabular templates leads <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html">data.table::fread()</a></code> to guessing a delimiter other than â\tâ. This issue has been fixed by explicitly stating the expected field delimiter.</li>
@@ -436,9 +444,9 @@
 </li>
 </ul>
 </div>
-<div id="bug-fix-3" class="section level3">
+<div id="bug-fix-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-3" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-4" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>otherEntity url:</strong> Add EML element <em>//otherEntity/physical/distribution/online/url</em> via <code><a href="../reference/make_eml.html">make_eml()</a></code>. This element was missing though documentation implied its existence.</li>
@@ -451,7 +459,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#emlassemblyline-2120">2.12.0</a></li>
+        <li><a href="#emlassemblyline-2121">2.12.1</a></li>
         <li><a href="#emlassemblyline-2111">2.11.1</a></li>
         <li><a href="#emlassemblyline-2110">2.11.0</a></li>
         <li><a href="#emlassemblyline-2102">2.10.2</a></li>
