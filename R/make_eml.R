@@ -678,7 +678,7 @@ make_eml <- function(
   
   # Initialize the <access> node
   
-  access <- list(
+  eml$access <- list(
     scope = "document",
     order = "allowFirst",
     authSystem = "https://pasta.edirepository.org/authentication",
@@ -703,7 +703,7 @@ make_eml <- function(
     }
   )
   r[[length(r)+1]] <- list(principal = "public", permission = "read")
-  access$allow <- r
+  eml$access$allow <- r
 
   # Create <dataset> ----------------------------------------------------------
   # Initialize the dataset list to which sub-nodes will be added

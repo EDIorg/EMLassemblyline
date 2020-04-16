@@ -1,3 +1,9 @@
+# EMLassemblyline 2.12.2
+
+### Bug fix
+
+* __`Missing <access> node`:__ The access node was not being added to the EML. This has been fixed.
+
 # EMLassemblyline 2.12.1
 
 ### Bug fix
