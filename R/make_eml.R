@@ -461,6 +461,19 @@ make_eml <- function(
     }
   }
   
+  # taxonomic_coverage.txt
+  # - Convert "" to NA as expected by taxonomyCleanr::make_taxonomicCoverage()
+  # - Add unresolved names to the name_resolved field so they will be listed in 
+  # the output EML (with a rank value of "unknown").
+  
+  if (!is.null(x$template$taxonomic_coverage.txt$content)) {
+    x$template$taxonomic_coverage.txt$content[
+      x$template$taxonomic_coverage.txt$content == "" ] <- NA_character_
+    use_i <- is.na(x$template$taxonomic_coverage.txt$content$name_resolved)
+    x$template$taxonomic_coverage.txt$content$name_resolved[use_i] <- 
+      x$template$taxonomic_coverage.txt$content$name[use_i]
+  }
+  
   # Load helper funcitions ----------------------------------------------------
   
   # A function to set personnel roles: contact, creator, Principal 
@@ -903,13 +916,12 @@ make_eml <- function(
   # 2.) The taxonomic_coverage.txt template listing taxa and authorities. 
   # Attempts are made to get the full hierarchy of taxonomic rank values for 
   # each taxa and render to EML.
-  # FIXME: Ensure this second option includes unresolvable taxa within the EML.
   # FIXME: Create methods for adding taxonomic authorities. Only ITIS is 
   # currently supported.
   # FIXME: Allow taxonomic hierarchies to be supplied as a table (i.e. align
   # taxonomic_coverage.txt with the taxonomicCoverage option of 
   # EML::set_coverage()).
-
+  
   if (!is.null(x$template$taxonomicCoverage.xml)) {
     message("      <taxonomicCoverage>")
     eml$dataset$coverage$taxonomicCoverage <- 
