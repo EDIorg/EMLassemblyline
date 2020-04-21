@@ -4,14 +4,8 @@
 \alias{template_arguments}
 \title{Initialize inputs to \code{EMLassemblyline} functions}
 \usage{
-template_arguments(
-  path = NULL,
-  data.path = NULL,
-  data.table = NULL,
-  other.entity = NULL,
-  sep = NULL,
-  empty = FALSE
-)
+template_arguments(path = NULL, data.path = NULL, data.table = NULL,
+  other.entity = NULL, sep = NULL, empty = FALSE)
 }
 \arguments{
 \item{path}{(character) Path to the directory containing \code{EMLassemblyline} 
