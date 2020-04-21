@@ -281,6 +281,22 @@ testthat::test_that('Expect template values in EML', {
   expect_equal(
     r$dataset$project$relatedProject[[4]]$funding,
     "No funding to report")
+  
+  # taxonomic_coverage.txt
+  
+  x1 <- x
+  x1$x <- template_arguments(
+    path = system.file(
+      '/examples/pkg_260/metadata_templates',
+      package = 'EMLassemblyline'),
+    data.path = system.file(
+      '/examples/pkg_260/data_objects',
+      package = 'EMLassemblyline'),
+    data.table = c("decomp.csv", "nitrogen.csv"),
+    other.entity = c("ancillary_data.zip", "processing_and_analysis.R"))$x
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_true(
+    !is.null(r$dataset$coverage$taxonomicCoverage))
 
 })
 
