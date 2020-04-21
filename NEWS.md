@@ -1,3 +1,9 @@
+# EMLassemblyline 2.12.3
+
+### Bug fix
+
+* __`Missing <taxonomicCoverage>`:__ taxonomicCoverage supplied in taxonomic_coverage.txt was missing from the EML. This has been fixed.
+
 # EMLassemblyline 2.12.2
 
 ### Bug fix
