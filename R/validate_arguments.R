@@ -520,7 +520,7 @@ validate_arguments <- function(fun.name, fun.args){
     # eml
     
     if (!is.null(fun.args$eml)) {
-      if (!file.exists(paste0(fun.args$path, "/", fun.args$eml))) {
+      if (!file.exists(paste0(fun.args$eml.path, "/", fun.args$eml))) {
         stop(
           paste0("The file ", fun.args$eml, " cannot be found at 'path'."),
           call. = FALSE

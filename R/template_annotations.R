@@ -302,7 +302,9 @@ template_annotations <- function(
     
     # Read an EML file
     
-    eml <- EMLassemblyline::read_eml(path, eml)
+    # FIXME: use eml.path instead
+    # FIXME remove EMLassemblyline namespace
+    eml <- EMLassemblyline::read_eml(eml.path, eml)
     
   }
   
@@ -493,7 +495,7 @@ template_annotations <- function(
   
   data.table::fwrite(
     x = anno,
-    file = paste0(eml.path, '/annotations.txt'),
+    file = paste0(path, '/annotations.txt'),
     sep = "\t",
     quote = FALSE
   )

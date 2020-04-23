@@ -4,9 +4,15 @@
 \alias{template_annotations}
 \title{Create the annotations template}
 \usage{
-template_annotations(path, data.path = path, data.table = NULL,
-  other.entity = NULL, default.annotations = NULL, eml.path = path,
-  eml = NULL)
+template_annotations(
+  path,
+  data.path = path,
+  data.table = NULL,
+  other.entity = NULL,
+  default.annotations = NULL,
+  eml.path = path,
+  eml = NULL
+)
 }
 \arguments{
 \item{path}{(character) Path to the metadata template directory and where 
