@@ -551,6 +551,8 @@ template_annotations <- function(
 #'     Extending support to all nodes capable of having 1 or more children is
 #'     welcomed.
 #'     
+#' @export
+#'     
 #' @examples 
 #' eml <- EMLassemblyline::read_eml(
 #'   path = system.file("/examples/eml", package = "EMLassemblyline"),
