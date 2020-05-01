@@ -180,34 +180,23 @@ template_annotations <- function(
   # Load default annotations to be added to the subjects found in eml
   
   if (!is.null(default.annotations)) {
-    
     defs <- default.annotations
-    
   } else {
-    
     defs <- as.data.frame(
       data.table::fread(
         file = system.file(
           '/templates/annotation_defaults.txt',
-          package = 'EMLassemblyline'
-        ),
+          package = 'EMLassemblyline'),
         colClasses = rep(
           "character",
           max(
             utils::count.fields(
               system.file(
                 '/templates/annotation_defaults.txt',
-                package = 'EMLassemblyline'
-              ),
-              sep = "\t"
-            )
-          )
-        ),
+                package = 'EMLassemblyline'),
+              sep = "\t"))),
         fill = TRUE,
-        blank.lines.skip = TRUE
-      )
-    )
-    
+        blank.lines.skip = TRUE))
   }
   
   # Initialize the annotations data frame that will be written to the 
@@ -252,8 +241,7 @@ template_annotations <- function(
       path = path,
       data.path = data.path,
       data.table = data.table,
-      other.entity = other.entity
-    )
+      other.entity = other.entity)
     
     # Call make_eml() with minimal inputs to expedite processing
     
@@ -293,10 +281,7 @@ template_annotations <- function(
       suppressWarnings(
         do.call(
           make_eml, 
-          x[names(x) %in% names(formals(make_eml))]
-        )
-      )
-    )
+          x[names(x) %in% names(formals(make_eml))])))
     
   } else {
     
@@ -330,10 +315,7 @@ template_annotations <- function(
               context = context[i],
               subject = subject[i],
               dplyr::select(defs[element == defs$element, ], -"element"),
-              stringsAsFactors = FALSE
-            )
-          )
-        )
+              stringsAsFactors = FALSE)))
       }
       anno
     }
@@ -351,9 +333,7 @@ template_annotations <- function(
     # Add ResponsibleParty to anno
     
     get_individualName <- function(x) {
-      
       if (x == "eml$dataset$project$relatedProject"){
-        
         lapply(
           eval(parse(text = x)),
           function(k) {
@@ -368,15 +348,10 @@ template_annotations <- function(
                   id = create_id(sub_i),
                   element = "/ResponsibleParty",
                   context = "dataset",
-                  subject = sub_i
-                )
-              }
-            )
-          }
-        )
-        
+                  subject = sub_i)
+              })
+          })
       } else {
-        
         lapply(
           eval(parse(text = x)),
           function(k) {
@@ -388,13 +363,9 @@ template_annotations <- function(
               id = create_id(sub_i),
               element = "/ResponsibleParty",
               context = "dataset",
-              subject = sub_i
-            )
-          }
-        )
-        
+              subject = sub_i)
+          })
       }
-      
     }
     
     # Gather annotatable elements and set default annotations -----------------
@@ -413,8 +384,7 @@ template_annotations <- function(
         id = create_id(element),
         element = create_id(element),
         context = "eml",
-        subject = element
-      )
+        subject = element)
 
     } else if (element == "dataTable") {
       
@@ -426,8 +396,7 @@ template_annotations <- function(
               id = create_id(k$physical$objectName),
               element = "/dataTable",
               context = "dataset",
-              subject = k$physical$objectName
-            )
+              subject = k$physical$objectName)
             lapply(
               k$attributeList$attribute,
               function(m) {
@@ -435,12 +404,9 @@ template_annotations <- function(
                   id = create_id(m$attributeName, k$physical$objectName),
                   element = "/dataTable/attribute",
                   context = k$physical$objectName,
-                  subject = m$attributeName
-                )
-              }
-            )
-          }
-        )
+                  subject = m$attributeName)
+              })
+          })
       }
       
     } else if (element == "otherEntity") {
@@ -453,11 +419,8 @@ template_annotations <- function(
               id = create_id(k$physical$objectName),
               element = "/otherEntity",
               context = "dataset",
-              subject = k$physical$objectName
-            )
-          }
-        )
-
+              subject = k$physical$objectName)
+          })
       }
       
     } else if (element == "ResponsibleParty") {
@@ -468,15 +431,12 @@ template_annotations <- function(
           "eml$dataset$contact",
           "eml$dataset$associatedParty",
           "eml$dataset$project$personnel",
-          "eml$dataset$project$relatedProject"
-        ),
-        get_individualName
-      )
+          "eml$dataset$project$relatedProject"),
+        get_individualName)
       rp <- unique(anno[anno$element == "/ResponsibleParty", ])
       anno <- rbind(
         anno[anno$element != "/ResponsibleParty", ],
-        rp[rp$id != "/", ]
-      )
+        rp[rp$id != "/", ])
 
     }
     
@@ -564,9 +524,7 @@ read_eml <- function(path, eml) {
   
   # Create the emld list object
   
-  eml <- EML::read_eml(
-    paste0(path, "/", eml)
-  )
+  eml <- EML::read_eml(paste0(path, "/", eml))
   
   # A helper function to wrap target nodes in list(). There are two 
   # implementations, one for target nodes and a second for nested target nodes.
@@ -577,40 +535,27 @@ read_eml <- function(path, eml) {
   # path.child = path of child node
   
   list_it <- function(eml, path.parent, path.child = NULL) {
-
     if (is.null(path.child)) {
-
       e <- eval(parse(text = path.parent))
       if ((length(e) > 1) & (!is.null(names(e)))) {
         eval(parse(text = paste0(path.parent, " <- list(e)")))
       }
-
     } else if (!is.null(path.child)) {
-
       lapply(
         seq_along(eval(parse(text = path.parent))),
         function(k) {
           if ((length(eval(parse(text = paste0(path.parent, "[[", k, "]]", path.child)))) > 1) & 
               (!is.null(names(eval(parse(text = paste0(path.parent, "[[", k, "]]", path.child))))))) {
-            
             eval(
               parse(
                 text = paste0(
                   path.parent, "[[", k, "]]", path.child, 
                   " <<- list(", 
-                  paste0(path.parent, "[[", k, "]]", path.child), ")"
-                )
-              )
-            )
-            
+                  paste0(path.parent, "[[", k, "]]", path.child), ")")))
           }
-        }
-      )
-
+        })
     }
-
     eml
-
   }
   
   # Fix the emld list object

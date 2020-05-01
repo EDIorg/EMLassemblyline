@@ -657,7 +657,6 @@ validate_annotations <- function(x) {
   if (is.null(x$template$annotations.txt)) {
     
     # If no annotations.txt then send a best practice alert as a warning.
-    
     warning(
       paste0(
         "Consider annotating your metadata. Annotations provide precise ",

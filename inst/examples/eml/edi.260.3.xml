@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="edi.260.3" xsi:schemaLocation="eml://ecoinformatics.org/eml-2.2.0  http://nis.lternet.edu/schemas/EML/eml-2.2.0/xsd/eml.xsd" system="edi">
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="edi.260.3" xsi:schemaLocation="eml://ecoinformatics.org/eml-2.2.0  https://nis.lternet.edu/schemas/EML/eml-2.2.0/xsd/eml.xsd" system="edi">
   <access authSystem="https://pasta.edirepository.org/authentication" order="allowFirst" scope="document">
     <allow>
-      <principal>uid=csmith,o=EDI,dc=edirepository,dc=org</principal>
+      <principal>uid=userid1,o=EDI,dc=edirepository,dc=org</principal>
+      <permission>all</permission>
+    </allow>
+    <allow>
+      <principal>uid=userid2,o=LTER,dc=ecoinformatics,dc=org</principal>
       <permission>all</permission>
     </allow>
     <allow>
@@ -11,7 +15,7 @@
     </allow>
   </access>
   <dataset>
-    <title>Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions</title>
+    <title>Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015</title>
     <creator>
       <individualName>
         <givenName>Kelman</givenName>
@@ -139,7 +143,7 @@
       <userId directory="https://orcid.org">https://orcid.org/0000-0001-5856-8473</userId>
       <role>Equipment Lead</role>
     </associatedParty>
-    <pubDate>2020-02-12</pubDate>
+    <pubDate>2020-05-01</pubDate>
     <abstract>
       <para>
   Development of the oil sands has led to increasing atmospheric N
@@ -198,12 +202,102 @@
     </intellectualRights>
     <coverage>
       <geographicCoverage>
+        <geographicDescription>Alberta, Canada, 100 km south of Fort McMurray, Canada</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>112.094</westBoundingCoordinate>
+          <eastBoundingCoordinate>112.094</eastBoundingCoordinate>
+          <northBoundingCoordinate>55.895</northBoundingCoordinate>
+          <southBoundingCoordinate>55.895</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+      <geographicCoverage>
         <geographicDescription>site_1</geographicDescription>
         <boundingCoordinates>
           <westBoundingCoordinate>-89.43</westBoundingCoordinate>
           <eastBoundingCoordinate>-89.43</eastBoundingCoordinate>
           <northBoundingCoordinate>45.23</northBoundingCoordinate>
           <southBoundingCoordinate>45.23</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+      <geographicCoverage>
+        <geographicDescription>site_2</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>-89.44</westBoundingCoordinate>
+          <eastBoundingCoordinate>-89.44</eastBoundingCoordinate>
+          <northBoundingCoordinate>45.24</northBoundingCoordinate>
+          <southBoundingCoordinate>45.24</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+      <geographicCoverage>
+        <geographicDescription>site_3</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>-89.45</westBoundingCoordinate>
+          <eastBoundingCoordinate>-89.45</eastBoundingCoordinate>
+          <northBoundingCoordinate>45.25</northBoundingCoordinate>
+          <southBoundingCoordinate>45.25</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+      <geographicCoverage>
+        <geographicDescription>site_4</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>-89.46</westBoundingCoordinate>
+          <eastBoundingCoordinate>-89.46</eastBoundingCoordinate>
+          <northBoundingCoordinate>45.26</northBoundingCoordinate>
+          <southBoundingCoordinate>45.26</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+      <geographicCoverage>
+        <geographicDescription>site_5</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>-89.47</westBoundingCoordinate>
+          <eastBoundingCoordinate>-89.47</eastBoundingCoordinate>
+          <northBoundingCoordinate>45.27</northBoundingCoordinate>
+          <southBoundingCoordinate>45.27</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+      <geographicCoverage>
+        <geographicDescription>site_6</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>-89.48</westBoundingCoordinate>
+          <eastBoundingCoordinate>-89.48</eastBoundingCoordinate>
+          <northBoundingCoordinate>45.28</northBoundingCoordinate>
+          <southBoundingCoordinate>45.28</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+      <geographicCoverage>
+        <geographicDescription>site_7</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>-89.49</westBoundingCoordinate>
+          <eastBoundingCoordinate>-89.49</eastBoundingCoordinate>
+          <northBoundingCoordinate>45.29</northBoundingCoordinate>
+          <southBoundingCoordinate>45.29</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+      <geographicCoverage>
+        <geographicDescription>site_8</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>-89.5</westBoundingCoordinate>
+          <eastBoundingCoordinate>-89.5</eastBoundingCoordinate>
+          <northBoundingCoordinate>45.3</northBoundingCoordinate>
+          <southBoundingCoordinate>45.3</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+      <geographicCoverage>
+        <geographicDescription>site_9</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>-89.51</westBoundingCoordinate>
+          <eastBoundingCoordinate>-89.51</eastBoundingCoordinate>
+          <northBoundingCoordinate>45.31</northBoundingCoordinate>
+          <southBoundingCoordinate>45.31</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+      <geographicCoverage>
+        <geographicDescription>site_10</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>-89.52</westBoundingCoordinate>
+          <eastBoundingCoordinate>-89.52</eastBoundingCoordinate>
+          <northBoundingCoordinate>45.32</northBoundingCoordinate>
+          <southBoundingCoordinate>45.32</southBoundingCoordinate>
         </boundingCoordinates>
       </geographicCoverage>
       <temporalCoverage>
@@ -216,71 +310,9 @@
           </endDate>
         </rangeOfDates>
       </temporalCoverage>
-      <taxonomicCoverage>
-        <taxonomicClassification>
-          <taxonRankName>kingdom</taxonRankName>
-          <taxonRankValue>Plantae</taxonRankValue>
-          <taxonomicClassification>
-            <taxonRankName>subkingdom</taxonRankName>
-            <taxonRankValue>Viridiplantae</taxonRankValue>
-            <taxonomicClassification>
-              <taxonRankName>infrakingdom</taxonRankName>
-              <taxonRankValue>Streptophyta</taxonRankValue>
-              <taxonomicClassification>
-                <taxonRankName>superdivision</taxonRankName>
-                <taxonRankValue>Embryophyta</taxonRankValue>
-                <taxonomicClassification>
-                  <taxonRankName>division</taxonRankName>
-                  <taxonRankValue>Tracheophyta</taxonRankValue>
-                  <taxonomicClassification>
-                    <taxonRankName>subdivision</taxonRankName>
-                    <taxonRankValue>Spermatophytina</taxonRankValue>
-                    <taxonomicClassification>
-                      <taxonRankName>class</taxonRankName>
-                      <taxonRankValue>Magnoliopsida</taxonRankValue>
-                      <taxonomicClassification>
-                        <taxonRankName>superorder</taxonRankName>
-                        <taxonRankValue>Asteranae</taxonRankValue>
-                        <taxonomicClassification>
-                          <taxonRankName>order</taxonRankName>
-                          <taxonRankValue>Asterales</taxonRankValue>
-                          <taxonomicClassification>
-                            <taxonRankName>family</taxonRankName>
-                            <taxonRankValue>Asteraceae</taxonRankValue>
-                            <taxonomicClassification>
-                              <taxonRankName>genus</taxonRankName>
-                              <taxonRankValue>Achillea</taxonRankValue>
-                              <taxonomicClassification>
-                                <taxonRankName>species</taxonRankName>
-                                <taxonRankValue>Achillea millefolium</taxonRankValue>
-                              </taxonomicClassification>
-                            </taxonomicClassification>
-                          </taxonomicClassification>
-                        </taxonomicClassification>
-                      </taxonomicClassification>
-                    </taxonomicClassification>
-                  </taxonomicClassification>
-                </taxonomicClassification>
-              </taxonomicClassification>
-            </taxonomicClassification>
-          </taxonomicClassification>
-        </taxonomicClassification>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-      </taxonomicCoverage>
     </coverage>
     <maintenance>
-      <description>completed</description>
+      <description>Completed</description>
     </maintenance>
     <contact>
       <individualName>
@@ -368,7 +400,7 @@
         <userId directory="https://orcid.org">https://orcid.org/0000-0001-5856-8473</userId>
         <role>Principal Investigator</role>
       </personnel>
-      <funding>Cumulative Environmental Management Association (CEMA): 2011-0003</funding>
+      <funding>Cumulative Environmental Management Association (CEMA) 2011-0003</funding>
       <relatedProject>
         <title>Decomposition in the real world</title>
         <personnel>
@@ -381,7 +413,7 @@
           <electronicMailAddress>mvile@villanova.edu</electronicMailAddress>
           <role>Principal Investigator</role>
         </personnel>
-        <funding>NSF: 111001</funding>
+        <funding>NSF 111001</funding>
       </relatedProject>
       <relatedProject>
         <title>No project title to report</title>
@@ -393,7 +425,7 @@
           <organizationName>Villanova University</organizationName>
           <role>Principal Investigator</role>
         </personnel>
-        <funding>NSF: 101</funding>
+        <funding>NSF 101</funding>
       </relatedProject>
       <relatedProject>
         <title>No project title to report</title>
@@ -422,8 +454,8 @@
       </relatedProject>
     </project>
     <dataTable>
-      <entityName>decomp.csv</entityName>
-      <entityDescription>Decomposition data</entityDescription>
+      <entityName>Decomp file name</entityName>
+      <entityDescription>Decomp file description</entityDescription>
       <physical>
         <objectName>decomp.csv</objectName>
         <size unit="bytes">15431</size>
@@ -435,9 +467,15 @@
             <attributeOrientation>column</attributeOrientation>
             <simpleDelimited>
               <fieldDelimiter>,</fieldDelimiter>
+              <quoteCharacter>\'</quoteCharacter>
             </simpleDelimited>
           </textFormat>
         </dataFormat>
+        <distribution>
+          <online>
+            <url>https://url/to/decomp.csv</url>
+          </online>
+        </distribution>
       </physical>
       <attributeList>
         <attribute>
@@ -614,8 +652,8 @@
       <numberOfRecords>294</numberOfRecords>
     </dataTable>
     <dataTable>
-      <entityName>nitrogen.csv</entityName>
-      <entityDescription>Nitrogen data</entityDescription>
+      <entityName>Nitrogen file name</entityName>
+      <entityDescription>Nitrogen file description</entityDescription>
       <physical>
         <objectName>nitrogen.csv</objectName>
         <size unit="bytes">6713</size>
@@ -627,13 +665,19 @@
             <attributeOrientation>column</attributeOrientation>
             <simpleDelimited>
               <fieldDelimiter>,</fieldDelimiter>
+              <quoteCharacter>\'</quoteCharacter>
             </simpleDelimited>
           </textFormat>
         </dataFormat>
+        <distribution>
+          <online>
+            <url>https://url/to/nitrogen.csv</url>
+          </online>
+        </distribution>
       </physical>
       <attributeList>
         <attribute>
-          <attributeName>year</attributeName>
+          <attributeName>date</attributeName>
           <attributeDefinition>Year of growth: 2011-2015</attributeDefinition>
           <storageType>date</storageType>
           <measurementScale>
@@ -866,8 +910,8 @@
               <numericDomain>
                 <numberType>real</numberType>
                 <bounds>
-                  <minimum exclusive="false">-90.46</minimum>
-                  <maximum exclusive="false">-89.43</maximum>
+                  <minimum exclusive="false">45.23</minimum>
+                  <maximum exclusive="false">46.26</maximum>
                 </bounds>
               </numericDomain>
             </ratio>
@@ -889,8 +933,8 @@
               <numericDomain>
                 <numberType>real</numberType>
                 <bounds>
-                  <minimum exclusive="false">45.23</minimum>
-                  <maximum exclusive="false">46.26</maximum>
+                  <minimum exclusive="false">-90.46</minimum>
+                  <maximum exclusive="false">-89.43</maximum>
                 </bounds>
               </numericDomain>
             </ratio>
@@ -904,8 +948,8 @@
       <numberOfRecords>104</numberOfRecords>
     </dataTable>
     <otherEntity>
-      <entityName>ancillary_data.zip</entityName>
-      <entityDescription>Ancillary data</entityDescription>
+      <entityName>ancillary_data file name</entityName>
+      <entityDescription>ancillary_data file description</entityDescription>
       <physical>
         <objectName>ancillary_data.zip</objectName>
         <size unit="bytes">4189</size>
@@ -915,12 +959,17 @@
             <formatName>unknown</formatName>
           </externallyDefinedFormat>
         </dataFormat>
+        <distribution>
+          <online>
+            <url>https://url/to/ancillary_data.zip</url>
+          </online>
+        </distribution>
       </physical>
       <entityType>unknown</entityType>
     </otherEntity>
     <otherEntity>
-      <entityName>processing_and_analysis.R</entityName>
-      <entityDescription>Data processing and analysis script</entityDescription>
+      <entityName>processing_and_analysis file name</entityName>
+      <entityDescription>processing_and_analysis file description</entityDescription>
       <physical>
         <objectName>processing_and_analysis.R</objectName>
         <size unit="bytes">2230</size>
@@ -930,6 +979,11 @@
             <formatName>unknown</formatName>
           </externallyDefinedFormat>
         </dataFormat>
+        <distribution>
+          <online>
+            <url>https://url/to/processing_and_analysis.R</url>
+          </online>
+        </distribution>
       </physical>
       <entityType>unknown</entityType>
     </otherEntity>

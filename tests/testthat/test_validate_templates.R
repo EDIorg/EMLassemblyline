@@ -21,8 +21,8 @@ testthat::test_that("annotations.txt", {
       "nitrogen.csv"
     ),
     other.entity = c(
-      "ancillary_data",
-      "processing_and_analysis"
+      "ancillary_data.zip",
+      "processing_and_analysis.R"
     )
   )$x
   
@@ -46,15 +46,6 @@ testthat::test_that("annotations.txt", {
       ),
       fill = TRUE,
       blank.lines.skip = TRUE
-    )
-  )
-  
-  # annotations - missing template --------------------------------------------
-  
-  expect_warning(
-    validate_templates(
-      fun.name = "make_eml",
-      x = as.null(x$template$annotations.txt)
     )
   )
   

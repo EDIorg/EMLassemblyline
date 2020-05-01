@@ -993,18 +993,40 @@ make_eml <- function(
           message("    <project>")
           eml$dataset$project <<- list(
             title = x$template$personnel.txt$content$projectTitle[k],
-            personnel = set_person(info_row = k, person_role = "pi"),
+            personnel = list(set_person(info_row = k, person_role = "pi")),
             funding = x$template$personnel.txt$content$funding[k])
         } else {
           message("      <relatedProject>")
           eml$dataset$project$relatedProject[[
             length(eml$dataset$project$relatedProject)+1]] <<- list(
               title = x$template$personnel.txt$content$projectTitle[k],
-              personnel = set_person(info_row = k, person_role = "pi"),
+              personnel = list(set_person(info_row = k, person_role = "pi")),
               funding = x$template$personnel.txt$content$funding[k])
         }
       })
   }
+  
+  # use_i <- x$template$personnel.txt$content$role == "pi"
+  # if (any(use_i)){
+  #   lapply(
+  #     which(use_i),
+  #     function(k) {
+  #       if (k == min(which(use_i))) {
+  #         message("    <project>")
+  #         eml$dataset$project <<- list(
+  #           title = x$template$personnel.txt$content$projectTitle[k],
+  #           personnel = set_person(info_row = k, person_role = "pi"),
+  #           funding = x$template$personnel.txt$content$funding[k])
+  #       } else {
+  #         message("      <relatedProject>")
+  #         eml$dataset$project$relatedProject[[
+  #           length(eml$dataset$project$relatedProject)+1]] <<- list(
+  #             title = x$template$personnel.txt$content$projectTitle[k],
+  #             personnel = set_person(info_row = k, person_role = "pi"),
+  #             funding = x$template$personnel.txt$content$funding[k])
+  #       }
+  #     })
+  # }
   
   # Create <dataTable> --------------------------------------------------------
   

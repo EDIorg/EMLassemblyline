@@ -56,8 +56,7 @@ annotate_eml <- function(
   
   validate_arguments(
     fun.name = 'annotate_eml',
-    fun.args = as.list(environment())
-  )
+    fun.args = as.list(environment()))
   
   if (is.character(eml.in)) {
     message("Annotating EML ...")
@@ -78,8 +77,7 @@ annotate_eml <- function(
 
   validate_templates(
     fun.name = "annotate_eml",
-    x = x
-  )
+    x = x)
   
   # Set parameters ------------------------------------------------------------
   
@@ -88,8 +86,7 @@ annotate_eml <- function(
   if (is.character(eml.in)) {
     eml <- EMLassemblyline::read_eml(
       path = dirname(eml.in),
-      eml = basename(eml.in)
-    )
+      eml = basename(eml.in))
   } else {
     eml <- eml.in
   }
@@ -119,15 +116,11 @@ annotate_eml <- function(
       list(
         propertyURI = list(
           anno$predicate_uri[k],
-          label = anno$predicate_label[k]
-        ),
+          label = anno$predicate_label[k]),
         valueURI = list(
           anno$object_uri[k],
-          label = anno$object_label[k]
-        )
-      )
-    }
-  )
+          label = anno$object_label[k]))
+    })
   
   # Match annotatable elements (subjects) to their annotations listed in
   # the annotations.txt template. Target EML sub-trees where the subjects 
@@ -148,6 +141,7 @@ annotate_eml <- function(
       }
       
     } else if (element == "dataTable") {
+      
       if (!is.null(eml$dataset$dataTable)) {
         lapply(
           seq_along(eml$dataset$dataTable),
@@ -165,11 +159,8 @@ annotate_eml <- function(
                 use_i <- (anno$subject == sub_i) & (anno$context == con_i)
                 eml$dataset$dataTable[[k]]$attributeList$attribute[[m]]$id <<- unique(anno$id[use_i])
                 eml$dataset$dataTable[[k]]$attributeList$attribute[[m]]$annotation <<- anno_ls[use_i]
-              }
-            )
-            
-          }
-        )
+              })
+          })
       }
       
     } else if (element == "otherEntity") {
@@ -184,8 +175,7 @@ annotate_eml <- function(
               eml$dataset$otherEntity[[k]]$annotation <<- anno_ls[anno$subject == sub_i]
             }
             k
-          }
-        )
+          })
       }
       
     } else if (element == "ResponsibleParty") {
@@ -194,13 +184,14 @@ annotate_eml <- function(
       # recurrences in the rp data frame.
       
       append_rp <- function(n) {
-        sub_i <- paste(unlist(n$individualName), collapse = " ")
+        sub_i <- paste(
+          c(unlist(n$individualName$givenName), n$individualName$surName), 
+          collapse = " ")
         if ((sub_i != "") & any(anno$subject == sub_i)) {
           n$id <- paste0(
             unique(anno$id[anno$subject == sub_i]),
             " ",
-            uuid::UUIDgenerate(use.time = TRUE)
-          )
+            uuid::UUIDgenerate(use.time = TRUE))
           rp <<- rbind(
             rp,
             suppressWarnings(
@@ -210,10 +201,7 @@ annotate_eml <- function(
                   anno$subject == sub_i,
                   c("element", "context", "subject", "predicate_label",
                     "predicate_uri", "object_label", "object_uri")
-                  ]
-              )
-            )
-          )
+                  ])))
         }
         n
       }
@@ -223,27 +211,23 @@ annotate_eml <- function(
           eml$dataset$creator,
           function(k) {
             append_rp(k)
-          }
-        )
+          })
       }
-      
-      
+
       if (!is.null(eml$dataset$contact)) {
         eml$dataset$contact <- lapply(
           eml$dataset$contact,
           function(k) {
             append_rp(k)
-          }
-        )
+          })
       }
-      
+
       if (!is.null(eml$dataset$associatedParty)) {
         eml$dataset$associatedParty <- lapply(
           eml$dataset$associatedParty,
           function(k) {
             append_rp(k)
-          }
-        )
+          })
       }
       
       if (!is.null(eml$dataset$project$personnel)) {
@@ -251,8 +235,7 @@ annotate_eml <- function(
           eml$dataset$project$personnel,
           function(k) {
             append_rp(k)
-          }
-        )
+          })
       }
       
       if (!is.null(eml$dataset$project$relatedProject)) {
@@ -263,11 +246,9 @@ annotate_eml <- function(
               k$personnel,
               function(m) {
                 append_rp(m)
-              }
-            )
+              })
             k
-          }
-        )
+          })
       }
       
     }
@@ -304,15 +285,11 @@ annotate_eml <- function(
       list(
         propertyURI = list(
           anno$predicate_uri[k],
-          label = anno$predicate_label[k]
-        ),
+          label = anno$predicate_label[k]),
         valueURI = list(
           anno$object_uri[k],
-          label = anno$object_label[k]
-        )
-      )
-    }
-  )
+          label = anno$object_label[k]))
+    })
   
   # Create the /dataset/annotations node and append below.
   
@@ -324,16 +301,11 @@ annotate_eml <- function(
           references = anno$id[k],
           propertyURI = list(
             label = anno_ls[[k]]$propertyURI$label,
-            propertyURI = anno_ls[[k]]$propertyURI[[1]]
-          ),
+            propertyURI = anno_ls[[k]]$propertyURI[[1]]),
           valueURI = list(
             label = anno_ls[[k]]$valueURI$label,
-            valueURI = anno_ls[[k]]$valueURI[[1]]
-          )
-        )
-      }
-    )
-  )
+            valueURI = anno_ls[[k]]$valueURI[[1]]))
+      }))
   
   # Add the /eml/datset/annotations element created above
   

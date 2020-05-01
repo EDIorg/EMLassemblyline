@@ -356,16 +356,13 @@ testthat::test_that('annotation characteristics', {
   file.copy(
     from = system.file(
       "/examples/pkg_260", 
-      package = "EMLassemblyline"
-    ),
+      package = "EMLassemblyline"),
     to = tempdir(),
-    recursive = TRUE
-  )
+    recursive = TRUE)
   
   unlink(
     paste0(tempdir(), "/pkg_260/metadata_templates/taxonomic_coverage.txt"), 
-    force = TRUE
-  )
+    force = TRUE)
   
   # Call make_eml() with a completed annotations.txt template
   
@@ -386,22 +383,19 @@ testthat::test_that('annotation characteristics', {
     user.domain = "LTER",
     package.id = 'edi.141.1',
     return.obj = TRUE,
-    write.file = FALSE
-  )
+    write.file = FALSE)
   
   # EML is schema valid
   
   expect_true(
-    EML::eml_validate(eml)
-  )
+    EML::eml_validate(eml))
   
   # Clean up
   
   unlink(
     paste0(tempdir(), "/pkg_260"), 
     recursive = TRUE, 
-    force = TRUE
-  )
+    force = TRUE)
   
 })
 
@@ -412,30 +406,25 @@ testthat::test_that("annotation of annotatable elements is not required", {
   file.copy(
     from = system.file(
       "/examples/pkg_260", 
-      package = "EMLassemblyline"
-    ),
+      package = "EMLassemblyline"),
     to = tempdir(),
-    recursive = TRUE
-  )
+    recursive = TRUE)
   
   unlink(
     paste0(tempdir(), "/pkg_260/metadata_templates/taxonomic_coverage.txt"), 
-    force = TRUE
-  )
+    force = TRUE)
   
   # Randomly remove annotations from the annotations template
   
   df <- data.table::fread(
-    paste0(tempdir(), "/pkg_260/metadata_templates/annotations.txt")
-  )
+    paste0(tempdir(), "/pkg_260/metadata_templates/annotations.txt"))
   
   df <- df[sample(seq(nrow(df)), round(nrow(df)/2)), ]
   
   data.table::fwrite(
     df, 
     paste0(tempdir(), "/pkg_260/metadata_templates/annotations.txt"), 
-    sep = "\t"
-  )
+    sep = "\t")
   
   # Call make_eml() with a completed annotations.txt template
   
@@ -456,22 +445,19 @@ testthat::test_that("annotation of annotatable elements is not required", {
     user.domain = "LTER",
     package.id = 'edi.141.1',
     return.obj = TRUE,
-    write.file = FALSE
-  )
+    write.file = FALSE)
   
   # EML is schema valid
   
   expect_true(
-    EML::eml_validate(eml)
-  )
+    EML::eml_validate(eml))
   
   # Clean up
   
   unlink(
     paste0(tempdir(), "/pkg_260"), 
     recursive = TRUE, 
-    force = TRUE
-  )
+    force = TRUE  )
   
 })
 
@@ -482,22 +468,18 @@ testthat::test_that("multiple annotations to one element is supported", {
   file.copy(
     from = system.file(
       "/examples/pkg_260", 
-      package = "EMLassemblyline"
-    ),
+      package = "EMLassemblyline"),
     to = tempdir(),
-    recursive = TRUE
-  )
+    recursive = TRUE)
   
   unlink(
     paste0(tempdir(), "/pkg_260/metadata_templates/taxonomic_coverage.txt"), 
-    force = TRUE
-  )
+    force = TRUE)
   
   # Add > 1 annotation to all unique elements within the annotations template
   
   df <- data.table::fread(
-    paste0(tempdir(), "/pkg_260/metadata_templates/annotations.txt")
-  )
+    paste0(tempdir(), "/pkg_260/metadata_templates/annotations.txt"))
   
   for (i in unique(df$element)) {
     df <- rbind(df, df[match(i, df$element)[1], ])
@@ -506,8 +488,7 @@ testthat::test_that("multiple annotations to one element is supported", {
   data.table::fwrite(
     df, 
     paste0(tempdir(), "/pkg_260/metadata_templates/annotations.txt"), 
-    sep = "\t"
-  )
+    sep = "\t")
   
   # Call make_eml() with a completed annotations.txt template
   
@@ -528,21 +509,18 @@ testthat::test_that("multiple annotations to one element is supported", {
     user.domain = "LTER",
     package.id = 'edi.141.1',
     return.obj = TRUE,
-    write.file = FALSE
-  )
+    write.file = FALSE)
   
   # EML is schema valid
   
   expect_true(
-    EML::eml_validate(eml)
-  )
+    EML::eml_validate(eml))
   
   # Clean up
   
   unlink(
     paste0(tempdir(), "/pkg_260"), 
     recursive = TRUE, 
-    force = TRUE
-  )
+    force = TRUE)
   
 })
