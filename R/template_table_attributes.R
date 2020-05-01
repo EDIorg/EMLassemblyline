@@ -352,12 +352,12 @@ template_table_attributes <- function(
       } else if (!exists('data_read_2_x')){
         
         value <- stringr::str_detect(
+          names(x$template),
           paste0(
             "attributes_",
             substr(data.table[i], 1, nchar(data.table[i]) - 4),
             ".txt"
-          ),
-          names(x$template)
+          )
         )
         
         if (!any(value)){
@@ -438,10 +438,7 @@ template_table_attributes <- function(
     
   } else if (!exists('data_read_2_x')){
     
-    if (any(is.na(x$template$custom_units.txt$content))){
-      
-      # Add to content
-      
+    if (is.null(x$template$custom_units.txt$content)) {
       x$template$custom_units.txt$content <- utils::read.table(
         file = system.file(
           '/templates/custom_units.txt',
@@ -449,11 +446,7 @@ template_table_attributes <- function(
         ), 
         header = T,
         sep = '\t',
-        as.is = T
-      )
-      
-      # Send message
-      
+        as.is = T)
       message("custom_units.txt")
       
     } else {

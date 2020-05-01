@@ -5,10 +5,10 @@ output: html_document
 
 ```{r setup, include=FALSE}
 
-# Parameterize
-
-dir_path <- '/Users/csmith/Desktop/data_packages'
-data_path <- '/Users/csmith/Desktop/data_packages/pkg_301/data_objects'
+# # Parameterize
+# 
+# dir_path <- '/Users/csmith/Desktop/data_packages'
+# data_path <- '/Users/csmith/Desktop/data_packages/pkg_301/data_objects'
 
 # Initialize .Rmd
 
@@ -16,17 +16,17 @@ knitr::opts_chunk$set(echo = TRUE)
 library(kableExtra)
 library(EMLassemblyline)
 
-# Clear contents of data package directory
+# # Clear contents of data package directory
 
 unlink(
-  x = '/Users/csmith/Desktop/data_packages/pkg_301',
+  paste0(tempdir(), '/pkg_301'),
   recursive = TRUE
 )
 
 # Create directory structure
 
 template_directories(
-  path = dir_path,
+  path = tempdir(),
   dir.name = 'pkg_301'
 )
 
@@ -47,30 +47,30 @@ file.copy(
     )
   ),
   to = paste0(
-    dir_path,
+    tempdir(),
     '/pkg_301/metadata_templates'
   )
 )
 
-# Remove templates
+# # Remove templates
 
 file.remove(
   paste0(
-    dir_path,
+    tempdir(),
     '/pkg_301/metadata_templates/bounding_boxes.txt'
   )
 )
 
 file.remove(
   paste0(
-    dir_path,
+    tempdir(),
     '/pkg_301/metadata_templates/geographic_coverage.txt'
   )
 )
 
 file.remove(
   paste0(
-    dir_path,
+    tempdir(),
     '/pkg_301/metadata_templates/taxonomicCoverage.xml'
   )
 )
@@ -92,7 +92,7 @@ file.copy(
     )
   ),
   to = paste0(
-    dir_path,
+    tempdir(),
     '/pkg_301/data_objects'
   )
 )
@@ -101,11 +101,11 @@ file.copy(
 
 template_geographic_coverage(
   path = paste0(
-    dir_path,
+    tempdir(),
     '/pkg_301/metadata_templates'
   ),
   data.path = paste0(
-    dir_path,
+    tempdir(),
     '/pkg_301/data_objects'
   ),
   data.table = 'nitrogen.csv',
@@ -116,7 +116,7 @@ template_geographic_coverage(
 
 # Set working directory
 
-knitr::opts_knit$set(root.dir = '/Users/csmith/Desktop/data_packages/pkg_301')
+knitr::opts_knit$set(root.dir = tempdir())
 
 ```
 
@@ -141,7 +141,7 @@ Example:
 # Display template
 
 abstract <- suppressWarnings(
-  readLines('./metadata_templates/abstract.txt')
+  readLines('./pkg_301/metadata_templates/abstract.txt')
 )
 
 knitr::kable(
@@ -164,7 +164,7 @@ Example:
 # Display template
 
 methods <- suppressWarnings(
-  readLines('./metadata_templates/methods.txt')
+  readLines('./pkg_301/metadata_templates/methods.txt')
 )
 
 knitr::kable(
@@ -192,7 +192,7 @@ Example:
 # Read keywords template
 
 keywords <- read.table(
-  file = './metadata_templates/keywords.txt',
+  file = './pkg_301/metadata_templates/keywords.txt',
   header = TRUE,
   sep = '\t',
   quote = "\"",
@@ -244,7 +244,7 @@ Example:
 # Read personnel template
 
 personnel <- read.table(
-  file = './metadata_templates/personnel.txt',
+  file = './pkg_301/metadata_templates/personnel.txt',
   header = TRUE,
   sep = '\t',
   quote = "\"",
@@ -281,7 +281,7 @@ Example:
 # Display template
 
 intellectual_rights <- suppressWarnings(
-  readLines('./metadata_templates/intellectual_rights.txt')
+  readLines('./pkg_301/metadata_templates/intellectual_rights.txt')
 )
 
 knitr::kable(
@@ -304,7 +304,7 @@ Example:
 # Display template
 
 additional_info <- suppressWarnings(
-  readLines('./metadata_templates/additional_info.txt')
+  readLines('./pkg_301/metadata_templates/additional_info.txt')
 )
 
 knitr::kable(
@@ -349,7 +349,7 @@ Example:
 # Read attribute templates
 
 attributes_decomp <- read.table(
-  file = './metadata_templates/attributes_decomp.txt',
+  file = './pkg_301/metadata_templates/attributes_decomp.txt',
   header = TRUE,
   sep = '\t',
   quote = "\"",
@@ -360,7 +360,7 @@ attributes_decomp <- read.table(
 )
 
 attributes_nitrogen <- read.table(
-  file = './metadata_templates/attributes_nitrogen.txt',
+  file = './pkg_301/metadata_templates/attributes_nitrogen.txt',
   header = TRUE,
   sep = '\t',
   quote = "\"",
@@ -404,7 +404,7 @@ Example:
 # Read custom units template
 
 custom_units <- read.table(
-  file = './metadata_templates/custom_units.txt',
+  file = './pkg_301/metadata_templates/custom_units.txt',
   header = TRUE,
   sep = '\t',
   quote = "\"",
@@ -440,7 +440,7 @@ Example:
 # Read catvar templates
 
 catvars_decomp <- read.table(
-  file = './metadata_templates/catvars_decomp.txt',
+  file = './pkg_301/metadata_templates/catvars_decomp.txt',
   header = TRUE,
   sep = '\t',
   quote = "\"",
@@ -451,7 +451,7 @@ catvars_decomp <- read.table(
 )
 
 catvars_nitrogen <- read.table(
-  file = './metadata_templates/catvars_nitrogen.txt',
+  file = './pkg_301/metadata_templates/catvars_nitrogen.txt',
   header = TRUE,
   sep = '\t',
   quote = "\"",
@@ -497,7 +497,7 @@ Example:
 # Read geocoverage template
 
 geocoverage <- read.table(
-  file = './metadata_templates/geographic_coverage.txt',
+  file = './pkg_301/metadata_templates/geographic_coverage.txt',
   header = TRUE,
   sep = '\t',
   quote = "\"",
@@ -541,7 +541,7 @@ Example:
 # Read taxonomic coverage template
 
 taxacoverage <- read.table(
-  file = './metadata_templates/taxonomic_coverage.txt',
+  file = './pkg_301/metadata_templates/taxonomic_coverage.txt',
   header = TRUE,
   sep = '\t',
   quote = "\"",

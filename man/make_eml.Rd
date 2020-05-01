@@ -17,10 +17,11 @@ make_eml(
   data.table.name = data.table,
   data.table.description = NULL,
   data.table.quote.character = NULL,
+  data.table.url = NULL,
   other.entity = NULL,
   other.entity.name = other.entity,
   other.entity.description = NULL,
-  data.url = NULL,
+  other.entity.url = NULL,
   provenance = NULL,
   user.id = NULL,
   user.domain = NULL,
@@ -33,6 +34,7 @@ make_eml(
   data.files.description,
   data.files.quote.character,
   data.files.url,
+  data.url = NULL,
   zip.dir,
   zip.dir.description
 )
@@ -80,6 +82,11 @@ order as listed in \code{data.table}. If the quote character is a quotation,
 then enter \code{"\\""}. If the quote character is an apostrophe, then 
 enter \code{"\\'"}.}
 
+\item{data.table.url}{(character; optional) The publicly accessible URL from which 
+\code{data.table} can be downloaded. If more than one, then supply as 
+a vector of character strings in the same order as listed in 
+\code{data.table}.}
+
 \item{other.entity}{(character; optional) Name of \code{other.entity}(s) in this 
 dataset. Use \code{other.entity} for all non-\code{data.table} files. 
 \code{other.entity}(s) should be stored at \code{data.path}. If more 
@@ -95,10 +102,10 @@ vector of character strings in the same order as listed in
 than one, then supply as a vector of descriptions in the same order as 
 listed in \code{other.entity}.}
 
-\item{data.url}{(character; optional) The publicly accessible URL from which 
-\code{data.table}s or \code{other.entity}s can be downloaded.
-This argument is not required, if the data will be 
-uploaded manually to the data repository.}
+\item{other.entity.url}{(character; optional) The publicly accessible URL from which 
+\code{other.entity} can be downloaded. If more than one, then supply as 
+a vector of character strings in the same order as listed in 
+\code{other.entity}.}
 
 \item{provenance}{(character; optional) EDI Data Repository Data package ID(s) 
 corresponding to parent datasets from which this dataset was created 
@@ -147,49 +154,10 @@ Render the contents of metadata templates into EML, validate, and write
 file.copy(
   from = system.file('/examples/pkg_260', package = 'EMLassemblyline'),
   to = tempdir(),
-  recursive = TRUE
-)
+  recursive = TRUE)
 
 # Set working directory
 setwd(paste0(tempdir(), '/pkg_260'))
-
-# Make EML (for data package with data tables)
-
-make_eml(
-  path = './metadata_templates',
-  data.path = './data_objects',
-  eml.path = './eml',
-  dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions',
-  temporal.coverage = c('2014-05-01', '2015-10-31'),
-  maintenance.description = 'completed',
-  data.table = c('decomp.csv', 'nitrogen.csv'),
-  data.table.description = c('Decomposition data', 'Nitrogen data'),
-  user.id = 'csmith',
-  user.domain = 'EDI',
-  package.id = 'edi.260.1'
-)
-
-# View EML directory contents (NOTE: edi.260.1 exists)
-dir('./eml')
-
-# Make EML (for data package with other entities)
-
-make_eml(
-  path = './metadata_templates',
-  data.path = './data_objects',
-  eml.path = './eml',
-  dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions',
-  temporal.coverage = c('2014-05-01', '2015-10-31'),
-  maintenance.description = 'completed',
-  other.entity = c('ancillary_data.zip', 'processing_and_analysis.R'),
-  other.entity.description = c('Ancillary data', 'Data processing and analysis script'),
-  user.id = 'csmith',
-  user.domain = 'EDI',
-  package.id = 'edi.260.2'
-)
-
-# View EML directory contents (NOTE: edi.260.2 exists)
-dir('./eml')
 
 # Make EML (for data package with data tables and other entities)
 
@@ -206,10 +174,9 @@ make_eml(
   other.entity.description = c('Ancillary data', 'Data processing and analysis script'),
   user.id = 'csmith',
   user.domain = 'EDI',
-  package.id = 'edi.260.3'
-)
+  package.id = 'edi.260.3')
 
-# View EML directory contents (NOTE: edi.260.3 exists)
+# View EML directory contents
 dir('./eml')
 
 # Clean up

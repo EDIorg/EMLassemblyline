@@ -234,27 +234,16 @@ import_templates <- function(path, data.path = path, license,
     
   } else if (!exists('data_read_2_x')){
     
-    if (any(is.na(x$template$abstract.txt$content))){
-      
-      # Add to content
-      
+    if (is.null(x$template$abstract.txt$content) |
+        (length(x$template$abstract.txt$content$para) == 0)) {
       x$template$abstract.txt$content <- EML::set_TextType(
         file = system.file(
           '/templates/abstract.txt',
-          package = 'EMLassemblyline'
-        )
-      )
-      
-      # Send message
-      
+          package = 'EMLassemblyline'))
       message("Importing abstract.txt.")
-      
     } else {
-      
       message("abstract.txt already exists!")
-      
     }
-    
   }
   
   # Import additional_info.txt ------------------------------------------------
@@ -288,25 +277,15 @@ import_templates <- function(path, data.path = path, license,
     
   } else if (!exists('data_read_2_x')){
     
-    if (any(is.na(x$template$additional_info.txt$content))){
-      
-      # Add to content
-      
+    if (is.null(x$template$additional_info.txt$content) |
+        (length(x$template$additional_info.txt$content$para) == 0)) {
       x$template$additional_info.txt$content <- EML::set_TextType(
         file = system.file(
           '/templates/additional_info.txt',
-          package = 'EMLassemblyline'
-        )
-      )
-      
-    # Send message
-      
+          package = 'EMLassemblyline'))
       message("Importing additional_info.txt")
-      
     } else {
-      
       message("additional_info.txt already exists!")
-      
     }
     
   }
@@ -342,10 +321,9 @@ import_templates <- function(path, data.path = path, license,
     
   } else if (!exists('data_read_2_x')){
     
-    if (any(is.na(x$template$bounding_boxes.txt$content))){
-      
-      # Add to content
-      
+    if (is.null(x$template$bounding_boxes.txt$content) |
+        ((is.data.frame(x$template$bounding_boxes.txt$content)) &
+         (length(x$template$bounding_boxes.txt$content) != 0))) {
       x$template$bounding_boxes.txt$content <- as.data.frame(
         data.table::fread(
           file = system.file(
@@ -353,18 +331,10 @@ import_templates <- function(path, data.path = path, license,
             package = 'EMLassemblyline'
           ),
           fill = TRUE,
-          blank.lines.skip = TRUE
-        )
-      )
-
-      # Send message
-      
-      message("Importing bounding_boxes.txt.")
-
+          blank.lines.skip = TRUE))
+      message("Importing bounding_boxes.txt")
     } else {
-      
       message("bounding_boxes.txt already exists!")
-      
     }
     
   }
@@ -400,41 +370,20 @@ import_templates <- function(path, data.path = path, license,
     
   } else if (!exists('data_read_2_x')){
     
-    if (any(is.na(x$template$custom_units.txt$content))){
-      
-      # Add to content
-      
+    if (is.null(x$template$custom_units.txt$content) |
+        ((is.data.frame(x$template$custom_units.txt$content)) &
+         (length(x$template$custom_units.txt$content) != 0))) {
       x$template$custom_units.txt$content <- as.data.frame(
         data.table::fread(
           file = system.file(
             '/templates/custom_units.txt',
             package = 'EMLassemblyline'
           ),
-          colClasses = rep(
-            "character",
-            max(
-              utils::count.fields(
-                system.file(
-                  '/templates/custom_units.txt',
-                  package = 'EMLassemblyline'
-                ),
-                sep = "\t"
-              )
-            )
-          ),
           fill = TRUE,
-          blank.lines.skip = TRUE
-        )
-      )
-      
-      # Send message
-      
-      message("Importing custom_units.txt.")
-       
+          blank.lines.skip = TRUE))
+      message("Importing custom_units.txt")
     } else {
-      
       message("custom_units.txt already exists!")
-      
     }
     
   }
@@ -474,25 +423,15 @@ import_templates <- function(path, data.path = path, license,
       
     } else if (!exists('data_read_2_x')){
       
-      if (any(is.na(x$template$intellectual_rights.txt$content))){
-        
-        # Add to content
-        
+      if (is.null(x$template$intellectual_rights.txt$content) |
+          (length(x$template$intellectual_rights.txt$content$para) == 0)) {
         x$template$intellectual_rights.txt$content <- EML::set_TextType(
           file = system.file(
             '/templates/intellectual_rights_cc0.txt',
-            package = 'EMLassemblyline'
-          )
-        )
-        
-        # Send message
-        
+            package = 'EMLassemblyline'))
         message("Importing intellectual_rights.txt.")
-        
       } else {
-        
         message("intellectual_rights.txt. already exists!")
-        
       }
       
     }
@@ -530,25 +469,15 @@ import_templates <- function(path, data.path = path, license,
       
     } else if (!exists('data_read_2_x')){
       
-      if (any(is.na(x$template$intellectual_rights.txt$content))){
-        
-        # Add to content
-        
+      if (is.null(x$template$intellectual_rights.txt$content) |
+          (length(x$template$intellectual_rights.txt$content$para) == 0)) {
         x$template$intellectual_rights.txt$content <- EML::set_TextType(
           file = system.file(
             '/templates/intellectual_rights_ccby4.0.txt',
-            package = 'EMLassemblyline'
-          )
-        )
-        
-        # Send message
-        
+            package = 'EMLassemblyline'))
         message("Importing intellectual_rights.txt.")
-         
       } else {
-        
-        message("intellectual_rights.txt already exists!")
-        
+        message("intellectual_rights.txt. already exists!")
       }
       
     }
@@ -586,10 +515,9 @@ import_templates <- function(path, data.path = path, license,
     
   } else if (!exists('data_read_2_x')){
     
-    if (any(is.na(x$template$keywords.txt$content))){
-      
-      # Add to content
-      
+    if (is.null(x$template$keywords.txt$content) |
+        ((is.data.frame(x$template$keywords.txt$content)) &
+         (length(x$template$keywords.txt$content) != 0))) {
       x$template$keywords.txt$content <- as.data.frame(
         data.table::fread(
           file = system.file(
@@ -609,18 +537,10 @@ import_templates <- function(path, data.path = path, license,
             )
           ),
           fill = TRUE,
-          blank.lines.skip = TRUE
-        )
-      )
-     
-      # Send message
-      
-      message("Importing keywords.txt.")
-       
+          blank.lines.skip = TRUE))
+      message("Importing keywords.txt")
     } else {
-      
       message("keywords.txt already exists!")
-      
     }
     
   }
@@ -656,25 +576,15 @@ import_templates <- function(path, data.path = path, license,
     
   } else if (!exists('data_read_2_x')){
     
-    if (any(is.na(x$template$methods.txt$content))){
-      
-      # Add to content
-      
+    if (is.null(x$template$methods.txt$content) |
+        (length(x$template$methods.txt$content$methodStep$description$para) == 0)) {
       x$template$methods.txt$content <- EML::set_methods(
         methods_file = system.file(
           '/templates/methods.txt',
-          package = 'EMLassemblyline'
-        )
-      )
-      
-      # Send message
-      
+          package = 'EMLassemblyline'))
       message("Importing methods.txt.")
-      
     } else {
-      
       message("methods.txt already exists!")
-      
     }
     
   }
@@ -710,41 +620,20 @@ import_templates <- function(path, data.path = path, license,
     
   } else if (!exists('data_read_2_x')){
     
-    if (any(is.na(x$template$personnel.txt$content))){
-      
-      # Add to content
-      
+    if (is.null(x$template$personnel.txt$content) |
+        ((is.data.frame(x$template$personnel.txt$content)) &
+         (length(x$template$personnel.txt$content) != 0))) {
       x$template$personnel.txt$content <- as.data.frame(
         data.table::fread(
           file = system.file(
             '/templates/personnel.txt',
             package = 'EMLassemblyline'
           ),
-          colClasses = rep(
-            "character",
-            max(
-              utils::count.fields(
-                system.file(
-                  '/templates/personnel.txt',
-                  package = 'EMLassemblyline'
-                ),
-                sep = "\t"
-              )
-            )
-          ),
           fill = TRUE,
-          blank.lines.skip = TRUE
-        )
-      )
-      
-      # Send message
-      
-      message("Importing personnel.txt.")
-      
+          blank.lines.skip = TRUE))
+      message("Importing personnel.txt")
     } else {
-      
       message("personnel.txt already exists!")
-      
     }
     
   }

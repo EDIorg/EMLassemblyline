@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.12.3</span>
       </span>
     </div>
 
@@ -127,17 +127,17 @@
 <h2 class="hasAnchor">
 <a href="#template_core_metadata" class="anchor"></a>template_core_metadata()</h2>
 <p>Use <code><a href="../reference/template_core_metadata.html">template_core_metadata()</a></code> to create metadata templates required by every data package.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Continuing with the data package directory ("pkg_301") set up in</span>
-<span class="co"># the article "Organize data package" ...</span>
-
-<span class="co"># The templates directory is empty</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/metadata_templates'</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># Continuing with the data package directory ("pkg_301") set up in</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="co"># the article "Organize data package" ...</span></a>
+<a class="sourceLine" id="cb1-3" title="3"></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="co"># The templates directory is empty</span></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/metadata_templates'</span>)</a></code></pre></div>
 <pre><code>## character(0)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Template core metadata</span>
-<span class="kw"><a href="../reference/template_core_metadata.html">template_core_metadata</a></span>(
-  <span class="dt">path =</span> <span class="st">'./pkg_301/metadata_templates'</span>,
-  <span class="dt">license =</span> <span class="st">'CC0'</span>
-)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># Template core metadata</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="../reference/template_core_metadata.html">template_core_metadata</a></span>(</a>
+<a class="sourceLine" id="cb3-3" title="3">  <span class="dt">path =</span> <span class="st">'./pkg_301/metadata_templates'</span>,</a>
+<a class="sourceLine" id="cb3-4" title="4">  <span class="dt">license =</span> <span class="st">'CC0'</span></a>
+<a class="sourceLine" id="cb3-5" title="5">)</a></code></pre></div>
 <pre><code>## Templating core metadata ...</code></pre>
 <pre><code>## abstract.txt</code></pre>
 <pre><code>## additional_info.txt</code></pre>
@@ -146,8 +146,8 @@
 <pre><code>## methods.txt</code></pre>
 <pre><code>## personnel.txt</code></pre>
 <pre><code>## Done.</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Core templates are now present</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/metadata_templates'</span>)</code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="co"># Core templates are now present</span></a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/metadata_templates'</span>)</a></code></pre></div>
 <pre><code>## [1] "abstract.txt"            "additional_info.txt"    
 ## [3] "intellectual_rights.txt" "keywords.txt"           
 ## [5] "methods.txt"             "personnel.txt"</code></pre>
@@ -156,42 +156,42 @@
 <h2 class="hasAnchor">
 <a href="#template_table_attributes" class="anchor"></a>template_table_attributes()</h2>
 <p>Use <code><a href="../reference/template_table_attributes.html">template_table_attributes()</a></code> to create templates required by data tables.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add a couple tables to "pkg_301"</span>
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/files">file.copy</a></span>(
-  <span class="dt">from =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">'/examples/data/nitrogen.csv'</span>, <span class="dt">package =</span> <span class="st">'EMLassemblyline'</span>),
-  <span class="dt">to =</span> <span class="st">'./pkg_301/data_objects'</span>
-)</code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="co"># Add a couple tables to "pkg_301"</span></a>
+<a class="sourceLine" id="cb14-2" title="2"></a>
+<a class="sourceLine" id="cb14-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/files">file.copy</a></span>(</a>
+<a class="sourceLine" id="cb14-4" title="4">  <span class="dt">from =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">'/examples/data/nitrogen.csv'</span>, <span class="dt">package =</span> <span class="st">'EMLassemblyline'</span>),</a>
+<a class="sourceLine" id="cb14-5" title="5">  <span class="dt">to =</span> <span class="st">'./pkg_301/data_objects'</span></a>
+<a class="sourceLine" id="cb14-6" title="6">)</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/files">file.copy</a></span>(
-  <span class="dt">from =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">'/examples/data/decomp.csv'</span>, <span class="dt">package =</span> <span class="st">'EMLassemblyline'</span>),
-  <span class="dt">to =</span> <span class="st">'./pkg_301/data_objects'</span>
-)</code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/files">file.copy</a></span>(</a>
+<a class="sourceLine" id="cb16-2" title="2">  <span class="dt">from =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">'/examples/data/decomp.csv'</span>, <span class="dt">package =</span> <span class="st">'EMLassemblyline'</span>),</a>
+<a class="sourceLine" id="cb16-3" title="3">  <span class="dt">to =</span> <span class="st">'./pkg_301/data_objects'</span></a>
+<a class="sourceLine" id="cb16-4" title="4">)</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Tables are now present</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/data_objects'</span>)</code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="co"># Tables are now present</span></a>
+<a class="sourceLine" id="cb18-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/data_objects'</span>)</a></code></pre></div>
 <pre><code>## [1] "decomp.csv"   "nitrogen.csv"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Template table attributes for each table</span>
-<span class="kw"><a href="../reference/template_table_attributes.html">template_table_attributes</a></span>(
-  <span class="dt">path =</span> <span class="st">'./pkg_301/metadata_templates'</span>,
-  <span class="dt">data.path =</span> <span class="st">'./pkg_301/data_objects'</span>,
-  <span class="dt">data.table =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'decomp.csv'</span>, <span class="st">'nitrogen.csv'</span>)
-)</code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="co"># Template table attributes for each table</span></a>
+<a class="sourceLine" id="cb20-2" title="2"><span class="kw"><a href="../reference/template_table_attributes.html">template_table_attributes</a></span>(</a>
+<a class="sourceLine" id="cb20-3" title="3">  <span class="dt">path =</span> <span class="st">'./pkg_301/metadata_templates'</span>,</a>
+<a class="sourceLine" id="cb20-4" title="4">  <span class="dt">data.path =</span> <span class="st">'./pkg_301/data_objects'</span>,</a>
+<a class="sourceLine" id="cb20-5" title="5">  <span class="dt">data.table =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'decomp.csv'</span>, <span class="st">'nitrogen.csv'</span>)</a>
+<a class="sourceLine" id="cb20-6" title="6">)</a></code></pre></div>
 <pre><code>## Templating table attributes ...</code></pre>
 <pre><code>## attributes_decomp.txt.</code></pre>
 <pre><code>## attributes_nitrogen.txt.</code></pre>
 <pre><code>## custom_units.txt</code></pre>
 <pre><code>## Done.</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Table attributes templates are now present</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/metadata_templates'</span>)</code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="co"># Table attributes templates are now present</span></a>
+<a class="sourceLine" id="cb26-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/metadata_templates'</span>)</a></code></pre></div>
 <pre><code>## [1] "abstract.txt"            "additional_info.txt"    
 ## [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
 ## [5] "custom_units.txt"        "intellectual_rights.txt"
 ## [7] "keywords.txt"            "methods.txt"            
 ## [9] "personnel.txt"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View templates</span>
-<span class="co"># </span><span class="al">NOTE</span><span class="co">: attributeName and class are autogenerated, and unit and </span>
-<span class="co"># dateTimeFormatString note where specific content is needed.</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="co"># View templates</span></a>
+<a class="sourceLine" id="cb28-2" title="2"><span class="co"># </span><span class="al">NOTE</span><span class="co">: attributeName and class are autogenerated, and unit and </span></a>
+<a class="sourceLine" id="cb28-3" title="3"><span class="co"># dateTimeFormatString note where specific content is needed.</span></a></code></pre></div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
 <table class="table table table-bordered">
 <caption style="font-size: initial !important;">
@@ -598,40 +598,40 @@ numeric
 <h2 class="hasAnchor">
 <a href="#template_categorical_variables" class="anchor"></a>template_categorical_variables()</h2>
 <p>Use <code><a href="../reference/template_categorical_variables.html">template_categorical_variables()</a></code> if any data table contains categorical variables.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Replace partially complete table attributes templates with fully completed </span>
-<span class="co"># ones as required by template_categorical_variables()</span>
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/files">file.copy</a></span>(
-  <span class="dt">from =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">'/examples/templates/attributes_nitrogen.txt'</span>, <span class="dt">package =</span> <span class="st">'EMLassemblyline'</span>),
-  <span class="dt">to =</span> <span class="st">'./pkg_301/metadata_templates'</span>,
-  <span class="dt">overwrite =</span> <span class="ot">TRUE</span>
-)</code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="co"># Replace partially complete table attributes templates with fully completed </span></a>
+<a class="sourceLine" id="cb29-2" title="2"><span class="co"># ones as required by template_categorical_variables()</span></a>
+<a class="sourceLine" id="cb29-3" title="3"></a>
+<a class="sourceLine" id="cb29-4" title="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/files">file.copy</a></span>(</a>
+<a class="sourceLine" id="cb29-5" title="5">  <span class="dt">from =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">'/examples/templates/attributes_nitrogen.txt'</span>, <span class="dt">package =</span> <span class="st">'EMLassemblyline'</span>),</a>
+<a class="sourceLine" id="cb29-6" title="6">  <span class="dt">to =</span> <span class="st">'./pkg_301/metadata_templates'</span>,</a>
+<a class="sourceLine" id="cb29-7" title="7">  <span class="dt">overwrite =</span> <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb29-8" title="8">)</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/files">file.copy</a></span>(
-  <span class="dt">from =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">'/examples/templates/attributes_decomp.txt'</span>, <span class="dt">package =</span> <span class="st">'EMLassemblyline'</span>),
-  <span class="dt">to =</span> <span class="st">'./pkg_301/metadata_templates'</span>,
-  <span class="dt">overwrite =</span> <span class="ot">TRUE</span>
-)</code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/files">file.copy</a></span>(</a>
+<a class="sourceLine" id="cb31-2" title="2">  <span class="dt">from =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">'/examples/templates/attributes_decomp.txt'</span>, <span class="dt">package =</span> <span class="st">'EMLassemblyline'</span>),</a>
+<a class="sourceLine" id="cb31-3" title="3">  <span class="dt">to =</span> <span class="st">'./pkg_301/metadata_templates'</span>,</a>
+<a class="sourceLine" id="cb31-4" title="4">  <span class="dt">overwrite =</span> <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb31-5" title="5">)</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Template categorical variables</span>
-<span class="kw"><a href="../reference/template_categorical_variables.html">template_categorical_variables</a></span>(
-  <span class="dt">path =</span> <span class="st">'./pkg_301/metadata_templates'</span>,
-  <span class="dt">data.path =</span> <span class="st">'./pkg_301/data_objects'</span>
-)</code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1"><span class="co"># Template categorical variables</span></a>
+<a class="sourceLine" id="cb33-2" title="2"><span class="kw"><a href="../reference/template_categorical_variables.html">template_categorical_variables</a></span>(</a>
+<a class="sourceLine" id="cb33-3" title="3">  <span class="dt">path =</span> <span class="st">'./pkg_301/metadata_templates'</span>,</a>
+<a class="sourceLine" id="cb33-4" title="4">  <span class="dt">data.path =</span> <span class="st">'./pkg_301/data_objects'</span></a>
+<a class="sourceLine" id="cb33-5" title="5">)</a></code></pre></div>
 <pre><code>## Templating categorical variables ...</code></pre>
 <pre><code>## catvars_decomp.txt</code></pre>
 <pre><code>## catvars_nitrogen.txt</code></pre>
 <pre><code>## Done.</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Categorical variable templates are now present</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/metadata_templates'</span>)</code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="co"># Categorical variable templates are now present</span></a>
+<a class="sourceLine" id="cb38-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/metadata_templates'</span>)</a></code></pre></div>
 <pre><code>##  [1] "abstract.txt"            "additional_info.txt"    
 ##  [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
 ##  [5] "catvars_decomp.txt"      "catvars_nitrogen.txt"   
 ##  [7] "custom_units.txt"        "intellectual_rights.txt"
 ##  [9] "keywords.txt"            "methods.txt"            
 ## [11] "personnel.txt"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View templates</span>
-<span class="co"># </span><span class="al">NOTE</span><span class="co">: attributeName and code is auto generated.</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="co"># View templates</span></a>
+<a class="sourceLine" id="cb40-2" title="2"><span class="co"># </span><span class="al">NOTE</span><span class="co">: attributeName and code is auto generated.</span></a></code></pre></div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:35%; ">
 <table class="table table table-bordered">
 <caption style="font-size: initial !important;">
@@ -907,27 +907,27 @@ arm
 <h2 class="hasAnchor">
 <a href="#template_geographic_coverage" class="anchor"></a>template_geographic_coverage()</h2>
 <p>Use <code><a href="../reference/template_geographic_coverage.html">template_geographic_coverage()</a></code> to document the locations of sampling points or areas. <em>NOTE:</em> Use the <code>empty = TRUE</code> argument to create a blank version of this template for manual editing.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Template geographic coverage</span>
-<span class="kw"><a href="../reference/template_geographic_coverage.html">template_geographic_coverage</a></span>(
-  <span class="dt">path =</span> <span class="st">'./pkg_301/metadata_templates'</span>,
-  <span class="dt">data.path =</span> <span class="st">'./pkg_301/data_objects'</span>,
-  <span class="dt">data.table =</span> <span class="st">'nitrogen.csv'</span>,
-  <span class="dt">site.col =</span> <span class="st">'site_name'</span>,
-  <span class="dt">lat.col =</span> <span class="st">'site_lat'</span>,
-  <span class="dt">lon.col =</span> <span class="st">'site_lon'</span>
-)</code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1"><span class="co"># Template geographic coverage</span></a>
+<a class="sourceLine" id="cb41-2" title="2"><span class="kw"><a href="../reference/template_geographic_coverage.html">template_geographic_coverage</a></span>(</a>
+<a class="sourceLine" id="cb41-3" title="3">  <span class="dt">path =</span> <span class="st">'./pkg_301/metadata_templates'</span>,</a>
+<a class="sourceLine" id="cb41-4" title="4">  <span class="dt">data.path =</span> <span class="st">'./pkg_301/data_objects'</span>,</a>
+<a class="sourceLine" id="cb41-5" title="5">  <span class="dt">data.table =</span> <span class="st">'nitrogen.csv'</span>,</a>
+<a class="sourceLine" id="cb41-6" title="6">  <span class="dt">site.col =</span> <span class="st">'site_name'</span>,</a>
+<a class="sourceLine" id="cb41-7" title="7">  <span class="dt">lat.col =</span> <span class="st">'site_lat'</span>,</a>
+<a class="sourceLine" id="cb41-8" title="8">  <span class="dt">lon.col =</span> <span class="st">'site_lon'</span></a>
+<a class="sourceLine" id="cb41-9" title="9">)</a></code></pre></div>
 <pre><code>## Templating geographic coverage ...</code></pre>
 <pre><code>## geographic_coverage.txt</code></pre>
 <pre><code>## Done.</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The geographic coverage template has been added</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/metadata_templates'</span>)</code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="co"># The geographic coverage template has been added</span></a>
+<a class="sourceLine" id="cb45-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/metadata_templates'</span>)</a></code></pre></div>
 <pre><code>##  [1] "abstract.txt"            "additional_info.txt"    
 ##  [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
 ##  [5] "catvars_decomp.txt"      "catvars_nitrogen.txt"   
 ##  [7] "custom_units.txt"        "geographic_coverage.txt"
 ##  [9] "intellectual_rights.txt" "keywords.txt"           
 ## [11] "methods.txt"             "personnel.txt"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View template</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="co"># View template</span></a></code></pre></div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; ">
 <table class="table table table-bordered">
 <caption style="font-size: initial !important;">
@@ -1129,74 +1129,25 @@ site_10
 <h2 class="hasAnchor">
 <a href="#template_taxonomic_coverage" class="anchor"></a>template_taxonomic_coverage()</h2>
 <p>Use <code><a href="../reference/template_taxonomic_coverage.html">template_taxonomic_coverage()</a></code> to automatically resolve taxa to authority systems and create hierarchical rank specific metadata.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Template taxonomic coverage</span>
-<span class="kw"><a href="../reference/template_taxonomic_coverage.html">template_taxonomic_coverage</a></span>(
-  <span class="dt">path =</span> <span class="st">'./pkg_301/metadata_templates'</span>,
-  <span class="dt">data.path =</span> <span class="st">'./pkg_301/data_objects'</span>,
-  <span class="dt">taxa.table =</span> <span class="st">'decomp.csv'</span>,
-  <span class="dt">taxa.col =</span> <span class="st">'taxa'</span>,
-  <span class="dt">taxa.authority =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">3</span>,<span class="dv">11</span>),
-  <span class="dt">taxa.name.type =</span> <span class="st">'scientific'</span>
-)</code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" title="1"><span class="co"># Template taxonomic coverage</span></a>
+<a class="sourceLine" id="cb48-2" title="2"><span class="kw"><a href="../reference/template_taxonomic_coverage.html">template_taxonomic_coverage</a></span>(</a>
+<a class="sourceLine" id="cb48-3" title="3">  <span class="dt">path =</span> <span class="st">'./pkg_301/metadata_templates'</span>,</a>
+<a class="sourceLine" id="cb48-4" title="4">  <span class="dt">data.path =</span> <span class="st">'./pkg_301/data_objects'</span>,</a>
+<a class="sourceLine" id="cb48-5" title="5">  <span class="dt">taxa.table =</span> <span class="st">'decomp.csv'</span>,</a>
+<a class="sourceLine" id="cb48-6" title="6">  <span class="dt">taxa.col =</span> <span class="st">'taxa'</span>,</a>
+<a class="sourceLine" id="cb48-7" title="7">  <span class="dt">taxa.authority =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">3</span>,<span class="dv">11</span>),</a>
+<a class="sourceLine" id="cb48-8" title="8">  <span class="dt">taxa.name.type =</span> <span class="st">'scientific'</span></a>
+<a class="sourceLine" id="cb48-9" title="9">)</a></code></pre></div>
 <pre><code>## Templating taxonomic coverage ...</code></pre>
 <pre><code>## Searching ITIS for "Mosses"</code></pre>
 <pre><code>## Searching GBIF Backbone Taxonomy for "Mosses"</code></pre>
 <pre><code>## Searching ITIS for "Unsorted biomass"</code></pre>
 <pre><code>## Searching GBIF Backbone Taxonomy for "Unsorted biomass"</code></pre>
-<pre><code>## Searching ITIS for "Achillea millefolium"</code></pre>
-<pre><code>## Searching GBIF Backbone Taxonomy for "Achillea millefolium"</code></pre>
-<pre><code>## 
-## Retrieving data for taxon 'Achillea millefolium'</code></pre>
-<pre><code>## Searching ITIS for "Crepis tectorum"</code></pre>
-<pre><code>## Searching GBIF Backbone Taxonomy for "Crepis tectorum"</code></pre>
-<pre><code>## 
-## Retrieving data for taxon 'Crepis tectorum'</code></pre>
-<pre><code>## Searching ITIS for "Cyperus"</code></pre>
-<pre><code>## Searching GBIF Backbone Taxonomy for "Cyperus"</code></pre>
-<pre><code>## 
-## Retrieving data for taxon 'Cyperus'</code></pre>
-<pre><code>## Searching ITIS for "Euphorbia glyptosperma"</code></pre>
-<pre><code>## Searching GBIF Backbone Taxonomy for "Euphorbia glyptosperma"</code></pre>
-<pre><code>## 
-## Retrieving data for taxon 'Euphorbia glyptosperma'</code></pre>
-<pre><code>## Searching ITIS for "Lespedeza capitata"</code></pre>
-<pre><code>## Searching GBIF Backbone Taxonomy for "Lespedeza capitata"</code></pre>
-<pre><code>## 
-## Retrieving data for taxon 'Lespedeza capitata'</code></pre>
-<pre><code>## Searching ITIS for "Lepidium densiflorum"</code></pre>
-<pre><code>## Searching GBIF Backbone Taxonomy for "Lepidium densiflorum"</code></pre>
-<pre><code>## 
-## Retrieving data for taxon 'Lepidium densiflorum'</code></pre>
-<pre><code>## Searching ITIS for "Poa pratensis"</code></pre>
-<pre><code>## Searching GBIF Backbone Taxonomy for "Poa pratensis"</code></pre>
-<pre><code>## 
-## Retrieving data for taxon 'Poa pratensis'</code></pre>
-<pre><code>## Searching ITIS for "Rumex acetosella"</code></pre>
-<pre><code>## Searching GBIF Backbone Taxonomy for "Rumex acetosella"</code></pre>
-<pre><code>## 
-## Retrieving data for taxon 'Rumex acetosella'</code></pre>
-<pre><code>## Searching ITIS for "Schizachyrium scoparium"</code></pre>
-<pre><code>## Searching GBIF Backbone Taxonomy for "Schizachyrium scoparium"</code></pre>
-<pre><code>## 
-## Retrieving data for taxon 'Schizachyrium scoparium'</code></pre>
-<pre><code>## Searching ITIS for "Bouteloua gracilis"</code></pre>
-<pre><code>## Searching GBIF Backbone Taxonomy for "Bouteloua gracilis"</code></pre>
-<pre><code>## 
-## Retrieving data for taxon 'Bouteloua gracilis'</code></pre>
 <pre><code>## Searching ITIS for "Koeleria cristata"</code></pre>
-<pre><code>## Searching GBIF Backbone Taxonomy for "Koeleria cristata"</code></pre>
-<pre><code>## 
-## Retrieving data for taxon 'Koeleria cristata'</code></pre>
-<pre><code>## Searching ITIS for "Liatris aspera"</code></pre>
-<pre><code>## Searching GBIF Backbone Taxonomy for "Liatris aspera"</code></pre>
-<pre><code>## 
-## Retrieving data for taxon 'Liatris aspera'</code></pre>
-<pre><code>## Searching ITIS for ""</code></pre>
-<pre><code>## Searching GBIF Backbone Taxonomy for ""</code></pre>
 <pre><code>## taxonomic_coverage.txt</code></pre>
 <pre><code>## Done.</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The taxonomic coverage template is present</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/metadata_templates'</span>)</code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" title="1"><span class="co"># The taxonomic coverage template is present</span></a>
+<a class="sourceLine" id="cb57-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/metadata_templates'</span>)</a></code></pre></div>
 <pre><code>##  [1] "abstract.txt"            "additional_info.txt"    
 ##  [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
 ##  [5] "catvars_decomp.txt"      "catvars_nitrogen.txt"   
@@ -1204,8 +1155,8 @@ site_10
 ##  [9] "intellectual_rights.txt" "keywords.txt"           
 ## [11] "methods.txt"             "personnel.txt"          
 ## [13] "taxonomic_coverage.txt"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View template</span>
-<span class="co"># </span><span class="al">NOTE</span><span class="co">: Unresolved taxa lack authority information</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1"><span class="co"># View template</span></a>
+<a class="sourceLine" id="cb59-2" title="2"><span class="co"># </span><span class="al">NOTE</span><span class="co">: Unresolved taxa lack authority information</span></a></code></pre></div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:70%; ">
 <table class="table table table-bordered">
 <caption style="font-size: initial !important;">
@@ -1265,176 +1216,6 @@ NA
 </tr>
 <tr>
 <td style="text-align:left;">
-Achillea millefolium
-</td>
-<td style="text-align:left;">
-scientific
-</td>
-<td style="text-align:left;">
-Achillea millefolium
-</td>
-<td style="text-align:left;">
-ITIS
-</td>
-<td style="text-align:left;">
-35423
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Crepis tectorum
-</td>
-<td style="text-align:left;">
-scientific
-</td>
-<td style="text-align:left;">
-Crepis tectorum
-</td>
-<td style="text-align:left;">
-ITIS
-</td>
-<td style="text-align:left;">
-37212
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Cyperus sp.
-</td>
-<td style="text-align:left;">
-scientific
-</td>
-<td style="text-align:left;">
-Cyperus
-</td>
-<td style="text-align:left;">
-ITIS
-</td>
-<td style="text-align:left;">
-39882
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Euphorbia glyptosperma
-</td>
-<td style="text-align:left;">
-scientific
-</td>
-<td style="text-align:left;">
-Euphorbia glyptosperma
-</td>
-<td style="text-align:left;">
-ITIS
-</td>
-<td style="text-align:left;">
-28074
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Lespedeza capitata
-</td>
-<td style="text-align:left;">
-scientific
-</td>
-<td style="text-align:left;">
-Lespedeza capitata
-</td>
-<td style="text-align:left;">
-ITIS
-</td>
-<td style="text-align:left;">
-25897
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Lepidium densiflorum
-</td>
-<td style="text-align:left;">
-scientific
-</td>
-<td style="text-align:left;">
-Lepidium densiflorum
-</td>
-<td style="text-align:left;">
-ITIS
-</td>
-<td style="text-align:left;">
-22960
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Poa pratensis
-</td>
-<td style="text-align:left;">
-scientific
-</td>
-<td style="text-align:left;">
-Poa pratensis
-</td>
-<td style="text-align:left;">
-ITIS
-</td>
-<td style="text-align:left;">
-41088
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Rumex acetosella
-</td>
-<td style="text-align:left;">
-scientific
-</td>
-<td style="text-align:left;">
-Rumex acetosella
-</td>
-<td style="text-align:left;">
-ITIS
-</td>
-<td style="text-align:left;">
-20934
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Schizachyrium scoparium
-</td>
-<td style="text-align:left;">
-scientific
-</td>
-<td style="text-align:left;">
-Schizachyrium scoparium
-</td>
-<td style="text-align:left;">
-ITIS
-</td>
-<td style="text-align:left;">
-42076
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Bouteloua gracilis
-</td>
-<td style="text-align:left;">
-scientific
-</td>
-<td style="text-align:left;">
-Bouteloua gracilis
-</td>
-<td style="text-align:left;">
-ITIS
-</td>
-<td style="text-align:left;">
-41493
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 Koeleria cristata
 </td>
 <td style="text-align:left;">
@@ -1450,39 +1231,6 @@ ITIS
 515476
 </td>
 </tr>
-<tr>
-<td style="text-align:left;">
-Liatris aspera
-</td>
-<td style="text-align:left;">
-scientific
-</td>
-<td style="text-align:left;">
-Liatris aspera
-</td>
-<td style="text-align:left;">
-ITIS
-</td>
-<td style="text-align:left;">
-37909
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-scientific
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -1490,6 +1238,7 @@ NA
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -1512,7 +1261,7 @@ NA
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
 </div>

@@ -5,14 +5,15 @@ data.table
 data.table.name
 data.table.description
 data.table.quote.character
+data.table.url
 data.url
 dataset.title
 default.annotations
 dir.name
 eml
 eml.in
-eml.path
 eml.out
+eml.path
 empty
 file.type
 geographic.coordinates
@@ -25,6 +26,7 @@ name.type
 other.entity
 other.entity.name
 other.entity.description
+other.entity.url
 package.id
 path
 provenance

@@ -1,1 +1,0 @@
-geographicDescription	westBoundingCoordinate	eastBoundingCoordinate	northBoundingCoordinate	southBoundingCoordinatesite_1	-123	-122	45	43site_2	-123	-122	45	43

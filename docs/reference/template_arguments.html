@@ -6,13 +6,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Initialize list of arguments and contents to <code>EMLassemblyline</code> functions — template_arguments • EMLassemblyline</title>
+<title>Initialize inputs to <code>EMLassemblyline</code> functions — template_arguments • EMLassemblyline</title>
+
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -30,15 +32,14 @@
 
 
 
-<meta property="og:title" content="Initialize list of arguments and contents to <code>EMLassemblyline</code> functions — template_arguments" />
 
-<meta property="og:description" content="Initialize the list of arguments for EMLassemblyline functions including
-    x, an argument containing metadata template and data file 
-    contents. This approach enables programatic interfacing of upstream 
-    metadata sources (e.g. 
-    LTER-core-metabase) 
-    to EMLassemblyline functions." />
+<meta property="og:title" content="Initialize inputs to <code>EMLassemblyline</code> functions — template_arguments" />
+<meta property="og:description" content="Initialize the full list of possible inputs to EMLassemblyline
+    functions (i.e. function arguments, metadata templates, and data 
+    objects). This enables bridging of upstream metadata and data sources 
+    (e.g. metabases, databases, Excel files, web forms, etc.)." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -68,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.12.3</span>
       </span>
     </div>
 
@@ -114,7 +115,6 @@
   <a href="../news/index.html">News</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/EDIorg/EMLassemblyline">
@@ -134,30 +134,21 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Initialize list of arguments and contents to <code>EMLassemblyline</code> functions</h1>
+    <h1>Initialize inputs to <code>EMLassemblyline</code> functions</h1>
     <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/template_arguments.R'><code>R/template_arguments.R</code></a></small>
     <div class="hidden name"><code>template_arguments.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    
-    <p>Initialize the list of arguments for EMLassemblyline functions including
-    <code>x</code>, an argument containing metadata template and data file 
-    contents. This approach enables programatic interfacing of upstream 
-    metadata sources (e.g. 
-    <a href='https://github.com/lter/LTER-core-metabase'>LTER-core-metabase</a>) 
-    to <code>EMLassemblyline</code> functions.</p>
-    
+    <p>Initialize the full list of possible inputs to <code>EMLassemblyline</code>
+    functions (i.e. function arguments, metadata templates, and data 
+    objects). This enables bridging of upstream metadata and data sources 
+    (e.g. metabases, databases, Excel files, web forms, etc.).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>template_arguments</span>(
-      <span class='kw'>path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-      <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-      <span class='kw'>data.table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-      <span class='kw'>other.entity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-      <span class='kw'>sep</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-    )</pre>
-    
+    <pre class="usage"><span class='fu'>template_arguments</span>(<span class='kw'>path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data.table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>other.entity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>empty</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -169,211 +160,64 @@ metadata templates.</p></td>
     <tr>
       <th>data.path</th>
       <td><p>(character) Path to the directory containing <code>data.table</code> and 
-<code>other.entity</code>.</p></td>
+<code>other.entity</code> data objects.</p></td>
     </tr>
     <tr>
       <th>data.table</th>
-      <td><p>(character) Data table name. If more than one, then supply as a vector 
-of character strings (e.g. 
-<code>data.table = c('concentrations.csv', 'characteristics.csv')</code>).</p></td>
+      <td><p>(character) File names of data tables. If more than one, then supply as 
+a vector (e.g. <code>data.table = c('decomp.csv', 'nitrogen.csv')</code>).</p></td>
     </tr>
     <tr>
       <th>other.entity</th>
-      <td><p>(character) Other entity name. If more than one, then supply as a vector 
-of character strings (e.g. 
-<code>other.entity = c('ancillary_data.zip', 'quality_control.R')</code>).</p></td>
+      <td><p>(character) File names of other entity data objects. If more than one, 
+then supply as a vector (e.g. 
+<code>other.entity = c('ancillary_data.zip', 'processing_and_analysis.R')</code>).</p></td>
     </tr>
     <tr>
       <th>sep</th>
-      <td><p>(character) Data table field delimiter. Use this argument if 
-<code>template_arguments</code> fails to automatically identify field delimiters of 
-<code>data.table</code>.</p></td>
+      <td><p>(character) Data table field delimiter. Use this if this function fails
+to read your <code>data.table</code>.</p></td>
+    </tr>
+    <tr>
+      <th>empty</th>
+      <td><p>(logical) Initialize the output with a set of empty metadata templates?
+This option is useful when wanting to transfer metadata directly into
+the template files without having to call the templating functions.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(named list) A list of all <code>EMLassemblyline</code> arguments with this
-    structure:</p><ul>
-<li><p><strong>data.path</strong> (character) Path to where the data 
-    files are stored.</p></li>
-<li><p><strong>data.table</strong> (character) Data table name. If more 
-    than one, supply as a vector of character strings (e.g. 
-    <code>data.table = c('concentrations.csv', 'characteristics.csv')</code>).</p></li>
-<li><p><strong>data.table.description</strong> (character) Data table 
-    description. Brief description of data tables. If more than 
-    one data table, then supply as a vector of character strings in 
-    the same order as listed in <code>data.table</code>.</p></li>
-<li><p><strong>data.table.quote.character</strong> (character) Quote 
-    character used in data tables. If more than one, then supply as 
-    a vector of character strings in the same order as listed in 
-    <code>data.table</code>. This argument is required only if 
-    <code>data.table</code> contain quotations. If the quote character is 
-    a quotation, then enter <code>"\""</code>. If the quote character is an 
-    apostrophe, then enter <code>"\'"</code>.</p></li>
-<li><p><strong>data.url</strong> (character) A publicly accessible URL to 
-    data tables and other entities of this dataset.</p></li>
-<li><p><strong>dataset.title</strong> (character) Dataset title.</p></li>
-<li><p><strong>dir.name</strong> (character) Name of parent directory. 
-    Subdirectories have predefined names.</p></li>
-<li><p><strong>eml.path</strong> (character) Path to where EML will be 
-    written.</p></li>
-<li><p><strong>geographic.coordinates</strong> (character) Geographic coordinates 
-    delineating the bounding area or point of a dataset, in decimal 
-    degrees. This argument is not required if using 
-    bounding_boxes.txt. Values must be listed in this order: 
-    North, East, South, West. Longitudes West of the prime meridian 
-    and latitudes South of the equator are negative. If representing 
-    a point, repeat the latitude for North and South, and repeat the 
-    longitude for East and West (e.g. 
-    <code>geographic.coordinates = c('28.38', '-119.95', '28.38', '-119.95')</code>).</p></li>
-<li><p><strong>geographic.description</strong> (character) Geographic 
-    description. Don't use this argument if using the 
-    geographic_coverage.txt template.</p></li>
-<li><p><strong>lat.col</strong> (character) Name of latitude column.</p></li>
-<li><p><strong>license</strong> (character) License under which the data 
-    will be released.</p></li>
-<li><p><strong>lon.col</strong> (character) Name of longitude column.</p></li>
-<li><p><strong>maintenance.description</strong> (character) Data collection 
-    status. Can be "ongoing" or "completed".</p></li>
-<li><p><strong>other.entity</strong> (character) Other entity name. If 
-    more than one, then supply as a vector of character strings. 
-    Other entities should be located at <code>data.path</code>.</p></li>
-<li><p><strong>other.entity.description</strong> (character) Other entity 
-    description. If more than one, then supply as a vector of 
-    descriptions in the same order as listed in <code>other.entity</code>.</p></li>
-<li><p><strong>package.id</strong> (character) Data package identifier. 
-    Missing <code>package.id</code> is assigned a default value of 
-    'edi.101.1'. Any data repository package ID may be used.</p></li>
-<li><p><strong>path</strong> (character) Path to where template files are
-    stored.</p></li>
-<li><p><strong>provenance</strong> (character) EDI Data Repository Data 
-    package ID(s) corresponding to parent datasets from which this 
-    dataset was created (e.g. 'knb-lter-cap.46.3'). If more than one, 
-    then supply as a vector of character strings.</p></li>
-<li><p><strong>return.obj</strong> (logical) Return the EML as an R 
-    object of class EML object.</p></li>
-<li><p><strong>sep</strong> (character) Field delimiter to be used when 
-    reading data tables.</p></li>
-<li><p><strong>site.col</strong> (character) Name of site column, where
-    site is the name of the location specified by <code>lat.col</code> and 
-    <code>lon.col</code>.</p></li>
-<li><p><strong>taxa.authority</strong> (integer) An ordered numeric vector of 
-    ID's corresponding to data sources (i.e. taxonomic authorities) 
-    you'd like to query, in the order of decreasing preference. Run 
-    <code>view_taxa_authorities()</code> to see supported data sources. Columns 
-    "resolve_sci_taxa", and "resolve_comm_taxa" correspond to scientific 
-    and common searches.</p></li>
-<li><p><strong>taxa.col</strong> (character) Name of column in 
-    <code>taxa.table</code>containing taxonomic names.</p></li>
-<li><p><strong>taxa.name.type</strong> (character) Taxonomic name type. Can be: 
-    "scientific", "common", or "both".</p></li>
-<li><p><strong>taxa.table</strong> (character) Name of data table containing 
-    <code>taxa.col</code>.</p></li>
-<li><p><strong>temporal.coverage</strong> (character) Beginning and ending 
-    dates of the dataset as a vector of character strings in the 
-    format <strong>YYYY-MM-DD</strong>.</p></li>
-<li><p><strong>user.domain</strong> (character) Domain of the 
-    <code>user.id</code>. If more than one, then supply as a vector of 
-    character strings in the same order corresponding to listed under
-    <code>user.id</code>. Valid options for EDI are "LTER" and "EDI". Other 
-    data repository IDs may be used. NULL user.domain defaults to 
-    "someuserdomain".</p></li>
-<li><p><strong>user.id</strong> (character) ID of data repository user 
-    account. If more than one, supply as a vector of character 
-    strings. NULL user.id defaults to "someuserid".</p></li>
-<li><p><strong>write.file</strong> (logical) Write file to 
-    <code>eml.path</code>.</p></li>
-<li><p><strong>x</strong> (named list) List of metadata template, data 
-    tables, and other entities.</p><ul>
-<li><p><strong>template</strong> - Metadata template files</p><ul>
-<li><p><strong>abstract.txt</strong> Abstract template</p><ul>
-<li><p><strong>content</strong> <code>list</code> containing 
-          abstract, NA otherwise</p></li>
-</ul></li>
-<li><p><strong>additional_info.txt</strong> Additional information template</p><ul>
-<li><p><strong>content</strong> <code>list</code> containing 
-          additional info, NA otherwise</p></li>
-</ul></li>
-<li><p><strong>attributes_name.txt</strong> Attributes template where 
-        "name" is the corresponding <code>data.table</code>.</p><ul>
-<li><p><strong>content</strong> Data frame of attributes template, 
-          NA otherwise.</p></li>
-</ul></li>
-<li><p><strong>bounding_boxes.txt</strong> Bounding boxes template</p><ul>
-<li><p><strong>content</strong> Data frame of bounding boxes 
-          template, NA otherwise.</p></li>
-</ul></li>
-<li><p><strong>catvars_name.txt</strong> Categorical variables template 
-          where "name" is the corresponding <code>data.table</code>.</p><ul>
-<li><p><strong>content</strong> Data frame of categorical variables 
-          template, NA otherwise.</p></li>
-</ul></li>
-<li><p><strong>custom_units.txt</strong> Custom units template</p><ul>
-<li><p><strong>content</strong> Data frame of custom units template, 
-          NA otherwise.</p></li>
-</ul></li>
-<li><p><strong>geographic_coverage.txt</strong> Geographic coverage 
-          template</p><ul>
-<li><p><strong>content</strong> Data frame of geographic coverage 
-          template, NA otherwise.</p></li>
-</ul></li>
-<li><p><strong>intellectual_rights.txt</strong> Intellectual rights 
-          template</p><ul>
-<li><p><strong>content</strong> <code>list</code> containing 
-          intellectual rights template, NA otherwise.</p></li>
-</ul></li>
-<li><p><strong>keywords.txt</strong> Keywords template</p><ul>
-<li><p><strong>content</strong> Data frame of keywords template, 
-          NA otherwise.</p></li>
-</ul></li>
-<li><p><strong>methods.txt</strong> Methods template</p><ul>
-<li><p><strong>content</strong> <code>list</code> containing 
-          methods, NA otherwise.</p></li>
-</ul></li>
-<li><p><strong>personnel.txt</strong> Personnel template</p><ul>
-<li><p><strong>content</strong> Data frame of personnel template, 
-          NA otherwise.</p></li>
-</ul></li>
-<li><p><strong>taxonomicCoverage.xml</strong> Taxonomic coverage EML 
-          element</p><ul>
-<li><p><strong>content</strong> <code>list</code>, 
-          NA otherwise</p></li>
-</ul></li>
-</ul></li>
-<li><p><strong>data.table</strong> Data tables</p><ul>
-<li><p><strong>data.table.name.ext</strong> Name of data table including 
-          file extension, NULL otherwise.</p><ul>
-<li><p><strong>content</strong> Data frame of data table.</p></li>
-</ul></li>
-</ul></li>
-<li><p><strong>other.entity</strong> Other entities</p><ul>
-<li><p><strong>other.entity.name.ext</strong> Name of other entity 
-           including file extension, NULL otherwise.</p><ul>
-<li><p><strong>content</strong> NA</p></li>
-</ul></li>
-</ul></li>
-</ul></li>
-</ul>
+    <p>(named list) A list of all <code>EMLassemblyline</code> arguments, specified 
+    metadata templates and data objects.</p>
 
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Output arguments and empty versions of metadata templates</span>
 
-    <p>The full named list structure is returned irrespective of NULL inputs,
-    so content can be added downstream (e.g. <code>EMLassemblyline</code> templating 
-    functions).</p>
-    
+<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>template_arguments</span>(<span class='kw'>empty</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
+<span class='co'># Output arguments, completed versions of metadata templates, and data objects</span>
+
+<span class='no'>mydir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/files'>file.copy</a></span>(
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>'/examples/pkg_260'</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'EMLassemblyline'</span>),
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),
+  <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/getwd'>setwd</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(), <span class='st'>"/pkg_260"</span>))
+
+<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>template_arguments</span>(
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"./metadata_templates"</span>,
+  <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='st'>"./data_objects"</span>,
+  <span class='kw'>data.table</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"decomp.csv"</span>, <span class='st'>"nitrogen.csv"</span>),
+  <span class='kw'>other.entity</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"ancillary_data.zip"</span>, <span class='st'>"processing_and_analysis.R"</span>))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-          </ul>
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
@@ -384,7 +228,7 @@ of character strings (e.g.
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
    </div>

@@ -1,6 +1,6 @@
 Package: EMLassemblyline
 Title: A workflow for creating EML
-Version: 2.8.1
+Version: 2.12.3
 Authors@R: person("Colin", "Smith", email = "colin.smith@wisc.edu", role = c("aut", "cre"), comment = "https://orcid.org/0000-0003-2261-9931")
 Description: 
     For scientists and data managers who need to easily create high quality 
@@ -21,9 +21,9 @@ Imports:
     rmarkdown (>= 1.11),
     EML (>= 2.0.0),
     methods,
-    taxonomyCleanr,
     uuid (>= 0.1-2),
-    EDIutils
+    taxonomyCleanr (>= 1.3.0),
+    EDIutils (>= 1.0.2)
 Suggests: testthat
 License: MIT
 Encoding: UTF-8

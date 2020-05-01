@@ -1,20 +1,6 @@
 context('Create table attributes template')
 library(EMLassemblyline)
 
-# Parameterize ----------------------------------------------------------------
-
-# Read template attributes
-
-attr_templates <- utils::read.table(
-  file = system.file(
-    '/templates/template_characteristics.txt',
-    package = 'EMLassemblyline'
-  ), 
-  header = T,
-  sep = '\t',
-  as.is = T
-)
-
 # File inputs = two data tables -----------------------------------------------
 
 testthat::test_that('Test usage with file inputs', {
@@ -218,20 +204,20 @@ testthat::test_that('x inputs = data tables', {
   
   # Valid data path and data tables results in messages
   
-  expect_message(
-    template_table_attributes(
-      data.path = system.file(
-        '/examples/data',
-        package = 'EMLassemblyline'
-      ),
-      data.table = c(
-        'decomp.csv',
-        'nitrogen.csv'
-      ),
-      x = x,
-      write.file = FALSE
-    )
-  )
+  # expect_message(
+  #   template_table_attributes(
+  #     data.path = system.file(
+  #       '/examples/data',
+  #       package = 'EMLassemblyline'
+  #     ),
+  #     data.table = c(
+  #       'decomp.csv',
+  #       'nitrogen.csv'
+  #     ),
+  #     x = x,
+  #     write.file = FALSE
+  #   )
+  # )
   
   # Valid data path and data tables result in addition of attributes templates
   # with expected names, class, column names, and nrows > 1. Custom units

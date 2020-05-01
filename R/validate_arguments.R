@@ -287,59 +287,59 @@ validate_arguments <- function(fun.name, fun.args){
     # dataset.title
     
     if (is.null(fun.args$dataset.title)){
-      stop('Input argument "dataset.title" is missing.')
+      stop('Input argument "dataset.title" is missing.', call. = F)
     }
 
     # data.table.description
     
     if (!is.null(fun.args$data.table)){
       if (is.null(fun.args$data.table.description)){
-        stop('Input argument "data.table.description" is missing.')
+        stop('Input argument "data.table.description" is missing.', call. = F)
       }
     }
 
     # temporal.coverage
     
     if (is.null(fun.args$temporal.coverage)){
-      stop('Input argument "temporal.coverage" is missing.')
+      stop('Input argument "temporal.coverage" is missing.', call. = F)
     }
     
     if (length(fun.args$temporal.coverage) != 2){
-      stop('The argument "temporal.coverage" requires both a begin date and end date. Please fix this.')
+      stop('The argument "temporal.coverage" requires both a begin date and end date. Please fix this.', call. = F)
     }
     
     # geographic.coordinates and geographic.description
     
     if (!is.null(fun.args$geographic.coordinates) & is.null(fun.args$geographic.description)){
-      stop('Input argument "geographic.description" is missing.')
+      stop('Input argument "geographic.description" is missing.', call. = F)
     }
     
     if (is.null(fun.args$geographic.coordinates) & !is.null(fun.args$geographic.description)){
-      stop('Input argument "geographic.coordinates" is missing.')
+      stop('Input argument "geographic.coordinates" is missing.', call. = F)
     }
 
     # maintenance.description
     
     if (is.null(fun.args$maintenance.description)){
-      stop('Input argument "maintenance.description" is missing. Indicate whether data collection is "ongoing" or "completed" for your dataset.')
+      stop('Input argument "maintenance.description" is missing. Indicate whether data collection is "ongoing" or "completed" for your dataset.', call. = F)
     }
 
     # user.id and user.domain
     
     if (!is.null(fun.args$user.id) & is.null(fun.args$user.domain)){
-      stop('Input argument "user.domain" is missing. Add one.')
+      stop('Input argument "user.domain" is missing. Add one.', call. = F)
     }
     
     if (!is.null(fun.args$user.domain) & is.null(fun.args$user.id)){
-      stop('Input argument "user.id" is missing. Add one.')
+      stop('Input argument "user.id" is missing. Add one.', call. = F)
     }
     
     if ((!is.null(fun.args$user.id)) & (!is.null(fun.args$user.domain))){
       if (length(fun.args$user.id) != length(fun.args$user.domain)){
-        stop('The number of values listed in arguments "user.id" and "user.domain" do not match. Each user.id must have a corresponding user.domain')
+        stop('The number of values listed in arguments "user.id" and "user.domain" do not match. Each user.id must have a corresponding user.domain', call. = F)
       }
       if (sum(sum(fun.args$user.domain == 'LTER'), sum(fun.args$user.domain == 'EDI')) != length(fun.args$user.domain)){
-        warning('Input argument "user.domain" is not "EDI" or "LTER". If not creating a data package for EDI, then ignore this message. A default value "someuserdomain" will be used.')
+        warning('Input argument "user.domain" is not "EDI" or "LTER". If not creating a data package for EDI, then ignore this message. A default value "someuserdomain" will be used.', call. = F)
       }
     }
     
@@ -386,7 +386,7 @@ validate_arguments <- function(fun.name, fun.args){
     
     if (!is.null(fun.args$data.table)){
       if (length(fun.args$data.table.description) != length(fun.args$data.table)){
-        stop('The number of descriptions listed in the argument "data.table.description" does not match the number of files listed in the argument "data.table". These must match.')
+        stop('The number of descriptions listed in the argument "data.table.description" does not match the number of files listed in the argument "data.table". These must match.', call. = F)
       }
     }
     
@@ -395,24 +395,32 @@ validate_arguments <- function(fun.name, fun.args){
     if (!is.null(fun.args$data.table)){
       if (!is.null(fun.args$data.table.quote.character)){
         if (length(fun.args$data.table.quote.character) != length(fun.args$data.table)){
-          stop('The number of quote characters listed in the argument "data.table.quote.character" does not match the number of files listed in the argument "data.table". These must match.')
+          stop('The number of quote characters listed in the argument "data.table.quote.character" does not match the number of files listed in the argument "data.table". These must match.', call. = F)
         }
+      }
+    }
+    
+    # data.table.url
+    
+    if (!is.null(fun.args$data.table.url)) {
+      if (length(fun.args$data.table.url) != length(fun.args$data.table)) {
+        stop('The number of URLs listed in the argument "data.table.url" does not match the number of files listed in the argument "data.table". These must match.', call. = F)
       }
     }
     
     # other.entity and other.entity.description
     
     if ((!is.null(fun.args$other.entity)) & (is.null(fun.args$other.entity.description))){
-      stop('The argument "other.entity.description" is missing and "other.entity" is present. Add a description for your zip directory.')
+      stop('The argument "other.entity.description" is missing and "other.entity" is present. Add a description for your zip directory.', call. = F)
     }
     
     if ((!is.null(fun.args$other.entity.description)) & (is.null(fun.args$other.entity))){
-      stop('The argument "other.entity" is missing and "other.entity.description" is present. Add the zip directories you are describing.')
+      stop('The argument "other.entity" is missing and "other.entity.description" is present. Add the zip directories you are describing.', call. = F)
     }
     
     if ((!is.null(fun.args$other.entity.description)) & (!is.null(fun.args$other.entity))){
       if ((length(fun.args$other.entity)) != (length(fun.args$other.entity.description))){
-        stop('The number of other.entity and other.entity.descriptions must match.')
+        stop('The number of other.entity and other.entity.descriptions must match.', call. = F)
       }
     }
     
@@ -430,11 +438,19 @@ validate_arguments <- function(fun.name, fun.args){
       }
     }
     
+    # other.entity.url
+    
+    if (!is.null(fun.args$other.entity.url)) {
+      if (length(fun.args$other.entity.url) != length(fun.args$other.entity)) {
+        stop('The number of URLs listed in the argument "other.entity.url" does not match the number of files listed in the argument "other.entity". These must match.', call. = F)
+      }
+    }
+    
     # package.id
     
     if (!is.null(fun.args$package.id)){
       if (!isTRUE(stringr::str_detect(fun.args$package.id, '[:alpha:]\\.[:digit:]+\\.[:digit:]'))){
-        warning('Input argument "package.id" is not valid for EDI. An EDI package ID must consist of a scope, identifier, and revision (e.g. "edi.100.4"). If not creating a data package for EDI, then ignore this message.')
+        warning('Input argument "package.id" is not valid for EDI. An EDI package ID must consist of a scope, identifier, and revision (e.g. "edi.100.4"). If not creating a data package for EDI, then ignore this message.', call. = F)
       }
     }
 
@@ -533,12 +549,27 @@ validate_arguments <- function(fun.name, fun.args){
   
   # Call from template_arguments() ------------------------------------------------
   
-  if (fun.name == 'template_arguments'){
+  if (fun.name == 'template_arguments') {
     
     # path
     
-    if (!is.null(fun.args$path)){
+    if (!is.null(fun.args$path)) {
       EDIutils::validate_path(fun.args$path)
+      attr_tmp <- read_template_attributes()
+      path_files <- list.files(fun.args$path)
+      if (!length(path_files) == 0) {
+        is_template <- rep(FALSE, length(path_files))
+        for (i in 1:length(path_files)){
+          is_template[i] <- any(
+            stringr::str_detect(path_files[i], attr_tmp$regexpr))
+        }
+        if (!any(is_template)) {
+          stop("No metadata templates found at 'path'.", call. = F)
+        }
+      } else {
+        stop("No metadata templates found at 'path'.", call. = F)
+      }
+      check_duplicate_templates(fun.args$path)
     }
     
     # data.path
@@ -585,7 +616,7 @@ validate_arguments <- function(fun.name, fun.args){
       use_i <- stringr::str_detect(string = files,
                                    pattern = "^attributes")
       if (sum(use_i) == 0){
-        stop('There are no attributes.txt files in your dataset working directory. Please fix this.')
+        stop('There are no attributes.txt files in your dataset working directory. Please fix this.', call. = F)
       }
       
       attribute_files <- files[use_i]
@@ -601,7 +632,7 @@ validate_arguments <- function(fun.name, fun.args){
       # Send warning if data table name is repeated more than once
       
       if (length(unique(tools::file_path_sans_ext(data_files))) != length(data_files)){
-        stop('Duplicate data file names exist in this directory. Please remove duplicates, even if they are a different file type.')
+        stop('Duplicate data file names exist in this directory. Please remove duplicates, even if they are a different file type.', call. = F)
       }
       
       # If using x ...
@@ -614,7 +645,7 @@ validate_arguments <- function(fun.name, fun.args){
       use_i <- stringr::str_detect(string = files,
                                    pattern = "^attributes")
       if (sum(use_i) == 0){
-        stop('There are no attributes.txt files in your dataset working directory. Please fix this.')
+        stop('There are no attributes.txt files in your dataset working directory. Please fix this.', call. = F)
       }
       
       attribute_files <- files[use_i]
@@ -634,7 +665,7 @@ validate_arguments <- function(fun.name, fun.args){
       # Send warning if data table name is repeated more than once
       
       if (length(unique(tools::file_path_sans_ext(data_files))) != length(data_files)){
-        stop('Duplicate data file names exist in this directory. Please remove duplicates, even if they are a different file type.')
+        stop('Duplicate data file names exist in this directory. Please remove duplicates, even if they are a different file type.', call. = F)
       }
       
     }
@@ -648,20 +679,20 @@ validate_arguments <- function(fun.name, fun.args){
     # license
     
     if (is.null(fun.args$license)){
-      stop('Input argument "license" is missing')
+      stop('Input argument "license" is missing', call. = F)
     }
     
     license.low <- tolower(fun.args$license)
     
     if (!stringr::str_detect(license.low, "^cc0$|^ccby$")){
-      stop('Invalid value entered for the "license" argument. Please choose "CC0" or "CCBY".')
+      stop('Invalid value entered for the "license" argument. Please choose "CC0" or "CCBY".', call. = F)
     }
     
     # file.type
     
     if ((fun.args$file.type != '.txt') & (fun.args$file.type != '.docx') & 
         (fun.args$file.type != '.md')){
-      stop(paste0('"', fun.args$file.type, '" is not a valid entry to the "file.type" argument.'))
+      stop(paste0('"', fun.args$file.type, '" is not a valid entry to the "file.type" argument.'), call. = F)
     }
     
   }
@@ -675,25 +706,25 @@ validate_arguments <- function(fun.name, fun.args){
       # data.table
       
       if (is.null(fun.args$data.table)){
-        stop('Input argument "data.table" is missing! Specify the data file containing the geographic coordinates.')
+        stop('Input argument "data.table" is missing! Specify the data file containing the geographic coordinates.', call. = F)
       }
       
       # lat.col
       
       if (is.null(fun.args$lat.col)){
-        stop('Input argument "lat.col" is missing! Specify latitude column name.')
+        stop('Input argument "lat.col" is missing! Specify latitude column name.', call. = F)
       }
       
       # lon.col
       
       if (is.null(fun.args$lon.col)){
-        stop('Input argument "lon.col" is missing! Specify longitude column name.')
+        stop('Input argument "lon.col" is missing! Specify longitude column name.', call. = F)
       }
       
       # site.col
       
       if (is.null(fun.args$site.col)){
-        stop('Input argument "site.col" is missing! Specify site column name.')
+        stop('Input argument "site.col" is missing! Specify site column name.', call. = F)
       }
       
       if (is.null(fun.args$x)){
@@ -732,7 +763,7 @@ validate_arguments <- function(fun.name, fun.args){
         use_i2 <- columns[use_i]
         use_i3 <- columns_in %in% use_i2
         if (sum(use_i) != 3){
-          stop(paste("Invalid column names entered: ", paste(columns_in[!use_i3], collapse = ", "), sep = ""))
+          stop(paste("Invalid column names entered: ", paste(columns_in[!use_i3], collapse = ", "), sep = ""), call. = F)
         }
       }
     }
@@ -767,7 +798,7 @@ validate_arguments <- function(fun.name, fun.args){
     # taxa.table
 
     if (is.null(fun.args$taxa.table)){
-      stop('Input argument "taxa.table" is missing.')
+      stop('Input argument "taxa.table" is missing.', call. = F)
     }
     
     if (is.null(fun.args$x)){
@@ -782,7 +813,7 @@ validate_arguments <- function(fun.name, fun.args){
     } else if (!is.null(fun.args$x)){
       
       if (!any(fun.args$taxa.table %in% names(fun.args$x$data.table))){
-        stop('Input argument "taxa.table" is invalid.')
+        stop('Input argument "taxa.table" is invalid.', call. = F)
 
       }
       
@@ -795,7 +826,7 @@ validate_arguments <- function(fun.name, fun.args){
     }
     
     if (length(fun.args$taxa.col) != length(fun.args$taxa.table)){
-      stop('Each "taxa.table" requires a corresponding "taxa.col".')
+      stop('Each "taxa.table" requires a corresponding "taxa.col".', call. = F)
     }
     
     if (is.null(fun.args$x)){
@@ -807,7 +838,7 @@ validate_arguments <- function(fun.name, fun.args){
       
       for (i in seq_along(fun.args$taxa.table)){
         if (!isTRUE(fun.args$taxa.col[i] %in% colnames(x$x$data.table[[data_files[i]]]$content))){
-          stop('Input argument "taxa.col" can not be found in "taxa.table".')
+          stop('Input argument "taxa.col" can not be found in "taxa.table".', call. = F)
         }
       }
       
@@ -815,7 +846,7 @@ validate_arguments <- function(fun.name, fun.args){
       
       for (i in seq_along(fun.args$taxa.table)){
         if (!isTRUE(fun.args$taxa.col[i] %in% colnames(fun.args$x$data.table[[fun.args$taxa.table[i]]]$content))){
-          stop('Input argument "taxa.col" can not be found in "taxa.table"')
+          stop('Input argument "taxa.col" can not be found in "taxa.table"', call. = F)
         }
       }
       
@@ -825,13 +856,13 @@ validate_arguments <- function(fun.name, fun.args){
     
     if (is.null(fun.args$taxa.name.type)){
       
-      stop('Input argument "taxa.name.type" is missing.')
+      stop('Input argument "taxa.name.type" is missing.', call. = F)
       
     } else {
       
       if (!any(tolower(fun.args$taxa.name.type) %in% c('scientific', 'common', 'both'))){
         
-        stop('Input argument "taxa.name.type" must be "scientific", "common", or "both".')
+        stop('Input argument "taxa.name.type" must be "scientific", "common", or "both".', call. = F)
       }
       
     }
@@ -839,7 +870,7 @@ validate_arguments <- function(fun.name, fun.args){
     # taxa.authority
     
     if (is.null(fun.args$taxa.authority)){
-      stop('Input argument "taxa.authority" is missing.')
+      stop('Input argument "taxa.authority" is missing.', call. = F)
     }
     
     authorities <- taxonomyCleanr::view_taxa_authorities()
@@ -849,9 +880,9 @@ validate_arguments <- function(fun.name, fun.args){
     use_i <- as.character(fun.args$taxa.authority) %in% as.character(authorities$id)
     
     if (sum(use_i) != length(use_i)){
-      stop('Input argument "taxa.authority" contains unsupported authority IDs.')
+      stop('Input argument "taxa.authority" contains unsupported authority IDs.', call. = F)
     }
   
   }
-
+  
 }
