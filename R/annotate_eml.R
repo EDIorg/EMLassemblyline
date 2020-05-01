@@ -141,7 +141,7 @@ annotate_eml <- function(
       }
       
     } else if (element == "dataTable") {
-      
+
       if (!is.null(eml$dataset$dataTable)) {
         lapply(
           seq_along(eml$dataset$dataTable),

@@ -547,6 +547,97 @@ validate_arguments <- function(fun.name, fun.args){
 
   }
   
+  # Call from template_annotations() ------------------------------------------
+  
+  if (fun.name == 'template_annotations'){
+    
+    # path
+    
+    if (is.null(fun.args$path)) {
+      stop('Input argument "path" is missing.', call. = FALSE)
+    }
+    
+    if (!is.null(fun.args$path)) {
+      EDIutils::validate_path(fun.args$path)
+    }
+    
+    if (file.exists(paste0(fun.args$path, "/annotations.txt"))) {
+      stop(
+        paste0(
+          "annotations.txt already exists. To create a new annotations ",
+          "template, remove this one from 'path'."
+        ), 
+        call. = FALSE
+      )
+    }
+    
+    # data.path
+    
+    if (!is.null(fun.args$data.path)) {
+      EDIutils::validate_path(fun.args$data.path)
+    }
+    
+    # data.table
+    
+    if (!is.null(fun.args$data.table)){
+      table_names <- suppressWarnings(
+        EDIutils::validate_file_names(
+          path = fun.args$data.path, 
+          data.files = fun.args$data.table
+        )
+      )
+    }
+    
+    # other.entity
+    
+    if (!is.null(fun.args$other.entity)){
+      table_names <- suppressWarnings(
+        EDIutils::validate_file_names(
+          path = fun.args$data.path, 
+          data.files = fun.args$other.entity
+        )
+      )
+    }
+    
+    # default.annotations
+    
+    if (!is.null(fun.args$default.annotations)){
+      
+      if (!is.data.frame(fun.args$default.annotations)) {
+        stop(
+          "Input argument 'default.annotations' is not a data frame.", 
+          call. = FALSE
+        )
+      }
+      
+      if (!all(c("element", "predicate_label", "predicate_uri", "object_label", 
+          "object_uri") %in% colnames(fun.args$default.annotations))) {
+        stop(
+          paste0(
+            "The 'default.annotations' data frame is missing one or more of ",
+            "these columns: 'element', 'predicate_label', 'predicate_uri', ",
+            "'object_label', 'object_uri'"
+          ),
+          call. = FALSE
+        )
+      }
+      
+    }
+    
+    # eml
+    
+    if (!is.null(fun.args$eml)) {
+      if (!file.exists(paste0(fun.args$eml.path, "/", fun.args$eml))) {
+        stop(
+          paste0("The file ", fun.args$eml, " cannot be found at 'path'."),
+          call. = FALSE
+        )
+      }
+      
+    }
+
+  }
+  
   # Call from template_arguments() ------------------------------------------------
   
   if (fun.name == 'template_arguments') {
