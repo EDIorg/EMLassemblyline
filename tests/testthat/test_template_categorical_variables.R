@@ -263,62 +263,123 @@ testthat::test_that('Test usage with x inputs',{
 
 testthat::test_that('Missing value codes', {
   
-  # Load templates and data, then configure for this test
-  
-  x_list <- template_arguments(
+  x <- template_arguments(
     path = system.file(
       '/examples/templates', 
-      package = 'EMLassemblyline'
-    ),
+      package = 'EMLassemblyline'),
     data.path = system.file(
       '/examples/data',
-      package = 'EMLassemblyline'
-    ),
+      package = 'EMLassemblyline'),
     data.table = c(
       'decomp.csv',
-      'nitrogen.csv'
-    )
-  )
+      'nitrogen.csv'))$x
   
-  x_list$x$data.table$decomp.csv$content$type[1:5] <- '-99999'
-  x_list$x$data.table$decomp.csv$content$arm[1:5] <- '-99999'
+  # Helper function for testing this feature - Change missing value code in 
+  # attributes.txt, add missing value code to data, write to file, run 
+  # template_categorical variables(), check missing value codes are not 
+  # included in categorical_variables.txt
   
-  dir.create(paste0(tempdir(), '/catvars_test'))
-
-  write.table(
-    x_list$x$template$attributes_decomp.txt$content,
-    paste0(tempdir(), '/catvars_test/attributes_decomp.txt'),
-    sep = '\t',
-    row.names = FALSE
-  )
+  test_missing_value_code <- function(data, attribute.template, missing.value.code) {
+    
+    if (class(missing.value.code) == "numeric") {
+      
+      attribute.template$missingValueCode[
+        attribute.template$class == "categorical"] <- as.character(missing.value.code)
+      data[1:5, colnames(data)[
+        attribute.template$class == "categorical"]] <- missing.value.code
+      dir.create(paste0(tempdir(), '/catvars_test'))
+      write.table(
+        attribute.template,
+        paste0(tempdir(), '/catvars_test/attributes_decomp.txt'),
+        sep = '\t',
+        row.names = FALSE)
+      write.csv(
+        data,
+        paste0(tempdir(), '/catvars_test/decomp.csv'),
+        row.names = FALSE)
+      template_categorical_variables(
+        path = paste0(tempdir(), '/catvars_test'))
+      t <- read.table(
+        paste0(tempdir(), '/catvars_test/catvars_decomp.txt'),
+        sep = '\t', 
+        header = TRUE,
+        as.is = TRUE)
+      expect_true(!any(missing.value.code %in% t$code))
+      
+    } else if (class(missing.value.code) == "character") {
+      
+      attribute.template$missingValueCode[
+        attribute.template$class == "categorical"] <- missing.value.code
+      data[1:5, colnames(data)[
+        attribute.template$class == "categorical"]] <- missing.value.code
+      dir.create(paste0(tempdir(), '/catvars_test'))
+      write.table(
+        attribute.template,
+        paste0(tempdir(), '/catvars_test/attributes_decomp.txt'),
+        sep = '\t',
+        row.names = FALSE)
+      write.csv(
+        data,
+        paste0(tempdir(), '/catvars_test/decomp.csv'),
+        row.names = FALSE)
+      template_categorical_variables(
+        path = paste0(tempdir(), '/catvars_test'))
+      t <- read.table(
+        paste0(tempdir(), '/catvars_test/catvars_decomp.txt'),
+        sep = '\t', 
+        header = TRUE,
+        as.is = TRUE)
+      expect_true(!any(missing.value.code %in% t$code))
+      
+    } else if (missing.value.code == "NA") {
+      
+      attribute.template$missingValueCode[
+        attribute.template$class == "categorical"] <- missing.value.code
+      data[1:5, colnames(data)[
+        attribute.template$class == "categorical"]] <- NA
+      dir.create(paste0(tempdir(), '/catvars_test'))
+      write.table(
+        attribute.template,
+        paste0(tempdir(), '/catvars_test/attributes_decomp.txt'),
+        sep = '\t',
+        row.names = FALSE)
+      write.csv(
+        data,
+        paste0(tempdir(), '/catvars_test/decomp.csv'),
+        row.names = FALSE)
+      template_categorical_variables(
+        path = paste0(tempdir(), '/catvars_test'))
+      t <- read.table(
+        paste0(tempdir(), '/catvars_test/catvars_decomp.txt'),
+        sep = '\t', 
+        header = TRUE,
+        as.is = TRUE)
+      expect_true(!any(missing.value.code %in% t$code))
+      
+    }
+    unlink(paste0(tempdir(), '/catvars_test'), recursive = T, force = T)
+  }
   
-  write.csv(
-    x_list$x$data.table$decomp.csv$content,
-    paste0(tempdir(), '/catvars_test/decomp.csv'),
-    row.names = FALSE
-  )
+  # Missing value code = -999 (interpreted as numeric within the data and 
+  # character in attributes.txt)
   
-  # Call template_categorical_variables()
+  test_missing_value_code(
+    data = x$data.table$decomp.csv$content,
+    attribute.template = x$template$attributes_decomp.txt$content,
+    missing.value.code = -999)
   
-  suppressMessages(
-    template_categorical_variables(
-      path = paste0(tempdir(), '/catvars_test')
-    )
-  )
+  # Missing value code = "No data"
   
-  # Read catvars.txt template
+  test_missing_value_code(
+    data = x$data.table$decomp.csv$content,
+    attribute.template = x$template$attributes_decomp.txt$content,
+    missing.value.code = "No data")
   
-  input <- read.table(
-    paste0(tempdir(), '/catvars_test/catvars_decomp.txt'),
-    sep = '\t', 
-    header = TRUE,
-    as.is = TRUE
-  )
+  # Missing value code = "NA" (interpreted as NA in the data)
   
-  # Test that missing value codes (-99999) are not included in catvars.txt
-  
-  expect_true(
-    !any('-99999' %in% input$code)
-  )
+  test_missing_value_code(
+    data = x$data.table$decomp.csv$content,
+    attribute.template = x$template$attributes_decomp.txt$content,
+    missing.value.code = "NA")
 
 })

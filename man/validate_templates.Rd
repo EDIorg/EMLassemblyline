@@ -4,10 +4,7 @@
 \alias{validate_templates}
 \title{Validate metadata template content}
 \usage{
-validate_templates(
-      fun.name,
-      fun.args
-    )
+validate_templates(fun.name, x)
 }
 \arguments{
 \item{fun.name}{(character) Function name passed to `validate_x` with 

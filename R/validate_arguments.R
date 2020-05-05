@@ -375,6 +375,20 @@ validate_arguments <- function(fun.name, fun.args){
         warning('Input argument "package.id" is not valid for EDI. An EDI package ID must consist of a scope, identifier, and revision (e.g. "edi.100.4"). If not creating a data package for EDI, then ignore this message.', call. = F)
       }
     }
+    
+    # provenance
+    
+    if (!is.null(fun.args$provenance)){
+      use_i <- stringr::str_detect(
+        fun.args$provenance, 
+        "(^knb-lter-[:alpha:]+\\.[:digit:]+\\.[:digit:]+)|(^[:alpha:]+\\.[:digit:]+\\.[:digit:]+)")
+      if (!all(use_i)){
+        warning(
+          paste0("Unable to generate provenance metadata for unrecognized identifier:\n",
+                 paste(fun.args$provenance[!use_i], collapse = ", ")),
+          call. = F)
+      }
+    }
 
   }
   

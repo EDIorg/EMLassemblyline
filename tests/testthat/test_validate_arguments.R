@@ -17,6 +17,7 @@ testthat::test_that("make_eml()", {
       package = 'EMLassemblyline'),
     data.table = c("decomp.csv", "nitrogen.csv"),
     other.entity = c("ancillary_data.zip", "processing_and_analysis.R"))
+  x$x$template$taxonomic_coverage.txt <- NULL
   
   x$data.path <- system.file('/examples/pkg_260/data_objects', package = 'EMLassemblyline')
   x$data.table <- c("decomp.csv", "nitrogen.csv")
@@ -121,6 +122,12 @@ testthat::test_that("make_eml()", {
   
   x1 <- x
   x1$package.id <- "edi.141"
+  expect_warning(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  
+  # provenance
+  
+  x1 <- x
+  x1$provenance <- c("edi.349.1", "knb-lter-ntl.3.28", "knbee-lter-ntl.3.28")
   expect_warning(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   
   # temporal.coverage - temporal.coverage is required
