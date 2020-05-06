@@ -3,12 +3,6 @@
 #' @description
 #'     Validate the content of `EMLassembline` metadata templates.
 #'
-#' @usage
-#'     validate_templates(
-#'       fun.name,
-#'       fun.args
-#'     )
-#'
 #' @param fun.name
 #'     (character) Function name passed to `validate_x` with 
 #'     `as.character(match.call()[[1]])`.
@@ -455,14 +449,13 @@ validate_templates <- function(fun.name, x){
       
       # role - At least one creator and contact is listed
       
-      use_i <- stringr::str_detect(
-        tolower(x$template$personnel.txt$content$role), 
-        "creator|contact")
+      use_i <- tolower(x$template$personnel.txt$content$role) == "creator"
       if (!any(use_i)) {
-        stop(
-          paste0("personnel.txt is missing a 'creator' and/or a 'contact'. ",
-                 "Add these roles to this template."), 
-          call. = F)
+        stop("personnel.txt is missing a 'creator'.", call. = F)
+      }
+      use_i <- tolower(x$template$personnel.txt$content$role) == "contact"
+      if (!any(use_i)) {
+        stop("personnel.txt is missing a 'contact'.", call. = F)
       }
       
       # role - All personnel have roles

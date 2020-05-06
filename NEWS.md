@@ -1,20 +1,27 @@
+# EMLassemblyline 2.12.4
+
+### Bug fixes
+
+* __Missing contact or creator:__ Contacts and creators are required by `make_eml()` but no errors were returned when missing from personnel.txt. The logic of `validate_templates()` has been updated to fix this issue.
+* __Missing value codes in categorical variables:__ Some missing value codes defined in the table attributes template were making their way into the categorical variables template. `template_categorical_variables()` has been updated to recognize more missing value code types.
+
 # EMLassemblyline 2.12.3
 
 ### Bug fix
 
-* __`Missing <taxonomicCoverage>`:__ taxonomicCoverage supplied in taxonomic_coverage.txt was missing from the EML. This has been fixed.
+* __Missing \<taxonomicCoverage\>:__ taxonomicCoverage supplied in taxonomic_coverage.txt was missing from the EML. This has been fixed.
 
 # EMLassemblyline 2.12.2
 
 ### Bug fix
 
-* __`Missing <access> node`:__ The access node was not being added to the EML. This has been fixed.
+* __Missing \<access\> node:__ The access node was not being added to the EML. This has been fixed.
 
 # EMLassemblyline 2.12.1
 
 ### Bug fix
 
-* __`Template reader`:__ A bug in the tabular template reader has been fixed ([see commit for details](https://github.com/EDIorg/EMLassemblyline/commit/42276a0a696a8c6e743cc15e28f4e9c22df1100e)).
+* __Template reader:__ A bug in the tabular template reader has been fixed ([see commit for details](https://github.com/EDIorg/EMLassemblyline/commit/42276a0a696a8c6e743cc15e28f4e9c22df1100e)).
 
 ### Enhancement
 

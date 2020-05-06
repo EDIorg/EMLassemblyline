@@ -393,7 +393,13 @@ testthat::test_that("personnel", {
   x1$template$personnel.txt$content$role[
     stringr::str_detect(
       x1$template$personnel.txt$content$role, 
-      "creator|contact")] <- "creontact"
+      "contact")] <- "creontact"
+  expect_error(validate_templates("make_eml", x1))
+  x1 <- x
+  x1$template$personnel.txt$content$role[
+    stringr::str_detect(
+      x1$template$personnel.txt$content$role, 
+      "creator")] <- "creontact"
   expect_error(validate_templates("make_eml", x1))
   
   # role - All personnel have roles

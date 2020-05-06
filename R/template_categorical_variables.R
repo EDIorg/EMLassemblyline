@@ -243,10 +243,16 @@ template_categorical_variables <- function(
         # value codes defined in the attribute.txt template are removed.
         
         for (k in 1:length(unique(catvars$attributeName))){
-          use_i <- (catvars$attributeName %in% unique(catvars$attributeName)[k]) &
-            (catvars$code %in% df_attributes$missingValueCode[
-              df_attributes$attributeName == unique(catvars$attributeName)[k]
-              ])
+          if (df_attributes$missingValueCode[
+            df_attributes$attributeName == unique(catvars$attributeName)[k]] == "NA") {
+            use_i <- (catvars$attributeName == unique(catvars$attributeName)[k]) & 
+              (is.na(catvars$code))
+          } else {
+            use_i <- (catvars$attributeName %in% unique(catvars$attributeName)[k]) &
+              (catvars$code %in% df_attributes$missingValueCode[
+                df_attributes$attributeName == unique(catvars$attributeName)[k]
+                ])
+          }
           catvars <- catvars[!use_i, ]
         }
 
