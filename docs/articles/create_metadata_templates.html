@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.12.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.12.4</span>
       </span>
     </div>
 
@@ -1139,15 +1139,20 @@ site_10
 <a class="sourceLine" id="cb48-8" title="8">  <span class="dt">taxa.name.type =</span> <span class="st">'scientific'</span></a>
 <a class="sourceLine" id="cb48-9" title="9">)</a></code></pre></div>
 <pre><code>## Templating taxonomic coverage ...</code></pre>
+<pre><code>## Warning: ITIS cannot be reached at this time. Please try again later.</code></pre>
 <pre><code>## Searching ITIS for "Mosses"</code></pre>
 <pre><code>## Searching GBIF Backbone Taxonomy for "Mosses"</code></pre>
 <pre><code>## Searching ITIS for "Unsorted biomass"</code></pre>
 <pre><code>## Searching GBIF Backbone Taxonomy for "Unsorted biomass"</code></pre>
 <pre><code>## Searching ITIS for "Koeleria cristata"</code></pre>
+<pre><code>## Searching GBIF Backbone Taxonomy for "Koeleria cristata"</code></pre>
+<pre><code>## ==  db: gbif =================</code></pre>
+<pre><code>## 
+## Retrieving data for taxon 'Koeleria cristata'</code></pre>
 <pre><code>## taxonomic_coverage.txt</code></pre>
 <pre><code>## Done.</code></pre>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" title="1"><span class="co"># The taxonomic coverage template is present</span></a>
-<a class="sourceLine" id="cb57-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/metadata_templates'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" title="1"><span class="co"># The taxonomic coverage template is present</span></a>
+<a class="sourceLine" id="cb61-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(<span class="st">'./pkg_301/metadata_templates'</span>)</a></code></pre></div>
 <pre><code>##  [1] "abstract.txt"            "additional_info.txt"    
 ##  [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
 ##  [5] "catvars_decomp.txt"      "catvars_nitrogen.txt"   
@@ -1155,8 +1160,8 @@ site_10
 ##  [9] "intellectual_rights.txt" "keywords.txt"           
 ## [11] "methods.txt"             "personnel.txt"          
 ## [13] "taxonomic_coverage.txt"</code></pre>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1"><span class="co"># View template</span></a>
-<a class="sourceLine" id="cb59-2" title="2"><span class="co"># </span><span class="al">NOTE</span><span class="co">: Unresolved taxa lack authority information</span></a></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1"><span class="co"># View template</span></a>
+<a class="sourceLine" id="cb63-2" title="2"><span class="co"># </span><span class="al">NOTE</span><span class="co">: Unresolved taxa lack authority information</span></a></code></pre></div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:70%; ">
 <table class="table table table-bordered">
 <caption style="font-size: initial !important;">
@@ -1225,10 +1230,10 @@ scientific
 Koeleria cristata
 </td>
 <td style="text-align:left;">
-ITIS
+GBIF Backbone Taxonomy
 </td>
 <td style="text-align:left;">
-515476
+2705915
 </td>
 </tr>
 </tbody>

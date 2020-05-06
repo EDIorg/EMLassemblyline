@@ -64,7 +64,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.12.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.12.4</span>
       </span>
     </div>
 
@@ -133,6 +133,20 @@
       <small>Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="emlassemblyline-2124" class="section level1">
+<h1 class="page-header">
+<a href="#emlassemblyline-2124" class="anchor"></a>EMLassemblyline 2.12.4</h1>
+<div id="bug-fixes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug fixes</h3>
+<ul>
+<li>
+<strong>Missing contact or creator:</strong> Contacts and creators are required by <code><a href="../reference/make_eml.html">make_eml()</a></code> but no errors were returned when missing from personnel.txt. The logic of <code><a href="../reference/validate_templates.html">validate_templates()</a></code> has been updated to fix this issue.</li>
+<li>
+<strong>Missing value codes in categorical variables:</strong> Some missing value codes defined in the table attributes template were making their way into the categorical variables template. <code><a href="../reference/template_categorical_variables.html">template_categorical_variables()</a></code> has been updated to recognize more missing value code types.</li>
+</ul>
+</div>
+</div>
     <div id="emlassemblyline-2123" class="section level1">
 <h1 class="page-header">
 <a href="#emlassemblyline-2123" class="anchor"></a>EMLassemblyline 2.12.3</h1>
@@ -141,7 +155,7 @@
 <a href="#bug-fix" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
-<strong><code>Missing &lt;taxonomicCoverage&gt;</code>:</strong> taxonomicCoverage supplied in taxonomic_coverage.txt was missing from the EML. This has been fixed.</li>
+<strong>Missing &lt;taxonomicCoverage&gt;:</strong> taxonomicCoverage supplied in taxonomic_coverage.txt was missing from the EML. This has been fixed.</li>
 </ul>
 </div>
 </div>
@@ -153,7 +167,7 @@
 <a href="#bug-fix-1" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
-<strong><code>Missing &lt;access&gt; node</code>:</strong> The access node was not being added to the EML. This has been fixed.</li>
+<strong>Missing &lt;access&gt; node:</strong> The access node was not being added to the EML. This has been fixed.</li>
 </ul>
 </div>
 </div>
@@ -165,7 +179,7 @@
 <a href="#bug-fix-2" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
-<strong><code>Template reader</code>:</strong> A bug in the tabular template reader has been fixed (<a href="https://github.com/EDIorg/EMLassemblyline/commit/42276a0a696a8c6e743cc15e28f4e9c22df1100e">see commit for details</a>).</li>
+<strong>Template reader:</strong> A bug in the tabular template reader has been fixed (<a href="https://github.com/EDIorg/EMLassemblyline/commit/42276a0a696a8c6e743cc15e28f4e9c22df1100e">see commit for details</a>).</li>
 </ul>
 </div>
 <div id="enhancement" class="section level3">
@@ -180,9 +194,9 @@
     <div id="emlassemblyline-2111" class="section level1">
 <h1 class="page-header">
 <a href="#emlassemblyline-2111" class="anchor"></a>EMLassemblyline 2.11.1</h1>
-<div id="bug-fixes" class="section level3">
+<div id="bug-fixes-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug fixes</h3>
+<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h3>
 <ul>
 <li>
 <strong>NAs in templates:</strong> Revised logic to distinguish the difference between NAs listed in the missingValueCode field of the table attribute template when supplied to <code><a href="../reference/make_eml.html">make_eml()</a></code> via files or the input argument <code>x</code>.</li>
@@ -298,9 +312,9 @@
 <strong>Multiple inputs to <code><a href="../reference/template_taxonomic_coverage.html">template_taxonomic_coverage()</a></code>:</strong> If the taxa of a dataset are in more than one table, then a user would want to extract the unique taxa from all the tables and compile into the taxonomic_coverage.txt template. Multiple inputs to the <code>taxa.table</code> and <code>taxa.col</code> arguments is now supported.</li>
 </ul>
 </div>
-<div id="bug-fixes-1" class="section level3">
+<div id="bug-fixes-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h3>
+<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h3>
 <ul>
 <li>
 <strong>EML schema validation:</strong> Schema validation in <code><a href="../reference/make_eml.html">make_eml()</a></code> began failing with release of the dependency libary EML 2.0.2. This has been fixed.</li>
@@ -325,9 +339,9 @@
     <div id="emlassemblyline-261" class="section level1">
 <h1 class="page-header">
 <a href="#emlassemblyline-261" class="anchor"></a>EMLassemblyline 2.6.1</h1>
-<div id="bug-fixes-2" class="section level3">
+<div id="bug-fixes-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h3>
+<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h3>
 <ul>
 <li>
 <strong>Unit dictionary:</strong> The <code><a href="../reference/view_unit_dictionary.html">view_unit_dictionary()</a></code> function was opening the unit dictionary in a separate non-searchable window. By removing the <code>utils</code> namespace from the function call the unit dictionary now opens within the RStudio source pane where searching is supported.</li>
@@ -373,9 +387,9 @@
 <strong>Change template import:</strong> Import custom_units.txt with <code><a href="../reference/template_table_attributes.html">template_table_attributes()</a></code> instead of with <code><a href="../reference/template_core_metadata.html">template_core_metadata()</a></code>. This is a more logical pairing.</li>
 </ul>
 </div>
-<div id="bug-fixes-3" class="section level3">
+<div id="bug-fixes-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h3>
+<a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h3>
 <ul>
 <li>
 <strong>The argument validator should not check geographic coverage templates:</strong> This fix moves the presence/absence check for geographic coverage templates to <code><a href="../reference/make_eml.html">make_eml()</a></code>.</li>
@@ -483,6 +497,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#emlassemblyline-2124">2.12.4</a></li>
         <li><a href="#emlassemblyline-2123">2.12.3</a></li>
         <li><a href="#emlassemblyline-2122">2.12.2</a></li>
         <li><a href="#emlassemblyline-2121">2.12.1</a></li>
