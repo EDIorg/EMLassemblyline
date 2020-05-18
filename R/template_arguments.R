@@ -173,18 +173,82 @@ template_arguments <- function(
     }
     
     read_txt <- function(f) {
+      if (tools::file_ext(f) == "txt") {
+        # .txt is not well supported by EML::set_TextType(). Reading the .txt
+        # file as character strings and parsing to paragraphs works better.
+        para <- as.list(
+          unlist(
+            stringr::str_split(
+              readr::read_file(f), 
+              pattern = "(\r\r)|(\n\n)|(\r\n\r\n)")))
+      } else if (tools::file_ext(f) == "md") {
+        # FIXME: EML 2.2.0 supports markdown so pass it "as is".
+        # Adjust this section once https://github.com/ropensci/EML/issues/298 
+        # has been fixed.
+        para <- as.list(
+          unlist(
+            stringr::str_split(
+              readr::read_file(f), 
+              pattern = "(\r\r)|(\n\n)|(\r\n\r\n)")))
+      } else if (tools::file_ext(f) == "docx") {
+        # .docx is not well supported by EML::set_TextType() but a 
+        # refactoring of some of this funcions underlying code improves 
+        # performance.
+        docbook <- to_docbook(f)
+        use_i <- stringr::str_detect(
+          xml2::xml_name(xml2::xml_children(docbook)), 
+          "sect")
+        if (any(use_i)) {
+          # To simplify parsing, if <section> is present then section titles 
+          # and children <para> will be flattened into <para>
+          xpath <- paste0(
+            "/article/", 
+            unique(xml2::xml_name(xml2::xml_children(docbook))[use_i]))
+          xml <- xml2::xml_new_root("article")
+          xml2::xml_add_child(xml, "title")
+          lapply(
+            xml2::xml_find_all(docbook, xpath),
+            function(m) {
+              lapply(
+                xml2::xml_children(m),
+                function(n) {
+                  xml2::xml_set_name(n, "para")
+                  xml2::xml_add_child(xml, n)
+                })
+            })
+          para <- emld::as_emld(xml)$para
+        } else {
+          para <- emld::as_emld(to_docbook(f))$para
+        }
+      }
+      # Adjust outputs to match unique structure of abstract, additional_info, 
+      # intellectual_rights, and methods nodes. Use default EML::set_TextType() 
+      # output when NULL otherwise an asynchronous process will occur between 
+      # between "templates" and "tfound" objects.
       if (stringr::str_detect(
         basename(f), 
         paste(
           attr_tmp$regexpr[
-            (attr_tmp$type == "text") & (attr_tmp$template_name != "methods")],
+            (attr_tmp$type == "text") & (attr_tmp$template_name == "methods")],
           collapse = "|"))) {
-        EML::set_TextType(file = f)
-      } else if (stringr::str_detect(
-        basename(f), 
-        attr_tmp$regexpr[attr_tmp$template_name == "methods"])) {
-        EML::set_methods(methods_file = f)
+        if (is.null(para)) {
+          txt <- EML::set_methods(f)
+        } else {
+          txt <- list(
+            methodStep = list(
+              description = list(
+                para = para)))
+        }
+      } else {
+        if (is.null(para)) {
+          txt <- EML::set_TextType(f)
+        } else {
+          txt <- list(
+            section = list(),
+            para = para)
+        }
       }
+      txt
     }
     
     # Loop through each metadata template found at path
@@ -371,4 +435,54 @@ template_arguments <- function(
   
   output
   
+}
+
+
+
+# Helper functions ------------------------------------------------------------
+
+#' Convert to docbook
+#' 
+#' This function is not exported from the EML R Package but useful here
+#'
+#' @param file
+#'     (character) Full path to file to be read into docbook
+#' @return
+#'     (xml) Docbook XML R object
+to_docbook <- function(file = NULL) {
+  if (!tools::file_ext(file) %in% c("xml", "dbk", "db")) {
+    ## Not xml yet, so use pandoc to generate docbook
+    if (!requireNamespace("rmarkdown", quietly = TRUE)) {
+      stop("rmarkdown package required to convert to Docbook format",
+           call. = FALSE
+      )
+    }
+    if (!rmarkdown::pandoc_available()) {
+      stop(paste("Pandoc is required to convert to Docbook format.",
+                 "Please supply input text directly"),
+           call. = FALSE
+      )
+    }
+    pandoc_convert <-
+      getExportedValue("rmarkdown", "pandoc_convert")
+    wd <- getwd()
+    dir <- tempdir()
+    file.copy(file, file.path(dir, basename(file)), overwrite = TRUE)
+    setwd(dir)
+    docbook_file <- tempfile(tmpdir = ".", fileext = ".xml")
+    pandoc_convert(
+      basename(file),
+      to = "docbook",
+      output = normalizePath(docbook_file, winslash = "/", mustWork = FALSE),
+      options = "-s"
+    )
+    docbook <- xml2::read_xml(docbook_file)
+    on.exit(setwd(wd))
+  } else {
+    ## File is already xml/docbook, so no need for pandoc
+    docbook <- xml2::read_xml(file)
+  }
+  ## Unlike EML, treat this as literal!
+  xml2::xml_ns_strip(docbook)
+  docbook
 }

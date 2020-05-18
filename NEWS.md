@@ -1,3 +1,9 @@
+# EMLassemblyline 2.12.5
+
+### Enhancement
+
+* __TextType:__ Conversion of abstract.docx, methods.docx, and additional_info.docx to EML has been improved.
+
 # EMLassemblyline 2.12.4
 
 ### Bug fixes
