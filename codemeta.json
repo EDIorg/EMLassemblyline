@@ -8,14 +8,14 @@
   "description": "\n    For scientists and data managers who need to easily create high quality \n    metadata for data publication. EMLassemblyline is a metadata builder that \n    emphasizes auto-extraction of metadata, appends value added content, and \n    inputs user supplied information through common interfaces thereby \n    minimizing user effort while maximizing metadata features for data \n    discovery and reuse.",
   "name": "EMLassemblyline: A workflow for creating EML",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "2.12.4",
+  "version": "2.12.5",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.5.2",
+    "version": "4.0.0",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.5.2 (2018-12-20)",
+  "runtimePlatform": "R version 4.0.0 (2020-04-24)",
   "author": [
     {
       "@type": "Person",
@@ -87,6 +87,12 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=stringi"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "tools",
+      "name": "tools",
+      "version": ">= 3.6.1"
     },
     {
       "@type": "SoftwareApplication",
@@ -201,7 +207,7 @@
   ],
   "codeRepository": "https://github.com/EDIorg/EMLassemblyline",
   "readme": "https://github.com/EDIorg/EMLassemblyline/blob/master/README.md",
-  "fileSize": "527.465KB",
+  "fileSize": "528.735KB",
   "contIntegration": [
     "https://travis-ci.org/clnsmth/EMLassemblyline",
     "https://codecov.io/github/clnsmth/EMLassemblyline?branch=master"

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Validate arguments of EMLassemblyline functions — validate_arguments • EMLassemblyline</title>
+<title>Convert to docbook — to_docbook • EMLassemblyline</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Validate arguments of EMLassemblyline functions — validate_arguments" />
-<meta property="og:description" content="Validate input arguments to `EMLassemblyline` functions." />
+<meta property="og:title" content="Convert to docbook — to_docbook" />
+<meta property="og:description" content="This function is not exported from the EML R Package but useful here" />
 
 
 
@@ -138,38 +138,29 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Validate arguments of EMLassemblyline functions</h1>
-    <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/validate_arguments.R'><code>R/validate_arguments.R</code></a></small>
-    <div class="hidden name"><code>validate_arguments.Rd</code></div>
+    <h1>Convert to docbook</h1>
+    <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/template_arguments.R'><code>R/template_arguments.R</code></a></small>
+    <div class="hidden name"><code>to_docbook.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Validate input arguments to `EMLassemblyline` functions.</p>
+    <p>This function is not exported from the EML R Package but useful here</p>
     </div>
 
-    <pre class="usage"><span class='fu'>validate_arguments</span>(
-      <span class='no'>fun.name</span>,
-      <span class='no'>fun.args</span>
-    )</pre>
+    <pre class="usage"><span class='fu'>to_docbook</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>fun.name</th>
-      <td><p>(character) Function name passed to `validate_x` with 
-`as.character(match.call()[[1]])`.</p></td>
-    </tr>
-    <tr>
-      <th>fun.args</th>
-      <td><p>(named list) Function arguments and values passed to `validate_x` with 
-`as.list(environment())`.</p></td>
+      <th>file</th>
+      <td><p>(character) Full path to file to be read into docbook</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Validation checks are function specific.</p>
+    <p>(xml) Docbook XML R object</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
