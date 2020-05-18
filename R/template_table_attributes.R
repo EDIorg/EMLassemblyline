@@ -174,17 +174,17 @@ template_table_attributes <- function(
         string = column_names,
         pattern = "\\."
       )
-      
+
       if (sum(use_i) > 0){
         stop(
           paste(
-            "Invalid column names detected in ", 
+            "Invalid column names detected in ",
             names(x$data.table)[i],
             ":  ",
             paste(
-              column_names[use_i], 
+              column_names[use_i],
               collapse = ", "
-            ), 
+            ),
             '  Replace characters located at periods "." in the above listed column names with underscores "_"',
             sep = ""
           )

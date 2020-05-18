@@ -1266,6 +1266,21 @@ make_eml <- function(
     message(paste0("Writing EML (", package.id, ".xml)"))
     emld::eml_version("eml-2.2.0")
     EML::write_eml(eml, paste0(eml.path, "/", package.id, ".xml"))
+    # Fix TextType nodes - EML::set_TextType() and EML::set_methods() replace
+    # special XML characters &, <, >, with their encoded representations. These
+    # characters are encoded a second time by EML::write_eml() resulting in 
+    # replacement of "&" by "&amp;" resulting in "&amp;gt;" etc. The below code
+    # block patches this issue.
+    txt <- readLines(paste0(eml.path, "/", package.id, ".xml"), encoding = "UTF-8")
+    invisible(
+      lapply(
+        seq_along(txt),
+        function(x) {
+          txt[x] <<- stringr::str_replace_all(txt[x], "&amp;gt;", "&gt;")
+          txt[x] <<- stringr::str_replace_all(txt[x], "&amp;lt;", "&lt;")
+          txt[x] <<- stringr::str_replace_all(txt[x], "&amp;amp;", "&amp;")
+        }))
+    writeLines(txt, paste0(eml.path, "/", package.id, ".xml"), useBytes = T)
   }
   
   # Validate EML --------------------------------------------------------------
