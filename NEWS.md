@@ -1,3 +1,9 @@
+# EMLassemblyline 2.13.1
+
+### Bug fix
+
+* __schemaLocation:__ Fixed schemaLocation and namespace to be a web resolvable address.
+
 # EMLassemblyline 2.13.0
 
 ### Enhancement
