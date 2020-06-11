@@ -1,4 +1,16 @@
-# EMLassemblyline 2.12.5
+# EMLassemblyline 2.14.0
+
+### Enhancement
+
+* __Boiler plate EMLassemblyline process:__ Add boilerplate function calls to /inst/templates/run_EMLassemblyline.R. This script is added to the users workspace via `template_directories()`. The boilerplate is meant to be a reminder and save the user a little time. Fixes [issue #36](https://github.com/EDIorg/EMLassemblyline/issues/36).
+
+# EMLassemblyline 2.13.1
+
+### Bug fix
+
+* __schemaLocation:__ Fixed schemaLocation and namespace to be a web resolvable address.
+
+# EMLassemblyline 2.13.0
 
 ### Enhancement
 

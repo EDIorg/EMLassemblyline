@@ -1,5 +1,5 @@
 pandoc: 2.7.2
-pkgdown: 1.3.0
+pkgdown: 1.5.1
 pkgdown_sha: ~
 articles:
   automate_data_publication: automate_data_publication.html
@@ -10,4 +10,5 @@ articles:
   organize_data_package: organize_data_package.html
   overview: overview.html
   publish_data_package: publish_data_package.html
+last_built: 2020-06-11T02:00Z
 
