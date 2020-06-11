@@ -665,7 +665,7 @@ make_eml <- function(
   }
   
   eml <- list(
-    schemaLocation = "eml://ecoinformatics.org/eml-2.2.0  https://nis.lternet.edu/schemas/EML/eml-2.2.0/xsd/eml.xsd",
+    schemaLocation = "https://eml.ecoinformatics.org/eml-2.2.0  https://nis.lternet.edu/schemas/EML/eml-2.2.0/xsd/eml.xsd",
     packageId = package.id,
     system = "edi")
   
