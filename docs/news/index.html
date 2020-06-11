@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.13.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.14.0</span>
       </span>
     </div>
 
@@ -141,12 +141,36 @@
       <small>Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="emlassemblyline-2130" class="section level1">
-<h1 class="page-header" data-toc-text="2.13.0">
-<a href="#emlassemblyline-2130" class="anchor"></a>EMLassemblyline 2.13.0</h1>
+    <div id="emlassemblyline-2140" class="section level1">
+<h1 class="page-header" data-toc-text="2.14.0">
+<a href="#emlassemblyline-2140" class="anchor"></a>EMLassemblyline 2.14.0</h1>
 <div id="enhancement" class="section level3">
 <h3 class="hasAnchor">
 <a href="#enhancement" class="anchor"></a>Enhancement</h3>
+<ul>
+<li>
+<strong>Boiler plate EMLassemblyline process:</strong> Add boilerplate function calls to /inst/templates/run_EMLassemblyline.R. This script is added to the users workspace via <code><a href="../reference/template_directories.html">template_directories()</a></code>. The boilerplate is meant to be a reminder and save the user a little time. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/36">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/36'>#36</a></a>.</li>
+</ul>
+</div>
+</div>
+    <div id="emlassemblyline-2131" class="section level1">
+<h1 class="page-header" data-toc-text="2.13.1">
+<a href="#emlassemblyline-2131" class="anchor"></a>EMLassemblyline 2.13.1</h1>
+<div id="bug-fix" class="section level3">
+<h3 class="hasAnchor">
+<a href="#bug-fix" class="anchor"></a>Bug fix</h3>
+<ul>
+<li>
+<strong>schemaLocation:</strong> Fixed schemaLocation and namespace to be a web resolvable address.</li>
+</ul>
+</div>
+</div>
+    <div id="emlassemblyline-2130" class="section level1">
+<h1 class="page-header" data-toc-text="2.13.0">
+<a href="#emlassemblyline-2130" class="anchor"></a>EMLassemblyline 2.13.0</h1>
+<div id="enhancement-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#enhancement-1" class="anchor"></a>Enhancement</h3>
 <ul>
 <li>
 <strong>TextType:</strong> Conversion of abstract.docx, methods.docx, and additional_info.docx to EML has been improved.</li>
@@ -170,9 +194,9 @@
     <div id="emlassemblyline-2123" class="section level1">
 <h1 class="page-header" data-toc-text="2.12.3">
 <a href="#emlassemblyline-2123" class="anchor"></a>EMLassemblyline 2.12.3</h1>
-<div id="bug-fix" class="section level3">
+<div id="bug-fix-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-1" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>Missing &lt;taxonomicCoverage&gt;:</strong> taxonomicCoverage supplied in taxonomic_coverage.txt was missing from the EML. This has been fixed.</li>
@@ -182,9 +206,9 @@
     <div id="emlassemblyline-2122" class="section level1">
 <h1 class="page-header" data-toc-text="2.12.2">
 <a href="#emlassemblyline-2122" class="anchor"></a>EMLassemblyline 2.12.2</h1>
-<div id="bug-fix-1" class="section level3">
+<div id="bug-fix-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-1" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-2" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>Missing &lt;access&gt; node:</strong> The access node was not being added to the EML. This has been fixed.</li>
@@ -194,17 +218,17 @@
     <div id="emlassemblyline-2121" class="section level1">
 <h1 class="page-header" data-toc-text="2.12.1">
 <a href="#emlassemblyline-2121" class="anchor"></a>EMLassemblyline 2.12.1</h1>
-<div id="bug-fix-2" class="section level3">
+<div id="bug-fix-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-2" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-3" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>Template reader:</strong> A bug in the tabular template reader has been fixed (<a href="https://github.com/EDIorg/EMLassemblyline/commit/42276a0a696a8c6e743cc15e28f4e9c22df1100e">see commit for details</a>).</li>
 </ul>
 </div>
-<div id="enhancement-1" class="section level3">
+<div id="enhancement-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#enhancement-1" class="anchor"></a>Enhancement</h3>
+<a href="#enhancement-2" class="anchor"></a>Enhancement</h3>
 <ul>
 <li>
 <strong><code><a href="../reference/make_eml.html">make_eml()</a></code> code:</strong> (For developers) The underlying code of <code><a href="../reference/make_eml.html">make_eml()</a></code> is now more concise and understandable.</li>
@@ -228,9 +252,9 @@
     <div id="emlassemblyline-2110" class="section level1">
 <h1 class="page-header" data-toc-text="2.11.0">
 <a href="#emlassemblyline-2110" class="anchor"></a>EMLassemblyline 2.11.0</h1>
-<div id="enhancement-2" class="section level3">
+<div id="enhancement-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#enhancement-2" class="anchor"></a>Enhancement</h3>
+<a href="#enhancement-3" class="anchor"></a>Enhancement</h3>
 <ul>
 <li>
 <strong>NAs in templates:</strong> Users often add NAs to templates where EMLassemblyline expects "". This enhancement ignores these extraneous NAs.</li>
@@ -240,9 +264,9 @@
     <div id="emlassemblyline-2102" class="section level1">
 <h1 class="page-header" data-toc-text="2.10.2">
 <a href="#emlassemblyline-2102" class="anchor"></a>EMLassemblyline 2.10.2</h1>
-<div id="bug-fix-3" class="section level3">
+<div id="bug-fix-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-3" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-4" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>Missing value codes:</strong> Recent changes broke the proper handling of “NA” missing value codes. This has been fixed.</li>
@@ -252,9 +276,9 @@
     <div id="emlassemblyline-2101" class="section level1">
 <h1 class="page-header" data-toc-text="2.10.1">
 <a href="#emlassemblyline-2101" class="anchor"></a>EMLassemblyline 2.10.1</h1>
-<div id="bug-fix-4" class="section level3">
+<div id="bug-fix-5" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-4" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-5" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>Schema validation:</strong> The referenced schema location was not correct. Now it is (<a href="https://github.com/EDIorg/EMLassemblyline/issues/59">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/59'>#59</a></a>).</li>
@@ -264,9 +288,9 @@
     <div id="emlassemblyline-2100" class="section level1">
 <h1 class="page-header" data-toc-text="2.10.0">
 <a href="#emlassemblyline-2100" class="anchor"></a>EMLassemblyline 2.10.0</h1>
-<div id="enhancement-3" class="section level3">
+<div id="enhancement-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#enhancement-3" class="anchor"></a>Enhancement</h3>
+<a href="#enhancement-4" class="anchor"></a>Enhancement</h3>
 <ul>
 <li>
 <strong>Schema validation:</strong> A schema validation error sporadically occurs under EML 2.1.1. Upgrading to EML 2.2.0 fixes this (<a href="https://github.com/EDIorg/EMLassemblyline/issues/59">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/59'>#59</a></a>).</li>
@@ -276,9 +300,9 @@
     <div id="emlassemblyline-290" class="section level1">
 <h1 class="page-header" data-toc-text="2.9.0">
 <a href="#emlassemblyline-290" class="anchor"></a>EMLassemblyline 2.9.0</h1>
-<div id="enhancement-4" class="section level3">
+<div id="enhancement-5" class="section level3">
 <h3 class="hasAnchor">
-<a href="#enhancement-4" class="anchor"></a>Enhancement</h3>
+<a href="#enhancement-5" class="anchor"></a>Enhancement</h3>
 <ul>
 <li>
 <strong>Template checks:</strong> A new suite of checks on metadata template content have been added to more effectively communicate issues and reduce errors. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/6">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/6'>#6</a></a>, <a href="https://github.com/EDIorg/EMLassemblyline/issues/35">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/35'>#35</a></a>, <a href="https://github.com/EDIorg/EMLassemblyline/issues/37">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/37'>#37</a></a>, and <a href="https://github.com/EDIorg/EMLassemblyline/issues/53">issue # 53</a>.</li>
@@ -288,9 +312,9 @@
     <div id="emlassemblyline-280" class="section level1">
 <h1 class="page-header" data-toc-text="2.8.0">
 <a href="#emlassemblyline-280" class="anchor"></a>EMLassemblyline 2.8.0</h1>
-<div id="enhancement-5" class="section level3">
+<div id="enhancement-6" class="section level3">
 <h3 class="hasAnchor">
-<a href="#enhancement-5" class="anchor"></a>Enhancement</h3>
+<a href="#enhancement-6" class="anchor"></a>Enhancement</h3>
 <ul>
 <li>
 <strong>Online distribution:</strong> The previous implementation for providing URLs by which the data can be publicly downloaded required all data objects to be co-located in the same directory, which is too restrictive. Now URLs can be explicitly listed for each data object. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/56">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/56'>#56</a></a>.</li>
@@ -308,9 +332,9 @@
     <div id="emlassemblyline-271" class="section level1">
 <h1 class="page-header" data-toc-text="2.7.1">
 <a href="#emlassemblyline-271" class="anchor"></a>EMLassemblyline 2.7.1</h1>
-<div id="bug-fix-5" class="section level3">
+<div id="bug-fix-6" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-5" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-6" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>Delimiter guessing:</strong> Occasionally the content of tabular templates leads <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html">data.table::fread()</a></code> to guessing a delimiter other than “\t”. This issue has been fixed by explicitly stating the expected field delimiter.</li>
@@ -502,9 +526,9 @@
 </li>
 </ul>
 </div>
-<div id="bug-fix-6" class="section level3">
+<div id="bug-fix-7" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-6" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-7" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>otherEntity url:</strong> Add EML element <em>//otherEntity/physical/distribution/online/url</em> via <code><a href="../reference/make_eml.html">make_eml()</a></code>. This element was missing though documentation implied its existence.</li>
