@@ -1,3 +1,9 @@
+# EMLassemblyline 2.X.0
+
+### Enhancements
+
+* __Installation:__ Simplified instructions so dependencies will be installed but and users will not be asked to upgrade installed packages (a point of confusion among many).
+
 # EMLassemblyline 2.14.0
 
 ### Enhancement
