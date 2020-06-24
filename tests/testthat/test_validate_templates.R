@@ -52,7 +52,7 @@ testthat::test_that("attributes.txt", {
     data.table = c("decomp.csv", "nitrogen.csv"),
     other.entity = c("ancillary_data.zip", "processing_and_analysis.R"))$x
   x1 <- x
-  expect_null(validate_templates("make_eml", x1))
+  expect_equivalent(validate_templates("make_eml", x1), x1)
   
   # attributes.txt - attributes.txt should be present for each data table
   
@@ -106,6 +106,38 @@ testthat::test_that("attributes.txt", {
     ] <- ""
   expect_error(validate_templates("make_eml", x1))
   
+  # class - Attributes specified by the user as numeric should contain no 
+  # characters other than listed under missingValueCode of the table 
+  # attributes template.
+  
+  x1 <- x
+  use_i <- x1$template$attributes_decomp.txt$content$class == "numeric"
+  x1$data.table$decomp.csv$content[[
+    x1$template$attributes_decomp.txt$content$attributeName[use_i]
+    ]][1:5] <- "non_numeric_values"
+  expect_warning(validate_templates("make_eml", x1))
+  x1 <- suppressWarnings(validate_templates("make_eml", x1))
+  expect_true(
+    x1$template$attributes_decomp.txt$content$class[use_i] == "character")
+  expect_true(
+    x1$template$attributes_decomp.txt$content$unit[use_i] == "")
+  
+  x1 <- x
+  use_i <- x1$template$attributes_nitrogen.txt$content$class == "numeric"
+  for (i in which(use_i)) {
+    x1$data.table$nitrogen.csv$content[[
+      x1$template$attributes_nitrogen.txt$content$attributeName[i]
+      ]][1:5] <- "non_numeric_values"
+  }
+  expect_warning(validate_templates("make_eml", x1))
+  x1 <- suppressWarnings(validate_templates("make_eml", x1))
+  for (i in which(use_i)) {
+    expect_true(
+      x1$template$attributes_nitrogen.txt$content$class[i] == "character")
+    expect_true(
+      x1$template$attributes_nitrogen.txt$content$unit[i] == "")
+  }
+  
   # unit - Numeric classed attributes have units
   
   x1 <- x
@@ -125,7 +157,7 @@ testthat::test_that("attributes.txt", {
   x1$template$custom_units.txt$content[nrow(x1$template$custom_units.txt$content)+1, ] <- c(
     "another_undefined_unit", "of some type", "with some parent SI", 
     "a multiplier", "and a description")
-  expect_null(validate_templates("make_eml", x1))
+  expect_equivalent(validate_templates("make_eml", x1), x1)
   
   # dateTimeFormatString- Remaining dateTimeFormatString prompts have been removed
   
@@ -177,7 +209,7 @@ testthat::test_that("Categorical variables", {
     data.table = c("decomp.csv", "nitrogen.csv"),
     other.entity = c("ancillary_data.zip", "processing_and_analysis.R"))$x
   x1 <- x
-  expect_null(validate_templates("make_eml", x1))
+  expect_equal(validate_templates("make_eml", x1), x1)
   
   # catvars.txt - Required when table attributes are listed as 
   # "categorical"
@@ -216,7 +248,7 @@ testthat::test_that("geographic_coverage", {
       '/examples/pkg_260/metadata_templates',
       package = 'EMLassemblyline'))$x
   x1 <- x
-  expect_null(validate_templates("make_eml", x1))
+  expect_equal(validate_templates("make_eml", x1), x1)
   
   # geographicDescription - Each entry requires a north, south, east, and west 
   # bounding coordinate
@@ -247,7 +279,7 @@ testthat::test_that("personnel", {
       '/examples/pkg_260/metadata_templates',
       package = 'EMLassemblyline'))$x
   x1 <- x
-  expect_null(validate_templates("make_eml", x1))
+  expect_equal(validate_templates("make_eml", x1), x1)
   
   # role - At least one creator and contact is listed
   

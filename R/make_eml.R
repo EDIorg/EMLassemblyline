@@ -344,6 +344,7 @@ make_eml <- function(
   # attributes.txt templates are input as files. In contrast, when inputs are 
   # supplied by the argument "x" and when is.na() returns TRUE for values in
   # the missingValueCode field, these NAs are converted to "".
+  # TODO: Move this process to validate_templates()
   
   for (k in names(x$template)) {
     if (is.data.frame(x$template[[k]]$content)) {
@@ -364,7 +365,7 @@ make_eml <- function(
   # Validate templates --------------------------------------------------------
   
   x <- remove_empty_templates(x)
-  validate_templates("make_eml", x)
+  x <- validate_templates("make_eml", x)
 
   # Modify templates ----------------------------------------------------------
   # Modification of some template content helps with downstream processes.

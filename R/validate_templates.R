@@ -178,17 +178,41 @@ validate_templates <- function(fun.name, x){
           " has attributes classified as 'Date' without a corresponding date ",
           "time format string. Add a format string to these attributes:"))
       
-      # FIXME: class - Numeric classed attributes should not contain characters other than the
-      # specified missing value codes (implement this in the metadata quality check functions
-      # to be developed? See GitHub issue #46)
-      # if ((class(raw) == "character") | (class(raw) == "factor")){
-      #   stop(paste0('Characters strings found in the column "',
-      #               colnames(df_table)[is_numeric[j]],
-      #               '" of the file "',
-      #               table_names[i],
-      #               '". ',
-      #               'Please remove these non-numeric characters and try again.'))
-      # }
+      # class - Attributes specified by the user as numeric should contain no 
+      # characters other than listed under missingValueCode of the table 
+      # attributes template.
+      
+      invisible(
+        lapply(
+          names(x$data.table),
+          function(table) {
+            template <- paste0(
+              "attributes_", tools::file_path_sans_ext(table), ".txt")
+            use_i <- x$template[[template]]$content$class == "numeric"
+            if (any(use_i)) {
+              for (i in which(use_i)) {
+                x$data.table[[table]]$content[ , i][
+                  x$data.table[[table]]$content[ , i] == 
+                    x$template[[template]]$content$missingValueCode[i]] <- NA
+                na_before <- sum(is.na(x$data.table[[table]]$content[ , i]))
+                na_after <- suppressWarnings(
+                  sum(is.na(as.numeric(x$data.table[[table]]$content[ , i]))))
+                if (na_before < na_after) {
+                  warning(
+                    "The attribute '",
+                    x$template[[template]]$content$attributeName[i],
+                    "' in the table '", table, "' is specified as numeric but ",
+                    "contains character values other than listed under the ",
+                    "missingValueCode column of the '", template, 
+                    "' template. Defaulting '", 
+                    x$template[[template]]$content$attributeName[i],
+                    "' to 'character' class.", call. = F)
+                  x$template[[template]]$content$class[i] <<- "character"
+                  x$template[[template]]$content$unit[i] <<- ""
+                }
+              }
+            }
+          }))
       
       # class - Numeric classed attributes have units and units should be from 
       # the dictionary or defined in custom_units.txt
@@ -479,6 +503,10 @@ validate_templates <- function(fun.name, x){
       }
 
     }
+    
+    # Return x (with any changes made here in) back to the parent environment
+    
+    return(x)
 
   }
   

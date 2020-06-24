@@ -1,8 +1,10 @@
-# EMLassemblyline 2.X.0
+# EMLassemblyline 2.15.0
 
 ### Enhancements
 
 * __Installation:__ Simplified instructions so dependencies will be installed but and users will not be asked to upgrade installed packages (a point of confusion among many).
+
+* __Default false numeric attributes to character:__ Default user specified numeric attributes to character class when the attribute contains character values outside of that specified under the missingValueCode field of the attributes.txt template. A warning alerts the user of the issue and preserves the original data by not coercing to numeric.
 
 # EMLassemblyline 2.14.0
 
