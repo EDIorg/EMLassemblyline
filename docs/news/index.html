@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.14.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.15.0</span>
       </span>
     </div>
 
@@ -141,6 +141,18 @@
       <small>Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="emlassemblyline-2150" class="section level1">
+<h1 class="page-header" data-toc-text="2.15.0">
+<a href="#emlassemblyline-2150" class="anchor"></a>EMLassemblyline 2.15.0</h1>
+<div id="enhancements" class="section level3">
+<h3 class="hasAnchor">
+<a href="#enhancements" class="anchor"></a>Enhancements</h3>
+<ul>
+<li><p><strong>Installation:</strong> Simplified instructions so dependencies will be installed but and users will not be asked to upgrade installed packages (a point of confusion among many).</p></li>
+<li><p><strong>Default false numeric attributes to character:</strong> Default user specified numeric attributes to character class when the attribute contains character values outside of that specified under the missingValueCode field of the attributes.txt template. A warning alerts the user of the issue and preserves the original data by not coercing to numeric.</p></li>
+</ul>
+</div>
+</div>
     <div id="emlassemblyline-2140" class="section level1">
 <h1 class="page-header" data-toc-text="2.14.0">
 <a href="#emlassemblyline-2140" class="anchor"></a>EMLassemblyline 2.14.0</h1>
@@ -344,9 +356,9 @@
     <div id="emlassemblyline-270" class="section level1">
 <h1 class="page-header" data-toc-text="2.7.0">
 <a href="#emlassemblyline-270" class="anchor"></a>EMLassemblyline 2.7.0</h1>
-<div id="enhancements" class="section level3">
+<div id="enhancements-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#enhancements" class="anchor"></a>Enhancements</h3>
+<a href="#enhancements-1" class="anchor"></a>Enhancements</h3>
 <ul>
 <li>
 <strong>File names containing spaces caused <code><a href="../reference/template_categorical_variables.html">template_categorical_variables()</a></code> to crash:</strong> Errors occurred when input file names contained spaces. Using spaces is still a common practice among users. To accommodate this while continuing to promote best practices, the naming restriction has been relaxed and the best practices have been made a warning. The function checking file presence and naming conventions is <code>EDIutils::validate_file_name()</code>. An explicit file name specification (i.e. including extension) is now required, which precludes errors when the same file name is used among different file types in the same directory. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/25">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/25'>#25</a></a>.</li>
@@ -405,9 +417,9 @@
     <div id="emlassemblyline-260" class="section level1">
 <h1 class="page-header" data-toc-text="2.6.0">
 <a href="#emlassemblyline-260" class="anchor"></a>EMLassemblyline 2.6.0</h1>
-<div id="enhancements-1" class="section level3">
+<div id="enhancements-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#enhancements-1" class="anchor"></a>Enhancements</h3>
+<a href="#enhancements-2" class="anchor"></a>Enhancements</h3>
 <ul>
 <li>
 <strong>EML v2.0.0:</strong> <code>EMLassemblyline</code> has been refactored to run with the `EML’ v2.0.0 dependency.</li>
@@ -421,9 +433,9 @@
     <div id="emlassemblyline-253" class="section level1">
 <h1 class="page-header" data-toc-text="2.5.3">
 <a href="#emlassemblyline-253" class="anchor"></a>EMLassemblyline 2.5.3</h1>
-<div id="enhancements-2" class="section level3">
+<div id="enhancements-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#enhancements-2" class="anchor"></a>Enhancements</h3>
+<a href="#enhancements-3" class="anchor"></a>Enhancements</h3>
 <ul>
 <li>
 <strong>Add function examples:</strong> Add examples to function documentation.</li>
@@ -447,9 +459,9 @@
     <div id="emlassemblyline-250" class="section level1">
 <h1 class="page-header" data-toc-text="2.5.0">
 <a href="#emlassemblyline-250" class="anchor"></a>EMLassemblyline 2.5.0</h1>
-<div id="enhancements-3" class="section level3">
+<div id="enhancements-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#enhancements-3" class="anchor"></a>Enhancements</h3>
+<a href="#enhancements-4" class="anchor"></a>Enhancements</h3>
 <ul>
 <li>
 <strong>Website:</strong> Improved documentation with vignettes demonstrating common and advanced use cases. Implemented with <code>pkgdown</code>.</li>
