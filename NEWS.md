@@ -1,3 +1,9 @@
+# EMLassemblyline 2.16.0
+
+### Enhancements
+
+* __maintenance:__ Maintenance is no longer required however, a missing maintenance description will provide a warning message with the recommended best practice.
+
 # EMLassemblyline 2.15.0
 
 ### Enhancements

@@ -91,7 +91,7 @@ testthat::test_that("make_eml()", {
   
   x1 <- x
   x1$maintenance.description <- NULL
-  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_warning(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   
   # other.entity - required if other.entity.name or other.entity.description
   # is in use

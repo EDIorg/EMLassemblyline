@@ -55,7 +55,8 @@
 #'     are negative. Don't use this argument if geographic coverage is supplied
 #'     by geographic_coverage.txt.
 #' @param maintenance.description
-#'     (character) Data collection status ("ongoing" or "complete").
+#'     (character) A description of data collection status (e.g. "ongoing", 
+#'     "complete"), communicating the frequency of updates.
 #' @param data.table
 #'     (character; optional) Table file name. If more than one, then supply 
 #'     as a vector of character strings (e.g. 
@@ -181,7 +182,7 @@ make_eml <- function(
   temporal.coverage,
   geographic.description, 
   geographic.coordinates, 
-  maintenance.description, 
+  maintenance.description = NULL, 
   data.table = NULL, 
   data.table.name = data.table,
   data.table.description = NULL, 
@@ -945,7 +946,9 @@ make_eml <- function(
   # Create <maintenance> ------------------------------------------------------
   
   message("    <maintenance>")
-  eml$dataset$maintenance$description <- maintenance.description
+  if (!is.null(maintenance.description)) {
+    eml$dataset$maintenance$description <- maintenance.description
+  }
 
   # Create <contact> ----------------------------------------------------------
 

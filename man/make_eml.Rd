@@ -54,7 +54,8 @@ Longitudes west of the prime meridian and latitudes south of the equator
 are negative. Don't use this argument if geographic coverage is supplied
 by geographic_coverage.txt.}
 
-\item{maintenance.description}{(character) Data collection status ("ongoing" or "complete").}
+\item{maintenance.description}{(character) A description of data collection status (e.g. "ongoing", 
+"complete"), communicating the frequency of updates.}
 
 \item{data.table}{(character; optional) Table file name. If more than one, then supply 
 as a vector of character strings (e.g. 

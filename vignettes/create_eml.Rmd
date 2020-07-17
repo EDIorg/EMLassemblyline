@@ -111,7 +111,7 @@ The most common data package only contains tables. To make EML for this package 
 *  **temporal.coverage** Beginning and ending dates of the data using the format YYYY-MM-DD
 *  **geographic.description** (required if not using the _geographic_coverage.txt_ template) Description of the data packages geographic area.
 *  **geographic.coordinates** (required if not using the _geographic_coverage.txt_ template) A vector of decimal degree coordinates in the order: north, east, south, west, where latitudes south of the equator and longitudes west of the prime meridian are negative.
-*  **maintenance.description** Indicator of whether data collection is ‘ongoing’ or ‘completed’
+*  **maintenance.description** A description of data collection status (e.g. "ongoing", "complete"), communicating the frequency of updates.
 *  **data.table** Data table file names.
 *  **data.table.name** Descriptive name(s) of `data.table` in the same order as under `data.table`.
 *  **data.table.description** Data table descriptions listed in the same order as under `data.table`
