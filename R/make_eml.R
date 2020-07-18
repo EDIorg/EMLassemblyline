@@ -595,7 +595,38 @@ make_eml <- function(
         how = c("replace"))
       rp_personnel
       
-    } else {
+    } else if (person_role == "publisher") {
+      
+      rp_personnel <- list(
+        individualName = list(
+          givenName = list(
+            x$template$personnel.txt$content[info_row,"givenName"],
+            x$template$personnel.txt$content[info_row,"middleInitial"]),
+          surName = x$template$personnel.txt$content[info_row,"surName"]),
+        organizationName = x$template$personnel.txt$content[info_row,"organizationName"],
+        electronicMailAddress = x$template$personnel.txt$content[info_row,"electronicMailAddress"])
+      if (nchar(x$template$personnel.txt$content[info_row,"userId"]) == 19){
+        rp_personnel$userId <- list(
+          directory = 'https://orcid.org',
+          paste0(
+            "https://orcid.org/", 
+            x$template$personnel.txt$content[info_row,"userId"]))
+      }
+      # FIXME Blank entries ('') result in closing tags when EML is written
+      # to file. Need function to set all elements of value = '' to NULL.
+      rp_personnel <- rapply(
+        rp_personnel,
+        function(x){
+          if (x == ""){
+            x <- NULL
+          } else {
+            x
+          }
+        },
+        how = c("replace"))
+      rp_personnel
+      
+    }else {
       
       # If givenName, middleName, and surName are blank then the 
       # associatedParty is an organization, otherwise the associatedParty 
@@ -957,6 +988,15 @@ make_eml <- function(
     function(k) {
       message("    <contact>")
       set_person(info_row = k, person_role = "contact")
+    })
+  
+  # Create <publisher> --------------------------------------------------------
+  
+  eml$dataset$publisher <- lapply(
+    which(x$template$personnel.txt$content$role == "publisher"),
+    function(k) {
+      message("    <publisher>")
+      set_person(info_row = k, person_role = "publisher")
     })
 
   # Create <methods> ----------------------------------------------------------

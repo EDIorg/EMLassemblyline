@@ -282,6 +282,26 @@ testthat::test_that('Expect template values in EML', {
     r$dataset$project$relatedProject[[4]]$funding,
     "No funding to report")
   
+  # personnel.txt - publisher
+  
+  x1 <- x
+  use_i <- min(which(x1$x$template$personnel.txt$content$role == "creator"))
+  x1$x$template$personnel.txt$content$role[use_i] <- "publisher"
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_true(
+    !is.null(r$dataset$publisher))
+  expect_true(
+    length(r$dataset$publisher[[1]]) > 1)
+  
+  x1 <- x
+  use_i <- which(x1$x$template$personnel.txt$content$role == "creator")[1:3]
+  x1$x$template$personnel.txt$content$role[use_i] <- "publisher"
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_true(
+    !is.null(r$dataset$publisher))
+  expect_true(
+    length(r$dataset$publisher[[1]]) > 1)
+
   # taxonomic_coverage.txt
   
   x1 <- x

@@ -2,7 +2,8 @@
 
 ### Enhancements
 
-* __maintenance:__ Maintenance is no longer required however, a missing maintenance description will provide a warning message with the recommended best practice.
+* __maintenance.description:__ The `maintenance.description` of `make_eml()` is no longer required however, a missing `maintenance.description` will return a warning with the recommended best practice.
+* __publisher:__ A data publisher can now be added by listing the person (or organization) with a "publisher" role to the personnel.txt template.
 
 # EMLassemblyline 2.15.0
 
