@@ -232,6 +232,7 @@ __personnel.txt__ is a tab delimited table with columns:
     + **creator** Data package author
     + **PI** (optional) Principal investigator associated with the data package.
     + **contact** Data package contact. Can be an organization or position (e.g. data manager). To do this, enter the organization or position name under *givenName* and leave *middleInitial* and *surName* empty.
+    + **publisher** Data package publisher. Can be a person, organization, or position (e.g. data manager). Note: Data repositories are publishers and may replace the contents you supply with their own.
     + Any other roles are acceptable and will be listed under _associated party_ (e.g. Field Technician).
 * **projectTitle** (optional) Project title the data package was created under. Only list project titles on lines where the personnel role is *PI*. If an ancillary project was involved, then add a new row below the primary project with the ancillary project title and associated PI. Repeat for additional ancillary projects.
 * **fundingAgency** (optional) Agency the project was funded by. Only list on lines where the role is *PI*.

@@ -484,6 +484,15 @@ validate_templates <- function(fun.name, x){
           call. = F)
       }
       
+      # Principal Investigator and project info is recommended
+      
+      use_i <- tolower(x$template$personnel.txt$content$role) == "pi"
+      if (!any(use_i)) {
+        warning(
+          "No principal investigator and project info was found. This ",
+          "metadata is recommended.", call. = FALSE)
+      }
+      
       # projectTitle, fundingAgency, fundingNumber - Project info is associated 
       # with first listed PI
       
@@ -503,6 +512,7 @@ validate_templates <- function(fun.name, x){
       }
       
       # publisher - Only one publisher is allowed and the first will be used.
+      
       use_i <- tolower(x$template$personnel.txt$content$role) == "publisher"
       if (sum(use_i) > 1) {
         warning(

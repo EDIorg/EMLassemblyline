@@ -182,6 +182,15 @@ testthat::test_that('Expect template values in EML', {
   expect_true(
     length(r$dataset$coverage$geographicCoverage) == nrow(x1$x$template$geographic_coverage.txt$content))
   
+  # personnel.txt - Principal Investigator is absent
+  
+  x1 <- x
+  use_i <- which(x1$x$template$personnel.txt$content$role == "PI")
+  x1$x$template$personnel.txt$content <- x1$x$template$personnel.txt$content[-use_i, ]
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_true(
+    is.null(r$dataset$project))
+  
   # personnel.txt - only projectTitle is present
   
   x1 <- x
