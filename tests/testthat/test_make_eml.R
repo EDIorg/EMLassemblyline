@@ -122,6 +122,15 @@ testthat::test_that('Expect argument values in EML', {
       r$dataset$otherEntity[[i]]$physical$objectName == names(x1$x$other.entity[i]))
   }
   
+  # other.entity - MIME Type
+  
+  x1 <- x
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  for (i in 1:length(r$dataset$otherEntity)) {
+    expect_true(
+      r$dataset$otherEntity[[i]]$physical$dataFormat$externallyDefinedFormat$formatName != "Unknown")
+  }
+  
   # other.entity.name - defaults to other.entity
   
   x1 <- x

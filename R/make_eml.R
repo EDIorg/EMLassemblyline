@@ -1261,7 +1261,6 @@ make_eml <- function(
   }
   
   # Create <otherEntity> ------------------------------------------------------
-  # FIXME: Need methods for inferring entity type, format, and other metadata
   
   if (!is.null(x$other.entity)) {
     eml$dataset$otherEntity <- lapply(
@@ -1273,7 +1272,8 @@ make_eml <- function(
           EML::set_physical(
             paste0(data.path, "/", k)))
         physical$dataFormat$textFormat <- NULL
-        physical$dataFormat$externallyDefinedFormat$formatName <- "unknown"
+        physical$dataFormat$externallyDefinedFormat$formatName <- mime::guess_type(
+          file = k, unknown = "Unknown", empty = "Unknown")
         # FIXME: data.url is deprecated. Remove support for this argument after (11 March 2021)
         if (!is.null(data.url)) {
           physical$distribution$online$url[[1]] <- paste0(data.url, "/", k)

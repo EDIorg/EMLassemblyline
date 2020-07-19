@@ -5,6 +5,7 @@
 * __maintenance.description:__ The `maintenance.description` of `make_eml()` is no longer required however, a missing `maintenance.description` will return a warning with the recommended best practice.
 * __publisher:__ A data publisher can now be added by listing the person (or organization) with a "publisher" role to the personnel.txt template.
 * __project:__ Missing project information (i.e. Principal Investigator and project metadata) return a warning with the recommended practice.
+* __formatName:__ The formatName of an otherEntity is now auto-detected using the `mime` library. Undetected MIME Types are listed as "Unknown". Fixes [issue #68](https://github.com/EDIorg/EMLassemblyline/issues/68).
 
 # EMLassemblyline 2.15.0
 
