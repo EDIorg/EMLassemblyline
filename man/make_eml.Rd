@@ -54,7 +54,8 @@ Longitudes west of the prime meridian and latitudes south of the equator
 are negative. Don't use this argument if geographic coverage is supplied
 by geographic_coverage.txt.}
 
-\item{maintenance.description}{(character) Data collection status ("ongoing" or "complete").}
+\item{maintenance.description}{(character) A description of data collection status (e.g. "ongoing", 
+"complete"), communicating the frequency of updates.}
 
 \item{data.table}{(character; optional) Table file name. If more than one, then supply 
 as a vector of character strings (e.g. 
@@ -77,7 +78,9 @@ enter \code{"\\'"}.}
 \item{data.table.url}{(character; optional) The publicly accessible URL from which 
 \code{data.table} can be downloaded. If more than one, then supply as 
 a vector of character strings in the same order as listed in 
-\code{data.table}.}
+\code{data.table}. If wanting to include URLs for some but not all
+\code{data.table}, then use a "" for those that don't have a URL
+(e.g. \code{data.table.url = c("", "/url/to/decomp.csv")}).}
 
 \item{other.entity}{(character; optional) Name of \code{other.entity}(s) in this 
 dataset. Use \code{other.entity} for all non-\code{data.table} files. 
@@ -97,7 +100,9 @@ listed in \code{other.entity}.}
 \item{other.entity.url}{(character; optional) The publicly accessible URL from which 
 \code{other.entity} can be downloaded. If more than one, then supply as 
 a vector of character strings in the same order as listed in 
-\code{other.entity}.}
+\code{other.entity}. If wanting to include URLs for some but not all
+\code{other.entity}, then use a "" for those that don't have a URL
+(e.g. \code{other.entity.url = c("", "/url/to/quality_control.R")}).}
 
 \item{provenance}{(character; optional) EDI Data Repository Data package ID(s) 
 corresponding to parent datasets from which this dataset was created 

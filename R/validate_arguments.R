@@ -243,7 +243,12 @@ validate_arguments <- function(fun.name, fun.args){
     # maintenance.description
     
     if (is.null(fun.args$maintenance.description)){
-      stop('Input argument "maintenance.description" is missing. Indicate whether data collection is "ongoing" or "completed" for your dataset.', call. = F)
+      warning(
+        paste0('Input argument "maintenance.description" is missing. Consider ',
+               'adding a description of your dataset collection status. E.g. ',
+               '"Ongoing collection with quarterly updates", or "Completed ',
+               'collection, updates to these data are not expected."'), 
+        call. = F)
     }
 
     # user.id and user.domain

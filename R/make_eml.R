@@ -55,7 +55,8 @@
 #'     are negative. Don't use this argument if geographic coverage is supplied
 #'     by geographic_coverage.txt.
 #' @param maintenance.description
-#'     (character) Data collection status ("ongoing" or "complete").
+#'     (character) A description of data collection status (e.g. "ongoing", 
+#'     "complete"), communicating the frequency of updates.
 #' @param data.table
 #'     (character; optional) Table file name. If more than one, then supply 
 #'     as a vector of character strings (e.g. 
@@ -78,7 +79,9 @@
 #'     (character; optional) The publicly accessible URL from which 
 #'     \code{data.table} can be downloaded. If more than one, then supply as 
 #'     a vector of character strings in the same order as listed in 
-#'     \code{data.table}.
+#'     \code{data.table}. If wanting to include URLs for some but not all
+#'     \code{data.table}, then use a "" for those that don't have a URL
+#'     (e.g. \code{data.table.url = c("", "/url/to/decomp.csv")}).
 #' @param other.entity
 #'     (character; optional) Name of \code{other.entity}(s) in this 
 #'     dataset. Use \code{other.entity} for all non-\code{data.table} files. 
@@ -98,7 +101,9 @@
 #'     (character; optional) The publicly accessible URL from which 
 #'     \code{other.entity} can be downloaded. If more than one, then supply as 
 #'     a vector of character strings in the same order as listed in 
-#'     \code{other.entity}.
+#'     \code{other.entity}. If wanting to include URLs for some but not all
+#'     \code{other.entity}, then use a "" for those that don't have a URL
+#'     (e.g. \code{other.entity.url = c("", "/url/to/quality_control.R")}).
 #' @param provenance
 #'     (character; optional) EDI Data Repository Data package ID(s) 
 #'     corresponding to parent datasets from which this dataset was created 
@@ -181,7 +186,7 @@ make_eml <- function(
   temporal.coverage,
   geographic.description, 
   geographic.coordinates, 
-  maintenance.description, 
+  maintenance.description = NULL, 
   data.table = NULL, 
   data.table.name = data.table,
   data.table.description = NULL, 
@@ -594,7 +599,38 @@ make_eml <- function(
         how = c("replace"))
       rp_personnel
       
-    } else {
+    } else if (person_role == "publisher") {
+      
+      rp_personnel <- list(
+        individualName = list(
+          givenName = list(
+            x$template$personnel.txt$content[info_row,"givenName"],
+            x$template$personnel.txt$content[info_row,"middleInitial"]),
+          surName = x$template$personnel.txt$content[info_row,"surName"]),
+        organizationName = x$template$personnel.txt$content[info_row,"organizationName"],
+        electronicMailAddress = x$template$personnel.txt$content[info_row,"electronicMailAddress"])
+      if (nchar(x$template$personnel.txt$content[info_row,"userId"]) == 19){
+        rp_personnel$userId <- list(
+          directory = 'https://orcid.org',
+          paste0(
+            "https://orcid.org/", 
+            x$template$personnel.txt$content[info_row,"userId"]))
+      }
+      # FIXME Blank entries ('') result in closing tags when EML is written
+      # to file. Need function to set all elements of value = '' to NULL.
+      rp_personnel <- rapply(
+        rp_personnel,
+        function(x){
+          if (x == ""){
+            x <- NULL
+          } else {
+            x
+          }
+        },
+        how = c("replace"))
+      rp_personnel
+      
+    }else {
       
       # If givenName, middleName, and surName are blank then the 
       # associatedParty is an organization, otherwise the associatedParty 
@@ -945,7 +981,9 @@ make_eml <- function(
   # Create <maintenance> ------------------------------------------------------
   
   message("    <maintenance>")
-  eml$dataset$maintenance$description <- maintenance.description
+  if (!is.null(maintenance.description)) {
+    eml$dataset$maintenance$description <- maintenance.description
+  }
 
   # Create <contact> ----------------------------------------------------------
 
@@ -954,6 +992,15 @@ make_eml <- function(
     function(k) {
       message("    <contact>")
       set_person(info_row = k, person_role = "contact")
+    })
+  
+  # Create <publisher> --------------------------------------------------------
+  
+  eml$dataset$publisher <- lapply(
+    which(x$template$personnel.txt$content$role == "publisher"),
+    function(k) {
+      message("    <publisher>")
+      set_person(info_row = k, person_role = "publisher")
     })
 
   # Create <methods> ----------------------------------------------------------
@@ -1180,8 +1227,15 @@ make_eml <- function(
         if (!is.null(data.url)) {
           physical$distribution$online$url[[1]] <- paste0(data.url, "/", k)
         } else if (!is.null(data.table.url)) {
-          physical$distribution$online$url <- data.table.url[
-            which(k == names(x$data.table))]
+          # data.table.url isn't required for each data table, but must have a 
+          # non-NULL entry in the data.table.url if other data tables have a 
+          # URL. A "" or NA indicates to skip URL assignment.
+          url <- data.table.url[which(k == names(x$data.table))]
+          if ((url == "") | is.na(url)) {
+            physical$distribution <- list()
+          } else {
+            physical$distribution$online$url <- url
+          }
         } else {
           physical$distribution <- list()
         }
@@ -1218,7 +1272,6 @@ make_eml <- function(
   }
   
   # Create <otherEntity> ------------------------------------------------------
-  # FIXME: Need methods for inferring entity type, format, and other metadata
   
   if (!is.null(x$other.entity)) {
     eml$dataset$otherEntity <- lapply(
@@ -1230,14 +1283,22 @@ make_eml <- function(
           EML::set_physical(
             paste0(data.path, "/", k)))
         physical$dataFormat$textFormat <- NULL
-        physical$dataFormat$externallyDefinedFormat$formatName <- "unknown"
+        physical$dataFormat$externallyDefinedFormat$formatName <- mime::guess_type(
+          file = k, unknown = "Unknown", empty = "Unknown")
         # FIXME: data.url is deprecated. Remove support for this argument after (11 March 2021)
         if (!is.null(data.url)) {
           physical$distribution$online$url[[1]] <- paste0(data.url, "/", k)
         } else if (!is.null(other.entity.url)) {
-          physical$distribution$online$url <- other.entity.url[
-            which(k == names(x$other.entity))]
-        }else {
+          # other.entity.url isn't required for each data table, but must have a 
+          # non-NULL entry in the other.entity.url if other data tables have a 
+          # URL. A "" or NA indicates to skip URL assignment.
+          url <- other.entity.url[which(k == names(x$other.entity))]
+          if ((url == "") | is.na(url)) {
+            physical$distribution <- list()
+          } else {
+            physical$distribution$online$url <- url
+          }
+        } else {
           physical$distribution <- list()
         }
         # Create otherEntity

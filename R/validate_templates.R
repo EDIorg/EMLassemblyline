@@ -484,6 +484,15 @@ validate_templates <- function(fun.name, x){
           call. = F)
       }
       
+      # Principal Investigator and project info is recommended
+      
+      use_i <- tolower(x$template$personnel.txt$content$role) == "pi"
+      if (!any(use_i)) {
+        warning(
+          "No principal investigator and project info was found. This ",
+          "metadata is recommended.", call. = FALSE)
+      }
+      
       # projectTitle, fundingAgency, fundingNumber - Project info is associated 
       # with first listed PI
       
@@ -500,6 +509,19 @@ validate_templates <- function(fun.name, x){
               "this. Please add one."),
             call. = F)
         }
+      }
+      
+      # publisher - Only one publisher is allowed and the first will be used.
+      
+      use_i <- tolower(x$template$personnel.txt$content$role) == "publisher"
+      if (sum(use_i) > 1) {
+        warning(
+          "personnel.txt has more than one 'publisher'. Only the first will ",
+          "be used.", call. = F)
+        use_i <- min(which(x$template$personnel.txt$content$role == "publisher"))
+        use_i <- which(x$template$personnel.txt$content$role == "publisher")[
+          which(x$template$personnel.txt$content$role == "publisher") != use_i]
+        x$template$personnel.txt$content <- x$template$personnel.txt$content[-c(use_i), ]
       }
 
     }
