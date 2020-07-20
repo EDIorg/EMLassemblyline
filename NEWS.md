@@ -6,6 +6,7 @@
 * __publisher:__ A data publisher can now be added by listing the person (or organization) with a "publisher" role to the personnel.txt template.
 * __project:__ Missing project information (i.e. Principal Investigator and project metadata) return a warning with the recommended practice.
 * __formatName:__ The formatName of an otherEntity is now auto-detected using the `mime` library. Undetected MIME Types are listed as "Unknown". Fixes [issue #68](https://github.com/EDIorg/EMLassemblyline/issues/68).
+* __distribution:__ Previously, when assigning a .//physical/distribtuion/online/url for two or more data tables or other entities, each was required to have a corresponding URL listed under the `make_eml()` arguments `data.table.url` and `other.entity.url` . Some use cases require assignment of a URL to only one in a list of two or more. This constraint as been relaxed so if a data object doesn't have a corresponding URL then use the values `""` or `NA` (e.g. if in `make_eml()` the argument `data.table = c("nitrogen.csv", "decomp.csv")`, and a URL only exists for the second object, then `data.table.url = c("", "/url/to/decomp.csv")`.
 
 # EMLassemblyline 2.15.0
 

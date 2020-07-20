@@ -79,7 +79,9 @@
 #'     (character; optional) The publicly accessible URL from which 
 #'     \code{data.table} can be downloaded. If more than one, then supply as 
 #'     a vector of character strings in the same order as listed in 
-#'     \code{data.table}.
+#'     \code{data.table}. If wanting to include URLs for some but not all
+#'     \code{data.table}, then use a "" for those that don't have a URL
+#'     (e.g. \code{data.table.url = c("", "/url/to/decomp.csv")}).
 #' @param other.entity
 #'     (character; optional) Name of \code{other.entity}(s) in this 
 #'     dataset. Use \code{other.entity} for all non-\code{data.table} files. 
@@ -99,7 +101,9 @@
 #'     (character; optional) The publicly accessible URL from which 
 #'     \code{other.entity} can be downloaded. If more than one, then supply as 
 #'     a vector of character strings in the same order as listed in 
-#'     \code{other.entity}.
+#'     \code{other.entity}. If wanting to include URLs for some but not all
+#'     \code{other.entity}, then use a "" for those that don't have a URL
+#'     (e.g. \code{other.entity.url = c("", "/url/to/quality_control.R")}).
 #' @param provenance
 #'     (character; optional) EDI Data Repository Data package ID(s) 
 #'     corresponding to parent datasets from which this dataset was created 
@@ -1223,8 +1227,15 @@ make_eml <- function(
         if (!is.null(data.url)) {
           physical$distribution$online$url[[1]] <- paste0(data.url, "/", k)
         } else if (!is.null(data.table.url)) {
-          physical$distribution$online$url <- data.table.url[
-            which(k == names(x$data.table))]
+          # data.table.url isn't required for each data table, but must have a 
+          # non-NULL entry in the data.table.url if other data tables have a 
+          # URL. A "" or NA indicates to skip URL assignment.
+          url <- data.table.url[which(k == names(x$data.table))]
+          if ((url == "") | is.na(url)) {
+            physical$distribution <- list()
+          } else {
+            physical$distribution$online$url <- url
+          }
         } else {
           physical$distribution <- list()
         }
@@ -1278,9 +1289,16 @@ make_eml <- function(
         if (!is.null(data.url)) {
           physical$distribution$online$url[[1]] <- paste0(data.url, "/", k)
         } else if (!is.null(other.entity.url)) {
-          physical$distribution$online$url <- other.entity.url[
-            which(k == names(x$other.entity))]
-        }else {
+          # other.entity.url isn't required for each data table, but must have a 
+          # non-NULL entry in the other.entity.url if other data tables have a 
+          # URL. A "" or NA indicates to skip URL assignment.
+          url <- other.entity.url[which(k == names(x$other.entity))]
+          if ((url == "") | is.na(url)) {
+            physical$distribution <- list()
+          } else {
+            physical$distribution$online$url <- url
+          }
+        } else {
           physical$distribution <- list()
         }
         # Create otherEntity
