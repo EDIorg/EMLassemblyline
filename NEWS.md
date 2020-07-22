@@ -1,3 +1,9 @@
+# EMLassemblyline 2.16.1
+
+### Bug fix
+
+* __template reader:__ Fixed a bug in the metadata template reader.
+
 # EMLassemblyline 2.16.0
 
 ### Enhancements

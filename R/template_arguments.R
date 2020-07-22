@@ -161,15 +161,15 @@ template_arguments <- function(
       # FIXME: Convert NA to "" expected by EAL funcitons. Assume NA listed
       # under missingValueCode of the attributes template is "" unless 
       # accompanied by a missingValueCodeExplanation
+      
       as.data.frame(
         data.table::fread(
           file = f,
           fill = TRUE,
           blank.lines.skip = TRUE,
           sep = "\t",
-          colClasses = rep(
-            "character", 
-            max(utils::count.fields(f, sep = "\t"), na.rm = T))))
+          colClasses = list(
+            character = 1:utils::count.fields(f, sep = "\t")[1])))
     }
     
     read_txt <- function(f) {
