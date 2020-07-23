@@ -1,3 +1,9 @@
+# EMLassemblyline 2.17.0
+
+### Enhancements
+
+* __Create EML for non-EDI repositories:__ Create EML for non-EDI repositories by refactoring the logic around the `make_eml()` function arguments `user.id`, `user.domain`, and `package.id`. Details are listed in the function documentation.
+
 # EMLassemblyline 2.16.1
 
 ### Bug fix

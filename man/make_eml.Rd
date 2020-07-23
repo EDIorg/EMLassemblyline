@@ -108,15 +108,28 @@ a vector of character strings in the same order as listed in
 corresponding to parent datasets from which this dataset was created 
 (e.g. \code{knb-lter-cap.46.3}).}
 
-\item{user.id}{(character; optional) ID(s) of data repository user account(s). If more 
-than one, supply as a vector of character strings.}
+\item{user.id}{(character; optional) Repository user identifier. If more than one, 
+then enter as a vector of character strings (e.g. 
+\code{c("user_id_1", "user_id_2")}). \code{user.id} sets the 
+/eml/access/principal element for all \code{user.domain} except
+"KNB", "ADC", and if \code{user.domain = NULL}.}
 
-\item{user.domain}{(character; optional) Domain of the \code{user.id}(s). Valid options 
-for EDI are "LTER" and "EDI". If more than one, supply as a vector of 
-character strings in the same order as corresponding \code{user.id}(s).}
+\item{user.domain}{(character; optional) Repository domain associated with 
+\code{user.id}. Currently supported values are "EDI" 
+(Environmental Data Initiative), "LTER" (Long-Term Ecological Research 
+Network), "KNB" (The Knowledge Network for Biocomplexity), "ADC" (The 
+Arctic Data Center). If you'd like your system supported please contact
+maintainers of the EMLassemblyline R package. If using more than one 
+\code{user.domain}, then enter as a vector of character strings (e.g. 
+\code{c("user_domain_1", "user_domain_2")}) in the same order as 
+corresponding \code{user.id}. If \code{user.domain} is missing then a 
+default value "unknown" is assigned. \code{user.domain} sets the EML 
+header "system" attribute and for all \code{user.domain}, except "KNB" 
+and "ADC", sets the /eml/access/principal element attributes and values.}
 
-\item{package.id}{(character; optional) Data Repository data package ID for this dataset. A 
-missing package ID defaults to "edi.101.1".}
+\item{package.id}{(character; optional) Data package ID for the dataset described by this
+EML. Ask your data repository for a package ID. Missing \code{package.id}
+is assigned a UUID.}
 
 \item{write.file}{(logical; optional) Whether to write the EML file.}
 

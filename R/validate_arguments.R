@@ -250,25 +250,6 @@ validate_arguments <- function(fun.name, fun.args){
                'collection, updates to these data are not expected."'), 
         call. = F)
     }
-
-    # user.id and user.domain
-    
-    if (!is.null(fun.args$user.id) & is.null(fun.args$user.domain)){
-      stop('Input argument "user.domain" is missing. Add one.', call. = F)
-    }
-    
-    if (!is.null(fun.args$user.domain) & is.null(fun.args$user.id)){
-      stop('Input argument "user.id" is missing. Add one.', call. = F)
-    }
-    
-    if ((!is.null(fun.args$user.id)) & (!is.null(fun.args$user.domain))){
-      if (length(fun.args$user.id) != length(fun.args$user.domain)){
-        stop('The number of values listed in arguments "user.id" and "user.domain" do not match. Each user.id must have a corresponding user.domain', call. = F)
-      }
-      if (sum(sum(fun.args$user.domain == 'LTER'), sum(fun.args$user.domain == 'EDI')) != length(fun.args$user.domain)){
-        warning('Input argument "user.domain" is not "EDI" or "LTER". If not creating a data package for EDI, then ignore this message. A default value "someuserdomain" will be used.', call. = F)
-      }
-    }
     
     # path, data.path, and eml.path
     
@@ -375,9 +356,14 @@ validate_arguments <- function(fun.name, fun.args){
     
     # package.id
     
-    if (!is.null(fun.args$package.id)){
-      if (!isTRUE(stringr::str_detect(fun.args$package.id, '[:alpha:]\\.[:digit:]+\\.[:digit:]'))){
-        warning('Input argument "package.id" is not valid for EDI. An EDI package ID must consist of a scope, identifier, and revision (e.g. "edi.100.4"). If not creating a data package for EDI, then ignore this message.', call. = F)
+    if (!is.null(fun.args$package.id) & !is.null(fun.args$user.domain)){
+      if (all(tolower(fun.args$user.domain) %in% c("edi", "lter"))) {
+        if (!isTRUE(stringr::str_detect(fun.args$package.id, '[:alpha:]\\.[:digit:]+\\.[:digit:]'))) {
+          warning(
+            "Warning: 'package.id' is not valid for EDI or LTER. Expected is ",
+            "the form 'edi.xxx.x' (EDI) or 'knb-lter-ccc.xxx.x' (LTER).", 
+            call. = FALSE)
+        }
       }
     }
     

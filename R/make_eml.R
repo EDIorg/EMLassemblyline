@@ -109,15 +109,28 @@
 #'     corresponding to parent datasets from which this dataset was created 
 #'     (e.g. \code{knb-lter-cap.46.3}).
 #' @param user.id
-#'     (character; optional) ID(s) of data repository user account(s). If more 
-#'     than one, supply as a vector of character strings.
+#'     (character; optional) Repository user identifier. If more than one, 
+#'     then enter as a vector of character strings (e.g. 
+#'     \code{c("user_id_1", "user_id_2")}). \code{user.id} sets the 
+#'     /eml/access/principal element for all \code{user.domain} except
+#'     "KNB", "ADC", and if \code{user.domain = NULL}.
 #' @param user.domain
-#'     (character; optional) Domain of the \code{user.id}(s). Valid options 
-#'     for EDI are "LTER" and "EDI". If more than one, supply as a vector of 
-#'     character strings in the same order as corresponding \code{user.id}(s).
+#'     (character; optional) Repository domain associated with 
+#'     \code{user.id}. Currently supported values are "EDI" 
+#'     (Environmental Data Initiative), "LTER" (Long-Term Ecological Research 
+#'     Network), "KNB" (The Knowledge Network for Biocomplexity), "ADC" (The 
+#'     Arctic Data Center). If you'd like your system supported please contact
+#'     maintainers of the EMLassemblyline R package. If using more than one 
+#'     \code{user.domain}, then enter as a vector of character strings (e.g. 
+#'     \code{c("user_domain_1", "user_domain_2")}) in the same order as 
+#'     corresponding \code{user.id}. If \code{user.domain} is missing then a 
+#'     default value "unknown" is assigned. \code{user.domain} sets the EML 
+#'     header "system" attribute and for all \code{user.domain}, except "KNB" 
+#'     and "ADC", sets the /eml/access/principal element attributes and values.
 #' @param package.id
-#'     (character; optional) Data Repository data package ID for this dataset. A 
-#'     missing package ID defaults to "edi.101.1".
+#'     (character; optional) Data package ID for the dataset described by this
+#'     EML. Ask your data repository for a package ID. Missing \code{package.id}
+#'     is assigned a UUID.
 #' @param write.file
 #'     (logical; optional) Whether to write the EML file.
 #' @param return.obj
@@ -284,7 +297,7 @@ make_eml <- function(
     data.url <- data.files.url
   }
   # FIXME: Do not remove until March 2021
-  if (!missing(data.url)){
+  if (!is.null(data.url)){
     warning(
       paste0("Argument 'data.url' is deprecated; please use 'data.table.url' ",
              "and 'other.entity.url' instead."),
@@ -692,68 +705,98 @@ make_eml <- function(
   
   # Create <eml> --------------------------------------------------------------
   
-  # FIXME: Support other system values
-  
   message("Making EML ...")
   message("<eml>")
   
-  if (is.null(package.id)){
-    package.id <- 'edi.101.1'
+  # Set default package.id
+  
+  if (is.null(package.id)) {
+    warning("Missing 'package.id', assigning a UUID", call. = FALSE)
+    package.id <- uuid::UUIDgenerate()
   }
+  
+  # Define the EML system attribute from user.domain
+  
+  if (("edi" %in% tolower(user.domain)) | ("lter" %in% tolower(user.domain))) {
+    sys <- "edi"
+  } else if ("knb" %in% tolower(user.domain)) {
+    sys <- "knb"
+  } else if ("adc" %in% tolower(user.domain)) {
+    sys <- "https://arcticdata.io"
+  } else {
+    sys <- "unknown"
+  }
+  
+  # Construct EML header
   
   eml <- list(
     schemaLocation = "https://eml.ecoinformatics.org/eml-2.2.0  https://nis.lternet.edu/schemas/EML/eml-2.2.0/xsd/eml.xsd",
     packageId = package.id,
-    system = "edi")
+    system = sys)
   
   # Create <access> -----------------------------------------------------------
+  # Create the access node for systems/repositories (i.e. user.domain) that 
+  # use it, and if a user.id is specified.
   
-  # FIXME: Support other user.id, user.domain, authSystem,
-  
-  message("  <access>")
-  
-  # Set default user.id and user.domain
-  
-  if (is.null(user.id)) {
-    warning(
-      "No 'user.id' was supplied. The default 'someuserid' will be used.",
-      call. = F)
-    user.id <- "someuserid"
-  } else if (is.null(user.domain)) {
-    warning(
-      "No 'user.domain' was supplied. The default 'user.domain' will be used.",
-      call. = F)
-    user.domain <- "someuserdomain"
-  }
-  
-  # Initialize the <access> node
-  
-  eml$access <- list(
-    scope = "document",
-    order = "allowFirst",
-    authSystem = "https://pasta.edirepository.org/authentication",
-    allow = list())
-  
-  # Set permissions to "all" for the EML creator/manager and "read" for 
-  # everyone else
-  
-  r <- lapply(
-    seq_along(user.id),
-    function(k) {
-      if (user.domain[k] == "LTER") {
-        principal <- paste0(
-          "uid=", user.id[k], ",o=", user.domain[k], ",dc=ecoinformatics,dc=org")
-      } else if (user.domain[k] == "EDI") {
-        principal <- paste0(
-          "uid=", user.id[k], ",o=", user.domain[k], ",dc=edirepository,dc=org")
-      } else {
-        principal <- user.id
-      }
-      list(principal = principal, permission = "all")
+  if ((eml$system != "knb") & 
+      (eml$system != "https://arcticdata.io") &
+      (!is.null(user.id))) {
+    
+    message("  <access>")
+    
+    # Set access attributes
+    
+    if (eml$system == "edi") {
+      auth_sys <- "https://pasta.edirepository.org/authentication"
+    } else {
+      auth_sys <- "unknown"
     }
-  )
-  r[[length(r)+1]] <- list(principal = "public", permission = "read")
-  eml$access$allow <- r
+    
+    eml$access <- list(
+      scope = "document",
+      order = "allowFirst",
+      authSystem = auth_sys,
+      allow = list())
+    
+    # Extrapolate user.id and user.domain if unequal lengths.
+    
+    if (!is.null(user.id) & !is.null(user.domain)) {
+      if (length(user.id) != length(user.domain)) {
+        user.id <- data.frame(
+          user.id, user.domain, stringsAsFactors = FALSE)$user.id
+        user.domain <- data.frame(
+          user.id, user.domain, stringsAsFactors = FALSE)$user.domain
+        warning(
+          "The number of 'user.id' and 'user.domain' inputs differ. ",
+          "Extrapolating to make equal:\nuser.id = ", 
+          paste(user.id, collapse = ", "), "\nuser.domain = ", 
+          paste(user.domain, collapse = ", "), call. = FALSE)
+      }
+    }
+    
+    # Set permissions to "all" for the principal and "read" for public
+    
+    r <- lapply(
+      seq_along(user.id),
+      function(k) {
+        if (auth_sys == "https://pasta.edirepository.org/authentication") {
+          if (tolower(user.domain[k]) == "lter") {
+            principal <- paste0(
+              "uid=", user.id[k], ",o=", user.domain[k], ",dc=ecoinformatics,dc=org")
+          } else if (tolower(user.domain[k]) == "edi") {
+            principal <- paste0(
+              "uid=", user.id[k], ",o=", user.domain[k], ",dc=edirepository,dc=org")
+          }
+        } else {
+          principal <- user.id[k]
+        }
+        permission <- "all"
+        list(principal = principal, permission = permission)
+      })
+    r[[length(r)+1]] <- list(principal = "public", permission = "read")
+    eml$access$allow <- r
+    
+  }
 
   # Create <dataset> ----------------------------------------------------------
   # Initialize the dataset list to which sub-nodes will be added

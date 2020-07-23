@@ -47,39 +47,3 @@ Import template for defining categorical variables used in data a
     An existing categorical variables template will not be overwritten 
     by subsequent calls to \code{define_catvars()}.
 }
-\examples{
-# Set working directory
-setwd(tempdir())
-
-# Create data package directory "pkg_255"
-file.copy(
-  from = system.file('/examples/pkg_255', package = 'EMLassemblyline'),
-  to = '.',
-  recursive = TRUE
-)
-
-# View directory contents (NOTE: catvars_*.txt files don't exist)
-dir('./pkg_255/metadata_templates')
-
-# Define categorical variables
-define_catvars(
-  path = './pkg_255/metadata_templates',
-  data.path = './pkg_255/data_objects'
-)
-
-# View directory contents (NOTE: catvars_*.txt files exist)
-dir('./pkg_255/metadata_templates')
-
-# Rerunning define_catvars() does not overwrite files
-define_catvars(
-  path = './pkg_255/metadata_templates',
-  data.path = './pkg_255/data_objects'
-)
-
-# Clean up
-unlink(
-  './pkg_255',
-  recursive = TRUE
-)
-
-}
