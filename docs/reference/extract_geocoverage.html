@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.16.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.17.0</span>
       </span>
     </div>
 
@@ -221,55 +221,6 @@ to <code>path</code>.</p></td>
     <p>An existing geographic coverage template will not be overwritten by 
     subsequent calls to <code>extract_geocoverage()</code>.</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Set working directory</span>
-<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>())
-
-<span class='co'># Create data package directory "pkg_255"</span>
-<span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.copy</a></span>(
-  <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>'/examples/pkg_255'</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'EMLassemblyline'</span>),
-  <span class='kw'>to</span> <span class='kw'>=</span> <span class='st'>'.'</span>,
-  <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
-<span class='co'># View directory contents (NOTE: geographic_coverage.txt doesn't exist)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span>(<span class='st'>'./pkg_255/metadata_templates'</span>)</div><div class='output co'>#&gt; [1] "abstract.txt"            "additional_info.txt"    
-#&gt; [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
-#&gt; [5] "custom_units.txt"        "intellectual_rights.txt"
-#&gt; [7] "keywords.txt"            "methods.txt"            
-#&gt; [9] "personnel.txt"          </div><div class='input'>
-<span class='co'># Extract geographic coverage</span>
-<span class='fu'>extract_geocoverage</span>(
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./pkg_255/metadata_templates'</span>,
-  <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='st'>'./pkg_255/data_objects'</span>,
-  <span class='kw'>data.table</span> <span class='kw'>=</span> <span class='st'>'nitrogen.csv'</span>,
-  <span class='kw'>site.col</span> <span class='kw'>=</span> <span class='st'>'site_name'</span>,
-  <span class='kw'>lat.col</span> <span class='kw'>=</span> <span class='st'>'site_lat'</span>,
-  <span class='kw'>lon.col</span> <span class='kw'>=</span> <span class='st'>'site_lon'</span>
-)</div><div class='output co'>#&gt; <span class='message'>Creating geographic coverage template.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'extract_geocoverage' is deprecated.</span>
-#&gt; <span class='warning'>Use 'template_geographic_coverage' instead.</span>
-#&gt; <span class='warning'>See help("Deprecated") and help("EMLassemblyline-deprecated").</span></div><div class='output co'>#&gt; <span class='message'>Writing geographic_coverage.txt to path</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
-<span class='co'># View directory contents (NOTE: geographic_coverage.txt exists)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span>(<span class='st'>'./pkg_255/metadata_templates'</span>)</div><div class='output co'>#&gt;  [1] "abstract.txt"            "additional_info.txt"    
-#&gt;  [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
-#&gt;  [5] "custom_units.txt"        "geographic_coverage.txt"
-#&gt;  [7] "intellectual_rights.txt" "keywords.txt"           
-#&gt;  [9] "methods.txt"             "personnel.txt"          </div><div class='input'>
-<span class='co'># Rerunning extract_geocoverage() does not overwrite files</span>
-<span class='fu'>extract_geocoverage</span>(
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./pkg_255/metadata_templates'</span>,
-  <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='st'>'./pkg_255/data_objects'</span>,
-  <span class='kw'>data.table</span> <span class='kw'>=</span> <span class='st'>'nitrogen.csv'</span>,
-  <span class='kw'>site.col</span> <span class='kw'>=</span> <span class='st'>'site_name'</span>,
-  <span class='kw'>lat.col</span> <span class='kw'>=</span> <span class='st'>'site_lat'</span>,
-  <span class='kw'>lon.col</span> <span class='kw'>=</span> <span class='st'>'site_lon'</span>
-)</div><div class='output co'>#&gt; <span class='message'>Creating geographic coverage template.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'extract_geocoverage' is deprecated.</span>
-#&gt; <span class='warning'>Use 'template_geographic_coverage' instead.</span>
-#&gt; <span class='warning'>See help("Deprecated") and help("EMLassemblyline-deprecated").</span></div><div class='output co'>#&gt; <span class='message'>Writing geographic_coverage.txt to path</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
-<span class='co'># Clean up</span>
-<span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(
-  <span class='st'>'./pkg_255'</span>,
-  <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.16.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.17.0</span>
       </span>
     </div>
 
@@ -226,65 +226,6 @@ functions. Use <code><a href='template_arguments.html'>template_arguments()</a><
     <p>Existing templates will not be overwritten subsequent calls to 
     <code>import_templates()</code>.</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Set working directory</span>
-<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>())
-
-<span class='co'># Create data package directory "pkg_250"</span>
-<span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.copy</a></span>(
-  <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>'/examples/pkg_250'</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'EMLassemblyline'</span>),
-  <span class='kw'>to</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(),
-  <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
-<span class='co'># View directory contents (NOTE: Directory is empty)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span>(<span class='st'>'./pkg_250/metadata_templates'</span>)</div><div class='output co'>#&gt; [1] "README.txt"</div><div class='input'>
-<span class='co'># Import templates (for data package with no tables)</span>
-<span class='fu'>import_templates</span>(
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./pkg_250/metadata_templates'</span>,
-  <span class='kw'>license</span> <span class='kw'>=</span> <span class='st'>'CC0'</span>
-)</div><div class='output co'>#&gt; <span class='message'>Importing metadata templates</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'import_templates' is deprecated.</span>
-#&gt; <span class='warning'>Use 'template_core_metadata and template_table_attributes' instead.</span>
-#&gt; <span class='warning'>See help("Deprecated") and help("EMLassemblyline-deprecated").</span></div><div class='output co'>#&gt; <span class='message'>Importing abstract.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing additional_info.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing bounding_boxes.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing custom_units.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing intellectual_rights.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing keywords.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing methods.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing personnel.txt.</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
-<span class='co'># View directory contents (NOTE: Templates exist)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span>(<span class='st'>'./pkg_250/metadata_templates'</span>)</div><div class='output co'>#&gt; [1] "abstract.txt"            "additional_info.txt"    
-#&gt; [3] "bounding_boxes.txt"      "custom_units.txt"       
-#&gt; [5] "intellectual_rights.txt" "keywords.txt"           
-#&gt; [7] "methods.txt"             "personnel.txt"          
-#&gt; [9] "README.txt"             </div><div class='input'>
-<span class='co'># Rerunning import_templates() does not overwrite files</span>
-<span class='fu'>import_templates</span>(
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./pkg_250/metadata_templates'</span>,
-  <span class='kw'>license</span> <span class='kw'>=</span> <span class='st'>'CC0'</span>
-)</div><div class='output co'>#&gt; <span class='message'>Importing metadata templates</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'import_templates' is deprecated.</span>
-#&gt; <span class='warning'>Use 'template_core_metadata and template_table_attributes' instead.</span>
-#&gt; <span class='warning'>See help("Deprecated") and help("EMLassemblyline-deprecated").</span></div><div class='output co'>#&gt; <span class='message'>abstract.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>additional_info.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>bounding_boxes.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>custom_units.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>intellectual_rights.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>keywords.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>methods.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>personnel.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
-<span class='co'># Remove templates from directory</span>
-<span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.remove</a></span>(
-  <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span>(<span class='st'>'./pkg_250/metadata_templates'</span>, <span class='kw'>full.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-)</div><div class='output co'>#&gt; [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</div><div class='input'>
-<span class='co'># Import templates (for data package with tables)</span>
-<span class='fu'>import_templates</span>(
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./pkg_250/metadata_templates'</span>,
-  <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='st'>'./pkg_250/data_objects'</span>,
-  <span class='kw'>data.table</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
-    <span class='st'>'decomp.csv'</span>,
-    <span class='st'>'nitrogen.csv'</span>
-  ),
-  <span class='kw'>license</span> <span class='kw'>=</span> <span class='st'>'CC0'</span>
-)</div><div class='output co'>#&gt; <span class='message'>Importing metadata templates</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'import_templates' is deprecated.</span>
-#&gt; <span class='warning'>Use 'template_core_metadata and template_table_attributes' instead.</span>
-#&gt; <span class='warning'>See help("Deprecated") and help("EMLassemblyline-deprecated").</span></div><div class='output co'>#&gt; <span class='message'>Importing abstract.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing additional_info.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing bounding_boxes.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing custom_units.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing intellectual_rights.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing keywords.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing methods.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing personnel.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing attributes_decomp.txt.</span></div><div class='output co'>#&gt; <span class='message'>Importing attributes_nitrogen.txt.</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
-<span class='co'># View directory contents (NOTE: Templates, including attributes*_.txt, exist)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span>(<span class='st'>'./pkg_250/metadata_templates'</span>)</div><div class='output co'>#&gt;  [1] "abstract.txt"            "additional_info.txt"    
-#&gt;  [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
-#&gt;  [5] "bounding_boxes.txt"      "custom_units.txt"       
-#&gt;  [7] "intellectual_rights.txt" "keywords.txt"           
-#&gt;  [9] "methods.txt"             "personnel.txt"          </div><div class='input'>
-<span class='co'># Clean up</span>
-<span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(
-  <span class='st'>'./pkg_250'</span>,
-  <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

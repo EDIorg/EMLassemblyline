@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.16.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.17.0</span>
       </span>
     </div>
 
@@ -204,48 +204,6 @@ functions. Use <code><a href='template_arguments.html'>template_arguments()</a><
 <p>An existing categorical variables template will not be overwritten 
     by subsequent calls to <code>define_catvars()</code>.</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Set working directory</span>
-<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>())
-
-<span class='co'># Create data package directory "pkg_255"</span>
-<span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.copy</a></span>(
-  <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>'/examples/pkg_255'</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'EMLassemblyline'</span>),
-  <span class='kw'>to</span> <span class='kw'>=</span> <span class='st'>'.'</span>,
-  <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
-<span class='co'># View directory contents (NOTE: catvars_*.txt files don't exist)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span>(<span class='st'>'./pkg_255/metadata_templates'</span>)</div><div class='output co'>#&gt; [1] "abstract.txt"            "additional_info.txt"    
-#&gt; [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
-#&gt; [5] "custom_units.txt"        "intellectual_rights.txt"
-#&gt; [7] "keywords.txt"            "methods.txt"            
-#&gt; [9] "personnel.txt"          </div><div class='input'>
-<span class='co'># Define categorical variables</span>
-<span class='fu'>define_catvars</span>(
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./pkg_255/metadata_templates'</span>,
-  <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='st'>'./pkg_255/data_objects'</span>
-)</div><div class='output co'>#&gt; <span class='message'>Creating categorical variable template.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'define_catvars' is deprecated.</span>
-#&gt; <span class='warning'>Use 'template_categorical_variables' instead.</span>
-#&gt; <span class='warning'>See help("Deprecated") and help("EMLassemblyline-deprecated").</span></div><div class='output co'>#&gt; <span class='message'>Writing catvars_decomp.txt</span></div><div class='output co'>#&gt; <span class='message'>Writing catvars_nitrogen.txt</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
-<span class='co'># View directory contents (NOTE: catvars_*.txt files exist)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span>(<span class='st'>'./pkg_255/metadata_templates'</span>)</div><div class='output co'>#&gt;  [1] "abstract.txt"            "additional_info.txt"    
-#&gt;  [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
-#&gt;  [5] "catvars_decomp.txt"      "catvars_nitrogen.txt"   
-#&gt;  [7] "custom_units.txt"        "intellectual_rights.txt"
-#&gt;  [9] "keywords.txt"            "methods.txt"            
-#&gt; [11] "personnel.txt"          </div><div class='input'>
-<span class='co'># Rerunning define_catvars() does not overwrite files</span>
-<span class='fu'>define_catvars</span>(
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./pkg_255/metadata_templates'</span>,
-  <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='st'>'./pkg_255/data_objects'</span>
-)</div><div class='output co'>#&gt; <span class='message'>Creating categorical variable template.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'define_catvars' is deprecated.</span>
-#&gt; <span class='warning'>Use 'template_categorical_variables' instead.</span>
-#&gt; <span class='warning'>See help("Deprecated") and help("EMLassemblyline-deprecated").</span></div><div class='output co'>#&gt; <span class='message'>catvars_decomp.txt already exists! Skipping this one.</span></div><div class='output co'>#&gt; <span class='message'>catvars_nitrogen.txt already exists! Skipping this one.</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
-<span class='co'># Clean up</span>
-<span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(
-  <span class='st'>'./pkg_255'</span>,
-  <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

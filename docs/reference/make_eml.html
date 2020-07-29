@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.16.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.17.0</span>
       </span>
     </div>
 
@@ -293,19 +293,32 @@ corresponding to parent datasets from which this dataset was created
     </tr>
     <tr>
       <th>user.id</th>
-      <td><p>(character; optional) ID(s) of data repository user account(s). If more 
-than one, supply as a vector of character strings.</p></td>
+      <td><p>(character; optional) Repository user identifier. If more than one, 
+then enter as a vector of character strings (e.g. 
+<code><a href='https://rdrr.io/r/base/c.html'>c("user_id_1", "user_id_2")</a></code>). <code>user.id</code> sets the 
+/eml/access/principal element for all <code>user.domain</code> except
+"KNB", "ADC", and if <code>user.domain = NULL</code>.</p></td>
     </tr>
     <tr>
       <th>user.domain</th>
-      <td><p>(character; optional) Domain of the <code>user.id</code>(s). Valid options 
-for EDI are "LTER" and "EDI". If more than one, supply as a vector of 
-character strings in the same order as corresponding <code>user.id</code>(s).</p></td>
+      <td><p>(character; optional) Repository domain associated with 
+<code>user.id</code>. Currently supported values are "EDI" 
+(Environmental Data Initiative), "LTER" (Long-Term Ecological Research 
+Network), "KNB" (The Knowledge Network for Biocomplexity), "ADC" (The 
+Arctic Data Center). If you'd like your system supported please contact
+maintainers of the EMLassemblyline R package. If using more than one 
+<code>user.domain</code>, then enter as a vector of character strings (e.g. 
+<code><a href='https://rdrr.io/r/base/c.html'>c("user_domain_1", "user_domain_2")</a></code>) in the same order as 
+corresponding <code>user.id</code>. If <code>user.domain</code> is missing then a 
+default value "unknown" is assigned. <code>user.domain</code> sets the EML 
+header "system" attribute and for all <code>user.domain</code>, except "KNB" 
+and "ADC", sets the /eml/access/principal element attributes and values.</p></td>
     </tr>
     <tr>
       <th>package.id</th>
-      <td><p>(character; optional) Data Repository data package ID for this dataset. A 
-missing package ID defaults to "edi.101.1".</p></td>
+      <td><p>(character; optional) Data package ID for the dataset described by this
+EML. Ask your data repository for a package ID. Missing <code>package.id</code>
+is assigned a UUID.</p></td>
     </tr>
     <tr>
       <th>write.file</th>
