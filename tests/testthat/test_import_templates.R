@@ -239,29 +239,6 @@ testthat::test_that('Test usage with file inputs', {
     )
   )
 
-  # New imports result in messages
-  
-  expect_message(
-    suppressWarnings(
-      import_templates(
-        path = system.file(
-          '/examples',
-          package = 'EMLassemblyline'
-        ),
-        data.path = system.file(
-          '/examples/data',
-          package = 'EMLassemblyline'
-        ),
-        data.table = c(
-          'decomp.csv',
-          'nitrogen.csv'
-        ),
-        license = 'CC0',
-        write.file = FALSE
-      ) 
-    )
-  )
-  
   # Deprecated argument results in warning
   
   expect_warning(
@@ -603,26 +580,6 @@ testthat::test_that('x inputs = data tables', {
     )
   )
 
-  # Valid data path and data tables results in messages
-
-  expect_message(
-    suppressWarnings(
-      import_templates(
-        data.path = system.file(
-          '/examples/data',
-          package = 'EMLassemblyline'
-        ),
-        data.table = c(
-          'decomp.csv',
-          'nitrogen.csv'
-        ),
-        x = x,
-        license = 'CC0',
-        write.file = FALSE
-      )
-    )
-  )
-
   # Deprecated argument results in warning
 
   expect_warning(
@@ -856,26 +813,6 @@ testthat::test_that('x inputs = data tables and templates', {
           license = 'CCzero',
           write.file = FALSE
         )
-      )
-    )
-  )
-
-  # Valid data path and data tables results in messages
-
-  expect_message(
-    suppressWarnings(
-      import_templates(
-        data.path = system.file(
-          '/examples/data',
-          package = 'EMLassemblyline'
-        ),
-        data.table = c(
-          'decomp.csv',
-          'nitrogen.csv'
-        ),
-        x = x,
-        license = 'CC0',
-        write.file = FALSE
       )
     )
   )

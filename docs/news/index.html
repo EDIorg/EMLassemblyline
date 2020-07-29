@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.14.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.16.1</span>
       </span>
     </div>
 
@@ -141,6 +141,50 @@
       <small>Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="emlassemblyline-2161" class="section level1">
+<h1 class="page-header" data-toc-text="2.16.1">
+<a href="#emlassemblyline-2161" class="anchor"></a>EMLassemblyline 2.16.1</h1>
+<div id="bug-fix" class="section level3">
+<h3 class="hasAnchor">
+<a href="#bug-fix" class="anchor"></a>Bug fix</h3>
+<ul>
+<li>
+<strong>template reader:</strong> Fixed a bug in the metadata template reader.</li>
+</ul>
+</div>
+</div>
+    <div id="emlassemblyline-2160" class="section level1">
+<h1 class="page-header" data-toc-text="2.16.0">
+<a href="#emlassemblyline-2160" class="anchor"></a>EMLassemblyline 2.16.0</h1>
+<div id="enhancements" class="section level3">
+<h3 class="hasAnchor">
+<a href="#enhancements" class="anchor"></a>Enhancements</h3>
+<ul>
+<li>
+<strong>maintenance.description:</strong> The <code>maintenance.description</code> of <code><a href="../reference/make_eml.html">make_eml()</a></code> is no longer required however, a missing <code>maintenance.description</code> will return a warning with the recommended best practice.</li>
+<li>
+<strong>publisher:</strong> A data publisher can now be added by listing the person (or organization) with a “publisher” role to the personnel.txt template.</li>
+<li>
+<strong>project:</strong> Missing project information (i.e. Principal Investigator and project metadata) return a warning with the recommended practice.</li>
+<li>
+<strong>formatName:</strong> The formatName of an otherEntity is now auto-detected using the <code>mime</code> library. Undetected MIME Types are listed as “Unknown”. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/68">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/68'>#68</a></a>.</li>
+<li>
+<strong>distribution:</strong> Previously, when assigning a .//physical/distribtuion/online/url for two or more data tables or other entities, each was required to have a corresponding URL listed under the <code><a href="../reference/make_eml.html">make_eml()</a></code> arguments <code>data.table.url</code> and <code>other.entity.url</code> . Some use cases require assignment of a URL to only one in a list of two or more. This constraint as been relaxed so if a data object doesn’t have a corresponding URL then use the values <code>""</code> or <code>NA</code> (e.g. if in <code><a href="../reference/make_eml.html">make_eml()</a></code> the argument <code>data.table = c("nitrogen.csv", "decomp.csv")</code>, and a URL only exists for the second object, then <code>data.table.url = c("", "/url/to/decomp.csv")</code>.</li>
+</ul>
+</div>
+</div>
+    <div id="emlassemblyline-2150" class="section level1">
+<h1 class="page-header" data-toc-text="2.15.0">
+<a href="#emlassemblyline-2150" class="anchor"></a>EMLassemblyline 2.15.0</h1>
+<div id="enhancements-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#enhancements-1" class="anchor"></a>Enhancements</h3>
+<ul>
+<li><p><strong>Installation:</strong> Simplified instructions so dependencies will be installed but and users will not be asked to upgrade installed packages (a point of confusion among many).</p></li>
+<li><p><strong>Default false numeric attributes to character:</strong> Default user specified numeric attributes to character class when the attribute contains character values outside of that specified under the missingValueCode field of the attributes.txt template. A warning alerts the user of the issue and preserves the original data by not coercing to numeric.</p></li>
+</ul>
+</div>
+</div>
     <div id="emlassemblyline-2140" class="section level1">
 <h1 class="page-header" data-toc-text="2.14.0">
 <a href="#emlassemblyline-2140" class="anchor"></a>EMLassemblyline 2.14.0</h1>
@@ -156,9 +200,9 @@
     <div id="emlassemblyline-2131" class="section level1">
 <h1 class="page-header" data-toc-text="2.13.1">
 <a href="#emlassemblyline-2131" class="anchor"></a>EMLassemblyline 2.13.1</h1>
-<div id="bug-fix" class="section level3">
+<div id="bug-fix-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-1" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>schemaLocation:</strong> Fixed schemaLocation and namespace to be a web resolvable address.</li>
@@ -194,9 +238,9 @@
     <div id="emlassemblyline-2123" class="section level1">
 <h1 class="page-header" data-toc-text="2.12.3">
 <a href="#emlassemblyline-2123" class="anchor"></a>EMLassemblyline 2.12.3</h1>
-<div id="bug-fix-1" class="section level3">
+<div id="bug-fix-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-1" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-2" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>Missing &lt;taxonomicCoverage&gt;:</strong> taxonomicCoverage supplied in taxonomic_coverage.txt was missing from the EML. This has been fixed.</li>
@@ -206,9 +250,9 @@
     <div id="emlassemblyline-2122" class="section level1">
 <h1 class="page-header" data-toc-text="2.12.2">
 <a href="#emlassemblyline-2122" class="anchor"></a>EMLassemblyline 2.12.2</h1>
-<div id="bug-fix-2" class="section level3">
+<div id="bug-fix-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-2" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-3" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>Missing &lt;access&gt; node:</strong> The access node was not being added to the EML. This has been fixed.</li>
@@ -218,9 +262,9 @@
     <div id="emlassemblyline-2121" class="section level1">
 <h1 class="page-header" data-toc-text="2.12.1">
 <a href="#emlassemblyline-2121" class="anchor"></a>EMLassemblyline 2.12.1</h1>
-<div id="bug-fix-3" class="section level3">
+<div id="bug-fix-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-3" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-4" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>Template reader:</strong> A bug in the tabular template reader has been fixed (<a href="https://github.com/EDIorg/EMLassemblyline/commit/42276a0a696a8c6e743cc15e28f4e9c22df1100e">see commit for details</a>).</li>
@@ -264,9 +308,9 @@
     <div id="emlassemblyline-2102" class="section level1">
 <h1 class="page-header" data-toc-text="2.10.2">
 <a href="#emlassemblyline-2102" class="anchor"></a>EMLassemblyline 2.10.2</h1>
-<div id="bug-fix-4" class="section level3">
+<div id="bug-fix-5" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-4" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-5" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>Missing value codes:</strong> Recent changes broke the proper handling of “NA” missing value codes. This has been fixed.</li>
@@ -276,9 +320,9 @@
     <div id="emlassemblyline-2101" class="section level1">
 <h1 class="page-header" data-toc-text="2.10.1">
 <a href="#emlassemblyline-2101" class="anchor"></a>EMLassemblyline 2.10.1</h1>
-<div id="bug-fix-5" class="section level3">
+<div id="bug-fix-6" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-5" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-6" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>Schema validation:</strong> The referenced schema location was not correct. Now it is (<a href="https://github.com/EDIorg/EMLassemblyline/issues/59">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/59'>#59</a></a>).</li>
@@ -332,9 +376,9 @@
     <div id="emlassemblyline-271" class="section level1">
 <h1 class="page-header" data-toc-text="2.7.1">
 <a href="#emlassemblyline-271" class="anchor"></a>EMLassemblyline 2.7.1</h1>
-<div id="bug-fix-6" class="section level3">
+<div id="bug-fix-7" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-6" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-7" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>Delimiter guessing:</strong> Occasionally the content of tabular templates leads <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html">data.table::fread()</a></code> to guessing a delimiter other than “\t”. This issue has been fixed by explicitly stating the expected field delimiter.</li>
@@ -344,9 +388,9 @@
     <div id="emlassemblyline-270" class="section level1">
 <h1 class="page-header" data-toc-text="2.7.0">
 <a href="#emlassemblyline-270" class="anchor"></a>EMLassemblyline 2.7.0</h1>
-<div id="enhancements" class="section level3">
+<div id="enhancements-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#enhancements" class="anchor"></a>Enhancements</h3>
+<a href="#enhancements-2" class="anchor"></a>Enhancements</h3>
 <ul>
 <li>
 <strong>File names containing spaces caused <code><a href="../reference/template_categorical_variables.html">template_categorical_variables()</a></code> to crash:</strong> Errors occurred when input file names contained spaces. Using spaces is still a common practice among users. To accommodate this while continuing to promote best practices, the naming restriction has been relaxed and the best practices have been made a warning. The function checking file presence and naming conventions is <code>EDIutils::validate_file_name()</code>. An explicit file name specification (i.e. including extension) is now required, which precludes errors when the same file name is used among different file types in the same directory. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/25">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/25'>#25</a></a>.</li>
@@ -405,9 +449,9 @@
     <div id="emlassemblyline-260" class="section level1">
 <h1 class="page-header" data-toc-text="2.6.0">
 <a href="#emlassemblyline-260" class="anchor"></a>EMLassemblyline 2.6.0</h1>
-<div id="enhancements-1" class="section level3">
+<div id="enhancements-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#enhancements-1" class="anchor"></a>Enhancements</h3>
+<a href="#enhancements-3" class="anchor"></a>Enhancements</h3>
 <ul>
 <li>
 <strong>EML v2.0.0:</strong> <code>EMLassemblyline</code> has been refactored to run with the `EML’ v2.0.0 dependency.</li>
@@ -421,9 +465,9 @@
     <div id="emlassemblyline-253" class="section level1">
 <h1 class="page-header" data-toc-text="2.5.3">
 <a href="#emlassemblyline-253" class="anchor"></a>EMLassemblyline 2.5.3</h1>
-<div id="enhancements-2" class="section level3">
+<div id="enhancements-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#enhancements-2" class="anchor"></a>Enhancements</h3>
+<a href="#enhancements-4" class="anchor"></a>Enhancements</h3>
 <ul>
 <li>
 <strong>Add function examples:</strong> Add examples to function documentation.</li>
@@ -447,9 +491,9 @@
     <div id="emlassemblyline-250" class="section level1">
 <h1 class="page-header" data-toc-text="2.5.0">
 <a href="#emlassemblyline-250" class="anchor"></a>EMLassemblyline 2.5.0</h1>
-<div id="enhancements-3" class="section level3">
+<div id="enhancements-5" class="section level3">
 <h3 class="hasAnchor">
-<a href="#enhancements-3" class="anchor"></a>Enhancements</h3>
+<a href="#enhancements-5" class="anchor"></a>Enhancements</h3>
 <ul>
 <li>
 <strong>Website:</strong> Improved documentation with vignettes demonstrating common and advanced use cases. Implemented with <code>pkgdown</code>.</li>
@@ -526,9 +570,9 @@
 </li>
 </ul>
 </div>
-<div id="bug-fix-7" class="section level3">
+<div id="bug-fix-8" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-7" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-8" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>otherEntity url:</strong> Add EML element <em>//otherEntity/physical/distribution/online/url</em> via <code><a href="../reference/make_eml.html">make_eml()</a></code>. This element was missing though documentation implied its existence.</li>

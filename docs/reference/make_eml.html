@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.14.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.16.1</span>
       </span>
     </div>
 
@@ -217,7 +217,8 @@ by geographic_coverage.txt.</p></td>
     </tr>
     <tr>
       <th>maintenance.description</th>
-      <td><p>(character) Data collection status ("ongoing" or "complete").</p></td>
+      <td><p>(character) A description of data collection status (e.g. "ongoing", 
+"complete"), communicating the frequency of updates.</p></td>
     </tr>
     <tr>
       <th>data.table</th>
@@ -250,7 +251,9 @@ enter <code>"\'"</code>.</p></td>
       <td><p>(character; optional) The publicly accessible URL from which 
 <code>data.table</code> can be downloaded. If more than one, then supply as 
 a vector of character strings in the same order as listed in 
-<code>data.table</code>.</p></td>
+<code>data.table</code>. If wanting to include URLs for some but not all
+<code>data.table</code>, then use a "" for those that don't have a URL
+(e.g. <code>data.table.url = c("", "/url/to/decomp.csv")</code>).</p></td>
     </tr>
     <tr>
       <th>other.entity</th>
@@ -278,7 +281,9 @@ listed in <code>other.entity</code>.</p></td>
       <td><p>(character; optional) The publicly accessible URL from which 
 <code>other.entity</code> can be downloaded. If more than one, then supply as 
 a vector of character strings in the same order as listed in 
-<code>other.entity</code>.</p></td>
+<code>other.entity</code>. If wanting to include URLs for some but not all
+<code>other.entity</code>, then use a "" for those that don't have a URL
+(e.g. <code>other.entity.url = c("", "/url/to/quality_control.R")</code>).</p></td>
     </tr>
     <tr>
       <th>provenance</th>

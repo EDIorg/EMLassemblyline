@@ -78,7 +78,8 @@ testthat::test_that('Expect argument values in EML', {
   
   x1 <- x
   x1$data.table.name <- NULL
-  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   for (i in 1:length(r$dataset$dataTable)) {
     expect_true(
       r$dataset$dataTable[[i]]$entityName == r$dataset$dataTable[[i]]$physical$objectName)
@@ -112,6 +113,26 @@ testthat::test_that('Expect argument values in EML', {
       x1$data.table.url[i])
   }
   
+  # data.table.url - A URL is not required for each dataTable
+  
+  x1 <- x
+  x1$data.table.url[1] <- ""
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_true(
+    is.null(r$dataset$dataTable[[1]]$physical$distribution$online$url))
+  expect_equal(
+    r$dataset$dataTable[[2]]$physical$distribution$online$url,
+    x1$data.table.url[2])
+  
+  x1 <- x
+  x1$data.table.url[1] <- NA_character_
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_true(
+    is.null(r$dataset$dataTable[[1]]$physical$distribution$online$url))
+  expect_equal(
+    r$dataset$dataTable[[2]]$physical$distribution$online$url,
+    x1$data.table.url[2])
+  
   # other.entity
   
   x1 <- x
@@ -122,11 +143,21 @@ testthat::test_that('Expect argument values in EML', {
       r$dataset$otherEntity[[i]]$physical$objectName == names(x1$x$other.entity[i]))
   }
   
+  # other.entity - MIME Type
+  
+  x1 <- x
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  for (i in 1:length(r$dataset$otherEntity)) {
+    expect_true(
+      r$dataset$otherEntity[[i]]$physical$dataFormat$externallyDefinedFormat$formatName != "Unknown")
+  }
+  
   # other.entity.name - defaults to other.entity
   
   x1 <- x
   x1$other.entity.name <- NULL
-  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   for (i in 1:length(r$dataset$otherEntity)) {
     expect_true(
       r$dataset$otherEntity[[i]]$entityName == r$dataset$otherEntity[[i]]$physical$objectName)
@@ -141,6 +172,26 @@ testthat::test_that('Expect argument values in EML', {
       r$dataset$otherEntity[[i]]$physical$distribution$online$url,
       x1$other.entity.url[i])
   }
+  
+  # other.entity.url - A URL is not required for each otherEntity
+  
+  x1 <- x
+  x1$other.entity.url[1] <- ""
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_true(
+    is.null(r$dataset$otherEntity[[1]]$physical$distribution$online$url))
+  expect_equal(
+    r$dataset$otherEntity[[2]]$physical$distribution$online$url,
+    x1$other.entity.url[2])
+  
+  x1 <- x
+  x1$other.entity.url[1] <- NA_character_
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_true(
+    is.null(r$dataset$otherEntity[[1]]$physical$distribution$online$url))
+  expect_equal(
+    r$dataset$otherEntity[[2]]$physical$distribution$online$url,
+    x1$other.entity.url[2])
   
   # provenance - Get provenance metadata for EDI data packages and place under
   # /eml/dataset/methods/methodStep/dataSource
@@ -181,6 +232,16 @@ testthat::test_that('Expect template values in EML', {
   r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
   expect_true(
     length(r$dataset$coverage$geographicCoverage) == nrow(x1$x$template$geographic_coverage.txt$content))
+  
+  # personnel.txt - Principal Investigator is absent
+  
+  x1 <- x
+  use_i <- which(x1$x$template$personnel.txt$content$role == "PI")
+  x1$x$template$personnel.txt$content <- x1$x$template$personnel.txt$content[-use_i, ]
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_true(
+    is.null(r$dataset$project))
   
   # personnel.txt - only projectTitle is present
   
@@ -282,6 +343,27 @@ testthat::test_that('Expect template values in EML', {
     r$dataset$project$relatedProject[[4]]$funding,
     "No funding to report")
   
+  # personnel.txt - publisher
+  
+  x1 <- x
+  use_i <- min(which(x1$x$template$personnel.txt$content$role == "creator"))
+  x1$x$template$personnel.txt$content$role[use_i] <- "publisher"
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_true(
+    !is.null(r$dataset$publisher))
+  expect_true(
+    length(r$dataset$publisher[[1]]) > 1)
+  
+  x1 <- x
+  use_i <- which(x1$x$template$personnel.txt$content$role == "creator")[1:3]
+  x1$x$template$personnel.txt$content$role[use_i] <- "publisher"
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_true(
+    !is.null(r$dataset$publisher))
+  expect_true(
+    length(r$dataset$publisher[[1]]) > 1)
+
   # taxonomic_coverage.txt
   
   x1 <- x
@@ -295,8 +377,16 @@ testthat::test_that('Expect template values in EML', {
     data.table = c("decomp.csv", "nitrogen.csv"),
     other.entity = c("ancillary_data.zip", "processing_and_analysis.R"))$x
   r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
-  expect_true(
-    !is.null(r$dataset$coverage$taxonomicCoverage))
+  use_i <- try(
+    expect_true(
+      !is.null(r$dataset$coverage$taxonomicCoverage)), 
+    silent = TRUE)
+  if (!isTRUE(use_i)) {
+    if (!attr(use_i, "class") == "try-error") {
+      expect_true(
+        !is.null(r$dataset$coverage$taxonomicCoverage))
+    }
+  }
 
 })
 
@@ -344,6 +434,166 @@ testthat::test_that("NA values", {
     r$dataset$dataTable[[1]]$attributeList$attribute[[2]]$missingValueCode$code == "-99999")
   expect_true(
     r$dataset$dataTable[[1]]$attributeList$attribute[[2]]$missingValueCode$codeExplanation == "Missing value")
+  
+})
+
+
+# EML header attributes -------------------------------------------------------
+
+testthat::test_that("EML header attributes", {
+  
+  # package.id - NULL packageId gets assigned a UUID
+  
+  x1 <- x
+  x1$package.id <- NULL
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_true(
+    all(nchar(unlist(stringr::str_split(r$packageId, "-"))) == c(8, 4, 4, 4, 12)))
+  
+  # package.id - Unknown package IDs are listed 'as is'
+  
+  x1 <- x
+  x1$package.id <- "some-package-id"
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_true(
+    r$packageId == x1$package.id)
+  
+  # user.domain - If EDI or LTER then system = "edi"
+  
+  x1 <- x
+  x1$user.domain <- "EDI"
+  x1$user.id <- "myid"
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_true(
+    r$system == "edi")
+  
+  x1 <- x
+  x1$user.domain <- "LTER"
+  x1$user.id <- "myid"
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_true(
+    r$system == "edi")
+  
+  # user.domain - If KNB then system = "knb"
+  
+  x1 <- x
+  x1$user.domain <- "KNB"
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_true(
+    r$system == "knb")
+  
+  # user.domain - If ADC then system = "adc"
+  
+  x1 <- x
+  x1$user.domain <- "ADC"
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_true(
+    r$system == "https://arcticdata.io")
+  
+  # user.domain - If NULL or unknown then system = "unknown"
+  
+  x1 <- x
+  x1$user.domain <- NULL
+  x1$user.id <- NULL
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_true(
+    r$system == "unknown")
+  
+})
+
+
+# <access> --------------------------------------------------------------------
+
+testthat::test_that("<access>", {
+  
+  # user.domain - Not all user.domain (i.e. systems) use the access node. In
+  # these cases it's dropped.
+  
+  x1 <- x
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_true(!is.null(r$access))
+  
+  x1 <- x
+  x1$user.domain <- "KNB"
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_null(r$access)
+  
+  x1 <- x
+  x1$user.domain <- "ADC"
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_null(r$access)
+
+  # user.domain - When EDI/LTER a unique set of access attributes and 
+  # principal values are created
+  
+  x1 <- x
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  for (i in 1:length(x1$user.domain)) {
+    if (x1$user.domain[i] == "EDI") {
+      expect_equal(
+        r$access$allow[[i]]$principal, 
+        "uid=userid1,o=EDI,dc=edirepository,dc=org")
+    } else if (x1$user.domain[i] == "LTER") {
+      expect_equal(
+        r$access$allow[[i]]$principal, 
+        "uid=userid2,o=LTER,dc=ecoinformatics,dc=org")
+    }
+  }
+  expect_true(
+    r$access$authSystem == "https://pasta.edirepository.org/authentication")
+  
+  # user.id - Controls whether the access node is created or not. If not NULL 
+  # then the access node is created.
+  
+  x1 <- x
+  x1$user.id <- "some_user_id"
+  x1$user.domain <- NULL
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_equal(
+    r$access$allow[[1]]$principal, "some_user_id")
+  
+  # user.id - Missing user.id is set to NULL value
+  
+  x1 <- x
+  x1$user.id <- NULL
+  x1$user.domain <- "EDI"
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_null(r$access)
+  
+  # user.id - Multiple user.id creates multiple principal elements
+  
+  x1 <- x
+  x1$user.id <- c("id1", "id2", "id3")
+  x1$user.domain <- c("some_domain", "some_domain", "some_domain")
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_equal(
+    length(r$access$allow), (length(x1$user.id) + 1))
+  
+  # user.id & user.domain - Different lengths result in defaults
+  
+  x1 <- x
+  x1$user.id <- c("userid1", "userid2")
+  x1$user.domain <- "some_domain"
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  for (i in 1:length(x1$user.id)) {
+    expect_equal(
+      r$access$allow[[i]]$principal, x1$user.id[i])
+  }
+  
+  x1 <- x
+  x1$user.id <- c("userid1")
+  x1$user.domain <- c("some_domain", "some_domain2")
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  for (i in 1:length(x1$user.id)) {
+    expect_equal(
+      r$access$allow[[i]]$principal, x1$user.id[i])
+  }
   
 })
 

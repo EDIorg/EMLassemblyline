@@ -91,7 +91,7 @@ testthat::test_that("make_eml()", {
   
   x1 <- x
   x1$maintenance.description <- NULL
-  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_warning(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   
   # other.entity - required if other.entity.name or other.entity.description
   # is in use
@@ -118,10 +118,11 @@ testthat::test_that("make_eml()", {
   x1$other.entity.url <- x1$other.entity.url[1]
   expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   
-  # package.id - unrecognized package.id results in warning
+  # package.id - If malformed EDI or LTER package ID then warning, but 
+  # package.id is used anyway.
   
   x1 <- x
-  x1$package.id <- "edi.141"
+  x1$package.id <- "knb-lter-ntl.5"
   expect_warning(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   
   # provenance
@@ -141,36 +142,6 @@ testthat::test_that("make_eml()", {
   
   x1 <- x
   x1$temporal.coverage <- x1$temporal.coverage[1]
-  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
-  
-  # user.domain - required for each user.id
-  
-  x1 <- x
-  x1$user.domain <- x1$user.domain[1]
-  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
-  
-  # user.domain - is required
-  
-  x1 <- x
-  x1$user.domain <- NULL
-  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
-  
-  # user.domain - unrecognized user.domain results in warning
-  
-  x1 <- x
-  x1$user.domain[1] <- "EDEYE"
-  expect_warning(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
-  
-  # user.id - required for each user.domain
-  
-  x1 <- x
-  x1$user.id <- x1$user.id[1]
-  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
-  
-  # user.id - is required
-  
-  x1 <- x
-  x1$user.id <- NULL
   expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
 
   # write.file - eml.path is required
