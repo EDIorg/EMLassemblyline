@@ -70,6 +70,9 @@
 #'     
 #'     Existing taxonomic_coverage.txt will not be overwritten by subsequent 
 #'     calls to \code{template_taxonomic_coverage()}.
+#'     
+#'     Character encoding of metadata extracted directly from the tables are 
+#'     converted to UTF-8 via \code{enc2utf8()}.
 #'
 #' @examples 
 #' # Initialize data package directory for template_taxonomic_coverage()
@@ -389,6 +392,10 @@ template_taxonomic_coverage <- function(
       output <- output_common
       
     }
+    
+    # Encode extracted metadata in UTF-8 --------------------------------------
+    
+    output$name <- enc2utf8(output$name)
     
     # Write to file or add to x -----------------------------------------------
     
