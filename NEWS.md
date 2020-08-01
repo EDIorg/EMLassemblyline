@@ -1,6 +1,12 @@
+# EMLassemblyline 2.17.1
+
+### Enhancement
+
+* __Coerce lat.col and lon.col inputs:__ `template_geographic_coverage()` `lat.col` and `lon.col` arguments expect numeric inputs and error if non-NA missing value codes are present. The values are now coerced to numeric, only complete cases returned in the geographic coverage template, and no errors occur.
+
 # EMLassemblyline 2.17.0
 
-### Enhancements
+### Enhancement
 
 * __Create EML for non-EDI repositories:__ Create EML for non-EDI repositories by refactoring the logic around the `make_eml()` function arguments `user.id`, `user.domain`, and `package.id`. Details are listed in the function documentation.
 

@@ -4,19 +4,6 @@
 #'     Use this function to extract the unique location coordinates and names
 #'     from a data table.
 #'
-#' @usage 
-#'     template_geographic_coverage(
-#'       path, 
-#'       data.path = path, 
-#'       data.table, 
-#'       lat.col, 
-#'       lon.col, 
-#'       site.col,
-#'       empty = FALSE, 
-#'       write.file = TRUE,
-#'       x = NULL
-#'     )
-#'
 #' @param path 
 #'     (character) Path to the metadata template directory.
 #' @param data.path
@@ -256,19 +243,14 @@ template_geographic_coverage <- function(
         
         useI <- site_name[i] == df_table[site.col]
         
-        latitude_out[i] <- latitude[useI][1]
+        latitude_out[i] <- suppressWarnings(
+          as.numeric(latitude[useI][1]))
         
-        longitude_out[i] <- longitude[useI][1]
+        longitude_out[i] <- suppressWarnings(
+          as.numeric(longitude[useI][1]))
         
         site_out[i] <- site_name[i]
         
-      }
-      
-      if (class(latitude_out) != "numeric"){
-        stop("Latitude contains non-numeric values. Remove these from your data table, then rerun this function.")
-      }
-      if (class(longitude_out) != "numeric"){
-        stop("Longitude contains non-numeric values. Remove these from your data table, then rerun this function.")
       }
       
       geocoverage_out <- data.frame(
@@ -278,6 +260,8 @@ template_geographic_coverage <- function(
         eastBoundingCoordinate = longitude_out,
         westBoundingCoordinate = longitude_out,
         stringsAsFactors = F)
+      
+      geocoverage_out <- geocoverage_out[complete.cases(geocoverage_out), ]
       
     } else {
       

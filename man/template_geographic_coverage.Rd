@@ -5,16 +5,16 @@
 \title{Create geographic coverage template}
 \usage{
 template_geographic_coverage(
-      path, 
-      data.path = path, 
-      data.table, 
-      lat.col, 
-      lon.col, 
-      site.col,
-      empty = FALSE, 
-      write.file = TRUE,
-      x = NULL
-    )
+  path,
+  data.path = path,
+  data.table,
+  lat.col,
+  lon.col,
+  site.col,
+  empty = FALSE,
+  write.file = TRUE,
+  x = NULL
+)
 }
 \arguments{
 \item{path}{(character) Path to the metadata template directory.}
