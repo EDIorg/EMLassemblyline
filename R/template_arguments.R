@@ -182,14 +182,26 @@ template_arguments <- function(
               readr::read_file(f), 
               pattern = "(\r\r)|(\n\n)|(\r\n\r\n)")))
       } else if (tools::file_ext(f) == "md") {
-        # FIXME: EML 2.2.0 supports markdown so pass it "as is".
-        # Adjust this section once https://github.com/ropensci/EML/issues/298 
-        # has been fixed.
-        para <- as.list(
-          unlist(
-            stringr::str_split(
-              readr::read_file(f), 
-              pattern = "(\r\r)|(\n\n)|(\r\n\r\n)")))
+        # TODO: Update this section when the EML R library has better support 
+        # for markdown
+        if (stringr::str_detect(
+          basename(f), 
+          paste(
+            attr_tmp$regexpr[
+              (attr_tmp$type == "text") & (attr_tmp$template_name == "methods")],
+            collapse = "|"))) {
+          txt <- EML::set_methods(f)
+          txt <- list(
+            methodStep = list(
+              description = txt$methodStep$description))
+          return(txt)
+        } else {
+          para <- as.list(
+            unlist(
+              stringr::str_split(
+                readr::read_file(f),
+                pattern = "(\r\r)|(\n\n)|(\r\n\r\n)")))
+        }
       } else if (tools::file_ext(f) == "docx") {
         # .docx is not well supported by EML::set_TextType() but a 
         # refactoring of some of this funcions underlying code improves 

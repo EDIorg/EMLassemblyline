@@ -1,8 +1,9 @@
 # EMLassemblyline 2.17.1
 
-### Enhancement
+### Bug fix
 
 * __Coerce lat.col and lon.col inputs:__ `template_geographic_coverage()` `lat.col` and `lon.col` arguments expect numeric inputs and error if non-NA missing value codes are present. The values are now coerced to numeric, only complete cases returned in the geographic coverage template, and no errors occur.
+* __Revert markdown parsing:__ Version 2.13.0 introduced better methods for parsing TextType templates (i.e. abstract, methods, and additional_info) from .docx, .txt, .md file types, however, .md lost some formatting controls. This has been fixed.
 
 # EMLassemblyline 2.17.0
 
