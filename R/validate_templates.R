@@ -12,7 +12,6 @@
 #' @details
 #'     Validation checks are function specific.
 #'
-
 validate_templates <- function(fun.name, x){
   
   # Parameterize --------------------------------------------------------------
@@ -20,27 +19,19 @@ validate_templates <- function(fun.name, x){
   attr_tmp <- read_template_attributes()
   
   if (fun.name == 'make_eml'){
-    
-    # make_eml() - required templates -----------------------------------------
-    # The minimal set of core templates are required for make_eml() to work.
-    
-    r_tmp <- attr_tmp[attr_tmp$required_template, ]
-    r <- unlist(
-      lapply(
-        r_tmp$regexpr,
-        function(k) {
-          !any(stringr::str_detect(names(x$template), k))
-        }))
-    if (any(r)) {
-      stop(
-        paste0(
-          "These templates are required but don't exist or have missing ",
-          "content:\n", paste(r_tmp$template_name[r], collapse = ", ")),
-        call. = F)
-    }
-    
+
     # make_eml() - abstract ---------------------------------------------------
     
+    # Missing
+    
+    missing_abstract <- !any(
+      stringr::str_detect(
+        names(x$template), 
+        attr_tmp$regexpr[attr_tmp$template_name == "abstract"]))
+    if (isTRUE(missing_abstract)) {
+      warning("An abstract is recommended.", call. = FALSE)
+    }
+
     # FIXME: Report non-utf-8 encoded characters (generalize this function for 
     # TextType templates)
     
@@ -54,6 +45,7 @@ validate_templates <- function(fun.name, x){
     if (!is.null(x$data.table)) {
       
       # attributes.txt - attributes.txt should be present for each data table
+      # otherwise the data table will be dropped from further processing.
       
       r <- unlist(
         lapply(
@@ -63,14 +55,12 @@ validate_templates <- function(fun.name, x){
               names(x$template), 
               paste0("attributes_", tools::file_path_sans_ext(k), ".txt"))
             if (!any(use_i)) {
-              paste0(k, " is missing an attributes template. Create one with ",
-                     "the template_table_attributes() function.")
+              x$data.table[[k]] <<- NULL
+              paste0(k, " is missing attributes metadata.")
             }
-          }
-        )
-      )
+          }))
       if (!is.null(r)) {
-        stop(paste(r, collapse = "\n"), call. = F)
+        warning(paste(r, collapse = "\n"), call. = FALSE)
       }
       
       # attributeName - All table columns are listed as attributeName
@@ -451,37 +441,79 @@ validate_templates <- function(fun.name, x){
     
     # make_eml() - intellectual_rights ----------------------------------------
     
+    # Missing
+    
+    missing_intellectual_rights <- !any(
+      stringr::str_detect(
+        names(x$template), 
+        attr_tmp$regexpr[attr_tmp$template_name == "intellectual_rights"]))
+    if (isTRUE(missing_intellectual_rights)) {
+      warning("An intellectual rights license is recommended.", call. = FALSE)
+    }
+    
     # FIXME: Report non-utf-8 encoded characters (generalize this function for 
     # TextType templates)
     
+    # make_eml() - keywords ---------------------------------------------------
+    
+    # Missing
+    
+    missing_keywords <- !any(
+      stringr::str_detect(
+        names(x$template), 
+        attr_tmp$regexpr[attr_tmp$template_name == "keywords"]))
+    if (isTRUE(missing_keywords)) {
+      warning("Keywords are recommended.", call. = FALSE)
+    }
+    
     # make_eml() - methods ----------------------------------------------------
+    
+    # Missing
+    
+    missing_methods <- !any(
+      stringr::str_detect(
+        names(x$template), 
+        attr_tmp$regexpr[attr_tmp$template_name == "methods"]))
+    if (isTRUE(missing_methods)) {
+      warning("Methods are recommended.", call. = FALSE)
+    }
     
     # FIXME: Report non-utf-8 encoded characters (generalize this function for 
     # TextType templates)
     
     # make_eml() - personnel --------------------------------------------------
     
+    # Missing
+    
+    missing_personnel <- !any(
+      stringr::str_detect(
+        names(x$template), 
+        attr_tmp$regexpr[attr_tmp$template_name == "personnel"]))
+    if (isTRUE(missing_personnel)) {
+      warning(
+        "Personnel are required (i.e. creator, contact, etc.).", 
+        call. = FALSE)
+    }
+    
     if (any(names(x$template) == "personnel.txt")) {
-      
+
       # role - At least one creator and contact is listed
       
       use_i <- tolower(x$template$personnel.txt$content$role) == "creator"
       if (!any(use_i)) {
-        stop("personnel.txt is missing a 'creator'.", call. = F)
+        warning("A creator is required.", call. = FALSE)
       }
       use_i <- tolower(x$template$personnel.txt$content$role) == "contact"
       if (!any(use_i)) {
-        stop("personnel.txt is missing a 'contact'.", call. = F)
+        warning("A contact is required.", call. = FALSE)
       }
       
       # role - All personnel have roles
       
       use_i <- x$template$personnel.txt$content$role == ""
       if (any(use_i)) {
-        stop(
-          paste0("personnel.txt is missing one or more 'role'. Ensure ",
-                 "each person in this template has a defined role."), 
-          call. = F)
+        warning(
+          paste0("Each person must have a 'role'."), call. = FALSE)
       }
       
       # Principal Investigator and project info is recommended
@@ -489,8 +521,8 @@ validate_templates <- function(fun.name, x){
       use_i <- tolower(x$template$personnel.txt$content$role) == "pi"
       if (!any(use_i)) {
         warning(
-          "No principal investigator and project info was found. This ",
-          "metadata is recommended.", call. = FALSE)
+          "A principal investigator and project info are recommended.", 
+          call. = FALSE)
       }
       
       # projectTitle, fundingAgency, fundingNumber - Project info is associated 
@@ -503,11 +535,11 @@ validate_templates <- function(fun.name, x){
         if ((sum(pi_proj != "") > 0) & (sum(pi_proj[1, ] == "") == 3)) {
           stop(
             paste0(
-              "The first Principal Investigator listed in personnel.txt is ",
+              "The first Principal Investigator listed is ",
               "missing a projectTitle, fundingAgency, or fundingNumber. The ",
               "first listed PI represents the major project and requires ",
-              "this. Please add one."),
-            call. = F)
+              "this."),
+            call. = FALSE)
         }
       }
       
@@ -517,7 +549,7 @@ validate_templates <- function(fun.name, x){
       if (sum(use_i) > 1) {
         warning(
           "personnel.txt has more than one 'publisher'. Only the first will ",
-          "be used.", call. = F)
+          "be used.", call. = FALSE)
         use_i <- min(which(x$template$personnel.txt$content$role == "publisher"))
         use_i <- which(x$template$personnel.txt$content$role == "publisher")[
           which(x$template$personnel.txt$content$role == "publisher") != use_i]
@@ -526,6 +558,7 @@ validate_templates <- function(fun.name, x){
 
     }
     
+    # Return templates --------------------------------------------------------
     # Return x (with any changes made here in) back to the parent environment
     
     return(x)
