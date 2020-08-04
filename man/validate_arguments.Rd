@@ -4,10 +4,7 @@
 \alias{validate_arguments}
 \title{Validate arguments of EMLassemblyline functions}
 \usage{
-validate_arguments(
-      fun.name, 
-      fun.args
-    )
+validate_arguments(fun.name, fun.args)
 }
 \arguments{
 \item{fun.name}{(character) Function name passed to `validate_x` with 

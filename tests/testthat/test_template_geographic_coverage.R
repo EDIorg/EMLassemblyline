@@ -481,49 +481,7 @@ testthat::test_that('Test usage with x inputs', {
       ) 
     )
   )
-  
-  # Non-numeric characters in latitude column result in error
-  
-  input <- x_list
-  
-  input$template$geographic_coverage.txt <- NULL
-  
-  input$data.table$nitrogen.csv$content$site_lat[1:5] <- 'Ooops'
-  
-  expect_error(
-    suppressMessages(
-      template_geographic_coverage(
-        data.table = 'nitrogen.csv', 
-        site.col = 'site_name', 
-        lat.col = 'site_lat',
-        lon.col = 'site_lon',
-        x = input,
-        write.file = FALSE
-      ) 
-    )
-  )
-  
-  # Non-numeric characters in longitude column result in error
-  
-  input <- x_list
-  
-  input$template$geographic_coverage.txt <- NULL
-  
-  input$data.table$nitrogen.csv$content$site_lon[1:5] <- 'Ooops'
-  
-  expect_error(
-    suppressMessages(
-      template_geographic_coverage(
-        data.table = 'nitrogen.csv', 
-        site.col = 'site_name', 
-        lat.col = 'site_lat',
-        lon.col = 'site_lon',
-        x = input,
-        write.file = FALSE
-      ) 
-    )
-  )
-  
+
 })
 
 # Test usage with 'empty = TRUE' ----------------------------------------------
@@ -579,3 +537,44 @@ testthat::test_that('Test usage with "empty = TRUE"', {
   )
 
 })
+
+# Coerce lat.col & lon.col to numeric -----------------------------------------
+
+testthat::test_that("Coerce lat.col & lon.col to numeric", {
+  
+  # Add character strings to numeric columns of the example data and expect 
+  # these rows to be missing from the resultant template.
+  
+  unlink(
+    paste0(tempdir(), c("/nitrogen.csv", "/geographic_coverage.txt")),
+    force = TRUE)
+  
+  # Add character strings to numeric columns of example data
+  
+  d <- data.table::fread(
+    system.file(
+      '/examples/pkg_260/data_objects/nitrogen.csv', 
+      package = 'EMLassemblyline'))
+  d$site_lat[1] <- "a_character_string"
+  d$site_lon[2] <- "a_character_string"
+  
+  data.table::fwrite(d, paste0(tempdir(), '/nitrogen.csv'))
+  
+  template_geographic_coverage(
+    path = tempdir(),
+    data.table = 'nitrogen.csv', 
+    site.col = 'site_name',
+    lat.col = 'site_lat', 
+    lon.col = 'site_lon')
+  
+  template <- data.table::fread(paste0(tempdir(), "/geographic_coverage.txt"))
+  
+  expect_true(
+    all(!(d$site_name[1:2] %in% template$geographicDescription)))
+  
+})
+
+
+
+
+

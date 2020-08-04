@@ -3,12 +3,6 @@
 #' @description
 #'     Validate input arguments to `EMLassemblyline` functions.
 #'
-#' @usage
-#'     validate_arguments(
-#'       fun.name, 
-#'       fun.args
-#'     )
-#'
 #' @param fun.name
 #'     (character) Function name passed to `validate_x` with 
 #'     `as.character(match.call()[[1]])`.
@@ -19,7 +13,6 @@
 #' @details
 #'     Validation checks are function specific.    
 #'
-
 validate_arguments <- function(fun.name, fun.args){
   
   # Parameterize --------------------------------------------------------------
@@ -206,74 +199,48 @@ validate_arguments <- function(fun.name, fun.args){
       fun.args$other.entity.description <- fun.args$zip.dir.description
     }
     
-    # dataset.title
+    # path
     
-    if (is.null(fun.args$dataset.title)){
-      stop('Input argument "dataset.title" is missing.', call. = F)
-    }
-
-    # data.table.description
-    
-    if (!is.null(fun.args$data.table)){
-      if (is.null(fun.args$data.table.description)){
-        stop('Input argument "data.table.description" is missing.', call. = F)
-      }
-    }
-
-    # temporal.coverage
-    
-    if (is.null(fun.args$temporal.coverage)){
-      stop('Input argument "temporal.coverage" is missing.', call. = F)
-    }
-    
-    if (length(fun.args$temporal.coverage) != 2){
-      stop('The argument "temporal.coverage" requires both a begin date and end date. Please fix this.', call. = F)
-    }
-    
-    # geographic.coordinates and geographic.description
-    
-    if (!is.null(fun.args$geographic.coordinates) & is.null(fun.args$geographic.description)){
-      stop('Input argument "geographic.description" is missing.', call. = F)
-    }
-    
-    if (is.null(fun.args$geographic.coordinates) & !is.null(fun.args$geographic.description)){
-      stop('Input argument "geographic.coordinates" is missing.', call. = F)
-    }
-
-    # maintenance.description
-    
-    if (is.null(fun.args$maintenance.description)){
-      warning(
-        paste0('Input argument "maintenance.description" is missing. Consider ',
-               'adding a description of your dataset collection status. E.g. ',
-               '"Ongoing collection with quarterly updates", or "Completed ',
-               'collection, updates to these data are not expected."'), 
-        call. = F)
-    }
-    
-    # path, data.path, and eml.path
-    
-    if (is.null(fun.args$x)){
+    if (is.null(fun.args$x)) {
       EDIutils::validate_path(fun.args$path)
     }
-
+    
+    # data.path
+    
     EDIutils::validate_path(fun.args$data.path)  
+    
+    # eml.path
     
     if (isTRUE(fun.args$write.file)){
       EDIutils::validate_path(fun.args$eml.path)
     }
     
+    # dataset.title
+    
+    if (is.null(fun.args$dataset.title)) {
+      warning('A dataset title is required.', call. = FALSE)
+    }
+
     # data.table
     
-    if (!is.null(fun.args$data.table)){
-      
+    if (!is.null(fun.args$data.table)) {
       table_names <- suppressWarnings(
         EDIutils::validate_file_names(
           path = fun.args$data.path, 
-          data.files = fun.args$data.table
-        )
-      )
-
+          data.files = fun.args$data.table))
+    }
+    
+    # data.table.description
+    
+    if (!is.null(fun.args$data.table)) {
+      if (is.null(fun.args$data.table.description)) {
+        warning('Data table descriptions are recommended.', call. = FALSE)
+      }
+      if (length(fun.args$data.table) > 
+          length(fun.args$data.table.description)) {
+        warning(
+          'One or more data table descriptions are missing.', call. = FALSE)
+      }
     }
     
     # data.table.name
@@ -281,29 +248,30 @@ validate_arguments <- function(fun.name, fun.args){
     if (!is.null(fun.args$data.table.name)) {
       if (all(fun.args$data.table %in% fun.args$data.table.name)) {
         warning(
-          paste0(
-            "Defaulting argument 'data.table.name' to 'data.table'. Consider ",
-            "providing a brief descriptive name for your file(s)."
-          ),
-          call. = FALSE
-        )
+          "Data table names are missing. A short name for each data table is ",
+          "recommended. Defaulting to data table file names.", call. = FALSE)
       }
     }
     
-    # data.table.description
+    # data.table.name - If uneven, default missing to data.table file name
     
-    if (!is.null(fun.args$data.table)){
-      if (length(fun.args$data.table.description) != length(fun.args$data.table)){
-        stop('The number of descriptions listed in the argument "data.table.description" does not match the number of files listed in the argument "data.table". These must match.', call. = F)
+    if (!is.null(fun.args$data.table) & !is.null(fun.args$data.table.name)) {
+      if (length(fun.args$data.table.name) < length(fun.args$data.table)) {
+        warning(
+          "One or more data table names are missing. Defaulting to data table ",
+          "file names", call. = FALSE)
       }
     }
     
     # data.table.quote.character
     
-    if (!is.null(fun.args$data.table)){
-      if (!is.null(fun.args$data.table.quote.character)){
-        if (length(fun.args$data.table.quote.character) != length(fun.args$data.table)){
-          stop('The number of quote characters listed in the argument "data.table.quote.character" does not match the number of files listed in the argument "data.table". These must match.', call. = F)
+    if (!is.null(fun.args$data.table)) {
+      if (!is.null(fun.args$data.table.quote.character)) {
+        if (length(fun.args$data.table.quote.character) < 
+            length(fun.args$data.table)) {
+          warning(
+            "One or more data table quote characters are missing.",
+            call. = FALSE)
         }
       }
     }
@@ -311,24 +279,53 @@ validate_arguments <- function(fun.name, fun.args){
     # data.table.url
     
     if (!is.null(fun.args$data.table.url)) {
-      if (length(fun.args$data.table.url) != length(fun.args$data.table)) {
-        stop('The number of URLs listed in the argument "data.table.url" does not match the number of files listed in the argument "data.table". These must match.', call. = F)
+      if (length(fun.args$data.table.url) < length(fun.args$data.table)) {
+        warning("One or more data table URLs are missing.", call. = FALSE)
       }
     }
     
-    # other.entity and other.entity.description
+    # geographic.coordinates and geographic.description
     
-    if ((!is.null(fun.args$other.entity)) & (is.null(fun.args$other.entity.description))){
-      stop('The argument "other.entity.description" is missing and "other.entity" is present. Add a description for your zip directory.', call. = F)
+    if (!is.null(fun.args$geographic.coordinates) & 
+        is.null(fun.args$geographic.description)) {
+      warning('Geographic description is missing.', call. = FALSE)
     }
     
-    if ((!is.null(fun.args$other.entity.description)) & (is.null(fun.args$other.entity))){
-      stop('The argument "other.entity" is missing and "other.entity.description" is present. Add the zip directories you are describing.', call. = F)
+    if (is.null(fun.args$geographic.coordinates) & 
+        !is.null(fun.args$geographic.description)){
+      warning('Geographic coordinates are missing.', call. = FALSE)
+    }
+
+    # maintenance.description
+    
+    if (is.null(fun.args$maintenance.description)) {
+      warning(
+        paste0(
+          'A maintenance description is recommended. Describe the collection ',
+          'status of this dataset (e.g. "Ongoing collection with quarterly ', 
+          'updates", or "Completed collection, updates to these data are not ',
+          'expected.")'), call. = FALSE)
     }
     
-    if ((!is.null(fun.args$other.entity.description)) & (!is.null(fun.args$other.entity))){
-      if ((length(fun.args$other.entity)) != (length(fun.args$other.entity.description))){
-        stop('The number of other.entity and other.entity.descriptions must match.', call. = F)
+    # other.entity
+    
+    if (!is.null(fun.args$other.entity)) {
+      other_entity_names <- suppressWarnings(
+        EDIutils::validate_file_names(
+          path = fun.args$data.path, 
+          data.files = fun.args$other.entity))
+    }
+
+    # other.entity.description
+    
+    if (!is.null(fun.args$other.entity)) {
+      if (is.null(fun.args$other.entity.description)) {
+        warning('Other entity descriptions are recommended.', call. = FALSE)
+      }
+      if (length(fun.args$other.entity) > 
+          length(fun.args$other.entity.description)) {
+        warning(
+          'One or more other entity descriptions are missing.', call. = FALSE)
       }
     }
     
@@ -337,28 +334,35 @@ validate_arguments <- function(fun.name, fun.args){
     if (!is.null(fun.args$other.entity.name)) {
       if (all(fun.args$other.entity %in% fun.args$other.entity.name)) {
         warning(
-          paste0(
-            "Defaulting argument 'other.entity.name' to 'other.entity'. Consider ",
-            "providing a brief descriptive name for your file(s)."
-          ),
-          call. = FALSE
-        )
+          "Other entity names are missing. A short name for each other entity is ",
+          "recommended. Defaulting to other entity file names.", call. = FALSE)
+      }
+    }
+    
+    # other.entity.name - If uneven, default missing to other.entity file name
+    
+    if (!is.null(fun.args$other.entity) & !is.null(fun.args$other.entity.name)) {
+      if (length(fun.args$other.entity.name) < length(fun.args$other.entity)) {
+        warning(
+          "One or more other entity names are missing. Defaulting to other entity ",
+          "file names", call. = FALSE)
       }
     }
     
     # other.entity.url
     
     if (!is.null(fun.args$other.entity.url)) {
-      if (length(fun.args$other.entity.url) != length(fun.args$other.entity)) {
-        stop('The number of URLs listed in the argument "other.entity.url" does not match the number of files listed in the argument "other.entity". These must match.', call. = F)
+      if (length(fun.args$other.entity.url) < length(fun.args$other.entity)) {
+        warning("One or more other entity URLs are missing.", call. = FALSE)
       }
     }
     
     # package.id
     
-    if (!is.null(fun.args$package.id) & !is.null(fun.args$user.domain)){
+    if (!is.null(fun.args$package.id) & !is.null(fun.args$user.domain)) {
       if (all(tolower(fun.args$user.domain) %in% c("edi", "lter"))) {
-        if (!isTRUE(stringr::str_detect(fun.args$package.id, '[:alpha:]\\.[:digit:]+\\.[:digit:]'))) {
+        if (!isTRUE(stringr::str_detect(
+          fun.args$package.id, '[:alpha:]\\.[:digit:]+\\.[:digit:]'))) {
           warning(
             "Warning: 'package.id' is not valid for EDI or LTER. Expected is ",
             "the form 'edi.xxx.x' (EDI) or 'knb-lter-ccc.xxx.x' (LTER).", 
@@ -367,7 +371,7 @@ validate_arguments <- function(fun.name, fun.args){
       }
     }
     
-    # provenance
+    # provenance - Warn about unrecognized identifiers
     
     if (!is.null(fun.args$provenance)){
       use_i <- stringr::str_detect(
@@ -375,12 +379,20 @@ validate_arguments <- function(fun.name, fun.args){
         "(^knb-lter-[:alpha:]+\\.[:digit:]+\\.[:digit:]+)|(^[:alpha:]+\\.[:digit:]+\\.[:digit:]+)")
       if (!all(use_i)){
         warning(
-          paste0("Unable to generate provenance metadata for unrecognized identifier:\n",
-                 paste(fun.args$provenance[!use_i], collapse = ", ")),
-          call. = F)
+          "Unable to generate provenance metadata for unrecognized identifier:\n",
+          paste(fun.args$provenance[!use_i], collapse = ", "), call. = FALSE)
       }
     }
 
+    # temporal.coverage
+    
+    if (is.null(fun.args$temporal.coverage)) {
+      warning('Temporal coverage is recommended', call. = FALSE)
+    }
+    if (length(fun.args$temporal.coverage) != 2) {
+      warning('Temporal coverage requires a begin and end date', call. = FALSE)
+    }
+    # TODO: Validate date format
   }
   
   # Call from template_arguments() ------------------------------------------------

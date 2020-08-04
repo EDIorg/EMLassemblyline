@@ -1,6 +1,17 @@
+# EMLassemblyline 2.18.0
+
+### Enhancement
+
+* __Allow creation of partial EML:__ During the draft process it is very useful to see a partial EML document, even if incomplete or invalid. Additionally, developers using EMLassemblyline as a backend (e.g. [MetaShARK](https://github.com/earnaud/MetaShARK-v2) and [Excel-to-EML](https://github.com/lkuiucsb/Excel-to-EML)) may not want the current set of input requirements for their applications. To accomodate these use cases, validation checks on inputs to `make_eml()` (often communicating best practice recommendations) have been refactored to return warnings rather than errors. Fixes [issue #34](https://github.com/EDIorg/EMLassemblyline/issues/34).
+
+### Bug fixes
+
+* __Coerce lat.col and lon.col inputs:__ `template_geographic_coverage()` `lat.col` and `lon.col` arguments expect numeric inputs and error if non-NA missing value codes are present. The values are now coerced to numeric, only complete cases returned in the geographic coverage template, and no errors occur.
+* __Revert markdown parsing:__ Version 2.13.0 introduced better methods for parsing TextType templates (i.e. abstract, methods, and additional_info) from .docx, .txt, .md file types, however, .md lost some formatting controls. This has been fixed.
+
 # EMLassemblyline 2.17.0
 
-### Enhancements
+### Enhancement
 
 * __Create EML for non-EDI repositories:__ Create EML for non-EDI repositories by refactoring the logic around the `make_eml()` function arguments `user.id`, `user.domain`, and `package.id`. Details are listed in the function documentation.
 

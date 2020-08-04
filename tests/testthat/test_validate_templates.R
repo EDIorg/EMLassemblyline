@@ -1,37 +1,29 @@
 context('Validate templates')
 library(EMLassemblyline)
 
+# abstract --------------------------------------------------------------------
 
-# Required templates ----------------------------------------------------------
-
-testthat::test_that("Required templates", {
+testthat::test_that("abstract", {
   
   # Parameterize
-  
-  attr_tmp <- read_template_attributes()
-  r_tmp <- attr_tmp[attr_tmp$required_template, ]
-  
-  # When some required templates are missing
-  
+
   x <- template_arguments(
     path = system.file(
-      '/examples/templates',
-      package = 'EMLassemblyline'))$x
-  for (i in 1:length(x$template)) {
-    x1 <- x
-    n <- names(x1$template[i])
-    if (stringr::str_detect(n, paste(r_tmp$regexpr, collapse = "|"))) {
-      x1$template[i] <- NULL
-      expect_error(
-        validate_templates("make_eml", x1))
-    }
-  }
+      '/examples/pkg_260/metadata_templates',
+      package = 'EMLassemblyline'),
+    data.path = system.file(
+      '/examples/pkg_260/data_objects',
+      package = 'EMLassemblyline'),
+    data.table = c("decomp.csv", "nitrogen.csv"),
+    other.entity = c("ancillary_data.zip", "processing_and_analysis.R"))$x
   
-  # When x$templates = NULL
+  # Warn if missing
   
-  x <- template_arguments()$x
-  expect_error(
-    validate_templates("make_eml", x))
+  x1 <- x
+  x1$template$abstract.txt <- NULL
+  expect_warning(
+    validate_templates("make_eml", x1),
+    regexp = "An abstract is recommended.")
   
 })
 
@@ -58,8 +50,9 @@ testthat::test_that("attributes.txt", {
   
   x1 <- x
   x1$template$attributes_decomp.txt <- NULL
-  x1$template$attributes_nitrogen.txt <- NULL
-  expect_error(validate_templates("make_eml", x1))
+  expect_warning(
+    validate_templates("make_eml", x1),
+    regexp = "is missing attributes metadata.")
   
   # attributeName - All table columns are listed as attributeName
   
@@ -211,7 +204,7 @@ testthat::test_that("Categorical variables", {
   x1 <- x
   expect_equal(validate_templates("make_eml", x1), x1)
   
-  # catvars.txt - Required when table attributes are listed as 
+  # TODO: catvars.txt - Required when table attributes are listed as 
   # "categorical"
   
   x1 <- x
@@ -221,7 +214,7 @@ testthat::test_that("Categorical variables", {
   x1$template$catvars_nitrogen.txt <- NULL
   expect_error(validate_templates("make_eml", x1))
   
-  # codes - All codes require definition
+  # TODO: codes - All codes require definition
   
   use_i <- seq(
     length(names(x$template)))[
@@ -250,7 +243,7 @@ testthat::test_that("geographic_coverage", {
   x1 <- x
   expect_equal(validate_templates("make_eml", x1), x1)
   
-  # geographicDescription - Each entry requires a north, south, east, and west 
+  # TODO: geographicDescription - Each entry requires a north, south, east, and west 
   # bounding coordinate
   
   x1 <- x
@@ -258,7 +251,7 @@ testthat::test_that("geographic_coverage", {
   x1$template$geographic_coverage.txt$content$southBoundingCoordinate[2] <- ""
   expect_error(validate_templates("make_eml", x1))
   
-  # coordinates - Decimal degree is expected
+  # TODO: coordinates - Decimal degree is expected
   
   x1 <- x
   x1$template$geographic_coverage.txt$content$northBoundingCoordinate[1] <- "45 23'"
@@ -266,6 +259,85 @@ testthat::test_that("geographic_coverage", {
   expect_error(validate_templates("make_eml", x1))
 
 })
+
+# intellectual_rights ---------------------------------------------------------
+
+testthat::test_that("intellectual_rights", {
+  
+  # Parameterize
+
+  x <- template_arguments(
+    path = system.file(
+      '/examples/pkg_260/metadata_templates',
+      package = 'EMLassemblyline'),
+    data.path = system.file(
+      '/examples/pkg_260/data_objects',
+      package = 'EMLassemblyline'),
+    data.table = c("decomp.csv", "nitrogen.csv"),
+    other.entity = c("ancillary_data.zip", "processing_and_analysis.R"))$x
+  
+  # Warn if missing
+  
+  x1 <- x
+  x1$template$intellectual_rights.txt <- NULL
+  expect_warning(
+    validate_templates("make_eml", x1),
+    regexp = "An intellectual rights license is recommended.")
+  
+})
+
+# keywords --------------------------------------------------------------------
+
+testthat::test_that("keywords", {
+  
+  # Parameterize
+  
+  x <- template_arguments(
+    path = system.file(
+      '/examples/pkg_260/metadata_templates',
+      package = 'EMLassemblyline'),
+    data.path = system.file(
+      '/examples/pkg_260/data_objects',
+      package = 'EMLassemblyline'),
+    data.table = c("decomp.csv", "nitrogen.csv"),
+    other.entity = c("ancillary_data.zip", "processing_and_analysis.R"))$x
+  
+  # Warn if missing
+  
+  x1 <- x
+  x1$template$keywords.txt <- NULL
+  expect_warning(
+    validate_templates("make_eml", x1),
+    regexp = "Keywords are recommended.")
+  
+})
+
+# methods ---------------------------------------------------------------------
+
+testthat::test_that("methods", {
+  
+  # Parameterize
+  
+  x <- template_arguments(
+    path = system.file(
+      '/examples/pkg_260/metadata_templates',
+      package = 'EMLassemblyline'),
+    data.path = system.file(
+      '/examples/pkg_260/data_objects',
+      package = 'EMLassemblyline'),
+    data.table = c("decomp.csv", "nitrogen.csv"),
+    other.entity = c("ancillary_data.zip", "processing_and_analysis.R"))$x
+  
+  # Warn if missing
+  
+  x1 <- x
+  x1$template$methods.txt <- NULL
+  expect_warning(
+    validate_templates("make_eml", x1),
+    regexp = "Methods are recommended.")
+  
+})
+
 
 # personnel -------------------------------------------------------------------
 
@@ -281,6 +353,14 @@ testthat::test_that("personnel", {
   x1 <- x
   expect_equal(validate_templates("make_eml", x1), x1)
   
+  # Missing
+  
+  x1 <- x
+  x1$template$personnel.txt <- NULL
+  expect_warning(
+    validate_templates("make_eml", x1),
+    regexp = "Personnel are required \\(i.e. creator, contact, etc.\\).")
+  
   # role - At least one creator and contact is listed
   
   x1 <- x
@@ -288,13 +368,17 @@ testthat::test_that("personnel", {
     stringr::str_detect(
       x1$template$personnel.txt$content$role, 
       "contact")] <- "creontact"
-  expect_error(validate_templates("make_eml", x1))
+  expect_warning(
+    validate_templates("make_eml", x1),
+    regexp = "A contact is required.")
   x1 <- x
   x1$template$personnel.txt$content$role[
     stringr::str_detect(
       x1$template$personnel.txt$content$role, 
       "creator")] <- "creontact"
-  expect_error(validate_templates("make_eml", x1))
+  expect_warning(
+    validate_templates("make_eml", x1),
+    regexp = "A creator is required.")
   
   # role - All personnel have roles
   
@@ -303,7 +387,11 @@ testthat::test_that("personnel", {
     stringr::str_detect(
       x1$template$personnel.txt$content$role, 
       "PI|pi")] <- ""
-  expect_error(validate_templates("make_eml", x1))
+  expect_warning(
+    validate_templates("make_eml", x1),
+    regexp = paste0(
+      "(Each person must have a 'role'.)|(A principal investigator and ",
+      "project info are recommended.)"))
 
 })
 

@@ -9,11 +9,11 @@
 #'       path,
 #'       data.path = path,
 #'       eml.path = path, 
-#'       dataset.title,
-#'       temporal.coverage,
-#'       geographic.description, 
-#'       geographic.coordinates, 
-#'       maintenance.description, 
+#'       dataset.title = NULL,
+#'       temporal.coverage = NULL,
+#'       geographic.description = NULL, 
+#'       geographic.coordinates = NULL, 
+#'       maintenance.description = NULL, 
 #'       data.table = NULL, 
 #'       data.table.name = data.table,
 #'       data.table.description = NULL, 
@@ -73,8 +73,11 @@
 #'     (character; optional) Quote character used in \code{data.table}. If 
 #'     more than one, then supply as a vector of character strings in the same 
 #'     order as listed in \code{data.table}. If the quote character is a quotation, 
-#'     then enter \code{"\\""}. If the quote character is an apostrophe, then 
-#'     enter \code{"\\'"}.
+#'     then enter \code{"\\\""}. If the quote character is an apostrophe, then 
+#'     enter \code{"\\'"}. If wanting to include quote characters for some but 
+#'     not all \code{data.table}, then use a "" for those that don't have a 
+#'     quote character (e.g. \code{data.table.quote.character = 
+#'     c("\\'", "")}).
 #' @param data.table.url
 #'     (character; optional) The publicly accessible URL from which 
 #'     \code{data.table} can be downloaded. If more than one, then supply as 
@@ -195,10 +198,10 @@ make_eml <- function(
   path,
   data.path = path,
   eml.path = path, 
-  dataset.title,
-  temporal.coverage,
-  geographic.description, 
-  geographic.coordinates, 
+  dataset.title = NULL,
+  temporal.coverage = NULL,
+  geographic.description = NULL, 
+  geographic.coordinates = NULL, 
   maintenance.description = NULL, 
   data.table = NULL, 
   data.table.name = data.table,
@@ -385,8 +388,29 @@ make_eml <- function(
   x <- remove_empty_templates(x)
   x <- validate_templates("make_eml", x)
 
+  # Modify arguments ----------------------------------------------------------
+  # Modification of some argument content helps with downstream processes.
+  # FIXME: Move this section to validate_arguments()
+  
+  # data.table.name
+  # - Missing values default to data.table
+  
+  if (length(data.table.name) < length(data.table)) {
+    use_i <- which(!(seq_along(data.table) %in% seq_along(data.table.name)))
+    data.table.name[use_i] <- data.table[use_i]
+  }
+  
+  # other.entity.name
+  # - Missing values default to other.entity
+  
+  if (length(other.entity.name) < length(other.entity)) {
+    use_i <- which(!(seq_along(other.entity) %in% seq_along(other.entity.name)))
+    other.entity.name[use_i] <- other.entity[use_i]
+  }
+  
   # Modify templates ----------------------------------------------------------
   # Modification of some template content helps with downstream processes.
+  # FIXME: Move this section to validate_templates()
   
   # catvars.txt:
   # - Remove incomplete cases
@@ -806,29 +830,35 @@ make_eml <- function(
   
   # Create <title> ------------------------------------------------------------
   
-  message("    <title>")
-  eml$dataset$title <- dataset.title
+  if (!is.null(dataset.title)) {
+    message("    <title>")
+    eml$dataset$title <- dataset.title
+  }
   
   # Create <creator> ----------------------------------------------------------
 
-  eml$dataset$creator <- lapply(
-    which(x$template$personnel.txt$content$role == "creator"),
-    function(k) {
-      message("    <creator>")
-      set_person(info_row = k, person_role = "creator")
-    })
+  if (!is.null(x$template$personnel.txt)) {
+    eml$dataset$creator <- lapply(
+      which(x$template$personnel.txt$content$role == "creator"),
+      function(k) {
+        message("    <creator>")
+        set_person(info_row = k, person_role = "creator")
+      })
+  }
 
   # Create <associatedParty> --------------------------------------------------
   
-  eml$dataset$associatedParty <- lapply(
-    which(
-      stringr::str_detect(
-        x$template$personnel.txt$content$role,
-        "[^pi|^creator|^contact]")),
-    function(k) {
-      message("    <associatedParty>")
-      set_person(info_row = k, person_role = "")
-    })
+  if (!is.null(x$template$personnel.txt)) {
+    eml$dataset$associatedParty <- lapply(
+      which(
+        stringr::str_detect(
+          x$template$personnel.txt$content$role,
+          "[^pi|^creator|^contact]")),
+      function(k) {
+        message("    <associatedParty>")
+        set_person(info_row = k, person_role = "")
+      })
+  }
   
   # Create <pubDate> ----------------------------------------------------------
   
@@ -916,76 +946,76 @@ make_eml <- function(
   # Check for multiple geographic coverage inputs.
   # FIXME: On May 1, 2020 remove support for bounding_boxes.txt
   
-  if (missing(geographic.coordinates) & 
-      !any(stringr::str_detect(
-        names(x$template), 
-        "geographic_coverage.txt|bounding_boxes.txt"))) {
-    stop(
-      paste0("No geographic coverage found. Please add using the ",
-        "'geographic.coordinates' and 'geographic.description' arguments to ",
-        "make_eml(), or the bounding_boxes.txt or ",
-        "geographic_coverage.txt templates."), 
-      call. = F)
-  }
-  
-  # Combine multiple sources of geographic coverage and remove duplicate entries
-  
-  o <- unique.data.frame(
-    rbind(
-      data.frame(
-        geographicDescription = character(0),
-        northBoundingCoordinate = character(0),
-        southBoundingCoordinate = character(0),
-        eastBoundingCoordinate = character(0),
-        westBoundingCoordinate = character(0),
-        stringsAsFactors = F),
-      if (!missing(geographic.description) & !missing(geographic.coordinates)) {
+  if (is.null(geographic.coordinates) & !any(stringr::str_detect(
+    names(x$template), 
+    "geographic_coverage.txt|bounding_boxes.txt"))) {
+    
+    warning("Geographic coverage is recommended.", call. = FALSE)
+    
+  } else {
+    
+    # Combine multiple sources of geographic coverage and remove duplicate entries
+    
+    o <- unique.data.frame(
+      rbind(
         data.frame(
-          geographicDescription = as.character(geographic.description),
-          northBoundingCoordinate = as.character(geographic.coordinates[1]),
-          southBoundingCoordinate = as.character(geographic.coordinates[3]),
-          eastBoundingCoordinate = as.character(geographic.coordinates[2]),
-          westBoundingCoordinate = as.character(geographic.coordinates[4]),
-          stringsAsFactors = F)
-      },
-      data.frame(
-        geographicDescription = x$template$bounding_boxes.txt$content$geographicDescription,
-        northBoundingCoordinate = x$template$bounding_boxes.txt$content$northBoundingCoordinate,
-        southBoundingCoordinate = x$template$bounding_boxes.txt$content$southBoundingCoordinate,
-        eastBoundingCoordinate = x$template$bounding_boxes.txt$content$eastBoundingCoordinate,
-        westBoundingCoordinate = x$template$bounding_boxes.txt$content$westBoundingCoordinate,
-        stringsAsFactors = F),
-      data.frame(
-        geographicDescription = x$template$geographic_coverage.txt$content$geographicDescription,
-        northBoundingCoordinate = x$template$geographic_coverage.txt$content$northBoundingCoordinate,
-        southBoundingCoordinate = x$template$geographic_coverage.txt$content$southBoundingCoordinate,
-        eastBoundingCoordinate = x$template$geographic_coverage.txt$content$eastBoundingCoordinate,
-        westBoundingCoordinate = x$template$geographic_coverage.txt$content$westBoundingCoordinate,
-        stringsAsFactors = F)))
-  
-  # Create the geographicCoverage node
-  
-  eml$dataset$coverage$geographicCoverage <- lapply(
-    seq_len(nrow(o)),
-    function(k) {
-      message('        <geographicCoverage>')
-      list(
-        geographicDescription = o$geographicDescription[k],
-        boundingCoordinates = list(
-          westBoundingCoordinate = o$westBoundingCoordinate[k],
-          eastBoundingCoordinate = o$eastBoundingCoordinate[k],
-          northBoundingCoordinate = o$northBoundingCoordinate[k],
-          southBoundingCoordinate = o$southBoundingCoordinate[k]))
-    }
-  )
+          geographicDescription = character(0),
+          northBoundingCoordinate = character(0),
+          southBoundingCoordinate = character(0),
+          eastBoundingCoordinate = character(0),
+          westBoundingCoordinate = character(0),
+          stringsAsFactors = F),
+        if (!missing(geographic.description) & !missing(geographic.coordinates)) {
+          data.frame(
+            geographicDescription = as.character(geographic.description),
+            northBoundingCoordinate = as.character(geographic.coordinates[1]),
+            southBoundingCoordinate = as.character(geographic.coordinates[3]),
+            eastBoundingCoordinate = as.character(geographic.coordinates[2]),
+            westBoundingCoordinate = as.character(geographic.coordinates[4]),
+            stringsAsFactors = F)
+        },
+        data.frame(
+          geographicDescription = x$template$bounding_boxes.txt$content$geographicDescription,
+          northBoundingCoordinate = x$template$bounding_boxes.txt$content$northBoundingCoordinate,
+          southBoundingCoordinate = x$template$bounding_boxes.txt$content$southBoundingCoordinate,
+          eastBoundingCoordinate = x$template$bounding_boxes.txt$content$eastBoundingCoordinate,
+          westBoundingCoordinate = x$template$bounding_boxes.txt$content$westBoundingCoordinate,
+          stringsAsFactors = F),
+        data.frame(
+          geographicDescription = x$template$geographic_coverage.txt$content$geographicDescription,
+          northBoundingCoordinate = x$template$geographic_coverage.txt$content$northBoundingCoordinate,
+          southBoundingCoordinate = x$template$geographic_coverage.txt$content$southBoundingCoordinate,
+          eastBoundingCoordinate = x$template$geographic_coverage.txt$content$eastBoundingCoordinate,
+          westBoundingCoordinate = x$template$geographic_coverage.txt$content$westBoundingCoordinate,
+          stringsAsFactors = F)))
+    
+    # Create the geographicCoverage node
+    
+    eml$dataset$coverage$geographicCoverage <- lapply(
+      seq_len(nrow(o)),
+      function(k) {
+        message('        <geographicCoverage>')
+        list(
+          geographicDescription = o$geographicDescription[k],
+          boundingCoordinates = list(
+            westBoundingCoordinate = o$westBoundingCoordinate[k],
+            eastBoundingCoordinate = o$eastBoundingCoordinate[k],
+            northBoundingCoordinate = o$northBoundingCoordinate[k],
+            southBoundingCoordinate = o$southBoundingCoordinate[k]))
+      }
+    )
+    
+  }
 
   # Create <temporalCoverage> -------------------------------------------------
   
-  message("      <temporalCoverage>")
-  eml$dataset$coverage$temporalCoverage <- list(
-    rangeOfDates = list(
-      beginDate = list(calendarDate = temporal.coverage[1]),
-      endDate = list(calendarDate = temporal.coverage[2])))
+  if (!is.null(temporal.coverage)) {
+    message("      <temporalCoverage>")
+    eml$dataset$coverage$temporalCoverage <- list(
+      rangeOfDates = list(
+        beginDate = list(calendarDate = temporal.coverage[1]),
+        endDate = list(calendarDate = temporal.coverage[2])))
+  }
   
   # Create <taxonomicCoverage> ------------------------------------------------
   # Two sources of taxonomic coverage are supported: 
@@ -1023,19 +1053,21 @@ make_eml <- function(
 
   # Create <maintenance> ------------------------------------------------------
   
-  message("    <maintenance>")
   if (!is.null(maintenance.description)) {
+    message("    <maintenance>")
     eml$dataset$maintenance$description <- maintenance.description
   }
 
   # Create <contact> ----------------------------------------------------------
 
-  eml$dataset$contact <- lapply(
-    which(x$template$personnel.txt$content$role == "contact"),
-    function(k) {
-      message("    <contact>")
-      set_person(info_row = k, person_role = "contact")
-    })
+  if (!is.null(x$template$personnel.txt)) {
+    eml$dataset$contact <- lapply(
+      which(x$template$personnel.txt$content$role == "contact"),
+      function(k) {
+        message("    <contact>")
+        set_person(info_row = k, person_role = "contact")
+      })
+  }
   
   # Create <publisher> --------------------------------------------------------
   
@@ -1103,26 +1135,28 @@ make_eml <- function(
   # under supbsequent "pi" will become related projects in the order they are 
   # listed.
   
-  use_i <- x$template$personnel.txt$content$role == "pi"
-  if (any(use_i)){
-    lapply(
-      which(use_i),
-      function(k) {
-        if (k == min(which(use_i))) {
-          message("    <project>")
-          eml$dataset$project <<- list(
-            title = x$template$personnel.txt$content$projectTitle[k],
-            personnel = set_person(info_row = k, person_role = "pi"),
-            funding = x$template$personnel.txt$content$funding[k])
-        } else {
-          message("      <relatedProject>")
-          eml$dataset$project$relatedProject[[
-            length(eml$dataset$project$relatedProject)+1]] <<- list(
+  if (!is.null(x$template$personnel.txt)) {
+    use_i <- x$template$personnel.txt$content$role == "pi"
+    if (any(use_i)){
+      lapply(
+        which(use_i),
+        function(k) {
+          if (k == min(which(use_i))) {
+            message("    <project>")
+            eml$dataset$project <<- list(
               title = x$template$personnel.txt$content$projectTitle[k],
               personnel = set_person(info_row = k, person_role = "pi"),
               funding = x$template$personnel.txt$content$funding[k])
-        }
-      })
+          } else {
+            message("      <relatedProject>")
+            eml$dataset$project$relatedProject[[
+              length(eml$dataset$project$relatedProject)+1]] <<- list(
+                title = x$template$personnel.txt$content$projectTitle[k],
+                personnel = set_person(info_row = k, person_role = "pi"),
+                funding = x$template$personnel.txt$content$funding[k])
+          }
+        })
+    }
   }
   
   # Create <dataTable> --------------------------------------------------------
@@ -1262,8 +1296,18 @@ make_eml <- function(
             url = "placeholder"))
         
         if (!is.null(data.table.quote.character)) {
-          physical$dataFormat$textFormat$simpleDelimited$quoteCharacter <- 
-            data.table.quote.character[which(k == names(x$data.table))]
+          # data.table.quote.character isn't required for each data table, but 
+          # must have a non-NULL entry if other data tables have a quote 
+          # character. A "" or NA indicates to skip assignment.
+          quote_character <- data.table.quote.character[
+            which(k == names(x$data.table))]
+          if ((quote_character == "") | is.na(quote_character)) {
+            physical$dataFormat$textFormat$simpleDelimited$quoteCharacter <- 
+              NULL
+          } else {
+            physical$dataFormat$textFormat$simpleDelimited$quoteCharacter <- 
+              quote_character
+          }
         }
         
         # FIXME: data.url is deprecated. Remove support for this argument after (11 March 2021)

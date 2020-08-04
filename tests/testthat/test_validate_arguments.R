@@ -43,113 +43,181 @@ testthat::test_that("make_eml()", {
   x$user.id <- c("userid1", "userid2")
   x$write.file <- F
   
-  # dataset.title - required
+  # dataset.title - Warn if missing
 
   x1 <- x
   x1$dataset.title <- NULL
-  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_warning(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]),
+    regexp = "A dataset title is required")
   
-  # data.table.description - required
+  # data.table.description - Warn if missing
   
   x1 <- x
   x1$data.table.description <- NULL
-  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_warning(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]),
+    regexp = "Data table descriptions are recommended")
   
-  # data.table.description - required for each data.table
+  # data.table.description - Warn if length doesn't match data.table
   
   x1 <- x
   x1$data.table.description <- x1$data.table.description[1]
-  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_warning(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]),
+    regexp = "One or more data table descriptions are missing")
   
-  # data.table.quote.character - required for each data.table
+  # data.table.description - When length doesn't match data.table undescribed
+  # tables will not have a description
+  
+  x1 <- x
+  x1$data.table.description <- x1$data.table.description[1]
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_true(!is.na(r$dataset$dataTable[[1]]$entityDescription))
+  expect_true(is.na(r$dataset$dataTable[[2]]$entityDescription))
+  
+  # data.table.name - Warn if using defaults
+  
+  x1 <- x
+  x1$data.table.name <- NULL
+  expect_warning(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]),
+    regexp = paste0(
+      "Data table names are missing. A short name for each data table is ",
+      "recommended. Defaulting to data table file names."))
+  
+  # data.table.name - Warn if length doesn't match data.table
+
+  x1 <- x
+  x1$data.table.name <- x1$data.table.name[1]
+  expect_warning(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]),
+    regexp = paste0("One or more data table names are missing. Defaulting to ",
+                    "data table file names"))
+  
+  # data.table.quote.character - Warn if length doesn't match data.table
   
   x1 <- x
   x1$data.table.quote.character <- x1$data.table.quote.character[1]
-  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_warning(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]),
+    regexp = "One or more data table quote characters are missing.")
   
-  # data.table.url - required for each data.table
+  # data.table.url - Warn if length doesn't match data.table
   
   x1 <- x
   x1$data.table.url <- x1$data.table.url[1]
-  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
-  
-  # geographic.corrdinates - required when using the geographic.description 
-  # argument
+  expect_warning(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]),
+    regexp = "One or more data table URLs are missing.")
+
+  # geographic.corrdinates - Expected when using geographic.description 
   
   x1 <- x
   x1$geographic.coordinates <- NULL
-  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  x1$x$template$geographic_coverage.txt <- NULL
+  expect_warning(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]),
+    regexp = "Geographic coordinates are missing.")
   
-  # geographic.description - required when using the geographic.coordinates 
-  # argument
+  # geographic.description - Expected when using geographic.coordinates
   
   x1 <- x
   x1$geographic.description <- NULL
-  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
-  
+  expect_warning(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]),
+    regexp = "Geographic description is missing.")
+
   # maintenance.description
   
   x1 <- x
   x1$maintenance.description <- NULL
-  expect_warning(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
-  
-  # other.entity - required if other.entity.name or other.entity.description
-  # is in use
-  
-  x1 <- x
-  x1$other.entity <- NULL
-  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
-  
-  # other.entity - required for each other.entity.description
-  
-  x1 <- x
-  x1$other.entity <- x1$other.entity[1]
-  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
-  
-  # other.entity.description - required
+  expect_warning(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]),
+    regexp = 'A maintenance description is recommended.')
+
+  # other.entity.description - Warn if missing
   
   x1 <- x
   x1$other.entity.description <- NULL
-  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_warning(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]),
+    regexp = "Other entity descriptions are recommended")
   
-  # other.entity.url - required for each other.entity
+  # other.entity.description - Warn if length doesn't match other.entity
+  
+  x1 <- x
+  x1$other.entity.description <- x1$other.entity.description[1]
+  expect_warning(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]),
+    regexp = "One or more other entity descriptions are missing")
+
+  # other.entity.name - Warn if using defaults
+  
+  x1 <- x
+  x1$other.entity.name <- NULL
+  expect_warning(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]),
+    regexp = paste0(
+      "Other entity names are missing. A short name for each other entity is ",
+      "recommended. Defaulting to other entity file names."))
+  
+  # other.entity.name - Warn if length doesn't match other.entity
+  
+  x1 <- x
+  x1$other.entity.name <- x1$other.entity.name[1]
+  expect_warning(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]),
+    regexp = paste0("One or more other entity names are missing. Defaulting to ",
+                    "other entity file names"))
+  
+  # other.entity.url - Warn if length doesn't match other.entity
   
   x1 <- x
   x1$other.entity.url <- x1$other.entity.url[1]
-  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_warning(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]),
+    regexp = "One or more other entity URLs are missing.")
   
-  # package.id - If malformed EDI or LTER package ID then warning, but 
-  # package.id is used anyway.
+  # package.id - If malformed EDI or LTER package ID then warning.
   
   x1 <- x
   x1$package.id <- "knb-lter-ntl.5"
-  expect_warning(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_warning(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]),
+    regexp = "Warning: 'package.id' is not valid for EDI or LTER. Expected ")
   
   # provenance
   
   x1 <- x
   x1$provenance <- c("edi.349.1", "knb-lter-ntl.3.28", "knbee-lter-ntl.3.28")
-  expect_warning(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_warning(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]),
+    regexp = "Unable to generate provenance metadata for unrecognized identifier")
   
-  # temporal.coverage - temporal.coverage is required
+  # temporal.coverage - Warn if missing
   
   x1 <- x
   x1$temporal.coverage <- NULL
-  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_warning(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]),
+    regexp = "Temporal coverage is recommended")
   
-  # temporal.coverage - temporal.coverage requires both a start date and an
-  # end date
+  # temporal.coverage - Warn if missing start or end date
   
   x1 <- x
   x1$temporal.coverage <- x1$temporal.coverage[1]
-  expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_warning(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]),
+    regexp = "Temporal coverage requires a begin and end date")
 
   # write.file - eml.path is required
   
   x1 <- x
   x1$path <- NULL
   x1$eml.path <- NULL
-  x1$write.file <- T
+  x1$write.file <- TRUE
   expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   
 })

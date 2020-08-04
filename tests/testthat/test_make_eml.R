@@ -74,6 +74,15 @@ testthat::test_that('Error out when required arguments are missing', {
 
 testthat::test_that('Expect argument values in EML', {
 
+  # data.table.name
+  
+  x1 <- x
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  for (i in 1:length(r$dataset$dataTable)) {
+    expect_true(
+      r$dataset$dataTable[[i]]$entityName == x1$data.table.name[i])
+  }
+  
   # data.table.name - defaults to data.table
   
   x1 <- x
@@ -85,23 +94,55 @@ testthat::test_that('Expect argument values in EML', {
       r$dataset$dataTable[[i]]$entityName == r$dataset$dataTable[[i]]$physical$objectName)
   }
   
-  # data.table.name
-  
   x1 <- x
-  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  x1$data.table.name <- x1$data.table.name[1]
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   for (i in 1:length(r$dataset$dataTable)) {
     expect_true(
-      r$dataset$dataTable[[i]]$entityName == x1$data.table.name[i])
+      (r$dataset$dataTable[[i]]$entityName == x1$data.table.name[i]) | 
+        (r$dataset$dataTable[[i]]$entityName == x1$data.table[i]))
   }
   
   # data.table.quote.character
   
   x1 <- x
+  x1$data.table.quote.character <- c("\\'", "\\\"")
   r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
-  for (i in 1:length(r$dataset$dataTable)) {
-    expect_true(
-      length(r$dataset$dataTable[[i]]$physical$dataFormat$textFormat$simpleDelimited$quoteCharacter) != 0)
-  }
+  expect_equal(
+    r$dataset$dataTable[[1]]$physical$dataFormat$textFormat$simpleDelimited$quoteCharacter,
+    "\\'")
+  expect_equal(
+    r$dataset$dataTable[[2]]$physical$dataFormat$textFormat$simpleDelimited$quoteCharacter,
+    "\\\"")
+  
+  # data.table.quote.character - Not required for each dataTable
+  
+  x1 <- x
+  x1$data.table.quote.character <- c("\\'", "")
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_equal(
+    r$dataset$dataTable[[1]]$physical$dataFormat$textFormat$simpleDelimited$quoteCharacter,
+    "\\'")
+  expect_null(
+    r$dataset$dataTable[[2]]$physical$dataFormat$textFormat$simpleDelimited$quoteCharacter)
+  
+  x1 <- x
+  x1$data.table.quote.character <- c("\\'", NA_character_)
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_equal(
+    r$dataset$dataTable[[1]]$physical$dataFormat$textFormat$simpleDelimited$quoteCharacter,
+    "\\'")
+  expect_null(
+    r$dataset$dataTable[[2]]$physical$dataFormat$textFormat$simpleDelimited$quoteCharacter)
+  
+  # data.table.quote.character - Warn if length doesn't match data.table
+  
+  x1 <- x
+  x1$data.table.quote.character <- x1$data.table.quote.character[1]
+  expect_warning(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]),
+    regexp = "One or more data table quote characters are missing.")
   
   # data.table.url
   
@@ -133,6 +174,34 @@ testthat::test_that('Expect argument values in EML', {
     r$dataset$dataTable[[2]]$physical$distribution$online$url,
     x1$data.table.url[2])
   
+  # data.table.url - NULL values assigned if length doesn't match data.table
+  
+  x1 <- x
+  x1$data.table.url <- x1$data.table.url[1]
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_null(r$dataset$dataTable[[2]]$physical$distribution$online$url)
+  
+  # geographic.corrdinates - The geographicCoverage node is dropped when NULL 
+  # and geographic.description is present.
+  
+  x1 <- x
+  x1$geographic.coordinates <- NULL
+  x1$x$template$geographic_coverage.txt <- NULL
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_null(r$dataset$coverage$geographicCoverage)
+  
+  # geographic.description - The geographicCoverage node is dropped when NULL 
+  # and geographic.coordinates are present.
+  
+  x1 <- x
+  x1$geographic.description <- NULL
+  x1$x$template$geographic_coverage.txt <- NULL
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_identical(r$dataset$coverage$geographicCoverage, list())
+  
   # other.entity
   
   x1 <- x
@@ -152,6 +221,16 @@ testthat::test_that('Expect argument values in EML', {
       r$dataset$otherEntity[[i]]$physical$dataFormat$externallyDefinedFormat$formatName != "Unknown")
   }
   
+  # other.entity.description - When length doesn't match other.entity undescribed
+  # other entities will not have a description
+  
+  x1 <- x
+  x1$other.entity.description <- x1$other.entity.description[1]
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_true(!is.na(r$dataset$otherEntity[[1]]$entityDescription))
+  expect_true(is.na(r$dataset$otherEntity[[2]]$entityDescription))
+  
   # other.entity.name - defaults to other.entity
   
   x1 <- x
@@ -161,6 +240,16 @@ testthat::test_that('Expect argument values in EML', {
   for (i in 1:length(r$dataset$otherEntity)) {
     expect_true(
       r$dataset$otherEntity[[i]]$entityName == r$dataset$otherEntity[[i]]$physical$objectName)
+  }
+  
+  x1 <- x
+  x1$other.entity.name <- x1$other.entity.name[1]
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  for (i in 1:length(r$dataset$otherEntity)) {
+    expect_true(
+      (r$dataset$otherEntity[[i]]$entityName == x1$other.entity.name[i]) | 
+        (r$dataset$otherEntity[[i]]$entityName == x1$other.entity[i]))
   }
   
   # other.entity.url
@@ -217,6 +306,24 @@ testthat::test_that('Expect argument values in EML', {
 
 testthat::test_that('Expect template values in EML', {
 
+  # abstract - EML is created even if missing
+  
+  x1 <- x
+  x1$x$template$abstract.txt <- NULL
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_null(r$dataset$abstract)
+  
+  # attributes.txt - attributes.txt should be present for each data table, if 
+  # missing then EML dataTable attributes will not be created
+  
+  x1 <- x
+  x1$x$template$attributes_decomp.txt <- NULL
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_true(
+    length(r$dataset$dataTable) != length(x1$x$data.table))
+
   # custom_units.txt
   
   x1 <- x
@@ -232,6 +339,41 @@ testthat::test_that('Expect template values in EML', {
   r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
   expect_true(
     length(r$dataset$coverage$geographicCoverage) == nrow(x1$x$template$geographic_coverage.txt$content))
+  
+  # intellectual rights - EML is created even if missing
+  
+  x1 <- x
+  x1$x$template$intellectual_rights.txt <- NULL
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_null(r$dataset$intellectualRights)
+  
+  # keywords - EML is created even if missing
+  
+  x1 <- x
+  x1$x$template$keywords.txt <- NULL
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_null(r$dataset$keywordSet)
+  
+  # methods - EML is created even if missing
+  
+  x1 <- x
+  x1$x$template$methods.txt <- NULL
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_null(r$dataset$methods)
+  
+  # personnel.txt - EML is created even if missing
+  
+  x1 <- x
+  x1$x$template$personnel.txt <- NULL
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_identical(r$dataset$creator, list())
+  expect_identical(r$dataset$associatedParty, list())
+  expect_identical(r$dataset$contact, list())
+  expect_null(r$dataset$project)
   
   # personnel.txt - Principal Investigator is absent
   
