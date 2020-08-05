@@ -45,8 +45,7 @@ x$write.file <- F
 
 x1 <- x
 r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
-expect_true(
-  EML::eml_validate(r))
+expect_true(EML::eml_validate(r))
 
 # Expect argument errors ------------------------------------------------------
 

@@ -633,15 +633,29 @@ import_templates <- function(path, data.path = path, license,
       
       # Guess character and numeric classes
       
-      guess <- unname(unlist(lapply(x$data.table[[i]]$content, class)))
+      guess <- unname(
+        unlist(
+          lapply(
+            x$data.table[[i]]$content, 
+            function(k) {
+              # An exception for the two component "IDate Date" class created 
+              # by data.table::fread(). Returning both components results in 
+              # a class vector that is longer than the column vector.
+              if ("Date" %in% class(k)) {
+                "Date"
+              } else {
+                class(k)
+              }
+            })))
       
       guess_map <- c(
         character = "character", 
         logical = "character", 
         factor = "character",
         integer = "numeric",
-        numeric = "numeric"
-      )
+        integer64 = "numeric",
+        numeric = "numeric",
+        Date = "Date")
       
       guess <- unname(guess_map[guess])
       

@@ -1,3 +1,9 @@
+# EMLassemblyline 2.18.1
+
+### Bug fix
+
+* __Patch for updated dependency:__ An updated dependency resulted in `template_table_attributes()` errors. This has been fixed.
+
 # EMLassemblyline 2.18.0
 
 ### Enhancement
