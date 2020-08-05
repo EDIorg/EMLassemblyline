@@ -1283,7 +1283,6 @@ make_eml <- function(
         # Set physical
         # FIXME: Auto-detect numHeaderLines
         # FIXME: Move EDIutils::get_eol() to EMLassemblyline?
-        
         physical <- suppressMessages(
           EML::set_physical(
             paste0(data.path, "/", k),
@@ -1366,9 +1365,14 @@ make_eml <- function(
       function(k) {
         message(paste0("    <otherEntity> (", k, ")"))
         # Set physical
-        physical <- suppressMessages(
-          EML::set_physical(
-            paste0(data.path, "/", k)))
+        # FIXME: Some sub-routine in EML::set_physical() doesn't like the .zip 
+        # file extension, so we suppress the warning here so users aren't 
+        # uneccessarily burdened by it. Not a great solution since helpful 
+        # warnings will be lost.
+        physical <- suppressWarnings(
+          suppressMessages(
+            EML::set_physical(
+              paste0(data.path, "/", k))))
         physical$dataFormat$textFormat <- NULL
         physical$dataFormat$externallyDefinedFormat$formatName <- mime::guess_type(
           file = k, unknown = "Unknown", empty = "Unknown")
