@@ -68,10 +68,7 @@ testthat::test_that('Test usage with file inputs', {
   
   expect_message(
     template_table_attributes(
-      path = system.file(
-        '/examples',
-        package = 'EMLassemblyline'
-      ),
+      path = tempdir(),
       data.path = system.file(
         '/examples/data',
         package = 'EMLassemblyline'

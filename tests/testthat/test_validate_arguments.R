@@ -221,3 +221,42 @@ testthat::test_that("make_eml()", {
   expect_error(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   
 })
+
+
+testthat::test_that("template_table_attributes()", {
+  
+  # template_table_attributes() -----------------------------------------------
+  
+  # Column names - Follow naming best practices
+  
+  dir.create(paste0(tempdir(), "/dataset"))
+  d <- data.table::fread(
+    system.file(
+      '/examples/pkg_260/data_objects/decomp.csv', 
+      package = 'EMLassemblyline'))
+  n <- stringr::str_replace(names(d), "_", " ")
+  n <- stringr::str_replace(n, "t", "%")
+  names(d) <- n
+  data.table::fwrite(d, paste0(tempdir(), "/dataset/decomp.csv"))
+  
+  x <- template_arguments()
+  x$path <- paste0(tempdir(), "/dataset")
+  x$data.path <- paste0(tempdir(), "/dataset")
+  x$data.table <- "decomp.csv"
+  x$write.file <- TRUE
+  x$x <- NULL
+  
+  expect_warning(
+    do.call(
+      template_table_attributes, 
+      x[names(x) %in% names(formals(template_table_attributes))]),
+    regexp = paste0(
+      "decomp.csv has column names that are not composed of strictly ",
+      "alphanumeric characters and underscores \\(recommended\\). This ",
+      "best practice ensures the data may be read by most software ",
+      "applications. Consider revising these columns: %ype, da%e, ",
+      "n%rt, percen% loss, %axa"))
+  
+  unlink(paste0(tempdir(), "/dataset"), recursive = TRUE)
+  
+})

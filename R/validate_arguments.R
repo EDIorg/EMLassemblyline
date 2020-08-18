@@ -631,9 +631,31 @@ validate_arguments <- function(fun.name, fun.args){
       data_files <- suppressWarnings(
         EDIutils::validate_file_names(
           path = fun.args$data.path, 
-          data.files = fun.args$data.table
-        )
-      )
+          data.files = fun.args$data.table))
+      
+      # attributeName - Names follow best practices
+      
+      r <- lapply(
+        fun.args$data.table,
+        function(k) {
+          x <- template_arguments(
+            data.path = fun.args$data.path,
+            data.table = k)$x
+          use_i <- stringr::str_detect(
+            colnames(x$data.table[[k]]$content), "(%|[:blank:]|([:punct:]^_))")
+          if (any(use_i)) {
+            paste0(
+              k, " has column names that are not composed of strictly ",
+              "alphanumeric characters and underscores (recommended). This ",
+              "best practice ensures the data may be read by most software ",
+              "applications. Consider revising these columns: ", 
+              paste(
+                colnames(x$data.table[[k]]$content)[use_i], collapse = ", "))
+          }
+        })
+      if (!is.null(unlist(r))) {
+        warning(paste(unlist(r), collapse = "\n"), call. = FALSE)
+      }
 
     }
     
