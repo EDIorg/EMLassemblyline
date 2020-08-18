@@ -228,7 +228,7 @@ template_table_attributes <- function(
               # An exception for the two component "IDate Date" class created 
               # by data.table::fread(). Returning both components results in 
               # a class vector that is longer than the column vector.
-              if ("Date" %in% class(k)) {
+              if (any(c("POSIXct", "POSIXt", "Date") %in% class(k))) {
                 "Date"
               } else {
                 class(k)
