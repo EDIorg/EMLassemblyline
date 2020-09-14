@@ -945,7 +945,6 @@ make_eml <- function(
   
   # Check for multiple geographic coverage inputs.
   # FIXME: On May 1, 2020 remove support for bounding_boxes.txt
-  
   if (is.null(geographic.coordinates) & !any(stringr::str_detect(
     names(x$template), 
     "geographic_coverage.txt|bounding_boxes.txt"))) {
@@ -953,58 +952,23 @@ make_eml <- function(
     warning("Geographic coverage is recommended.", call. = FALSE)
     
   } else {
-    
-    # Combine multiple sources of geographic coverage and remove duplicate entries
-    
-    o <- unique.data.frame(
-      rbind(
-        data.frame(
-          geographicDescription = character(0),
-          northBoundingCoordinate = character(0),
-          southBoundingCoordinate = character(0),
-          eastBoundingCoordinate = character(0),
-          westBoundingCoordinate = character(0),
-          stringsAsFactors = F),
-        if (!missing(geographic.description) & !missing(geographic.coordinates)) {
-          data.frame(
-            geographicDescription = as.character(geographic.description),
-            northBoundingCoordinate = as.character(geographic.coordinates[1]),
-            southBoundingCoordinate = as.character(geographic.coordinates[3]),
-            eastBoundingCoordinate = as.character(geographic.coordinates[2]),
-            westBoundingCoordinate = as.character(geographic.coordinates[4]),
-            stringsAsFactors = F)
-        },
-        data.frame(
-          geographicDescription = x$template$bounding_boxes.txt$content$geographicDescription,
-          northBoundingCoordinate = x$template$bounding_boxes.txt$content$northBoundingCoordinate,
-          southBoundingCoordinate = x$template$bounding_boxes.txt$content$southBoundingCoordinate,
-          eastBoundingCoordinate = x$template$bounding_boxes.txt$content$eastBoundingCoordinate,
-          westBoundingCoordinate = x$template$bounding_boxes.txt$content$westBoundingCoordinate,
-          stringsAsFactors = F),
-        data.frame(
-          geographicDescription = x$template$geographic_coverage.txt$content$geographicDescription,
-          northBoundingCoordinate = x$template$geographic_coverage.txt$content$northBoundingCoordinate,
-          southBoundingCoordinate = x$template$geographic_coverage.txt$content$southBoundingCoordinate,
-          eastBoundingCoordinate = x$template$geographic_coverage.txt$content$eastBoundingCoordinate,
-          westBoundingCoordinate = x$template$geographic_coverage.txt$content$westBoundingCoordinate,
-          stringsAsFactors = F)))
-    
-    # Create the geographicCoverage node
-    
-    eml$dataset$coverage$geographicCoverage <- lapply(
-      seq_len(nrow(o)),
-      function(k) {
-        message('        <geographicCoverage>')
-        list(
-          geographicDescription = o$geographicDescription[k],
-          boundingCoordinates = list(
-            westBoundingCoordinate = o$westBoundingCoordinate[k],
-            eastBoundingCoordinate = o$eastBoundingCoordinate[k],
-            northBoundingCoordinate = o$northBoundingCoordinate[k],
-            southBoundingCoordinate = o$southBoundingCoordinate[k]))
-      }
-    )
-    
+
+    if (!is.null(x$template$geographic_coverage.txt)) {
+      # Create the geographicCoverage node
+      o <- x$template$geographic_coverage.txt$content
+      eml$dataset$coverage$geographicCoverage <- lapply(
+        seq_len(nrow(o)),
+        function(k) {
+          message('        <geographicCoverage>')
+          list(
+            geographicDescription = o$geographicDescription[k],
+            boundingCoordinates = list(
+              westBoundingCoordinate = o$westBoundingCoordinate[k],
+              eastBoundingCoordinate = o$eastBoundingCoordinate[k],
+              northBoundingCoordinate = o$northBoundingCoordinate[k],
+              southBoundingCoordinate = o$southBoundingCoordinate[k]))
+        })
+    }
   }
 
   # Create <temporalCoverage> -------------------------------------------------
@@ -1138,24 +1102,25 @@ make_eml <- function(
   if (!is.null(x$template$personnel.txt)) {
     use_i <- x$template$personnel.txt$content$role == "pi"
     if (any(use_i)){
-      lapply(
-        which(use_i),
-        function(k) {
-          if (k == min(which(use_i))) {
-            message("    <project>")
-            eml$dataset$project <<- list(
-              title = x$template$personnel.txt$content$projectTitle[k],
-              personnel = set_person(info_row = k, person_role = "pi"),
-              funding = x$template$personnel.txt$content$funding[k])
-          } else {
-            message("      <relatedProject>")
-            eml$dataset$project$relatedProject[[
-              length(eml$dataset$project$relatedProject)+1]] <<- list(
+      invisible(
+        lapply(
+          which(use_i),
+          function(k) {
+            if (k == min(which(use_i))) {
+              message("    <project>")
+              eml$dataset$project <<- list(
                 title = x$template$personnel.txt$content$projectTitle[k],
                 personnel = set_person(info_row = k, person_role = "pi"),
                 funding = x$template$personnel.txt$content$funding[k])
-          }
-        })
+            } else {
+              message("      <relatedProject>")
+              eml$dataset$project$relatedProject[[
+                length(eml$dataset$project$relatedProject)+1]] <<- list(
+                  title = x$template$personnel.txt$content$projectTitle[k],
+                  personnel = set_person(info_row = k, person_role = "pi"),
+                  funding = x$template$personnel.txt$content$funding[k])
+            }
+          }))
     }
   }
   
@@ -1175,6 +1140,9 @@ make_eml <- function(
         
         # Add attributes.txt contents to the data frame input expected by 
         # EML::set_attributes().
+        # FIXME: Order of attributes listed in the template may not be match 
+        # the order listed in the table so ... reorder attributes according
+        # to the data table listing.
         
         attributes <- data.frame(
           attributeName = tbl_attr$attributeName,

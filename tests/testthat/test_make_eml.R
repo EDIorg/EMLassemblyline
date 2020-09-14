@@ -199,7 +199,16 @@ testthat::test_that('Expect argument values in EML', {
   x1$x$template$geographic_coverage.txt <- NULL
   r <- suppressWarnings(
     do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
-  expect_identical(r$dataset$coverage$geographicCoverage, list())
+  expect_null(r$dataset$coverage$geographicCoverage)
+  
+  # geographic.corrdinates & geographic.description - These values are added to
+  # the EML via compile_geographic_coverage()
+  
+  x1 <- x
+  x1$x$template$geographic_coverage.txt <- NULL
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_true(!is.null(r$dataset$coverage$geographicCoverage))
   
   # other.entity
   
@@ -330,14 +339,25 @@ testthat::test_that('Expect template values in EML', {
   expect_true(
     length(r$additionalMetadata[[1]]$metadata$unitList$unit) == nrow(x$x$template$custom_units.txt$content))
   
-  # geographic_coverage.txt
+  # geographic_coverage.txt - If make_eml() arguments geographic.coordinates 
+  # and geographic.description are present, then they are added to 
+  # the geographic_coverage template.
+  
+  x1 <- x
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_true(
+    length(
+      r$dataset$coverage$geographicCoverage) == 
+      (nrow(x1$x$template$geographic_coverage.txt$content) + 1))
   
   x1 <- x
   x1$geographic.coordinates <- NULL
   x1$geographic.description <- NULL
   r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
   expect_true(
-    length(r$dataset$coverage$geographicCoverage) == nrow(x1$x$template$geographic_coverage.txt$content))
+    length(
+      r$dataset$coverage$geographicCoverage) == 
+      nrow(x1$x$template$geographic_coverage.txt$content))
   
   # intellectual rights - EML is created even if missing
   
@@ -389,7 +409,8 @@ testthat::test_that('Expect template values in EML', {
   x1 <- x
   x1$x$template$personnel.txt$content$fundingAgency <- ""
   x1$x$template$personnel.txt$content$fundingNumber <- ""
-  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   x1$x$template$personnel.txt$content$projectTitle[
     x1$x$template$personnel.txt$content$projectTitle == ""] <- "No project title to report"
   expect_equal(
@@ -409,7 +430,8 @@ testthat::test_that('Expect template values in EML', {
   x1 <- x
   x1$x$template$personnel.txt$content$projectTitle <- ""
   x1$x$template$personnel.txt$content$fundingNumber <- ""
-  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   x1$x$template$personnel.txt$content$fundingAgency[
     x1$x$template$personnel.txt$content$fundingAgency == ""] <- "No funding to report"
   expect_equal(
@@ -429,7 +451,8 @@ testthat::test_that('Expect template values in EML', {
   x1 <- x
   x1$x$template$personnel.txt$content$projectTitle <- ""
   x1$x$template$personnel.txt$content$fundingAgency <- ""
-  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   x1$x$template$personnel.txt$content$fundingNumber[
     x1$x$template$personnel.txt$content$fundingNumber == ""] <- "No funding to report"
   expect_equal(
@@ -467,22 +490,16 @@ testthat::test_that('Expect template values in EML', {
     "NSF 111001")
   expect_equal(
     r$dataset$project$relatedProject[[2]]$title,
-    "No project title to report")
+    "Project title 3")
   expect_equal(
     r$dataset$project$relatedProject[[2]]$funding,
     "NSF 101")
   expect_equal(
     r$dataset$project$relatedProject[[3]]$title,
-    "No project title to report")
+    "Project title 4")
   expect_equal(
     r$dataset$project$relatedProject[[3]]$funding,
-    "111001")
-  expect_equal(
-    r$dataset$project$relatedProject[[4]]$title,
-    "No project title to report")
-  expect_equal(
-    r$dataset$project$relatedProject[[4]]$funding,
-    "No funding to report")
+    "NSF 111001")
   
   # personnel.txt - publisher
   

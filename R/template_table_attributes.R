@@ -111,8 +111,7 @@ template_table_attributes <- function(
   
   validate_arguments(
     fun.name = 'template_table_attributes',
-    fun.args = as.list(environment())
-  )
+    fun.args = as.list(environment()))
   
   # Read metadata templates and data ------------------------------------------
   

@@ -3,6 +3,7 @@
 export(define_catvars)
 export(extract_geocoverage)
 export(import_templates)
+export(issues)
 export(make_eml)
 export(template_arguments)
 export(template_categorical_variables)

@@ -7,14 +7,31 @@
 validate_templates(fun.name, x)
 }
 \arguments{
-\item{fun.name}{(character) Function name passed to `validate_x` with 
-`as.character(match.call()[[1]])`.}
+\item{fun.name}{(character) Function name from which \code{validate_templates} is 
+called}
 
-\item{x}{(named list) Use \code{template_arguments()} to create \code{x}.}
+\item{x}{(named list) The data and metadata object returned by 
+\code{template_arguments()}.}
+}
+\value{
+\item{template_issues}{Any issues found in the validation process and 
+returned as a character vector. This object can be saved for later use 
+and viewed in a human readable form with \code{issues()}}.
 }
 \description{
-Validate the content of `EMLassembline` metadata templates.
+Validate metadata template content
 }
 \details{
-Validation checks are function specific.
+Each template has a unique set of metadata providing valuable 
+    information about corresponding data objects. This function checks
+    for metadata content according to metadata best practices and the needs
+    of downstream processes in the EMLassemblyline. Each set of checks is 
+    applied within the scope of the calling function (i.e. \code{fun.name}),
+    which each has a unique set of needs and constraints. If the needs of 
+    down stream processes are not met, then the template content is modified 
+    and a message returned to the user.
+    
+    All issues are compiled into a single report and returned to the user 
+    with a warning. This approach of not "failing fast" allows the user to 
+    address several issues at once.
 }

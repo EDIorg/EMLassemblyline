@@ -1,3 +1,11 @@
+# EMLassemblyline 2.19.0
+
+### Enhancement
+
+* __Allow creation of partial EML (part 2):__
+
+This completes implementation of issue #34 by moving all evaluation of inputs to make_eml() (and associated warning and error handling) from various locations in the code base to validate_templates(). With this implementation comes a new approach to communicating input issues to the user via template_issues, an object written to the global environment and formatted into a human readable report (message) when passed through issues().
+
 # EMLassemblyline 2.18.2
 
 ### Bug fix
