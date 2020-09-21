@@ -1099,8 +1099,12 @@ validate_personnel_project <- function(x) {
     if (any(missing_project_info)) {
       paste0(
         "Missing funding information. Including the project title, ",
-        "funding agency, and corresponding funding number for all principal ",
-        "investigators is recommended.")
+        "funding agency, and funding number for all principal ",
+        "investigators is recommended. Incomplete funding information found ",
+        "for entries: ", 
+        paste(
+          seq_along(missing_project_info)[missing_project_info], 
+          collapse = ", "))
     }
   }
 }
@@ -2151,10 +2155,14 @@ compile_geographic_coverage <- function(x) {
   geographic.description <- NULL
   
   make_eml_args <- try(sys.call(which = -3), silent = TRUE)
-  if (class(make_eml_args) != "try-error") {
-    if (!is.null(make_eml_args$geographic.coordinates) &
-        !is.null(make_eml_args$geographic.description)) {
+  if (class(make_eml_args) == "call") {
+    if (is.character(make_eml_args$geographic.coordinates) &
+        is.character(make_eml_args$geographic.description)) {
       geographic.coordinates <- make_eml_args$geographic.coordinates
+      geographic.description <- make_eml_args$geographic.description
+    } else if (is.call(make_eml_args$geographic.coordinates) &
+               is.character(make_eml_args$geographic.description)) {
+      geographic.coordinates <- eval(make_eml_args$geographic.coordinates)
       geographic.description <- make_eml_args$geographic.description
     }
   }
@@ -2192,6 +2200,7 @@ compile_geographic_coverage <- function(x) {
   if (nrow(x$template$geographic_coverage.txt$content) == 0) {
     x$template$geographic_coverage.txt <- NULL
   }
+  
   x
 }
 
