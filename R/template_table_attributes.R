@@ -46,6 +46,9 @@
 #'     An existing attributes template will not be overwritten by subsequent 
 #'     calls to \code{template_table_attributes()}.
 #'     
+#'     Character encoding of metadata extracted directly from the tables are 
+#'     converted to UTF-8 via \code{enc2utf8()}.
+#'     
 #' @examples 
 #' # Initialize data package directory for template_table_attributes()
 #' file.copy(
@@ -306,6 +309,10 @@ template_table_attributes <- function(
         attributes[[i]]$dateTimeFormatString[use_i] <- "!Add datetime specifier here!"
       }
       
+      # Encode extracted metadata in UTF-8
+      
+      attributes[[i]]$attributeName <- enc2utf8(attributes[[i]]$attributeName)
+      
       # Write template to file or add template to x$template$attributes_*.txt$content
       
       # If writing to file ...
@@ -338,7 +345,8 @@ template_table_attributes <- function(
               path,
               "/",
               "attributes_",
-              substr(data.table[i], 1, nchar(data.table[i]) - 4),
+              enc2utf8(
+                substr(data.table[i], 1, nchar(data.table[i]) - 4)),
               ".txt"
             ),
             sep = "\t",

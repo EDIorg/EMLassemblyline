@@ -158,6 +158,14 @@
 #'     with best practice recommendations of scientists, data managers, and 
 #'     data repositories. The EML is then validated against the schema and 
 #'     written to file.
+#'     
+#'     Character encodings in tabular metadata templates are converted to UTF-8 
+#'     via \code{enc2utf8()}. Characters in TextType metadata templates are not
+#'     yet converted. Note: This may lead to an inaccuracy and disconnect 
+#'     between values in the data objects and what is reported in the EML (e.g.
+#'     a categorical variable listed in the EML may not be the same as it's 
+#'     corresponding value in the data object). For this reason it's important 
+#'     to work with UTF-8 encoded data and metadata.
 #'
 #' @examples 
 #' # Initialize data package directory for make_eml()

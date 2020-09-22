@@ -48,6 +48,9 @@ Use this function to extract column names and classes of a data table
 \details{
 An existing attributes template will not be overwritten by subsequent 
     calls to \code{template_table_attributes()}.
+    
+    Character encoding of metadata extracted directly from the tables are 
+    converted to UTF-8 via \code{enc2utf8()}.
 }
 \examples{
 # Initialize data package directory for template_table_attributes()

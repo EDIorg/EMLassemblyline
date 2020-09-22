@@ -52,6 +52,9 @@ Use this function to extract the unique location coordinates and names
 \details{
 An existing geographic coverage template will not be overwritten by 
     subsequent calls to \code{template_geographic_coverage()}.
+    
+    Character encoding of metadata extracted directly from the tables are 
+    converted to UTF-8 via \code{enc2utf8()}.
 }
 \examples{
 # Initialize data package directory for template_template_geographic_coverage()

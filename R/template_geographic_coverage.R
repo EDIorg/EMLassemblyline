@@ -36,6 +36,9 @@
 #' @details 
 #'     An existing geographic coverage template will not be overwritten by 
 #'     subsequent calls to \code{template_geographic_coverage()}.
+#'     
+#'     Character encoding of metadata extracted directly from the tables are 
+#'     converted to UTF-8 via \code{enc2utf8()}.
 #'
 #' @examples 
 #' # Initialize data package directory for template_template_geographic_coverage()
@@ -254,7 +257,7 @@ template_geographic_coverage <- function(
       }
       
       geocoverage_out <- data.frame(
-        geographicDescription = site_out,
+        geographicDescription = enc2utf8(site_out), # Encode extracted metadata in UTF-8
         northBoundingCoordinate = latitude_out,
         southBoundingCoordinate = latitude_out,
         eastBoundingCoordinate = longitude_out,

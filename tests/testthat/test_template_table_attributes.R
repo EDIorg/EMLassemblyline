@@ -339,3 +339,27 @@ testthat::test_that('x inputs = data tables', {
   )
   
 })
+
+# UTF-8 encoding --------------------------------------------------------------
+
+testthat::test_that("UTF-8 encoding", {
+  
+  # # Header has UTF-8 encoded characters
+  # 
+  # file.copy(
+  #   from = system.file(
+  #     '/examples/pkg_260/data_objects/nitrogen.csv', 
+  #     package = 'EMLassemblyline'),
+  #   to = tempdir())
+  # f <- paste0(tempdir(), "/nitrogen.csv")
+  # d <- data.table::fread(f)
+  # 
+  # x <- c("Ekstr\xf8m", "J\xf6reskog", "bi\xdfchen Z\xfcrcher")
+  # Encoding(x) <- "latin1"
+  # test <- iconv(xx, "UTF-16LE", "UTF-8")
+  # Encoding(test)
+  # test <- iconv(xx, "UTF-8", "UTF-16LE")
+  # Encoding(test)
+  # colnames(d)
+  
+})

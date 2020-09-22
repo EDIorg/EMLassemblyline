@@ -38,6 +38,9 @@
 #'     
 #'     An existing categorical variables template will not be overwritten 
 #'     by subsequent calls to \code{template_categorical_variables()}.
+#'     
+#'     Character encoding of metadata extracted directly from the tables are 
+#'     converted to UTF-8 via \code{enc2utf8()}.
 #'
 #' @examples 
 #' # Initialize data package directory for template_categorical_variables()
@@ -220,7 +223,7 @@ template_categorical_variables <- function(
                   df_attributes$attributeName[catvars_I[j]],
                   sep = ""))))
           
-          catvars$attributeName[row:(length(factor_names)+row-1)] <-
+          catvars$attributeName[row:(length(factor_names)+row-1)] <- 
             df_attributes$attributeName[catvars_I[j]]
           
           catvars$code[row:(length(factor_names)+row-1)] <- factor_names
@@ -255,6 +258,11 @@ template_categorical_variables <- function(
           }
           catvars <- catvars[!use_i, ]
         }
+        
+        # Encode extracted metadata in UTF-8
+        
+        catvars$attributeName <- enc2utf8(catvars$attributeName)
+        catvars$code <- enc2utf8(catvars$code)
 
         # Write template to file
         
@@ -264,7 +272,7 @@ template_categorical_variables <- function(
           suppressWarnings(utils::write.table(catvars,
                                               paste(path,
                                                     "/",
-                                                    fname_table_catvars[i],
+                                                    enc2utf8(fname_table_catvars[i]),
                                                     sep = ""),
                                               sep = "\t",
                                               row.names = F,
