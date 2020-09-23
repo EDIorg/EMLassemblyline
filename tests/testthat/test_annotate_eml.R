@@ -9,6 +9,11 @@ library(EMLassemblyline)
 
 testthat::test_that("from .xml", {
 
+  unlink(
+    paste0(tempdir(), "/pkg_260"), 
+    recursive = TRUE, 
+    force = TRUE)
+  
   file.copy(
     from = system.file(
       "/examples/pkg_260", 
@@ -29,8 +34,6 @@ testthat::test_that("from .xml", {
 
   expect_true(
     EML::eml_validate(eml))
-  
-  # Clean up
   
   unlink(
     paste0(tempdir(), "/pkg_260"), 

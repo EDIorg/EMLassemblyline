@@ -184,9 +184,21 @@ annotate_eml <- function(
       # recurrences in the rp data frame.
       
       append_rp <- function(n) {
-        sub_i <- paste(
-          c(unlist(n$individualName$givenName), n$individualName$surName), 
-          collapse = " ")
+        
+        # sub_i <- paste(
+        #   c(unlist(n$individualName$givenName), n$individualName$surName),
+        #   collapse = " ")
+        
+        sub_i <- try(
+          paste(
+            c(unlist(n$individualName$givenName), n$individualName$surName),
+            collapse = " "),
+          silent = TRUE)
+        if (class(sub_i) == "try-error") {
+          browser()
+        }
+        
+        message(sub_i)
         if ((sub_i != "") & any(anno$subject == sub_i)) {
           n$id <- paste0(
             unique(anno$id[anno$subject == sub_i]),
@@ -237,7 +249,7 @@ annotate_eml <- function(
             append_rp(k)
           })
       }
-      
+      browser()
       if (!is.null(eml$dataset$project$relatedProject)) {
         eml$dataset$project$relatedProject <- lapply(
           eml$dataset$project$relatedProject,

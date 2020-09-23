@@ -44,6 +44,10 @@ x$write.file <- F
 # Default test inputs create schema valid EML
 
 x1 <- x
+
+# Debugging annotate_eml()
+x1$x$template$personnel.txt$content <- x1$x$template$personnel.txt$content[-c(19, 20), ]
+
 r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
 expect_true(EML::eml_validate(r))
 
@@ -759,14 +763,16 @@ testthat::test_that("<access>", {
 testthat::test_that('annotation characteristics', {
   
   # Parameterize
-  
+  unlink(
+    paste0(tempdir(), "/pkg_260"), 
+    recursive = TRUE, 
+    force = TRUE)
   file.copy(
     from = system.file(
       "/examples/pkg_260", 
       package = "EMLassemblyline"),
     to = tempdir(),
     recursive = TRUE)
-  
   unlink(
     paste0(tempdir(), "/pkg_260/metadata_templates/taxonomic_coverage.txt"), 
     force = TRUE)
