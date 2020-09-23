@@ -259,7 +259,7 @@ testthat::test_that('x inputs = data tables', {
     expect_equal(
       all(
         colnames(output$template[[attr_names[i]]]$content) %in%
-          c('attributeName', 'attributeDefinition', 'class', 'unit', 
+          c('id', 'attributeName', 'attributeDefinition', 'class', 'unit', 
             'dateTimeFormatString', 'missingValueCode', 
             'missingValueCodeExplanation')
       ),

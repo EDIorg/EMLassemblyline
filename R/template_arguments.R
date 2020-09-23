@@ -301,7 +301,7 @@ template_arguments <- function(
         templates[[i]]$content <- read_txt(
           paste0(path, '/', tfound[i]))
       }
-      
+        
       # Read additional information -------------------------------------------
       
       if (stringr::str_detect(
@@ -309,6 +309,16 @@ template_arguments <- function(
         attr_tmp$regexpr[attr_tmp$template_name == "additional_info"])) {
         templates[[i]]$content <- read_txt(
           paste0(path, '/', tfound[i]))
+      }
+      
+      # Read annotations ------------------------------------------------------
+      
+      # FIXME: Use read_tbl()
+      if (stringr::str_detect(
+        tfound[i], 
+        attr_tmp$regexpr[attr_tmp$template_name == "annotations"])) {
+        templates[[i]]$content <- read_tbl(
+          paste0(path, "/", tfound[i]))
       }
       
       # Read attributes (data table) ------------------------------------------

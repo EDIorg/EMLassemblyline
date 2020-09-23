@@ -129,7 +129,7 @@ define_catvars <- function(path, data.path = path, write.file = TRUE,
   attribute_files <- names(x$template)[
     stringr::str_detect(
       names(x$template),
-      'attributes_.*.txt$'
+      "attributes_(?!dataset).*.txt"
     )
   ]
   

@@ -1131,7 +1131,7 @@ make_eml <- function(
           }))
     }
   }
-  
+
   # Create <dataTable> --------------------------------------------------------
   
   if (!is.null(x$data.table)) {
@@ -1388,6 +1388,15 @@ make_eml <- function(
         x$template$custom_units.txt$content)
   }
   
+  # Create <annotations> ------------------------------------------------------
+  
+  if (any(stringr::str_detect(names(x$template), "annotations.txt"))) {
+    message("  <annotations>")
+    eml <- annotate_eml(
+      annotations = x$template$annotations.txt$content,
+      eml.in = eml)
+  }
+  
   # Write EML -----------------------------------------------------------------
   
   message("</eml>")
@@ -1413,7 +1422,7 @@ make_eml <- function(
   }
   
   # Validate EML --------------------------------------------------------------
-  
+
   message("Validating EML")
   r <- EML::eml_validate(eml)
   if (isTRUE(r)) {

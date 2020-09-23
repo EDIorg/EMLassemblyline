@@ -1,4 +1,5 @@
 argument_name
+annotations
 data.path
 data.table
 data.table.name
@@ -7,8 +8,13 @@ data.table.quote.character
 data.table.url
 data.url
 dataset.title
+default.annotations
 dir.name
+eml
+eml.in
+eml.out
 eml.path
+empty
 file.type
 geographic.coordinates
 geographic.description

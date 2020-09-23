@@ -470,7 +470,18 @@ import_templates <- function(path, data.path = path, license,
             '/templates/keywords.txt',
             package = 'EMLassemblyline'
           ),
-          colClasses = rep("character", 2),
+          colClasses = rep(
+            "character",
+            max(
+              utils::count.fields(
+                system.file(
+                  '/templates/keywords.txt',
+                  package = 'EMLassemblyline'
+                ),
+                sep = "\t"
+              )
+            )
+          ),
           fill = TRUE,
           blank.lines.skip = TRUE))
       message("Importing keywords.txt")

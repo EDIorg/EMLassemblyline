@@ -1,6 +1,7 @@
 template_name	regexpr	delimiter	required_template	class	type
 abstract	abstract.(docx|md|txt)	NA	TRUE	list	text
 additional_info	additional_info.(docx|md|txt)	NA	FALSE	list	text
+annotations	annotations.txt	\t	FALSE	data.frame	table
 attributes	attributes_.*.txt	\t	FALSE	data.frame	table
 catvars	catvars_.*.txt	\t	FALSE	data.frame	table
 custom_units	custom_units.txt	\t	FALSE	data.frame	table

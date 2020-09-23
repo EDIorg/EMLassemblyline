@@ -30,7 +30,28 @@ validate_templates <- function(fun.name, x) {
   message("Checking inputs")
   attr_tmp <- read_template_attributes()
   
+  if (fun.name == "annotate_eml") {
+    
+    # Called from annotate_eml() ----------------------------------------------
+    
+    # TODO: Annotations
+    r <- validate_annotations(x)
+    issues <- c(issues, r$issues)
+    x <- r$x
+    
+    # Return
+    if (!is.null(issues)) {
+      list2env(list(template_issues = issues), .GlobalEnv)
+      warning(
+        "Input issues found. Use issues() to see them.", 
+        call. = FALSE)
+    }
+    return(x)
+    
+  }
+  
   if (fun.name == 'make_eml'){
+    
     # Called from make_eml() --------------------------------------------------
 
     # Initialize object for collecting issue messages
@@ -42,7 +63,12 @@ validate_templates <- function(fun.name, x) {
     
     # TODO: Implement a check for the additional_info template including a 
     # check for non-utf-8 encoded characters
-
+    
+    # TODO: Annotations
+    r <- validate_annotations(x)
+    issues <- c(issues, r$issues)
+    x <- r$x
+    
     # Categorical variables
     if (any(
       stringr::str_detect(
@@ -146,6 +172,197 @@ validate_abstract <- function(x) {
       "\n")
   }
   msg
+}
+
+
+
+
+
+
+
+
+#' Validate the annotations template (annotations.txt)
+#'
+#' @param x
+#'     (named list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' @return
+#'     \item{issues}{(character) Descriptions of issues found in the template 
+#'     grouped by "required" and "optional" criteria.}
+#'     \item{x}{(named list) If "required" issues are found, then the template 
+#'     is removed along with the corresponding data table.}
+#'     
+#' @details 
+#'     Checks performed on each data tables attribute metadata:
+#'     \itemize{
+#'         \item{Each annotation has a subject, predicate, and object, with
+#'         corresponding labels and URIs}
+#'         \item{Dataset annotations are present}
+#'         \item{Data table annotations are present}
+#'         \item{Data table attribute annotations are present}
+#'         \item{Other entity annotations are present}
+#'         \item{Responsible party annotations are present}
+#'     }
+#'     
+#'     Checks on annotation presence are only a reminder that it is possible 
+#'     to annotate these elements.
+#'
+validate_annotations <- function(x) {
+  
+  if (!is.null(x$template$annotations.txt) & 
+      (nrow(x$template$annotations.txt$content) > 0)) {
+    
+    # Each issue is logged as "required" or "optional"
+    required_issues <- c()
+    optional_issues <- c()
+    
+    # Parameterize the annotations checks with a data frame of annotations.txt 
+    # but with "" filled with NA_character_. This streamlines the code.
+    anno <- x$template$annotations.txt$content
+    anno[anno == ""] <- NA_character_
+    
+    # Incomplete annotations results in warning - Expected are a subject 
+    # ID, predicate label and URI, object label and URI.
+    df <- dplyr::select(
+      anno,
+      c("id", "predicate_label", "predicate_uri", "object_label", 
+        "object_uri"))
+    if (any(!complete.cases(df))) {
+      warning(
+        paste0(
+          "Incomplete annotations. A complete annotation requires an ID, ",
+          "predicate label, predicate URI, object label, and object URI. One ",
+          "or more of these are missing in annotations.txt at rows:\n",
+          paste(seq(nrow(df))[!complete.cases(df)], collapse = ", ")),
+        call. = FALSE)
+    }
+    
+    # Missing dataset annotation results in warning (every data package
+    # should have one).
+    if (!any((anno$element == "/dataset") & complete.cases(anno))) {
+      warning(
+        paste0(
+          "The dataset annotation is missing. Consider adding a highlevel ",
+          "annotation that describes your dataset. Add this to ",
+          "annotations.txt."), 
+        call. = FALSE)
+    }
+    
+    # TODO: Create function to test whether URIs are resolvable.
+    # The test has already been implemented.
+    # 
+    # resolve_uri <- function(k, cname) {
+    #   # k is a vector of URIs
+    #   # cname is the vector name
+    #   # return value is a logical vector of length k (use_i)
+    #   if (any(!use_i)) {
+    #     warning(
+    #       paste0(
+    #         "Non-resolvable URIs in the ", cname, " column of ",
+    #         "annotations.txt at lines:",
+    #         paste(seq(length(k))[!use_i], collapse = ", ")
+    #       ),
+    #       call. = FALSE
+    #     ) 
+    #   }
+    # }
+    # 
+    # resolve_uri(anno$predicate_uri, "predicate_uri")
+    # resolve_uri(anno$object_uri, "object_uri")
+    
+    # TODO: The annotations template lists all annotatable elements in the 
+    # corresponding EML
+    
+    # dataTable
+    if (!is.null(names(x$data.table))) {
+      
+      # Missing dataTable annotations results in warning
+      if (!any(anno$element == "/dataTable")) {
+        warning(
+          paste0(
+            "The dataTable annotation is missing. Consider adding an ",
+            "annotation that describes your data table(s). Add this to ",
+            "annotations.txt."),
+          call. = FALSE)
+      }
+      
+      # Missing dataTable attribute annotations results in warning
+      if (!any(anno$element == "/dataTable/attribute")) {
+        warning(
+          paste0(
+            "The dataTable attribute annotation is missing. Consider ",
+            "adding annotations that describe the columns of your data ",
+            "table(s) and the corresponding units. Add these to ",
+            "annotations.txt."),
+          call. = FALSE)
+      }
+      
+    }
+    
+    # otherEntity
+    if (!is.null(names(x$other.entity))) {
+      # Missing otherEntity annotations result in warning
+      if (!any(anno$element == "/otherEntity")) {
+        warning(
+          paste0(
+            "The otherEntity annotation is missing. Consider adding an ",
+            "annotation that describes your other data entities. Add this ",
+            "to annotations.txt."),
+          call. = FALSE)
+      }
+    }
+    
+    # ResponsibleParty
+    if (!is.null(x$template$personnel.txt)) {
+      # Missing ResponsibleParty results in warning
+      if (!any(anno$element == "/ResponsibleParty")) {
+        warning(
+          paste0(
+            "The ResponsibleParty annotation is missing. Consider adding ",
+            "an annotation that identifies the persons associated with ", 
+            "these data and the organizations they belong to. Add these to ",
+            "annotations.txt."),
+          call. = FALSE)
+      }
+    }
+    
+    # A compiled report of issues helps the user fix them
+    if (!is.null(required_issues)) {
+      required_issues <- paste0(
+        "\n",
+        "Data table attributes (", table_file, ", Required) - Data table ",
+        "attributes will be dropped from the EML until these issues are ",
+        "fixed:\n",
+        paste(
+          paste0(seq_along(required_issues), ". "),
+          required_issues,
+          collapse = "\n"), 
+        "\n")
+    }
+    if (!is.null(optional_issues)) {
+      optional_issues <- paste0(
+        "\n",
+        "Data table attributes (", table_file, ", Optional):\n",
+        paste(
+          paste0(seq_along(optional_issues), ". "),
+          optional_issues,
+          collapse = "\n"), 
+        "\n")
+    }
+    issues <- c(required_issues, optional_issues)
+    
+    # There's no recovering from required issues, and the most reasonable
+    # fix is to drop the table attributes template from further use.
+    if (!is.null(required_issues)) {
+      x$template[[attribute_file]] <<- NULL
+      x$data.table[[table_file]] <<- NULL
+    }
+    
+    # Return
+    list(issues = issues, x = x)
+    
+  }
 }
 
 
@@ -1980,6 +2197,7 @@ validate_taxonomic_coverage_column_names <- function(x) {
 
 
 
+
 #' Check authority_system values in the taxonomic coverage template
 #'
 #' @param x 
@@ -2039,9 +2257,6 @@ validate_taxonomic_coverage_completeness <- function(x) {
 
 
 # Helper functions ------------------------------------------------------------
-
-
-
 
 read_template_attributes <- function() {
   data.table::fread(
