@@ -122,160 +122,16 @@ annotate_eml <- function(
           label = anno$object_label[k]))
     })
   
-  # Match annotatable elements (subjects) to their annotations listed in
-  # the annotations.txt template. Target EML sub-trees where the subjects 
-  # occur, extract their values and, when not unique, their context, then 
-  # use these as keys to annotations.txt from which IDs and predicate
-  # + object annotations are retrieved and assigned to the EML. Annotatable
-  # elements only supported through ID references are added to  
-  # /eml/dataset/annotations (e.g. ResponsibleParty).
+  # Assign IDs and annotations ------------------------------------------------
+  # Note: ResponsibleParty annotations are added to /eml/dataset/annotations 
+  # (below).
   
-  annotate_element <- function(element) {
-    
-    if (element == "dataset") {
-      
-      if (!is.null(eml$dataset)) {
-        sub_i <- element
-        eml$dataset$id <- unique(anno$id[anno$subject == sub_i])
-        eml$dataset$annotation <- anno_ls[anno$subject == sub_i]
-      }
-      
-    } else if (element == "dataTable") {
-
-      if (!is.null(eml$dataset$dataTable)) {
-        lapply(
-          seq_along(eml$dataset$dataTable),
-          function(k) {
-            sub_i <- eml$dataset$dataTable[[k]]$physical$objectName
-            if (sub_i != "") {
-              eml$dataset$dataTable[[k]]$id <<- unique(anno$id[anno$subject == sub_i])
-              eml$dataset$dataTable[[k]]$annotation <<- anno_ls[anno$subject == sub_i]
-            }
-            lapply(
-              seq_along(eml$dataset$dataTable[[k]]$attributeList$attribute), 
-              function(m) {
-                sub_i <- eml$dataset$dataTable[[k]]$attributeList$attribute[[m]]$attributeName
-                con_i <- eml$dataset$dataTable[[k]]$physical$objectName
-                use_i <- (anno$subject == sub_i) & (anno$context == con_i)
-                eml$dataset$dataTable[[k]]$attributeList$attribute[[m]]$id <<- unique(anno$id[use_i])
-                eml$dataset$dataTable[[k]]$attributeList$attribute[[m]]$annotation <<- anno_ls[use_i]
-              })
-          })
-      }
-      
-    } else if (element == "otherEntity") {
-      
-      if (!is.null(eml$dataset$otherEntity)) {
-        lapply(
-          seq_along(eml$dataset$otherEntity),
-          function(k) {
-            sub_i <- eml$dataset$otherEntity[[k]]$physical$objectName
-            if (sub_i != "") {
-              eml$dataset$otherEntity[[k]]$id <<- unique(anno$id[anno$subject == sub_i])
-              eml$dataset$otherEntity[[k]]$annotation <<- anno_ls[anno$subject == sub_i]
-            }
-            k
-          })
-      }
-      
-    } else if (element == "ResponsibleParty") {
-      
-      # A helper function for assigning ResponsibleParty IDs and appending
-      # recurrences in the rp data frame.
-      
-      append_rp <- function(n) {
-        
-        # sub_i <- paste(
-        #   c(unlist(n$individualName$givenName), n$individualName$surName),
-        #   collapse = " ")
-        
-        sub_i <- try(
-          paste(
-            c(unlist(n$individualName$givenName), n$individualName$surName),
-            collapse = " "),
-          silent = TRUE)
-        if (class(sub_i) == "try-error") {
-          browser()
-        }
-        
-        message(sub_i)
-        if ((sub_i != "") & any(anno$subject == sub_i)) {
-          n$id <- paste0(
-            unique(anno$id[anno$subject == sub_i]),
-            " ",
-            uuid::UUIDgenerate(use.time = TRUE))
-          rp <<- rbind(
-            rp,
-            suppressWarnings(
-              data.frame(
-                id = n$id,
-                anno[
-                  anno$subject == sub_i,
-                  c("element", "context", "subject", "predicate_label",
-                    "predicate_uri", "object_label", "object_uri")
-                  ])))
-        }
-        n
-      }
-      
-      if (!is.null(eml$dataset$creator)) {
-        eml$dataset$creator <- lapply(
-          eml$dataset$creator,
-          function(k) {
-            append_rp(k)
-          })
-      }
-
-      if (!is.null(eml$dataset$contact)) {
-        eml$dataset$contact <- lapply(
-          eml$dataset$contact,
-          function(k) {
-            append_rp(k)
-          })
-      }
-
-      if (!is.null(eml$dataset$associatedParty)) {
-        eml$dataset$associatedParty <- lapply(
-          eml$dataset$associatedParty,
-          function(k) {
-            append_rp(k)
-          })
-      }
-      
-      if (!is.null(eml$dataset$project$personnel)) {
-        eml$dataset$project$personnel <- lapply(
-          eml$dataset$project$personnel,
-          function(k) {
-            append_rp(k)
-          })
-      }
-      browser()
-      if (!is.null(eml$dataset$project$relatedProject)) {
-        eml$dataset$project$relatedProject <- lapply(
-          eml$dataset$project$relatedProject,
-          function(k) {
-            k$personnel <- lapply(
-              k$personnel,
-              function(m) {
-                append_rp(m)
-              })
-            k
-          })
-      }
-      
-    }
-    
-    eml
-    
-  }
-  
-  # Assign IDs and annotations. Note: ResponsibleParty annotations are 
-  # added to /eml/dataset/annotations (below).
-  
+  eml <- annotate_element("ResponsibleParty", eml, anno, rp)
+  browser()
   eml <- annotate_element("dataset")
   eml <- annotate_element("dataTable")
   eml <- annotate_element("otherEntity")
-  eml <- annotate_element("ResponsibleParty")
+  # eml <- annotate_element("ResponsibleParty")
   
   # Replace ResponsibleParty in anno with expanded ResponsibleParty in rp and 
   # update anno_ls so all annotations listed in /eml/dataset/annotations will
@@ -340,4 +196,252 @@ annotate_eml <- function(
   
   eml
   
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#' Annotate an EML element
+#' 
+#' This is a helper function for \code{annotate_eml()}.
+#'
+#' @param element 
+#' @param eml 
+#' @param anno
+#' @param rp
+#'
+#' @return
+#' 
+#' @details 
+#' Match annotatable elements (subjects) to their annotations listed in
+#' the annotations.txt template. Target EML sub-trees where the subjects 
+#' occur, extract their values and, when not unique, their context, then 
+#' use these as keys to annotations.txt from which IDs and predicate + 
+#' object annotations are retrieved and assigned to the EML. Annotatable
+#' elements only supported through ID references are added to 
+#' /eml/dataset/annotations (e.g. ResponsibleParty).
+#' 
+annotate_element <- function(element, eml, anno, rp) {
+  
+  if (element == "dataset") {
+    
+    if (!is.null(eml$dataset)) {
+      sub_i <- element
+      eml$dataset$id <- unique(anno$id[anno$subject == sub_i])
+      eml$dataset$annotation <- anno_ls[anno$subject == sub_i]
+    }
+    
+  } else if (element == "dataTable") {
+    
+    if (!is.null(eml$dataset$dataTable)) {
+      lapply(
+        seq_along(eml$dataset$dataTable),
+        function(k) {
+          sub_i <- eml$dataset$dataTable[[k]]$physical$objectName
+          if (sub_i != "") {
+            eml$dataset$dataTable[[k]]$id <<- unique(anno$id[anno$subject == sub_i])
+            eml$dataset$dataTable[[k]]$annotation <<- anno_ls[anno$subject == sub_i]
+          }
+          lapply(
+            seq_along(eml$dataset$dataTable[[k]]$attributeList$attribute), 
+            function(m) {
+              sub_i <- eml$dataset$dataTable[[k]]$attributeList$attribute[[m]]$attributeName
+              con_i <- eml$dataset$dataTable[[k]]$physical$objectName
+              use_i <- (anno$subject == sub_i) & (anno$context == con_i)
+              eml$dataset$dataTable[[k]]$attributeList$attribute[[m]]$id <<- unique(anno$id[use_i])
+              eml$dataset$dataTable[[k]]$attributeList$attribute[[m]]$annotation <<- anno_ls[use_i]
+            })
+        })
+    }
+    
+  } else if (element == "otherEntity") {
+    
+    if (!is.null(eml$dataset$otherEntity)) {
+      lapply(
+        seq_along(eml$dataset$otherEntity),
+        function(k) {
+          sub_i <- eml$dataset$otherEntity[[k]]$physical$objectName
+          if (sub_i != "") {
+            eml$dataset$otherEntity[[k]]$id <<- unique(anno$id[anno$subject == sub_i])
+            eml$dataset$otherEntity[[k]]$annotation <<- anno_ls[anno$subject == sub_i]
+          }
+          k
+        })
+    }
+    
+  } else if (element == "ResponsibleParty") {
+    # Responsible party --------------------------------------
+    
+    if (!is.null(eml$dataset$creator)) {
+      r <- assign_responsible_party_id(eml$dataset$creator, anno, rp)
+      eml$dataset$creator <- r$responsible.party
+      rp <- r$rp
+    }
+    
+    if (!is.null(eml$dataset$contact)) {
+      browser()
+      r <- update_rp(eml$dataset$contact, anno, rp)
+      eml$dataset$contact <- r$responsible.party
+      rp <- r$rp
+      
+      # eml$dataset$contact <- lapply(
+      #   eml$dataset$contact,
+      #   function(k) {
+      #     append_rp(k)
+      #   })
+    }
+    
+    if (!is.null(eml$dataset$associatedParty)) {
+      eml$dataset$associatedParty <- lapply(
+        eml$dataset$associatedParty,
+        function(k) {
+          append_rp(k)
+        })
+    }
+    
+    if (!is.null(eml$dataset$project$personnel)) {
+      eml$dataset$project$personnel <- lapply(
+        eml$dataset$project$personnel,
+        function(k) {
+          append_rp(k)
+        })
+    }
+    # browser()
+    if (!is.null(eml$dataset$project$relatedProject)) {
+      eml$dataset$project$relatedProject <- lapply(
+        eml$dataset$project$relatedProject,
+        function(k) {
+          k$personnel <- lapply(
+            k$personnel,
+            function(m) {
+              append_rp(m)
+            })
+          k
+        })
+    }
+    
+  }
+  
+  eml
+  
+}
+
+#' Assign ResponsibleParty IDs and append recurrences to the rp data frame
+#' 
+#' This is a helper function for \code{annotate_eml()}
+#'
+#' @param responsible.party
+#'     (emld list) A ResponsibleParty EML node in the emld list format.
+#' @param annotations.template
+#'     (data.frame) The annotations template created within 
+#'     \code{annotate_eml()}.
+#' @param rp
+#'     (data.frame) A growing set of responsible party metadata to be used
+#'     in \code{annotate_eml()}
+#'
+#' @return
+#'     \item{responsible.party}{(emld list) Annotated responsible party node}
+#'     \item{rp}{(data.frame) the rp object}
+#' 
+append_rp <- function(responsible.party, annotations.template, rp) {
+  # browser()
+  subject <- paste(
+    c(
+      unlist(responsible.party$individualName$givenName), 
+      responsible.party$individualName$surName),
+    collapse = " ")
+  # subject <- try(
+  #   paste(
+  #     c(unlist(responsible.party$individualName$givenName), responsible.party$individualName$surName),
+  #     collapse = " "),
+  #   silent = TRUE)
+  # if (class(subject) == "try-error") {
+  #   browser()
+  # }
+  message(subject)
+  
+  if ((subject != "") & any(annotations.template$subject == subject)) {
+    
+    responsible.party$id <- paste0(
+      unique(
+        annotations.template$id[
+          annotations.template$subject == subject]),
+      " ",
+      uuid::UUIDgenerate(use.time = TRUE))
+    
+    rp <- suppressWarnings(
+      data.frame(
+        id = responsible.party$id,
+        annotations.template[ 
+          annotations.template$subject == subject,
+          c("element", "context", "subject", "predicate_label",
+            "predicate_uri", "object_label", "object_uri")
+          ]))
+    
+  }
+  
+  list(
+    responsible.party = responsible.party, 
+    rp = rp)
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#' Update the rp object with ID information
+#' 
+#' This is a helper function for \code{annotate_eml()}
+#'
+#' @param responsible.party
+#'     (emld list) A ResponsibleParty EML node in the emld list format.
+#' @param annotations.template
+#'     (data.frame) The annotations template created within 
+#'     \code{annotate_eml()}.
+#' @param rp
+#'     (data.frame) A growing set of responsible party metadata to be used
+#'     in \code{annotate_eml()}
+#'
+#' @return
+#'     \item{responsible.party}{(emld list) Annotated responsible party node}
+#'     \item{rp}{(data.frame) the rp object}
+#' 
+assign_responsible_party_id <- function(responsible.party, anno, rp) {
+  browser()
+  r <- lapply(
+    responsible.party,
+    function(k) {
+      append_rp(
+        responsible.party = k,
+        annotations.template = anno)
+    })
+  
+  list(
+    responsible.party = lapply(r, `[[`, 1),
+    rp = data.table::rbindlist(lapply(r, `[[`, 2)))
+
 }
