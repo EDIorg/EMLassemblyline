@@ -283,7 +283,7 @@ annotate_element <- function(element, eml, anno, rp) {
     
   } else if (element == "ResponsibleParty") {
     # Responsible party --------------------------------------
-    
+    browser()
     if (!is.null(eml$dataset$creator)) {
       r <- assign_responsible_party_id(eml$dataset$creator, anno, rp)
       eml$dataset$creator <- r$responsible.party
@@ -292,16 +292,11 @@ annotate_element <- function(element, eml, anno, rp) {
     
     if (!is.null(eml$dataset$contact)) {
       browser()
-      r <- update_rp(eml$dataset$contact, anno, rp)
+      r <- assign_responsible_party_id(eml$dataset$contact, anno, rp)
       eml$dataset$contact <- r$responsible.party
       rp <- r$rp
-      
-      # eml$dataset$contact <- lapply(
-      #   eml$dataset$contact,
-      #   function(k) {
-      #     append_rp(k)
-      #   })
     }
+    browser()
     
     if (!is.null(eml$dataset$associatedParty)) {
       eml$dataset$associatedParty <- lapply(
@@ -347,21 +342,21 @@ annotate_element <- function(element, eml, anno, rp) {
 #' @param annotations.template
 #'     (data.frame) The annotations template created within 
 #'     \code{annotate_eml()}.
-#' @param rp
-#'     (data.frame) A growing set of responsible party metadata to be used
-#'     in \code{annotate_eml()}
 #'
 #' @return
 #'     \item{responsible.party}{(emld list) Annotated responsible party node}
 #'     \item{rp}{(data.frame) the rp object}
 #' 
-append_rp <- function(responsible.party, annotations.template, rp) {
+append_rp <- function(responsible.party, annotations.template) {
   # browser()
   subject <- paste(
     c(
       unlist(responsible.party$individualName$givenName), 
       responsible.party$individualName$surName),
     collapse = " ")
+  
+  browser()
+  
   # subject <- try(
   #   paste(
   #     c(unlist(responsible.party$individualName$givenName), responsible.party$individualName$surName),
@@ -390,11 +385,11 @@ append_rp <- function(responsible.party, annotations.template, rp) {
             "predicate_uri", "object_label", "object_uri")
           ]))
     
+    list(
+      responsible.party = responsible.party, 
+      rp = rp)
+    
   }
-  
-  list(
-    responsible.party = responsible.party, 
-    rp = rp)
   
 }
 
@@ -431,7 +426,7 @@ append_rp <- function(responsible.party, annotations.template, rp) {
 #'     \item{rp}{(data.frame) the rp object}
 #' 
 assign_responsible_party_id <- function(responsible.party, anno, rp) {
-  browser()
+  
   r <- lapply(
     responsible.party,
     function(k) {
