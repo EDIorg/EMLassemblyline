@@ -44,10 +44,6 @@ x$write.file <- F
 # Default test inputs create schema valid EML
 
 x1 <- x
-
-# Debugging annotate_eml()
-x1$x$template$personnel.txt$content <- x1$x$template$personnel.txt$content[-c(19, 20), ]
-
 r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
 expect_true(EML::eml_validate(r))
 

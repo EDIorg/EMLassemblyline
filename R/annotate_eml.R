@@ -122,6 +122,8 @@ annotate_eml <- function(
           label = anno$object_label[k]))
     })
   
+  # Annotate ------------------------------------------------------------------
+  
   # Match annotatable elements (subjects) to their annotations listed in
   # the annotations.txt template. Target EML sub-trees where the subjects 
   # occur, extract their values and, when not unique, their context, then 
@@ -184,21 +186,9 @@ annotate_eml <- function(
       # recurrences in the rp data frame.
       
       append_rp <- function(n) {
-        
-        # sub_i <- paste(
-        #   c(unlist(n$individualName$givenName), n$individualName$surName),
-        #   collapse = " ")
-        
-        sub_i <- try(
-          paste(
-            c(unlist(n$individualName$givenName), n$individualName$surName),
-            collapse = " "),
-          silent = TRUE)
-        if (class(sub_i) == "try-error") {
-          browser()
-        }
-        
-        message(sub_i)
+        sub_i <- paste(
+          c(unlist(n$individualName$givenName), n$individualName$surName),
+          collapse = " ")
         if ((sub_i != "") & any(anno$subject == sub_i)) {
           n$id <- paste0(
             unique(anno$id[anno$subject == sub_i]),
@@ -241,24 +231,20 @@ annotate_eml <- function(
             append_rp(k)
           })
       }
-      
+
       if (!is.null(eml$dataset$project$personnel)) {
         eml$dataset$project$personnel <- lapply(
-          eml$dataset$project$personnel,
+          list(eml$dataset$project$personnel),
           function(k) {
             append_rp(k)
           })
       }
-      browser()
+
       if (!is.null(eml$dataset$project$relatedProject)) {
         eml$dataset$project$relatedProject <- lapply(
           eml$dataset$project$relatedProject,
           function(k) {
-            k$personnel <- lapply(
-              k$personnel,
-              function(m) {
-                append_rp(m)
-              })
+            k$personnel <- append_rp(k$personnel)
             k
           })
       }
@@ -319,9 +305,41 @@ annotate_eml <- function(
             valueURI = anno_ls[[k]]$valueURI[[1]]))
       }))
   
-  # Add the /eml/datset/annotations element created above
+  # Remove unused references from the /dataset/annotations node or the EML will
+  # be invalid
   
-  eml$annotations <- annotations
+  rmatch <- function(x, name) {
+    pos <- match(name, names(x))
+    if (!is.na(pos)) return(x[[pos]])
+    for (el in x) {
+      if (class(el) == "list") {
+        out <- Recall(el, name)
+        if (!is.null(out)) return(out)
+      }
+    }
+  }
+  
+  references <- unlist(
+    lapply(
+      annotations$annotation, 
+      rmatch, 
+      "references"))
+  
+  eml_flattened <- unlist(eml)
+  eml_ids <- eml_flattened[
+    stringr::str_detect(names(eml_flattened), "id")]
+  
+  annotation_ids <- stringr::str_remove(
+    eml_ids[
+      stringr::str_detect(eml_ids, "/")], 
+    "^/")
+  
+  annotations_clean <- annotations$annotation[
+    references %in% annotation_ids]
+  
+  # Add the /eml/datset/annotations element created and cleaned above
+  
+  eml$annotations$annotation <- annotations_clean
   
   # Return --------------------------------------------------------------------
   
