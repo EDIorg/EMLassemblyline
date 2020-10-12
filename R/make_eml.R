@@ -1392,9 +1392,10 @@ make_eml <- function(
   
   if (any(stringr::str_detect(names(x$template), "annotations.txt"))) {
     message("  <annotations>")
-    eml <- annotate_eml(
-      annotations = x$template$annotations.txt$content,
-      eml.in = eml)
+    eml <- suppressMessages(
+      annotate_eml(
+        annotations = x$template$annotations.txt$content,
+        eml.in = eml))
   }
   
   # Write EML -----------------------------------------------------------------
