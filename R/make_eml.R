@@ -73,11 +73,11 @@
 #'     (character; optional) Quote character used in \code{data.table}. If 
 #'     more than one, then supply as a vector of character strings in the same 
 #'     order as listed in \code{data.table}. If the quote character is a quotation, 
-#'     then enter \code{"\\\""}. If the quote character is an apostrophe, then 
-#'     enter \code{"\\'"}. If wanting to include quote characters for some but 
+#'     then enter \code{'"'}. If the quote character is an apostrophe, then 
+#'     enter \code{"'"}. If wanting to include quote characters for some but 
 #'     not all \code{data.table}, then use a "" for those that don't have a 
 #'     quote character (e.g. \code{data.table.quote.character = 
-#'     c("\\'", "")}).
+#'     c("'", "")}).
 #' @param data.table.url
 #'     (character; optional) The publicly accessible URL from which 
 #'     \code{data.table} can be downloaded. If more than one, then supply as 
