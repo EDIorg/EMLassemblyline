@@ -11,5 +11,6 @@ intellectual_rights	intellectual_rights.txt	NA	TRUE	list	text
 keywords	keywords.txt	\t	TRUE	data.frame	table
 methods	methods.(docx|md|txt)	NA	TRUE	list	text
 personnel	personnel.txt	\t	TRUE	data.frame	table
+provenance	provenance.txt	\t	FALSE	data.frame	table
 taxonomicCoverage	taxonomicCoverage.xml	NA	FALSE	taxonomicCoverage	xml
 taxonomic_coverage	taxonomic_coverage.txt	\t	FALSE	data.frame	table

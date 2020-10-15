@@ -295,7 +295,8 @@ testthat::test_that('Expect argument values in EML', {
   
   x1 <- x
   x1$provenance <- "edi.100.1"
-  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   expect_true(EML::eml_validate(r))
   expect_true(
     r$dataset$methods$methodStep[[2]]$description$para[[1]] == 
@@ -379,6 +380,7 @@ testthat::test_that('Expect template values in EML', {
   
   x1 <- x
   x1$x$template$methods.txt <- NULL
+  x1$x$template$provenance.txt <- NULL
   r <- suppressWarnings(
     do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   expect_null(r$dataset$methods)
@@ -1011,3 +1013,7 @@ testthat::test_that("Single item lists and excess references", {
     force = TRUE)
   
 })
+
+# provenance ------------------------------------------------------------------
+# These tests are in test_validate_templates.R
+

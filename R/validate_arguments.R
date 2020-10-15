@@ -787,6 +787,17 @@ validate_arguments <- function(fun.name, fun.args){
 
   }
   
+  # Call from template_provenance() -------------------------------------------
+  
+  if (fun.name == 'template_provenance'){
+    
+    # path
+    if (!is.null(fun.args$path)) {
+      EDIutils::validate_path(fun.args$path)
+    }
+    
+  }
+  
   # Call from template_table_attributes() -------------------------------------
   
   if (fun.name == 'template_table_attributes'){

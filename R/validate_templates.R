@@ -99,6 +99,11 @@ validate_templates <- function(fun.name, x) {
     issues <- c(issues, r$issues)
     x <- r$x
     
+    # Provenance
+    r <- validate_provenance(x)
+    issues <- c(issues, r$issues)
+    x <- r$x
+    
     # Table attributes
     r <- validate_table_attributes(x)
     issues <- c(issues, r$issues)
@@ -1370,6 +1375,507 @@ validate_personnel_publisher <- function(x) {
 
 
 
+
+#' Validate the provenance template
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' @return
+#'     \item{issues}{(character) Descriptions of issues found in the template}
+#'     \item{x}{(list) A potentially modified \code{x} if relevant issues were
+#'     found}
+#'     
+#' @details 
+#'     This function compiles provenance input as \code{provenance} to 
+#'     \code{make_eml()} and listed in the provenance.txt template,
+#'     and returns all unique values in the provenance.txt template.
+#' 
+#'     Checks performed by this function:
+#'     \itemize{
+#'         \item{Template column names are correct}
+#'         \item{systemID is one of the supported system identifiers}
+#'         \item{dataPackageID and systemID pair resolves to resource metadata in \code{systemID}}
+#'         \item{A URL is present and resolves for external resources}
+#'         \item{An online description is recommended for external resources}
+#'         \item{A title is present for external resources}
+#'         \item{A persons name, or an organization name, is present for external resources}
+#'         \item{A creator and contact (role) is listed for each external resource}
+#'         \item{An email contact is recommended for external resources}
+#'     }
+#'     
+#'     Checks are grouped by required and optional criteria. If any required
+#'     checks fail, then the entire template is removed from \code{x}.
+#'
+validate_provenance <- function(x) {
+  
+  # Objects for catching required and optional issues
+  required_issues <- c()
+  optional_issues <- c()
+
+  if (any(names(x$template) == "provenance.txt")) {
+
+    # Template column names are correct
+    r <- validate_provenance_column_names(x)
+    
+    # Compile provenance from allowed sources
+    x <- compile_provenance(x)
+    
+    # systemID is one of the supported system identifiers
+    r <- validate_provenance_system_id(x)
+    required_issues <- c(required_issues, r)
+
+    # dataPackageID and systemID pair resolves to resource metadata in systemID
+    r <- validate_provenance_data_package_id(x)
+    required_issues <- c(required_issues, r)
+    
+    # A URL is present for external resources
+    r <- validate_provenance_url_presence(x)
+    required_issues <- c(required_issues, r)
+    
+    # A URL resolves for external resources
+    r <- validate_provenance_url_resolvability(x)
+    required_issues <- c(required_issues, r)
+
+    # An online description is recommended for external resources
+    r <- validate_provenance_online_description(x)
+    optional_issues <- c(optional_issues, r)
+
+    # A title is present for external resources
+    r <- validate_provenance_title(x)
+    required_issues <- c(required_issues, r)
+
+    # A persons name, or an organization name, is present for external 
+    # resources
+    r <- validate_provenance_individual_organization_name(x)
+    required_issues <- c(required_issues, r)
+
+    # A creator and contact (role) is listed for each external resource
+    r <- validate_provenance_contact_creator(x)
+    required_issues <- c(required_issues, r)
+
+    # An email is recommended for external resources
+    r <- validate_provenance_email(x)
+    optional_issues <- c(optional_issues, r)
+
+  }
+  
+  # Compile issues
+  if (!is.null(required_issues)) {
+    required_issues <- paste0(
+      "\n",
+      "Provenance (Required) - Provenance metadata will be ",
+      "dropped from the EML until these issues are fixed:\n",
+      paste(
+        paste0(seq_along(required_issues), ". "),
+        required_issues,
+        collapse = "\n"), 
+      "\n")
+  }
+  if (!is.null(optional_issues)) {
+    optional_issues <- paste0(
+      "\n",
+      "provenance (Optional):\n",
+      paste(
+        paste0(seq_along(optional_issues), ". "),
+        optional_issues,
+        collapse = "\n"), 
+      "\n")
+  }
+  issues <- c(required_issues, optional_issues)
+  
+  # Drop the provenance template if required issues are found
+  if (!is.null(required_issues)) {
+    x$template$provenance.txt <- NULL
+  }
+  
+  # Return
+  list(issues = issues, x = x)
+  
+}
+
+
+
+
+
+
+
+
+#' Check column names of provenance template
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' @return
+#'     \item{error}{If column names are invalid}
+#'     \item{NULL}{If no issues were found}
+#'
+validate_provenance_column_names <- function(x) {
+  template <- data.table::fread(
+    system.file(
+      '/templates/provenance.txt',
+      package = 'EMLassemblyline'))
+  expected_colnames <- colnames(template)
+  found_colnames <- colnames(x$template$provenance.txt$content)
+  if (!all(expected_colnames %in% found_colnames)) {
+    stop(
+      "Unexpected column names in the provenance template. ",
+      "Expected columns are: ",
+      paste(expected_colnames, collapse = ", "),
+      call. = FALSE)
+  }
+}
+
+
+
+
+
+
+
+#' Check for allowed systemID in provenance template
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' @return
+#'     \item{character}{Description of validation issues}
+#'     \item{NULL}{If no issues were found}
+#'
+validate_provenance_system_id <- function(x) {
+  unsupported_system_ids <- 
+    tolower(x$template$provenance.txt$content$systemID) != "edi" &
+    x$template$provenance.txt$content$systemID != ""
+  if (any(unsupported_system_ids)) {
+    paste0(
+      "Unsupported systemID. The only supported system, currently, is 'EDI'.")
+  }
+}
+
+
+
+
+
+
+
+#' Check the dataPackageID + systemID pair resolves in the provenance template
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' @return
+#'     \item{character}{Description of validation issues}
+#'     \item{NULL}{If no issues were found}
+#'
+validate_provenance_data_package_id <- function(x) {
+  valid_system_ids <- tolower(
+    x$template$provenance.txt$content$systemID) == "edi"
+  if (any(valid_system_ids)) {
+    data_package_ids <- x$template$provenance.txt$content$dataPackageID[
+      valid_system_ids]
+    invalid_package_ids <- unlist(
+      lapply(
+        data_package_ids,
+        function(x) {
+          provenance <- try(
+            suppressMessages(
+              EDIutils::api_get_provenance_metadata(x)), 
+            silent = TRUE)
+          if ("try-error" %in% class(provenance)) {
+            x
+          }
+        }))
+    if (length(invalid_package_ids) != 0) {
+      paste0(
+        "Invalid dataPackageID. These dataPackageID cannot be resolved: ", 
+        paste(invalid_package_ids, collapse = ", "))
+    }
+  }
+}
+
+
+
+
+
+
+
+
+#' Check a URL is present for external resources in the provenance template
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' @return
+#'     \item{character}{Description of validation issues}
+#'     \item{NULL}{If no issues were found}
+#'
+validate_provenance_url_presence <- function(x) {
+  external_resources <- x$template$provenance.txt$content[
+    !(x$template$provenance.txt$content$dataPackageID != "" &
+      x$template$provenance.txt$content$systemID != ""), ]
+  urls <- unique(external_resources$url)
+  titles <- unique(external_resources$title)
+  missing_urls <- unlist(
+    lapply(
+      urls,
+      function(url) {
+        if (url == "") {
+          TRUE
+        } else {
+          FALSE
+        }      
+      }))
+  if (any(missing_urls)) {
+    paste0(
+      "Missing URLs. A URL is required for each resource. These resources ",
+      "have missing URLs:\n", 
+      paste(titles[missing_urls], collapse = "\n"))
+  }
+}
+
+
+
+
+
+
+
+
+#' Check a URL can be resolved for external resources in the provenance template
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' @return
+#'     \item{character}{Description of validation issues}
+#'     \item{NULL}{If no issues were found}
+#'
+validate_provenance_url_resolvability <- function(x) {
+  external_resources <- x$template$provenance.txt$content[
+    !(x$template$provenance.txt$content$dataPackageID != "" &
+        x$template$provenance.txt$content$systemID != ""), ]
+  urls <- unique(external_resources$url)
+  unresolvable_urls <- unlist(
+    lapply(
+      urls,
+      function(url) {
+        r <- tryCatch(
+          httr::GET(url), 
+          error = function(e) {
+            TRUE
+          })
+        if (isTRUE(r)) {
+          url
+        }
+      }))
+  if (length(unresolvable_urls) != 0) {
+    paste0(
+      "Unresolvable URLs. URLs must be resolvable. These URLs do not resolve:\n",
+      paste(unresolvable_urls, collapse = "\n"))
+  }
+}
+
+
+
+
+
+
+
+
+#' Check for description of external resources in the provenance template
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' @return
+#'     \item{character}{Description of validation issues}
+#'     \item{NULL}{If no issues were found}
+#'
+validate_provenance_online_description <- function(x) {
+  external_resources <- x$template$provenance.txt$content[
+    !(x$template$provenance.txt$content$dataPackageID != "" &
+        x$template$provenance.txt$content$systemID != ""), ]
+  missing_descriptions <- unique(
+    external_resources$title[
+      external_resources$onlineDescription == ""])
+  if (length(missing_descriptions) != 0) {
+    paste0(
+      "Missing online descriptions. A description of each external resource ",
+      "is recommended. These resources are missing descriptions:\n",
+      paste(missing_descriptions, collapse = "\n"))
+  }
+}
+
+
+
+
+
+
+
+
+#' Check for title of external resources in the provenance template
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' @return
+#'     \item{character}{Description of validation issues}
+#'     \item{NULL}{If no issues were found}
+#'
+validate_provenance_title <- function(x) {
+  external_resources <- x$template$provenance.txt$content[
+    !(x$template$provenance.txt$content$dataPackageID != "" &
+        x$template$provenance.txt$content$systemID != ""), ]
+  missing_titles <- unique(
+    external_resources$url[
+      external_resources$title == ""])
+  if (length(missing_titles) != 0) {
+    paste0(
+      "Missing titles. A title is required for each external resource. ",
+      "These resources are missing titles:\n",
+      paste(missing_titles, collapse = "\n"))
+  }
+}
+
+
+
+
+
+
+
+
+#' Check individual and organization name of external resources in the provenance template
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' @return
+#'     \item{character}{Description of validation issues}
+#'     \item{NULL}{If no issues were found}
+#'
+validate_provenance_individual_organization_name <- function(x) {
+  external_resources <- x$template$provenance.txt$content[
+    !(x$template$provenance.txt$content$dataPackageID != "" &
+        x$template$provenance.txt$content$systemID != ""), ]
+  titles <- unique(external_resources$title)
+  if (!is.null(external_resources)) {
+    missing_individual_and_organization_name <- apply(
+      external_resources, 
+      1,
+      function(x) {
+        (x["givenName"] == "" & x["surName"] == "") & x["organizationName"] == ""
+      })
+    missing_titles <- unique(
+      external_resources$title[
+        missing_individual_and_organization_name])
+    if (length(missing_titles) != 0) {
+      paste0(
+        "Missing individual or organization name. An individual person or ",
+        "organization name is required for each external resource. These ",
+        "resources are missing one or the other:\n",
+        paste(missing_titles, collapse = "\n"))
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+#' Check creator and contact in the provenance template
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' @return
+#'     \item{character}{Description of validation issues}
+#'     \item{NULL}{If no issues were found}
+#'
+validate_provenance_contact_creator <- function(x) {
+  external_resources <- x$template$provenance.txt$content[
+    !(x$template$provenance.txt$content$dataPackageID != "" &
+        x$template$provenance.txt$content$systemID != ""), ]
+  titles <- unique(external_resources$title)
+  missing_creator_or_contact <- unlist(
+    lapply(
+      titles,
+      function(title) {
+        roles <- x$template$provenance.txt$content[
+          x$template$provenance.txt$content$title == title, ]$role
+        missing_roles <- !(c("contact", "creator") %in% roles)
+        if (any(missing_roles)) {
+          title
+        }
+      }))
+  if (length(missing_creator_or_contact) != 0) {
+    paste0(
+      "Missing creator/contact. Each external resources requires both a ",
+      "creator and a contact. A creator/contact is missing for these ",
+      "resources:\n", 
+      paste(missing_creator_or_contact, collapse = "\n"))
+  }
+}
+
+
+
+
+
+
+
+
+#' Check for email in external resources in the provenance template
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' @return
+#'     \item{character}{Description of validation issues}
+#'     \item{NULL}{If no issues were found}
+#'
+validate_provenance_email <- function(x) {
+  external_resources <- x$template$provenance.txt$content[
+    !(x$template$provenance.txt$content$dataPackageID != "" &
+        x$template$provenance.txt$content$systemID != ""), ]
+  missing_emails <- unique(
+    external_resources$title[
+      external_resources$email == ""])
+  if (length(missing_emails) != 0) {
+    paste0(
+      "Missing email. An email address for each external resource ",
+      "is recommended. These resources are missing email addresses:\n",
+      paste(missing_emails, collapse = "\n"))
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #' Validate the table attributes template (attributes_*.txt)
 #'
 #' @param x
@@ -2372,6 +2878,8 @@ compile_geographic_coverage <- function(x) {
   geographic.coordinates <- NULL
   geographic.description <- NULL
   
+  # TODO: Refactor this chunck. Each conditional handles a separate user case.
+  # A better solution would require fewer exceptions.
   make_eml_args <- try(sys.call(which = -3), silent = TRUE)
   if (class(make_eml_args) == "call") {
     if (is.character(make_eml_args$geographic.coordinates) &
@@ -2382,6 +2890,10 @@ compile_geographic_coverage <- function(x) {
                is.character(make_eml_args$geographic.description)) {
       geographic.coordinates <- eval(make_eml_args$geographic.coordinates)
       geographic.description <- make_eml_args$geographic.description
+    } else if (is.name(make_eml_args$geographic.coordinates) &
+               is.name(make_eml_args$geographic.description)) {
+      geographic.coordinates <- eval(make_eml_args$geographic.coordinates)
+      geographic.description <- eval(make_eml_args$geographic.description)
     }
   }
   
@@ -2421,6 +2933,95 @@ compile_geographic_coverage <- function(x) {
   
   x
 }
+
+
+
+
+
+
+
+
+#' Compile provenance from multiple sources
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'     
+#' @return
+#'     \item{x}{(list) With geographic coverage compiled from multiple input 
+#'     sources into the geographic_coverage template.}
+#'
+#' @details 
+#'     Combine multiple sources of provenance and remove duplicate 
+#'     entries. This info can be supplied in the \code{provenance} 
+#'     argument of \code{make_eml()} as well as in the provenance template.
+#'     
+compile_provenance <- function(x) {
+  
+  provenance <- NULL
+
+  # TODO: Refactor this chunck. Each conditional handles a separate user case.
+  # A better solution would require fewer exceptions.
+  make_eml_args <- try(sys.call(which = -3), silent = TRUE)
+  if (class(make_eml_args) == "call") {
+    if (is.character(make_eml_args$provenance)) {
+      provenance <- make_eml_args$provenance
+    } else if (is.call(make_eml_args$provenance)) {
+      provenance <- eval(make_eml_args$provenance)
+    } else if (is.name(make_eml_args$provenance)) {
+      provenance <- eval(make_eml_args$provenance)
+    }
+  }
+  
+  if (!is.null(provenance)) {
+    x$template$provenance.txt$content <- unique.data.frame(
+      rbind(
+        data.frame(
+          dataPackageID = character(0),
+          systemID = character(0),
+          url = character(0),
+          onlineDescription = character(0),
+          title = character(0),
+          givenName = character(0),
+          middleInitial = character(0),
+          surName = character(0),
+          role = character(0),
+          organizationName = character(0),
+          email = character(0),
+          stringsAsFactors = F),
+        data.frame(
+          dataPackageID = as.character(provenance),
+          systemID = "EDI",
+          url = "",
+          onlineDescription = "",
+          title = "",
+          givenName = "",
+          middleInitial = "",
+          surName = "",
+          role = "",
+          organizationName = "",
+          email = "",
+          stringsAsFactors = F),
+        data.frame(
+          dataPackageID = x$template$provenance.txt$content$dataPackageID,
+          systemID = x$template$provenance.txt$content$systemID,
+          url = x$template$provenance.txt$content$url,
+          onlineDescription = x$template$provenance.txt$content$onlineDescription,
+          title = x$template$provenance.txt$content$title,
+          givenName = x$template$provenance.txt$content$givenName,
+          middleInitial = x$template$provenance.txt$content$middleInitial,
+          surName = x$template$provenance.txt$content$surName,
+          role = x$template$provenance.txt$content$role,
+          organizationName = x$template$provenance.txt$content$organizationName,
+          email = x$template$provenance.txt$content$email,
+          stringsAsFactors = F)))
+    if (nrow(x$template$provenance.txt$content) == 0) {
+      x$template$provenance.txt <- NULL
+    }
+  }
+  x
+}
+
 
 
 

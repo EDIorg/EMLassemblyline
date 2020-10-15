@@ -107,10 +107,6 @@ a vector of character strings in the same order as listed in
 \code{other.entity}, then use a "" for those that don't have a URL
 (e.g. \code{other.entity.url = c("", "/url/to/quality_control.R")}).}
 
-\item{provenance}{(character; optional) EDI Data Repository Data package ID(s) 
-corresponding to parent datasets from which this dataset was created 
-(e.g. \code{knb-lter-cap.46.3}).}
-
 \item{user.id}{(character; optional) Repository user identifier. If more than one, 
 then enter as a vector of character strings (e.g. 
 \code{c("user_id_1", "user_id_2")}). \code{user.id} sets the 
@@ -142,6 +138,10 @@ is assigned a UUID.}
 \item{x}{(named list; optional) Alternative input to 
 \code{make_eml()}. Use \code{template_arguments()} 
 to create \code{x}.}
+
+\item{provenance}{(character; optional) EDI Data Repository Data package ID(s) 
+corresponding to parent datasets from which this dataset was created 
+(e.g. \code{knb-lter-cap.46.3}).}
 }
 \value{
 \itemize{

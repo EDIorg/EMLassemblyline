@@ -419,6 +419,18 @@ testthat::test_that("make_eml()", {
   
 })
 
+# template_provenance() -------------------------------------------------------
+
+testthat::test_that("template_provenance()", {
+  
+  # path
+  expect_error(
+    validate_arguments(
+      fun.name = 'template_provenance',
+      fun.args = list(path = "/not/a/directory")), 
+    regexp = 'The directory specified by the argument "path" does not')
+
+})
 
 testthat::test_that("template_table_attributes()", {
   
