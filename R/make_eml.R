@@ -1127,6 +1127,7 @@ make_eml <- function(
     # being displayed in the returned EML as closing tags (i.e. </tag>). This 
     # is an issue in the EML R package. Is there a more concise way of handling
     # this issue than implemented here?
+
     if (nrow(external_sources) != 0) {
       source_titles <- unique(external_sources$title)
       provenance <- lapply(
@@ -1141,6 +1142,7 @@ make_eml <- function(
             online_description <- NULL
           }
           # Initialize provenance node
+
           out <- list(
             dataSource = list(
               title = title,
@@ -1476,7 +1478,7 @@ make_eml <- function(
   }
   
   # Create <annotations> ------------------------------------------------------
-  
+
   if (any(stringr::str_detect(names(x$template), "annotations.txt"))) {
     message("  <annotations>")
     eml <- suppressMessages(

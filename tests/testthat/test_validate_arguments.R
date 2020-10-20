@@ -5,6 +5,8 @@ library(EMLassemblyline)
 
 testthat::test_that('template_annotations()', {
   
+  unlink(paste0(tempdir(), "/annotations.txt"), recursive = TRUE)
+  
   # Missing path
   
   expect_error(

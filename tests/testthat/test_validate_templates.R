@@ -104,19 +104,31 @@ testthat::test_that("abstract", {
 testthat::test_that("annotations.txt", {
   
   # Parameterize
+  
+  unlink(
+    paste0(tempdir(), "/pkg_260"), 
+    recursive = TRUE, 
+    force = TRUE)
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260", 
+      package = "EMLassemblyline"),
+    to = tempdir(),
+    recursive = TRUE)
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260/metadata_templates_overflow/annotations.txt", 
+      package = "EMLassemblyline"),
+    to = paste0(tempdir(), "/pkg_260/metadata_templates"),
+    recursive = TRUE)
+
   x <- template_arguments(
-    path = system.file(
-      "/examples/pkg_260/metadata_templates", 
-      package = "EMLassemblyline"),
-    data.path = system.file(
-      "/examples/pkg_260/data_objects",
-      package = "EMLassemblyline"),
-    data.table = c(
-      "decomp.csv",
-      "nitrogen.csv"),
-    other.entity = c(
-      "ancillary_data.zip",
-      "processing_and_analysis.R"))$x
+    path = paste0(tempdir(), "/pkg_260/metadata_templates"), 
+    data.path = paste0(tempdir(), "/pkg_260/data_objects"),
+    data.table = c("decomp.csv", "nitrogen.csv"),
+    other.entity = c("ancillary_data.zip", "processing_and_analysis.R"))$x
   
   defs <- as.data.frame(
     data.table::fread(
@@ -134,71 +146,48 @@ testthat::test_that("annotations.txt", {
       fill = TRUE,
       blank.lines.skip = TRUE))
   
-  # annotations - incomplete annotations
+  # Template column names are correct
+  
   x1 <- x
-  x1$template$annotations.txt$content$object_uri[c(1,2)] <- NA_character_
-  expect_warning(
-    validate_templates(fun.name = "make_eml", x = x1))
-  rm(x1)
+  colnames(x1$template$annotations.txt$content) <- c(
+    colnames(x1$template$annotations.txt$content)[1:7], "Not a column name")
+
+  expect_error(
+    validate_annotation_column_names(x1),
+    regexp = "Unexpected column names in the annotations template. ")
   
-  # annotations - resolvable URIs
+  # Each annotation has a subject, predicate, and object, with corresponding 
+  # labels and URIs
   
-  # x1 <- x
-  # x1$template$annotations.txt$content$predicate_uri[1] <- "Not a uri"
-  # 
-  # expect_warning(
-  #   validate_templates(
-  #     fun.name = "make_eml",
-  #     x = x1
-  #   )
-  # )
-  # 
-  # x1$template$annotations.txt$content$object_uri[1] <- "Not a uri"
-  # x1$template$annotations.txt$content$predicate_uri[1] <- 
-  #   x1$template$annotations.txt$content$predicate_uri[2]
-  # 
-  # expect_warning(
-  #   validate_templates(
-  #     fun.name = "make_eml",
-  #     x = x1
-  #   )
-  # )
-  # 
-  # rm(x1)
+  x1 <- x
+  x1$template$annotations.txt$content$id[1] <- NA_character_
+  x1$template$annotations.txt$content$predicate_label[2] <- NA_character_
+  x1$template$annotations.txt$content$predicate_uri[3] <- NA_character_
+  x1$template$annotations.txt$content$object_label[4] <- NA_character_
+  x1$template$annotations.txt$content$object_uri[5] <- NA_character_
   
-  # annotations - elements
-  # Current list of supported elements 
-  # (see /inst/templates/annotation_defaults.txt)
+  expect_true(
+    stringr::str_detect(
+      validate_annotation_completeness(x1),
+      "Incomplete annotations. A complete annotation requires an ID, subject"))
   
-  test_elements <- function(element, x) {
-    if (element == "dataset") {
-      x1 <- x
-      x1$template$annotations.txt$content$element[
-        x1$template$annotations.txt$content$element == element
-        ] <- "dataTable"
-      expect_warning(
-        validate_templates(
-          fun.name = "make_eml",
-          x = x1))
-      rm(x1)
-    } else {
-      x1 <- x
-      x1$template$annotations.txt$content$element[
-        x1$template$annotations.txt$content$element == element
-        ] <- "dataset"
-      expect_warning(
-        validate_templates(
-          fun.name = "make_eml",
-          x = x1))
-      rm(x1)
-    }
-  }
+  # URIs are resolvable
   
-  x1 <- lapply(
-    unique(defs$element),
-    test_elements,
-    x = x)
-  rm(x1)
+  x1 <- x
+  x1$template$annotations.txt$content$predicate_uri[1] <- "not_a_uri"
+  x1$template$annotations.txt$content$object_uri[2] <- "not_a_uri"
+  
+  expect_true(
+    stringr::str_detect(
+      validate_annotation_uri(x1),
+      "Unresolvable URIs. Resolvable URIs are required. These URIs "))
+  
+  # Clean up
+  
+  unlink(
+    paste0(tempdir(), "/pkg_260"), 
+    recursive = TRUE, 
+    force = TRUE)
   
 })
 
@@ -1195,11 +1184,34 @@ testthat::test_that("provenance", {
   # Parameterize
   
   attr_tmp <- read_template_attributes()
+  
+  unlink(
+    paste0(tempdir(), "/pkg_260"), 
+    recursive = TRUE, 
+    force = TRUE)
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260", 
+      package = "EMLassemblyline"),
+    to = tempdir(),
+    recursive = TRUE)
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260/metadata_templates_overflow/provenance.txt", 
+      package = "EMLassemblyline"),
+    to = paste0(tempdir(), "/pkg_260/metadata_templates"),
+    recursive = TRUE)
+  
   x <- template_arguments(
-    system.file(
-      '/examples/pkg_260/metadata_templates',
-      package = 'EMLassemblyline'))$x
+    path = paste0(tempdir(), "/pkg_260/metadata_templates"))$x
   x1 <- x
+  
+  unlink(
+    paste0(tempdir(), "/pkg_260"), 
+    recursive = TRUE, 
+    force = TRUE)
   
   # Valid inputs result don't result in issues
   
@@ -1493,16 +1505,32 @@ testthat::test_that("compile_provenance()", {
   
   # Parameterize do.call()
   attr_tmp <- read_template_attributes()
+  
+  unlink(
+    paste0(tempdir(), "/pkg_260"), 
+    recursive = TRUE, 
+    force = TRUE)
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260", 
+      package = "EMLassemblyline"),
+    to = tempdir(),
+    recursive = TRUE)
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260/metadata_templates_overflow/provenance.txt", 
+      package = "EMLassemblyline"),
+    to = paste0(tempdir(), "/pkg_260/metadata_templates"),
+    recursive = TRUE)
+  
   x <- template_arguments(
-    path = system.file(
-      '/examples/pkg_260/metadata_templates',
-      package = 'EMLassemblyline'),
-    data.path = system.file(
-      '/examples/pkg_260/data_objects',
-      package = 'EMLassemblyline'),
+    path = paste0(tempdir(), "/pkg_260/metadata_templates"), 
+    data.path = paste0(tempdir(), "/pkg_260/data_objects"),
     data.table = c("decomp.csv", "nitrogen.csv"),
     other.entity = c("ancillary_data.zip", "processing_and_analysis.R"))
-  x$x$template$taxonomic_coverage.txt <- NULL
+
   x$data.path <- system.file('/examples/pkg_260/data_objects', package = 'EMLassemblyline')
   x$data.table <- c("decomp.csv", "nitrogen.csv")
   x$data.table.name <- c("Decomp file name", "Nitrogen file name")
@@ -1520,7 +1548,6 @@ testthat::test_that("compile_provenance()", {
   x$other.entity.url <- c("https://url/to/ancillary_data.zip", "https://url/to/processing_and_analysis.R")
   x$package.id <- "edi.100.1"
   x$path <- system.file('/examples/pkg_260/metadata_templates', package = 'EMLassemblyline')
-  x$provenance <- "edi.200.1"
   x$return.obj <- T
   x$temporal.coverage <- c('2014-05-01', '2015-10-31')
   x$user.domain <- c("EDI", "LTER")
@@ -1532,17 +1559,6 @@ testthat::test_that("compile_provenance()", {
     x1$x$template$provenance.txt$content$dataPackageID != ""])
   external_resources <- unique(x1$x$template$provenance.txt$content$title[
     x1$x$template$provenance.txt$content$dataPackageID == ""])
-  
-  # Parameterize for make_eml()
-  file.copy(
-    from = system.file(
-      "/examples/pkg_260", 
-      package = "EMLassemblyline"),
-    to = tempdir(),
-    recursive = TRUE)
-  unlink(
-    paste0(tempdir(), "/pkg_260/metadata_templates/taxonomic_coverage.txt"),
-    force = TRUE)
   
   # Called from do.call()
 
@@ -1578,7 +1594,6 @@ testthat::test_that("compile_provenance()", {
       user.id = "someuserid",
       user.domain = "LTER",
       package.id = 'edi.141.1',
-      provenance = "edi.200.1",
       return.obj = TRUE,
       write.file = FALSE))
 
@@ -1643,11 +1658,34 @@ testthat::test_that("taxonomic_coverage", {
   # Parameterize
   
   attr_tmp <- read_template_attributes()
+  
+  unlink(
+    paste0(tempdir(), "/pkg_260"), 
+    recursive = TRUE, 
+    force = TRUE)
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260", 
+      package = "EMLassemblyline"),
+    to = tempdir(),
+    recursive = TRUE)
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260/metadata_templates_overflow/taxonomic_coverage.txt", 
+      package = "EMLassemblyline"),
+    to = paste0(tempdir(), "/pkg_260/metadata_templates"),
+    recursive = TRUE)
+  
   x <- template_arguments(
-    system.file(
-      '/examples/pkg_260/metadata_templates',
-      package = 'EMLassemblyline'))$x
+    path = paste0(tempdir(), "/pkg_260/metadata_templates"))$x
   x1 <- x
+  
+  unlink(
+    paste0(tempdir(), "/pkg_260"), 
+    recursive = TRUE, 
+    force = TRUE)
   
   # Default manipulation - Use raw names when a resolved name is missing
   x1 <- x

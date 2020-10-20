@@ -527,15 +527,37 @@ testthat::test_that('Expect template values in EML', {
   # taxonomic_coverage.txt
   
   x1 <- x
+  
+  unlink(
+    paste0(tempdir(), "/pkg_260"), 
+    recursive = TRUE, 
+    force = TRUE)
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260", 
+      package = "EMLassemblyline"),
+    to = tempdir(),
+    recursive = TRUE)
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260/metadata_templates_overflow/taxonomic_coverage.txt", 
+      package = "EMLassemblyline"),
+    to = paste0(tempdir(), "/pkg_260/metadata_templates"),
+    recursive = TRUE)
+  
   x1$x <- template_arguments(
-    path = system.file(
-      '/examples/pkg_260/metadata_templates',
-      package = 'EMLassemblyline'),
-    data.path = system.file(
-      '/examples/pkg_260/data_objects',
-      package = 'EMLassemblyline'),
+    path = paste0(tempdir(), "/pkg_260/metadata_templates"), 
+    data.path = paste0(tempdir(), "/pkg_260/data_objects"),
     data.table = c("decomp.csv", "nitrogen.csv"),
     other.entity = c("ancillary_data.zip", "processing_and_analysis.R"))$x
+  
+  unlink(
+    paste0(tempdir(), "/pkg_260"), 
+    recursive = TRUE, 
+    force = TRUE)
+
   r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
   use_i <- try(
     expect_true(
@@ -774,9 +796,12 @@ testthat::test_that('annotation characteristics', {
     to = tempdir(),
     recursive = TRUE)
   
-  unlink(
-    paste0(tempdir(), "/pkg_260/metadata_templates/taxonomic_coverage.txt"), 
-    force = TRUE)
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260/metadata_templates_overflow/annotations.txt", 
+      package = "EMLassemblyline"),
+    to = paste0(tempdir(), "/pkg_260/metadata_templates"),
+    recursive = TRUE)
   
   # Call make_eml() with a completed annotations.txt template
   
@@ -824,9 +849,12 @@ testthat::test_that("annotation of annotatable elements is not required", {
     to = tempdir(),
     recursive = TRUE)
   
-  unlink(
-    paste0(tempdir(), "/pkg_260/metadata_templates/taxonomic_coverage.txt"), 
-    force = TRUE)
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260/metadata_templates_overflow/annotations.txt", 
+      package = "EMLassemblyline"),
+    to = paste0(tempdir(), "/pkg_260/metadata_templates"),
+    recursive = TRUE)
   
   # Randomly remove annotations from the annotations template
   
@@ -887,9 +915,12 @@ testthat::test_that("multiple annotations to one element is supported", {
     to = tempdir(),
     recursive = TRUE)
   
-  unlink(
-    paste0(tempdir(), "/pkg_260/metadata_templates/taxonomic_coverage.txt"), 
-    force = TRUE)
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260/metadata_templates_overflow/annotations.txt", 
+      package = "EMLassemblyline"),
+    to = paste0(tempdir(), "/pkg_260/metadata_templates"),
+    recursive = TRUE)
   
   # Add > 1 annotation to all unique elements within the annotations template
   
@@ -957,9 +988,13 @@ testthat::test_that("Single item lists and excess references", {
     to = tempdir(),
     recursive = TRUE)
   
-  unlink(
-    paste0(tempdir(), "/pkg_260/metadata_templates/taxonomic_coverage.txt"),
-    force = TRUE)
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260/metadata_templates_overflow/annotations.txt", 
+      package = "EMLassemblyline"),
+    to = paste0(tempdir(), "/pkg_260/metadata_templates"),
+    recursive = TRUE)
+  
   unlink(
     paste0(tempdir(), "/pkg_260/metadata_templates/attributes_nitrogen.txt"),
     force = TRUE)

@@ -2,13 +2,24 @@
 
 ### Enhancement
 
-* __Allow creation of partial EML (part 2):__
+* __Semantic annotation:__ User can now annotate their EML. This implementation supports two use cases:
+    1. New EML ... created by the EMLassemblyline workflow:
+        - Complete all metadata templates for your dataset (as usual)
+        - Run `template_annotations()` to create the annotations template
+            - The annotations template (annotations.txt) reports the annotatable elements within your metadata and assigns default predicate annotations. You’ll have to add object annotations from ontologies of your choosing. You can remove annotations by deleting rows and add annotations by copying a subject's row, pasting it to a new line, then modifying the object annotation fields.
+            - Default annotations can be changed by the user
+            - Instructions for creating annotations.txt from scratch are included in the function docs (for users gathering annotations in other ways).
+            - Recurring nodes (e.g. ResponsibleParty) only require one set of annotations within annotations.txt
+        - Run `make_eml()`
+    2. Old EML ... created in other ways:
+        - Run template_annotations() for your EML file
+        - Run annotate_eml() to get an annotated revision of your EML file
+        
+    *Note: All annotated elements are assigned ids and their annotations are placed both immediately under the parent element (subject) and within the /eml/annotations node through id+reference pairs. This redundant approach supports variation in where EML metadata consumers prefer to harvest this information and supports annotation of EML elements requiring id+reference pairs.*
 
-This completes implementation of issue #34 by moving all evaluation of inputs to make_eml() (and associated warning and error handling) from various locations in the code base to validate_templates(). With this implementation comes a new approach to communicating input issues to the user via template_issues, an object written to the global environment and formatted into a human readable report (message) when passed through issues().
+* __Provenance metadata template:__ This extends support for provenance metadata of data sources external to the EDI Data Repository. Create the template with `template_provenance()`. Fixes [issue #8](https://github.com/EDIorg/EMLassemblyline/issues/8)
 
-* __Provenance metadata template:__
-
-This extends support for provenance metadata of data sources external to the EDI Data Repository. Create the template with `template_provenance()`. Fixes [issue #8](https://github.com/EDIorg/EMLassemblyline/issues/8)
+* __Allow creation of partial EML (part 2):__ This completes implementation of issue #34 by moving all evaluation of inputs to make_eml() (and associated warning and error handling) from various locations in the code base to validate_templates(). With this implementation comes a new approach to communicating input issues to the user via template_issues, an object written to the global environment and formatted into a human readable report (message) when passed through issues().
 
 
 ### Enhancement
