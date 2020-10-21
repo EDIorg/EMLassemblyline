@@ -168,17 +168,10 @@ template_arguments <- function(
     # Helper functions for reading templates
     
     read_tbl <- function(f) {
+      
       # FIXME: Convert NA to "" expected by EAL funcitons. Assume NA listed
       # under missingValueCode of the attributes template is "" unless 
       # accompanied by a missingValueCodeExplanation
-      
-      # Non-UTF-8 encoded metadata can lead to down stream inaccuracies
-      encoding_guess <- readr::guess_encoding(f, n_max = -1)
-      if (!any(c("UTF-8", "ASCII") %in% encoding_guess)) {
-        warning(
-          "Encoding of ", basename(f), " may not be UTF-8 (or ASCII).", 
-          call. = FALSE)
-      }
       
       d <- as.data.frame(
         data.table::fread(
@@ -413,6 +406,15 @@ template_arguments <- function(
           paste0(path, "/", tfound[i]))
       }
       
+      # Read provenance -------------------------------------------------------
+      
+      if (stringr::str_detect(
+        tfound[i], 
+        attr_tmp$regexpr[attr_tmp$template_name == "provenance"])) {
+        templates[[i]]$content <- read_tbl(
+          paste0(path, "/", tfound[i]))
+      }
+      
       # Read taxonomic coverage -----------------------------------------------
       
       if (stringr::str_detect(
@@ -439,14 +441,7 @@ template_arguments <- function(
     
     for (i in 1:length(data.table)) {
       f <- paste0(data.path, "/", data.table[i])
-      
-      encoding_guess <- readr::guess_encoding(f)
-      if (!any(c("UTF-8", "ASCII") %in% encoding_guess)) {
-        warning(
-          "Encoding of ", basename(f), " may not be UTF-8 (or ASCII).", 
-          call. = FALSE)
-      }
-      
+
       if (is.null(sep)){
         
         data_tables[[i]]$content <- as.data.frame(

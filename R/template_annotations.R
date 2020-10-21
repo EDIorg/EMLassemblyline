@@ -338,7 +338,7 @@ template_annotations <- function(
           eval(parse(text = x)),
           function(k) {
             lapply(
-              k$personnel,
+              list(k$personnel),
               function(m) {
                 sub_i <- trimws(
                   paste(unlist(m$individualName), collapse = " ")
@@ -350,6 +350,20 @@ template_annotations <- function(
                   context = "dataset",
                   subject = sub_i)
               })
+          })
+      } else if (x == "eml$dataset$project$personnel") {
+        lapply(
+          list(eval(parse(text = x))),
+          function(k) {
+            sub_i <- trimws(
+              paste(unlist(k$individualName), collapse = " ")
+            )
+            sub_i <- stringr::str_replace(sub_i, "[:blank:]{2,}", " ")
+            anno <<- append_anno(
+              id = create_id(sub_i),
+              element = "/ResponsibleParty",
+              context = "dataset",
+              subject = sub_i)
           })
       } else {
         lapply(

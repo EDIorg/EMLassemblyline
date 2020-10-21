@@ -44,10 +44,6 @@ x$write.file <- F
 # Default test inputs create schema valid EML
 
 x1 <- x
-
-# Debugging annotate_eml()
-x1$x$template$personnel.txt$content <- x1$x$template$personnel.txt$content[-c(19, 20), ]
-
 r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
 expect_true(EML::eml_validate(r))
 
@@ -299,7 +295,8 @@ testthat::test_that('Expect argument values in EML', {
   
   x1 <- x
   x1$provenance <- "edi.100.1"
-  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   expect_true(EML::eml_validate(r))
   expect_true(
     r$dataset$methods$methodStep[[2]]$description$para[[1]] == 
@@ -383,6 +380,7 @@ testthat::test_that('Expect template values in EML', {
   
   x1 <- x
   x1$x$template$methods.txt <- NULL
+  x1$x$template$provenance.txt <- NULL
   r <- suppressWarnings(
     do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   expect_null(r$dataset$methods)
@@ -529,15 +527,37 @@ testthat::test_that('Expect template values in EML', {
   # taxonomic_coverage.txt
   
   x1 <- x
+  
+  unlink(
+    paste0(tempdir(), "/pkg_260"), 
+    recursive = TRUE, 
+    force = TRUE)
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260", 
+      package = "EMLassemblyline"),
+    to = tempdir(),
+    recursive = TRUE)
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260/metadata_templates_overflow/taxonomic_coverage.txt", 
+      package = "EMLassemblyline"),
+    to = paste0(tempdir(), "/pkg_260/metadata_templates"),
+    recursive = TRUE)
+  
   x1$x <- template_arguments(
-    path = system.file(
-      '/examples/pkg_260/metadata_templates',
-      package = 'EMLassemblyline'),
-    data.path = system.file(
-      '/examples/pkg_260/data_objects',
-      package = 'EMLassemblyline'),
+    path = paste0(tempdir(), "/pkg_260/metadata_templates"), 
+    data.path = paste0(tempdir(), "/pkg_260/data_objects"),
     data.table = c("decomp.csv", "nitrogen.csv"),
     other.entity = c("ancillary_data.zip", "processing_and_analysis.R"))$x
+  
+  unlink(
+    paste0(tempdir(), "/pkg_260"), 
+    recursive = TRUE, 
+    force = TRUE)
+
   r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
   use_i <- try(
     expect_true(
@@ -763,19 +783,25 @@ testthat::test_that("<access>", {
 testthat::test_that('annotation characteristics', {
   
   # Parameterize
+  
   unlink(
     paste0(tempdir(), "/pkg_260"), 
     recursive = TRUE, 
     force = TRUE)
+  
   file.copy(
     from = system.file(
       "/examples/pkg_260", 
       package = "EMLassemblyline"),
     to = tempdir(),
     recursive = TRUE)
-  unlink(
-    paste0(tempdir(), "/pkg_260/metadata_templates/taxonomic_coverage.txt"), 
-    force = TRUE)
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260/metadata_templates_overflow/annotations.txt", 
+      package = "EMLassemblyline"),
+    to = paste0(tempdir(), "/pkg_260/metadata_templates"),
+    recursive = TRUE)
   
   # Call make_eml() with a completed annotations.txt template
   
@@ -823,9 +849,12 @@ testthat::test_that("annotation of annotatable elements is not required", {
     to = tempdir(),
     recursive = TRUE)
   
-  unlink(
-    paste0(tempdir(), "/pkg_260/metadata_templates/taxonomic_coverage.txt"), 
-    force = TRUE)
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260/metadata_templates_overflow/annotations.txt", 
+      package = "EMLassemblyline"),
+    to = paste0(tempdir(), "/pkg_260/metadata_templates"),
+    recursive = TRUE)
   
   # Randomly remove annotations from the annotations template
   
@@ -841,24 +870,25 @@ testthat::test_that("annotation of annotatable elements is not required", {
   
   # Call make_eml() with a completed annotations.txt template
   
-  eml <- make_eml(
-    path = paste0(tempdir(), "/pkg_260/metadata_templates"),
-    data.path = paste0(tempdir(), "/pkg_260/data_objects"),
-    eml.path = paste0(tempdir(), "/pkg_260/eml"),
-    dataset.title = "Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015",
-    data.table = c("decomp.csv", "nitrogen.csv"),
-    data.table.name = c("Decomp file name", "Nitrogen file name"),
-    data.table.description = c("Decomposition data description", "Nitrogen data description"),
-    other.entity = c("ancillary_data.zip", "processing_and_analysis.R"),
-    other.entity.name = c("Ancillary data name", "Processing and analysis name"),
-    other.entity.description = c("Ancillary data description", "Processing and analysis description"),
-    temporal.coverage = c('2014-05-01', '2015-10-31'),
-    maintenance.description = 'completed',
-    user.id = "someuserid",
-    user.domain = "LTER",
-    package.id = 'edi.141.1',
-    return.obj = TRUE,
-    write.file = FALSE)
+  eml <- suppressWarnings(
+    make_eml(
+      path = paste0(tempdir(), "/pkg_260/metadata_templates"),
+      data.path = paste0(tempdir(), "/pkg_260/data_objects"),
+      eml.path = paste0(tempdir(), "/pkg_260/eml"),
+      dataset.title = "Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015",
+      data.table = c("decomp.csv", "nitrogen.csv"),
+      data.table.name = c("Decomp file name", "Nitrogen file name"),
+      data.table.description = c("Decomposition data description", "Nitrogen data description"),
+      other.entity = c("ancillary_data.zip", "processing_and_analysis.R"),
+      other.entity.name = c("Ancillary data name", "Processing and analysis name"),
+      other.entity.description = c("Ancillary data description", "Processing and analysis description"),
+      temporal.coverage = c('2014-05-01', '2015-10-31'),
+      maintenance.description = 'completed',
+      user.id = "someuserid",
+      user.domain = "LTER",
+      package.id = 'edi.141.1',
+      return.obj = TRUE,
+      write.file = FALSE))
   
   # EML is schema valid
   
@@ -885,9 +915,12 @@ testthat::test_that("multiple annotations to one element is supported", {
     to = tempdir(),
     recursive = TRUE)
   
-  unlink(
-    paste0(tempdir(), "/pkg_260/metadata_templates/taxonomic_coverage.txt"), 
-    force = TRUE)
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260/metadata_templates_overflow/annotations.txt", 
+      package = "EMLassemblyline"),
+    to = paste0(tempdir(), "/pkg_260/metadata_templates"),
+    recursive = TRUE)
   
   # Add > 1 annotation to all unique elements within the annotations template
   
@@ -937,3 +970,85 @@ testthat::test_that("multiple annotations to one element is supported", {
     force = TRUE)
   
 })
+
+testthat::test_that("Single item lists and excess references", {
+  
+  # This is more of a check that EMLassemblyline::read_eml() is working 
+  # properly. This function ensures a single item and multi item lists are 
+  # represented the same way so annotate_eml() can work properly. This test 
+  # also checks that excess references in /eml/annotations are dropped so 
+  # errors don't occur. This second test is implemented in EML::validate_eml().
+  
+  # Parameterize
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260", 
+      package = "EMLassemblyline"),
+    to = tempdir(),
+    recursive = TRUE)
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260/metadata_templates_overflow/annotations.txt", 
+      package = "EMLassemblyline"),
+    to = paste0(tempdir(), "/pkg_260/metadata_templates"),
+    recursive = TRUE)
+  
+  unlink(
+    paste0(tempdir(), "/pkg_260/metadata_templates/attributes_nitrogen.txt"),
+    force = TRUE)
+  unlink(
+    paste0(tempdir(), "/pkg_260/metadata_templates/catvars_nitrogen.txt"),
+    force = TRUE)
+  
+  df <- data.table::fread(
+    paste0(tempdir(), "/pkg_260/metadata_templates/personnel.txt"))
+  df_new <- rbind(
+    df[df$role == "PI", ][1:2, ],
+    df[df$role == "contact", ][1, ],
+    df[df$role == "creator", ][1, ],
+    df[df$role == "instrument technician", ][1, ])
+  data.table::fwrite(
+    df_new, 
+    paste0(tempdir(), "/pkg_260/metadata_templates/personnel.txt"), 
+    sep = "\t")
+  
+  # Call make_eml() with a completed annotations.txt template
+  
+  eml <- make_eml(
+    path = paste0(tempdir(), "/pkg_260/metadata_templates"),
+    data.path = paste0(tempdir(), "/pkg_260/data_objects"),
+    eml.path = paste0(tempdir(), "/pkg_260/eml"),
+    dataset.title = "Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015",
+    data.table = c("decomp.csv"),
+    data.table.name = c("Decomp file name"),
+    data.table.description = c("Decomposition data description"),
+    other.entity = c("ancillary_data.zip"),
+    other.entity.name = c("Ancillary data name"),
+    other.entity.description = c("Ancillary data description"),
+    temporal.coverage = c('2014-05-01', '2015-10-31'),
+    maintenance.description = 'completed',
+    user.id = "someuserid",
+    user.domain = "LTER",
+    package.id = 'edi.141.1',
+    return.obj = TRUE,
+    write.file = FALSE)
+  
+  # EML is schema valid
+  
+  expect_true(
+    EML::eml_validate(eml))
+  
+  # Clean up
+  
+  unlink(
+    paste0(tempdir(), "/pkg_260"), 
+    recursive = TRUE, 
+    force = TRUE)
+  
+})
+
+# provenance ------------------------------------------------------------------
+# These tests are in test_validate_templates.R
+

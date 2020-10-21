@@ -104,19 +104,31 @@ testthat::test_that("abstract", {
 testthat::test_that("annotations.txt", {
   
   # Parameterize
+  
+  unlink(
+    paste0(tempdir(), "/pkg_260"), 
+    recursive = TRUE, 
+    force = TRUE)
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260", 
+      package = "EMLassemblyline"),
+    to = tempdir(),
+    recursive = TRUE)
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260/metadata_templates_overflow/annotations.txt", 
+      package = "EMLassemblyline"),
+    to = paste0(tempdir(), "/pkg_260/metadata_templates"),
+    recursive = TRUE)
+
   x <- template_arguments(
-    path = system.file(
-      "/examples/pkg_260/metadata_templates", 
-      package = "EMLassemblyline"),
-    data.path = system.file(
-      "/examples/pkg_260/data_objects",
-      package = "EMLassemblyline"),
-    data.table = c(
-      "decomp.csv",
-      "nitrogen.csv"),
-    other.entity = c(
-      "ancillary_data.zip",
-      "processing_and_analysis.R"))$x
+    path = paste0(tempdir(), "/pkg_260/metadata_templates"), 
+    data.path = paste0(tempdir(), "/pkg_260/data_objects"),
+    data.table = c("decomp.csv", "nitrogen.csv"),
+    other.entity = c("ancillary_data.zip", "processing_and_analysis.R"))$x
   
   defs <- as.data.frame(
     data.table::fread(
@@ -134,71 +146,48 @@ testthat::test_that("annotations.txt", {
       fill = TRUE,
       blank.lines.skip = TRUE))
   
-  # annotations - incomplete annotations
+  # Template column names are correct
+  
   x1 <- x
-  x1$template$annotations.txt$content$object_uri[c(1,2)] <- NA_character_
-  expect_warning(
-    validate_templates(fun.name = "make_eml", x = x1))
-  rm(x1)
+  colnames(x1$template$annotations.txt$content) <- c(
+    colnames(x1$template$annotations.txt$content)[1:7], "Not a column name")
+
+  expect_error(
+    validate_annotation_column_names(x1),
+    regexp = "Unexpected column names in the annotations template. ")
   
-  # annotations - resolvable URIs
+  # Each annotation has a subject, predicate, and object, with corresponding 
+  # labels and URIs
   
-  # x1 <- x
-  # x1$template$annotations.txt$content$predicate_uri[1] <- "Not a uri"
-  # 
-  # expect_warning(
-  #   validate_templates(
-  #     fun.name = "make_eml",
-  #     x = x1
-  #   )
-  # )
-  # 
-  # x1$template$annotations.txt$content$object_uri[1] <- "Not a uri"
-  # x1$template$annotations.txt$content$predicate_uri[1] <- 
-  #   x1$template$annotations.txt$content$predicate_uri[2]
-  # 
-  # expect_warning(
-  #   validate_templates(
-  #     fun.name = "make_eml",
-  #     x = x1
-  #   )
-  # )
-  # 
-  # rm(x1)
+  x1 <- x
+  x1$template$annotations.txt$content$id[1] <- NA_character_
+  x1$template$annotations.txt$content$predicate_label[2] <- NA_character_
+  x1$template$annotations.txt$content$predicate_uri[3] <- NA_character_
+  x1$template$annotations.txt$content$object_label[4] <- NA_character_
+  x1$template$annotations.txt$content$object_uri[5] <- NA_character_
   
-  # annotations - elements
-  # Current list of supported elements 
-  # (see /inst/templates/annotation_defaults.txt)
+  expect_true(
+    stringr::str_detect(
+      validate_annotation_completeness(x1),
+      "Incomplete annotations. A complete annotation requires an ID, subject"))
   
-  test_elements <- function(element, x) {
-    if (element == "dataset") {
-      x1 <- x
-      x1$template$annotations.txt$content$element[
-        x1$template$annotations.txt$content$element == element
-        ] <- "dataTable"
-      expect_warning(
-        validate_templates(
-          fun.name = "make_eml",
-          x = x1))
-      rm(x1)
-    } else {
-      x1 <- x
-      x1$template$annotations.txt$content$element[
-        x1$template$annotations.txt$content$element == element
-        ] <- "dataset"
-      expect_warning(
-        validate_templates(
-          fun.name = "make_eml",
-          x = x1))
-      rm(x1)
-    }
-  }
+  # URIs are resolvable
   
-  x1 <- lapply(
-    unique(defs$element),
-    test_elements,
-    x = x)
-  rm(x1)
+  x1 <- x
+  x1$template$annotations.txt$content$predicate_uri[1] <- "not_a_uri"
+  x1$template$annotations.txt$content$object_uri[2] <- "not_a_uri"
+  
+  expect_true(
+    stringr::str_detect(
+      validate_annotation_uri(x1),
+      "Unresolvable URIs. Resolvable URIs are required. These URIs "))
+  
+  # Clean up
+  
+  unlink(
+    paste0(tempdir(), "/pkg_260"), 
+    recursive = TRUE, 
+    force = TRUE)
   
 })
 
@@ -1188,6 +1177,480 @@ testthat::test_that("personnel", {
   
 })
 
+# provenance -------------------------------------------------------------------
+
+testthat::test_that("provenance", {
+  
+  # Parameterize
+  
+  attr_tmp <- read_template_attributes()
+  
+  unlink(
+    paste0(tempdir(), "/pkg_260"), 
+    recursive = TRUE, 
+    force = TRUE)
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260", 
+      package = "EMLassemblyline"),
+    to = tempdir(),
+    recursive = TRUE)
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260/metadata_templates_overflow/provenance.txt", 
+      package = "EMLassemblyline"),
+    to = paste0(tempdir(), "/pkg_260/metadata_templates"),
+    recursive = TRUE)
+  
+  x <- template_arguments(
+    path = paste0(tempdir(), "/pkg_260/metadata_templates"))$x
+  x1 <- x
+  
+  unlink(
+    paste0(tempdir(), "/pkg_260"), 
+    recursive = TRUE, 
+    force = TRUE)
+  
+  # Valid inputs result don't result in issues
+  
+  r <- validate_provenance(x1)
+  expect_null(r$issues)
+  expect_identical(r$x, x1)
+  
+  # Required columns are present
+  
+  x1 <- x
+  expected_colnames <- colnames(x1$template$provenance.txt$content)
+  colnames(x1$template$provenance.txt$content) <- c(
+    "given", "middle", expected_colnames[-1:-2])
+  
+  expect_error(
+    validate_provenance_column_names(x1),
+    regexp = "Unexpected column names in the provenance template.")
+  
+  expect_error(
+    validate_provenance(x1),
+    regexp = "Unexpected column names in the provenance template.")
+  
+  # systemID - Only some systems are supported
+  
+  x1 <- x
+  x1$template$provenance.txt$content$systemID[
+    stringr::str_detect(
+      x1$template$provenance.txt$content$systemID, 
+      "EDI")] <- "non_supported_system"
+  
+  expect_true(
+    stringr::str_detect(
+      validate_provenance_system_id(x1),
+      "Unsupported systemID. The only supported system, currently, is 'EDI'."))
+  
+  r <- validate_provenance(x1)
+  expect_true(
+    stringr::str_detect(
+      r$issues,
+      "Unsupported systemID. The only supported system, currently, is 'EDI'."))
+  expect_null(r$x$template$provenance.txt)
+  
+  # dataPackageID + systemID - Valid pairs resolve to provenance metadata
+  
+  x1 <- x
+  x1$template$provenance.txt$content$dataPackageID[
+    stringr::str_detect(
+      x1$template$provenance.txt$content$systemID, 
+      "EDI")] <- "non_supported_package_id"
+  
+  expect_true(
+    stringr::str_detect(
+      validate_provenance_data_package_id(x1),
+      "Invalid dataPackageID. These dataPackageID cannot be resolved:"))
+  
+  r <- validate_provenance(x1)
+  expect_true(
+    stringr::str_detect(
+      r$issues,
+      "Invalid dataPackageID. These dataPackageID cannot be resolved:"))
+  expect_null(r$x$template$provenance.txt)
+  
+  # A URL is present for external resources
+  
+  x1 <- x
+  external_resources <- as.numeric(
+    row.names(
+      x1$template$provenance.txt$content[
+        !(x1$template$provenance.txt$content$dataPackageID != "" &
+            x1$template$provenance.txt$content$systemID != ""), ]))
+  x1$template$provenance.txt$content$url[external_resources[1:2]] <- ""
+  
+  expect_true(
+    stringr::str_detect(
+      validate_provenance_url_presence(x1),
+      "Missing URLs. A URL is required for each resource. These resources"))
+  
+  r <- validate_provenance(x1)
+  expect_true(
+    stringr::str_detect(
+      r$issues,
+      "Missing URLs. A URL is required for each resource. These resources"))
+  expect_null(r$x$template$provenance.txt)
+  
+  # A URL resolves for external resources
+
+  x1 <- x
+  external_resources <- as.numeric(
+    row.names(
+      x1$template$provenance.txt$content[
+        !(x1$template$provenance.txt$content$dataPackageID != "" &
+            x1$template$provenance.txt$content$systemID != ""), ]))
+  x1$template$provenance.txt$content$url[external_resources[1:2]] <- 
+    "a_non_resolvable_url"
+  
+  expect_true(
+    stringr::str_detect(
+      validate_provenance_url_resolvability(x1),
+      "Unresolvable URLs. URLs must be resolvable. These URLs do not "))
+  
+  r <- validate_provenance(x1)
+  expect_true(
+    stringr::str_detect(
+      r$issues,
+      "Unresolvable URLs. URLs must be resolvable. These URLs do not "))
+  expect_null(r$x$template$provenance.txt)
+  
+  # An online description is recommended for external resources
+  
+  x1 <- x
+  external_resources <- as.numeric(
+    row.names(
+      x1$template$provenance.txt$content[
+        !(x1$template$provenance.txt$content$dataPackageID != "" &
+            x1$template$provenance.txt$content$systemID != ""), ]))
+  x1$template$provenance.txt$content$onlineDescription[
+    external_resources[1:2]] <- ""
+  
+  expect_true(
+    stringr::str_detect(
+      validate_provenance_online_description(x1),
+      "Missing online descriptions. A description of each external resource"))
+  
+  r <- validate_provenance(x1)
+  expect_true(
+    stringr::str_detect(
+      r$issues,
+      "Missing online descriptions. A description of each external resource"))
+  expect_true(!is.null(r$x$template$provenance.txt))
+  
+  # A title is present for external resources
+  
+  x1 <- x
+  external_resources <- as.numeric(
+    row.names(
+      x1$template$provenance.txt$content[
+        !(x1$template$provenance.txt$content$dataPackageID != "" &
+            x1$template$provenance.txt$content$systemID != ""), ]))
+  x1$template$provenance.txt$content$title[external_resources[1:2]] <- ""
+  
+  expect_true(
+    stringr::str_detect(
+      validate_provenance_title(x1),
+      "Missing titles. A title is required for each external resource. "))
+  
+  r <- validate_provenance(x1)
+  expect_true(
+    stringr::str_detect(
+      r$issues,
+      "Missing titles. A title is required for each external resource. "))
+  expect_null(r$x$template$provenance.txt)
+  
+  # A persons name, or an organization name, is present for external resources
+  
+  # Is not an issue if organization name is present
+  x1 <- x
+  external_resources <- as.numeric(
+    row.names(
+      x1$template$provenance.txt$content[
+        !(x1$template$provenance.txt$content$dataPackageID != "" &
+            x1$template$provenance.txt$content$systemID != ""), ]))
+  x1$template$provenance.txt$content$givenName[external_resources[1:2]] <- ""
+  x1$template$provenance.txt$content$middleInitial[external_resources[1:2]] <- ""
+  x1$template$provenance.txt$content$surName[external_resources[1:2]] <- ""
+  expect_null(validate_provenance_individual_organization_name(x1))
+  
+  # Is not an issue if individual name is present
+  x1 <- x
+  external_resources <- as.numeric(
+    row.names(
+      x1$template$provenance.txt$content[
+        !(x1$template$provenance.txt$content$dataPackageID != "" &
+            x1$template$provenance.txt$content$systemID != ""), ]))
+  x1$template$provenance.txt$content$organizationName[external_resources[1:2]] <- ""
+  expect_null(validate_provenance_individual_organization_name(x1))
+  
+  # Is an issue only if both are missing
+  x1 <- x
+  external_resources <- as.numeric(
+    row.names(
+      x1$template$provenance.txt$content[
+        !(x1$template$provenance.txt$content$dataPackageID != "" &
+            x1$template$provenance.txt$content$systemID != ""), ]))
+  x1$template$provenance.txt$content$givenName[external_resources[1:2]] <- ""
+  x1$template$provenance.txt$content$middleInitial[external_resources[1:2]] <- ""
+  x1$template$provenance.txt$content$surName[external_resources[1:2]] <- ""
+  x1$template$provenance.txt$content$organizationName[external_resources[1:2]] <- ""
+  
+  expect_true(
+    stringr::str_detect(
+      validate_provenance_individual_organization_name(x1),
+      "Missing individual or organization name. An individual person or "))
+  
+  r <- validate_provenance(x1)
+  expect_true(
+    stringr::str_detect(
+      r$issues,
+      "Missing individual or organization name. An individual person or "))
+  expect_null(r$x$template$provenance.txt)
+  
+  # A creator and contact is listed for each resource, when dataPackageID 
+  # and systemID pair is missing
+  
+  x1 <- x
+  external_resources <- as.numeric(
+    row.names(
+      x1$template$provenance.txt$content[
+        !(x1$template$provenance.txt$content$dataPackageID != "" &
+            x1$template$provenance.txt$content$systemID != ""), ]))
+  x1$template$provenance.txt$content$role[external_resources[1:2]] <- ""
+  
+  expect_true(
+    stringr::str_detect(
+      validate_provenance_contact_creator(x1),
+      "Missing creator/contact. Each external resources requires both a "))
+  
+  r <- validate_provenance(x1)
+  expect_true(
+    stringr::str_detect(
+      r$issues,
+      "Missing creator/contact. Each external resources requires both a "))
+  expect_null(r$x$template$provenance.txt)
+  
+  # An email contact is recommended for external resources
+  
+  x1 <- x
+  external_resources <- as.numeric(
+    row.names(
+      x1$template$provenance.txt$content[
+        !(x1$template$provenance.txt$content$dataPackageID != "" &
+            x1$template$provenance.txt$content$systemID != ""), ]))
+  x1$template$provenance.txt$content$email[
+    external_resources[1:2]] <- ""
+  
+  expect_true(
+    stringr::str_detect(
+      validate_provenance_email(x1),
+      "Missing email. An email address for each external resource is "))
+  
+  r <- validate_provenance(x1)
+  expect_true(
+    stringr::str_detect(
+      r$issues,
+      "Missing email. An email address for each external resource is "))
+  expect_true(!is.null(r$x$template$provenance.txt))
+  
+  # If multiple validation issues, then report all issues with a warning and
+  # corresponding changes to x (the data and metadata list object).
+  
+  x1 <- x
+  # systemID
+  x1$template$provenance.txt$content$systemID[
+    stringr::str_detect(
+      x1$template$provenance.txt$content$systemID, 
+      "EDI")] <- "non_supported_system"
+  # email
+  external_resources <- as.numeric(
+    row.names(
+      x1$template$provenance.txt$content[
+        !(x1$template$provenance.txt$content$dataPackageID != "" &
+            x1$template$provenance.txt$content$systemID != ""), ]))
+  x1$template$provenance.txt$content$email[
+    external_resources[1:2]] <- ""
+  
+  # Expectations
+  r <- validate_provenance(x1)
+  expect_true(
+    any(
+      stringr::str_detect(
+        r$issues,
+        "Unsupported systemID. The only supported system, currently, ")))
+  expect_true(
+    any(
+      stringr::str_detect(
+        r$issues,
+        "Missing email. An email address for each external resource is ")))
+  
+})
+
+
+
+
+
+
+
+
+testthat::test_that("compile_provenance()", {
+  
+  # Test the 3 different function call permutations to ensure the provenance
+  # metadata is being added correctly
+  
+  # Parameterize do.call()
+  attr_tmp <- read_template_attributes()
+  
+  unlink(
+    paste0(tempdir(), "/pkg_260"), 
+    recursive = TRUE, 
+    force = TRUE)
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260", 
+      package = "EMLassemblyline"),
+    to = tempdir(),
+    recursive = TRUE)
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260/metadata_templates_overflow/provenance.txt", 
+      package = "EMLassemblyline"),
+    to = paste0(tempdir(), "/pkg_260/metadata_templates"),
+    recursive = TRUE)
+  
+  x <- template_arguments(
+    path = paste0(tempdir(), "/pkg_260/metadata_templates"), 
+    data.path = paste0(tempdir(), "/pkg_260/data_objects"),
+    data.table = c("decomp.csv", "nitrogen.csv"),
+    other.entity = c("ancillary_data.zip", "processing_and_analysis.R"))
+
+  x$data.path <- system.file('/examples/pkg_260/data_objects', package = 'EMLassemblyline')
+  x$data.table <- c("decomp.csv", "nitrogen.csv")
+  x$data.table.name <- c("Decomp file name", "Nitrogen file name")
+  x$data.table.description <- c("Decomp file description", "Nitrogen file description")
+  x$data.table.quote.character  <- c("\\'", "\\'")
+  x$data.table.url <- c("https://url/to/decomp.csv", "https://url/to/nitrogen.csv")
+  x$dataset.title <- 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015'
+  x$eml.path <- tempdir()
+  x$geographic.coordinates <- c('55.895', '112.094','55.895', '112.094')
+  x$geographic.description <- 'Alberta, Canada, 100 km south of Fort McMurray, Canada'
+  x$maintenance.description <- 'Completed'
+  x$other.entity <- c("ancillary_data.zip", "processing_and_analysis.R")
+  x$other.entity.name <- c("ancillary_data file name", "processing_and_analysis file name")
+  x$other.entity.description <- c("ancillary_data file description", "processing_and_analysis file description")
+  x$other.entity.url <- c("https://url/to/ancillary_data.zip", "https://url/to/processing_and_analysis.R")
+  x$package.id <- "edi.100.1"
+  x$path <- system.file('/examples/pkg_260/metadata_templates', package = 'EMLassemblyline')
+  x$return.obj <- T
+  x$temporal.coverage <- c('2014-05-01', '2015-10-31')
+  x$user.domain <- c("EDI", "LTER")
+  x$user.id <- c("userid1", "userid2")
+  x$write.file <- F
+
+  x1 <- x
+  internal_resources <- unique(x1$x$template$provenance.txt$content$dataPackageID[
+    x1$x$template$provenance.txt$content$dataPackageID != ""])
+  external_resources <- unique(x1$x$template$provenance.txt$content$title[
+    x1$x$template$provenance.txt$content$dataPackageID == ""])
+  
+  # Called from do.call()
+
+  x1 <- x
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+
+  expect_true(
+    length(r$dataset$methods$methodStep) - 1 ==
+      length(c(internal_resources, external_resources)))
+
+  for (i in 2:length(r$dataset$methods$methodStep)) {
+    expect_true(
+      "dataSource" %in% names(r$dataset$methods$methodStep[[i]]))
+  }
+
+  # Called from make_eml() with explicitly stated arguments
+
+  r <- suppressWarnings(
+    make_eml(
+      path = paste0(tempdir(), "/pkg_260/metadata_templates"),
+      data.path = paste0(tempdir(), "/pkg_260/data_objects"),
+      eml.path = paste0(tempdir(), "/pkg_260/eml"),
+      dataset.title = "Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015",
+      data.table = c("decomp.csv", "nitrogen.csv"),
+      data.table.name = c("Decomp file name", "Nitrogen file name"),
+      data.table.description = c("Decomposition data description", "Nitrogen data description"),
+      other.entity = c("ancillary_data.zip", "processing_and_analysis.R"),
+      other.entity.name = c("Ancillary data name", "Script name"),
+      other.entity.description = c("Ancillary data description", "Script description"),
+      temporal.coverage = c('2014-05-01', '2015-10-31'),
+      maintenance.description = 'completed',
+      user.id = "someuserid",
+      user.domain = "LTER",
+      package.id = 'edi.141.1',
+      return.obj = TRUE,
+      write.file = FALSE))
+
+  expect_true(
+    length(r$dataset$methods$methodStep) - 1 ==
+      length(c(internal_resources, external_resources)))
+
+  for (i in 2:length(r$dataset$methods$methodStep)) {
+    expect_true(
+      "dataSource" %in% names(r$dataset$methods$methodStep[[i]]))
+  }
+  
+  # FIXME: This test cannot be run without error within this test_that() 
+  # because the prov object is not accessible within sys.call() return of
+  # compile_provenance().
+  # # Called from make_eml() with named arguments
+  # 
+  # prov <- "edi.200.1"
+  # r <- suppressWarnings(
+  #   make_eml(
+  #     path = paste0(tempdir(), "/pkg_260/metadata_templates"),
+  #     data.path = paste0(tempdir(), "/pkg_260/data_objects"),
+  #     eml.path = paste0(tempdir(), "/pkg_260/eml"),
+  #     dataset.title = "Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015",
+  #     data.table = c("decomp.csv", "nitrogen.csv"),
+  #     data.table.name = c("Decomp file name", "Nitrogen file name"),
+  #     data.table.description = c("Decomposition data description", "Nitrogen data description"),
+  #     other.entity = c("ancillary_data.zip", "processing_and_analysis.R"),
+  #     other.entity.name = c("Ancillary data name", "Script name"),
+  #     other.entity.description = c("Ancillary data description", "Script description"),
+  #     temporal.coverage = c('2014-05-01', '2015-10-31'),
+  #     maintenance.description = 'completed',
+  #     user.id = "someuserid",
+  #     user.domain = "LTER",
+  #     package.id = 'edi.141.1',
+  #     provenance = prov,
+  #     return.obj = TRUE,
+  #     write.file = FALSE))
+  # 
+  # expect_true(
+  #   length(r$dataset$methods$methodStep) - 1 == 
+  #     length(c(internal_resources, external_resources)))
+  # 
+  # for (i in 2:length(r$dataset$methods$methodStep)) {
+  #   expect_true(
+  #     "dataSource" %in% names(r$dataset$methods$methodStep[[i]]))
+  # }
+  
+  # Clean up
+  
+  unlink(
+    paste0(tempdir(), "/pkg_260"), 
+    recursive = TRUE, 
+    force = TRUE)
+  
+})
+
 # taxonomic_coverage ----------------------------------------------------------
 
 testthat::test_that("taxonomic_coverage", {
@@ -1195,11 +1658,34 @@ testthat::test_that("taxonomic_coverage", {
   # Parameterize
   
   attr_tmp <- read_template_attributes()
+  
+  unlink(
+    paste0(tempdir(), "/pkg_260"), 
+    recursive = TRUE, 
+    force = TRUE)
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260", 
+      package = "EMLassemblyline"),
+    to = tempdir(),
+    recursive = TRUE)
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260/metadata_templates_overflow/taxonomic_coverage.txt", 
+      package = "EMLassemblyline"),
+    to = paste0(tempdir(), "/pkg_260/metadata_templates"),
+    recursive = TRUE)
+  
   x <- template_arguments(
-    system.file(
-      '/examples/pkg_260/metadata_templates',
-      package = 'EMLassemblyline'))$x
+    path = paste0(tempdir(), "/pkg_260/metadata_templates"))$x
   x1 <- x
+  
+  unlink(
+    paste0(tempdir(), "/pkg_260"), 
+    recursive = TRUE, 
+    force = TRUE)
   
   # Default manipulation - Use raw names when a resolved name is missing
   x1 <- x

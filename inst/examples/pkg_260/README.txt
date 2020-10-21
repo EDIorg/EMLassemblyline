@@ -1,0 +1,1 @@
+metadata_templates_overflow contains templates requiring a substantial load of HTTP requests within the EMLassemblyline test suite and are placed in this separate directory to be called upon when needed, rather than each time validate_templates() is called by a function.

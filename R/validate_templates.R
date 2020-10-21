@@ -33,20 +33,24 @@ validate_templates <- function(fun.name, x) {
   if (fun.name == "annotate_eml") {
     
     # Called from annotate_eml() ----------------------------------------------
-    validate_annotations(x)
-    # TODO: Annotations
-    # r <- validate_annotations(x)
-    # issues <- c(issues, r$issues)
-    # x <- r$x
-    # 
-    # # Return
-    # if (!is.null(issues)) {
-    #   list2env(list(template_issues = issues), .GlobalEnv)
-    #   warning(
-    #     "Input issues found. Use issues() to see them.", 
-    #     call. = FALSE)
-    # }
-    # return(x)
+    
+    # Initialize object for collecting issue messages
+    issues <- c()
+
+    # Annotations
+    validate_annotation(x)
+    r <- validate_annotation(x)
+    issues <- c(issues, r$issues)
+    x <- r$x
+
+    # Return
+    if (!is.null(issues)) {
+      list2env(list(template_issues = issues), .GlobalEnv)
+      warning(
+        "Input issues found. Use issues() to see them.",
+        call. = FALSE)
+    }
+    return(x)
     
   }
   
@@ -64,11 +68,10 @@ validate_templates <- function(fun.name, x) {
     # TODO: Implement a check for the additional_info template including a 
     # check for non-utf-8 encoded characters
     
-    # TODO: Annotations
-    validate_annotations(x)
-    # r <- validate_annotations(x)
-    # issues <- c(issues, r$issues)
-    # x <- r$x
+    # Annotations
+    r <- validate_annotation(x)
+    issues <- c(issues, r$issues)
+    x <- r$x
     
     # Categorical variables
     if (any(
@@ -96,6 +99,11 @@ validate_templates <- function(fun.name, x) {
     
     # Personnel
     r <- validate_personnel(x)
+    issues <- c(issues, r$issues)
+    x <- r$x
+    
+    # Provenance
+    r <- validate_provenance(x)
     issues <- c(issues, r$issues)
     x <- r$x
     
@@ -197,176 +205,184 @@ validate_abstract <- function(x) {
 #' @details 
 #'     Checks performed on each data tables attribute metadata:
 #'     \itemize{
+#'         \item{Template column names are correct}
 #'         \item{Each annotation has a subject, predicate, and object, with
 #'         corresponding labels and URIs}
-#'         \item{Dataset annotations are present}
-#'         \item{Data table annotations are present}
-#'         \item{Data table attribute annotations are present}
-#'         \item{Other entity annotations are present}
-#'         \item{Responsible party annotations are present}
+#'         \item{URIs are resolvable}
 #'     }
 #'     
 #'     Checks on annotation presence are only a reminder that it is possible 
 #'     to annotate these elements.
 #'
-validate_annotations <- function(x) {
+validate_annotation <- function(x) {
+  
+  # Each issue is logged as "required" or "optional"
+  required_issues <- c()
+  optional_issues <- c()
+  
   if (!is.null(x$template$annotations.txt)) {
-    if (nrow(x$template$annotations.txt$content) > 0) {
-      
-      # TODO: Modernize this chunck
-      # Each issue is logged as "required" or "optional"
-      # required_issues <- c()
-      # optional_issues <- c()
-      
-      # Parameterize the annotations checks with a data frame of annotations.txt 
-      # but with "" filled with NA_character_. This streamlines the code.
-      anno <- x$template$annotations.txt$content
-      anno[anno == ""] <- NA_character_
-      
-      # Incomplete annotations results in warning - Expected are a subject 
-      # ID, predicate label and URI, object label and URI.
-      df <- dplyr::select(
-        anno,
-        c("id", "predicate_label", "predicate_uri", "object_label", 
-          "object_uri"))
-      if (any(!complete.cases(df))) {
-        warning(
-          paste0(
-            "Incomplete annotations. A complete annotation requires an ID, ",
-            "predicate label, predicate URI, object label, and object URI. One ",
-            "or more of these are missing in annotations.txt at rows:\n",
-            paste(seq(nrow(df))[!complete.cases(df)], collapse = ", ")),
-          call. = FALSE)
-      }
-      
-      # Missing dataset annotation results in warning (every data package
-      # should have one).
-      if (!any((anno$element == "/dataset") & complete.cases(anno))) {
-        warning(
-          paste0(
-            "The dataset annotation is missing. Consider adding a highlevel ",
-            "annotation that describes your dataset. Add this to ",
-            "annotations.txt."), 
-          call. = FALSE)
-      }
-      
-      # TODO: Create function to test whether URIs are resolvable.
-      # The test has already been implemented.
-      # 
-      # resolve_uri <- function(k, cname) {
-      #   # k is a vector of URIs
-      #   # cname is the vector name
-      #   # return value is a logical vector of length k (use_i)
-      #   if (any(!use_i)) {
-      #     warning(
-      #       paste0(
-      #         "Non-resolvable URIs in the ", cname, " column of ",
-      #         "annotations.txt at lines:",
-      #         paste(seq(length(k))[!use_i], collapse = ", ")
-      #       ),
-      #       call. = FALSE
-      #     ) 
-      #   }
-      # }
-      # 
-      # resolve_uri(anno$predicate_uri, "predicate_uri")
-      # resolve_uri(anno$object_uri, "object_uri")
-      
-      # TODO: The annotations template lists all annotatable elements in the 
-      # corresponding EML
-      
-      # dataTable
-      if (!is.null(names(x$data.table))) {
-        
-        # Missing dataTable annotations results in warning
-        if (!any(anno$element == "/dataTable")) {
-          warning(
-            paste0(
-              "The dataTable annotation is missing. Consider adding an ",
-              "annotation that describes your data table(s). Add this to ",
-              "annotations.txt."),
-            call. = FALSE)
-        }
-        
-        # Missing dataTable attribute annotations results in warning
-        if (!any(anno$element == "/dataTable/attribute")) {
-          warning(
-            paste0(
-              "The dataTable attribute annotation is missing. Consider ",
-              "adding annotations that describe the columns of your data ",
-              "table(s) and the corresponding units. Add these to ",
-              "annotations.txt."),
-            call. = FALSE)
-        }
-        
-      }
-      
-      # otherEntity
-      if (!is.null(names(x$other.entity))) {
-        # Missing otherEntity annotations result in warning
-        if (!any(anno$element == "/otherEntity")) {
-          warning(
-            paste0(
-              "The otherEntity annotation is missing. Consider adding an ",
-              "annotation that describes your other data entities. Add this ",
-              "to annotations.txt."),
-            call. = FALSE)
-        }
-      }
-      
-      # ResponsibleParty
-      if (!is.null(x$template$personnel.txt)) {
-        # Missing ResponsibleParty results in warning
-        if (!any(anno$element == "/ResponsibleParty")) {
-          warning(
-            paste0(
-              "The ResponsibleParty annotation is missing. Consider adding ",
-              "an annotation that identifies the persons associated with ", 
-              "these data and the organizations they belong to. Add these to ",
-              "annotations.txt."),
-            call. = FALSE)
-        }
-      }
-      
-      # TODO: Modernize this chunck
-      # # A compiled report of issues helps the user fix them
-      # if (!is.null(required_issues)) {
-      #   required_issues <- paste0(
-      #     "\n",
-      #     "Data table attributes (", table_file, ", Required) - Data table ",
-      #     "attributes will be dropped from the EML until these issues are ",
-      #     "fixed:\n",
-      #     paste(
-      #       paste0(seq_along(required_issues), ". "),
-      #       required_issues,
-      #       collapse = "\n"), 
-      #     "\n")
-      # }
-      # if (!is.null(optional_issues)) {
-      #   optional_issues <- paste0(
-      #     "\n",
-      #     "Data table attributes (", table_file, ", Optional):\n",
-      #     paste(
-      #       paste0(seq_along(optional_issues), ". "),
-      #       optional_issues,
-      #       collapse = "\n"), 
-      #     "\n")
-      # }
-      # issues <- c(required_issues, optional_issues)
-      # 
-      # # There's no recovering from required issues, and the most reasonable
-      # # fix is to drop the table attributes template from further use.
-      # if (!is.null(required_issues)) {
-      #   x$template[[attribute_file]] <<- NULL
-      #   x$data.table[[table_file]] <<- NULL
-      # }
-      # 
-      # # Return
-      # list(issues = issues, x = x)
+    
+    # Template column names are correct
+    r <- validate_annotation_column_names(x)
+    
+    # Each annotation has an id, subject, predicate, and object, with 
+    # corresponding labels and URIs
+    r <- validate_annotation_completeness(x)
+    required_issues <- c(required_issues, r)
 
-    }
+    # URIs are resolvable
+    r <- validate_annotation_uri(x)
+    required_issues <- c(required_issues, r)
+
   } 
+  
+  # Compile issues
+  if (!is.null(required_issues)) {
+    required_issues <- paste0(
+      "\n",
+      "Annotations (Required) - Annotations will be dropped from the EML ",
+      "until these issues are fixed:\n",
+      paste(
+        paste0(seq_along(required_issues), ". "),
+        required_issues,
+        collapse = "\n"), 
+      "\n")
+  }
+  if (!is.null(optional_issues)) {
+    optional_issues <- paste0(
+      "\n",
+      "Annotations (Optional):\n",
+      paste(
+        paste0(seq_along(optional_issues), ". "),
+        optional_issues,
+        collapse = "\n"), 
+      "\n")
+  }
+  issues <- c(required_issues, optional_issues)
+  
+  # Drop the annotations template if required issues are found
+  if (!is.null(required_issues)) {
+    x$template$annotations.txt <- NULL
+  }
+  
+  # Return
+  list(issues = issues, x = x)
+  
 }
+
+
+
+
+
+
+
+
+#' Check column names of the annotations template
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' @return
+#'     \item{error}{If column names are invalid}
+#'     \item{NULL}{If no issues were found}
+#'
+validate_annotation_column_names <- function(x) {
+  template <- data.table::fread(
+    system.file(
+      '/templates/annotations.txt',
+      package = 'EMLassemblyline'))
+  expected_colnames <- colnames(template)
+  found_colnames <- colnames(x$template$annotations.txt$content)
+  if (!all(expected_colnames %in% found_colnames)) {
+    stop(
+      "Unexpected column names in the annotations template. ",
+      "Expected columns are: ",
+      paste(expected_colnames, collapse = ", "),
+      call. = FALSE)
+  }
+}
+
+
+
+
+
+
+
+
+#' Check completeness of the annotations template
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' @return
+#'     \item{character}{Description of validation issues}
+#'     \item{NULL}{If no issues were found}
+#'
+validate_annotation_completeness <- function(x) {
+  anno <- x$template$annotations.txt$content
+  anno[anno == ""] <- NA_character_
+  d <- dplyr::select(
+    anno,
+    c("id", "subject", "predicate_label", "predicate_uri", "object_label",
+      "object_uri"))
+  if (any(!complete.cases(d))) {
+    paste0(
+      "Incomplete annotations. A complete annotation requires an ID, ",
+      "subject, predicate label, predicate URI, object label, and object ",
+      "URI. One or more of these are missing for:\n",
+      paste(unique(d$id[!complete.cases(d)]), collapse = "\n"))
+  }
+}
+
+
+
+
+
+
+
+
+
+#' Check URIs are resolvable in the annotations template
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' @return
+#'     \item{character}{Description of validation issues}
+#'     \item{NULL}{If no issues were found}
+#'
+validate_annotation_uri <- function(x) {
+  # Predicate URI
+  unresolvable_predicate <- unlist(
+    lapply(
+      x$template$annotations.txt$content$predicate_uri,
+      function(uri) {
+        if (!isTRUE(check_uri(uri))) {
+          uri
+        }
+      }))
+  # Object URI
+  unresolvable_object <- unlist(
+    lapply(
+      x$template$annotations.txt$content$object_uri,
+      function(uri) {
+        if (!isTRUE(check_uri(uri))) {
+          uri
+        }
+      }))
+  # Return
+  if (length(c(unresolvable_predicate, unresolvable_object)) != 0) {
+    paste0(
+      "Unresolvable URIs. Resolvable URIs are required. These URIs ",
+      "do not resolve:\n", 
+      paste(c(unresolvable_predicate, unresolvable_object), collapse = "\n"))
+  }
+}
+
+
 
 
 
@@ -1370,6 +1386,502 @@ validate_personnel_publisher <- function(x) {
 
 
 
+
+#' Validate the provenance template
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' @return
+#'     \item{issues}{(character) Descriptions of issues found in the template}
+#'     \item{x}{(list) A potentially modified \code{x} if relevant issues were
+#'     found}
+#'     
+#' @details 
+#'     This function compiles provenance input as \code{provenance} to 
+#'     \code{make_eml()} and listed in the provenance.txt template,
+#'     and returns all unique values in the provenance.txt template.
+#' 
+#'     Checks performed by this function:
+#'     \itemize{
+#'         \item{Template column names are correct}
+#'         \item{systemID is one of the supported system identifiers}
+#'         \item{dataPackageID and systemID pair resolves to resource metadata in \code{systemID}}
+#'         \item{A URL is present and resolves for external resources}
+#'         \item{An online description is recommended for external resources}
+#'         \item{A title is present for external resources}
+#'         \item{A persons name, or an organization name, is present for external resources}
+#'         \item{A creator and contact (role) is listed for each external resource}
+#'         \item{An email contact is recommended for external resources}
+#'     }
+#'     
+#'     Checks are grouped by required and optional criteria. If any required
+#'     checks fail, then the entire template is removed from \code{x}.
+#'
+validate_provenance <- function(x) {
+  
+  # Objects for catching required and optional issues
+  required_issues <- c()
+  optional_issues <- c()
+
+  if (any(names(x$template) == "provenance.txt")) {
+
+    # Template column names are correct
+    r <- validate_provenance_column_names(x)
+    
+    # Compile provenance from allowed sources
+    x <- compile_provenance(x)
+    
+    # systemID is one of the supported system identifiers
+    r <- validate_provenance_system_id(x)
+    required_issues <- c(required_issues, r)
+
+    # dataPackageID and systemID pair resolves to resource metadata in systemID
+    r <- validate_provenance_data_package_id(x)
+    required_issues <- c(required_issues, r)
+    
+    # A URL is present for external resources
+    r <- validate_provenance_url_presence(x)
+    required_issues <- c(required_issues, r)
+    
+    # A URL resolves for external resources
+    r <- validate_provenance_url_resolvability(x)
+    required_issues <- c(required_issues, r)
+
+    # An online description is recommended for external resources
+    r <- validate_provenance_online_description(x)
+    optional_issues <- c(optional_issues, r)
+
+    # A title is present for external resources
+    r <- validate_provenance_title(x)
+    required_issues <- c(required_issues, r)
+
+    # A persons name, or an organization name, is present for external 
+    # resources
+    r <- validate_provenance_individual_organization_name(x)
+    required_issues <- c(required_issues, r)
+
+    # A creator and contact (role) is listed for each external resource
+    r <- validate_provenance_contact_creator(x)
+    required_issues <- c(required_issues, r)
+
+    # An email is recommended for external resources
+    r <- validate_provenance_email(x)
+    optional_issues <- c(optional_issues, r)
+
+  }
+  
+  # Compile issues
+  if (!is.null(required_issues)) {
+    required_issues <- paste0(
+      "\n",
+      "Provenance (Required) - Provenance metadata will be ",
+      "dropped from the EML until these issues are fixed:\n",
+      paste(
+        paste0(seq_along(required_issues), ". "),
+        required_issues,
+        collapse = "\n"), 
+      "\n")
+  }
+  if (!is.null(optional_issues)) {
+    optional_issues <- paste0(
+      "\n",
+      "provenance (Optional):\n",
+      paste(
+        paste0(seq_along(optional_issues), ". "),
+        optional_issues,
+        collapse = "\n"), 
+      "\n")
+  }
+  issues <- c(required_issues, optional_issues)
+  
+  # Drop the provenance template if required issues are found
+  if (!is.null(required_issues)) {
+    x$template$provenance.txt <- NULL
+  }
+  
+  # Return
+  list(issues = issues, x = x)
+  
+}
+
+
+
+
+
+
+
+
+#' Check column names of provenance template
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' @return
+#'     \item{error}{If column names are invalid}
+#'     \item{NULL}{If no issues were found}
+#'
+validate_provenance_column_names <- function(x) {
+  template <- data.table::fread(
+    system.file(
+      '/templates/provenance.txt',
+      package = 'EMLassemblyline'))
+  expected_colnames <- colnames(template)
+  found_colnames <- colnames(x$template$provenance.txt$content)
+  if (!all(expected_colnames %in% found_colnames)) {
+    stop(
+      "Unexpected column names in the provenance template. ",
+      "Expected columns are: ",
+      paste(expected_colnames, collapse = ", "),
+      call. = FALSE)
+  }
+}
+
+
+
+
+
+
+
+#' Check for allowed systemID in provenance template
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' @return
+#'     \item{character}{Description of validation issues}
+#'     \item{NULL}{If no issues were found}
+#'
+validate_provenance_system_id <- function(x) {
+  unsupported_system_ids <- 
+    tolower(x$template$provenance.txt$content$systemID) != "edi" &
+    x$template$provenance.txt$content$systemID != ""
+  if (any(unsupported_system_ids)) {
+    paste0(
+      "Unsupported systemID. The only supported system, currently, is 'EDI'.")
+  }
+}
+
+
+
+
+
+
+
+#' Check the dataPackageID + systemID pair resolves in the provenance template
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' @return
+#'     \item{character}{Description of validation issues}
+#'     \item{NULL}{If no issues were found}
+#'
+validate_provenance_data_package_id <- function(x) {
+  valid_system_ids <- tolower(
+    x$template$provenance.txt$content$systemID) == "edi"
+  if (any(valid_system_ids)) {
+    data_package_ids <- x$template$provenance.txt$content$dataPackageID[
+      valid_system_ids]
+    invalid_package_ids <- unlist(
+      lapply(
+        data_package_ids,
+        function(x) {
+          provenance <- try(
+            suppressMessages(
+              EDIutils::api_get_provenance_metadata(x)), 
+            silent = TRUE)
+          if ("try-error" %in% class(provenance)) {
+            x
+          }
+        }))
+    if (length(invalid_package_ids) != 0) {
+      paste0(
+        "Invalid dataPackageID. These dataPackageID cannot be resolved: ", 
+        paste(invalid_package_ids, collapse = ", "))
+    }
+  }
+}
+
+
+
+
+
+
+
+
+#' Check a URL is present for external resources in the provenance template
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' @return
+#'     \item{character}{Description of validation issues}
+#'     \item{NULL}{If no issues were found}
+#'
+validate_provenance_url_presence <- function(x) {
+  external_resources <- x$template$provenance.txt$content[
+    !(x$template$provenance.txt$content$dataPackageID != "" &
+      x$template$provenance.txt$content$systemID != ""), ]
+  urls <- unique(external_resources$url)
+  titles <- unique(external_resources$title)
+  missing_urls <- unlist(
+    lapply(
+      urls,
+      function(url) {
+        if (url == "") {
+          TRUE
+        } else {
+          FALSE
+        }      
+      }))
+  if (any(missing_urls)) {
+    paste0(
+      "Missing URLs. A URL is required for each resource. These resources ",
+      "have missing URLs:\n", 
+      paste(titles[missing_urls], collapse = "\n"))
+  }
+}
+
+
+
+
+
+
+
+
+#' Check a URL can be resolved for external resources in the provenance template
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' @return
+#'     \item{character}{Description of validation issues}
+#'     \item{NULL}{If no issues were found}
+#'
+validate_provenance_url_resolvability <- function(x) {
+  external_resources <- x$template$provenance.txt$content[
+    !(x$template$provenance.txt$content$dataPackageID != "" &
+        x$template$provenance.txt$content$systemID != ""), ]
+  urls <- unique(external_resources$url)
+  unresolvable_urls <- unlist(
+    lapply(
+      urls,
+      function(url) {
+        if (!isTRUE(check_uri(url))) {
+          url
+        }
+      }))
+  if (length(unresolvable_urls) != 0) {
+    paste0(
+      "Unresolvable URLs. URLs must be resolvable. These URLs do not resolve:\n",
+      paste(unresolvable_urls, collapse = "\n"))
+  }
+}
+
+
+
+
+
+
+
+
+#' Check for description of external resources in the provenance template
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' @return
+#'     \item{character}{Description of validation issues}
+#'     \item{NULL}{If no issues were found}
+#'
+validate_provenance_online_description <- function(x) {
+  external_resources <- x$template$provenance.txt$content[
+    !(x$template$provenance.txt$content$dataPackageID != "" &
+        x$template$provenance.txt$content$systemID != ""), ]
+  missing_descriptions <- unique(
+    external_resources$title[
+      external_resources$onlineDescription == ""])
+  if (length(missing_descriptions) != 0) {
+    paste0(
+      "Missing online descriptions. A description of each external resource ",
+      "is recommended. These resources are missing descriptions:\n",
+      paste(missing_descriptions, collapse = "\n"))
+  }
+}
+
+
+
+
+
+
+
+
+#' Check for title of external resources in the provenance template
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' @return
+#'     \item{character}{Description of validation issues}
+#'     \item{NULL}{If no issues were found}
+#'
+validate_provenance_title <- function(x) {
+  external_resources <- x$template$provenance.txt$content[
+    !(x$template$provenance.txt$content$dataPackageID != "" &
+        x$template$provenance.txt$content$systemID != ""), ]
+  missing_titles <- unique(
+    external_resources$url[
+      external_resources$title == ""])
+  if (length(missing_titles) != 0) {
+    paste0(
+      "Missing titles. A title is required for each external resource. ",
+      "These resources are missing titles:\n",
+      paste(missing_titles, collapse = "\n"))
+  }
+}
+
+
+
+
+
+
+
+
+#' Check individual and organization name of external resources in the provenance template
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' @return
+#'     \item{character}{Description of validation issues}
+#'     \item{NULL}{If no issues were found}
+#'
+validate_provenance_individual_organization_name <- function(x) {
+  external_resources <- x$template$provenance.txt$content[
+    !(x$template$provenance.txt$content$dataPackageID != "" &
+        x$template$provenance.txt$content$systemID != ""), ]
+  titles <- unique(external_resources$title)
+  if (!is.null(external_resources)) {
+    missing_individual_and_organization_name <- apply(
+      external_resources, 
+      1,
+      function(x) {
+        (x["givenName"] == "" & x["surName"] == "") & x["organizationName"] == ""
+      })
+    missing_titles <- unique(
+      external_resources$title[
+        missing_individual_and_organization_name])
+    if (length(missing_titles) != 0) {
+      paste0(
+        "Missing individual or organization name. An individual person or ",
+        "organization name is required for each external resource. These ",
+        "resources are missing one or the other:\n",
+        paste(missing_titles, collapse = "\n"))
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+#' Check creator and contact in the provenance template
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' @return
+#'     \item{character}{Description of validation issues}
+#'     \item{NULL}{If no issues were found}
+#'
+validate_provenance_contact_creator <- function(x) {
+  external_resources <- x$template$provenance.txt$content[
+    !(x$template$provenance.txt$content$dataPackageID != "" &
+        x$template$provenance.txt$content$systemID != ""), ]
+  titles <- unique(external_resources$title)
+  missing_creator_or_contact <- unlist(
+    lapply(
+      titles,
+      function(title) {
+        roles <- x$template$provenance.txt$content[
+          x$template$provenance.txt$content$title == title, ]$role
+        missing_roles <- !(c("contact", "creator") %in% roles)
+        if (any(missing_roles)) {
+          title
+        }
+      }))
+  if (length(missing_creator_or_contact) != 0) {
+    paste0(
+      "Missing creator/contact. Each external resources requires both a ",
+      "creator and a contact. A creator/contact is missing for these ",
+      "resources:\n", 
+      paste(missing_creator_or_contact, collapse = "\n"))
+  }
+}
+
+
+
+
+
+
+
+
+#' Check for email in external resources in the provenance template
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' @return
+#'     \item{character}{Description of validation issues}
+#'     \item{NULL}{If no issues were found}
+#'
+validate_provenance_email <- function(x) {
+  external_resources <- x$template$provenance.txt$content[
+    !(x$template$provenance.txt$content$dataPackageID != "" &
+        x$template$provenance.txt$content$systemID != ""), ]
+  missing_emails <- unique(
+    external_resources$title[
+      external_resources$email == ""])
+  if (length(missing_emails) != 0) {
+    paste0(
+      "Missing email. An email address for each external resource ",
+      "is recommended. These resources are missing email addresses:\n",
+      paste(missing_emails, collapse = "\n"))
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #' Validate the table attributes template (attributes_*.txt)
 #'
 #' @param x
@@ -2261,18 +2773,6 @@ validate_taxonomic_coverage_completeness <- function(x) {
 
 # Helper functions ------------------------------------------------------------
 
-read_template_attributes <- function() {
-  data.table::fread(
-    system.file(
-      '/templates/template_characteristics.txt',
-      package = 'EMLassemblyline'), 
-    fill = TRUE,
-    blank.lines.skip = TRUE)
-}
-
-
-
-
 check_duplicate_templates <- function(path) {
   # path = Path to the directory containing metadata templates
   attr_tmp <- read_template_attributes()
@@ -2296,6 +2796,254 @@ check_duplicate_templates <- function(path) {
     }
   }
 }
+
+
+
+
+
+
+
+
+
+#' Check resolvability of URI
+#'
+#' @param uri 
+#'
+#' @return (logical) TRUE if can be resolved, FALSE otherwise
+#'
+check_uri <- function(uri) {
+  r <- try(
+    httr::GET(uri), 
+    silent = TRUE)
+  if ("try-error" %in% class(r)) {
+    return(FALSE)
+  } else {
+    if (r$status_code >= 400) {
+      return(FALSE)
+    } else {
+      return(TRUE)
+    }
+  }
+}
+
+
+
+
+
+
+
+
+#' Compile geographic coverage from multiple sources
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'     
+#' @return
+#'     \item{x}{(list) With geographic coverage compiled from multiple input 
+#'     sources into the geographic_coverage template.}
+#'
+#' @details 
+#'     Combine multiple sources of geographic coverage and remove duplicate 
+#'     entries. This info can be supplied in the \code{geographic.coverage} and 
+#'     \code{geographic.description} arguments of \code{make_eml()} as well as 
+#'     in the geographic_coverage and bounding_boxes templates.
+#'     
+compile_geographic_coverage <- function(x) {
+  
+  geographic.coordinates <- NULL
+  geographic.description <- NULL
+  
+  # TODO: Refactor this chunck. Each conditional handles a separate user case.
+  # A better solution would require fewer exceptions.
+  make_eml_args <- try(sys.call(which = -3), silent = TRUE)
+  if (class(make_eml_args) == "call") {
+    if (is.character(make_eml_args$geographic.coordinates) &
+        is.character(make_eml_args$geographic.description)) {
+      geographic.coordinates <- make_eml_args$geographic.coordinates
+      geographic.description <- make_eml_args$geographic.description
+    } else if (is.call(make_eml_args$geographic.coordinates) &
+               is.character(make_eml_args$geographic.description)) {
+      geographic.coordinates <- eval(make_eml_args$geographic.coordinates)
+      geographic.description <- make_eml_args$geographic.description
+    } else if (is.name(make_eml_args$geographic.coordinates) &
+               is.name(make_eml_args$geographic.description)) {
+      geographic.coordinates <- eval(make_eml_args$geographic.coordinates)
+      geographic.description <- eval(make_eml_args$geographic.description)
+    }
+  }
+  
+  x$template$geographic_coverage.txt$content <- unique.data.frame(
+    rbind(
+      data.frame(
+        geographicDescription = character(0),
+        northBoundingCoordinate = character(0),
+        southBoundingCoordinate = character(0),
+        eastBoundingCoordinate = character(0),
+        westBoundingCoordinate = character(0),
+        stringsAsFactors = F),
+      data.frame(
+        geographicDescription = as.character(geographic.description),
+        northBoundingCoordinate = as.character(geographic.coordinates[1]),
+        southBoundingCoordinate = as.character(geographic.coordinates[3]),
+        eastBoundingCoordinate = as.character(geographic.coordinates[2]),
+        westBoundingCoordinate = as.character(geographic.coordinates[4]),
+        stringsAsFactors = F),
+      data.frame(
+        geographicDescription = x$template$bounding_boxes.txt$content$geographicDescription,
+        northBoundingCoordinate = x$template$bounding_boxes.txt$content$northBoundingCoordinate,
+        southBoundingCoordinate = x$template$bounding_boxes.txt$content$southBoundingCoordinate,
+        eastBoundingCoordinate = x$template$bounding_boxes.txt$content$eastBoundingCoordinate,
+        westBoundingCoordinate = x$template$bounding_boxes.txt$content$westBoundingCoordinate,
+        stringsAsFactors = F),
+      data.frame(
+        geographicDescription = x$template$geographic_coverage.txt$content$geographicDescription,
+        northBoundingCoordinate = x$template$geographic_coverage.txt$content$northBoundingCoordinate,
+        southBoundingCoordinate = x$template$geographic_coverage.txt$content$southBoundingCoordinate,
+        eastBoundingCoordinate = x$template$geographic_coverage.txt$content$eastBoundingCoordinate,
+        westBoundingCoordinate = x$template$geographic_coverage.txt$content$westBoundingCoordinate,
+        stringsAsFactors = F)))
+  if (nrow(x$template$geographic_coverage.txt$content) == 0) {
+    x$template$geographic_coverage.txt <- NULL
+  }
+  
+  x
+}
+
+
+
+
+
+
+
+
+#' Compile provenance from multiple sources
+#'
+#' @param x 
+#'     (list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'     
+#' @return
+#'     \item{x}{(list) With geographic coverage compiled from multiple input 
+#'     sources into the geographic_coverage template.}
+#'
+#' @details 
+#'     Combine multiple sources of provenance and remove duplicate 
+#'     entries. This info can be supplied in the \code{provenance} 
+#'     argument of \code{make_eml()} as well as in the provenance template.
+#'     
+compile_provenance <- function(x) {
+  
+  provenance <- NULL
+  
+  # TODO: Refactor this chunck. Each conditional handles a separate user case.
+  # A better solution would require fewer exceptions.
+  make_eml_args <- try(sys.call(which = -3), silent = TRUE)
+  if (class(make_eml_args) == "call") {
+    if (is.character(make_eml_args$provenance)) {
+      provenance <- make_eml_args$provenance
+    } else if (is.call(make_eml_args$provenance)) {
+      provenance <- eval(make_eml_args$provenance)
+    } else if (is.name(make_eml_args$provenance)) {
+      provenance <- eval(make_eml_args$provenance)
+    }
+  }
+  
+  if (!is.null(provenance)) {
+    x$template$provenance.txt$content <- unique.data.frame(
+      rbind(
+        data.frame(
+          dataPackageID = character(0),
+          systemID = character(0),
+          url = character(0),
+          onlineDescription = character(0),
+          title = character(0),
+          givenName = character(0),
+          middleInitial = character(0),
+          surName = character(0),
+          role = character(0),
+          organizationName = character(0),
+          email = character(0),
+          stringsAsFactors = F),
+        data.frame(
+          dataPackageID = as.character(provenance),
+          systemID = "EDI",
+          url = "",
+          onlineDescription = "",
+          title = "",
+          givenName = "",
+          middleInitial = "",
+          surName = "",
+          role = "",
+          organizationName = "",
+          email = "",
+          stringsAsFactors = F),
+        data.frame(
+          dataPackageID = x$template$provenance.txt$content$dataPackageID,
+          systemID = x$template$provenance.txt$content$systemID,
+          url = x$template$provenance.txt$content$url,
+          onlineDescription = x$template$provenance.txt$content$onlineDescription,
+          title = x$template$provenance.txt$content$title,
+          givenName = x$template$provenance.txt$content$givenName,
+          middleInitial = x$template$provenance.txt$content$middleInitial,
+          surName = x$template$provenance.txt$content$surName,
+          role = x$template$provenance.txt$content$role,
+          organizationName = x$template$provenance.txt$content$organizationName,
+          email = x$template$provenance.txt$content$email,
+          stringsAsFactors = F)))
+    if (nrow(x$template$provenance.txt$content) == 0) {
+      x$template$provenance.txt <- NULL
+    }
+  }
+  x
+}
+
+
+
+
+
+
+
+
+#' View validation issues
+#'
+#' @return
+#'     A message listing any validation issues
+#'     
+#' @description 
+#'     Validation functions return a list of validation issues to the global 
+#'     environment in an \code{issues} object. The \code{view_issues()} 
+#'     function wraps these issues in \code{message()} to provide a human 
+#'     readable form.
+#'     
+#' @export
+#'
+issues <- function() {
+  if (exists("template_issues", envir = .GlobalEnv)) {
+    message(template_issues)
+  } else {
+    message("No issues found")
+  }
+}
+
+
+
+
+
+
+
+
+
+
+read_template_attributes <- function() {
+  data.table::fread(
+    system.file(
+      '/templates/template_characteristics.txt',
+      package = 'EMLassemblyline'), 
+    fill = TRUE,
+    blank.lines.skip = TRUE)
+}
+
 
 
 
@@ -2351,75 +3099,20 @@ remove_empty_templates <- function(x) {
 
 
 
-#' Compile geographic coverage from multiple sources
+#' Validate character encoding of tabular files
 #'
-#' @param x 
-#'     (list) The data and metadata object returned by 
-#'     \code{template_arguments()}.
-#'     
+#' @param f 
+#'     (character) Full path to file
+#'
 #' @return
-#'     \item{x}{(list) With geographic coverage compiled from multiple input 
-#'     sources into the geographic_coverage template.}
-#'
-#' @details 
-#'     Combine multiple sources of geographic coverage and remove duplicate 
-#'     entries. This info can be supplied in the \code{geographic.coverage} and 
-#'     \code{geographic.description} arguments of \code{make_eml()} as well as 
-#'     in the geographic_coverage and bounding_boxes templates.
+#'     (character or NULL) A description of validation issues if any are 
+#'     found, otherwise NULL.
 #'     
-compile_geographic_coverage <- function(x) {
-  
-  geographic.coordinates <- NULL
-  geographic.description <- NULL
-  
-  make_eml_args <- try(sys.call(which = -3), silent = TRUE)
-  if (class(make_eml_args) == "call") {
-    if (is.character(make_eml_args$geographic.coordinates) &
-        is.character(make_eml_args$geographic.description)) {
-      geographic.coordinates <- make_eml_args$geographic.coordinates
-      geographic.description <- make_eml_args$geographic.description
-    } else if (is.call(make_eml_args$geographic.coordinates) &
-               is.character(make_eml_args$geographic.description)) {
-      geographic.coordinates <- eval(make_eml_args$geographic.coordinates)
-      geographic.description <- make_eml_args$geographic.description
-    }
+validate_table_encoding <- function(f) {
+  encoding_guess <- readr::guess_encoding(f, n_max = -1)
+  if (!any(c("UTF-8", "ASCII") %in% encoding_guess)) {
+    "File encoding may not be UTF-8 (or ASCII)."
   }
-  
-  x$template$geographic_coverage.txt$content <- unique.data.frame(
-    rbind(
-      data.frame(
-        geographicDescription = character(0),
-        northBoundingCoordinate = character(0),
-        southBoundingCoordinate = character(0),
-        eastBoundingCoordinate = character(0),
-        westBoundingCoordinate = character(0),
-        stringsAsFactors = F),
-      data.frame(
-        geographicDescription = as.character(geographic.description),
-        northBoundingCoordinate = as.character(geographic.coordinates[1]),
-        southBoundingCoordinate = as.character(geographic.coordinates[3]),
-        eastBoundingCoordinate = as.character(geographic.coordinates[2]),
-        westBoundingCoordinate = as.character(geographic.coordinates[4]),
-        stringsAsFactors = F),
-      data.frame(
-        geographicDescription = x$template$bounding_boxes.txt$content$geographicDescription,
-        northBoundingCoordinate = x$template$bounding_boxes.txt$content$northBoundingCoordinate,
-        southBoundingCoordinate = x$template$bounding_boxes.txt$content$southBoundingCoordinate,
-        eastBoundingCoordinate = x$template$bounding_boxes.txt$content$eastBoundingCoordinate,
-        westBoundingCoordinate = x$template$bounding_boxes.txt$content$westBoundingCoordinate,
-        stringsAsFactors = F),
-      data.frame(
-        geographicDescription = x$template$geographic_coverage.txt$content$geographicDescription,
-        northBoundingCoordinate = x$template$geographic_coverage.txt$content$northBoundingCoordinate,
-        southBoundingCoordinate = x$template$geographic_coverage.txt$content$southBoundingCoordinate,
-        eastBoundingCoordinate = x$template$geographic_coverage.txt$content$eastBoundingCoordinate,
-        westBoundingCoordinate = x$template$geographic_coverage.txt$content$westBoundingCoordinate,
-        stringsAsFactors = F)))
-  if (nrow(x$template$geographic_coverage.txt$content) == 0) {
-    x$template$geographic_coverage.txt <- NULL
-  }
-  
-  x
 }
 
 
@@ -2428,27 +3121,6 @@ compile_geographic_coverage <- function(x) {
 
 
 
-
-#' View validation issues
-#'
-#' @return
-#'     A message listing any validation issues
-#'     
-#' @description 
-#'     Validation functions return a list of validation issues to the global 
-#'     environment in an \code{issues} object. The \code{view_issues()} 
-#'     function wraps these issues in \code{message()} to provide a human 
-#'     readable form.
-#'     
-#' @export
-#'
-issues <- function() {
-  if (exists("template_issues", envir = .GlobalEnv)) {
-    message(template_issues)
-  } else {
-    message("No issues found")
-  }
-}
 
 
 # FIXME: Create function to remove user supplied NA from templates (a common 

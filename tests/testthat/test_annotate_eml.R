@@ -9,6 +9,8 @@ library(EMLassemblyline)
 
 testthat::test_that("from .xml", {
 
+  # Parameterize
+  
   unlink(
     paste0(tempdir(), "/pkg_260"), 
     recursive = TRUE, 
@@ -20,6 +22,15 @@ testthat::test_that("from .xml", {
       package = "EMLassemblyline"),
     to = tempdir(),
     recursive = TRUE)
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260/metadata_templates_overflow/annotations.txt", 
+      package = "EMLassemblyline"),
+    to = paste0(tempdir(), "/pkg_260/metadata_templates"),
+    recursive = TRUE)
+  
+  # Validate schema of annotated EML
   
   eml <- annotate_eml(
     annotations = paste0(
@@ -34,6 +45,8 @@ testthat::test_that("from .xml", {
 
   expect_true(
     EML::eml_validate(eml))
+  
+  # Clean up
   
   unlink(
     paste0(tempdir(), "/pkg_260"), 
@@ -96,13 +109,28 @@ testthat::test_that("metadata templates", {
   
   # Annotate the emld object
   
+  unlink(
+    paste0(tempdir(), "/pkg_260"), 
+    recursive = TRUE, 
+    force = TRUE)
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260", 
+      package = "EMLassemblyline"),
+    to = tempdir(),
+    recursive = TRUE)
+  
+  file.copy(
+    from = system.file(
+      "/examples/pkg_260/metadata_templates_overflow/annotations.txt", 
+      package = "EMLassemblyline"),
+    to = paste0(tempdir(), "/pkg_260/metadata_templates"),
+    recursive = TRUE)
+  
   x <- template_arguments(
-    path = system.file(
-      '/examples/pkg_260/metadata_templates',
-      package = 'EMLassemblyline'),
-    data.path = system.file(
-      '/examples/pkg_260/data_objects',
-      package = 'EMLassemblyline'),
+    path = paste0(tempdir(), "/pkg_260/metadata_templates"), 
+    data.path = paste0(tempdir(), "/pkg_260/data_objects"),
     data.table = c("decomp.csv", "nitrogen.csv"),
     other.entity = c("ancillary_data.zip", "processing_and_analysis.R"))
   
@@ -112,5 +140,6 @@ testthat::test_that("metadata templates", {
   
   expect_true(
     EML::eml_validate(r))
+  
   
 })

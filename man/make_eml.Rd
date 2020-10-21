@@ -72,11 +72,11 @@ as a vector of character strings in the same order as listed in
 \item{data.table.quote.character}{(character; optional) Quote character used in \code{data.table}. If 
 more than one, then supply as a vector of character strings in the same 
 order as listed in \code{data.table}. If the quote character is a quotation, 
-then enter \code{"\\\""}. If the quote character is an apostrophe, then 
-enter \code{"\\'"}. If wanting to include quote characters for some but 
+then enter \code{'"'}. If the quote character is an apostrophe, then 
+enter \code{"'"}. If wanting to include quote characters for some but 
 not all \code{data.table}, then use a "" for those that don't have a 
 quote character (e.g. \code{data.table.quote.character = 
-c("\\'", "")}).}
+c("'", "")}).}
 
 \item{data.table.url}{(character; optional) The publicly accessible URL from which 
 \code{data.table} can be downloaded. If more than one, then supply as 
@@ -106,10 +106,6 @@ a vector of character strings in the same order as listed in
 \code{other.entity}. If wanting to include URLs for some but not all
 \code{other.entity}, then use a "" for those that don't have a URL
 (e.g. \code{other.entity.url = c("", "/url/to/quality_control.R")}).}
-
-\item{provenance}{(character; optional) EDI Data Repository Data package ID(s) 
-corresponding to parent datasets from which this dataset was created 
-(e.g. \code{knb-lter-cap.46.3}).}
 
 \item{user.id}{(character; optional) Repository user identifier. If more than one, 
 then enter as a vector of character strings (e.g. 
@@ -142,6 +138,10 @@ is assigned a UUID.}
 \item{x}{(named list; optional) Alternative input to 
 \code{make_eml()}. Use \code{template_arguments()} 
 to create \code{x}.}
+
+\item{provenance}{(character; optional) EDI Data Repository Data package ID(s) 
+corresponding to parent datasets from which this dataset was created 
+(e.g. \code{knb-lter-cap.46.3}).}
 }
 \value{
 \itemize{

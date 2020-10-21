@@ -73,11 +73,11 @@
 #'     (character; optional) Quote character used in \code{data.table}. If 
 #'     more than one, then supply as a vector of character strings in the same 
 #'     order as listed in \code{data.table}. If the quote character is a quotation, 
-#'     then enter \code{"\\\""}. If the quote character is an apostrophe, then 
-#'     enter \code{"\\'"}. If wanting to include quote characters for some but 
+#'     then enter \code{'"'}. If the quote character is an apostrophe, then 
+#'     enter \code{"'"}. If wanting to include quote characters for some but 
 #'     not all \code{data.table}, then use a "" for those that don't have a 
 #'     quote character (e.g. \code{data.table.quote.character = 
-#'     c("\\'", "")}).
+#'     c("'", "")}).
 #' @param data.table.url
 #'     (character; optional) The publicly accessible URL from which 
 #'     \code{data.table} can be downloaded. If more than one, then supply as 
@@ -220,7 +220,6 @@ make_eml <- function(
   other.entity.name = other.entity,
   other.entity.description = NULL,
   other.entity.url = NULL,
-  provenance = NULL,
   user.id = NULL,
   user.domain = NULL,
   package.id = NULL,
@@ -233,6 +232,7 @@ make_eml <- function(
   data.files.quote.character,
   data.files.url,
   data.url = NULL,
+  provenance = NULL,
   zip.dir,
   zip.dir.description
   ) {
@@ -312,6 +312,14 @@ make_eml <- function(
     warning(
       paste0("Argument 'data.url' is deprecated; please use 'data.table.url' ",
              "and 'other.entity.url' instead."),
+      call. = F)
+  }
+  # FIXME: Remove October 2021
+  if (!is.null(provenance)) {
+    warning(
+      paste0(
+        "Argument 'provenance' is deprecated; please use ",
+        "'template_provanence()' instead."),
       call. = F)
   }
   # FIXME: Remove May 2020
@@ -1022,16 +1030,16 @@ make_eml <- function(
       eml$dataset$coverage$taxonomicCoverage$taxonomicClassification <- tc$taxonomicClassification
     }
   }
-
+  
   # Create <maintenance> ------------------------------------------------------
   
   if (!is.null(maintenance.description)) {
     message("    <maintenance>")
     eml$dataset$maintenance$description <- maintenance.description
   }
-
+  
   # Create <contact> ----------------------------------------------------------
-
+  
   if (!is.null(x$template$personnel.txt)) {
     eml$dataset$contact <- lapply(
       which(x$template$personnel.txt$content$role == "contact"),
@@ -1049,7 +1057,7 @@ make_eml <- function(
       message("    <publisher>")
       set_person(info_row = k, person_role = "publisher")
     })
-
+  
   # Create <methods> ----------------------------------------------------------
   
   if (any(stringr::str_detect(names(x$template), "methods"))) {
@@ -1059,48 +1067,129 @@ make_eml <- function(
         names(x$template)[stringr::str_detect(names(x$template), "methods")]
         ]]$content$methodStep)
   }
-
+  
   # Create <methodStep> (provenance) ------------------------------------------
-  # Get provenance metadata for a data package in the EDI data repository.
-  # FIXME: Support inputs from the provenance.txt metadata template
-  # FIXME: Support provenance metadata models used by other EML based 
-  # repositories
+  # Get provenance metadata from supported systems (repositories) and external 
+  # sources (everything else), then combine as a list of methodStep.
   
-  if (!is.null(provenance)) {
-    o <- lapply(
-      provenance,
-      function(k) {
-        message("      <methodStep> (provenance metadata)")
-        r <- httr::GET(
-          paste0(
-            EDIutils::url_env("production"), 
-            ".lternet.edu/package/provenance/eml/", 
-            stringr::str_replace_all(k, '\\.', '/')))
-        if (r$status_code == 200) {
-          prov <- httr::content(r, encoding = 'UTF-8')
-          # Remove IDs from creator and contact to preempt ID + reference 
-          # errors
-          xml2::xml_set_attr(
-            xml2::xml_find_all(prov, './/dataSource/creator'),
-            'id', NULL)
-          xml2::xml_set_attr(
-            xml2::xml_find_all(prov, './/dataSource/contact'),
-            'id', NULL)
-          # Write .xml to tempdir() and read back in as an emld list object
-          # to be added to the dataset emld list under construction here
-          xml2::write_xml(prov, paste0(tempdir(), "/provenance_metadata.xml"))
-          prov <- EML::read_eml(paste0(tempdir(), "/provenance_metadata.xml"))
-          prov$`@context` <- NULL
-          prov$`@type` <- NULL
-          eml$dataset$methods$methodStep[[
-            length(eml$dataset$methods$methodStep)+1]] <<- prov
-          suppressMessages(file.remove(paste0(tempdir(), "/provenance_metadata.xml")))
-        } else {
-          message("Unable to get provenance metadata.")
-        }
-      })
+  # TODO: Support provenance metadata models used by other EML based 
+  # repositories.
+  
+  if (!is.null(x$template$provenance.txt$content)) {
+    
+    # Identify internal sources
+    internal_sources <- x$template$provenance.txt$content[
+      x$template$provenance.txt$content$dataPackageID != "", ]
+    
+    # Parse internal sources
+    if (nrow(internal_sources) != 0) {
+      data_package_identifiers <- unique(internal_sources$dataPackageID)
+      o <- lapply(
+        data_package_identifiers,
+        function(k) {
+          message("      <methodStep> (provenance metadata)")
+          r <- httr::GET(
+            paste0(
+              EDIutils::url_env("production"),
+              ".lternet.edu/package/provenance/eml/",
+              stringr::str_replace_all(k, '\\.', '/')))
+          if (r$status_code == 200) {
+            prov <- httr::content(r, encoding = 'UTF-8')
+            # Remove IDs from creator and contact to preempt ID + reference
+            # errors
+            xml2::xml_set_attr(
+              xml2::xml_find_all(prov, './/dataSource/creator'),
+              'id', NULL)
+            xml2::xml_set_attr(
+              xml2::xml_find_all(prov, './/dataSource/contact'),
+              'id', NULL)
+            # Write .xml to tempdir() and read back in as an emld list object
+            # to be added to the dataset emld list under construction here
+            xml2::write_xml(prov, paste0(tempdir(), "/provenance_metadata.xml"))
+            prov <- EML::read_eml(paste0(tempdir(), "/provenance_metadata.xml"))
+            prov$`@context` <- NULL
+            prov$`@type` <- NULL
+            eml$dataset$methods$methodStep[[
+              length(eml$dataset$methods$methodStep)+1]] <<- prov
+            suppressMessages(file.remove(paste0(tempdir(), "/provenance_metadata.xml")))
+          } else {
+            message("Unable to get provenance metadata.")
+          }
+        })
+    }
+    
+    # Identify external sources
+    external_sources <- x$template$provenance.txt$content[
+      x$template$provenance.txt$content$dataPackageID == "", ]
+    
+    # Parse external sources.
+    # FIXME: Some elements require an explicit NULL value to prevent them from 
+    # being displayed in the returned EML as closing tags (i.e. </tag>). This 
+    # is an issue in the EML R package. Is there a more concise way of handling
+    # this issue than implemented here?
+
+    if (nrow(external_sources) != 0) {
+      source_titles <- unique(external_sources$title)
+      provenance <- lapply(
+        source_titles,
+        function(title) {
+          message("      <methodStep> (provenance metadata)")
+          d <- x$template$provenance.txt$content[
+            x$template$provenance.txt$content$title == title, ]
+          # Initialize onlineDescription
+          online_description <- d$onlineDescription[1]
+          if (online_description == "") {
+            online_description <- NULL
+          }
+          # Initialize provenance node
+
+          out <- list(
+            dataSource = list(
+              title = title,
+              creator = NULL,
+              distribution = list(
+                online = list(
+                  onlineDescription = online_description,
+                  url = d[1, "url"])),
+              contact = NULL),
+            description = "This provenance metadata does not contain entity specific information.")
+          for (i in 1:nrow(d)) {
+            # Initialize individualName
+            individual_name <- list(
+              givenName = trimws(paste(d$givenName[i], d$middleInitial[i])),
+              surName = d$surName[i])
+            if (individual_name$givenName == "" &
+                individual_name$surName == "") {
+              individual_name <- NULL
+            }
+            # Initialize organizationName
+            organization_name <- d$organizationName[i]
+            if (organization_name == "") {
+              organization_name <- NULL
+            }
+            # Add creator
+            if (d$role[i] == "creator") {
+              out$dataSource$creator[[length(out$dataSource$creator) + 1]] <- 
+                list(
+                  individualName = individual_name,
+                  organizationName = organization_name)
+            }
+            # Add contact
+            if (d$role[i] == "contact") {
+              out$dataSource$contact[[length(out$dataSource$contact) + 1]] <- 
+                list(
+                  individualName = individual_name,
+                  organizationName = organization_name)
+            }
+          }
+          out
+        })
+      # Add to eml
+      eml$dataset$methods$methodStep <- c(eml$dataset$methods$methodStep, provenance)
+    }
+
   }
-  
+
   # Create <project> ----------------------------------------------------------
   # The project metadata corresponding to the first "pi" listed in 
   # personnel.txt will become the primary project. Project metadata listed 
@@ -1389,12 +1478,13 @@ make_eml <- function(
   }
   
   # Create <annotations> ------------------------------------------------------
-  
+
   if (any(stringr::str_detect(names(x$template), "annotations.txt"))) {
     message("  <annotations>")
-    eml <- annotate_eml(
-      annotations = x$template$annotations.txt$content,
-      eml.in = eml)
+    eml <- suppressMessages(
+      annotate_eml(
+        annotations = x$template$annotations.txt$content,
+        eml.in = eml))
   }
   
   # Write EML -----------------------------------------------------------------
