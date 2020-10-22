@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.18.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.19.0</span>
       </span>
     </div>
 
@@ -141,6 +141,53 @@
       <small>Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="emlassemblyline-2190" class="section level1">
+<h1 class="page-header" data-toc-text="2.19.0">
+<a href="#emlassemblyline-2190" class="anchor"></a>EMLassemblyline 2.19.0</h1>
+<div id="enhancement" class="section level3">
+<h3 class="hasAnchor">
+<a href="#enhancement" class="anchor"></a>Enhancement</h3>
+<ul>
+<li>
+<p><strong>Semantic annotation:</strong> User can now annotate their EML. This implementation supports two use cases:</p>
+<ol>
+<li>New EML … created by the EMLassemblyline workflow:
+<ul>
+<li>Complete all metadata templates for your dataset (as usual)</li>
+<li>Run <code><a href="../reference/template_annotations.html">template_annotations()</a></code> to create the annotations template
+<ul>
+<li>The annotations template (annotations.txt) reports the annotatable elements within your metadata and assigns default predicate annotations. You’ll have to add object annotations from ontologies of your choosing. You can remove annotations by deleting rows and add annotations by copying a subject’s row, pasting it to a new line, then modifying the object annotation fields.</li>
+<li>Default annotations can be changed by the user</li>
+<li>Instructions for creating annotations.txt from scratch are included in the function docs (for users gathering annotations in other ways).</li>
+<li>Recurring nodes (e.g. ResponsibleParty) only require one set of annotations within annotations.txt</li>
+</ul>
+</li>
+<li>Run <code><a href="../reference/make_eml.html">make_eml()</a></code>
+</li>
+</ul>
+</li>
+<li>Old EML … created in other ways:
+<ul>
+<li>Run template_annotations() for your EML file</li>
+<li>Run annotate_eml() to get an annotated revision of your EML file</li>
+</ul>
+</li>
+</ol>
+<p><em>Note: All annotated elements are assigned ids and their annotations are placed both immediately under the parent element (subject) and within the /eml/annotations node through id+reference pairs. This redundant approach supports variation in where EML metadata consumers prefer to harvest this information and supports annotation of EML elements requiring id+reference pairs.</em></p>
+</li>
+<li><p><strong>Provenance metadata template:</strong> This extends support for provenance metadata of data sources external to the EDI Data Repository. Create the template with <code><a href="../reference/template_provenance.html">template_provenance()</a></code>. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/8">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/8'>#8</a></a></p></li>
+<li><p><strong>Allow creation of partial EML (part 2):</strong> This completes implementation of issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/34'>#34</a> by moving all evaluation of inputs to make_eml() (and associated warning and error handling) from various locations in the code base to validate_templates(). With this implementation comes a new approach to communicating input issues to the user via template_issues, an object written to the global environment and formatted into a human readable report (message) when passed through issues().</p></li>
+</ul>
+</div>
+<div id="enhancement-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#enhancement-1" class="anchor"></a>Enhancement</h3>
+<ul>
+<li>
+<strong>UTF-8 character encoding:</strong> EMLassemblyline extracts metadata from data objects and may malform this content if the character encoding is not supported. In an attempt to minimize this issue and convert metadata into the UTF-8 encoding expected by EML, the Base R function <code><a href="https://rdrr.io/r/base/Encoding.html">enc2utf8()</a></code> has been implemented anywhere metadata is extracted from data objects and written to file (i.e. templating functions) and anywhere template content is added to the EML (i.e. <code><a href="../reference/make_eml.html">make_eml()</a></code>). Because this may create EML that inaccuratly represents the data object it describes (e.g. categorical variables encoded in UTF-8 but the data encoded in something else) warnings are now issued when the input data object is not UTF-8 (or ASCII) encoded as estimated by <code><a href="https://readr.tidyverse.org/reference/encoding.html">readr::guess_encoding()</a></code>. Additionally, EMLassemblyline documentation now emphasizes the importance of encoding data objects in UTF-8 first and then beginning the metadata creation process. An encoding conversion of TextType metadata (i.e. abstract, methods, additional_info) has not yet been implemented.</li>
+</ul>
+</div>
+</div>
     <div id="emlassemblyline-2182" class="section level1">
 <h1 class="page-header" data-toc-text="2.18.2">
 <a href="#emlassemblyline-2182" class="anchor"></a>EMLassemblyline 2.18.2</h1>
@@ -168,9 +215,9 @@
     <div id="emlassemblyline-2180" class="section level1">
 <h1 class="page-header" data-toc-text="2.18.0">
 <a href="#emlassemblyline-2180" class="anchor"></a>EMLassemblyline 2.18.0</h1>
-<div id="enhancement" class="section level3">
+<div id="enhancement-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#enhancement" class="anchor"></a>Enhancement</h3>
+<a href="#enhancement-2" class="anchor"></a>Enhancement</h3>
 <ul>
 <li>
 <strong>Allow creation of partial EML:</strong> During the draft process it is very useful to see a partial EML document, even if incomplete or invalid. Additionally, developers using EMLassemblyline as a backend (e.g. <a href="https://github.com/earnaud/MetaShARK-v2">MetaShARK</a> and <a href="https://github.com/lkuiucsb/Excel-to-EML">Excel-to-EML</a>) may not want the current set of input requirements for their applications. To accomodate these use cases, validation checks on inputs to <code><a href="../reference/make_eml.html">make_eml()</a></code> (often communicating best practice recommendations) have been refactored to return warnings rather than errors. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/34">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/34'>#34</a></a>.</li>
@@ -190,9 +237,9 @@
     <div id="emlassemblyline-2170" class="section level1">
 <h1 class="page-header" data-toc-text="2.17.0">
 <a href="#emlassemblyline-2170" class="anchor"></a>EMLassemblyline 2.17.0</h1>
-<div id="enhancement-1" class="section level3">
+<div id="enhancement-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#enhancement-1" class="anchor"></a>Enhancement</h3>
+<a href="#enhancement-3" class="anchor"></a>Enhancement</h3>
 <ul>
 <li>
 <strong>Create EML for non-EDI repositories:</strong> Create EML for non-EDI repositories by refactoring the logic around the <code><a href="../reference/make_eml.html">make_eml()</a></code> function arguments <code>user.id</code>, <code>user.domain</code>, and <code>package.id</code>. Details are listed in the function documentation.</li>
@@ -246,9 +293,9 @@
     <div id="emlassemblyline-2140" class="section level1">
 <h1 class="page-header" data-toc-text="2.14.0">
 <a href="#emlassemblyline-2140" class="anchor"></a>EMLassemblyline 2.14.0</h1>
-<div id="enhancement-2" class="section level3">
+<div id="enhancement-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#enhancement-2" class="anchor"></a>Enhancement</h3>
+<a href="#enhancement-4" class="anchor"></a>Enhancement</h3>
 <ul>
 <li>
 <strong>Boiler plate EMLassemblyline process:</strong> Add boilerplate function calls to /inst/templates/run_EMLassemblyline.R. This script is added to the users workspace via <code><a href="../reference/template_directories.html">template_directories()</a></code>. The boilerplate is meant to be a reminder and save the user a little time. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/36">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/36'>#36</a></a>.</li>
@@ -270,9 +317,9 @@
     <div id="emlassemblyline-2130" class="section level1">
 <h1 class="page-header" data-toc-text="2.13.0">
 <a href="#emlassemblyline-2130" class="anchor"></a>EMLassemblyline 2.13.0</h1>
-<div id="enhancement-3" class="section level3">
+<div id="enhancement-5" class="section level3">
 <h3 class="hasAnchor">
-<a href="#enhancement-3" class="anchor"></a>Enhancement</h3>
+<a href="#enhancement-5" class="anchor"></a>Enhancement</h3>
 <ul>
 <li>
 <strong>TextType:</strong> Conversion of abstract.docx, methods.docx, and additional_info.docx to EML has been improved.</li>
@@ -328,9 +375,9 @@
 <strong>Template reader:</strong> A bug in the tabular template reader has been fixed (<a href="https://github.com/EDIorg/EMLassemblyline/commit/42276a0a696a8c6e743cc15e28f4e9c22df1100e">see commit for details</a>).</li>
 </ul>
 </div>
-<div id="enhancement-4" class="section level3">
+<div id="enhancement-6" class="section level3">
 <h3 class="hasAnchor">
-<a href="#enhancement-4" class="anchor"></a>Enhancement</h3>
+<a href="#enhancement-6" class="anchor"></a>Enhancement</h3>
 <ul>
 <li>
 <strong><code><a href="../reference/make_eml.html">make_eml()</a></code> code:</strong> (For developers) The underlying code of <code><a href="../reference/make_eml.html">make_eml()</a></code> is now more concise and understandable.</li>
@@ -354,9 +401,9 @@
     <div id="emlassemblyline-2110" class="section level1">
 <h1 class="page-header" data-toc-text="2.11.0">
 <a href="#emlassemblyline-2110" class="anchor"></a>EMLassemblyline 2.11.0</h1>
-<div id="enhancement-5" class="section level3">
+<div id="enhancement-7" class="section level3">
 <h3 class="hasAnchor">
-<a href="#enhancement-5" class="anchor"></a>Enhancement</h3>
+<a href="#enhancement-7" class="anchor"></a>Enhancement</h3>
 <ul>
 <li>
 <strong>NAs in templates:</strong> Users often add NAs to templates where EMLassemblyline expects "". This enhancement ignores these extraneous NAs.</li>
@@ -390,9 +437,9 @@
     <div id="emlassemblyline-2100" class="section level1">
 <h1 class="page-header" data-toc-text="2.10.0">
 <a href="#emlassemblyline-2100" class="anchor"></a>EMLassemblyline 2.10.0</h1>
-<div id="enhancement-6" class="section level3">
+<div id="enhancement-8" class="section level3">
 <h3 class="hasAnchor">
-<a href="#enhancement-6" class="anchor"></a>Enhancement</h3>
+<a href="#enhancement-8" class="anchor"></a>Enhancement</h3>
 <ul>
 <li>
 <strong>Schema validation:</strong> A schema validation error sporadically occurs under EML 2.1.1. Upgrading to EML 2.2.0 fixes this (<a href="https://github.com/EDIorg/EMLassemblyline/issues/59">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/59'>#59</a></a>).</li>
@@ -402,9 +449,9 @@
     <div id="emlassemblyline-290" class="section level1">
 <h1 class="page-header" data-toc-text="2.9.0">
 <a href="#emlassemblyline-290" class="anchor"></a>EMLassemblyline 2.9.0</h1>
-<div id="enhancement-7" class="section level3">
+<div id="enhancement-9" class="section level3">
 <h3 class="hasAnchor">
-<a href="#enhancement-7" class="anchor"></a>Enhancement</h3>
+<a href="#enhancement-9" class="anchor"></a>Enhancement</h3>
 <ul>
 <li>
 <strong>Template checks:</strong> A new suite of checks on metadata template content have been added to more effectively communicate issues and reduce errors. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/6">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/6'>#6</a></a>, <a href="https://github.com/EDIorg/EMLassemblyline/issues/35">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/35'>#35</a></a>, <a href="https://github.com/EDIorg/EMLassemblyline/issues/37">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/37'>#37</a></a>, and <a href="https://github.com/EDIorg/EMLassemblyline/issues/53">issue # 53</a>.</li>
@@ -414,9 +461,9 @@
     <div id="emlassemblyline-280" class="section level1">
 <h1 class="page-header" data-toc-text="2.8.0">
 <a href="#emlassemblyline-280" class="anchor"></a>EMLassemblyline 2.8.0</h1>
-<div id="enhancement-8" class="section level3">
+<div id="enhancement-10" class="section level3">
 <h3 class="hasAnchor">
-<a href="#enhancement-8" class="anchor"></a>Enhancement</h3>
+<a href="#enhancement-10" class="anchor"></a>Enhancement</h3>
 <ul>
 <li>
 <strong>Online distribution:</strong> The previous implementation for providing URLs by which the data can be publicly downloaded required all data objects to be co-located in the same directory, which is too restrictive. Now URLs can be explicitly listed for each data object. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/56">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/56'>#56</a></a>.</li>

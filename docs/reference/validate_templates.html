@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Validate metadata template content — validate_templates" />
-<meta property="og:description" content="Validate the content of `EMLassembline` metadata templates." />
+<meta property="og:description" content="Validate metadata template content" />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.18.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.19.0</span>
       </span>
     </div>
 
@@ -144,7 +144,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Validate the content of `EMLassembline` metadata templates.</p>
+    <p>Validate metadata template content</p>
     </div>
 
     <pre class="usage"><span class='fu'>validate_templates</span>(<span class='no'>fun.name</span>, <span class='no'>x</span>)</pre>
@@ -154,18 +154,37 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>fun.name</th>
-      <td><p>(character) Function name passed to `validate_x` with 
-`as.character(match.call()[[1]])`.</p></td>
+      <td><p>(character) Function name from which <code>validate_templates</code> is 
+called</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>(named list) Use <code><a href='template_arguments.html'>template_arguments()</a></code> to create <code>x</code>.</p></td>
+      <td><p>(named list) The data and metadata object returned by 
+<code><a href='template_arguments.html'>template_arguments()</a></code>.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    
+
+<dt>template_issues</dt><dd><p>Any issues found in the validation process and 
+returned as a character vector. This object can be saved for later use 
+and viewed in a human readable form with <code><a href='issues.html'>issues()</a></code></p></dd>.
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Validation checks are function specific.</p>
+    <p>Each template has a unique set of metadata providing valuable 
+    information about corresponding data objects. This function checks
+    for metadata content according to metadata best practices and the needs
+    of downstream processes in the EMLassemblyline. Each set of checks is 
+    applied within the scope of the calling function (i.e. <code>fun.name</code>),
+    which each has a unique set of needs and constraints. If the needs of 
+    down stream processes are not met, then the template content is modified 
+    and a message returned to the user.</p>    
+<p>All issues are compiled into a single report and returned to the user 
+    with a warning. This approach of not "failing fast" allows the user to 
+    address several issues at once.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.18.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.19.0</span>
       </span>
     </div>
 
@@ -243,11 +243,11 @@ as a vector of character strings in the same order as listed in
       <td><p>(character; optional) Quote character used in <code>data.table</code>. If 
 more than one, then supply as a vector of character strings in the same 
 order as listed in <code>data.table</code>. If the quote character is a quotation, 
-then enter <code>"\""</code>. If the quote character is an apostrophe, then 
-enter <code>"\'"</code>. If wanting to include quote characters for some but 
+then enter <code>'"'</code>. If the quote character is an apostrophe, then 
+enter <code>"'"</code>. If wanting to include quote characters for some but 
 not all <code>data.table</code>, then use a "" for those that don't have a 
 quote character (e.g. <code>data.table.quote.character = 
-c("\'", "")</code>).</p></td>
+c("'", "")</code>).</p></td>
     </tr>
     <tr>
       <th>data.table.url</th>
@@ -287,12 +287,6 @@ a vector of character strings in the same order as listed in
 <code>other.entity</code>. If wanting to include URLs for some but not all
 <code>other.entity</code>, then use a "" for those that don't have a URL
 (e.g. <code>other.entity.url = c("", "/url/to/quality_control.R")</code>).</p></td>
-    </tr>
-    <tr>
-      <th>provenance</th>
-      <td><p>(character; optional) EDI Data Repository Data package ID(s) 
-corresponding to parent datasets from which this dataset was created 
-(e.g. <code>knb-lter-cap.46.3</code>).</p></td>
     </tr>
     <tr>
       <th>user.id</th>
@@ -338,6 +332,12 @@ is assigned a UUID.</p></td>
 <code>make_eml()</code>. Use <code><a href='template_arguments.html'>template_arguments()</a></code> 
 to create <code>x</code>.</p></td>
     </tr>
+    <tr>
+      <th>provenance</th>
+      <td><p>(character; optional) EDI Data Repository Data package ID(s) 
+corresponding to parent datasets from which this dataset was created 
+(e.g. <code>knb-lter-cap.46.3</code>).</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -356,7 +356,14 @@ to create <code>x</code>.</p></td>
     adds all the metadata content to locations in the EML schema according 
     with best practice recommendations of scientists, data managers, and 
     data repositories. The EML is then validated against the schema and 
-    written to file.</p>
+    written to file.</p>    
+<p>Character encodings in tabular metadata templates are converted to UTF-8 
+    via <code><a href='https://rdrr.io/r/base/Encoding.html'>enc2utf8()</a></code>. Characters in TextType metadata templates are not
+    yet converted. Note: This may lead to an inaccuracy and disconnect 
+    between values in the data objects and what is reported in the EML (e.g.
+    a categorical variable listed in the EML may not be the same as it's 
+    corresponding value in the data object). For this reason it's important 
+    to work with UTF-8 encoded data and metadata.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Initialize data package directory for make_eml()</span>
@@ -382,7 +389,118 @@ to create <code>x</code>.</p></td>
   <span class='kw'>other.entity.description</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'Ancillary data'</span>, <span class='st'>'Data processing and analysis script'</span>),
   <span class='kw'>user.id</span> <span class='kw'>=</span> <span class='st'>'csmith'</span>,
   <span class='kw'>user.domain</span> <span class='kw'>=</span> <span class='st'>'EDI'</span>,
-  <span class='kw'>package.id</span> <span class='kw'>=</span> <span class='st'>'edi.260.3'</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Data table names are missing. A short name for each data table is recommended. Defaulting to data table file names.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Other entity names are missing. A short name for each other entity is recommended. Defaulting to other entity file names.</span></div><div class='output co'>#&gt; <span class='message'>Making EML ...</span></div><div class='output co'>#&gt; <span class='message'>&lt;eml&gt;</span></div><div class='output co'>#&gt; <span class='message'>  &lt;access&gt;</span></div><div class='output co'>#&gt; <span class='message'>  &lt;dataset&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;title&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;creator&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;creator&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;creator&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;creator&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;creator&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;creator&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;creator&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;creator&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;creator&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;creator&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;creator&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;associatedParty&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;associatedParty&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;associatedParty&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;associatedParty&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;pubDate&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;abstract&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;keywordSet&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;keywordSet&gt;</span></div><div class='output co'>#&gt; <span class='message'>   &lt;additionalInfo&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;intellectualRights&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;coverage&gt;</span></div><div class='output co'>#&gt; <span class='message'>        &lt;geographicCoverage&gt;</span></div><div class='output co'>#&gt; <span class='message'>        &lt;geographicCoverage&gt;</span></div><div class='output co'>#&gt; <span class='message'>        &lt;geographicCoverage&gt;</span></div><div class='output co'>#&gt; <span class='message'>        &lt;geographicCoverage&gt;</span></div><div class='output co'>#&gt; <span class='message'>        &lt;geographicCoverage&gt;</span></div><div class='output co'>#&gt; <span class='message'>        &lt;geographicCoverage&gt;</span></div><div class='output co'>#&gt; <span class='message'>        &lt;geographicCoverage&gt;</span></div><div class='output co'>#&gt; <span class='message'>        &lt;geographicCoverage&gt;</span></div><div class='output co'>#&gt; <span class='message'>        &lt;geographicCoverage&gt;</span></div><div class='output co'>#&gt; <span class='message'>        &lt;geographicCoverage&gt;</span></div><div class='output co'>#&gt; <span class='message'>      &lt;temporalCoverage&gt;</span></div><div class='output co'>#&gt; <span class='message'>      &lt;taxonomicCoverage&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;maintenance&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;contact&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;contact&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;contact&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;methods&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;project&gt;</span></div><div class='output co'>#&gt; <span class='message'>      &lt;relatedProject&gt;</span></div><div class='output co'>#&gt; <span class='message'>      &lt;relatedProject&gt;</span></div><div class='output co'>#&gt; <span class='message'>      &lt;relatedProject&gt;</span></div><div class='output co'>#&gt; <span class='message'>      &lt;relatedProject&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;dataTable&gt; (decomp.csv)</span></div><div class='output co'>#&gt; <span class='message'>    &lt;dataTable&gt; (nitrogen.csv)</span></div><div class='output co'>#&gt; <span class='message'>    &lt;otherEntity&gt; (ancillary_data.zip)</span></div><div class='output co'>#&gt; <span class='message'>    &lt;otherEntity&gt; (processing_and_analysis.R)</span></div><div class='output co'>#&gt; <span class='message'>  &lt;additionalMetadata&gt;</span></div><div class='output co'>#&gt; <span class='message'>&lt;/eml&gt;</span></div><div class='output co'>#&gt; <span class='message'>Writing EML (edi.260.3.xml)</span></div><div class='output co'>#&gt; <span class='message'>Validating EML</span></div><div class='output co'>#&gt; <span class='message'>  Validation passed :)</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
+  <span class='kw'>package.id</span> <span class='kw'>=</span> <span class='st'>'edi.260.3'</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Data table names are missing. A short name for each data table is recommended. Defaulting to data table file names.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Other entity names are missing. A short name for each other entity is recommended. Defaulting to other entity file names.</span></div><div class='output co'>#&gt; <span class='message'>Checking inputs</span></div><div class='output co'>#&gt; <span class='message'>Making EML ...</span></div><div class='output co'>#&gt; <span class='message'>&lt;eml&gt;</span></div><div class='output co'>#&gt; <span class='message'>  &lt;access&gt;</span></div><div class='output co'>#&gt; <span class='message'>  &lt;dataset&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;title&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;creator&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;creator&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;creator&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;creator&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;creator&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;creator&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;creator&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;creator&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;creator&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;creator&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;creator&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;associatedParty&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;associatedParty&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;associatedParty&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;associatedParty&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;pubDate&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;abstract&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;keywordSet&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;keywordSet&gt;</span></div><div class='output co'>#&gt; <span class='message'>   &lt;additionalInfo&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;intellectualRights&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;coverage&gt;</span></div><div class='output co'>#&gt; <span class='message'>        &lt;geographicCoverage&gt;</span></div><div class='output co'>#&gt; <span class='message'>        &lt;geographicCoverage&gt;</span></div><div class='output co'>#&gt; <span class='message'>        &lt;geographicCoverage&gt;</span></div><div class='output co'>#&gt; <span class='message'>        &lt;geographicCoverage&gt;</span></div><div class='output co'>#&gt; <span class='message'>        &lt;geographicCoverage&gt;</span></div><div class='output co'>#&gt; <span class='message'>        &lt;geographicCoverage&gt;</span></div><div class='output co'>#&gt; <span class='message'>        &lt;geographicCoverage&gt;</span></div><div class='output co'>#&gt; <span class='message'>        &lt;geographicCoverage&gt;</span></div><div class='output co'>#&gt; <span class='message'>        &lt;geographicCoverage&gt;</span></div><div class='output co'>#&gt; <span class='message'>        &lt;geographicCoverage&gt;</span></div><div class='output co'>#&gt; <span class='message'>      &lt;temporalCoverage&gt;</span></div><div class='output co'>#&gt; <span class='message'>      &lt;taxonomicCoverage&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;maintenance&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;contact&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;contact&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;contact&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;methods&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;project&gt;</span></div><div class='output co'>#&gt; <span class='message'>      &lt;relatedProject&gt;</span></div><div class='output co'>#&gt; <span class='message'>      &lt;relatedProject&gt;</span></div><div class='output co'>#&gt; <span class='message'>      &lt;relatedProject&gt;</span></div><div class='output co'>#&gt; <span class='message'>    &lt;dataTable&gt; (decomp.csv)</span></div><div class='output co'>#&gt; <span class='message'>    &lt;dataTable&gt; (nitrogen.csv)</span></div><div class='output co'>#&gt; <span class='message'>    &lt;otherEntity&gt; (ancillary_data.zip)</span></div><div class='output co'>#&gt; <span class='message'>    &lt;otherEntity&gt; (processing_and_analysis.R)</span></div><div class='output co'>#&gt; <span class='message'>  &lt;additionalMetadata&gt;</span></div><div class='output co'>#&gt; <span class='message'>  &lt;annotations&gt;</span></div><div class='output co'>#&gt; <span class='message'>Checking inputs</span></div><div class='output co'>#&gt; <span class='message'>Kelman R Wieder</span></div><div class='output co'>#&gt; <span class='message'>Dale H Vitt</span></div><div class='output co'>#&gt; <span class='message'>Melanie A Vile</span></div><div class='output co'>#&gt; <span class='message'>Jeremy A Graham</span></div><div class='output co'>#&gt; <span class='message'>Jeremy A Hartsock</span></div><div class='output co'>#&gt; <span class='message'>Hope Fillingim</span></div><div class='output co'>#&gt; <span class='message'>Melissa House</span></div><div class='output co'>#&gt; <span class='message'>James C Quinn</span></div><div class='output co'>#&gt; <span class='message'>Kimberli D Scott</span></div><div class='output co'>#&gt; <span class='message'>Meaghan Petix</span></div><div class='output co'>#&gt; <span class='message'>Kelly J McMillen</span></div><div class='output co'>#&gt; <span class='message'>Kelman R Wieder</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; </div><div class='output co'>#&gt; </div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>James C Quinn</span></div><div class='output co'>#&gt; <span class='message'>Jane Doe</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Called from: append_rp(k)
+#&gt; debug: message(sub_i)</div><div class='output co'>#&gt; <span class='message'>Error in n$individualName : $ operator is invalid for atomic vectors</span></div><div class='output co'>#&gt; debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+#&gt;     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+#&gt;         uuid::UUIDgenerate(use.time = TRUE))
+#&gt;     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+#&gt;         sub_i, c("element", "context", "subject", "predicate_label", 
+#&gt;         "predicate_uri", "object_label", "object_uri")])))
+#&gt; }
+#&gt; debug: n
+#&gt; Called from: append_rp(k)
+#&gt; debug: message(sub_i)</div><div class='output co'>#&gt; <span class='message'>Error in n$individualName : $ operator is invalid for atomic vectors</span></div><div class='output co'>#&gt; debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+#&gt;     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+#&gt;         uuid::UUIDgenerate(use.time = TRUE))
+#&gt;     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+#&gt;         sub_i, c("element", "context", "subject", "predicate_label", 
+#&gt;         "predicate_uri", "object_label", "object_uri")])))
+#&gt; }
+#&gt; debug: n
+#&gt; Called from: append_rp(k)
+#&gt; debug: message(sub_i)</div><div class='output co'>#&gt; <span class='message'>Error in n$individualName : $ operator is invalid for atomic vectors</span></div><div class='output co'>#&gt; debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+#&gt;     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+#&gt;         uuid::UUIDgenerate(use.time = TRUE))
+#&gt;     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+#&gt;         sub_i, c("element", "context", "subject", "predicate_label", 
+#&gt;         "predicate_uri", "object_label", "object_uri")])))
+#&gt; }
+#&gt; debug: n</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Called from: annotate_element("ResponsibleParty")
+#&gt; debug: if (!is.null(eml$dataset$project$relatedProject)) {
+#&gt;     eml$dataset$project$relatedProject &lt;- lapply(eml$dataset$project$relatedProject, 
+#&gt;         function(k) {
+#&gt;             k$personnel &lt;- lapply(k$personnel, function(m) {
+#&gt;                 append_rp(m)
+#&gt;             })
+#&gt;             k
+#&gt;         })
+#&gt; }
+#&gt; debug: eml$dataset$project$relatedProject &lt;- lapply(eml$dataset$project$relatedProject, 
+#&gt;     function(k) {
+#&gt;         k$personnel &lt;- lapply(k$personnel, function(m) {
+#&gt;             append_rp(m)
+#&gt;         })
+#&gt;         k
+#&gt;     })</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Called from: append_rp(m)
+#&gt; debug: message(sub_i)</div><div class='output co'>#&gt; <span class='message'>Error in n$individualName : $ operator is invalid for atomic vectors</span></div><div class='output co'>#&gt; debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+#&gt;     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+#&gt;         uuid::UUIDgenerate(use.time = TRUE))
+#&gt;     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+#&gt;         sub_i, c("element", "context", "subject", "predicate_label", 
+#&gt;         "predicate_uri", "object_label", "object_uri")])))
+#&gt; }
+#&gt; debug: n
+#&gt; Called from: append_rp(m)
+#&gt; debug: message(sub_i)</div><div class='output co'>#&gt; <span class='message'>Error in n$individualName : $ operator is invalid for atomic vectors</span></div><div class='output co'>#&gt; debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+#&gt;     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+#&gt;         uuid::UUIDgenerate(use.time = TRUE))
+#&gt;     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+#&gt;         sub_i, c("element", "context", "subject", "predicate_label", 
+#&gt;         "predicate_uri", "object_label", "object_uri")])))
+#&gt; }
+#&gt; debug: n
+#&gt; Called from: append_rp(m)
+#&gt; debug: message(sub_i)</div><div class='output co'>#&gt; <span class='message'>Error in n$individualName : $ operator is invalid for atomic vectors</span></div><div class='output co'>#&gt; debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+#&gt;     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+#&gt;         uuid::UUIDgenerate(use.time = TRUE))
+#&gt;     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+#&gt;         sub_i, c("element", "context", "subject", "predicate_label", 
+#&gt;         "predicate_uri", "object_label", "object_uri")])))
+#&gt; }
+#&gt; debug: n</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Called from: append_rp(m)
+#&gt; debug: message(sub_i)</div><div class='output co'>#&gt; <span class='message'>Error in n$individualName : $ operator is invalid for atomic vectors</span></div><div class='output co'>#&gt; debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+#&gt;     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+#&gt;         uuid::UUIDgenerate(use.time = TRUE))
+#&gt;     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+#&gt;         sub_i, c("element", "context", "subject", "predicate_label", 
+#&gt;         "predicate_uri", "object_label", "object_uri")])))
+#&gt; }
+#&gt; debug: n</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Called from: append_rp(m)
+#&gt; debug: message(sub_i)</div><div class='output co'>#&gt; <span class='message'>Error in n$individualName : $ operator is invalid for atomic vectors</span></div><div class='output co'>#&gt; debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+#&gt;     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+#&gt;         uuid::UUIDgenerate(use.time = TRUE))
+#&gt;     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+#&gt;         sub_i, c("element", "context", "subject", "predicate_label", 
+#&gt;         "predicate_uri", "object_label", "object_uri")])))
+#&gt; }
+#&gt; debug: n</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Called from: append_rp(m)
+#&gt; debug: message(sub_i)</div><div class='output co'>#&gt; <span class='message'>Error in n$individualName : $ operator is invalid for atomic vectors</span></div><div class='output co'>#&gt; debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+#&gt;     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+#&gt;         uuid::UUIDgenerate(use.time = TRUE))
+#&gt;     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+#&gt;         sub_i, c("element", "context", "subject", "predicate_label", 
+#&gt;         "predicate_uri", "object_label", "object_uri")])))
+#&gt; }
+#&gt; debug: n
+#&gt; Called from: append_rp(m)
+#&gt; debug: message(sub_i)</div><div class='output co'>#&gt; <span class='message'>Error in n$individualName : $ operator is invalid for atomic vectors</span></div><div class='output co'>#&gt; debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+#&gt;     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+#&gt;         uuid::UUIDgenerate(use.time = TRUE))
+#&gt;     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+#&gt;         sub_i, c("element", "context", "subject", "predicate_label", 
+#&gt;         "predicate_uri", "object_label", "object_uri")])))
+#&gt; }
+#&gt; debug: n
+#&gt; Called from: append_rp(m)
+#&gt; debug: message(sub_i)</div><div class='output co'>#&gt; <span class='message'>Error in n$individualName : $ operator is invalid for atomic vectors</span></div><div class='output co'>#&gt; debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+#&gt;     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+#&gt;         uuid::UUIDgenerate(use.time = TRUE))
+#&gt;     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+#&gt;         sub_i, c("element", "context", "subject", "predicate_label", 
+#&gt;         "predicate_uri", "object_label", "object_uri")])))
+#&gt; }
+#&gt; debug: n
+#&gt; debug: eml</div><div class='output co'>#&gt; <span class='message'>&lt;/eml&gt;</span></div><div class='output co'>#&gt; <span class='message'>Writing EML (edi.260.3.xml)</span></div><div class='output co'>#&gt; <span class='message'>Validating EML</span></div><div class='output co'>#&gt; <span class='message'>  Validation passed :)</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
 <span class='co'># View EML directory contents</span>
 <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span>(<span class='st'>'./eml'</span>)</div><div class='output co'>#&gt; [1] "edi.260.3.xml" "README.txt"   </div><div class='input'>
 <span class='co'># Clean up</span>

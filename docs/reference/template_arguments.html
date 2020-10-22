@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.18.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.19.0</span>
       </span>
     </div>
 
@@ -203,6 +203,16 @@ the template files without having to call the templating functions.</p></td>
 
     <p>(named list) A list of all <code>EMLassemblyline</code> arguments, specified 
     metadata templates and data objects.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Character encoding in tabular metadata templates is converted to UTF-8 
+    via <code><a href='https://rdrr.io/r/base/Encoding.html'>enc2utf8()</a></code>. Characters in TextType metadata templates are not
+    yet converted. Note: This may lead to an inaccuracy and disconnect 
+    between values in the data objects and what is reported in the EML (e.g.
+    a categorical variable listed in the EML may not be the same as it's 
+    corresponding value in the data object). To reduce the chance of this,
+    warnings are issued if the input data object from which the metadata was
+    extracted is not UTF-8 encoded.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Output arguments and empty versions of metadata templates</span>

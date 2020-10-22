@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.18.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.19.0</span>
       </span>
     </div>
 
@@ -206,7 +206,9 @@ to create <code>x</code>.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>An existing attributes template will not be overwritten by subsequent 
-    calls to <code>template_table_attributes()</code>.</p>
+    calls to <code>template_table_attributes()</code>.</p>    
+<p>Character encoding of metadata extracted directly from the tables are 
+    converted to UTF-8 via <code><a href='https://rdrr.io/r/base/Encoding.html'>enc2utf8()</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Initialize data package directory for template_table_attributes()</span>

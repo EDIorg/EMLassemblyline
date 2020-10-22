@@ -7,9 +7,11 @@ reference:
   - title: Create metadata templates
     desc: Functions for creating metadata templates, using automated metadata extraction when possible.
     contents:
+    - template_annotations
     - template_categorical_variables
     - template_core_metadata
     - template_geographic_coverage
+    - template_provenance
     - template_table_attributes
     - template_taxonomic_coverage
   - title: Make EML metdata

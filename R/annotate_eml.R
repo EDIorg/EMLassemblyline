@@ -389,9 +389,14 @@ annotate_eml <- function(
 #' This is a helper function for \code{annotate_eml()}.
 #'
 #' @param element 
+#'     (character) Element to be annotated
 #' @param eml 
+#'     (emld list) EML to be annotated
 #' @param anno
+#'     (data.frame) The annotations.txt template
 #' @param rp
+#'     (data.frame) The responsibleParty table
+#' 
 #'
 #' @return
 #' 
@@ -453,8 +458,9 @@ annotate_element <- function(element, eml, anno, rp) {
     }
     
   } else if (element == "ResponsibleParty") {
+    
     # Responsible party --------------------------------------
-    browser()
+    
     if (!is.null(eml$dataset$creator)) {
       r <- assign_responsible_party_id(eml$dataset$creator, anno, rp)
       eml$dataset$creator <- r$responsible.party
@@ -462,12 +468,10 @@ annotate_element <- function(element, eml, anno, rp) {
     }
     
     if (!is.null(eml$dataset$contact)) {
-      browser()
       r <- assign_responsible_party_id(eml$dataset$contact, anno, rp)
       eml$dataset$contact <- r$responsible.party
       rp <- r$rp
     }
-    browser()
     
     if (!is.null(eml$dataset$associatedParty)) {
       eml$dataset$associatedParty <- lapply(
@@ -484,7 +488,7 @@ annotate_element <- function(element, eml, anno, rp) {
           append_rp(k)
         })
     }
-    # browser()
+    
     if (!is.null(eml$dataset$project$relatedProject)) {
       eml$dataset$project$relatedProject <- lapply(
         eml$dataset$project$relatedProject,
@@ -519,23 +523,13 @@ annotate_element <- function(element, eml, anno, rp) {
 #'     \item{rp}{(data.frame) the rp object}
 #' 
 append_rp <- function(responsible.party, annotations.template) {
-  # browser()
+  
   subject <- paste(
     c(
       unlist(responsible.party$individualName$givenName), 
       responsible.party$individualName$surName),
     collapse = " ")
   
-  browser()
-  
-  # subject <- try(
-  #   paste(
-  #     c(unlist(responsible.party$individualName$givenName), responsible.party$individualName$surName),
-  #     collapse = " "),
-  #   silent = TRUE)
-  # if (class(subject) == "try-error") {
-  #   browser()
-  # }
   message(subject)
   
   if ((subject != "") & any(annotations.template$subject == subject)) {

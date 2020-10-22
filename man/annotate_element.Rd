@@ -7,11 +7,13 @@
 annotate_element(element, eml, anno, rp)
 }
 \arguments{
-\item{element}{}
+\item{element}{(character) Element to be annotated}
 
-\item{eml}{}
+\item{eml}{(emld list) EML to be annotated}
 
-\item{rp}{}
+\item{anno}{(data.frame) The annotations.txt template}
+
+\item{rp}{(data.frame) The responsibleParty table}
 }
 \value{
 

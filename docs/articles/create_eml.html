@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.18.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.19.0</span>
       </span>
     </div>
 
@@ -144,7 +144,7 @@
   ),
   <span class="kw">overwrite</span> <span class="kw">=</span> <span class="fl">TRUE</span>
 )</pre></body></html></div>
-<pre><code>##  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
+<pre><code>##  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co"># Add a couple non-tabular data objects</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/files.html">file.copy</a></span>(
@@ -214,13 +214,143 @@
   <span class="kw">user.id</span> <span class="kw">=</span> <span class="st">'csmith'</span>,
   <span class="kw">user.domain</span> <span class="kw">=</span> <span class="st">'EDI'</span>,
   <span class="kw">package.id</span> <span class="kw">=</span> <span class="st">'edi.301.1'</span>
-)
-
-<span class="co"># View directory</span>
+)</pre></body></html></div>
+<pre><code>## Warning: Input issues found. Use issues() to see them.</code></pre>
+<pre><code>## Called from: append_rp(k)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: append_rp(k)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: append_rp(k)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: annotate_element("ResponsibleParty")
+## debug: if (!is.null(eml$dataset$project$relatedProject)) {
+##     eml$dataset$project$relatedProject &lt;- lapply(eml$dataset$project$relatedProject, 
+##         function(k) {
+##             k$personnel &lt;- lapply(k$personnel, function(m) {
+##                 append_rp(m)
+##             })
+##             k
+##         })
+## }
+## debug: eml$dataset$project$relatedProject &lt;- lapply(eml$dataset$project$relatedProject, 
+##     function(k) {
+##         k$personnel &lt;- lapply(k$personnel, function(m) {
+##             append_rp(m)
+##         })
+##         k
+##     })
+## Called from: append_rp(m)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: append_rp(m)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: append_rp(m)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: append_rp(m)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: append_rp(m)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: append_rp(m)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: append_rp(m)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: append_rp(m)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## debug: eml</code></pre>
+<pre><code>## Warning in eml_additional_validation(doc, encoding = encoding): Document is invalid. Found the following errors:
+##  not all 'references' values match defined id attributes</code></pre>
+<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="co"># View directory</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">dir</a></span>(<span class="st">'./pkg_301/eml'</span>)</pre></body></html></div>
 <pre><code>## [1] "edi.301.1.xml"</code></pre>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"># View EML</pre></body></html></div>
+<div class="sourceCode" id="cb13"><html><body><pre class="r"># View EML</pre></body></html></div>
 <pre><code>$eml
 &lt;eml:eml packageId="edi.301.1" schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0  https://nis.lternet.edu/schemas/EML/eml-2.2.0/xsd/eml.xsd" system="edi" xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2"&gt;
  &lt;access authSystem="https://pasta.edirepository.org/authentication" order="allowFirst" scope="document"&gt;
@@ -233,9 +363,9 @@
    &lt;permission&gt;read&lt;/permission&gt;
   &lt;/allow&gt;
  &lt;/access&gt;
- &lt;dataset&gt;
+ &lt;dataset id="dataset"&gt;
   &lt;title&gt;Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions&lt;/title&gt;
-  &lt;creator&gt;
+  &lt;creator id="Kelman R Wieder 2934d4e8-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Kelman&lt;/givenName&gt;
     &lt;givenName&gt;R&lt;/givenName&gt;
@@ -245,7 +375,7 @@
    &lt;electronicMailAddress&gt;kelman.wieder@villanova.edu&lt;/electronicMailAddress&gt;
    &lt;userId directory="https://orcid.org"&gt;https://orcid.org/0000-0001-5856-8473&lt;/userId&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="Dale H Vitt 29437174-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Dale&lt;/givenName&gt;
     &lt;givenName&gt;H&lt;/givenName&gt;
@@ -253,7 +383,7 @@
    &lt;/individualName&gt;
    &lt;organizationName&gt;Southern Illinois University&lt;/organizationName&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="Melanie A Vile 2943ac34-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Melanie&lt;/givenName&gt;
     &lt;givenName&gt;A&lt;/givenName&gt;
@@ -262,7 +392,7 @@
    &lt;organizationName&gt;Villanova University&lt;/organizationName&gt;
    &lt;electronicMailAddress&gt;mvile@villanova.edu&lt;/electronicMailAddress&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="Jeremy A Graham 2943bfee-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Jeremy&lt;/givenName&gt;
     &lt;givenName&gt;A&lt;/givenName&gt;
@@ -271,7 +401,7 @@
    &lt;organizationName&gt;Southern Illinois University&lt;/organizationName&gt;
    &lt;electronicMailAddress&gt;jeremyg@mtu.edu&lt;/electronicMailAddress&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="Jeremy A Hartsock 2943e85c-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Jeremy&lt;/givenName&gt;
     &lt;givenName&gt;A&lt;/givenName&gt;
@@ -280,7 +410,7 @@
    &lt;organizationName&gt;Southern Illinois University&lt;/organizationName&gt;
    &lt;electronicMailAddress&gt;hartsock@siu.edu&lt;/electronicMailAddress&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="Hope Fillingim 29440f80-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Hope&lt;/givenName&gt;
     &lt;surName&gt;Fillingim&lt;/surName&gt;
@@ -288,7 +418,7 @@
    &lt;organizationName&gt;Villanova University&lt;/organizationName&gt;
    &lt;electronicMailAddress&gt;fillingimhope@gmail.com&lt;/electronicMailAddress&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="Melissa House 294436ae-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Melissa&lt;/givenName&gt;
     &lt;surName&gt;House&lt;/surName&gt;
@@ -296,7 +426,7 @@
    &lt;organizationName&gt;Southern Illinois University&lt;/organizationName&gt;
    &lt;electronicMailAddress&gt;mhouse@siu.edu&lt;/electronicMailAddress&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="James C Quinn 29445ddc-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;James&lt;/givenName&gt;
     &lt;givenName&gt;C&lt;/givenName&gt;
@@ -305,7 +435,7 @@
    &lt;organizationName&gt;Villanova University&lt;/organizationName&gt;
    &lt;electronicMailAddress&gt;jcqui03@gmail.com&lt;/electronicMailAddress&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="Kimberli D Scott 29448604-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Kimberli&lt;/givenName&gt;
     &lt;givenName&gt;D&lt;/givenName&gt;
@@ -314,7 +444,7 @@
    &lt;organizationName&gt;Villanova University&lt;/organizationName&gt;
    &lt;electronicMailAddress&gt;kscott@villanova.edu&lt;/electronicMailAddress&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="Meaghan Petix 2944ac2e-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Meaghan&lt;/givenName&gt;
     &lt;surName&gt;Petix&lt;/surName&gt;
@@ -322,7 +452,7 @@
    &lt;organizationName&gt;Southern Illinois University&lt;/organizationName&gt;
    &lt;electronicMailAddress&gt;meaghan.petix@wsu.edu&lt;/electronicMailAddress&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="Kelly J McMillen 2944d366-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Kelly&lt;/givenName&gt;
     &lt;givenName&gt;J&lt;/givenName&gt;
@@ -342,7 +472,7 @@
    &lt;electronicMailAddress&gt;tls@wisc.edu&lt;/electronicMailAddress&gt;
    &lt;role&gt;Secondary Collaborator&lt;/role&gt;
   &lt;/associatedParty&gt;
-  &lt;associatedParty&gt;
+  &lt;associatedParty id="James C Quinn 294548dc-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;James&lt;/givenName&gt;
     &lt;givenName&gt;C&lt;/givenName&gt;
@@ -352,7 +482,7 @@
    &lt;electronicMailAddress&gt;jcqui03@gmail.com&lt;/electronicMailAddress&gt;
    &lt;role&gt;Instrument Technician&lt;/role&gt;
   &lt;/associatedParty&gt;
-  &lt;associatedParty&gt;
+  &lt;associatedParty id="Jane Doe 2945700a-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Jane&lt;/givenName&gt;
     &lt;surName&gt;Doe&lt;/surName&gt;
@@ -362,7 +492,7 @@
    &lt;userId directory="https://orcid.org"&gt;https://orcid.org/0000-0001-5856-8473&lt;/userId&gt;
    &lt;role&gt;Equipment Lead&lt;/role&gt;
   &lt;/associatedParty&gt;
-  &lt;pubDate&gt;2020-08-18&lt;/pubDate&gt;
+  &lt;pubDate&gt;2020-10-21&lt;/pubDate&gt;
   &lt;abstract&gt;
    &lt;para&gt;Development of the oil sands has led to increasing atmospheric N deposition, with values as high as 17 kg N ha^-1 yr^-1; regional background levels &amp;lt;2 kg N ha^-1 yr^-1.  Bogs, being ombrotrophic, may be especially susceptible to increasing N deposition.  To examine responses to N deposition, over five years, we experimentally applied N (as NH4NO3) to a bog near Mariana Lakes, Alberta, at rates of 0, 5, 10, 15, 20, and 25 kg N ha^-1 yr^-1, plus controls (no water or N addition).   In May of each year, we collected mixed vascular plant tissue and Sphagnum fuscum peat and placed homogenized mixtures in nylon bags and placed them approximately 10 cm below the peat surface in early June.  Bags were collected again in October of each year, cleaned, dried, and weighed.  Decomposition of Sphagnum moss and mixed vascular plant litter was affected by N inputs, on average losing 8 and 38 % of initial mass, respectively, over 5 months of decomposition. Water addition alone had no significant effect on decomposition of cellulose, Sphagnum, or vascular plant litter (p &amp;gt; 0.15).&lt;/para&gt;
   &lt;/abstract&gt;
@@ -1039,10 +1169,14 @@
     &lt;/taxonomicClassification&gt;
    &lt;/taxonomicCoverage&gt;
   &lt;/coverage&gt;
+  &lt;annotation&gt;
+   &lt;propertyURI label="is about"&gt;http://purl.obolibrary.org/obo/IAO_0000136&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
   &lt;maintenance&gt;
    &lt;description&gt;completed&lt;/description&gt;
   &lt;/maintenance&gt;
-  &lt;contact&gt;
+  &lt;contact id="Kelman R Wieder 2944fa8a-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Kelman&lt;/givenName&gt;
     &lt;givenName&gt;R&lt;/givenName&gt;
@@ -1117,7 +1251,7 @@
     &lt;funding&gt;NSF 111001&lt;/funding&gt;
    &lt;/relatedProject&gt;
    &lt;relatedProject&gt;
-    &lt;title&gt;No project title to report&lt;/title&gt;
+    &lt;title&gt;Project title 3&lt;/title&gt;
     &lt;personnel&gt;
      &lt;individualName&gt;
       &lt;givenName&gt;Joe&lt;/givenName&gt;
@@ -1129,19 +1263,7 @@
     &lt;funding&gt;NSF 101&lt;/funding&gt;
    &lt;/relatedProject&gt;
    &lt;relatedProject&gt;
-    &lt;title&gt;No project title to report&lt;/title&gt;
-    &lt;personnel&gt;
-     &lt;individualName&gt;
-      &lt;givenName&gt;Joe&lt;/givenName&gt;
-      &lt;surName&gt;Smith&lt;/surName&gt;
-     &lt;/individualName&gt;
-     &lt;organizationName&gt;Villanova University&lt;/organizationName&gt;
-     &lt;role&gt;Principal Investigator&lt;/role&gt;
-    &lt;/personnel&gt;
-    &lt;funding&gt;111001&lt;/funding&gt;
-   &lt;/relatedProject&gt;
-   &lt;relatedProject&gt;
-    &lt;title&gt;No project title to report&lt;/title&gt;
+    &lt;title&gt;Project title 4&lt;/title&gt;
     &lt;personnel&gt;
      &lt;individualName&gt;
       &lt;givenName&gt;Chase&lt;/givenName&gt;
@@ -1151,10 +1273,10 @@
      &lt;electronicMailAddress&gt;gachase@unm.edu&lt;/electronicMailAddress&gt;
      &lt;role&gt;Principal Investigator&lt;/role&gt;
     &lt;/personnel&gt;
-    &lt;funding&gt;No funding to report&lt;/funding&gt;
+    &lt;funding&gt;NSF 111001&lt;/funding&gt;
    &lt;/relatedProject&gt;
   &lt;/project&gt;
-  &lt;dataTable&gt;
+  &lt;dataTable id="decomp.csv"&gt;
    &lt;entityName&gt;Decomposition data&lt;/entityName&gt;
    &lt;entityDescription&gt;Decomposition rates monitored throughout the experiment&lt;/entityDescription&gt;
    &lt;physical&gt;
@@ -1172,8 +1294,12 @@
      &lt;/textFormat&gt;
     &lt;/dataFormat&gt;
    &lt;/physical&gt;
+   &lt;annotation&gt;
+    &lt;propertyURI label="is about"&gt;http://purl.obolibrary.org/obo/IAO_0000136&lt;/propertyURI&gt;
+    &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+   &lt;/annotation&gt;
    &lt;attributeList&gt;
-    &lt;attribute&gt;
+    &lt;attribute id="decomp.csv/type"&gt;
      &lt;attributeName&gt;type&lt;/attributeName&gt;
      &lt;attributeDefinition&gt;Vegetation type: Sphagnum fuscum or vascular plant tissue&lt;/attributeDefinition&gt;
      &lt;storageType&gt;string&lt;/storageType&gt;
@@ -1197,8 +1323,16 @@
       &lt;code&gt;-99999&lt;/code&gt;
       &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
      &lt;/missingValueCode&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
     &lt;/attribute&gt;
-    &lt;attribute&gt;
+    &lt;attribute id="decomp.csv/date"&gt;
      &lt;attributeName&gt;date&lt;/attributeName&gt;
      &lt;attributeDefinition&gt;Year of growth: 2011-2015&lt;/attributeDefinition&gt;
      &lt;storageType&gt;date&lt;/storageType&gt;
@@ -1212,8 +1346,16 @@
       &lt;code&gt;-99999&lt;/code&gt;
       &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
      &lt;/missingValueCode&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
     &lt;/attribute&gt;
-    &lt;attribute&gt;
+    &lt;attribute id="decomp.csv/arm"&gt;
      &lt;attributeName&gt;arm&lt;/attributeName&gt;
      &lt;attributeDefinition&gt;Experimental plots were located along 3 arms; each arm had one replicate each of 8 N treatments&lt;/attributeDefinition&gt;
      &lt;storageType&gt;string&lt;/storageType&gt;
@@ -1241,8 +1383,16 @@
       &lt;code&gt;-99999&lt;/code&gt;
       &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
      &lt;/missingValueCode&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
     &lt;/attribute&gt;
-    &lt;attribute&gt;
+    &lt;attribute id="decomp.csv/ntrt"&gt;
      &lt;attributeName&gt;ntrt&lt;/attributeName&gt;
      &lt;attributeDefinition&gt;Field experimental N treatments were made with 8 applications per plot per year between mid-May and mid-August of each year&lt;/attributeDefinition&gt;
      &lt;storageType&gt;string&lt;/storageType&gt;
@@ -1286,8 +1436,16 @@
       &lt;code&gt;-99999&lt;/code&gt;
       &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
      &lt;/missingValueCode&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
     &lt;/attribute&gt;
-    &lt;attribute&gt;
+    &lt;attribute id="decomp.csv/year"&gt;
      &lt;attributeName&gt;year&lt;/attributeName&gt;
      &lt;attributeDefinition&gt;Year collected&lt;/attributeDefinition&gt;
      &lt;storageType&gt;date&lt;/storageType&gt;
@@ -1301,8 +1459,16 @@
       &lt;code&gt;-99999&lt;/code&gt;
       &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
      &lt;/missingValueCode&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
     &lt;/attribute&gt;
-    &lt;attribute&gt;
+    &lt;attribute id="decomp.csv/percent_loss"&gt;
      &lt;attributeName&gt;percent_loss&lt;/attributeName&gt;
      &lt;attributeDefinition&gt;Amount of mass lost expressed as a percent of original mass&lt;/attributeDefinition&gt;
      &lt;storageType&gt;float&lt;/storageType&gt;
@@ -1324,8 +1490,16 @@
       &lt;code&gt;-99999&lt;/code&gt;
       &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
      &lt;/missingValueCode&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
     &lt;/attribute&gt;
-    &lt;attribute&gt;
+    &lt;attribute id="decomp.csv/taxa"&gt;
      &lt;attributeName&gt;taxa&lt;/attributeName&gt;
      &lt;attributeDefinition&gt;Taxa observed at site&lt;/attributeDefinition&gt;
      &lt;storageType&gt;string&lt;/storageType&gt;
@@ -1342,301 +1516,297 @@
       &lt;code&gt;-99999&lt;/code&gt;
       &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
      &lt;/missingValueCode&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
     &lt;/attribute&gt;
    &lt;/attributeList&gt;
    &lt;numberOfRecords&gt;294&lt;/numberOfRecords&gt;
   &lt;/dataTable&gt;
-  &lt;dataTable&gt;
-   &lt;entityName&gt;Nitrogen data&lt;/entityName&gt;
-   &lt;entityDescription&gt;Nitrogen species measured near the study site&lt;/entityDescription&gt;
-   &lt;physical&gt;
-    &lt;objectName&gt;nitrogen.csv&lt;/objectName&gt;
-    &lt;size unit="bytes"&gt;6733&lt;/size&gt;
-    &lt;authentication method="MD5"&gt;2b10baaea5692bf96cafab9ae636f831&lt;/authentication&gt;
-    &lt;dataFormat&gt;
-     &lt;textFormat&gt;
-      &lt;numHeaderLines&gt;1&lt;/numHeaderLines&gt;
-      &lt;recordDelimiter&gt;\r\n&lt;/recordDelimiter&gt;
-      &lt;attributeOrientation&gt;column&lt;/attributeOrientation&gt;
-      &lt;simpleDelimited&gt;
-       &lt;fieldDelimiter&gt;,&lt;/fieldDelimiter&gt;
-      &lt;/simpleDelimited&gt;
-     &lt;/textFormat&gt;
-    &lt;/dataFormat&gt;
-   &lt;/physical&gt;
-   &lt;attributeList&gt;
-    &lt;attribute&gt;
-     &lt;attributeName&gt;date&lt;/attributeName&gt;
-     &lt;attributeDefinition&gt;Year of growth: 2011-2015&lt;/attributeDefinition&gt;
-     &lt;storageType&gt;date&lt;/storageType&gt;
-     &lt;measurementScale&gt;
-      &lt;dateTime&gt;
-       &lt;formatString&gt;YYYY-MM-DD&lt;/formatString&gt;
-       &lt;dateTimeDomain/&gt;
-      &lt;/dateTime&gt;
-     &lt;/measurementScale&gt;
-     &lt;missingValueCode&gt;
-      &lt;code&gt;-99999&lt;/code&gt;
-      &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
-     &lt;/missingValueCode&gt;
-    &lt;/attribute&gt;
-    &lt;attribute&gt;
-     &lt;attributeName&gt;ntrt&lt;/attributeName&gt;
-     &lt;attributeDefinition&gt;Field experimental N treatments were made with 8 applications per plot per year between mid May and mid August of each year&lt;/attributeDefinition&gt;
-     &lt;storageType&gt;string&lt;/storageType&gt;
-     &lt;measurementScale&gt;
-      &lt;nominal&gt;
-       &lt;nonNumericDomain&gt;
-        &lt;enumeratedDomain&gt;
-         &lt;codeDefinition&gt;
-          &lt;code&gt;C&lt;/code&gt;
-          &lt;definition&gt;Control, no water, no N added&lt;/definition&gt;
-         &lt;/codeDefinition&gt;
-         &lt;codeDefinition&gt;
-          &lt;code&gt;0&lt;/code&gt;
-          &lt;definition&gt;0 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
-         &lt;/codeDefinition&gt;
-         &lt;codeDefinition&gt;
-          &lt;code&gt;5&lt;/code&gt;
-          &lt;definition&gt;5 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
-         &lt;/codeDefinition&gt;
-         &lt;codeDefinition&gt;
-          &lt;code&gt;10&lt;/code&gt;
-          &lt;definition&gt;10 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
-         &lt;/codeDefinition&gt;
-         &lt;codeDefinition&gt;
-          &lt;code&gt;15&lt;/code&gt;
-          &lt;definition&gt;15 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
-         &lt;/codeDefinition&gt;
-         &lt;codeDefinition&gt;
-          &lt;code&gt;20&lt;/code&gt;
-          &lt;definition&gt;20 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
-         &lt;/codeDefinition&gt;
-         &lt;codeDefinition&gt;
-          &lt;code&gt;25&lt;/code&gt;
-          &lt;definition&gt;25 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
-         &lt;/codeDefinition&gt;
-        &lt;/enumeratedDomain&gt;
-       &lt;/nonNumericDomain&gt;
-      &lt;/nominal&gt;
-     &lt;/measurementScale&gt;
-     &lt;missingValueCode&gt;
-      &lt;code&gt;-99999&lt;/code&gt;
-      &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
-     &lt;/missingValueCode&gt;
-    &lt;/attribute&gt;
-    &lt;attribute&gt;
-     &lt;attributeName&gt;arm&lt;/attributeName&gt;
-     &lt;attributeDefinition&gt;Experimental plots were located along 3 arms; each arm had one replicate each of 8 N treatments&lt;/attributeDefinition&gt;
-     &lt;storageType&gt;string&lt;/storageType&gt;
-     &lt;measurementScale&gt;
-      &lt;nominal&gt;
-       &lt;nonNumericDomain&gt;
-        &lt;enumeratedDomain&gt;
-         &lt;codeDefinition&gt;
-          &lt;code&gt;1&lt;/code&gt;
-          &lt;definition&gt;Arm 1&lt;/definition&gt;
-         &lt;/codeDefinition&gt;
-         &lt;codeDefinition&gt;
-          &lt;code&gt;2&lt;/code&gt;
-          &lt;definition&gt;Arm 2&lt;/definition&gt;
-         &lt;/codeDefinition&gt;
-         &lt;codeDefinition&gt;
-          &lt;code&gt;3&lt;/code&gt;
-          &lt;definition&gt;Arm3&lt;/definition&gt;
-         &lt;/codeDefinition&gt;
-        &lt;/enumeratedDomain&gt;
-       &lt;/nonNumericDomain&gt;
-      &lt;/nominal&gt;
-     &lt;/measurementScale&gt;
-     &lt;missingValueCode&gt;
-      &lt;code&gt;-99999&lt;/code&gt;
-      &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
-     &lt;/missingValueCode&gt;
-    &lt;/attribute&gt;
-    &lt;attribute&gt;
-     &lt;attributeName&gt;net_primary_production&lt;/attributeName&gt;
-     &lt;attributeDefinition&gt;The product of moss linear growth of stems (cm yr-1) and stem mass density (SMD)&lt;/attributeDefinition&gt;
-     &lt;storageType&gt;float&lt;/storageType&gt;
-     &lt;measurementScale&gt;
-      &lt;ratio&gt;
-       &lt;unit&gt;
-        &lt;standardUnit&gt;gramsPerMeterSquaredPerYear&lt;/standardUnit&gt;
-       &lt;/unit&gt;
-       &lt;numericDomain&gt;
-        &lt;numberType&gt;real&lt;/numberType&gt;
-        &lt;bounds&gt;
-         &lt;minimum exclusive="false"&gt;39.4&lt;/minimum&gt;
-         &lt;maximum exclusive="false"&gt;540.7&lt;/maximum&gt;
-        &lt;/bounds&gt;
-       &lt;/numericDomain&gt;
-      &lt;/ratio&gt;
-     &lt;/measurementScale&gt;
-     &lt;missingValueCode&gt;
-      &lt;code&gt;-99999&lt;/code&gt;
-      &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
-     &lt;/missingValueCode&gt;
-    &lt;/attribute&gt;
-    &lt;attribute&gt;
-     &lt;attributeName&gt;stem_mass_density&lt;/attributeName&gt;
-     &lt;attributeDefinition&gt;Mass of 1-cm lengths of Sphagnum stems beneath the capitula per m2&lt;/attributeDefinition&gt;
-     &lt;storageType&gt;float&lt;/storageType&gt;
-     &lt;measurementScale&gt;
-      &lt;ratio&gt;
-       &lt;unit&gt;
-        &lt;customUnit&gt;gramsPerSquaredMeterPerCentimeter&lt;/customUnit&gt;
-       &lt;/unit&gt;
-       &lt;numericDomain&gt;
-        &lt;numberType&gt;real&lt;/numberType&gt;
-        &lt;bounds&gt;
-         &lt;minimum exclusive="false"&gt;29.5&lt;/minimum&gt;
-         &lt;maximum exclusive="false"&gt;268.8&lt;/maximum&gt;
-        &lt;/bounds&gt;
-       &lt;/numericDomain&gt;
-      &lt;/ratio&gt;
-     &lt;/measurementScale&gt;
-     &lt;missingValueCode&gt;
-      &lt;code&gt;-99999&lt;/code&gt;
-      &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
-     &lt;/missingValueCode&gt;
-    &lt;/attribute&gt;
-    &lt;attribute&gt;
-     &lt;attributeName&gt;plant_density&lt;/attributeName&gt;
-     &lt;attributeDefinition&gt;Number of plants/area&lt;/attributeDefinition&gt;
-     &lt;storageType&gt;float&lt;/storageType&gt;
-     &lt;measurementScale&gt;
-      &lt;ratio&gt;
-       &lt;unit&gt;
-        &lt;standardUnit&gt;numberPerMeterSquared&lt;/standardUnit&gt;
-       &lt;/unit&gt;
-       &lt;numericDomain&gt;
-        &lt;numberType&gt;natural&lt;/numberType&gt;
-        &lt;bounds&gt;
-         &lt;minimum exclusive="false"&gt;20191&lt;/minimum&gt;
-         &lt;maximum exclusive="false"&gt;87719&lt;/maximum&gt;
-        &lt;/bounds&gt;
-       &lt;/numericDomain&gt;
-      &lt;/ratio&gt;
-     &lt;/measurementScale&gt;
-     &lt;missingValueCode&gt;
-      &lt;code&gt;-99999&lt;/code&gt;
-      &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
-     &lt;/missingValueCode&gt;
-    &lt;/attribute&gt;
-    &lt;attribute&gt;
-     &lt;attributeName&gt;stem_n_concentration&lt;/attributeName&gt;
-     &lt;attributeDefinition&gt;N concentration in the 0-2 cm stem sections&lt;/attributeDefinition&gt;
-     &lt;storageType&gt;float&lt;/storageType&gt;
-     &lt;measurementScale&gt;
-      &lt;ratio&gt;
-       &lt;unit&gt;
-        &lt;customUnit&gt;milligramsPerGram&lt;/customUnit&gt;
-       &lt;/unit&gt;
-       &lt;numericDomain&gt;
-        &lt;numberType&gt;real&lt;/numberType&gt;
-        &lt;bounds&gt;
-         &lt;minimum exclusive="false"&gt;6.83&lt;/minimum&gt;
-         &lt;maximum exclusive="false"&gt;12.92&lt;/maximum&gt;
-        &lt;/bounds&gt;
-       &lt;/numericDomain&gt;
-      &lt;/ratio&gt;
-     &lt;/measurementScale&gt;
-     &lt;missingValueCode&gt;
-      &lt;code&gt;-99999&lt;/code&gt;
-      &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
-     &lt;/missingValueCode&gt;
-    &lt;/attribute&gt;
-    &lt;attribute&gt;
-     &lt;attributeName&gt;n_assimilated&lt;/attributeName&gt;
-     &lt;attributeDefinition&gt;Amount of N used and stored per area of moss cover per year&lt;/attributeDefinition&gt;
-     &lt;storageType&gt;float&lt;/storageType&gt;
-     &lt;measurementScale&gt;
-      &lt;ratio&gt;
-       &lt;unit&gt;
-        &lt;standardUnit&gt;gramsPerMeterSquaredPerYear&lt;/standardUnit&gt;
-       &lt;/unit&gt;
-       &lt;numericDomain&gt;
-        &lt;numberType&gt;real&lt;/numberType&gt;
-        &lt;bounds&gt;
-         &lt;minimum exclusive="false"&gt;0.4&lt;/minimum&gt;
-         &lt;maximum exclusive="false"&gt;5.26&lt;/maximum&gt;
-        &lt;/bounds&gt;
-       &lt;/numericDomain&gt;
-      &lt;/ratio&gt;
-     &lt;/measurementScale&gt;
-     &lt;missingValueCode&gt;
-      &lt;code&gt;-99999&lt;/code&gt;
-      &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
-     &lt;/missingValueCode&gt;
-    &lt;/attribute&gt;
-    &lt;attribute&gt;
-     &lt;attributeName&gt;site_name&lt;/attributeName&gt;
-     &lt;attributeDefinition&gt;Name of site&lt;/attributeDefinition&gt;
-     &lt;storageType&gt;string&lt;/storageType&gt;
-     &lt;measurementScale&gt;
-      &lt;nominal&gt;
-       &lt;nonNumericDomain&gt;
-        &lt;textDomain&gt;
-         &lt;definition&gt;Name of site&lt;/definition&gt;
-        &lt;/textDomain&gt;
-       &lt;/nonNumericDomain&gt;
-      &lt;/nominal&gt;
-     &lt;/measurementScale&gt;
-     &lt;missingValueCode&gt;
-      &lt;code&gt;-99999&lt;/code&gt;
-      &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
-     &lt;/missingValueCode&gt;
-    &lt;/attribute&gt;
-    &lt;attribute&gt;
-     &lt;attributeName&gt;site_lat&lt;/attributeName&gt;
-     &lt;attributeDefinition&gt;Latitude in decimal degrees&lt;/attributeDefinition&gt;
-     &lt;storageType&gt;float&lt;/storageType&gt;
-     &lt;measurementScale&gt;
-      &lt;ratio&gt;
-       &lt;unit&gt;
-        &lt;standardUnit&gt;degree&lt;/standardUnit&gt;
-       &lt;/unit&gt;
-       &lt;numericDomain&gt;
-        &lt;numberType&gt;real&lt;/numberType&gt;
-        &lt;bounds&gt;
-         &lt;minimum exclusive="false"&gt;45.23&lt;/minimum&gt;
-         &lt;maximum exclusive="false"&gt;45.32&lt;/maximum&gt;
-        &lt;/bounds&gt;
-       &lt;/numericDomain&gt;
-      &lt;/ratio&gt;
-     &lt;/measurementScale&gt;
-     &lt;missingValueCode&gt;
-      &lt;code&gt;-99999&lt;/code&gt;
-      &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
-     &lt;/missingValueCode&gt;
-    &lt;/attribute&gt;
-    &lt;attribute&gt;
-     &lt;attributeName&gt;site_lon&lt;/attributeName&gt;
-     &lt;attributeDefinition&gt;Longitude in decimal degrees&lt;/attributeDefinition&gt;
-     &lt;storageType&gt;float&lt;/storageType&gt;
-     &lt;measurementScale&gt;
-      &lt;ratio&gt;
-       &lt;unit&gt;
-        &lt;standardUnit&gt;degree&lt;/standardUnit&gt;
-       &lt;/unit&gt;
-       &lt;numericDomain&gt;
-        &lt;numberType&gt;real&lt;/numberType&gt;
-        &lt;bounds&gt;
-         &lt;minimum exclusive="false"&gt;-89.52&lt;/minimum&gt;
-         &lt;maximum exclusive="false"&gt;-89.43&lt;/maximum&gt;
-        &lt;/bounds&gt;
-       &lt;/numericDomain&gt;
-      &lt;/ratio&gt;
-     &lt;/measurementScale&gt;
-     &lt;missingValueCode&gt;
-      &lt;code&gt;-99999&lt;/code&gt;
-      &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
-     &lt;/missingValueCode&gt;
-    &lt;/attribute&gt;
-   &lt;/attributeList&gt;
-   &lt;numberOfRecords&gt;104&lt;/numberOfRecords&gt;
-  &lt;/dataTable&gt;
  &lt;/dataset&gt;
+ &lt;annotations&gt;
+  &lt;annotation references="dataset"&gt;
+   &lt;propertyURI label="is about"&gt;http://purl.obolibrary.org/obo/IAO_0000136&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv"&gt;
+   &lt;propertyURI label="is about"&gt;http://purl.obolibrary.org/obo/IAO_0000136&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/date"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/date"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/ntrt"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/ntrt"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/arm"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/arm"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/net_primary_production"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/net_primary_production"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/stem_mass_density"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/stem_mass_density"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/plant_density"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/plant_density"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/stem_n_concentration"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/stem_n_concentration"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/n_assimilated"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/n_assimilated"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/site_name"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/site_name"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/site_lat"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/site_lat"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/site_lon"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/site_lon"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv"&gt;
+   &lt;propertyURI label="is about"&gt;http://purl.obolibrary.org/obo/IAO_0000136&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/type"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/type"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/date"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/date"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/arm"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/arm"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/ntrt"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/ntrt"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/year"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/year"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/percent_loss"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/percent_loss"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/taxa"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/taxa"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="ancillary_data.zip"&gt;
+   &lt;propertyURI label="is about"&gt;http://purl.obolibrary.org/obo/IAO_0000136&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="processing_and_analysis.R"&gt;
+   &lt;propertyURI label="is about"&gt;http://purl.obolibrary.org/obo/IAO_0000136&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Kelman R Wieder 2934d4e8-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Kelman R Wieder 2934d4e8-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Dale H Vitt 29437174-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Dale H Vitt 29437174-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Melanie A Vile 2943ac34-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Melanie A Vile 2943ac34-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Jeremy A Graham 2943bfee-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Jeremy A Graham 2943bfee-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Jeremy A Hartsock 2943e85c-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Jeremy A Hartsock 2943e85c-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Hope Fillingim 29440f80-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Hope Fillingim 29440f80-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Melissa House 294436ae-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Melissa House 294436ae-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="James C Quinn 29445ddc-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="James C Quinn 29445ddc-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Kimberli D Scott 29448604-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Kimberli D Scott 29448604-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Meaghan Petix 2944ac2e-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Meaghan Petix 2944ac2e-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Kelly J McMillen 2944d366-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Kelly J McMillen 2944d366-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Kelman R Wieder 2944fa8a-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Kelman R Wieder 2944fa8a-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="James C Quinn 294548dc-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="James C Quinn 294548dc-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Jane Doe 2945700a-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Jane Doe 2945700a-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+ &lt;/annotations&gt;
  &lt;additionalMetadata&gt;
   &lt;metadata&gt;
    &lt;unitList&gt;
@@ -1688,7 +1858,7 @@
 <li>
 <strong>package.id</strong> (optional) Data package identifier in the format expected by the receiving data repository.</li>
 </ul>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="co"># Make EML for other entities</span>
+<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="co"># Make EML for other entities</span>
 
 <span class="fu"><a href="../reference/make_eml.html">make_eml</a></span>(
   <span class="kw">path</span> <span class="kw">=</span> <span class="st">'./pkg_301/metadata_templates'</span>,
@@ -1703,13 +1873,142 @@
   <span class="kw">user.id</span> <span class="kw">=</span> <span class="st">'csmith'</span>,
   <span class="kw">user.domain</span> <span class="kw">=</span> <span class="st">'EDI'</span>,
   <span class="kw">package.id</span> <span class="kw">=</span> <span class="st">'edi.301.2'</span>
-)
-
-<span class="co"># View directory</span>
+)</pre></body></html></div>
+<pre><code>## Called from: append_rp(k)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: append_rp(k)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: append_rp(k)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: annotate_element("ResponsibleParty")
+## debug: if (!is.null(eml$dataset$project$relatedProject)) {
+##     eml$dataset$project$relatedProject &lt;- lapply(eml$dataset$project$relatedProject, 
+##         function(k) {
+##             k$personnel &lt;- lapply(k$personnel, function(m) {
+##                 append_rp(m)
+##             })
+##             k
+##         })
+## }
+## debug: eml$dataset$project$relatedProject &lt;- lapply(eml$dataset$project$relatedProject, 
+##     function(k) {
+##         k$personnel &lt;- lapply(k$personnel, function(m) {
+##             append_rp(m)
+##         })
+##         k
+##     })
+## Called from: append_rp(m)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: append_rp(m)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: append_rp(m)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: append_rp(m)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: append_rp(m)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: append_rp(m)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: append_rp(m)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: append_rp(m)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## debug: eml</code></pre>
+<pre><code>## Warning in eml_additional_validation(doc, encoding = encoding): Document is invalid. Found the following errors:
+##  not all 'references' values match defined id attributes</code></pre>
+<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="co"># View directory</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">dir</a></span>(<span class="st">'./pkg_301/eml'</span>)</pre></body></html></div>
 <pre><code>## [1] "edi.301.1.xml" "edi.301.2.xml"</code></pre>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"># View EML</pre></body></html></div>
+<div class="sourceCode" id="cb20"><html><body><pre class="r"># View EML</pre></body></html></div>
 <pre><code>$eml
 &lt;eml:eml packageId="edi.301.2" schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0  https://nis.lternet.edu/schemas/EML/eml-2.2.0/xsd/eml.xsd" system="edi" xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2"&gt;
  &lt;access authSystem="https://pasta.edirepository.org/authentication" order="allowFirst" scope="document"&gt;
@@ -1722,9 +2021,9 @@
    &lt;permission&gt;read&lt;/permission&gt;
   &lt;/allow&gt;
  &lt;/access&gt;
- &lt;dataset&gt;
+ &lt;dataset id="dataset"&gt;
   &lt;title&gt;Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions&lt;/title&gt;
-  &lt;creator&gt;
+  &lt;creator id="Kelman R Wieder 2f19b982-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Kelman&lt;/givenName&gt;
     &lt;givenName&gt;R&lt;/givenName&gt;
@@ -1734,7 +2033,7 @@
    &lt;electronicMailAddress&gt;kelman.wieder@villanova.edu&lt;/electronicMailAddress&gt;
    &lt;userId directory="https://orcid.org"&gt;https://orcid.org/0000-0001-5856-8473&lt;/userId&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="Dale H Vitt 2f28cc06-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Dale&lt;/givenName&gt;
     &lt;givenName&gt;H&lt;/givenName&gt;
@@ -1742,7 +2041,7 @@
    &lt;/individualName&gt;
    &lt;organizationName&gt;Southern Illinois University&lt;/organizationName&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="Melanie A Vile 2f2919f4-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Melanie&lt;/givenName&gt;
     &lt;givenName&gt;A&lt;/givenName&gt;
@@ -1751,7 +2050,7 @@
    &lt;organizationName&gt;Villanova University&lt;/organizationName&gt;
    &lt;electronicMailAddress&gt;mvile@villanova.edu&lt;/electronicMailAddress&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="Jeremy A Graham 2f29412c-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Jeremy&lt;/givenName&gt;
     &lt;givenName&gt;A&lt;/givenName&gt;
@@ -1760,7 +2059,7 @@
    &lt;organizationName&gt;Southern Illinois University&lt;/organizationName&gt;
    &lt;electronicMailAddress&gt;jeremyg@mtu.edu&lt;/electronicMailAddress&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="Jeremy A Hartsock 2f296846-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Jeremy&lt;/givenName&gt;
     &lt;givenName&gt;A&lt;/givenName&gt;
@@ -1769,7 +2068,7 @@
    &lt;organizationName&gt;Southern Illinois University&lt;/organizationName&gt;
    &lt;electronicMailAddress&gt;hartsock@siu.edu&lt;/electronicMailAddress&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="Hope Fillingim 2f298f74-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Hope&lt;/givenName&gt;
     &lt;surName&gt;Fillingim&lt;/surName&gt;
@@ -1777,7 +2076,7 @@
    &lt;organizationName&gt;Villanova University&lt;/organizationName&gt;
    &lt;electronicMailAddress&gt;fillingimhope@gmail.com&lt;/electronicMailAddress&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="Melissa House 2f29b6a2-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Melissa&lt;/givenName&gt;
     &lt;surName&gt;House&lt;/surName&gt;
@@ -1785,7 +2084,7 @@
    &lt;organizationName&gt;Southern Illinois University&lt;/organizationName&gt;
    &lt;electronicMailAddress&gt;mhouse@siu.edu&lt;/electronicMailAddress&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="James C Quinn 2f29b6a3-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;James&lt;/givenName&gt;
     &lt;givenName&gt;C&lt;/givenName&gt;
@@ -1794,7 +2093,7 @@
    &lt;organizationName&gt;Villanova University&lt;/organizationName&gt;
    &lt;electronicMailAddress&gt;jcqui03@gmail.com&lt;/electronicMailAddress&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="Kimberli D Scott 2f29ddc6-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Kimberli&lt;/givenName&gt;
     &lt;givenName&gt;D&lt;/givenName&gt;
@@ -1803,7 +2102,7 @@
    &lt;organizationName&gt;Villanova University&lt;/organizationName&gt;
    &lt;electronicMailAddress&gt;kscott@villanova.edu&lt;/electronicMailAddress&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="Meaghan Petix 2f2a04f4-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Meaghan&lt;/givenName&gt;
     &lt;surName&gt;Petix&lt;/surName&gt;
@@ -1811,7 +2110,7 @@
    &lt;organizationName&gt;Southern Illinois University&lt;/organizationName&gt;
    &lt;electronicMailAddress&gt;meaghan.petix@wsu.edu&lt;/electronicMailAddress&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="Kelly J McMillen 2f2a2c36-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Kelly&lt;/givenName&gt;
     &lt;givenName&gt;J&lt;/givenName&gt;
@@ -1831,7 +2130,7 @@
    &lt;electronicMailAddress&gt;tls@wisc.edu&lt;/electronicMailAddress&gt;
    &lt;role&gt;Secondary Collaborator&lt;/role&gt;
   &lt;/associatedParty&gt;
-  &lt;associatedParty&gt;
+  &lt;associatedParty id="James C Quinn 2f2aa1a2-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;James&lt;/givenName&gt;
     &lt;givenName&gt;C&lt;/givenName&gt;
@@ -1841,7 +2140,7 @@
    &lt;electronicMailAddress&gt;jcqui03@gmail.com&lt;/electronicMailAddress&gt;
    &lt;role&gt;Instrument Technician&lt;/role&gt;
   &lt;/associatedParty&gt;
-  &lt;associatedParty&gt;
+  &lt;associatedParty id="Jane Doe 2f2ac8d0-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Jane&lt;/givenName&gt;
     &lt;surName&gt;Doe&lt;/surName&gt;
@@ -1851,7 +2150,7 @@
    &lt;userId directory="https://orcid.org"&gt;https://orcid.org/0000-0001-5856-8473&lt;/userId&gt;
    &lt;role&gt;Equipment Lead&lt;/role&gt;
   &lt;/associatedParty&gt;
-  &lt;pubDate&gt;2020-08-18&lt;/pubDate&gt;
+  &lt;pubDate&gt;2020-10-21&lt;/pubDate&gt;
   &lt;abstract&gt;
    &lt;para&gt;Development of the oil sands has led to increasing atmospheric N deposition, with values as high as 17 kg N ha^-1 yr^-1; regional background levels &amp;lt;2 kg N ha^-1 yr^-1.  Bogs, being ombrotrophic, may be especially susceptible to increasing N deposition.  To examine responses to N deposition, over five years, we experimentally applied N (as NH4NO3) to a bog near Mariana Lakes, Alberta, at rates of 0, 5, 10, 15, 20, and 25 kg N ha^-1 yr^-1, plus controls (no water or N addition).   In May of each year, we collected mixed vascular plant tissue and Sphagnum fuscum peat and placed homogenized mixtures in nylon bags and placed them approximately 10 cm below the peat surface in early June.  Bags were collected again in October of each year, cleaned, dried, and weighed.  Decomposition of Sphagnum moss and mixed vascular plant litter was affected by N inputs, on average losing 8 and 38 % of initial mass, respectively, over 5 months of decomposition. Water addition alone had no significant effect on decomposition of cellulose, Sphagnum, or vascular plant litter (p &amp;gt; 0.15).&lt;/para&gt;
   &lt;/abstract&gt;
@@ -2528,10 +2827,14 @@
     &lt;/taxonomicClassification&gt;
    &lt;/taxonomicCoverage&gt;
   &lt;/coverage&gt;
+  &lt;annotation&gt;
+   &lt;propertyURI label="is about"&gt;http://purl.obolibrary.org/obo/IAO_0000136&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
   &lt;maintenance&gt;
    &lt;description&gt;completed&lt;/description&gt;
   &lt;/maintenance&gt;
-  &lt;contact&gt;
+  &lt;contact id="Kelman R Wieder 2f2a5346-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Kelman&lt;/givenName&gt;
     &lt;givenName&gt;R&lt;/givenName&gt;
@@ -2606,7 +2909,7 @@
     &lt;funding&gt;NSF 111001&lt;/funding&gt;
    &lt;/relatedProject&gt;
    &lt;relatedProject&gt;
-    &lt;title&gt;No project title to report&lt;/title&gt;
+    &lt;title&gt;Project title 3&lt;/title&gt;
     &lt;personnel&gt;
      &lt;individualName&gt;
       &lt;givenName&gt;Joe&lt;/givenName&gt;
@@ -2618,19 +2921,7 @@
     &lt;funding&gt;NSF 101&lt;/funding&gt;
    &lt;/relatedProject&gt;
    &lt;relatedProject&gt;
-    &lt;title&gt;No project title to report&lt;/title&gt;
-    &lt;personnel&gt;
-     &lt;individualName&gt;
-      &lt;givenName&gt;Joe&lt;/givenName&gt;
-      &lt;surName&gt;Smith&lt;/surName&gt;
-     &lt;/individualName&gt;
-     &lt;organizationName&gt;Villanova University&lt;/organizationName&gt;
-     &lt;role&gt;Principal Investigator&lt;/role&gt;
-    &lt;/personnel&gt;
-    &lt;funding&gt;111001&lt;/funding&gt;
-   &lt;/relatedProject&gt;
-   &lt;relatedProject&gt;
-    &lt;title&gt;No project title to report&lt;/title&gt;
+    &lt;title&gt;Project title 4&lt;/title&gt;
     &lt;personnel&gt;
      &lt;individualName&gt;
       &lt;givenName&gt;Chase&lt;/givenName&gt;
@@ -2640,10 +2931,10 @@
      &lt;electronicMailAddress&gt;gachase@unm.edu&lt;/electronicMailAddress&gt;
      &lt;role&gt;Principal Investigator&lt;/role&gt;
     &lt;/personnel&gt;
-    &lt;funding&gt;No funding to report&lt;/funding&gt;
+    &lt;funding&gt;NSF 111001&lt;/funding&gt;
    &lt;/relatedProject&gt;
   &lt;/project&gt;
-  &lt;otherEntity&gt;
+  &lt;otherEntity id="ancillary_data.zip"&gt;
    &lt;entityName&gt;Ancillary data&lt;/entityName&gt;
    &lt;entityDescription&gt;Ancillary data including schematics and images&lt;/entityDescription&gt;
    &lt;physical&gt;
@@ -2656,9 +2947,13 @@
      &lt;/externallyDefinedFormat&gt;
     &lt;/dataFormat&gt;
    &lt;/physical&gt;
+   &lt;annotation&gt;
+    &lt;propertyURI label="is about"&gt;http://purl.obolibrary.org/obo/IAO_0000136&lt;/propertyURI&gt;
+    &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+   &lt;/annotation&gt;
    &lt;entityType&gt;unknown&lt;/entityType&gt;
   &lt;/otherEntity&gt;
-  &lt;otherEntity&gt;
+  &lt;otherEntity id="processing_and_analysis.R"&gt;
    &lt;entityName&gt;R script&lt;/entityName&gt;
    &lt;entityDescription&gt;Data processing and analysis script written in the R Language&lt;/entityDescription&gt;
    &lt;physical&gt;
@@ -2671,9 +2966,291 @@
      &lt;/externallyDefinedFormat&gt;
     &lt;/dataFormat&gt;
    &lt;/physical&gt;
+   &lt;annotation&gt;
+    &lt;propertyURI label="is about"&gt;http://purl.obolibrary.org/obo/IAO_0000136&lt;/propertyURI&gt;
+    &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+   &lt;/annotation&gt;
    &lt;entityType&gt;unknown&lt;/entityType&gt;
   &lt;/otherEntity&gt;
  &lt;/dataset&gt;
+ &lt;annotations&gt;
+  &lt;annotation references="dataset"&gt;
+   &lt;propertyURI label="is about"&gt;http://purl.obolibrary.org/obo/IAO_0000136&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv"&gt;
+   &lt;propertyURI label="is about"&gt;http://purl.obolibrary.org/obo/IAO_0000136&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/date"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/date"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/ntrt"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/ntrt"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/arm"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/arm"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/net_primary_production"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/net_primary_production"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/stem_mass_density"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/stem_mass_density"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/plant_density"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/plant_density"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/stem_n_concentration"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/stem_n_concentration"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/n_assimilated"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/n_assimilated"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/site_name"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/site_name"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/site_lat"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/site_lat"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/site_lon"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/site_lon"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv"&gt;
+   &lt;propertyURI label="is about"&gt;http://purl.obolibrary.org/obo/IAO_0000136&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/type"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/type"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/date"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/date"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/arm"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/arm"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/ntrt"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/ntrt"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/year"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/year"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/percent_loss"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/percent_loss"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/taxa"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/taxa"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="ancillary_data.zip"&gt;
+   &lt;propertyURI label="is about"&gt;http://purl.obolibrary.org/obo/IAO_0000136&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="processing_and_analysis.R"&gt;
+   &lt;propertyURI label="is about"&gt;http://purl.obolibrary.org/obo/IAO_0000136&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Kelman R Wieder 2f19b982-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Kelman R Wieder 2f19b982-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Dale H Vitt 2f28cc06-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Dale H Vitt 2f28cc06-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Melanie A Vile 2f2919f4-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Melanie A Vile 2f2919f4-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Jeremy A Graham 2f29412c-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Jeremy A Graham 2f29412c-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Jeremy A Hartsock 2f296846-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Jeremy A Hartsock 2f296846-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Hope Fillingim 2f298f74-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Hope Fillingim 2f298f74-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Melissa House 2f29b6a2-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Melissa House 2f29b6a2-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="James C Quinn 2f29b6a3-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="James C Quinn 2f29b6a3-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Kimberli D Scott 2f29ddc6-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Kimberli D Scott 2f29ddc6-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Meaghan Petix 2f2a04f4-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Meaghan Petix 2f2a04f4-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Kelly J McMillen 2f2a2c36-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Kelly J McMillen 2f2a2c36-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Kelman R Wieder 2f2a5346-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Kelman R Wieder 2f2a5346-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="James C Quinn 2f2aa1a2-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="James C Quinn 2f2aa1a2-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Jane Doe 2f2ac8d0-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Jane Doe 2f2ac8d0-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+ &lt;/annotations&gt;
  &lt;additionalMetadata&gt;
   &lt;metadata&gt;
    &lt;unitList&gt;
@@ -2734,7 +3311,7 @@
 <li>
 <strong>package.id</strong> (optional) Data package identifier in the format expected by the receiving data repository.</li>
 </ul>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="co"># Make EML for data tables and other entities</span>
+<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="co"># Make EML for data tables and other entities</span>
 
 <span class="fu"><a href="../reference/make_eml.html">make_eml</a></span>(
   <span class="kw">path</span> <span class="kw">=</span> <span class="st">'./pkg_301/metadata_templates'</span>,
@@ -2752,13 +3329,143 @@
   <span class="kw">user.id</span> <span class="kw">=</span> <span class="st">'csmith'</span>,
   <span class="kw">user.domain</span> <span class="kw">=</span> <span class="st">'EDI'</span>,
   <span class="kw">package.id</span> <span class="kw">=</span> <span class="st">'edi.301.3'</span>
-)
-
-<span class="co"># View directory</span>
+)</pre></body></html></div>
+<pre><code>## Warning: Input issues found. Use issues() to see them.</code></pre>
+<pre><code>## Called from: append_rp(k)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: append_rp(k)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: append_rp(k)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: annotate_element("ResponsibleParty")
+## debug: if (!is.null(eml$dataset$project$relatedProject)) {
+##     eml$dataset$project$relatedProject &lt;- lapply(eml$dataset$project$relatedProject, 
+##         function(k) {
+##             k$personnel &lt;- lapply(k$personnel, function(m) {
+##                 append_rp(m)
+##             })
+##             k
+##         })
+## }
+## debug: eml$dataset$project$relatedProject &lt;- lapply(eml$dataset$project$relatedProject, 
+##     function(k) {
+##         k$personnel &lt;- lapply(k$personnel, function(m) {
+##             append_rp(m)
+##         })
+##         k
+##     })
+## Called from: append_rp(m)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: append_rp(m)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: append_rp(m)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: append_rp(m)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: append_rp(m)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: append_rp(m)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: append_rp(m)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## Called from: append_rp(m)
+## debug: message(sub_i)
+## debug: if ((sub_i != "") &amp; any(anno$subject == sub_i)) {
+##     n$id &lt;- paste0(unique(anno$id[anno$subject == sub_i]), " ", 
+##         uuid::UUIDgenerate(use.time = TRUE))
+##     rp &lt;&lt;- rbind(rp, suppressWarnings(data.frame(id = n$id, anno[anno$subject == 
+##         sub_i, c("element", "context", "subject", "predicate_label", 
+##         "predicate_uri", "object_label", "object_uri")])))
+## }
+## debug: n
+## debug: eml</code></pre>
+<pre><code>## Warning in eml_additional_validation(doc, encoding = encoding): Document is invalid. Found the following errors:
+##  not all 'references' values match defined id attributes</code></pre>
+<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="co"># View directory</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">dir</a></span>(<span class="st">'./pkg_301/eml'</span>)</pre></body></html></div>
 <pre><code>## [1] "edi.301.1.xml" "edi.301.2.xml" "edi.301.3.xml"</code></pre>
-<div class="sourceCode" id="cb17"><html><body><pre class="r"># View EML</pre></body></html></div>
+<div class="sourceCode" id="cb28"><html><body><pre class="r"># View EML</pre></body></html></div>
 <pre><code>$eml
 &lt;eml:eml packageId="edi.301.3" schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0  https://nis.lternet.edu/schemas/EML/eml-2.2.0/xsd/eml.xsd" system="edi" xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2"&gt;
  &lt;access authSystem="https://pasta.edirepository.org/authentication" order="allowFirst" scope="document"&gt;
@@ -2771,9 +3478,9 @@
    &lt;permission&gt;read&lt;/permission&gt;
   &lt;/allow&gt;
  &lt;/access&gt;
- &lt;dataset&gt;
+ &lt;dataset id="dataset"&gt;
   &lt;title&gt;Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions&lt;/title&gt;
-  &lt;creator&gt;
+  &lt;creator id="Kelman R Wieder 352b0254-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Kelman&lt;/givenName&gt;
     &lt;givenName&gt;R&lt;/givenName&gt;
@@ -2783,7 +3490,7 @@
    &lt;electronicMailAddress&gt;kelman.wieder@villanova.edu&lt;/electronicMailAddress&gt;
    &lt;userId directory="https://orcid.org"&gt;https://orcid.org/0000-0001-5856-8473&lt;/userId&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="Dale H Vitt 353965ba-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Dale&lt;/givenName&gt;
     &lt;givenName&gt;H&lt;/givenName&gt;
@@ -2791,7 +3498,7 @@
    &lt;/individualName&gt;
    &lt;organizationName&gt;Southern Illinois University&lt;/organizationName&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="Melanie A Vile 35398d6a-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Melanie&lt;/givenName&gt;
     &lt;givenName&gt;A&lt;/givenName&gt;
@@ -2800,7 +3507,7 @@
    &lt;organizationName&gt;Villanova University&lt;/organizationName&gt;
    &lt;electronicMailAddress&gt;mvile@villanova.edu&lt;/electronicMailAddress&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="Jeremy A Graham 35398d6b-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Jeremy&lt;/givenName&gt;
     &lt;givenName&gt;A&lt;/givenName&gt;
@@ -2809,7 +3516,7 @@
    &lt;organizationName&gt;Southern Illinois University&lt;/organizationName&gt;
    &lt;electronicMailAddress&gt;jeremyg@mtu.edu&lt;/electronicMailAddress&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="Jeremy A Hartsock 3539b40c-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Jeremy&lt;/givenName&gt;
     &lt;givenName&gt;A&lt;/givenName&gt;
@@ -2818,7 +3525,7 @@
    &lt;organizationName&gt;Southern Illinois University&lt;/organizationName&gt;
    &lt;electronicMailAddress&gt;hartsock@siu.edu&lt;/electronicMailAddress&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="Hope Fillingim 3539db3a-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Hope&lt;/givenName&gt;
     &lt;surName&gt;Fillingim&lt;/surName&gt;
@@ -2826,7 +3533,7 @@
    &lt;organizationName&gt;Villanova University&lt;/organizationName&gt;
    &lt;electronicMailAddress&gt;fillingimhope@gmail.com&lt;/electronicMailAddress&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="Melissa House 353a0268-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Melissa&lt;/givenName&gt;
     &lt;surName&gt;House&lt;/surName&gt;
@@ -2834,7 +3541,7 @@
    &lt;organizationName&gt;Southern Illinois University&lt;/organizationName&gt;
    &lt;electronicMailAddress&gt;mhouse@siu.edu&lt;/electronicMailAddress&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="James C Quinn 353a298c-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;James&lt;/givenName&gt;
     &lt;givenName&gt;C&lt;/givenName&gt;
@@ -2843,7 +3550,7 @@
    &lt;organizationName&gt;Villanova University&lt;/organizationName&gt;
    &lt;electronicMailAddress&gt;jcqui03@gmail.com&lt;/electronicMailAddress&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="Kimberli D Scott 353a5114-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Kimberli&lt;/givenName&gt;
     &lt;givenName&gt;D&lt;/givenName&gt;
@@ -2852,7 +3559,7 @@
    &lt;organizationName&gt;Villanova University&lt;/organizationName&gt;
    &lt;electronicMailAddress&gt;kscott@villanova.edu&lt;/electronicMailAddress&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="Meaghan Petix 353a77e8-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Meaghan&lt;/givenName&gt;
     &lt;surName&gt;Petix&lt;/surName&gt;
@@ -2860,7 +3567,7 @@
    &lt;organizationName&gt;Southern Illinois University&lt;/organizationName&gt;
    &lt;electronicMailAddress&gt;meaghan.petix@wsu.edu&lt;/electronicMailAddress&gt;
   &lt;/creator&gt;
-  &lt;creator&gt;
+  &lt;creator id="Kelly J McMillen 353a9f0c-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Kelly&lt;/givenName&gt;
     &lt;givenName&gt;J&lt;/givenName&gt;
@@ -2880,7 +3587,7 @@
    &lt;electronicMailAddress&gt;tls@wisc.edu&lt;/electronicMailAddress&gt;
    &lt;role&gt;Secondary Collaborator&lt;/role&gt;
   &lt;/associatedParty&gt;
-  &lt;associatedParty&gt;
+  &lt;associatedParty id="James C Quinn 353b14aa-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;James&lt;/givenName&gt;
     &lt;givenName&gt;C&lt;/givenName&gt;
@@ -2890,7 +3597,7 @@
    &lt;electronicMailAddress&gt;jcqui03@gmail.com&lt;/electronicMailAddress&gt;
    &lt;role&gt;Instrument Technician&lt;/role&gt;
   &lt;/associatedParty&gt;
-  &lt;associatedParty&gt;
+  &lt;associatedParty id="Jane Doe 353b3bce-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Jane&lt;/givenName&gt;
     &lt;surName&gt;Doe&lt;/surName&gt;
@@ -2900,7 +3607,7 @@
    &lt;userId directory="https://orcid.org"&gt;https://orcid.org/0000-0001-5856-8473&lt;/userId&gt;
    &lt;role&gt;Equipment Lead&lt;/role&gt;
   &lt;/associatedParty&gt;
-  &lt;pubDate&gt;2020-08-18&lt;/pubDate&gt;
+  &lt;pubDate&gt;2020-10-21&lt;/pubDate&gt;
   &lt;abstract&gt;
    &lt;para&gt;Development of the oil sands has led to increasing atmospheric N deposition, with values as high as 17 kg N ha^-1 yr^-1; regional background levels &amp;lt;2 kg N ha^-1 yr^-1.  Bogs, being ombrotrophic, may be especially susceptible to increasing N deposition.  To examine responses to N deposition, over five years, we experimentally applied N (as NH4NO3) to a bog near Mariana Lakes, Alberta, at rates of 0, 5, 10, 15, 20, and 25 kg N ha^-1 yr^-1, plus controls (no water or N addition).   In May of each year, we collected mixed vascular plant tissue and Sphagnum fuscum peat and placed homogenized mixtures in nylon bags and placed them approximately 10 cm below the peat surface in early June.  Bags were collected again in October of each year, cleaned, dried, and weighed.  Decomposition of Sphagnum moss and mixed vascular plant litter was affected by N inputs, on average losing 8 and 38 % of initial mass, respectively, over 5 months of decomposition. Water addition alone had no significant effect on decomposition of cellulose, Sphagnum, or vascular plant litter (p &amp;gt; 0.15).&lt;/para&gt;
   &lt;/abstract&gt;
@@ -3577,10 +4284,14 @@
     &lt;/taxonomicClassification&gt;
    &lt;/taxonomicCoverage&gt;
   &lt;/coverage&gt;
+  &lt;annotation&gt;
+   &lt;propertyURI label="is about"&gt;http://purl.obolibrary.org/obo/IAO_0000136&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
   &lt;maintenance&gt;
    &lt;description&gt;completed&lt;/description&gt;
   &lt;/maintenance&gt;
-  &lt;contact&gt;
+  &lt;contact id="Kelman R Wieder 353ac63a-1407-11eb-ae04-df42b9f10526"&gt;
    &lt;individualName&gt;
     &lt;givenName&gt;Kelman&lt;/givenName&gt;
     &lt;givenName&gt;R&lt;/givenName&gt;
@@ -3655,7 +4366,7 @@
     &lt;funding&gt;NSF 111001&lt;/funding&gt;
    &lt;/relatedProject&gt;
    &lt;relatedProject&gt;
-    &lt;title&gt;No project title to report&lt;/title&gt;
+    &lt;title&gt;Project title 3&lt;/title&gt;
     &lt;personnel&gt;
      &lt;individualName&gt;
       &lt;givenName&gt;Joe&lt;/givenName&gt;
@@ -3667,19 +4378,7 @@
     &lt;funding&gt;NSF 101&lt;/funding&gt;
    &lt;/relatedProject&gt;
    &lt;relatedProject&gt;
-    &lt;title&gt;No project title to report&lt;/title&gt;
-    &lt;personnel&gt;
-     &lt;individualName&gt;
-      &lt;givenName&gt;Joe&lt;/givenName&gt;
-      &lt;surName&gt;Smith&lt;/surName&gt;
-     &lt;/individualName&gt;
-     &lt;organizationName&gt;Villanova University&lt;/organizationName&gt;
-     &lt;role&gt;Principal Investigator&lt;/role&gt;
-    &lt;/personnel&gt;
-    &lt;funding&gt;111001&lt;/funding&gt;
-   &lt;/relatedProject&gt;
-   &lt;relatedProject&gt;
-    &lt;title&gt;No project title to report&lt;/title&gt;
+    &lt;title&gt;Project title 4&lt;/title&gt;
     &lt;personnel&gt;
      &lt;individualName&gt;
       &lt;givenName&gt;Chase&lt;/givenName&gt;
@@ -3689,10 +4388,10 @@
      &lt;electronicMailAddress&gt;gachase@unm.edu&lt;/electronicMailAddress&gt;
      &lt;role&gt;Principal Investigator&lt;/role&gt;
     &lt;/personnel&gt;
-    &lt;funding&gt;No funding to report&lt;/funding&gt;
+    &lt;funding&gt;NSF 111001&lt;/funding&gt;
    &lt;/relatedProject&gt;
   &lt;/project&gt;
-  &lt;dataTable&gt;
+  &lt;dataTable id="decomp.csv"&gt;
    &lt;entityName&gt;Decomposition data&lt;/entityName&gt;
    &lt;entityDescription&gt;Decomposition rates monitored throughout the experiment&lt;/entityDescription&gt;
    &lt;physical&gt;
@@ -3710,8 +4409,12 @@
      &lt;/textFormat&gt;
     &lt;/dataFormat&gt;
    &lt;/physical&gt;
+   &lt;annotation&gt;
+    &lt;propertyURI label="is about"&gt;http://purl.obolibrary.org/obo/IAO_0000136&lt;/propertyURI&gt;
+    &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+   &lt;/annotation&gt;
    &lt;attributeList&gt;
-    &lt;attribute&gt;
+    &lt;attribute id="decomp.csv/type"&gt;
      &lt;attributeName&gt;type&lt;/attributeName&gt;
      &lt;attributeDefinition&gt;Vegetation type: Sphagnum fuscum or vascular plant tissue&lt;/attributeDefinition&gt;
      &lt;storageType&gt;string&lt;/storageType&gt;
@@ -3735,8 +4438,16 @@
       &lt;code&gt;-99999&lt;/code&gt;
       &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
      &lt;/missingValueCode&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
     &lt;/attribute&gt;
-    &lt;attribute&gt;
+    &lt;attribute id="decomp.csv/date"&gt;
      &lt;attributeName&gt;date&lt;/attributeName&gt;
      &lt;attributeDefinition&gt;Year of growth: 2011-2015&lt;/attributeDefinition&gt;
      &lt;storageType&gt;date&lt;/storageType&gt;
@@ -3750,8 +4461,16 @@
       &lt;code&gt;-99999&lt;/code&gt;
       &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
      &lt;/missingValueCode&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
     &lt;/attribute&gt;
-    &lt;attribute&gt;
+    &lt;attribute id="decomp.csv/arm"&gt;
      &lt;attributeName&gt;arm&lt;/attributeName&gt;
      &lt;attributeDefinition&gt;Experimental plots were located along 3 arms; each arm had one replicate each of 8 N treatments&lt;/attributeDefinition&gt;
      &lt;storageType&gt;string&lt;/storageType&gt;
@@ -3779,8 +4498,16 @@
       &lt;code&gt;-99999&lt;/code&gt;
       &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
      &lt;/missingValueCode&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
     &lt;/attribute&gt;
-    &lt;attribute&gt;
+    &lt;attribute id="decomp.csv/ntrt"&gt;
      &lt;attributeName&gt;ntrt&lt;/attributeName&gt;
      &lt;attributeDefinition&gt;Field experimental N treatments were made with 8 applications per plot per year between mid-May and mid-August of each year&lt;/attributeDefinition&gt;
      &lt;storageType&gt;string&lt;/storageType&gt;
@@ -3824,8 +4551,16 @@
       &lt;code&gt;-99999&lt;/code&gt;
       &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
      &lt;/missingValueCode&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
     &lt;/attribute&gt;
-    &lt;attribute&gt;
+    &lt;attribute id="decomp.csv/year"&gt;
      &lt;attributeName&gt;year&lt;/attributeName&gt;
      &lt;attributeDefinition&gt;Year collected&lt;/attributeDefinition&gt;
      &lt;storageType&gt;date&lt;/storageType&gt;
@@ -3839,8 +4574,16 @@
       &lt;code&gt;-99999&lt;/code&gt;
       &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
      &lt;/missingValueCode&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
     &lt;/attribute&gt;
-    &lt;attribute&gt;
+    &lt;attribute id="decomp.csv/percent_loss"&gt;
      &lt;attributeName&gt;percent_loss&lt;/attributeName&gt;
      &lt;attributeDefinition&gt;Amount of mass lost expressed as a percent of original mass&lt;/attributeDefinition&gt;
      &lt;storageType&gt;float&lt;/storageType&gt;
@@ -3862,8 +4605,16 @@
       &lt;code&gt;-99999&lt;/code&gt;
       &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
      &lt;/missingValueCode&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
     &lt;/attribute&gt;
-    &lt;attribute&gt;
+    &lt;attribute id="decomp.csv/taxa"&gt;
      &lt;attributeName&gt;taxa&lt;/attributeName&gt;
      &lt;attributeDefinition&gt;Taxa observed at site&lt;/attributeDefinition&gt;
      &lt;storageType&gt;string&lt;/storageType&gt;
@@ -3880,301 +4631,19 @@
       &lt;code&gt;-99999&lt;/code&gt;
       &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
      &lt;/missingValueCode&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
+     &lt;annotation&gt;
+      &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+      &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+     &lt;/annotation&gt;
     &lt;/attribute&gt;
    &lt;/attributeList&gt;
    &lt;numberOfRecords&gt;294&lt;/numberOfRecords&gt;
   &lt;/dataTable&gt;
-  &lt;dataTable&gt;
-   &lt;entityName&gt;Nitrogen data&lt;/entityName&gt;
-   &lt;entityDescription&gt;Nitrogen species measured near the study site&lt;/entityDescription&gt;
-   &lt;physical&gt;
-    &lt;objectName&gt;nitrogen.csv&lt;/objectName&gt;
-    &lt;size unit="bytes"&gt;6733&lt;/size&gt;
-    &lt;authentication method="MD5"&gt;2b10baaea5692bf96cafab9ae636f831&lt;/authentication&gt;
-    &lt;dataFormat&gt;
-     &lt;textFormat&gt;
-      &lt;numHeaderLines&gt;1&lt;/numHeaderLines&gt;
-      &lt;recordDelimiter&gt;\r\n&lt;/recordDelimiter&gt;
-      &lt;attributeOrientation&gt;column&lt;/attributeOrientation&gt;
-      &lt;simpleDelimited&gt;
-       &lt;fieldDelimiter&gt;,&lt;/fieldDelimiter&gt;
-      &lt;/simpleDelimited&gt;
-     &lt;/textFormat&gt;
-    &lt;/dataFormat&gt;
-   &lt;/physical&gt;
-   &lt;attributeList&gt;
-    &lt;attribute&gt;
-     &lt;attributeName&gt;date&lt;/attributeName&gt;
-     &lt;attributeDefinition&gt;Year of growth: 2011-2015&lt;/attributeDefinition&gt;
-     &lt;storageType&gt;date&lt;/storageType&gt;
-     &lt;measurementScale&gt;
-      &lt;dateTime&gt;
-       &lt;formatString&gt;YYYY-MM-DD&lt;/formatString&gt;
-       &lt;dateTimeDomain/&gt;
-      &lt;/dateTime&gt;
-     &lt;/measurementScale&gt;
-     &lt;missingValueCode&gt;
-      &lt;code&gt;-99999&lt;/code&gt;
-      &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
-     &lt;/missingValueCode&gt;
-    &lt;/attribute&gt;
-    &lt;attribute&gt;
-     &lt;attributeName&gt;ntrt&lt;/attributeName&gt;
-     &lt;attributeDefinition&gt;Field experimental N treatments were made with 8 applications per plot per year between mid May and mid August of each year&lt;/attributeDefinition&gt;
-     &lt;storageType&gt;string&lt;/storageType&gt;
-     &lt;measurementScale&gt;
-      &lt;nominal&gt;
-       &lt;nonNumericDomain&gt;
-        &lt;enumeratedDomain&gt;
-         &lt;codeDefinition&gt;
-          &lt;code&gt;C&lt;/code&gt;
-          &lt;definition&gt;Control, no water, no N added&lt;/definition&gt;
-         &lt;/codeDefinition&gt;
-         &lt;codeDefinition&gt;
-          &lt;code&gt;0&lt;/code&gt;
-          &lt;definition&gt;0 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
-         &lt;/codeDefinition&gt;
-         &lt;codeDefinition&gt;
-          &lt;code&gt;5&lt;/code&gt;
-          &lt;definition&gt;5 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
-         &lt;/codeDefinition&gt;
-         &lt;codeDefinition&gt;
-          &lt;code&gt;10&lt;/code&gt;
-          &lt;definition&gt;10 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
-         &lt;/codeDefinition&gt;
-         &lt;codeDefinition&gt;
-          &lt;code&gt;15&lt;/code&gt;
-          &lt;definition&gt;15 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
-         &lt;/codeDefinition&gt;
-         &lt;codeDefinition&gt;
-          &lt;code&gt;20&lt;/code&gt;
-          &lt;definition&gt;20 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
-         &lt;/codeDefinition&gt;
-         &lt;codeDefinition&gt;
-          &lt;code&gt;25&lt;/code&gt;
-          &lt;definition&gt;25 kg N/ha/yr added as NH4NO3&lt;/definition&gt;
-         &lt;/codeDefinition&gt;
-        &lt;/enumeratedDomain&gt;
-       &lt;/nonNumericDomain&gt;
-      &lt;/nominal&gt;
-     &lt;/measurementScale&gt;
-     &lt;missingValueCode&gt;
-      &lt;code&gt;-99999&lt;/code&gt;
-      &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
-     &lt;/missingValueCode&gt;
-    &lt;/attribute&gt;
-    &lt;attribute&gt;
-     &lt;attributeName&gt;arm&lt;/attributeName&gt;
-     &lt;attributeDefinition&gt;Experimental plots were located along 3 arms; each arm had one replicate each of 8 N treatments&lt;/attributeDefinition&gt;
-     &lt;storageType&gt;string&lt;/storageType&gt;
-     &lt;measurementScale&gt;
-      &lt;nominal&gt;
-       &lt;nonNumericDomain&gt;
-        &lt;enumeratedDomain&gt;
-         &lt;codeDefinition&gt;
-          &lt;code&gt;1&lt;/code&gt;
-          &lt;definition&gt;Arm 1&lt;/definition&gt;
-         &lt;/codeDefinition&gt;
-         &lt;codeDefinition&gt;
-          &lt;code&gt;2&lt;/code&gt;
-          &lt;definition&gt;Arm 2&lt;/definition&gt;
-         &lt;/codeDefinition&gt;
-         &lt;codeDefinition&gt;
-          &lt;code&gt;3&lt;/code&gt;
-          &lt;definition&gt;Arm3&lt;/definition&gt;
-         &lt;/codeDefinition&gt;
-        &lt;/enumeratedDomain&gt;
-       &lt;/nonNumericDomain&gt;
-      &lt;/nominal&gt;
-     &lt;/measurementScale&gt;
-     &lt;missingValueCode&gt;
-      &lt;code&gt;-99999&lt;/code&gt;
-      &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
-     &lt;/missingValueCode&gt;
-    &lt;/attribute&gt;
-    &lt;attribute&gt;
-     &lt;attributeName&gt;net_primary_production&lt;/attributeName&gt;
-     &lt;attributeDefinition&gt;The product of moss linear growth of stems (cm yr-1) and stem mass density (SMD)&lt;/attributeDefinition&gt;
-     &lt;storageType&gt;float&lt;/storageType&gt;
-     &lt;measurementScale&gt;
-      &lt;ratio&gt;
-       &lt;unit&gt;
-        &lt;standardUnit&gt;gramsPerMeterSquaredPerYear&lt;/standardUnit&gt;
-       &lt;/unit&gt;
-       &lt;numericDomain&gt;
-        &lt;numberType&gt;real&lt;/numberType&gt;
-        &lt;bounds&gt;
-         &lt;minimum exclusive="false"&gt;39.4&lt;/minimum&gt;
-         &lt;maximum exclusive="false"&gt;540.7&lt;/maximum&gt;
-        &lt;/bounds&gt;
-       &lt;/numericDomain&gt;
-      &lt;/ratio&gt;
-     &lt;/measurementScale&gt;
-     &lt;missingValueCode&gt;
-      &lt;code&gt;-99999&lt;/code&gt;
-      &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
-     &lt;/missingValueCode&gt;
-    &lt;/attribute&gt;
-    &lt;attribute&gt;
-     &lt;attributeName&gt;stem_mass_density&lt;/attributeName&gt;
-     &lt;attributeDefinition&gt;Mass of 1-cm lengths of Sphagnum stems beneath the capitula per m2&lt;/attributeDefinition&gt;
-     &lt;storageType&gt;float&lt;/storageType&gt;
-     &lt;measurementScale&gt;
-      &lt;ratio&gt;
-       &lt;unit&gt;
-        &lt;customUnit&gt;gramsPerSquaredMeterPerCentimeter&lt;/customUnit&gt;
-       &lt;/unit&gt;
-       &lt;numericDomain&gt;
-        &lt;numberType&gt;real&lt;/numberType&gt;
-        &lt;bounds&gt;
-         &lt;minimum exclusive="false"&gt;29.5&lt;/minimum&gt;
-         &lt;maximum exclusive="false"&gt;268.8&lt;/maximum&gt;
-        &lt;/bounds&gt;
-       &lt;/numericDomain&gt;
-      &lt;/ratio&gt;
-     &lt;/measurementScale&gt;
-     &lt;missingValueCode&gt;
-      &lt;code&gt;-99999&lt;/code&gt;
-      &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
-     &lt;/missingValueCode&gt;
-    &lt;/attribute&gt;
-    &lt;attribute&gt;
-     &lt;attributeName&gt;plant_density&lt;/attributeName&gt;
-     &lt;attributeDefinition&gt;Number of plants/area&lt;/attributeDefinition&gt;
-     &lt;storageType&gt;float&lt;/storageType&gt;
-     &lt;measurementScale&gt;
-      &lt;ratio&gt;
-       &lt;unit&gt;
-        &lt;standardUnit&gt;numberPerMeterSquared&lt;/standardUnit&gt;
-       &lt;/unit&gt;
-       &lt;numericDomain&gt;
-        &lt;numberType&gt;natural&lt;/numberType&gt;
-        &lt;bounds&gt;
-         &lt;minimum exclusive="false"&gt;20191&lt;/minimum&gt;
-         &lt;maximum exclusive="false"&gt;87719&lt;/maximum&gt;
-        &lt;/bounds&gt;
-       &lt;/numericDomain&gt;
-      &lt;/ratio&gt;
-     &lt;/measurementScale&gt;
-     &lt;missingValueCode&gt;
-      &lt;code&gt;-99999&lt;/code&gt;
-      &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
-     &lt;/missingValueCode&gt;
-    &lt;/attribute&gt;
-    &lt;attribute&gt;
-     &lt;attributeName&gt;stem_n_concentration&lt;/attributeName&gt;
-     &lt;attributeDefinition&gt;N concentration in the 0-2 cm stem sections&lt;/attributeDefinition&gt;
-     &lt;storageType&gt;float&lt;/storageType&gt;
-     &lt;measurementScale&gt;
-      &lt;ratio&gt;
-       &lt;unit&gt;
-        &lt;customUnit&gt;milligramsPerGram&lt;/customUnit&gt;
-       &lt;/unit&gt;
-       &lt;numericDomain&gt;
-        &lt;numberType&gt;real&lt;/numberType&gt;
-        &lt;bounds&gt;
-         &lt;minimum exclusive="false"&gt;6.83&lt;/minimum&gt;
-         &lt;maximum exclusive="false"&gt;12.92&lt;/maximum&gt;
-        &lt;/bounds&gt;
-       &lt;/numericDomain&gt;
-      &lt;/ratio&gt;
-     &lt;/measurementScale&gt;
-     &lt;missingValueCode&gt;
-      &lt;code&gt;-99999&lt;/code&gt;
-      &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
-     &lt;/missingValueCode&gt;
-    &lt;/attribute&gt;
-    &lt;attribute&gt;
-     &lt;attributeName&gt;n_assimilated&lt;/attributeName&gt;
-     &lt;attributeDefinition&gt;Amount of N used and stored per area of moss cover per year&lt;/attributeDefinition&gt;
-     &lt;storageType&gt;float&lt;/storageType&gt;
-     &lt;measurementScale&gt;
-      &lt;ratio&gt;
-       &lt;unit&gt;
-        &lt;standardUnit&gt;gramsPerMeterSquaredPerYear&lt;/standardUnit&gt;
-       &lt;/unit&gt;
-       &lt;numericDomain&gt;
-        &lt;numberType&gt;real&lt;/numberType&gt;
-        &lt;bounds&gt;
-         &lt;minimum exclusive="false"&gt;0.4&lt;/minimum&gt;
-         &lt;maximum exclusive="false"&gt;5.26&lt;/maximum&gt;
-        &lt;/bounds&gt;
-       &lt;/numericDomain&gt;
-      &lt;/ratio&gt;
-     &lt;/measurementScale&gt;
-     &lt;missingValueCode&gt;
-      &lt;code&gt;-99999&lt;/code&gt;
-      &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
-     &lt;/missingValueCode&gt;
-    &lt;/attribute&gt;
-    &lt;attribute&gt;
-     &lt;attributeName&gt;site_name&lt;/attributeName&gt;
-     &lt;attributeDefinition&gt;Name of site&lt;/attributeDefinition&gt;
-     &lt;storageType&gt;string&lt;/storageType&gt;
-     &lt;measurementScale&gt;
-      &lt;nominal&gt;
-       &lt;nonNumericDomain&gt;
-        &lt;textDomain&gt;
-         &lt;definition&gt;Name of site&lt;/definition&gt;
-        &lt;/textDomain&gt;
-       &lt;/nonNumericDomain&gt;
-      &lt;/nominal&gt;
-     &lt;/measurementScale&gt;
-     &lt;missingValueCode&gt;
-      &lt;code&gt;-99999&lt;/code&gt;
-      &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
-     &lt;/missingValueCode&gt;
-    &lt;/attribute&gt;
-    &lt;attribute&gt;
-     &lt;attributeName&gt;site_lat&lt;/attributeName&gt;
-     &lt;attributeDefinition&gt;Latitude in decimal degrees&lt;/attributeDefinition&gt;
-     &lt;storageType&gt;float&lt;/storageType&gt;
-     &lt;measurementScale&gt;
-      &lt;ratio&gt;
-       &lt;unit&gt;
-        &lt;standardUnit&gt;degree&lt;/standardUnit&gt;
-       &lt;/unit&gt;
-       &lt;numericDomain&gt;
-        &lt;numberType&gt;real&lt;/numberType&gt;
-        &lt;bounds&gt;
-         &lt;minimum exclusive="false"&gt;45.23&lt;/minimum&gt;
-         &lt;maximum exclusive="false"&gt;45.32&lt;/maximum&gt;
-        &lt;/bounds&gt;
-       &lt;/numericDomain&gt;
-      &lt;/ratio&gt;
-     &lt;/measurementScale&gt;
-     &lt;missingValueCode&gt;
-      &lt;code&gt;-99999&lt;/code&gt;
-      &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
-     &lt;/missingValueCode&gt;
-    &lt;/attribute&gt;
-    &lt;attribute&gt;
-     &lt;attributeName&gt;site_lon&lt;/attributeName&gt;
-     &lt;attributeDefinition&gt;Longitude in decimal degrees&lt;/attributeDefinition&gt;
-     &lt;storageType&gt;float&lt;/storageType&gt;
-     &lt;measurementScale&gt;
-      &lt;ratio&gt;
-       &lt;unit&gt;
-        &lt;standardUnit&gt;degree&lt;/standardUnit&gt;
-       &lt;/unit&gt;
-       &lt;numericDomain&gt;
-        &lt;numberType&gt;real&lt;/numberType&gt;
-        &lt;bounds&gt;
-         &lt;minimum exclusive="false"&gt;-89.52&lt;/minimum&gt;
-         &lt;maximum exclusive="false"&gt;-89.43&lt;/maximum&gt;
-        &lt;/bounds&gt;
-       &lt;/numericDomain&gt;
-      &lt;/ratio&gt;
-     &lt;/measurementScale&gt;
-     &lt;missingValueCode&gt;
-      &lt;code&gt;-99999&lt;/code&gt;
-      &lt;codeExplanation&gt;Missing value&lt;/codeExplanation&gt;
-     &lt;/missingValueCode&gt;
-    &lt;/attribute&gt;
-   &lt;/attributeList&gt;
-   &lt;numberOfRecords&gt;104&lt;/numberOfRecords&gt;
-  &lt;/dataTable&gt;
-  &lt;otherEntity&gt;
+  &lt;otherEntity id="ancillary_data.zip"&gt;
    &lt;entityName&gt;Ancillary data&lt;/entityName&gt;
    &lt;entityDescription&gt;Ancillary data including schematics and images&lt;/entityDescription&gt;
    &lt;physical&gt;
@@ -4187,9 +4656,13 @@
      &lt;/externallyDefinedFormat&gt;
     &lt;/dataFormat&gt;
    &lt;/physical&gt;
+   &lt;annotation&gt;
+    &lt;propertyURI label="is about"&gt;http://purl.obolibrary.org/obo/IAO_0000136&lt;/propertyURI&gt;
+    &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+   &lt;/annotation&gt;
    &lt;entityType&gt;unknown&lt;/entityType&gt;
   &lt;/otherEntity&gt;
-  &lt;otherEntity&gt;
+  &lt;otherEntity id="processing_and_analysis.R"&gt;
    &lt;entityName&gt;R script&lt;/entityName&gt;
    &lt;entityDescription&gt;Data processing and analysis script written in the R Language&lt;/entityDescription&gt;
    &lt;physical&gt;
@@ -4202,9 +4675,291 @@
      &lt;/externallyDefinedFormat&gt;
     &lt;/dataFormat&gt;
    &lt;/physical&gt;
+   &lt;annotation&gt;
+    &lt;propertyURI label="is about"&gt;http://purl.obolibrary.org/obo/IAO_0000136&lt;/propertyURI&gt;
+    &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+   &lt;/annotation&gt;
    &lt;entityType&gt;unknown&lt;/entityType&gt;
   &lt;/otherEntity&gt;
  &lt;/dataset&gt;
+ &lt;annotations&gt;
+  &lt;annotation references="dataset"&gt;
+   &lt;propertyURI label="is about"&gt;http://purl.obolibrary.org/obo/IAO_0000136&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv"&gt;
+   &lt;propertyURI label="is about"&gt;http://purl.obolibrary.org/obo/IAO_0000136&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/date"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/date"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/ntrt"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/ntrt"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/arm"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/arm"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/net_primary_production"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/net_primary_production"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/stem_mass_density"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/stem_mass_density"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/plant_density"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/plant_density"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/stem_n_concentration"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/stem_n_concentration"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/n_assimilated"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/n_assimilated"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/site_name"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/site_name"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/site_lat"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/site_lat"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/site_lon"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="nitrogen.csv/site_lon"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv"&gt;
+   &lt;propertyURI label="is about"&gt;http://purl.obolibrary.org/obo/IAO_0000136&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/type"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/type"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/date"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/date"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/arm"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/arm"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/ntrt"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/ntrt"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/year"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/year"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/percent_loss"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/percent_loss"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/taxa"&gt;
+   &lt;propertyURI label="contains measurements of type"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="decomp.csv/taxa"&gt;
+   &lt;propertyURI label="has unit"&gt;http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="ancillary_data.zip"&gt;
+   &lt;propertyURI label="is about"&gt;http://purl.obolibrary.org/obo/IAO_0000136&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="processing_and_analysis.R"&gt;
+   &lt;propertyURI label="is about"&gt;http://purl.obolibrary.org/obo/IAO_0000136&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Kelman R Wieder 352b0254-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Kelman R Wieder 352b0254-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Dale H Vitt 353965ba-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Dale H Vitt 353965ba-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Melanie A Vile 35398d6a-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Melanie A Vile 35398d6a-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Jeremy A Graham 35398d6b-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Jeremy A Graham 35398d6b-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Jeremy A Hartsock 3539b40c-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Jeremy A Hartsock 3539b40c-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Hope Fillingim 3539db3a-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Hope Fillingim 3539db3a-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Melissa House 353a0268-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Melissa House 353a0268-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="James C Quinn 353a298c-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="James C Quinn 353a298c-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Kimberli D Scott 353a5114-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Kimberli D Scott 353a5114-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Meaghan Petix 353a77e8-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Meaghan Petix 353a77e8-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Kelly J McMillen 353a9f0c-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Kelly J McMillen 353a9f0c-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Kelman R Wieder 353ac63a-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Kelman R Wieder 353ac63a-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="James C Quinn 353b14aa-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="James C Quinn 353b14aa-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Jane Doe 353b3bce-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="is a"&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&lt;/propertyURI&gt;
+   &lt;valueURI label="Person"&gt;https://schema.org/Person&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+  &lt;annotation references="Jane Doe 353b3bce-1407-11eb-ae04-df42b9f10526"&gt;
+   &lt;propertyURI label="member of"&gt;https://schema.org/memberOf&lt;/propertyURI&gt;
+   &lt;valueURI label="placeholder"&gt;placeholder&lt;/valueURI&gt;
+  &lt;/annotation&gt;
+ &lt;/annotations&gt;
  &lt;additionalMetadata&gt;
   &lt;metadata&gt;
    &lt;unitList&gt;
