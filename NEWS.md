@@ -2,7 +2,7 @@
 
 ### Enhancement
 
-* __Semantic annotation:__ User can now annotate their EML. This implementation supports two use cases:
+* __Semantic annotation:__ EML can now be annotated. This implementation supports two use cases:
     1. New EML ... created by the EMLassemblyline workflow:
         - Complete all metadata templates for your dataset (as usual)
         - Run `template_annotations()` to create the annotations template
