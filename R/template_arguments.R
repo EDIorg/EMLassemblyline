@@ -179,6 +179,7 @@ template_arguments <- function(
           fill = TRUE,
           blank.lines.skip = TRUE,
           sep = "\t",
+          quote = "\"",
           colClasses = list(
             character = 1:utils::count.fields(f, sep = "\t")[1])))
       

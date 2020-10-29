@@ -1,17 +1,9 @@
 #' Create categorical variables template
 #'
 #' @description  
-#'     Use this function to extract the unique categorical variables of a data
+#'     Use this function after table attributes templates are complete. It uses information in attribute templates to extract the unique categorical variables from the corresponding data table.
 #'     table and return for user supplied definitions. 
 #'     \href{https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html}{Instructions for editing this template.}
-#'
-#' @usage 
-#'     template_categorical_variables(
-#'       path,
-#'       data.path = path,
-#'       write.file = TRUE,
-#'       x = NULL
-#'     )
 #'
 #' @param path 
 #'     (character) Path to the metadata template directory.
@@ -19,17 +11,10 @@
 #'     (character) Path to the data directory.
 #' @param write.file
 #'     (logical; optional) Whether to write the template file.
-#' @param x
-#'     (named list; optional) Alternative input to 
-#'     \code{template_categorical_variables()}. Use \code{template_arguments()} 
-#'     to create \code{x}.
 #'
 #' @return 
-#'     \strong{catvars_*.txt} The tab delimited categorical variable 
-#'     template, where * is the table name from which the variables were
-#'     extracted. This file is written to \code{path} unless using \code{x},
-#'     in which case the template is added to 
-#'     \strong{/x/templates/catvars_*.txt}.
+#' \item{catvars_tablename.txt}{The tab delimited categorical variable template, where "tablename" is the table name from which the variables were extracted. This file is written to \code{path}}.
+#' \item{list of data frames}{A list of data frames. One for each categorical variables template.}
 #'     
 #' @details 
 #'     \code{template_categorical_variables()} knows which columns of a table
@@ -53,290 +38,213 @@
 #' # Set working directory
 #' setwd(paste0(tempdir(), '/pkg_255'))
 #' 
-#' # View directory contents (NOTE: catvars_*.txt files don't exist)
-#' dir('./metadata_templates')
-#' 
 #' # Template categorical variables
-#' template_categorical_variables(
+#' catvars <- template_categorical_variables(
 #'   path = './metadata_templates',
-#'   data.path = './data_objects'
-#' )
+#'   data.path = './data_objects')
+#' catvars
 #' 
 #' # View directory contents (NOTE: catvars_*.txt files exist)
 #' dir('./metadata_templates')
-#' 
-#' # Rerunning template_categorical_variables() does not overwrite files
-#' template_categorical_variables(
-#'   path = './metadata_templates',
-#'   data.path = './data_objects'
-#' )
 #' 
 #' # Clean up
 #' unlink('.', recursive = TRUE)
 #'
 #' @export
 #'
-
 template_categorical_variables <- function(
   path, 
   data.path = path, 
-  write.file = TRUE,
-  x = NULL) {
+  write.file = TRUE) {
   
   message('Templating categorical variables ...')
   
-  # Validate arguments and import data ------------------------------------------
-  
-  # Validate path usage before passing arguments to validate_arguments()
-  # When not using x, inputs are expected from path and data.path. 
-  # When using x, only data.path is used. Ignored are path and write.file.
-  
-  if (is.null(x) & missing(path)){
-    stop('Input argument "path" is missing.')
-  } else if (!is.null(x) & missing(path)){
-    path <- NULL
-    if (missing(data.path)){
-      stop('Input argument "data.path" is missing.')
-    }
-  }
-  
-  # Pass remaining arguments to validate_arguments().
+  # Validate arguments --------------------------------------------------------
   
   validate_arguments(
     fun.name = 'template_categorical_variables',
-    fun.args = as.list(environment())
-  )
+    fun.args = as.list(environment()))
   
-  # If not using x ...
+  # Read templates and data ---------------------------------------------------
   
-  if (is.null(x)){
-    
-    # Get attribute file names and data file names
-    
-    files <- list.files(path)
-    use_i <- stringr::str_detect(string = files,
-                                 pattern = "^attributes")
-    
-    attribute_files <- files[use_i]
-    table_names_base <- stringr::str_sub(string = attribute_files,
-                                         start = 12,
-                                         end = nchar(attribute_files)-4)
-    data_files <- list.files(data.path)
-    use_i <- stringr::str_detect(string = data_files,
-                                 pattern = stringr::str_c("^", table_names_base, collapse = "|"))
-    table_names <- data_files[use_i]
-    data_files <- table_names
-    
-    # Read templates and data.table into list
-    
-    x <- template_arguments(
-      path = path,
-      data.path = data.path,
-      data.table = data_files
-    )
-    
-    x <- x$x
-    
-    data_read_2_x <- TRUE
-    
-  }
+  # Read all templates in path then parse the table attribute file names to get 
+  # the corresponding data table names. Once all file names are known, re-read
+  # all templates and data files.
   
-  # Extract categorical variables and write to file ---------------------------
+  x <- template_arguments(path = path)$x
   
-  table_names <- names(x$data.table)
+  attribute_template_names <- stringr::str_subset(
+    names(x$template),
+    "(?<=attributes_).*(?=\\.txt)")
   
-  fname_table_catvars <- paste0(
-    'catvars_',
-    substr(names(x$data.table), 1, (nchar(names(x$data.table))-4)),
-    '.txt'
-  )
+  data_tables <- sapply(
+    attribute_template_names,
+    attribute_template_to_table,
+    data.path = data.path)
   
-  attribute_files <- names(x$template)[
-    stringr::str_detect(
-      names(x$template),
-      "attributes_(?!dataset).*.txt"
-    )
-    ]
+  x <- template_arguments(
+    path = path,
+    data.path = data.path,
+    data.table = data_tables)$x
   
-  files <- names(x$template)
+  # Extract categorical variables ---------------------------------------------
   
-  for (i in 1:length(attribute_files)){
-    
-    use_i <- stringr::str_detect(
-      string = files,
-      pattern = fname_table_catvars[i]
-    )
-    
-    if (sum(use_i) > 0){
+  # Categorical variables are classified in each data tables attribute 
+  # template. For each categorical variable found, extract unique codes, except
+  # for declared missing value codes, and return in a long data frame.
+  
+  r <- lapply(
+    seq_along(data_tables),
+    function(i, data_tables) {
       
-      message(paste(files[use_i], "already exists!"))
+      # Get components
       
-      catvars <- NULL
+      d <- x$data.table[[unname(data_tables)[i]]]$content
+      attributes <- x$template[[names(data_tables)[i]]]$content
       
-    } else {
+      categorical_variables <- attributes$attributeName[
+        attributes$class == "categorical"]
       
-      # Read attributes_datatablename.txt
+      missing_value_codes <- dplyr::select(
+        attributes, attributeName, missingValueCode)
       
-      df_attributes <- x$template[[attribute_files[i]]]$content
+      categorical_variables_file_name <- stringr::str_replace(
+        names(data_tables)[i], 
+        "attributes_", 
+        "catvars_")
       
-      # Build catvars table
+      # Continue if categorical variables exist for this data table and if
+      # a categorical variables template doesn't already exist
       
-      catvars_I <- which(df_attributes$class %in% "categorical")
-      
-      # Read data table
-      
-      df_table <- x$data.table[[table_names[i]]]$content
-      
-      # If there are no catvars then skip to the next file
-      
-      if (length(catvars_I) > 0){
-        
-        rows <- 0
-        for (j in 1:length(catvars_I)){
-          factor_names <- unique(
-            eval(
-              parse(
-                text = paste(
-                  "df_table",
-                  "$",
-                  df_attributes$attributeName[catvars_I[j]],
-                  sep = ""))))
-          
-          rows <- length(factor_names) + rows
-          
-        }
-        
-        catvars <- data.frame(attributeName = character(rows),
-                              code = character(rows),
-                              definition = character(rows),
-                              stringsAsFactors = F)
-        
-        row <- 1
-        for (j in 1:length(catvars_I)){
-          
-          factor_names <- unique(
-            eval(
-              parse(
-                text = paste(
-                  "df_table",
-                  "$",
-                  df_attributes$attributeName[catvars_I[j]],
-                  sep = ""))))
-          
-          catvars$attributeName[row:(length(factor_names)+row-1)] <- 
-            df_attributes$attributeName[catvars_I[j]]
-          
-          catvars$code[row:(length(factor_names)+row-1)] <- factor_names
-          
-          row <- row + length(factor_names)
-          
-        }
-        
-        # Remove rows with empty codes
-        
-        use_i <- catvars$code == ""
-        if (sum(use_i, na.rm = T) > 0){
-          use_i <- match("", catvars$code)
-          index <- seq(length(catvars$code))
-          use_i <- index %in% use_i
-          catvars <- catvars[!use_i, ]
-        }
-        
-        # Remove missing value codes from categorical variables. Only missing
-        # value codes defined in the attribute.txt template are removed.
-        
-        for (k in 1:length(unique(catvars$attributeName))){
-          if (df_attributes$missingValueCode[
-            df_attributes$attributeName == unique(catvars$attributeName)[k]] == "NA") {
-            use_i <- (catvars$attributeName == unique(catvars$attributeName)[k]) & 
-              (is.na(catvars$code))
-          } else {
-            use_i <- (catvars$attributeName %in% unique(catvars$attributeName)[k]) &
-              (catvars$code %in% df_attributes$missingValueCode[
-                df_attributes$attributeName == unique(catvars$attributeName)[k]
-                ])
-          }
-          catvars <- catvars[!use_i, ]
-        }
-        
-        # Encode extracted metadata in UTF-8
-        
-        catvars$attributeName <- enc2utf8(catvars$attributeName)
-        catvars$code <- enc2utf8(catvars$code)
-
-        # Write template to file
-        
-        if (isTRUE(write.file) & exists('data_read_2_x')){
-          
-          message(fname_table_catvars[i])
-          suppressWarnings(utils::write.table(catvars,
-                                              paste(path,
-                                                    "/",
-                                                    enc2utf8(fname_table_catvars[i]),
-                                                    sep = ""),
-                                              sep = "\t",
-                                              row.names = F,
-                                              quote = F,
-                                              fileEncoding = "UTF-8"))
-          
-          # Add template to x
-          
-        } else if (!exists('data_read_2_x')){
-          
-          value <- stringr::str_detect(
-            names(x$template),
-            fname_table_catvars[i]
-          )
-          
-          if (!any(value)){
-            
-            message(
-              paste0(
-                "Adding ",
-                fname_table_catvars[i],
-                ' to x'
-              )
-            )
-            
-            missing_template <- list(
-              content = catvars
-            )
-            
-            missing_template <- list(
-              missing_template
-            )
-            
-            names(missing_template) <- fname_table_catvars[i]
-            
-            x$template <- c(
-              x$template, 
-              missing_template
-            )
-            
-          }
-          
-        }
-        
+      if (length(categorical_variables) == 0) {
+        message("No categorical variables found.")
       } else {
         
-        message("No categorical variables found.")
-        
-        catvars <- NULL
-        
+        if (categorical_variables_file_name %in% names(x$template)) {
+          message(categorical_variables_file_name, " already exists!")
+        } else {
+          message(categorical_variables_file_name)
+          
+          # Compile components for the categorical variables template
+          
+          catvars <- dplyr::select(d, categorical_variables)
+          catvars <- tidyr::gather(catvars, "attributeName", "code")
+          catvars <- dplyr::distinct(catvars)
+          catvars <- dplyr::right_join(missing_value_codes, catvars, by = "attributeName")
+          
+          # Remove missing value codes listed in the table attributes template 
+          # since these will be listed in the EML metadata separately. NOTE: 
+          # Because EAL templates use "" instead of NA, all "" from the template
+          # are converted to NA to facilitate matching.
+          
+          use_i <- apply(
+            catvars, 
+            1, 
+            function(x) {
+              if (x[["missingValueCode"]] == "NA") {
+                x[["missingValueCode"]] <- NA_character_
+              }
+              missing_value_code <- x[["missingValueCode"]] %in% x[["code"]]
+              return(missing_value_code)
+            })
+          
+          catvars <- catvars[!use_i, ]
+          
+          # Tranform contents into the categorical variales template format
+          
+          catvars$definition <- ""
+          catvars <- dplyr::select(catvars, -missingValueCode)
+          
+          # Encode extracted metadata in UTF-8
+          
+          catvars$attributeName <- enc2utf8(catvars$attributeName)
+          catvars$code <- enc2utf8(catvars$code)
+          
+          # List under "content" to accord with structure returned by 
+          # template_arguments()
+          
+          catvars <- list(content = catvars)
+          
+          return(catvars)
+          
+        }
       }
-      
+    },
+    data_tables = data_tables)
+  
+  names(r) <- stringr::str_replace(
+    names(data_tables), 
+    "attributes_", 
+    "catvars_")
+  
+  # Write to file -------------------------------------------------------------
+  
+  if (write.file) {
+    for (i in names(r)) {
+      if (!is.null(r[[i]])) {
+        data.table::fwrite(
+          x = r[[i]]$content,
+          file = paste0(path, "/", enc2utf8(i)),
+          sep = "\t",
+          quote = TRUE)
+      }
     }
-    
   }
   
   message("Done.")
   
-  # Return
-  
-  if (!exists('data_read_2_x')){
-    
-    x
-    
-  }
-  
+  # Return --------------------------------------------------------------------
+
+  return(r)
+}
+
+
+
+
+
+
+
+
+#' Convert attributes file name to the corresponding data table file name
+#'
+#' @param attributes.template 
+#'     (character) Table attributes template file name, including file extension
+#' @param data.path
+#'     (character) Path to the data directory
+#'
+#' @return
+#'     (character) Data table file name
+#'     
+attribute_template_to_table <- function(attributes.template, data.path) {
+  table_regex <- paste0(
+    "(?<!^attributes_)",
+    stringr::str_extract(
+      attributes.template, 
+      "(?<=attributes_).*(?=\\.txt)"),
+    "\\.[:alpha:]*$")
+  table <- stringr::str_subset(dir(data.path), table_regex)
+  return(table)
+}
+
+
+
+
+
+
+
+
+#' Convert data table file name to the corresponding attributes file name
+#'
+#' @param data.table
+#'     (character) File name of data table, including file extension
+#'
+#' @return
+#'     (character) Table attributes file name
+#'     
+table_to_attribute_template <- function(data.table) {
+  attribute_template <- paste0(
+    "attributes_",
+    stringr::str_remove(data.table, "\\.[:alpha:]*"),
+    ".txt")
+  return(attribute_template)
 }
