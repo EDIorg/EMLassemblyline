@@ -4,12 +4,7 @@
 \alias{template_categorical_variables}
 \title{Create categorical variables template}
 \usage{
-template_categorical_variables(
-      path,
-      data.path = path,
-      write.file = TRUE,
-      x = NULL
-    )
+template_categorical_variables(path, data.path = path, write.file = TRUE)
 }
 \arguments{
 \item{path}{(character) Path to the metadata template directory.}
@@ -17,20 +12,13 @@ template_categorical_variables(
 \item{data.path}{(character) Path to the data directory.}
 
 \item{write.file}{(logical; optional) Whether to write the template file.}
-
-\item{x}{(named list; optional) Alternative input to 
-\code{template_categorical_variables()}. Use \code{template_arguments()} 
-to create \code{x}.}
 }
 \value{
-\strong{catvars_*.txt} The tab delimited categorical variable 
-    template, where * is the table name from which the variables were
-    extracted. This file is written to \code{path} unless using \code{x},
-    in which case the template is added to 
-    \strong{/x/templates/catvars_*.txt}.
+\item{catvars_tablename.txt}{The tab delimited categorical variable template, where "tablename" is the table name from which the variables were extracted. This file is written to \code{path}}.
+\item{list of data frames}{A list of data frames. One for each categorical variables template.}
 }
 \description{
-Use this function to extract the unique categorical variables of a data
+Use this function after table attributes templates are complete. It uses information in attribute templates to extract the unique categorical variables from the corresponding data table.
     table and return for user supplied definitions. 
     \href{https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html}{Instructions for editing this template.}
 }
@@ -53,23 +41,14 @@ file.copy(
 # Set working directory
 setwd(paste0(tempdir(), '/pkg_255'))
 
-# View directory contents (NOTE: catvars_*.txt files don't exist)
-dir('./metadata_templates')
-
 # Template categorical variables
-template_categorical_variables(
+catvars <- template_categorical_variables(
   path = './metadata_templates',
-  data.path = './data_objects'
-)
+  data.path = './data_objects')
+catvars
 
 # View directory contents (NOTE: catvars_*.txt files exist)
 dir('./metadata_templates')
-
-# Rerunning template_categorical_variables() does not overwrite files
-template_categorical_variables(
-  path = './metadata_templates',
-  data.path = './data_objects'
-)
 
 # Clean up
 unlink('.', recursive = TRUE)

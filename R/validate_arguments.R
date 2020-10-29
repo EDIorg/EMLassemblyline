@@ -453,69 +453,34 @@ validate_arguments <- function(fun.name, fun.args){
   # Call from template_categorical_variables() -------------------------------------
   
   if (fun.name == 'template_categorical_variables'){
+
+    if (is.null(fun.args$path)) {
+      stop("Input argument 'path' is missing", call. = FALSE)
+    }
     
-    # If not using x ...
+    # Get attribute file names and data file names
     
-    if (is.null(fun.args$x)){
-      
-      # Get attribute file names and data file names
-      
-      files <- list.files(fun.args$path)
-      use_i <- stringr::str_detect(string = files,
-                                   pattern = "^attributes")
-      if (sum(use_i) == 0){
-        stop('There are no attributes.txt files in your dataset working directory. Please fix this.', call. = F)
-      }
-      
-      attribute_files <- files[use_i]
-      table_names_base <- stringr::str_sub(string = attribute_files,
-                                           start = 12,
-                                           end = nchar(attribute_files)-4)
-      data_files <- list.files(fun.args$data.path)
-      use_i <- stringr::str_detect(string = data_files,
-                                   pattern = stringr::str_c("^", table_names_base, collapse = "|"))
-      table_names <- data_files[use_i]
-      data_files <- table_names
-      
-      # Send warning if data table name is repeated more than once
-      
-      if (length(unique(tools::file_path_sans_ext(data_files))) != length(data_files)){
-        stop('Duplicate data file names exist in this directory. Please remove duplicates, even if they are a different file type.', call. = F)
-      }
-      
-      # If using x ...
-      
-    } else if (!is.null(fun.args$x)){
-      
-      # Get attribute file names and data file names
-      
-      files <- names(fun.args$x$template)
-      use_i <- stringr::str_detect(string = files,
-                                   pattern = "^attributes")
-      if (sum(use_i) == 0){
-        stop('There are no attributes.txt files in your dataset working directory. Please fix this.', call. = F)
-      }
-      
-      attribute_files <- files[use_i]
-      
-      table_names_base <- stringr::str_sub(string = attribute_files,
-                                           start = 12,
-                                           end = nchar(attribute_files)-4)
-      
-      data_files <- names(fun.args$x$data.table)
-      
-      use_i <- stringr::str_detect(string = data_files,
-                                   pattern = stringr::str_c("^", table_names_base, collapse = "|"))
-      
-      table_names <- data_files[use_i]
-      data_files <- table_names
-      
-      # Send warning if data table name is repeated more than once
-      
-      if (length(unique(tools::file_path_sans_ext(data_files))) != length(data_files)){
-        stop('Duplicate data file names exist in this directory. Please remove duplicates, even if they are a different file type.', call. = F)
-      }
-      
+    files <- list.files(fun.args$path)
+    use_i <- stringr::str_detect(string = files,
+                                 pattern = "^attributes")
+    if (sum(use_i) == 0){
+      stop('There are no attributes.txt files in your dataset working directory. Please fix this.', call. = F)
+    }
+    
+    attribute_files <- files[use_i]
+    table_names_base <- stringr::str_sub(string = attribute_files,
+                                         start = 12,
+                                         end = nchar(attribute_files)-4)
+    data_files <- list.files(fun.args$data.path)
+    use_i <- stringr::str_detect(string = data_files,
+                                 pattern = stringr::str_c("^", table_names_base, collapse = "|"))
+    table_names <- data_files[use_i]
+    data_files <- table_names
+    
+    # Send warning if data table name is repeated more than once
+    
+    if (length(unique(tools::file_path_sans_ext(data_files))) != length(data_files)){
+      stop('Duplicate data file names exist in this directory. Please remove duplicates, even if they are a different file type.', call. = F)
     }
 
   }
