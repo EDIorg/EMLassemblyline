@@ -21,6 +21,8 @@
 
 * __Allow creation of partial EML (part 2):__ This completes implementation of issue #34 by moving all evaluation of inputs to make_eml() (and associated warning and error handling) from various locations in the code base to validate_templates(). With this implementation comes a new approach to communicating input issues to the user via template_issues, an object written to the global environment and formatted into a human readable report (message) when passed through issues().
 
+* __template_categorical_variables quote character:__ Occasionally unquoted strings in the categorical variables template leads to errors. Quoting characters, when required, during the write to file phase has been implemented. Additionally, the entire function has been simplified.
+
 
 ### Enhancement
 

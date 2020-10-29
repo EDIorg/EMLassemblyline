@@ -10,6 +10,7 @@ Description:
     minimizing user effort while maximizing metadata features for data 
     discovery and reuse.
 Imports:
+    bit64 (>= 4.0.5),
     data.table (>= 1.12.2),
     EDIutils (>= 1.2.0),
     EML (>= 2.0.3),

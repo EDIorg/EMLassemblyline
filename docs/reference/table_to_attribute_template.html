@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create provenance template — template_provenance • EMLassemblyline</title>
+<title>Convert data table file name to the corresponding attributes file name — table_to_attribute_template • EMLassemblyline</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Create provenance template — template_provenance" />
-<meta property="og:description" content="Use this function to create the provenance template for listing data entities (i.e. datasets, articles, etc.) that serve as data sources (inputs) to the derived dataset metadata is being created for." />
+<meta property="og:title" content="Convert data table file name to the corresponding attributes file name — table_to_attribute_template" />
+<meta property="og:description" content="Convert data table file name to the corresponding attributes file name" />
 
 
 
@@ -138,75 +138,30 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create provenance template</h1>
-    <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/template_provenance.R'><code>R/template_provenance.R</code></a></small>
-    <div class="hidden name"><code>template_provenance.Rd</code></div>
+    <h1>Convert data table file name to the corresponding attributes file name</h1>
+    <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/template_categorical_variables.R'><code>R/template_categorical_variables.R</code></a></small>
+    <div class="hidden name"><code>table_to_attribute_template.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Use this function to create the provenance template for listing data entities (i.e. datasets, articles, etc.) that serve as data sources (inputs) to the derived dataset metadata is being created for.</p>
+    <p>Convert data table file name to the corresponding attributes file name</p>
     </div>
 
-    <pre class="usage"><span class='fu'>template_provenance</span>(
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>empty</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>write.file</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>return.obj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>table_to_attribute_template</span>(<span class='no'>data.table</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>path</th>
-      <td><p>(character) Path to the metadata template directory.</p></td>
-    </tr>
-    <tr>
-      <th>empty</th>
-      <td><p>(logical) Whether to write an empty template file. Default is <code>TRUE</code>.</p></td>
-    </tr>
-    <tr>
-      <th>write.file</th>
-      <td><p>(logical; optional) Whether to write the template file. Default is <code>TRUE</code>.</p></td>
-    </tr>
-    <tr>
-      <th>return.obj</th>
-      <td><p>(logical; optional) Whether to return the provenance template as a data frame. Default is <code>FALSE</code>.</p></td>
+      <th>data.table</th>
+      <td><p>(character) File name of data table, including file extension</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
+    <p>(character) Table attributes file name</p>
 
-<dt>provenance.txt</dt><dd><p>The tab delimited provenance template written to <code>path</code> with the columns:
-<ul>
-<li><p>dataPackageID - Data package identifier. Supplying a valid packageID and systemID is all that is needed to create a complete provenance record.</p></li>
-<li><p>systemID - System (i.e. data repository) identifier. Currently supported systems are: EDI (Environmental Data Initiative).</p></li>
-<li><p>url - URL linking to an online source (i.e. data, paper, etc.). Required when a source can't be defined by a packageID and systemID.</p></li>
-<li><p>onlineDescription - Description of the data source. Required when a source can't be defined by a packageID and systemID.</p></li>
-<li><p>title - The source title. Required when a source can't be defined by a packageID and systemID.</p></li>
-<li><p>givenName - A creator or contacts given name. Required when a source can't be defined by a packageID and systemID.</p></li>
-<li><p>middleInitial - A creator or contacts middle initial. Required when a source can't be defined by a packageID and systemID.</p></li>
-<li><p>surName - A creator or contacts middle initial. Required when a source can't be defined by a packageID and systemID.</p></li>
-<li><p>role - "creator" and "contact" of the data source. Required when a source can't be defined by a packageID and systemID. Add both the creator and contact as separate rows within the template, where the information in each row is duplicated except for the givenName, middleInitial, surName (or organizationName), and role fields.</p></li>
-<li><p>organizationName - Name of organization the creator or contact belongs to. Required when a source can't be defined by a packageID and systemID.</p></li>
-<li><p>email - Email of the creator or contact. Required when a source can't be defined by a packageID and systemID.</p></li>
-</ul>
-This table has a "long" (i.e. name-value) format accomodating multiple contacts and creators within a single provenance record.</p></dd>
-
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>An existing provenance template will not be overwritten by a call to <code>template_provenance()</code>.</p>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Set working directory</span>
-<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>())
-
-<span class='co'># The most common use case is import of a blank template and manual completion</span>
-<span class='fu'>template_provenance</span>(<span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"."</span>)</div><div class='output co'>#&gt; <span class='message'>Templating provenance ...</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
-<span class='co'># Clean up</span>
-<span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(<span class='st'>'.'</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

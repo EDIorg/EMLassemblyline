@@ -191,26 +191,10 @@ Accepted versions of the emld list object can be created by
 <span class='co'># (edi.260.4.xml)</span>
 
 <span class='no'>eml</span> <span class='kw'>&lt;-</span> <span class='fu'>annotate_eml</span>(
- <span class='kw'>annotations</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"/examples/pkg_260/metadata_templates/annotations.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"EMLassemblyline"</span>),
+ <span class='kw'>annotations</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"/examples/pkg_260/metadata_templates_overflow/annotations.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"EMLassemblyline"</span>),
  <span class='kw'>eml.in</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"/examples/eml/edi.260.3.xml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"EMLassemblyline"</span>),
  <span class='kw'>eml.out</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"/edi.260.4.xml"</span>)
-)</div><div class='output co'>#&gt; <span class='message'>Annotating EML ...</span></div><div class='output co'>#&gt; <span class='message'>Checking inputs</span></div><div class='output co'>#&gt; <span class='message'>Kelman R Wieder</span></div><div class='output co'>#&gt; <span class='message'>Dale H Vitt</span></div><div class='output co'>#&gt; <span class='message'>Melanie A Vile</span></div><div class='output co'>#&gt; <span class='message'>Jeremy A Graham</span></div><div class='output co'>#&gt; <span class='message'>Jeremy A Hartsock</span></div><div class='output co'>#&gt; <span class='message'>Hope Fillingim</span></div><div class='output co'>#&gt; <span class='message'>Melissa House</span></div><div class='output co'>#&gt; <span class='message'>James C Quinn</span></div><div class='output co'>#&gt; <span class='message'>Kimberli D Scott</span></div><div class='output co'>#&gt; <span class='message'>Meaghan Petix</span></div><div class='output co'>#&gt; <span class='message'>Kelly J McMillen</span></div><div class='output co'>#&gt; <span class='message'>Kelman R Wieder</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; </div><div class='output co'>#&gt; </div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>James C Quinn</span></div><div class='output co'>#&gt; <span class='message'>Jane Doe</span></div><div class='output co'>#&gt; <span class='message'>Kelman R Wieder</span></div><div class='output co'>#&gt; Called from: annotate_element("ResponsibleParty")
-#&gt; debug: if (!is.null(eml$dataset$project$relatedProject)) {
-#&gt;     eml$dataset$project$relatedProject &lt;- lapply(eml$dataset$project$relatedProject, 
-#&gt;         function(k) {
-#&gt;             k$personnel &lt;- lapply(k$personnel, function(m) {
-#&gt;                 append_rp(m)
-#&gt;             })
-#&gt;             k
-#&gt;         })
-#&gt; }
-#&gt; debug: eml$dataset$project$relatedProject &lt;- lapply(eml$dataset$project$relatedProject, 
-#&gt;     function(k) {
-#&gt;         k$personnel &lt;- lapply(k$personnel, function(m) {
-#&gt;             append_rp(m)
-#&gt;         })
-#&gt;         k
-#&gt;     })</div><div class='output co'>#&gt; <span class='message'>Melanie A Vile</span></div><div class='output co'>#&gt; <span class='message'>Joe Smith</span></div><div class='output co'>#&gt; <span class='message'>Joe Smith</span></div><div class='output co'>#&gt; <span class='message'>Chase Gacho</span></div><div class='output co'>#&gt; debug: eml</div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'><span class='no'>eml</span></div><div class='output co'>#&gt; access:
+)</div><div class='output co'>#&gt; <span class='message'>Annotating EML ...</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'><span class='no'>eml</span></div><div class='output co'>#&gt; access:
 #&gt;   authSystem: https://pasta.edirepository.org/authentication
 #&gt;   order: allowFirst
 #&gt;   scope: document
@@ -240,49 +224,15 @@ Accepted versions of the emld list object can be created by
 #&gt; dataset:
 #&gt;   title: 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions:
 #&gt;     2014-2015'
-#&gt;   pubDate: '2020-05-01'
+#&gt;   pubDate: '2020-10-11'
 #&gt;   abstract:
-#&gt;     para: |2
-#&gt; 
-#&gt;         Development of the oil sands has led to increasing atmospheric N
-#&gt;         deposition, with values as high as 17 kg N ha^-1 yr^-1; regional
-#&gt;         background levels &amp;amp;lt;2 kg N ha^-1 yr^-1. Bogs, being ombrotrophic,
-#&gt;         may be especially susceptible to increasing N deposition. To examine
-#&gt;         responses to N deposition, over five years, we experimentally applied
-#&gt;         N (as NH4NO3) to a bog near Mariana Lakes, Alberta, at rates of 0, 5,
-#&gt;         10, 15, 20, and 25 kg N ha^-1 yr^-1, plus controls (no water or N
-#&gt;         addition). In May of each year, we collected mixed vascular plant
-#&gt;         tissue and Sphagnum fuscum peat and placed homogenized mixtures in
-#&gt;         nylon bags and placed them approximately 10 cm below the peat surface
-#&gt;         in early June. Bags were collected again in October of each year,
-#&gt;         cleaned, dried, and weighed. Decomposition of Sphagnum moss and mixed
-#&gt;         vascular plant litter was affected by N inputs, on average losing 8
-#&gt;         and 38 % of initial mass, respectively, over 5 months of
-#&gt;         decomposition. Water addition alone had no significant effect on
-#&gt;         decomposition of cellulose, Sphagnum, or vascular plant litter (p &amp;amp;gt;
-#&gt;         0.15).
+#&gt;     para: |
+#&gt;       Development of the oil sands has led to increasing atmospheric N deposition, with values as high as 17 kg N ha^-1 yr^-1; regional background levels &amp;lt;2 kg N ha^-1 yr^-1.  Bogs, being ombrotrophic, may be especially susceptible to increasing N deposition.  To examine responses to N deposition, over five years, we experimentally applied N (as NH4NO3) to a bog near Mariana Lakes, Alberta, at rates of 0, 5, 10, 15, 20, and 25 kg N ha^-1 yr^-1, plus controls (no water or N addition).   In May of each year, we collected mixed vascular plant tissue and Sphagnum fuscum peat and placed homogenized mixtures in nylon bags and placed them approximately 10 cm below the peat surface in early June.  Bags were collected again in October of each year, cleaned, dried, and weighed.  Decomposition of Sphagnum moss and mixed vascular plant litter was affected by N inputs, on average losing 8 and 38 % of initial mass, respectively, over 5 months of decomposition. Water addition alone had no significant effect on decomposition of cellulose, Sphagnum, or vascular plant litter (p &amp;gt; 0.15).&amp;#13;
 #&gt;   additionalInfo:
-#&gt;     para: |2
-#&gt; 
-#&gt;         Articles derived from this dataset: Article 1, Article 2, Article 3
+#&gt;     para: 'Articles derived from this dataset: Article 1, Article 2, Article 3'
 #&gt;   intellectualRights:
-#&gt;     para: |2
-#&gt; 
-#&gt;         This data package is released to the "public domain" under
-#&gt;         Creative Commons CC0 1.0 "No Rights Reserved" (see:
-#&gt;         https://creativecommons.org/publicdomain/zero/1.0/). It is considered
-#&gt;         professional etiquette to provide attribution of the original work if
-#&gt;         this data package is shared in whole or by individual components. A
-#&gt;         generic citation is provided for this data package on the website
-#&gt;         https://portal.edirepository.org (herein "website") in the
-#&gt;         summary metadata page. Communication (and collaboration) with the
-#&gt;         creators of this data package is recommended to prevent duplicate
-#&gt;         research or publication. This data package (and its components) is
-#&gt;         made available "as is" and with no warranty of accuracy or
-#&gt;         fitness for use. The creators of this data package and the website
-#&gt;         shall not be liable for any damages resulting from misinterpretation
-#&gt;         or misuse of the data package or its components. Periodic updates of
-#&gt;         this data package may be available from the website. Thank you.
+#&gt;     para: |
+#&gt;       This data package is released to the \"public domain\" under Creative Commons CC0 1.0 \"No Rights Reserved\" (see: https://creativecommons.org/publicdomain/zero/1.0/). It is considered professional etiquette to provide attribution of the original work if this data package is shared in whole or by individual components. A generic citation is provided for this data package on the website https://portal.edirepository.org (herein \"website\") in the summary metadata page. Communication (and collaboration) with the creators of this data package is recommended to prevent duplicate research or publication. This data package (and its components) is made available \"as is\" and with no warranty of accuracy or fitness for use. The creators of this data package and the website shall not be liable for any damages resulting from misinterpretation or misuse of the data package or its components. Periodic updates of this data package may be available from the website. Thank you.&amp;#13;
 #&gt;   coverage:
 #&gt;     temporalCoverage:
 #&gt;       rangeOfDates:
@@ -362,54 +312,35 @@ Accepted versions of the emld list object can be created by
 #&gt;   methods:
 #&gt;     methodStep:
 #&gt;       description:
-#&gt;         para:
-#&gt;         - "\n  In 2014 and 2015, we quantified decomposition of plant litter material\n
-#&gt;           \ collected from each plot. In late May, we collected vascular plant\n  litter
-#&gt;           from the surface of each plot, along with\n  "
-#&gt;         - &lt;emphasis&gt;Sphagnum&lt;/emphasis&gt;
-#&gt;         - ' peat ('
-#&gt;         - |-
-#&gt;           &lt;emphasis&gt;S.
-#&gt;             fuscum&lt;/emphasis&gt;
-#&gt;         - "-derived), from roughly 5-15 cm below the capitula.\n  We placed nylon
-#&gt;           mesh litter bags with mixed vascular plant litter\n  (approx. 1.7 g dry
-#&gt;           mass; roughly equal masses of\n  "
-#&gt;         - &lt;emphasis&gt;Rhododendron groenlandicum&lt;/emphasis&gt;
-#&gt;         - ', '
-#&gt;         - |-
-#&gt;           &lt;emphasis&gt;Andromeda
-#&gt;             polifolia&lt;/emphasis&gt;
-#&gt;         - &lt;emphasis&gt;Chamaedaphne calyculata&lt;/emphasis&gt;
-#&gt;         - ",\n  "
-#&gt;         - &lt;emphasis&gt;Smilacina trifolia&lt;/emphasis&gt;
-#&gt;         - ', and '
-#&gt;         - |-
-#&gt;           &lt;emphasis&gt;Rubus
-#&gt;             chamaemorus&lt;/emphasis&gt;
-#&gt;         - ") or peat approximately 10 cm below the peat\n  surface in early June (in
-#&gt;           2014, 3 bags per plot of vascular litter and\n  3 bags of "
-#&gt;         - |2
-#&gt;            peat; in 2015, 4 bags of each
-#&gt;             material). Upon retrieval in October of each year, we manually removed
-#&gt;             debris from each retrieved bag before drying at 55 C for a minimum of
-#&gt;             5 days, and weighing.
+#&gt;         para: In 2014 and 2015, we quantified decomposition of plant litter material
+#&gt;           collected from each plot.  In late May, we collected vascular plant litter
+#&gt;           from the surface of each plot, along with &lt;emphasis&gt;Sphagnum&lt;/emphasis&gt;
+#&gt;           peat (&lt;emphasis&gt;S. fuscum&lt;/emphasis&gt;-derived), from roughly 5-15 cm below
+#&gt;           the capitula.  We placed nylon mesh litter bags with mixed vascular plant
+#&gt;           litter (approx. 1.7 g dry mass; roughly equal masses of &lt;emphasis&gt;Rhododendron
+#&gt;           groenlandicum&lt;/emphasis&gt;, &lt;emphasis&gt;Andromeda polifolia&lt;/emphasis&gt;, &lt;emphasis&gt;Chamaedaphne
+#&gt;           calyculata&lt;/emphasis&gt;, &lt;emphasis&gt;Smilacina trifolia&lt;/emphasis&gt;, and &lt;emphasis&gt;Rubus
+#&gt;           chamaemorus&lt;/emphasis&gt;) or peat approximately 10 cm below the peat surface
+#&gt;           in early June (in 2014, 3 bags per plot of vascular litter and 3 bags of
+#&gt;           &lt;emphasis&gt;Sphagnum&lt;/emphasis&gt; peat; in 2015, 4 bags of each material).  Upon
+#&gt;           retrieval in October of each year, we manually removed debris from each
+#&gt;           retrieved bag before drying at 55 C for a minimum of 5 days, and weighing.
 #&gt;   project:
 #&gt;     title: 'Nitrogen Addition Experiments in Boreal Ecosystems: Understanding the
 #&gt;       Fate of Atmospherically Deposited Nitrogen in order to Determine Nitrogen Critical
 #&gt;       Loads'
 #&gt;     personnel:
-#&gt;     - individualName:
-#&gt;         surName: Wieder
-#&gt;         givenName:
-#&gt;         - Kelman
-#&gt;         - R
-#&gt;       organizationName: Villanova University
-#&gt;       electronicMailAddress: kelman.wieder@villanova.edu
-#&gt;       userId:
-#&gt;         directory: https://orcid.org
-#&gt;         userId: https://orcid.org/0000-0001-5856-8473
-#&gt;       role: Principal Investigator
-#&gt;       id: /Kelman R Wieder ce7c407a-1408-11eb-85e4-051eaf7838f1
+#&gt;     - - individualName:
+#&gt;           surName: Wieder
+#&gt;           givenName:
+#&gt;           - Kelman
+#&gt;           - R
+#&gt;         organizationName: Villanova University
+#&gt;         electronicMailAddress: kelman.wieder@villanova.edu
+#&gt;         userId:
+#&gt;           directory: https://orcid.org
+#&gt;           userId: https://orcid.org/0000-0001-5856-8473
+#&gt;         role: Principal Investigator
 #&gt;     funding: Cumulative Environmental Management Association (CEMA) 2011-0003
 #&gt;     relatedProject:
 #&gt;     - title: Decomposition in the real world
@@ -422,27 +353,16 @@ Accepted versions of the emld list object can be created by
 #&gt;         organizationName: Villanova University
 #&gt;         electronicMailAddress: mvile@villanova.edu
 #&gt;         role: Principal Investigator
-#&gt;         id: /Melanie A Vile ce7c679e-1408-11eb-85e4-051eaf7838f1
 #&gt;       funding: NSF 111001
-#&gt;     - title: No project title to report
+#&gt;     - title: Project title 3
 #&gt;       personnel:
 #&gt;       - individualName:
 #&gt;           givenName: Joe
 #&gt;           surName: Smith
 #&gt;         organizationName: Villanova University
 #&gt;         role: Principal Investigator
-#&gt;         id: /Joe Smith ce7c8ecc-1408-11eb-85e4-051eaf7838f1
 #&gt;       funding: NSF 101
-#&gt;     - title: No project title to report
-#&gt;       personnel:
-#&gt;       - individualName:
-#&gt;           givenName: Joe
-#&gt;           surName: Smith
-#&gt;         organizationName: Villanova University
-#&gt;         role: Principal Investigator
-#&gt;         id: /Joe Smith ce7cb5f0-1408-11eb-85e4-051eaf7838f1
-#&gt;       funding: '111001'
-#&gt;     - title: No project title to report
+#&gt;     - title: Project title 4
 #&gt;       personnel:
 #&gt;       - individualName:
 #&gt;           givenName: Chase
@@ -450,8 +370,7 @@ Accepted versions of the emld list object can be created by
 #&gt;         organizationName: University of New Mexico
 #&gt;         electronicMailAddress: gachase@unm.edu
 #&gt;         role: Principal Investigator
-#&gt;         id: /Chase Gacho ce7cdd1e-1408-11eb-85e4-051eaf7838f1
-#&gt;       funding: No funding to report
+#&gt;       funding: NSF 111001
 #&gt;   creator:
 #&gt;   - individualName:
 #&gt;       surName: Wieder
@@ -463,14 +382,14 @@ Accepted versions of the emld list object can be created by
 #&gt;     userId:
 #&gt;       directory: https://orcid.org
 #&gt;       userId: https://orcid.org/0000-0001-5856-8473
-#&gt;     id: /Kelman R Wieder ce6f52ca-1408-11eb-85e4-051eaf7838f1
+#&gt;     id: /Kelman R Wieder 38efff82-1a30-11eb-be70-5b4b4d070821
 #&gt;   - individualName:
 #&gt;       surName: Vitt
 #&gt;       givenName:
 #&gt;       - Dale
 #&gt;       - H
 #&gt;     organizationName: Southern Illinois University
-#&gt;     id: /Dale H Vitt ce7a919e-1408-11eb-85e4-051eaf7838f1
+#&gt;     id: /Dale H Vitt 38f026ba-1a30-11eb-be70-5b4b4d070821
 #&gt;   - individualName:
 #&gt;       surName: Vile
 #&gt;       givenName:
@@ -478,7 +397,7 @@ Accepted versions of the emld list object can be created by
 #&gt;       - A
 #&gt;     organizationName: Villanova University
 #&gt;     electronicMailAddress: mvile@villanova.edu
-#&gt;     id: /Melanie A Vile ce7ab91c-1408-11eb-85e4-051eaf7838f1
+#&gt;     id: /Melanie A Vile 38f04dd4-1a30-11eb-be70-5b4b4d070821
 #&gt;   - individualName:
 #&gt;       surName: Graham
 #&gt;       givenName:
@@ -486,7 +405,7 @@ Accepted versions of the emld list object can be created by
 #&gt;       - A
 #&gt;     organizationName: Southern Illinois University
 #&gt;     electronicMailAddress: jeremyg@mtu.edu
-#&gt;     id: /Jeremy A Graham ce7adffa-1408-11eb-85e4-051eaf7838f1
+#&gt;     id: /Jeremy A Graham 38f04dd5-1a30-11eb-be70-5b4b4d070821
 #&gt;   - individualName:
 #&gt;       surName: Hartsock
 #&gt;       givenName:
@@ -494,19 +413,19 @@ Accepted versions of the emld list object can be created by
 #&gt;       - A
 #&gt;     organizationName: Southern Illinois University
 #&gt;     electronicMailAddress: hartsock@siu.edu
-#&gt;     id: /Jeremy A Hartsock ce7b0728-1408-11eb-85e4-051eaf7838f1
+#&gt;     id: /Jeremy A Hartsock 38f07502-1a30-11eb-be70-5b4b4d070821
 #&gt;   - individualName:
 #&gt;       givenName: Hope
 #&gt;       surName: Fillingim
 #&gt;     organizationName: Villanova University
 #&gt;     electronicMailAddress: fillingimhope@gmail.com
-#&gt;     id: /Hope Fillingim ce7b2e4c-1408-11eb-85e4-051eaf7838f1
+#&gt;     id: /Hope Fillingim 38f09c26-1a30-11eb-be70-5b4b4d070821
 #&gt;   - individualName:
 #&gt;       givenName: Melissa
 #&gt;       surName: House
 #&gt;     organizationName: Southern Illinois University
 #&gt;     electronicMailAddress: mhouse@siu.edu
-#&gt;     id: /Melissa House ce7b2e4d-1408-11eb-85e4-051eaf7838f1
+#&gt;     id: /Melissa House 38f09c27-1a30-11eb-be70-5b4b4d070821
 #&gt;   - individualName:
 #&gt;       surName: Quinn
 #&gt;       givenName:
@@ -514,7 +433,7 @@ Accepted versions of the emld list object can be created by
 #&gt;       - C
 #&gt;     organizationName: Villanova University
 #&gt;     electronicMailAddress: jcqui03@gmail.com
-#&gt;     id: /James C Quinn ce7b5570-1408-11eb-85e4-051eaf7838f1
+#&gt;     id: /James C Quinn 38f0c35e-1a30-11eb-be70-5b4b4d070821
 #&gt;   - individualName:
 #&gt;       surName: Scott
 #&gt;       givenName:
@@ -522,13 +441,13 @@ Accepted versions of the emld list object can be created by
 #&gt;       - D
 #&gt;     organizationName: Villanova University
 #&gt;     electronicMailAddress: kscott@villanova.edu
-#&gt;     id: /Kimberli D Scott ce7b7c9e-1408-11eb-85e4-051eaf7838f1
+#&gt;     id: /Kimberli D Scott 38f0ea82-1a30-11eb-be70-5b4b4d070821
 #&gt;   - individualName:
 #&gt;       givenName: Meaghan
 #&gt;       surName: Petix
 #&gt;     organizationName: Southern Illinois University
 #&gt;     electronicMailAddress: meaghan.petix@wsu.edu
-#&gt;     id: /Meaghan Petix ce7ba3cc-1408-11eb-85e4-051eaf7838f1
+#&gt;     id: /Meaghan Petix 38f111b0-1a30-11eb-be70-5b4b4d070821
 #&gt;   - individualName:
 #&gt;       surName: McMillen
 #&gt;       givenName:
@@ -536,7 +455,7 @@ Accepted versions of the emld list object can be created by
 #&gt;       - J
 #&gt;     organizationName: Villanova University
 #&gt;     electronicMailAddress: Kelly.Mcmillen@ttu.edu
-#&gt;     id: /Kelly J McMillen ce7ba3cd-1408-11eb-85e4-051eaf7838f1
+#&gt;     id: /Kelly J McMillen 38f111b1-1a30-11eb-be70-5b4b4d070821
 #&gt;   associatedParty:
 #&gt;   - organizationName: Center for Limnology
 #&gt;     electronicMailAddress: cfl@wisc.edu
@@ -555,7 +474,7 @@ Accepted versions of the emld list object can be created by
 #&gt;     organizationName: Villanova University
 #&gt;     electronicMailAddress: jcqui03@gmail.com
 #&gt;     role: Instrument Technician
-#&gt;     id: /James C Quinn ce7c194c-1408-11eb-85e4-051eaf7838f1
+#&gt;     id: /James C Quinn 38f1600c-1a30-11eb-be70-5b4b4d070821
 #&gt;   - individualName:
 #&gt;       givenName: Jane
 #&gt;       surName: Doe
@@ -565,7 +484,7 @@ Accepted versions of the emld list object can be created by
 #&gt;       directory: https://orcid.org
 #&gt;       userId: https://orcid.org/0000-0001-5856-8473
 #&gt;     role: Equipment Lead
-#&gt;     id: /Jane Doe ce7c194d-1408-11eb-85e4-051eaf7838f1
+#&gt;     id: /Jane Doe 38f1600d-1a30-11eb-be70-5b4b4d070821
 #&gt;   keywordSet:
 #&gt;   - keyword:
 #&gt;     - Villanova Peatland Biogeochemistry Group
@@ -587,7 +506,7 @@ Accepted versions of the emld list object can be created by
 #&gt;     userId:
 #&gt;       directory: https://orcid.org
 #&gt;       userId: https://orcid.org/0000-0001-5856-8473
-#&gt;     id: /Kelman R Wieder ce7bcaf0-1408-11eb-85e4-051eaf7838f1
+#&gt;     id: /Kelman R Wieder 38f138d4-1a30-11eb-be70-5b4b4d070821
 #&gt;   - organizationName: Villanova University
 #&gt;     positionName: Information Manager
 #&gt;     electronicMailAddress: info@villanova.edu
@@ -642,14 +561,8 @@ Accepted versions of the emld list object can be created by
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;             label: contains measurements of type
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
-#&gt;         - propertyURI:
-#&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt;             label: has unit
-#&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.dataone.org/odo/ECSO_00002623
+#&gt;             label: type of soil core
 #&gt;       - attributeName: date
 #&gt;         attributeDefinition: 'Year of growth: 2011-2015'
 #&gt;         storageType: date
@@ -666,14 +579,14 @@ Accepted versions of the emld list object can be created by
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;             label: contains measurements of type
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.dataone.org/odo/ECSO_00002043
+#&gt;             label: date and time of measurement
 #&gt;         - propertyURI:
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
 #&gt;             label: has unit
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.dataone.org/odo/ECSO_00002072
+#&gt;             label: year and day of measurement
 #&gt;       - attributeName: arm
 #&gt;         attributeDefinition: Experimental plots were located along 3 arms; each arm
 #&gt;           had one replicate each of 8 N treatments
@@ -698,14 +611,8 @@ Accepted versions of the emld list object can be created by
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;             label: contains measurements of type
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
-#&gt;         - propertyURI:
-#&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt;             label: has unit
-#&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.dataone.org/odo/ECSO_00002997
+#&gt;             label: site identifier
 #&gt;       - attributeName: ntrt
 #&gt;         attributeDefinition: Field experimental N treatments were made with 8 applications
 #&gt;           per plot per year between mid-May and mid-August of each year
@@ -738,14 +645,14 @@ Accepted versions of the emld list object can be created by
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;             label: contains measurements of type
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.dataone.org/odo/ECSO_00002216
+#&gt;             label: nitrate concentration
 #&gt;         - propertyURI:
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
 #&gt;             label: has unit
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.obolibrary.org/obo/UO_0010049
+#&gt;             label: gram per square meter
 #&gt;       - attributeName: year
 #&gt;         attributeDefinition: Year collected
 #&gt;         storageType: date
@@ -762,14 +669,8 @@ Accepted versions of the emld list object can be created by
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;             label: contains measurements of type
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
-#&gt;         - propertyURI:
-#&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt;             label: has unit
-#&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.dataone.org/odo/ECSO_00002050
+#&gt;             label: year of measurement
 #&gt;       - attributeName: percent_loss
 #&gt;         attributeDefinition: Amount of mass lost expressed as a percent of original
 #&gt;           mass
@@ -796,14 +697,14 @@ Accepted versions of the emld list object can be created by
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;             label: contains measurements of type
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.dataone.org/odo/ECSO_00002294
+#&gt;             label: loss on ignition percentage
 #&gt;         - propertyURI:
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
 #&gt;             label: has unit
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.obolibrary.org/obo/UO_0000187
+#&gt;             label: percent
 #&gt;       - attributeName: taxa
 #&gt;         attributeDefinition: Taxa observed at site
 #&gt;         storageType: string
@@ -821,14 +722,8 @@ Accepted versions of the emld list object can be created by
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;             label: contains measurements of type
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
-#&gt;         - propertyURI:
-#&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt;             label: has unit
-#&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.dataone.org/odo/ECSO_00002730
+#&gt;             label: taxonomic classification
 #&gt;     numberOfRecords: '294'
 #&gt;     id: /decomp.csv
 #&gt;     annotation:
@@ -836,18 +731,18 @@ Accepted versions of the emld list object can be created by
 #&gt;         '': http://purl.obolibrary.org/obo/IAO_0000136
 #&gt;         label: is about
 #&gt;       valueURI:
-#&gt;         '': placeholder
-#&gt;         label: placeholder
+#&gt;         '': http://purl.dataone.org/odo/ECSO_00000034
+#&gt;         label: Leaf Litter Carbon Pool
 #&gt;   - entityName: Nitrogen file name
 #&gt;     entityDescription: Nitrogen file description
 #&gt;     physical:
 #&gt;       objectName: nitrogen.csv
 #&gt;       size:
 #&gt;         unit: bytes
-#&gt;         size: '6713'
+#&gt;         size: '6297'
 #&gt;       authentication:
 #&gt;         method: MD5
-#&gt;         authentication: 53df28ab8fc5bfdcb88fd911fc4466c4
+#&gt;         authentication: e6609e09690640fb64b104fd5e8b6d4e
 #&gt;       dataFormat:
 #&gt;         textFormat:
 #&gt;           numHeaderLines: '1'
@@ -866,7 +761,7 @@ Accepted versions of the emld list object can be created by
 #&gt;         storageType: date
 #&gt;         measurementScale:
 #&gt;           dateTime:
-#&gt;             formatString: YYYY
+#&gt;             formatString: YYYY-MM-DD
 #&gt;             dateTimeDomain: []
 #&gt;         missingValueCode:
 #&gt;           code: '-99999'
@@ -877,14 +772,14 @@ Accepted versions of the emld list object can be created by
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;             label: contains measurements of type
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.dataone.org/odo/ECSO_00002043
+#&gt;             label: date and time of measurement
 #&gt;         - propertyURI:
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
 #&gt;             label: has unit
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.dataone.org/odo/ECSO_00002072
+#&gt;             label: year and day of measurement
 #&gt;       - attributeName: ntrt
 #&gt;         attributeDefinition: Field experimental N treatments were made with 8 applications
 #&gt;           per plot per year between mid May and mid August of each year
@@ -917,14 +812,14 @@ Accepted versions of the emld list object can be created by
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;             label: contains measurements of type
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.dataone.org/odo/ECSO_00002216
+#&gt;             label: nitrate concentration
 #&gt;         - propertyURI:
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
 #&gt;             label: has unit
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.obolibrary.org/obo/UO_0010049
+#&gt;             label: gram per square meter
 #&gt;       - attributeName: arm
 #&gt;         attributeDefinition: Experimental plots were located along 3 arms; each arm
 #&gt;           had one replicate each of 8 N treatments
@@ -949,14 +844,8 @@ Accepted versions of the emld list object can be created by
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;             label: contains measurements of type
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
-#&gt;         - propertyURI:
-#&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt;             label: has unit
-#&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.dataone.org/odo/ECSO_00002997
+#&gt;             label: site identifier
 #&gt;       - attributeName: net_primary_production
 #&gt;         attributeDefinition: The product of moss linear growth of stems (cm yr-1)
 #&gt;           and stem mass density (SMD)
@@ -983,14 +872,14 @@ Accepted versions of the emld list object can be created by
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;             label: contains measurements of type
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.dataone.org/odo/ECSO_00001137
+#&gt;             label: Net Primary Production Biomass Flux
 #&gt;         - propertyURI:
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
 #&gt;             label: has unit
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.obolibrary.org/obo/UO_0000311
+#&gt;             label: milligram per kilogram per day
 #&gt;       - attributeName: stem_mass_density
 #&gt;         attributeDefinition: Mass of 1-cm lengths of Sphagnum stems beneath the capitula
 #&gt;           per m2
@@ -1017,14 +906,14 @@ Accepted versions of the emld list object can be created by
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;             label: contains measurements of type
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.dataone.org/odo/ECSO_00000678
+#&gt;             label: mass density
 #&gt;         - propertyURI:
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
 #&gt;             label: has unit
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.obolibrary.org/obo/UO_0000182
+#&gt;             label: density unit
 #&gt;       - attributeName: plant_density
 #&gt;         attributeDefinition: Number of plants/area
 #&gt;         storageType: float
@@ -1050,14 +939,14 @@ Accepted versions of the emld list object can be created by
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;             label: contains measurements of type
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.dataone.org/odo/ECSO_00001147
+#&gt;             label: Plant Material Biomass Density
 #&gt;         - propertyURI:
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
 #&gt;             label: has unit
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.obolibrary.org/obo/UO_0000052
+#&gt;             label: mass density unit
 #&gt;       - attributeName: stem_n_concentration
 #&gt;         attributeDefinition: N concentration in the 0-2 cm stem sections
 #&gt;         storageType: float
@@ -1083,14 +972,14 @@ Accepted versions of the emld list object can be created by
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;             label: contains measurements of type
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.dataone.org/odo/ECSO_00001883
+#&gt;             label: nitrogen concentration
 #&gt;         - propertyURI:
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
 #&gt;             label: has unit
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.obolibrary.org/obo/UO_0000051
+#&gt;             label: concentration unit
 #&gt;       - attributeName: n_assimilated
 #&gt;         attributeDefinition: Amount of N used and stored per area of moss cover per
 #&gt;           year
@@ -1117,14 +1006,14 @@ Accepted versions of the emld list object can be created by
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;             label: contains measurements of type
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.dataone.org/odo/ECSO_00001123
+#&gt;             label: http://purl.dataone.org/odo/ECSO_00001883
 #&gt;         - propertyURI:
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
 #&gt;             label: has unit
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.obolibrary.org/obo/UO_0000311
+#&gt;             label: milligram per kilogram per day
 #&gt;       - attributeName: site_name
 #&gt;         attributeDefinition: Name of site
 #&gt;         storageType: string
@@ -1142,14 +1031,8 @@ Accepted versions of the emld list object can be created by
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;             label: contains measurements of type
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
-#&gt;         - propertyURI:
-#&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt;             label: has unit
-#&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.dataone.org/odo/ECSO_00002392
+#&gt;             label: station name
 #&gt;       - attributeName: site_lat
 #&gt;         attributeDefinition: Latitude in decimal degrees
 #&gt;         storageType: float
@@ -1175,14 +1058,14 @@ Accepted versions of the emld list object can be created by
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;             label: contains measurements of type
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.dataone.org/odo/ECSO_00002130
+#&gt;             label: latitude coordinate
 #&gt;         - propertyURI:
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
 #&gt;             label: has unit
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.obolibrary.org/obo/UO_0000185
+#&gt;             label: degree
 #&gt;       - attributeName: site_lon
 #&gt;         attributeDefinition: Longitude in decimal degrees
 #&gt;         storageType: float
@@ -1208,14 +1091,14 @@ Accepted versions of the emld list object can be created by
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;             label: contains measurements of type
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.dataone.org/odo/ECSO_00002132
+#&gt;             label: longitude coordinate
 #&gt;         - propertyURI:
 #&gt;             '': http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
 #&gt;             label: has unit
 #&gt;           valueURI:
-#&gt;             '': placeholder
-#&gt;             label: placeholder
+#&gt;             '': http://purl.obolibrary.org/obo/UO_0000185
+#&gt;             label: degree
 #&gt;     numberOfRecords: '104'
 #&gt;     id: /nitrogen.csv
 #&gt;     annotation:
@@ -1223,8 +1106,8 @@ Accepted versions of the emld list object can be created by
 #&gt;         '': http://purl.obolibrary.org/obo/IAO_0000136
 #&gt;         label: is about
 #&gt;       valueURI:
-#&gt;         '': placeholder
-#&gt;         label: placeholder
+#&gt;         '': http://purl.dataone.org/odo/ECSO_00002467
+#&gt;         label: nitrogen proportion in whole plant
 #&gt;   otherEntity:
 #&gt;   - entityName: ancillary_data file name
 #&gt;     entityDescription: ancillary_data file description
@@ -1238,7 +1121,7 @@ Accepted versions of the emld list object can be created by
 #&gt;         authentication: f128eaf557babfbb85efeaef488e9c94
 #&gt;       dataFormat:
 #&gt;         externallyDefinedFormat:
-#&gt;           formatName: unknown
+#&gt;           formatName: application/zip
 #&gt;       distribution:
 #&gt;         online:
 #&gt;           url: https://url/to/ancillary_data.zip
@@ -1249,8 +1132,8 @@ Accepted versions of the emld list object can be created by
 #&gt;         '': http://purl.obolibrary.org/obo/IAO_0000136
 #&gt;         label: is about
 #&gt;       valueURI:
-#&gt;         '': placeholder
-#&gt;         label: placeholder
+#&gt;         '': http://purl.obolibrary.org/obo/ENVO_00002297
+#&gt;         label: environmental feature
 #&gt;   - entityName: processing_and_analysis file name
 #&gt;     entityDescription: processing_and_analysis file description
 #&gt;     physical:
@@ -1263,7 +1146,7 @@ Accepted versions of the emld list object can be created by
 #&gt;         authentication: bb3e4aba767dfb2d4e3b053e1dfa1985
 #&gt;       dataFormat:
 #&gt;         externallyDefinedFormat:
-#&gt;           formatName: unknown
+#&gt;           formatName: text/plain
 #&gt;       distribution:
 #&gt;         online:
 #&gt;           url: https://url/to/processing_and_analysis.R
@@ -1274,16 +1157,16 @@ Accepted versions of the emld list object can be created by
 #&gt;         '': http://purl.obolibrary.org/obo/IAO_0000136
 #&gt;         label: is about
 #&gt;       valueURI:
-#&gt;         '': placeholder
-#&gt;         label: placeholder
+#&gt;         '': http://purl.dataone.org/odo/ECSO_00002489
+#&gt;         label: analysis code
 #&gt;   id: /dataset
 #&gt;   annotation:
 #&gt;   - propertyURI:
 #&gt;       '': http://purl.obolibrary.org/obo/IAO_0000136
 #&gt;       label: is about
 #&gt;     valueURI:
-#&gt;       '': placeholder
-#&gt;       label: placeholder
+#&gt;       '': http://purl.dataone.org/odo/ECSO_00002467
+#&gt;       label: nitrogen proportion in whole plant
 #&gt; packageId: edi.260.4
 #&gt; schemaLocation: eml://ecoinformatics.org/eml-2.2.0  http://nis.lternet.edu/schemas/EML/eml-2.2.0/xsd/eml.xsd
 #&gt; system: edi
@@ -1294,554 +1177,442 @@ Accepted versions of the emld list object can be created by
 #&gt;       label: is about
 #&gt;       propertyURI: http://purl.obolibrary.org/obo/IAO_0000136
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: nitrogen proportion in whole plant
+#&gt;       valueURI: http://purl.dataone.org/odo/ECSO_00002467
 #&gt;   - references: nitrogen.csv
 #&gt;     propertyURI:
 #&gt;       label: is about
 #&gt;       propertyURI: http://purl.obolibrary.org/obo/IAO_0000136
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: nitrogen proportion in whole plant
+#&gt;       valueURI: http://purl.dataone.org/odo/ECSO_00002467
 #&gt;   - references: nitrogen.csv/date
 #&gt;     propertyURI:
 #&gt;       label: contains measurements of type
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: date and time of measurement
+#&gt;       valueURI: http://purl.dataone.org/odo/ECSO_00002043
 #&gt;   - references: nitrogen.csv/date
 #&gt;     propertyURI:
 #&gt;       label: has unit
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: year and day of measurement
+#&gt;       valueURI: http://purl.dataone.org/odo/ECSO_00002072
 #&gt;   - references: nitrogen.csv/ntrt
 #&gt;     propertyURI:
 #&gt;       label: contains measurements of type
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: nitrate concentration
+#&gt;       valueURI: http://purl.dataone.org/odo/ECSO_00002216
 #&gt;   - references: nitrogen.csv/ntrt
 #&gt;     propertyURI:
 #&gt;       label: has unit
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: gram per square meter
+#&gt;       valueURI: http://purl.obolibrary.org/obo/UO_0010049
 #&gt;   - references: nitrogen.csv/arm
 #&gt;     propertyURI:
 #&gt;       label: contains measurements of type
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
-#&gt;   - references: nitrogen.csv/arm
-#&gt;     propertyURI:
-#&gt;       label: has unit
-#&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: site identifier
+#&gt;       valueURI: http://purl.dataone.org/odo/ECSO_00002997
 #&gt;   - references: nitrogen.csv/net_primary_production
 #&gt;     propertyURI:
 #&gt;       label: contains measurements of type
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: Net Primary Production Biomass Flux
+#&gt;       valueURI: http://purl.dataone.org/odo/ECSO_00001137
 #&gt;   - references: nitrogen.csv/net_primary_production
 #&gt;     propertyURI:
 #&gt;       label: has unit
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: milligram per kilogram per day
+#&gt;       valueURI: http://purl.obolibrary.org/obo/UO_0000311
 #&gt;   - references: nitrogen.csv/stem_mass_density
 #&gt;     propertyURI:
 #&gt;       label: contains measurements of type
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: mass density
+#&gt;       valueURI: http://purl.dataone.org/odo/ECSO_00000678
 #&gt;   - references: nitrogen.csv/stem_mass_density
 #&gt;     propertyURI:
 #&gt;       label: has unit
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: density unit
+#&gt;       valueURI: http://purl.obolibrary.org/obo/UO_0000182
 #&gt;   - references: nitrogen.csv/plant_density
 #&gt;     propertyURI:
 #&gt;       label: contains measurements of type
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: Plant Material Biomass Density
+#&gt;       valueURI: http://purl.dataone.org/odo/ECSO_00001147
 #&gt;   - references: nitrogen.csv/plant_density
 #&gt;     propertyURI:
 #&gt;       label: has unit
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: mass density unit
+#&gt;       valueURI: http://purl.obolibrary.org/obo/UO_0000052
 #&gt;   - references: nitrogen.csv/stem_n_concentration
 #&gt;     propertyURI:
 #&gt;       label: contains measurements of type
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: nitrogen concentration
+#&gt;       valueURI: http://purl.dataone.org/odo/ECSO_00001883
 #&gt;   - references: nitrogen.csv/stem_n_concentration
 #&gt;     propertyURI:
 #&gt;       label: has unit
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: concentration unit
+#&gt;       valueURI: http://purl.obolibrary.org/obo/UO_0000051
 #&gt;   - references: nitrogen.csv/n_assimilated
 #&gt;     propertyURI:
 #&gt;       label: contains measurements of type
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: http://purl.dataone.org/odo/ECSO_00001883
+#&gt;       valueURI: http://purl.dataone.org/odo/ECSO_00001123
 #&gt;   - references: nitrogen.csv/n_assimilated
 #&gt;     propertyURI:
 #&gt;       label: has unit
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: milligram per kilogram per day
+#&gt;       valueURI: http://purl.obolibrary.org/obo/UO_0000311
 #&gt;   - references: nitrogen.csv/site_name
 #&gt;     propertyURI:
 #&gt;       label: contains measurements of type
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
-#&gt;   - references: nitrogen.csv/site_name
-#&gt;     propertyURI:
-#&gt;       label: has unit
-#&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: station name
+#&gt;       valueURI: http://purl.dataone.org/odo/ECSO_00002392
 #&gt;   - references: nitrogen.csv/site_lat
 #&gt;     propertyURI:
 #&gt;       label: contains measurements of type
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: latitude coordinate
+#&gt;       valueURI: http://purl.dataone.org/odo/ECSO_00002130
 #&gt;   - references: nitrogen.csv/site_lat
 #&gt;     propertyURI:
 #&gt;       label: has unit
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: degree
+#&gt;       valueURI: http://purl.obolibrary.org/obo/UO_0000185
 #&gt;   - references: nitrogen.csv/site_lon
 #&gt;     propertyURI:
 #&gt;       label: contains measurements of type
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: longitude coordinate
+#&gt;       valueURI: http://purl.dataone.org/odo/ECSO_00002132
 #&gt;   - references: nitrogen.csv/site_lon
 #&gt;     propertyURI:
 #&gt;       label: has unit
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: degree
+#&gt;       valueURI: http://purl.obolibrary.org/obo/UO_0000185
 #&gt;   - references: decomp.csv
 #&gt;     propertyURI:
 #&gt;       label: is about
 #&gt;       propertyURI: http://purl.obolibrary.org/obo/IAO_0000136
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: Leaf Litter Carbon Pool
+#&gt;       valueURI: http://purl.dataone.org/odo/ECSO_00000034
 #&gt;   - references: decomp.csv/type
 #&gt;     propertyURI:
 #&gt;       label: contains measurements of type
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
-#&gt;   - references: decomp.csv/type
-#&gt;     propertyURI:
-#&gt;       label: has unit
-#&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: type of soil core
+#&gt;       valueURI: http://purl.dataone.org/odo/ECSO_00002623
 #&gt;   - references: decomp.csv/date
 #&gt;     propertyURI:
 #&gt;       label: contains measurements of type
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: date and time of measurement
+#&gt;       valueURI: http://purl.dataone.org/odo/ECSO_00002043
 #&gt;   - references: decomp.csv/date
 #&gt;     propertyURI:
 #&gt;       label: has unit
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: year and day of measurement
+#&gt;       valueURI: http://purl.dataone.org/odo/ECSO_00002072
 #&gt;   - references: decomp.csv/arm
 #&gt;     propertyURI:
 #&gt;       label: contains measurements of type
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
-#&gt;   - references: decomp.csv/arm
-#&gt;     propertyURI:
-#&gt;       label: has unit
-#&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: site identifier
+#&gt;       valueURI: http://purl.dataone.org/odo/ECSO_00002997
 #&gt;   - references: decomp.csv/ntrt
 #&gt;     propertyURI:
 #&gt;       label: contains measurements of type
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: nitrate concentration
+#&gt;       valueURI: http://purl.dataone.org/odo/ECSO_00002216
 #&gt;   - references: decomp.csv/ntrt
 #&gt;     propertyURI:
 #&gt;       label: has unit
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: gram per square meter
+#&gt;       valueURI: http://purl.obolibrary.org/obo/UO_0010049
 #&gt;   - references: decomp.csv/year
 #&gt;     propertyURI:
 #&gt;       label: contains measurements of type
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
-#&gt;   - references: decomp.csv/year
-#&gt;     propertyURI:
-#&gt;       label: has unit
-#&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: year of measurement
+#&gt;       valueURI: http://purl.dataone.org/odo/ECSO_00002050
 #&gt;   - references: decomp.csv/percent_loss
 #&gt;     propertyURI:
 #&gt;       label: contains measurements of type
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: loss on ignition percentage
+#&gt;       valueURI: http://purl.dataone.org/odo/ECSO_00002294
 #&gt;   - references: decomp.csv/percent_loss
 #&gt;     propertyURI:
 #&gt;       label: has unit
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: percent
+#&gt;       valueURI: http://purl.obolibrary.org/obo/UO_0000187
 #&gt;   - references: decomp.csv/taxa
 #&gt;     propertyURI:
 #&gt;       label: contains measurements of type
 #&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
-#&gt;   - references: decomp.csv/taxa
-#&gt;     propertyURI:
-#&gt;       label: has unit
-#&gt;       propertyURI: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: taxonomic classification
+#&gt;       valueURI: http://purl.dataone.org/odo/ECSO_00002730
 #&gt;   - references: ancillary_data.zip
 #&gt;     propertyURI:
 #&gt;       label: is about
 #&gt;       propertyURI: http://purl.obolibrary.org/obo/IAO_0000136
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
+#&gt;       label: environmental feature
+#&gt;       valueURI: http://purl.obolibrary.org/obo/ENVO_00002297
 #&gt;   - references: processing_and_analysis.R
 #&gt;     propertyURI:
 #&gt;       label: is about
 #&gt;       propertyURI: http://purl.obolibrary.org/obo/IAO_0000136
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
-#&gt;   - references: Kelman R Wieder ce6f52ca-1408-11eb-85e4-051eaf7838f1
+#&gt;       label: analysis code
+#&gt;       valueURI: http://purl.dataone.org/odo/ECSO_00002489
+#&gt;   - references: Kelman R Wieder 38efff82-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: is a
 #&gt;       propertyURI: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
 #&gt;     valueURI:
 #&gt;       label: Person
 #&gt;       valueURI: https://schema.org/Person
-#&gt;   - references: Kelman R Wieder ce6f52ca-1408-11eb-85e4-051eaf7838f1
+#&gt;   - references: Kelman R Wieder 38efff82-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: member of
 #&gt;       propertyURI: https://schema.org/memberOf
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
-#&gt;   - references: Dale H Vitt ce7a919e-1408-11eb-85e4-051eaf7838f1
+#&gt;       label: Villanova University
+#&gt;       valueURI: https://ror.org/02g7kd627
+#&gt;   - references: Dale H Vitt 38f026ba-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: is a
 #&gt;       propertyURI: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
 #&gt;     valueURI:
 #&gt;       label: Person
 #&gt;       valueURI: https://schema.org/Person
-#&gt;   - references: Dale H Vitt ce7a919e-1408-11eb-85e4-051eaf7838f1
+#&gt;   - references: Dale H Vitt 38f026ba-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: member of
 #&gt;       propertyURI: https://schema.org/memberOf
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
-#&gt;   - references: Melanie A Vile ce7ab91c-1408-11eb-85e4-051eaf7838f1
+#&gt;       label: Southern Illinois University Edwardsville
+#&gt;       valueURI: https://ror.org/04cqs5j56
+#&gt;   - references: Melanie A Vile 38f04dd4-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: is a
 #&gt;       propertyURI: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
 #&gt;     valueURI:
 #&gt;       label: Person
 #&gt;       valueURI: https://schema.org/Person
-#&gt;   - references: Melanie A Vile ce7ab91c-1408-11eb-85e4-051eaf7838f1
+#&gt;   - references: Melanie A Vile 38f04dd4-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: member of
 #&gt;       propertyURI: https://schema.org/memberOf
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
-#&gt;   - references: Jeremy A Graham ce7adffa-1408-11eb-85e4-051eaf7838f1
+#&gt;       label: Villanova University
+#&gt;       valueURI: https://ror.org/02g7kd627
+#&gt;   - references: Jeremy A Graham 38f04dd5-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: is a
 #&gt;       propertyURI: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
 #&gt;     valueURI:
 #&gt;       label: Person
 #&gt;       valueURI: https://schema.org/Person
-#&gt;   - references: Jeremy A Graham ce7adffa-1408-11eb-85e4-051eaf7838f1
+#&gt;   - references: Jeremy A Graham 38f04dd5-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: member of
 #&gt;       propertyURI: https://schema.org/memberOf
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
-#&gt;   - references: Jeremy A Hartsock ce7b0728-1408-11eb-85e4-051eaf7838f1
+#&gt;       label: Southern Illinois University Edwardsville
+#&gt;       valueURI: https://ror.org/04cqs5j56
+#&gt;   - references: Jeremy A Hartsock 38f07502-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: is a
 #&gt;       propertyURI: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
 #&gt;     valueURI:
 #&gt;       label: Person
 #&gt;       valueURI: https://schema.org/Person
-#&gt;   - references: Jeremy A Hartsock ce7b0728-1408-11eb-85e4-051eaf7838f1
+#&gt;   - references: Jeremy A Hartsock 38f07502-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: member of
 #&gt;       propertyURI: https://schema.org/memberOf
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
-#&gt;   - references: Hope Fillingim ce7b2e4c-1408-11eb-85e4-051eaf7838f1
+#&gt;       label: Southern Illinois University Edwardsville
+#&gt;       valueURI: https://ror.org/04cqs5j56
+#&gt;   - references: Hope Fillingim 38f09c26-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: is a
 #&gt;       propertyURI: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
 #&gt;     valueURI:
 #&gt;       label: Person
 #&gt;       valueURI: https://schema.org/Person
-#&gt;   - references: Hope Fillingim ce7b2e4c-1408-11eb-85e4-051eaf7838f1
+#&gt;   - references: Hope Fillingim 38f09c26-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: member of
 #&gt;       propertyURI: https://schema.org/memberOf
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
-#&gt;   - references: Melissa House ce7b2e4d-1408-11eb-85e4-051eaf7838f1
+#&gt;       label: Villanova University
+#&gt;       valueURI: https://ror.org/02g7kd627
+#&gt;   - references: Melissa House 38f09c27-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: is a
 #&gt;       propertyURI: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
 #&gt;     valueURI:
 #&gt;       label: Person
 #&gt;       valueURI: https://schema.org/Person
-#&gt;   - references: Melissa House ce7b2e4d-1408-11eb-85e4-051eaf7838f1
+#&gt;   - references: Melissa House 38f09c27-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: member of
 #&gt;       propertyURI: https://schema.org/memberOf
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
-#&gt;   - references: James C Quinn ce7b5570-1408-11eb-85e4-051eaf7838f1
+#&gt;       label: Southern Illinois University Edwardsville
+#&gt;       valueURI: https://ror.org/04cqs5j56
+#&gt;   - references: James C Quinn 38f0c35e-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: is a
 #&gt;       propertyURI: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
 #&gt;     valueURI:
 #&gt;       label: Person
 #&gt;       valueURI: https://schema.org/Person
-#&gt;   - references: James C Quinn ce7b5570-1408-11eb-85e4-051eaf7838f1
+#&gt;   - references: James C Quinn 38f0c35e-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: member of
 #&gt;       propertyURI: https://schema.org/memberOf
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
-#&gt;   - references: Kimberli D Scott ce7b7c9e-1408-11eb-85e4-051eaf7838f1
+#&gt;       label: Villanova University
+#&gt;       valueURI: https://ror.org/02g7kd627
+#&gt;   - references: Kimberli D Scott 38f0ea82-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: is a
 #&gt;       propertyURI: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
 #&gt;     valueURI:
 #&gt;       label: Person
 #&gt;       valueURI: https://schema.org/Person
-#&gt;   - references: Kimberli D Scott ce7b7c9e-1408-11eb-85e4-051eaf7838f1
+#&gt;   - references: Kimberli D Scott 38f0ea82-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: member of
 #&gt;       propertyURI: https://schema.org/memberOf
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
-#&gt;   - references: Meaghan Petix ce7ba3cc-1408-11eb-85e4-051eaf7838f1
+#&gt;       label: Villanova University
+#&gt;       valueURI: https://ror.org/02g7kd627
+#&gt;   - references: Meaghan Petix 38f111b0-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: is a
 #&gt;       propertyURI: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
 #&gt;     valueURI:
 #&gt;       label: Person
 #&gt;       valueURI: https://schema.org/Person
-#&gt;   - references: Meaghan Petix ce7ba3cc-1408-11eb-85e4-051eaf7838f1
+#&gt;   - references: Meaghan Petix 38f111b0-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: member of
 #&gt;       propertyURI: https://schema.org/memberOf
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
-#&gt;   - references: Kelly J McMillen ce7ba3cd-1408-11eb-85e4-051eaf7838f1
+#&gt;       label: Southern Illinois University Edwardsville
+#&gt;       valueURI: https://ror.org/04cqs5j56
+#&gt;   - references: Kelly J McMillen 38f111b1-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: is a
 #&gt;       propertyURI: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
 #&gt;     valueURI:
 #&gt;       label: Person
 #&gt;       valueURI: https://schema.org/Person
-#&gt;   - references: Kelly J McMillen ce7ba3cd-1408-11eb-85e4-051eaf7838f1
+#&gt;   - references: Kelly J McMillen 38f111b1-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: member of
 #&gt;       propertyURI: https://schema.org/memberOf
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
-#&gt;   - references: Kelman R Wieder ce7bcaf0-1408-11eb-85e4-051eaf7838f1
+#&gt;       label: Villanova University
+#&gt;       valueURI: https://ror.org/02g7kd627
+#&gt;   - references: Kelman R Wieder 38f138d4-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: is a
 #&gt;       propertyURI: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
 #&gt;     valueURI:
 #&gt;       label: Person
 #&gt;       valueURI: https://schema.org/Person
-#&gt;   - references: Kelman R Wieder ce7bcaf0-1408-11eb-85e4-051eaf7838f1
+#&gt;   - references: Kelman R Wieder 38f138d4-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: member of
 #&gt;       propertyURI: https://schema.org/memberOf
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
-#&gt;   - references: James C Quinn ce7c194c-1408-11eb-85e4-051eaf7838f1
+#&gt;       label: Villanova University
+#&gt;       valueURI: https://ror.org/02g7kd627
+#&gt;   - references: James C Quinn 38f1600c-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: is a
 #&gt;       propertyURI: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
 #&gt;     valueURI:
 #&gt;       label: Person
 #&gt;       valueURI: https://schema.org/Person
-#&gt;   - references: James C Quinn ce7c194c-1408-11eb-85e4-051eaf7838f1
+#&gt;   - references: James C Quinn 38f1600c-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: member of
 #&gt;       propertyURI: https://schema.org/memberOf
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
-#&gt;   - references: Jane Doe ce7c194d-1408-11eb-85e4-051eaf7838f1
+#&gt;       label: Villanova University
+#&gt;       valueURI: https://ror.org/02g7kd627
+#&gt;   - references: Jane Doe 38f1600d-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: is a
 #&gt;       propertyURI: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
 #&gt;     valueURI:
 #&gt;       label: Person
 #&gt;       valueURI: https://schema.org/Person
-#&gt;   - references: Jane Doe ce7c194d-1408-11eb-85e4-051eaf7838f1
+#&gt;   - references: Jane Doe 38f1600d-1a30-11eb-be70-5b4b4d070821
 #&gt;     propertyURI:
 #&gt;       label: member of
 #&gt;       propertyURI: https://schema.org/memberOf
 #&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
-#&gt;   - references: Kelman R Wieder ce7c407a-1408-11eb-85e4-051eaf7838f1
-#&gt;     propertyURI:
-#&gt;       label: is a
-#&gt;       propertyURI: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt;     valueURI:
-#&gt;       label: Person
-#&gt;       valueURI: https://schema.org/Person
-#&gt;   - references: Kelman R Wieder ce7c407a-1408-11eb-85e4-051eaf7838f1
-#&gt;     propertyURI:
-#&gt;       label: member of
-#&gt;       propertyURI: https://schema.org/memberOf
-#&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
-#&gt;   - references: Melanie A Vile ce7c679e-1408-11eb-85e4-051eaf7838f1
-#&gt;     propertyURI:
-#&gt;       label: is a
-#&gt;       propertyURI: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt;     valueURI:
-#&gt;       label: Person
-#&gt;       valueURI: https://schema.org/Person
-#&gt;   - references: Melanie A Vile ce7c679e-1408-11eb-85e4-051eaf7838f1
-#&gt;     propertyURI:
-#&gt;       label: member of
-#&gt;       propertyURI: https://schema.org/memberOf
-#&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
-#&gt;   - references: Joe Smith ce7c8ecc-1408-11eb-85e4-051eaf7838f1
-#&gt;     propertyURI:
-#&gt;       label: is a
-#&gt;       propertyURI: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt;     valueURI:
-#&gt;       label: Person
-#&gt;       valueURI: https://schema.org/Person
-#&gt;   - references: Joe Smith ce7c8ecc-1408-11eb-85e4-051eaf7838f1
-#&gt;     propertyURI:
-#&gt;       label: member of
-#&gt;       propertyURI: https://schema.org/memberOf
-#&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
-#&gt;   - references: Joe Smith ce7cb5f0-1408-11eb-85e4-051eaf7838f1
-#&gt;     propertyURI:
-#&gt;       label: is a
-#&gt;       propertyURI: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt;     valueURI:
-#&gt;       label: Person
-#&gt;       valueURI: https://schema.org/Person
-#&gt;   - references: Joe Smith ce7cb5f0-1408-11eb-85e4-051eaf7838f1
-#&gt;     propertyURI:
-#&gt;       label: member of
-#&gt;       propertyURI: https://schema.org/memberOf
-#&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder
-#&gt;   - references: Chase Gacho ce7cdd1e-1408-11eb-85e4-051eaf7838f1
-#&gt;     propertyURI:
-#&gt;       label: is a
-#&gt;       propertyURI: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt;     valueURI:
-#&gt;       label: Person
-#&gt;       valueURI: https://schema.org/Person
-#&gt;   - references: Chase Gacho ce7cdd1e-1408-11eb-85e4-051eaf7838f1
-#&gt;     propertyURI:
-#&gt;       label: member of
-#&gt;       propertyURI: https://schema.org/memberOf
-#&gt;     valueURI:
-#&gt;       label: placeholder
-#&gt;       valueURI: placeholder</div><div class='input'>
+#&gt;       label: University of Wisconsinâ€“Madison
+#&gt;       valueURI: https://ror.org/01y2jtd41</div><div class='input'>
 <span class='co'># Remove the EML files from the temporary directory</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"/edi.260.3.xml"</span>))

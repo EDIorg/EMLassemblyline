@@ -177,6 +177,7 @@
 </li>
 <li><p><strong>Provenance metadata template:</strong> This extends support for provenance metadata of data sources external to the EDI Data Repository. Create the template with <code><a href="../reference/template_provenance.html">template_provenance()</a></code>. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/8">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/8'>#8</a></a></p></li>
 <li><p><strong>Allow creation of partial EML (part 2):</strong> This completes implementation of issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/34'>#34</a> by moving all evaluation of inputs to make_eml() (and associated warning and error handling) from various locations in the code base to validate_templates(). With this implementation comes a new approach to communicating input issues to the user via template_issues, an object written to the global environment and formatted into a human readable report (message) when passed through issues().</p></li>
+<li><p><strong>template_categorical_variables quote character:</strong> Occasionally unquoted strings in the categorical variables template leads to errors. Quoting characters, when required, during the write to file phase has been implemented. Additionally, the entire function has been simplified.</p></li>
 </ul>
 </div>
 <div id="enhancement-1" class="section level3">

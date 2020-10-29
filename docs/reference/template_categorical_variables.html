@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Create categorical variables template — template_categorical_variables" />
-<meta property="og:description" content="Use this function to extract the unique categorical variables of a data
+<meta property="og:description" content="Use this function after table attributes templates are complete. It uses information in attribute templates to extract the unique categorical variables from the corresponding data table.
     table and return for user supplied definitions. 
     Instructions for editing this template." />
 
@@ -146,17 +146,12 @@
     </div>
 
     <div class="ref-description">
-    <p>Use this function to extract the unique categorical variables of a data
+    <p>Use this function after table attributes templates are complete. It uses information in attribute templates to extract the unique categorical variables from the corresponding data table.
     table and return for user supplied definitions. 
     <a href='https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html'>Instructions for editing this template.</a></p>
     </div>
 
-    <pre class="usage"><span class='fu'>template_categorical_variables</span>(
-      <span class='no'>path</span>,
-      <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='no'>path</span>,
-      <span class='kw'>write.file</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-      <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-    )</pre>
+    <pre class="usage"><span class='fu'>template_categorical_variables</span>(<span class='no'>path</span>, <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='no'>path</span>, <span class='kw'>write.file</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -173,21 +168,15 @@
       <th>write.file</th>
       <td><p>(logical; optional) Whether to write the template file.</p></td>
     </tr>
-    <tr>
-      <th>x</th>
-      <td><p>(named list; optional) Alternative input to 
-<code>template_categorical_variables()</code>. Use <code><a href='template_arguments.html'>template_arguments()</a></code> 
-to create <code>x</code>.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><strong>catvars_*.txt</strong> The tab delimited categorical variable 
-    template, where * is the table name from which the variables were
-    extracted. This file is written to <code>path</code> unless using <code>x</code>,
-    in which case the template is added to 
-    <strong>/x/templates/catvars_*.txt</strong>.</p>
+    
+
+<dt>catvars_tablename.txt</dt><dd><p>The tab delimited categorical variable template, where "tablename" is the table name from which the variables were extracted. This file is written to <code>path</code></p></dd>.
+<dt>list of data frames</dt><dd><p>A list of data frames. One for each categorical variables template.</p></dd>
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>template_categorical_variables()</code> knows which columns of a table
@@ -208,17 +197,10 @@ to create <code>x</code>.</p></td>
 <span class='co'># Set working directory</span>
 <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>'/pkg_255'</span>))
 
-<span class='co'># View directory contents (NOTE: catvars_*.txt files don't exist)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span>(<span class='st'>'./metadata_templates'</span>)</div><div class='output co'>#&gt; [1] "abstract.txt"            "additional_info.txt"    
-#&gt; [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
-#&gt; [5] "custom_units.txt"        "intellectual_rights.txt"
-#&gt; [7] "keywords.txt"            "methods.txt"            
-#&gt; [9] "personnel.txt"          </div><div class='input'>
 <span class='co'># Template categorical variables</span>
-<span class='fu'>template_categorical_variables</span>(
+<span class='no'>catvars</span> <span class='kw'>&lt;-</span> <span class='fu'>template_categorical_variables</span>(
   <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./metadata_templates'</span>,
-  <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='st'>'./data_objects'</span>
-)</div><div class='output co'>#&gt; <span class='message'>Templating categorical variables ...</span></div><div class='output co'>#&gt; <span class='message'>catvars_decomp.txt</span></div><div class='output co'>#&gt; <span class='message'>catvars_nitrogen.txt</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
+  <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='st'>'./data_objects'</span>)</div><div class='output co'>#&gt; <span class='message'>Templating categorical variables ...</span></div><div class='output co'>#&gt; <span class='message'>catvars_decomp.txt</span></div><div class='output co'>#&gt; <span class='message'>catvars_nitrogen.txt</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'><span class='no'>catvars</span></div><div class='output co'>#&gt; NULL</div><div class='input'>
 <span class='co'># View directory contents (NOTE: catvars_*.txt files exist)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span>(<span class='st'>'./metadata_templates'</span>)</div><div class='output co'>#&gt;  [1] "abstract.txt"            "additional_info.txt"    
 #&gt;  [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
@@ -226,11 +208,6 @@ to create <code>x</code>.</p></td>
 #&gt;  [7] "custom_units.txt"        "intellectual_rights.txt"
 #&gt;  [9] "keywords.txt"            "methods.txt"            
 #&gt; [11] "personnel.txt"          </div><div class='input'>
-<span class='co'># Rerunning template_categorical_variables() does not overwrite files</span>
-<span class='fu'>template_categorical_variables</span>(
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./metadata_templates'</span>,
-  <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='st'>'./data_objects'</span>
-)</div><div class='output co'>#&gt; <span class='message'>Templating categorical variables ...</span></div><div class='output co'>#&gt; <span class='message'>catvars_decomp.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>catvars_nitrogen.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
 <span class='co'># Clean up</span>
 <span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(<span class='st'>'.'</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
   </div>
