@@ -30,9 +30,9 @@ validate_templates <- function(fun.name, x) {
   message("Checking inputs")
   attr_tmp <- read_template_attributes()
   
+  # Called from annotate_eml() ------------------------------------------------
+  
   if (fun.name == "annotate_eml") {
-    
-    # Called from annotate_eml() ----------------------------------------------
     
     # Initialize object for collecting issue messages
     issues <- c()
@@ -54,9 +54,32 @@ validate_templates <- function(fun.name, x) {
     
   }
   
-  if (fun.name == 'make_eml'){
+  # Called from template_categorical_variables() ------------------------------
+  
+  if (fun.name == "template_categorical_variables") {
     
-    # Called from make_eml() --------------------------------------------------
+    # Initialize object for collecting issue messages
+    issues <- c()
+    
+    # Table attributes
+    r <- validate_table_attributes(x)
+    issues <- c(issues, r$issues)
+    x <- r$x
+    
+    # Return
+    if (!is.null(issues)) {
+      list2env(list(template_issues = issues), .GlobalEnv)
+      warning(
+        "Input issues found. Use issues() to see them.",
+        call. = FALSE)
+    }
+    return(x)
+    
+  }
+  
+  # Called from make_eml() ----------------------------------------------------
+  
+  if (fun.name == 'make_eml'){
 
     # Initialize object for collecting issue messages
     issues <- c()

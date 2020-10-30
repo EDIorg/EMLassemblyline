@@ -87,6 +87,11 @@ template_categorical_variables <- function(
     data.path = data.path,
     data.table = data_tables)$x
   
+  # Validate templates --------------------------------------------------------
+  
+  x <- remove_empty_templates(x)
+  x <- validate_templates("template_categorical_variables", x)
+  
   # Extract categorical variables ---------------------------------------------
   
   # Categorical variables are classified in each data tables attribute 
@@ -99,8 +104,12 @@ template_categorical_variables <- function(
       
       # Get components
       
-      d <- x$data.table[[unname(data_tables)[i]]]$content
+      d <- x$data.table[[data_tables[i]]]$content
       attributes <- x$template[[names(data_tables)[i]]]$content
+      # Do not continue unless data and attributes have made it this far
+      if (is.null(d) | is.null(attributes)) {
+        return(NULL)
+      }
       
       categorical_variables <- attributes$attributeName[
         attributes$class == "categorical"]
