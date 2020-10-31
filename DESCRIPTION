@@ -23,7 +23,7 @@ Imports:
     rmarkdown (>= 1.11),
     stringr (>= 1.2.0),
     stringi (>= 1.1.5),
-    taxonomyCleanr (>= 1.4.0),
+    taxonomyCleanr (>= 1.4.1),
     tidyr (>= 1.1.2),
     tools (>= 3.6.1),
     uuid (>= 0.1-4),

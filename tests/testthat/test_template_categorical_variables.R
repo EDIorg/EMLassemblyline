@@ -50,16 +50,18 @@ testthat::test_that('Test usage with file inputs', {
   # Correct argument use results in messages
   
   expect_message(
-    template_categorical_variables(
-      path = system.file(
-        '/examples/templates',
-        package = 'EMLassemblyline'
-      ), 
-      data.path = system.file(
-        '/examples/data',
-        package = 'EMLassemblyline'
-      ),
-      write.file = FALSE
+    suppressWarnings(
+      template_categorical_variables(
+        path = system.file(
+          '/examples/templates',
+          package = 'EMLassemblyline'
+        ), 
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ),
+        write.file = FALSE
+      )
     )
   )
   

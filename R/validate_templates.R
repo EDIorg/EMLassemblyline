@@ -2653,9 +2653,11 @@ validate_taxonomic_coverage <- function(x) {
     r <- validate_taxonomic_coverage_authority_system(x)
     required_issues <- c(required_issues, r)
     
+    # FIXME: Relax constraints on this check to match those of 
+    # taxonomyCleanr::make_taxonomicCoverage()
     # Complete entries are required
-    r <- validate_taxonomic_coverage_completeness(x)
-    required_issues <- c(required_issues, r)
+    # r <- validate_taxonomic_coverage_completeness(x)
+    # required_issues <- c(required_issues, r)
     
   }
   

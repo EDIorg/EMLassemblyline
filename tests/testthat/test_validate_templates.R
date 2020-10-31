@@ -1733,24 +1733,26 @@ testthat::test_that("taxonomic_coverage", {
       "Unsupported authorities for entries: .+. Supported authorities are"))
   expect_null(r$x$template$taxonomic_coverage.txt)
   
-  # incomplete entries - Incomplete entries (missing authority_system or 
-  # authority_id) will not return information
-  
-  x1 <- x
-  x1$template$taxonomic_coverage.txt$content$authority_system[1] <- ""
-  x1$template$taxonomic_coverage.txt$content$authority_id[2] <- ""
-  
-  expect_true(
-    stringr::str_detect(
-      validate_taxonomic_coverage_completeness(x1),
-      "Missing inputs. A taxonomic authority and corresponding identifier "))
-  
-  r <- validate_taxonomic_coverage(x1)
-  expect_true(
-    stringr::str_detect(
-      r$issues,
-      "Missing inputs. A taxonomic authority and corresponding identifier "))
-  expect_null(r$x$template$taxonomic_coverage.txt)
+  # FIXME: Relax constraints to those of 
+  # taxonomyCleanr::make_taxonomicCoverage()
+  # # incomplete entries - Incomplete entries (missing authority_system or 
+  # # authority_id) will not return information
+  # 
+  # x1 <- x
+  # x1$template$taxonomic_coverage.txt$content$authority_system[1] <- ""
+  # x1$template$taxonomic_coverage.txt$content$authority_id[2] <- ""
+  # 
+  # expect_true(
+  #   stringr::str_detect(
+  #     validate_taxonomic_coverage_completeness(x1),
+  #     "Missing inputs. A taxonomic authority and corresponding identifier "))
+  # 
+  # r <- validate_taxonomic_coverage(x1)
+  # expect_true(
+  #   stringr::str_detect(
+  #     r$issues,
+  #     "Missing inputs. A taxonomic authority and corresponding identifier "))
+  # expect_null(r$x$template$taxonomic_coverage.txt)
   
   # resolved names - Use the raw name if it cannot be resolved
   
@@ -1770,9 +1772,6 @@ testthat::test_that("taxonomic_coverage", {
   # authority_system
   x1$template$taxonomic_coverage.txt$content$authority_system[1:2] <- 
     "unsupported_authority_id"
-  # incomplete entries
-  x1$template$taxonomic_coverage.txt$content$authority_system[3] <- ""
-  x1$template$taxonomic_coverage.txt$content$authority_id[4] <- ""
 
   # Expectations
   r <- validate_taxonomic_coverage(x1)
@@ -1780,10 +1779,6 @@ testthat::test_that("taxonomic_coverage", {
     stringr::str_detect(
       r$issues,
       "Unsupported authorities for entries: .+. Supported authorities are"))
-  expect_true(
-    stringr::str_detect(
-      r$issues,
-      "Missing inputs. A taxonomic authority and corresponding identifier "))
   expect_null(r$x$template$taxonomic_coverage.txt)
   
 })
