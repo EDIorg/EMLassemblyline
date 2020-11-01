@@ -1447,14 +1447,14 @@ validate_provenance <- function(x) {
   # Objects for catching required and optional issues
   required_issues <- c()
   optional_issues <- c()
-
+  
+  # Compile provenance from allowed sources
+  x <- compile_provenance(x)
+  
   if (any(names(x$template) == "provenance.txt")) {
-
+    
     # Template column names are correct
     r <- validate_provenance_column_names(x)
-    
-    # Compile provenance from allowed sources
-    x <- compile_provenance(x)
     
     # systemID is one of the supported system identifiers
     r <- validate_provenance_system_id(x)
