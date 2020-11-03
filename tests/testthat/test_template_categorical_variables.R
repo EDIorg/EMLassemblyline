@@ -129,22 +129,30 @@ testthat::test_that('Missing value codes', {
       data[1:5, colnames(data)[
         attribute.template$class == "categorical"]] <- missing.value.code
       dir.create(paste0(tempdir(), '/catvars_test'))
-      write.table(
-        attribute.template,
-        paste0(tempdir(), '/catvars_test/attributes_decomp.txt'),
-        sep = '\t',
-        row.names = FALSE)
+      
+      data.table::fwrite(
+        x = attribute.template,
+        file = paste0(tempdir(), '/catvars_test/attributes_decomp.txt'),
+        sep = "\t",
+        quote = FALSE)
+      
       write.csv(
         data,
         paste0(tempdir(), '/catvars_test/decomp.csv'),
         row.names = FALSE)
       template_categorical_variables(
         path = paste0(tempdir(), '/catvars_test'))
-      t <- read.table(
-        paste0(tempdir(), '/catvars_test/catvars_decomp.txt'),
-        sep = '\t', 
-        header = TRUE,
-        as.is = TRUE)
+      
+      t <- as.data.frame(
+        data.table::fread(
+          file = paste0(tempdir(), '/catvars_test/catvars_decomp.txt'),
+          fill = TRUE,
+          blank.lines.skip = TRUE,
+          sep = "\t",
+          quote = "",
+          colClasses = list(
+            character = 1:utils::count.fields(paste0(tempdir(), '/catvars_test/catvars_decomp.txt'), sep = "\t")[1])))
+      
       expect_true(!any(missing.value.code %in% t$code))
       
     } else if (class(missing.value.code) == "character") {
@@ -154,22 +162,30 @@ testthat::test_that('Missing value codes', {
       data[1:5, colnames(data)[
         attribute.template$class == "categorical"]] <- missing.value.code
       dir.create(paste0(tempdir(), '/catvars_test'))
-      write.table(
-        attribute.template,
-        paste0(tempdir(), '/catvars_test/attributes_decomp.txt'),
-        sep = '\t',
-        row.names = FALSE)
+      
+      data.table::fwrite(
+        x = attribute.template,
+        file = paste0(tempdir(), '/catvars_test/attributes_decomp.txt'),
+        sep = "\t",
+        quote = FALSE)
+      
       write.csv(
         data,
         paste0(tempdir(), '/catvars_test/decomp.csv'),
         row.names = FALSE)
       template_categorical_variables(
         path = paste0(tempdir(), '/catvars_test'))
-      t <- read.table(
-        paste0(tempdir(), '/catvars_test/catvars_decomp.txt'),
-        sep = '\t', 
-        header = TRUE,
-        as.is = TRUE)
+      
+      t <- as.data.frame(
+        data.table::fread(
+          file = paste0(tempdir(), '/catvars_test/catvars_decomp.txt'),
+          fill = TRUE,
+          blank.lines.skip = TRUE,
+          sep = "\t",
+          quote = "",
+          colClasses = list(
+            character = 1:utils::count.fields(paste0(tempdir(), '/catvars_test/catvars_decomp.txt'), sep = "\t")[1])))
+      
       expect_true(!any(missing.value.code %in% t$code))
       
     } else if (missing.value.code == "NA") {
@@ -179,22 +195,30 @@ testthat::test_that('Missing value codes', {
       data[1:5, colnames(data)[
         attribute.template$class == "categorical"]] <- NA
       dir.create(paste0(tempdir(), '/catvars_test'))
-      write.table(
-        attribute.template,
-        paste0(tempdir(), '/catvars_test/attributes_decomp.txt'),
-        sep = '\t',
-        row.names = FALSE)
+      
+      data.table::fwrite(
+        x = attribute.template,
+        file = paste0(tempdir(), '/catvars_test/attributes_decomp.txt'),
+        sep = "\t",
+        quote = FALSE)
+      
       write.csv(
         data,
         paste0(tempdir(), '/catvars_test/decomp.csv'),
         row.names = FALSE)
       template_categorical_variables(
         path = paste0(tempdir(), '/catvars_test'))
-      t <- read.table(
-        paste0(tempdir(), '/catvars_test/catvars_decomp.txt'),
-        sep = '\t', 
-        header = TRUE,
-        as.is = TRUE)
+      
+      t <- as.data.frame(
+        data.table::fread(
+          file = paste0(tempdir(), '/catvars_test/catvars_decomp.txt'),
+          fill = TRUE,
+          blank.lines.skip = TRUE,
+          sep = "\t",
+          quote = "",
+          colClasses = list(
+            character = 1:utils::count.fields(paste0(tempdir(), '/catvars_test/catvars_decomp.txt'), sep = "\t")[1])))
+      
       expect_true(!any(missing.value.code %in% t$code))
       
     }

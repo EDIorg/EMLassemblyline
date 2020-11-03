@@ -21,9 +21,6 @@
 
 * __Allow creation of partial EML (part 2):__ This completes implementation of issue #34 by moving all evaluation of inputs to make_eml() (and associated warning and error handling) from various locations in the code base to validate_templates(). With this implementation comes a new approach to communicating input issues to the user via template_issues, an object written to the global environment and formatted into a human readable report (message) when passed through issues().
 
-* __template_categorical_variables quote character:__ Occasionally unquoted strings in the categorical variables template leads to errors. Quoting characters, when required, during the write to file phase has been implemented. Additionally, the entire function has been simplified.
-
-
 ### Enhancement
 
 * __UTF-8 character encoding:__ EMLassemblyline extracts metadata from data objects and may malform this content if the character encoding is not supported. In an attempt to minimize this issue and convert metadata into the UTF-8 encoding expected by EML, the Base R function `enc2utf8()` has been implemented anywhere metadata is extracted from data objects and written to file (i.e. templating functions) and anywhere template content is added to the EML (i.e. `make_eml()`). Because this may create EML that inaccuratly represents the data object it describes (e.g. categorical variables encoded in UTF-8 but the data encoded in something else) warnings are now issued when the input data object is not UTF-8 (or ASCII) encoded as estimated by `readr::guess_encoding()`. Additionally, EMLassemblyline documentation now emphasizes the importance of encoding data objects in UTF-8 first and then beginning the metadata creation process. An encoding conversion of TextType metadata (i.e. abstract, methods, additional_info) has not yet been implemented.

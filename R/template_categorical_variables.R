@@ -195,7 +195,7 @@ template_categorical_variables <- function(
           x = r[[i]]$content,
           file = paste0(path, "/", enc2utf8(i)),
           sep = "\t",
-          quote = TRUE)
+          quote = FALSE)
       }
     }
   }
