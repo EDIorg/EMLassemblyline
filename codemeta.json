@@ -51,6 +51,19 @@
   "softwareRequirements": [
     {
       "@type": "SoftwareApplication",
+      "identifier": "bit64",
+      "name": "bit64",
+      "version": ">= 4.0.5",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=bit64"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "data.table",
       "name": "data.table",
       "version": ">= 1.12.2",
@@ -73,7 +86,7 @@
       "@type": "SoftwareApplication",
       "identifier": "EML",
       "name": "EML",
-      "version": ">= 2.0.3",
+      "version": ">= 2.0.4",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -195,7 +208,7 @@
       "@type": "SoftwareApplication",
       "identifier": "taxonomyCleanr",
       "name": "taxonomyCleanr",
-      "version": ">= 1.3.0",
+      "version": ">= 1.4.1",
       "sameAs": "https://github.com/EDIorg/taxonomyCleanr"
     },
     {
@@ -246,7 +259,7 @@
   ],
   "codeRepository": "https://github.com/EDIorg/EMLassemblyline",
   "readme": "https://github.com/EDIorg/EMLassemblyline/blob/master/README.md",
-  "fileSize": "646.183KB",
+  "fileSize": "643.506KB",
   "contIntegration": [
     "https://travis-ci.org/clnsmth/EMLassemblyline",
     "https://codecov.io/github/clnsmth/EMLassemblyline?branch=master"
