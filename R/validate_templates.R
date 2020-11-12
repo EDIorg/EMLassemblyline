@@ -253,9 +253,9 @@ validate_annotation <- function(x) {
     r <- validate_annotation_completeness(x)
     required_issues <- c(required_issues, r)
 
-    # URIs are resolvable
-    r <- validate_annotation_uri(x)
-    required_issues <- c(required_issues, r)
+    # # URIs are resolvable (takes a long time to complete)
+    # r <- validate_annotation_uri(x)
+    # required_issues <- c(required_issues, r)
 
   } 
   
