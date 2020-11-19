@@ -238,6 +238,15 @@ template_table_attributes <- function(
         potential_date_cols <- colnames(x$data.table[[i]]$content)[use_i]
         potential_date_i <- stringr::str_detect(tolower(potential_date_cols), "date|time|day")
         guess_datetime <- potential_date_cols[potential_date_i]
+        ### NEW ###
+        # Check for hour formats in columns content
+        sapply(potential_date_cols, function(pd_col){
+          content <- unlist(x$data.table[[i]]$content[ ,pd_col])
+          content <- content[!which(is.na(content) || content == "")]
+          if(grepl("(([0-1][0-9])|(2[0-3]))[:\\-][0-5][0-9]([:\\-][0-5][0-9])?", content))
+            guess_datetime <- unique(c(guess_datetime, pd_col))
+        })
+        ###
         use_i <- match(guess_datetime, attributes[[i]]$attributeName)
         guess[use_i] <- "Date"
       }
@@ -257,18 +266,27 @@ template_table_attributes <- function(
       use_i <- guess == "character"
       if (sum(use_i) > 0){
         potential_fact_cols <- colnames(x$data.table[[i]]$content)[use_i]
-        use_i2 <- match(potential_fact_cols, colnames(x$data.table[[i]]$content))
-        if (length(use_i2) == 1){
-          unique_lengths <- length(unique(x$data.table[[i]]$content[ ,use_i2]))
-        } else {
-          unique_lengths <- apply(x$data.table[[i]]$content[ ,use_i2], 2, function(x)length(unique(x)))
-        }
-        potential_facts <- unique_lengths <= dim(x$data.table[[i]]$content)[1]*0.3
-        if (sum(potential_facts) > 0){
-          potential_facts <- names(potential_facts[potential_facts == TRUE])
-          use_i <- match(potential_facts, attributes[[i]]$attributeName)
-          guess[use_i] <- "categorical"
-        }
+        ### NEW ###
+        sapply(potential_fact_cols, function(pf_col) {
+          var <- x$data.table[[i]]$content[ ,pf_col]
+          col_ind <- match(pf_col, attributes[[i]]$attributeName)
+          
+          if(length(unique(var)) > max(table(var))) # alternatively, mean() could be used. Any way, it is just an approximation
+            guess[col_ind] <- "categorical" # high repetitions
+        })
+        ### OLD ###
+        # use_i2 <- match(potential_fact_cols, colnames(x$data.table[[i]]$content))
+        # if (length(use_i2) == 1){
+        #   unique_lengths <- length(unique(x$data.table[[i]]$content[ ,use_i2]))
+        # } else {
+        #   unique_lengths <- apply(x$data.table[[i]]$content[ ,use_i2], 2, function(x)length(unique(x)))
+        # }
+        # potential_facts <- unique_lengths <= dim(x$data.table[[i]]$content)[1]*0.3
+        # if (sum(potential_facts) > 0){
+        #   potential_facts <- names(potential_facts[potential_facts == TRUE])
+        #   use_i <- match(potential_facts, attributes[[i]]$attributeName)
+        #   guess[use_i] <- "categorical"
+        # }
       }
       
       # Update attributes class
