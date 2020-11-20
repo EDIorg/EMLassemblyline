@@ -273,6 +273,7 @@ template_table_attributes <- function(
       # Guess factor class
       
       use_i <- guess == "character"
+      
       if (sum(use_i) > 0){
         potential_fact_cols <- colnames(x$data.table[[i]]$content)[use_i]
         use_i2 <- match(potential_fact_cols, colnames(x$data.table[[i]]$content))
@@ -281,7 +282,17 @@ template_table_attributes <- function(
         } else {
           unique_lengths <- apply(x$data.table[[i]]$content[ ,use_i2], 2, function(x)length(unique(x)))
         }
-        potential_facts <- unique_lengths <= dim(x$data.table[[i]]$content)[1]*0.3
+        ### OLD ###
+        # potential_facts <- unique_lengths <= dim(x$data.table[[i]]$content)[1]*0.3
+        ### NEW ###
+        # Avoid magical '0.3' by selecting an empirical but logical value
+        # this value is set as the most repeated character string
+        potential_facts <- unique_lengths < sapply(
+          x$data.table[[i]]$content[,names(unique_lengths)],
+          function(col) 
+            max(table(col))
+        )
+        ###
         if (sum(potential_facts) > 0){
           potential_facts <- names(potential_facts[potential_facts == TRUE])
           use_i <- match(potential_facts, attributes[[i]]$attributeName)
