@@ -905,7 +905,7 @@ template_arguments <- function(
           os = EDIutils::detect_os()
         )
         
-        output$x$data.table[[i]]$content <- utils::read.table(
+        output$x$data.table[[i]]$content <- data.table::fread( # utils::read.table(
           file = paste0(
             data.path,
             '/',
@@ -913,9 +913,9 @@ template_arguments <- function(
           ),
           header = T,
           sep = delim_guess,
-          quote = "\"",
-          as.is = TRUE,
-          comment.char = ""
+          quote = "\""#,
+          # as.is = TRUE,
+          # comment.char = ""
         )
         
         # If delimiter is defined ...

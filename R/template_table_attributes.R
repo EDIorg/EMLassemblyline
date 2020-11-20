@@ -217,15 +217,26 @@ template_table_attributes <- function(
       attributes[[i]]$attributeName <- colnames(x$data.table[[i]]$content)
       
       # Guess character and numeric classes
-      
-      guess <- unname(unlist(lapply(x$data.table[[i]]$content, class)))
+      guess <- unname(unlist(lapply(
+        colnames(x$data.table[[i]]$content), 
+        function(col_id){
+          col <- x$data.table[[i]]$content[ ,col_id]
+          if(typeof(col) %in% class(col))
+            return(class(col))
+          if(any(grepl("Date", class(col))))
+            return("Date")
+          warning(paste0("Unguessed type for",col_id,": set as \"character\"."))
+          return("character")
+        }
+      )))
       
       guess_map <- c(
         character = "character", 
         logical = "character", 
         factor = "character",
         integer = "numeric",
-        numeric = "numeric"
+        numeric = "numeric",
+        Date = "Date"
       )
       
       guess <- unname(guess_map[guess])
@@ -238,15 +249,6 @@ template_table_attributes <- function(
         potential_date_cols <- colnames(x$data.table[[i]]$content)[use_i]
         potential_date_i <- stringr::str_detect(tolower(potential_date_cols), "date|time|day")
         guess_datetime <- potential_date_cols[potential_date_i]
-        ### NEW ###
-        # Check for hour formats in columns content
-        sapply(potential_date_cols, function(pd_col){
-          content <- unlist(x$data.table[[i]]$content[ ,pd_col])
-          content <- content[!which(is.na(content) || content == "")]
-          if(grepl("(([0-1][0-9])|(2[0-3]))[:\\-][0-5][0-9]([:\\-][0-5][0-9])?", content))
-            guess_datetime <- unique(c(guess_datetime, pd_col))
-        })
-        ###
         use_i <- match(guess_datetime, attributes[[i]]$attributeName)
         guess[use_i] <- "Date"
       }
