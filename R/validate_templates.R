@@ -6,9 +6,6 @@
 #' @param x
 #'     (named list) The data and metadata object returned by 
 #'     \code{template_arguments()}.
-#' @param env
-#'     (environment) Environment in which \code{issues()}' content will
-#'     be assigned (default to .GlobalEnv).
 #'     
 #' @return 
 #' \item{template_issues}{Any issues found in the validation process and 
@@ -29,7 +26,7 @@
 #'     with a warning. This approach of not "failing fast" allows the user to 
 #'     address several issues at once.
 #'
-validate_templates <- function(fun.name, x, env = .GlobalEnv) {
+validate_templates <- function(fun.name, x) {
   message("Checking inputs")
   attr_tmp <- read_template_attributes()
   
@@ -48,7 +45,7 @@ validate_templates <- function(fun.name, x, env = .GlobalEnv) {
 
     # Return
     if (!is.null(issues)) {
-      list2env(list(template_issues = issues), env)
+      list2env(list(template_issues = issues), options("eal.env"))
       warning(
         "Input issues found. Use issues() to see them.",
         call. = FALSE)
@@ -71,7 +68,7 @@ validate_templates <- function(fun.name, x, env = .GlobalEnv) {
     
     # Return
     if (!is.null(issues)) {
-      list2env(list(template_issues = issues), env)
+      list2env(list(template_issues = issues), options("eal.env"))
       warning(
         "Input issues found. Use issues() to see them.",
         call. = FALSE)
@@ -145,7 +142,7 @@ validate_templates <- function(fun.name, x, env = .GlobalEnv) {
     
     # Return
     if (!is.null(issues)) {
-      list2env(list(template_issues = issues), env)
+      list2env(list(template_issues = issues), options("eal.env"))
       warning(
         "Input issues found. Use issues() to see them.", 
         call. = FALSE)
@@ -3035,10 +3032,6 @@ compile_provenance <- function(x) {
 
 #' View validation issues
 #'
-#' @param env
-#'     (environment) Environment in which \code{template_issues} has
-#'     been assigned (default to .GlobalEnv).
-#'     
 #' @return
 #'     A message listing any validation issues
 #'     
@@ -3050,8 +3043,8 @@ compile_provenance <- function(x) {
 #'     
 #' @export
 #'
-issues <- function(env = .GlobalEnv) {
-  if (exists("template_issues", envir = env)) {
+issues <- function() {
+  if (exists("template_issues", envir = options("eal.env"))) {
     message(template_issues)
   } else {
     message("No issues found")
