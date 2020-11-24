@@ -11,6 +11,9 @@
 #'     (character) Path to the data directory.
 #' @param write.file
 #'     (logical; optional) Whether to write the template file.
+#' @param env
+#'     (environment) Environment in which \code{issues()}' content will
+#'     be assigned (default to .GlobalEnv).
 #'
 #' @return 
 #' \item{catvars_tablename.txt}{The tab delimited categorical variable template, where "tablename" is the table name from which the variables were extracted. This file is written to \code{path}}.
@@ -55,7 +58,8 @@
 template_categorical_variables <- function(
   path, 
   data.path = path, 
-  write.file = TRUE) {
+  write.file = TRUE,
+  env = .GlobalEnv) {
   
   message('Templating categorical variables ...')
   
@@ -90,7 +94,7 @@ template_categorical_variables <- function(
   # Validate templates --------------------------------------------------------
   
   x <- remove_empty_templates(x)
-  x <- validate_templates("template_categorical_variables", x)
+  x <- validate_templates("template_categorical_variables", x, env)
   
   # Extract categorical variables ---------------------------------------------
   

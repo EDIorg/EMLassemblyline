@@ -139,6 +139,9 @@
 #' @param return.obj
 #'     (logical; optional) Whether to return the EML as an R object of class 
 #'     \code{EML object}.
+#' @param env
+#'     (environment) Environment in which \code{issues()}' content will
+#'     be assigned (default to .GlobalEnv).
 #' @param x
 #'     (named list; optional) Alternative input to 
 #'     \code{make_eml()}. Use \code{template_arguments()} 
@@ -225,6 +228,7 @@ make_eml <- function(
   package.id = NULL,
   write.file = TRUE,
   return.obj = FALSE,
+  env = .GlobalEnv,
   x = NULL,
   affiliation,
   data.files,
@@ -402,7 +406,7 @@ make_eml <- function(
   # Validate templates --------------------------------------------------------
   
   x <- remove_empty_templates(x)
-  x <- validate_templates("make_eml", x)
+  x <- validate_templates("make_eml", x, env)
 
   # Modify arguments ----------------------------------------------------------
   # Modification of some argument content helps with downstream processes.

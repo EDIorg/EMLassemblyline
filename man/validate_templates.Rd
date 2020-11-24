@@ -4,7 +4,7 @@
 \alias{validate_templates}
 \title{Validate metadata template content}
 \usage{
-validate_templates(fun.name, x)
+validate_templates(fun.name, x, env = .GlobalEnv)
 }
 \arguments{
 \item{fun.name}{(character) Function name from which \code{validate_templates} is 
@@ -12,6 +12,9 @@ called}
 
 \item{x}{(named list) The data and metadata object returned by 
 \code{template_arguments()}.}
+
+\item{env}{(environment) Environment in which \code{issues()}' content will
+be assigned (default to .GlobalEnv).}
 }
 \value{
 \item{template_issues}{Any issues found in the validation process and 

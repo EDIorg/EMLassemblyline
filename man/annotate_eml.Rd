@@ -4,7 +4,12 @@
 \alias{annotate_eml}
 \title{Annotate EML}
 \usage{
-annotate_eml(annotations = NULL, eml.in = NULL, eml.out = NULL)
+annotate_eml(
+  annotations = NULL,
+  eml.in = NULL,
+  eml.out = NULL,
+  env = .GlobalEnv
+)
 }
 \arguments{
 \item{annotations}{(character; data frame) Path or data frame of the annotations.txt 
@@ -16,6 +21,9 @@ Accepted versions of the emld list object can be created by
 \code{EMLassemblyline::read_eml()} or \code{make_eml()}.}
 
 \item{eml.out}{(character) Path of the annotated EML file to be written.}
+
+\item{env}{(environment) Environment in which \code{issues()}' content will
+be assigned (default to .GlobalEnv).}
 }
 \value{
 (EML; emld list) If the input to \code{eml.in} is an EML file then the

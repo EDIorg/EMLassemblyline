@@ -13,6 +13,9 @@
 #'     \code{EMLassemblyline::read_eml()} or \code{make_eml()}.
 #' @param eml.out
 #'     (character) Path of the annotated EML file to be written.
+#' @param env
+#'     (environment) Environment in which \code{issues()}' content will
+#'     be assigned (default to .GlobalEnv).
 #'
 #' @return
 #'     (EML; emld list) If the input to \code{eml.in} is an EML file then the
@@ -50,7 +53,8 @@
 annotate_eml <- function(
   annotations = NULL, 
   eml.in = NULL, 
-  eml.out = NULL) {
+  eml.out = NULL, 
+  env = .GlobalEnv) {
   
   # Validate arguments --------------------------------------------------------
   
@@ -79,7 +83,7 @@ annotate_eml <- function(
   # Validation can take minutes.
   
   if (!any(stringr::str_detect(deparse(sys.calls()), "make_eml"))) {
-    x <- validate_templates("annotate_eml", x)
+    x <- validate_templates("annotate_eml", x, env)
   }
   
   # Continue if annotations.txt hasn't been dropped after validation
