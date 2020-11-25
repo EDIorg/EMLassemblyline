@@ -4,12 +4,7 @@
 \alias{template_categorical_variables}
 \title{Create categorical variables template}
 \usage{
-template_categorical_variables(
-  path,
-  data.path = path,
-  write.file = TRUE,
-  env = .GlobalEnv
-)
+template_categorical_variables(path, data.path = path, write.file = TRUE)
 }
 \arguments{
 \item{path}{(character) Path to the metadata template directory.}
@@ -17,9 +12,6 @@ template_categorical_variables(
 \item{data.path}{(character) Path to the data directory.}
 
 \item{write.file}{(logical; optional) Whether to write the template file.}
-
-\item{env}{(environment) Environment in which \code{issues()}' content will
-be assigned (default to .GlobalEnv).}
 }
 \value{
 \item{catvars_tablename.txt}{The tab delimited categorical variable template, where "tablename" is the table name from which the variables were extracted. This file is written to \code{path}}.

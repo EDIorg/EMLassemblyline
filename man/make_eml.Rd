@@ -135,9 +135,6 @@ is assigned a UUID.}
 \item{return.obj}{(logical; optional) Whether to return the EML as an R object of class 
 \code{EML object}.}
 
-\item{env}{(environment) Environment in which \code{issues()}' content will
-be assigned (default to .GlobalEnv).}
-
 \item{x}{(named list; optional) Alternative input to 
 \code{make_eml()}. Use \code{template_arguments()} 
 to create \code{x}.}

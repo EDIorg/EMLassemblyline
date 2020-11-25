@@ -4,11 +4,7 @@
 \alias{issues}
 \title{View validation issues}
 \usage{
-issues(env = .GlobalEnv)
-}
-\arguments{
-\item{env}{(environment) Environment in which \code{template_issues} has
-been assigned (default to .GlobalEnv).}
+issues()
 }
 \value{
 A message listing any validation issues

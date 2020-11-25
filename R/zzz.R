@@ -1,5 +1,5 @@
 # From: https://r-pkgs.org/r.html 
-.onLoad <- function(libname, pkgname) {
+.onAttach <- .onLoad <- function(libname, pkgname) {
   op <- options()
   op.eal <- list(
     eal.env = .GlobalEnv
@@ -10,7 +10,7 @@
   invisible()
 }
 
-.onUnload <- function(libname, pkgname) {
+.onDetach <- .onUnload <- function(libname, pkgname) {
   options(eal.env = NULL)
   
   invisible()
