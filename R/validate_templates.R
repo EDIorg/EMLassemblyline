@@ -2394,8 +2394,10 @@ validate_table_attribute_unit_definition <- function(file.name, x) {
     EML::get_unitList()$units$id,
     x$template$custom_units.txt$content$id)
   undefined_units <- 
-    !((x$template[[file.name]]$content$unit %in% defined_units) | 
-        (x$template[[file.name]]$content$unit == ""))
+    (
+      !((x$template[[file.name]]$content$unit %in% defined_units) | 
+          (x$template[[file.name]]$content$unit == "")) &
+        x$template[[file.name]]$content$class == "numeric")
   if (any(undefined_units)) {
     paste0(
       "Undefined units. Units must be from the EML standard unit dictionary ",
