@@ -29,5 +29,6 @@ addons:
       - libv8-dev
       - libjq-dev
       - libudunits2-dev
+install: travis_wait 30 R -e 'devtools::install_deps(dep = T)'
 after_success:
   - Rscript -e 'library(covr); codecov()'
