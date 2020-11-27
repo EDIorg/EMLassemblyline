@@ -227,6 +227,12 @@ template_table_attributes <- function(
           lapply(
             x$data.table[[i]]$content, 
             function(k) {
+              # 'character' has no consequence on other steps. 
+              # Then, makes empty cols be recognized as it. 
+              if(length(unique(k)) == 1 && 
+                 (all(is.na(k)) || all(k == ""))
+              )
+                return("empty")
               # An exception for the two component "IDate Date" class created 
               # by data.table::fread(). Returning both components results in 
               # a class vector that is longer than the column vector.
@@ -244,7 +250,8 @@ template_table_attributes <- function(
         integer = "numeric",
         integer64 = "numeric",
         numeric = "numeric",
-        Date = "Date")
+        Date = "Date",
+        empty = "empty")
       
       guess <- unname(guess_map[guess])
       
@@ -252,7 +259,7 @@ template_table_attributes <- function(
       
       use_i <- guess == "character"
       
-      if (sum(use_i) > 0){
+      if (sum(use_i) > 0) {
         potential_date_cols <- colnames(x$data.table[[i]]$content)[use_i]
         potential_date_i <- stringr::str_detect(tolower(potential_date_cols), "date|time|day")
         guess_datetime <- potential_date_cols[potential_date_i]
@@ -277,11 +284,12 @@ template_table_attributes <- function(
       if (sum(use_i) > 0){
         potential_fact_cols <- colnames(x$data.table[[i]]$content)[use_i]
         use_i2 <- match(potential_fact_cols, colnames(x$data.table[[i]]$content))
-        if (length(use_i2) == 1){
+        if (length(use_i2) == 1) {
           unique_lengths <- length(unique(x$data.table[[i]]$content[ ,use_i2]))
         } else {
           unique_lengths <- apply(x$data.table[[i]]$content[ ,use_i2], 2, function(x)length(unique(x)))
         }
+        
         ### OLD ###
         # potential_facts <- unique_lengths <= dim(x$data.table[[i]]$content)[1]*0.3
         ### NEW ###
@@ -299,6 +307,10 @@ template_table_attributes <- function(
           guess[use_i] <- "categorical"
         }
       }
+      
+      # Replace empty col class by "character"
+      
+      guess <- replace(guess, list = which(guess == "empty"), "character")
       
       # Update attributes class
       
