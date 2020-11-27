@@ -36,16 +36,23 @@ validate_templates <- function(fun.name, x) {
     
     # Initialize object for collecting issue messages
     issues <- c()
-
+    
     # Annotations
     validate_annotation(x)
     r <- validate_annotation(x)
     issues <- c(issues, r$issues)
     x <- r$x
-
+    
     # Return
     if (!is.null(issues)) {
-      list2env(list(template_issues = issues), .GlobalEnv)
+      list2env(
+        list(template_issues = issues),
+        if(is.null(options("eal.env"))) {
+          .GlobalEnv
+        } else {
+          options("eal.env")[[1]]
+        }
+      )
       warning(
         "Input issues found. Use issues() to see them.",
         call. = FALSE)
@@ -68,7 +75,14 @@ validate_templates <- function(fun.name, x) {
     
     # Return
     if (!is.null(issues)) {
-      list2env(list(template_issues = issues), .GlobalEnv)
+      list2env(
+        list(template_issues = issues),
+        if(is.null(options("eal.env"))) {
+          .GlobalEnv
+        } else {
+          options("eal.env")[[1]]
+        }
+      )
       warning(
         "Input issues found. Use issues() to see them.",
         call. = FALSE)
@@ -80,10 +94,10 @@ validate_templates <- function(fun.name, x) {
   # Called from make_eml() ----------------------------------------------------
   
   if (fun.name == 'make_eml'){
-
+    
     # Initialize object for collecting issue messages
     issues <- c()
-
+    
     # Abstract
     r <- validate_abstract(x)
     issues <- c(issues, r)
@@ -105,7 +119,7 @@ validate_templates <- function(fun.name, x) {
       issues <- c(issues, r$issues)
       x <- r$x
     }
-
+    
     # Geographic coverage
     r <- validate_geographic_coverage(x)
     issues <- c(issues, r$issues)
@@ -142,7 +156,14 @@ validate_templates <- function(fun.name, x) {
     
     # Return
     if (!is.null(issues)) {
-      list2env(list(template_issues = issues), .GlobalEnv)
+      list2env(
+        list(template_issues = issues),
+        if(is.null(options("eal.env"))) {
+          .GlobalEnv
+        } else {
+          options("eal.env")[[1]]
+        }
+      )
       warning(
         "Input issues found. Use issues() to see them.", 
         call. = FALSE)
@@ -192,7 +213,7 @@ validate_abstract <- function(x) {
   
   # FIXME: Report non-utf-8 encoded characters (generalize this function for 
   # TextType templates)
-
+  
   if (!is.null(msg)) {
     msg <- paste0(
       "\n",
@@ -252,11 +273,11 @@ validate_annotation <- function(x) {
     # corresponding labels and URIs
     r <- validate_annotation_completeness(x)
     required_issues <- c(required_issues, r)
-
+    
     # # URIs are resolvable (takes a long time to complete)
     # r <- validate_annotation_uri(x)
     # required_issues <- c(required_issues, r)
-
+    
   } 
   
   # Compile issues
@@ -440,7 +461,7 @@ validate_annotation_uri <- function(x) {
 #'
 validate_categorical_variables <- function(x) {
   attr_tmp <- read_template_attributes()
-
+  
   # Categorical variable metadata only matters for specified tables
   output <- lapply(
     names(x$data.table),
@@ -452,17 +473,17 @@ validate_categorical_variables <- function(x) {
         "attributes_", tools::file_path_sans_ext(table_file), ".txt")
       catvars_file <- paste0(
         "catvars_", tools::file_path_sans_ext(table_file), ".txt")
-
+      
       # Each issue is logged as "required" or "optional"
       required_issues <- c()
       optional_issues <- c()
-
+      
       # Categorical metadata is expected for variables classified "categorical"
       if (attribute_file %in% names(x$template)) {
         r <- validate_categorical_variable_template_presence(attribute_file, x)
         required_issues <- c(required_issues, r)
       }
-
+      
       if (catvars_file %in% names(x$template)) {
         
         # Downstream processes index these metadata by column name
@@ -516,7 +537,7 @@ validate_categorical_variables <- function(x) {
       # Return
       issues
     })
-
+  
   # Return
   list(issues = unlist(output), x = x)
   
@@ -727,7 +748,7 @@ validate_geographic_coverage <- function(x) {
   
   # Return
   list(issues = issues, x = x)
-
+  
 }
 
 
@@ -1033,7 +1054,7 @@ validate_methods <- function(x) {
       "Missing methods. Methods are recommended and should describe (in ",
       "detail) how the data were created.")
   }
-
+  
   # FIXME: Report non-utf-8 encoded characters (generalize this function for 
   # TextType templates)
   
@@ -1091,7 +1112,7 @@ validate_personnel <- function(x) {
   # personnel template is not missing
   r <- validate_personnel_presence(x)
   required_issues <- c(required_issues, r)
-
+  
   if (any(names(x$template) == "personnel.txt")) {
     
     # Column names are correct
@@ -1120,7 +1141,7 @@ validate_personnel <- function(x) {
     r <- validate_personnel_publisher(x)
     optional_issues <- c(optional_issues, r$issues)
     x <- r$x
-
+    
   }
   
   # Compile issues
@@ -1459,7 +1480,7 @@ validate_provenance <- function(x) {
     # systemID is one of the supported system identifiers
     r <- validate_provenance_system_id(x)
     required_issues <- c(required_issues, r)
-
+    
     # dataPackageID and systemID pair resolves to resource metadata in systemID
     r <- validate_provenance_data_package_id(x)
     required_issues <- c(required_issues, r)
@@ -1471,28 +1492,28 @@ validate_provenance <- function(x) {
     # A URL resolves for external resources
     r <- validate_provenance_url_resolvability(x)
     required_issues <- c(required_issues, r)
-
+    
     # An online description is recommended for external resources
     r <- validate_provenance_online_description(x)
     optional_issues <- c(optional_issues, r)
-
+    
     # A title is present for external resources
     r <- validate_provenance_title(x)
     required_issues <- c(required_issues, r)
-
+    
     # A persons name, or an organization name, is present for external 
     # resources
     r <- validate_provenance_individual_organization_name(x)
     required_issues <- c(required_issues, r)
-
+    
     # A creator and contact (role) is listed for each external resource
     r <- validate_provenance_contact_creator(x)
     required_issues <- c(required_issues, r)
-
+    
     # An email is recommended for external resources
     r <- validate_provenance_email(x)
     optional_issues <- c(optional_issues, r)
-
+    
   }
   
   # Compile issues
@@ -1650,7 +1671,7 @@ validate_provenance_data_package_id <- function(x) {
 validate_provenance_url_presence <- function(x) {
   external_resources <- x$template$provenance.txt$content[
     !(x$template$provenance.txt$content$dataPackageID != "" &
-      x$template$provenance.txt$content$systemID != ""), ]
+        x$template$provenance.txt$content$systemID != ""), ]
   urls <- unique(external_resources$url)
   titles <- unique(external_resources$title)
   missing_urls <- unlist(
@@ -1962,7 +1983,7 @@ validate_table_attributes <- function(x) {
         
         # Downstream processes index these metadata by column name
         r <- validate_table_attribute_template_column_names(attribute_file, x)
-
+        
         # All columns of a table should be listed
         r <- validate_table_attribute_name_presence(
           attribute_file, table_file, x)
@@ -1972,19 +1993,19 @@ validate_table_attributes <- function(x) {
         r <- validate_table_attribute_name_order(
           attribute_file, table_file, x)
         required_issues <- c(required_issues, r)
-
+        
         # Attributes are meaningless without definition
         r <- validate_table_attribute_definitions(attribute_file, x)
         required_issues <- c(required_issues, r)
-
+        
         # All attributes must be assigned a class
         r <- validate_table_attribute_class_presence(attribute_file, x)
         required_issues <- c(required_issues, r)
-
+        
         # All attributes must be assigned a class of the expected type
         r <- validate_table_attribute_class_type(attribute_file, x)
         required_issues <- c(required_issues, r)
-
+        
         # Numeric attributes must have a unit
         r <- validate_table_attribute_unit_presence(attribute_file, x)
         required_issues <- c(required_issues, r)
@@ -1992,25 +2013,25 @@ validate_table_attributes <- function(x) {
         # Units are meaningless without definition
         r <- validate_table_attribute_unit_definition(attribute_file, x)
         required_issues <- c(required_issues, r)
-
+        
         # Date attributes must have a format specifier
         r <- validate_table_attribute_date_format_presence(attribute_file, x)
         required_issues <- c(required_issues, r)
-
+        
         # TODO: Date and time specifier represents one of the preferred formats
         # r <- validate_table_attribute_date_format_specifier(attribute_file, x)
         # optional_issues <- c(optional_issues, r)
-
+        
         # Only one missing value code per attribute is supported
         r <- validate_table_attribute_missing_value_code_quantity(
           attribute_file, x)
         optional_issues <- c(optional_issues, r)
-
+        
         # Missing value code is not a blank/white space
         r <- validate_table_attribute_missing_value_code_ws(
           attribute_file, x)
         required_issues <- c(required_issues, r)
-
+        
         # Missing value code is meaningless without definition and vise versa
         r <- validate_table_attribute_missing_value_code_definition(
           attribute_file, x)
@@ -2027,7 +2048,7 @@ validate_table_attributes <- function(x) {
             x$template[[attribute_file]]$content$attributeName %in% 
               r$false_numeric_attributes] <<- "character"
         }
-
+        
       }
       
       # A compiled report of issues helps the user fix them
@@ -2061,7 +2082,7 @@ validate_table_attributes <- function(x) {
         x$template[[attribute_file]] <<- NULL
         x$data.table[[table_file]] <<- NULL
       }
-
+      
       # Return
       issues
     })
@@ -2107,7 +2128,7 @@ validate_table_attribute_template_presence <- function(file.name, x) {
 
 
 
- 
+
 #' Check column names of table attributes template
 #'
 #' @param file.name
@@ -2373,8 +2394,10 @@ validate_table_attribute_unit_definition <- function(file.name, x) {
     EML::get_unitList()$units$id,
     x$template$custom_units.txt$content$id)
   undefined_units <- 
-    !((x$template[[file.name]]$content$unit %in% defined_units) | 
-    (x$template[[file.name]]$content$unit == ""))
+    (
+      !((x$template[[file.name]]$content$unit %in% defined_units) | 
+          (x$template[[file.name]]$content$unit == "")) &
+        x$template[[file.name]]$content$class == "numeric")
   if (any(undefined_units)) {
     paste0(
       "Undefined units. Units must be from the EML standard unit dictionary ",
@@ -2529,7 +2552,7 @@ validate_table_attribute_missing_value_code_definition <- function(
   file.name, x) {
   incomplete_code_definition <- 
     ((x$template[[file.name]]$content$missingValueCode == "") &
-    (x$template[[file.name]]$content$missingValueCodeExplanation != "")) | 
+       (x$template[[file.name]]$content$missingValueCodeExplanation != "")) | 
     ((x$template[[file.name]]$content$missingValueCode != "") &
        (x$template[[file.name]]$content$missingValueCodeExplanation == ""))
   if (any(incomplete_code_definition)) {
@@ -2638,7 +2661,7 @@ validate_taxonomic_coverage <- function(x) {
   # Objects for catching required and optional issues
   required_issues <- c()
   optional_issues <- c()
-
+  
   if (any(names(x$template) == "taxonomic_coverage.txt")) {
     
     # Default manipulation - Use raw names when a resolved name is missing
@@ -2648,7 +2671,7 @@ validate_taxonomic_coverage <- function(x) {
     
     # Column names are correct
     r <- validate_taxonomic_coverage_column_names(x)
-
+    
     # authority_system is supported
     r <- validate_taxonomic_coverage_authority_system(x)
     required_issues <- c(required_issues, r)
@@ -2755,7 +2778,7 @@ validate_taxonomic_coverage_authority_system <- function(x) {
   authorities_found <- 
     x$template$taxonomic_coverage.txt$content$authority_system
   unsupported_authorities <- !((authorities_found %in% authorities_supported) | 
-    (authorities_found == ""))
+                                 (authorities_found == ""))
   if (any(unsupported_authorities)) {
     paste0(
       "Unsupported authorities for entries: ",
@@ -3044,7 +3067,16 @@ compile_provenance <- function(x) {
 #' @export
 #'
 issues <- function() {
-  if (exists("template_issues", envir = .GlobalEnv)) {
+  if (
+    exists(
+      "template_issues",
+      if(is.null(options("eal.env"))) {
+        .GlobalEnv
+      } else {
+        options("eal.env")[[1]]
+      }
+    )
+  ) {
     message(template_issues)
   } else {
     message("No issues found")
