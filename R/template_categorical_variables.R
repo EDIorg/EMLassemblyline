@@ -164,10 +164,14 @@ template_categorical_variables <- function(
           catvars$definition <- ""
           catvars <- dplyr::select(catvars, -missingValueCode)
           
+          # Order results
+          
+          catvars <- dplyr::arrange(catvars, attributeName, code)
+          
           # Encode extracted metadata in UTF-8
           
-          catvars$attributeName <- enc2utf8(catvars$attributeName)
-          catvars$code <- enc2utf8(catvars$code)
+          catvars$attributeName <- enc2utf8(as.character(catvars$attributeName))
+          catvars$code <- enc2utf8(as.character(catvars$code))
           
           # List under "content" to accord with structure returned by 
           # template_arguments()

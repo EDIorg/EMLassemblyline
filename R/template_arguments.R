@@ -144,7 +144,7 @@ template_arguments <- function(
       path = data.path,
       data.files = data.table)
     data_tables <- vector('list', length(data_table))
-    names(data_tables) <- enc2utf8(data_table)
+    names(data_tables) <- enc2utf8(as.character(data_table))
   } else {
     data_tables <- NULL
   }
@@ -156,7 +156,7 @@ template_arguments <- function(
       path = data.path,
       data.files = other.entity)
     other_entities <- vector('list', length(other_entity))
-    names(other_entities) <- enc2utf8(other_entity)
+    names(other_entities) <- enc2utf8(as.character(other_entity))
   } else {
     other_entities <- NULL
   }
