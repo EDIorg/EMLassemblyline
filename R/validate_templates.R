@@ -1,11 +1,9 @@
 #' Validate metadata template content
 #'
 #' @param fun.name
-#'     (character) Function name from which \code{validate_templates} is 
-#'     called
+#'     (character) Name calling function.
 #' @param x
-#'     (named list) The data and metadata object returned by 
-#'     \code{template_arguments()}.
+#'     (named list) The data and metadata object returned by \code{template_arguments()}.
 #'     
 #' @return 
 #' \item{template_issues}{Any issues found in the validation process and 

@@ -7,11 +7,9 @@
 validate_templates(fun.name, x)
 }
 \arguments{
-\item{fun.name}{(character) Function name from which \code{validate_templates} is 
-called}
+\item{fun.name}{(character) Name calling function.}
 
-\item{x}{(named list) The data and metadata object returned by 
-\code{template_arguments()}.}
+\item{x}{(named list) The data and metadata object returned by \code{template_arguments()}.}
 }
 \value{
 \item{template_issues}{Any issues found in the validation process and 

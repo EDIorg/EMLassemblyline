@@ -403,26 +403,6 @@ make_eml <- function(
   
   x <- remove_empty_templates(x)
   x <- validate_templates("make_eml", x)
-
-  # Modify arguments ----------------------------------------------------------
-  # Modification of some argument content helps with downstream processes.
-  # FIXME: Move this section to validate_arguments()
-  
-  # data.table.name
-  # - Missing values default to data.table
-  
-  if (length(data.table.name) < length(data.table)) {
-    use_i <- which(!(seq_along(data.table) %in% seq_along(data.table.name)))
-    data.table.name[use_i] <- data.table[use_i]
-  }
-  
-  # other.entity.name
-  # - Missing values default to other.entity
-  
-  if (length(other.entity.name) < length(other.entity)) {
-    use_i <- which(!(seq_along(other.entity) %in% seq_along(other.entity.name)))
-    other.entity.name[use_i] <- other.entity[use_i]
-  }
   
   # Modify templates ----------------------------------------------------------
   # Modification of some template content helps with downstream processes.
