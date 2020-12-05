@@ -163,7 +163,7 @@ validate_templates <- function(fun.name, x) {
         }
       )
       warning(
-        "Input issues found. Use issues() to see them.", 
+        "Template issues found. Use issues() to see them.", 
         call. = FALSE)
     }
     return(x)
@@ -3051,34 +3051,44 @@ compile_provenance <- function(x) {
 
 
 
-#' View validation issues
+#' View issues to function inputs
 #'
 #' @return
-#'     A message listing any validation issues
+#'     A message listing any issues found in EMLassemblyline function inputs (arguments and templates).
 #'     
-#' @description 
-#'     Validation functions return a list of validation issues to the global 
-#'     environment in an \code{issues} object. The \code{view_issues()} 
-#'     function wraps these issues in \code{message()} to provide a human 
-#'     readable form.
+#' @details 
+#'     Validation functions \code{validate_arguments()} and \code{validate_templates()} return a list of issues to the global environment in \code{argument_issues} and \code{template_issues} list objects, respectively. The \code{view_issues()} function wraps these issues in \code{message()} to provide a human readable form.
 #'     
 #' @export
 #'
 issues <- function() {
-  if (
-    exists(
-      "template_issues",
-      if(is.null(options("eal.env"))) {
-        .GlobalEnv
-      } else {
-        options("eal.env")[[1]]
-      }
-    )
-  ) {
+  
+  arg <- exists(
+    "argument_issues",
+    if(is.null(options("eal.env"))) {
+      .GlobalEnv
+    } else {
+      options("eal.env")[[1]]
+    })
+  
+  tmp <- exists(
+    "template_issues",
+    if(is.null(options("eal.env"))) {
+      .GlobalEnv
+    } else {
+      options("eal.env")[[1]]
+    })
+  
+  if (arg & tmp) {
+    message(c(argument_issues, template_issues))
+  } else if (arg) {
+    message(argument_issues)
+  } else if (tmp) {
     message(template_issues)
   } else {
     message("No issues found")
   }
+  
 }
 
 

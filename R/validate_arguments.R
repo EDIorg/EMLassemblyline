@@ -9,12 +9,14 @@
 #'     (named list) Function arguments and their values.
 #'     
 #' @return 
-#' \item{argument_issues}{Any issues found in the validation process and 
-#' returned as a character vector. This object can be saved for later use 
-#' and viewed in a human readable form with \code{issues()}}.
+#' \item{argument_issues}{Any issues found in the validation process and returned as a list of character strings to the users environment. This object can be saved for later use and viewed in a human readable form with \code{issues()}}.
+#' 
+#' @note Some arise where an arguments value is set to NULL 
 #'     
 #' @details
 #'     \code{fun.name} defines which checks to call.
+#'     
+#'     \code{fun.args} values are modified when critical issues are found and are reassigned to the calling environment so the calling function may proceed without error.
 #'
 validate_arguments <- function(fun.name, fun.args){
   
@@ -284,17 +286,17 @@ validate_arguments <- function(fun.name, fun.args){
     }
     
     # path
-    
+
     if (is.null(fun.args$x)) {
       EDIutils::validate_path(fun.args$path)
     }
-    
+
     # data.path
-    
-    EDIutils::validate_path(fun.args$data.path)  
-    
+
+    EDIutils::validate_path(fun.args$data.path)
+
     # eml.path
-    
+
     if (isTRUE(fun.args$write.file)){
       EDIutils::validate_path(fun.args$eml.path)
     }
@@ -307,7 +309,7 @@ validate_arguments <- function(fun.name, fun.args){
     if (!is.null(fun.args$data.table)) {
       table_names <- suppressWarnings(
         EDIutils::validate_file_names(
-          path = fun.args$data.path, 
+          path = fun.args$data.path,
           data.files = fun.args$data.table))
     }
     
@@ -363,15 +365,16 @@ validate_arguments <- function(fun.name, fun.args){
     issues <- c(issues, r$issues)
     fun.args <- r$fun.args
 
-    # TODO: temporal.coverage
+    # temporal.coverage
     r <- validate_temporal_coverage(fun.args)
     issues <- c(issues, r$issues)
     fun.args <- r$fun.args
 
-    # TODO: Return
+    # Return
+    
     if (!is.null(issues)) {
       list2env(
-        list(template_issues = issues),
+        list(argument_issues = issues),
         if(is.null(options("eal.env"))) {
           .GlobalEnv
         } else {
@@ -379,11 +382,16 @@ validate_arguments <- function(fun.name, fun.args){
         }
       )
       warning(
-        "Input issues found. Use issues() to see them.", 
+        "Argument issues found. Use issues() to see them.",
         call. = FALSE)
     }
-    return(x)
     
+    for (i in seq_along(fun.args)) {
+      assign(
+        x = names(fun.args[i]), 
+        value = fun.args[[i]], 
+        envir = parent.frame())
+    }
     
   }
   
@@ -1017,6 +1025,12 @@ validate_table_name <- function(fun.args) {
                "files help users understand the data. Defaulting to file ",
                "name."))
       fun.args$data.table.name[i] <- tbl
+    } else if (tbl == name) {
+      optional_issues <- c(
+        optional_issues,
+        paste0("Missing name for ", tbl, ". Short descriptive names of the ",
+               "files help users understand the data. Defaulting to file ",
+               "name."))
     }
   }
   
@@ -1042,7 +1056,6 @@ validate_table_name <- function(fun.args) {
       "\n")
   }
   issues <- c(required_issues, optional_issues)
-  
   return(list(issues = issues, fun.args = fun.args))
 }
 
@@ -1333,6 +1346,12 @@ validate_other_entity_name <- function(fun.args) {
                "files help users understand the data. Defaulting to file ",
                "name."))
       fun.args$other.entity.name[i] <- othent
+    } else if (othent == name) {
+      optional_issues <- c(
+        optional_issues,
+        paste0("Missing name for ", othent, ". Short descriptive names of the ",
+               "files help users understand the data. Defaulting to file ",
+               "name."))
     }
   }
   

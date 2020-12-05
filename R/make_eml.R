@@ -265,7 +265,6 @@ make_eml <- function(
   }
   
   # Pass remaining arguments to validate_arguments()
-  
   validate_arguments(
     fun.name = "make_eml",
     fun.args = as.list(environment()))
@@ -273,35 +272,35 @@ make_eml <- function(
   # Handle deprecated arguments
   
   # FIXME: Remove May 2020
-  if (!missing(affiliation)) {
+  if (!is.null(affiliation)) {
     warning(
       "Argument 'affiliation' is deprecated; please use 'user.domain' instead.",
       call. = F)
     user.domain <- affiliation
   }
   # FIXME: Remove May 2020
-  if (!missing(data.files)){
+  if (!is.null(data.files)){
     warning(
       "Argument 'data.files' is deprecated; please use 'data.table' instead.",
       call. = F)
     data.table <- data.files
   }
   # FIXME: Remove May 2020
-  if (!missing(data.files.description)){
+  if (!is.null(data.files.description)){
     warning(
       "Argument 'data.files.description' is deprecated; please use 'data.table.description' instead.",
       call. = F)
     data.table.description <- data.files.description
   }
   # FIXME: Remove May 2020
-  if (!missing(data.files.quote.character)){
+  if (!is.null(data.files.quote.character)){
     warning(
       "Argument 'data.files.quote.character' is deprecated; please use 'data.table.quote.character' instead.",
       call. = F)
     data.table.quote.character <- data.files.quote.character
   }
   # FIXME: Remove May 2020
-  if (!missing(data.files.url)){
+  if (!is.null(data.files.url)){
     warning(
       "Argument 'data.files.url' is deprecated; please use 'data.url' instead.",
       call. = F)
@@ -323,14 +322,14 @@ make_eml <- function(
       call. = F)
   }
   # FIXME: Remove May 2020
-  if (!missing(zip.dir)){
+  if (!is.null(zip.dir)){
     warning(
       "Argument 'zip.dir' is deprecated; please use 'other.entity' instead.",
       call. = F)
     other.entity <- zip.dir
   }
   # FIXME: Remove May 2020
-  if (!missing(zip.dir.description)){
+  if (!is.null(zip.dir.description)){
     warning(
       "Argument 'zip.dir.description' is deprecated; please use 'other.entity.description' instead.",
       call. = F)

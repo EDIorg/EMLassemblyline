@@ -12,13 +12,16 @@ validate_arguments(fun.name, fun.args)
 \item{fun.args}{(named list) Function arguments and their values.}
 }
 \value{
-\item{argument_issues}{Any issues found in the validation process and 
-returned as a character vector. This object can be saved for later use 
-and viewed in a human readable form with \code{issues()}}.
+\item{argument_issues}{Any issues found in the validation process and returned as a list of character strings to the users environment. This object can be saved for later use and viewed in a human readable form with \code{issues()}}.
 }
 \description{
 Validate input arguments to EMLassemblyline functions.
 }
 \details{
 \code{fun.name} defines which checks to call.
+    
+    \code{fun.args} values are modified when critical issues are found and are reassigned to the calling environment so the calling function may proceed without error.
+}
+\note{
+Some arise where an arguments value is set to NULL
 }

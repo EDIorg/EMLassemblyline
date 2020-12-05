@@ -2,16 +2,16 @@
 % Please edit documentation in R/validate_templates.R
 \name{issues}
 \alias{issues}
-\title{View validation issues}
+\title{View issues to function inputs}
 \usage{
 issues()
 }
 \value{
-A message listing any validation issues
+A message listing any issues found in EMLassemblyline function inputs (arguments and templates).
 }
 \description{
-Validation functions return a list of validation issues to the global 
-    environment in an \code{issues} object. The \code{view_issues()} 
-    function wraps these issues in \code{message()} to provide a human 
-    readable form.
+View issues to function inputs
+}
+\details{
+Validation functions \code{validate_arguments()} and \code{validate_templates()} return a list of issues to the global environment in \code{argument_issues} and \code{template_issues} list objects, respectively. The \code{view_issues()} function wraps these issues in \code{message()} to provide a human readable form.
 }
