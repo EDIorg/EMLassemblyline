@@ -241,22 +241,6 @@ testthat::test_that("make_eml()", {
   x$user.domain <- c("EDI", "LTER")
   x$user.id <- c("userid1", "userid2")
   x$write.file <- F
-  
-  # temporal.coverage - Warn if missing
-  
-  x1 <- x
-  x1$temporal.coverage <- NULL
-  expect_warning(
-    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]),
-    regexp = "Temporal coverage is recommended")
-  
-  # temporal.coverage - Warn if missing start or end date
-  
-  x1 <- x
-  x1$temporal.coverage <- x1$temporal.coverage[1]
-  expect_warning(
-    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]),
-    regexp = "Temporal coverage requires a begin and end date")
 
   # write.file - eml.path is required
   
