@@ -1,4 +1,4 @@
-#' View EML's standard unit dictionary
+#' Browse EML's dictionary for defining units of data attributes
 #'
 #' @description  
 #'     View the standard unit dictionary of the Ecological Metadata Language

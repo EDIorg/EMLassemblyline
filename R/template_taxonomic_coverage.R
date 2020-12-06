@@ -1,4 +1,4 @@
-#' Create taxonomic coverage template
+#' Template taxonomic coverage (biological entities)
 #'
 #' @description  
 #'     Use this function to extract the unique taxa of a data table and 

@@ -1,4 +1,4 @@
-#' Create the annotations template
+#' Template metadata annotations (to create linked data)
 #'
 #' @description  
 #'     The annotations template (annotations.txt) lists the elements and 

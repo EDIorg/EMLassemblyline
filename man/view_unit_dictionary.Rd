@@ -2,7 +2,7 @@
 % Please edit documentation in R/view_unit_dictionary.R
 \name{view_unit_dictionary}
 \alias{view_unit_dictionary}
-\title{View EML's standard unit dictionary}
+\title{Browse EML's dictionary for defining units of data attributes}
 \usage{
 view_unit_dictionary()
 }

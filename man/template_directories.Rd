@@ -2,7 +2,7 @@
 % Please edit documentation in R/template_directories.R
 \name{template_directories}
 \alias{template_directories}
-\title{Create data package directory}
+\title{Initialize directories for templates, data objects, and EML}
 \usage{
 template_directories(
       path, 

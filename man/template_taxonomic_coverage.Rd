@@ -2,7 +2,7 @@
 % Please edit documentation in R/template_taxonomic_coverage.R
 \name{template_taxonomic_coverage}
 \alias{template_taxonomic_coverage}
-\title{Create taxonomic coverage template}
+\title{Template taxonomic coverage (biological entities)}
 \usage{
 template_taxonomic_coverage(
       path,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/template_annotations.R
 \name{template_annotations}
 \alias{template_annotations}
-\title{Create the annotations template}
+\title{Template metadata annotations (to create linked data)}
 \usage{
 template_annotations(
   path,

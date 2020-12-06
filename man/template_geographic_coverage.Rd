@@ -2,7 +2,7 @@
 % Please edit documentation in R/template_geographic_coverage.R
 \name{template_geographic_coverage}
 \alias{template_geographic_coverage}
-\title{Create geographic coverage template}
+\title{Template geographic coverage (where measurements were taken)}
 \usage{
 template_geographic_coverage(
   path,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/template_categorical_variables.R
 \name{template_categorical_variables}
 \alias{template_categorical_variables}
-\title{Create categorical variables template}
+\title{Template categorical variables of a data table (codes and definitions)}
 \usage{
 template_categorical_variables(path, data.path = path, write.file = TRUE)
 }

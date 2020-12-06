@@ -2,7 +2,7 @@
 % Please edit documentation in R/template_arguments.R
 \name{template_arguments}
 \alias{template_arguments}
-\title{Initialize inputs to \code{EMLassemblyline} functions}
+\title{Create a list of inputs to EMLassemblyline functions (primarily for internal use only)}
 \usage{
 template_arguments(
   path = NULL,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/template_provenance.R
 \name{template_provenance}
 \alias{template_provenance}
-\title{Create provenance template}
+\title{Template provenance metadata (source data)}
 \usage{
 template_provenance(
   path = NULL,

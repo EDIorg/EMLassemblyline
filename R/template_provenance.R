@@ -1,4 +1,4 @@
-#' Create provenance template
+#' Template provenance metadata (source data)
 #'
 #' @description  
 #'     Use this function to create the provenance template for listing data entities (i.e. datasets, articles, etc.) that serve as data sources (inputs) to the derived dataset metadata is being created for.

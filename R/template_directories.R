@@ -1,4 +1,4 @@
-#' Create data package directory
+#' Initialize directories for templates, data objects, and EML
 #'
 #' @description  
 #'     Create a directory structure for data package contents and 

@@ -1,4 +1,4 @@
-#' Create table attributes template
+#' Template attributes of a data table (column names, definitions, etc.)
 #'
 #' @description  
 #'     Use this function to extract column names and classes of a data table 

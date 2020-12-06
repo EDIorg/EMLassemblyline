@@ -1,4 +1,4 @@
-#' Initialize inputs to \code{EMLassemblyline} functions
+#' Create a list of inputs to EMLassemblyline functions (primarily for internal use only)
 #'
 #' @description  
 #'     Initialize the full list of possible inputs to \code{EMLassemblyline}

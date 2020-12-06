@@ -2,7 +2,7 @@
 % Please edit documentation in R/template_table_attributes.R
 \name{template_table_attributes}
 \alias{template_table_attributes}
-\title{Create table attributes template}
+\title{Template attributes of a data table (column names, definitions, etc.)}
 \usage{
 template_table_attributes(
       path,

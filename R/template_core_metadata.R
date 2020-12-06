@@ -1,4 +1,4 @@
-#' Create core metadata templates
+#' Template core metadata (abstract, methods, keywords, personnel, license)
 #'
 #' @description  
 #'     Use this function to create the core metadata templates required by 

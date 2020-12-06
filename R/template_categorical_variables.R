@@ -1,4 +1,4 @@
-#' Create categorical variables template
+#' Template categorical variables of a data table (codes and definitions)
 #'
 #' @description  
 #'     Use this function after table attributes templates are complete. It uses information in attribute templates to extract the unique categorical variables from the corresponding data table.

@@ -1,4 +1,4 @@
-#' Create geographic coverage template
+#' Template geographic coverage (where measurements were taken)
 #'
 #' @description  
 #'     Use this function to extract the unique location coordinates and names

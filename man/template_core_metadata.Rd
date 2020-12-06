@@ -2,7 +2,7 @@
 % Please edit documentation in R/template_core_metadata.R
 \name{template_core_metadata}
 \alias{template_core_metadata}
-\title{Create core metadata templates}
+\title{Template core metadata (abstract, methods, keywords, personnel, license)}
 \usage{
 template_core_metadata(
       path,

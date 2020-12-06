@@ -4,26 +4,26 @@ template:
   bootswatch: spacelab
 
 reference:
-  - title: Create metadata templates
-    desc: Functions for creating metadata templates, using automated metadata extraction when possible.
+  - title: Create templates
+    desc: Templates hold metadata content and are a mix of machine extracted and human supplied information.
     contents:
-    - template_annotations
-    - template_categorical_variables
+    - template_directories
     - template_core_metadata
-    - template_geographic_coverage
-    - template_provenance
     - template_table_attributes
+    - template_categorical_variables
+    - template_geographic_coverage
     - template_taxonomic_coverage
-  - title: Make EML metdata
-    desc: Function for creating EML from metadata templates, using automated metadata extraction when possible.
+    - template_annotations
+    - template_provenance
+  - title: Create EML
+    desc: Renders template content into an EML file.
     contents:
     - make_eml
-  - title: Helpers
-    desc: Helper functions for creating metadata
+  - title: Utilities
+    desc: Helper functions 
     contents:
-    - template_arguments
-    - template_directories
     - view_unit_dictionary
+    - template_arguments
     
 navbar:
   title: ~
