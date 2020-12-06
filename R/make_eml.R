@@ -4,34 +4,6 @@
 #'     Render the contents of metadata templates into EML, validate, and write
 #'     to file.
 #'     
-#' @usage 
-#'     make_eml(
-#'       path,
-#'       data.path = path,
-#'       eml.path = path, 
-#'       dataset.title = NULL,
-#'       temporal.coverage = NULL,
-#'       geographic.description = NULL, 
-#'       geographic.coordinates = NULL, 
-#'       maintenance.description = NULL, 
-#'       data.table = NULL, 
-#'       data.table.name = data.table,
-#'       data.table.description = NULL, 
-#'       data.table.quote.character = NULL, 
-#'       data.table.url = NULL,
-#'       other.entity = NULL,
-#'       other.entity.name = other.entity,
-#'       other.entity.description = NULL,
-#'       other.entity.url = NULL,
-#'       provenance = NULL,
-#'       user.id = NULL,
-#'       user.domain = NULL,
-#'       package.id = NULL,
-#'       write.file = TRUE,
-#'       return.obj = FALSE,
-#'       x = NULL
-#'     )
-#'     
 #' @param path 
 #'     (character) Path to the metadata template directory.
 #' @param data.path
@@ -220,21 +192,13 @@ make_eml <- function(
   other.entity.name = other.entity,
   other.entity.description = NULL,
   other.entity.url = NULL,
+  provenance = NULL,
   user.id = NULL,
   user.domain = NULL,
   package.id = NULL,
   write.file = TRUE,
   return.obj = FALSE,
-  x = NULL,
-  affiliation,
-  data.files,
-  data.files.description,
-  data.files.quote.character,
-  data.files.url,
-  data.url = NULL,
-  provenance = NULL,
-  zip.dir,
-  zip.dir.description
+  x = NULL
   ) {
   
   # Parameterize --------------------------------------------------------------
@@ -271,48 +235,6 @@ make_eml <- function(
   
   # Handle deprecated arguments
   
-  # FIXME: Remove May 2020
-  if (!is.null(affiliation)) {
-    warning(
-      "Argument 'affiliation' is deprecated; please use 'user.domain' instead.",
-      call. = F)
-    user.domain <- affiliation
-  }
-  # FIXME: Remove May 2020
-  if (!is.null(data.files)){
-    warning(
-      "Argument 'data.files' is deprecated; please use 'data.table' instead.",
-      call. = F)
-    data.table <- data.files
-  }
-  # FIXME: Remove May 2020
-  if (!is.null(data.files.description)){
-    warning(
-      "Argument 'data.files.description' is deprecated; please use 'data.table.description' instead.",
-      call. = F)
-    data.table.description <- data.files.description
-  }
-  # FIXME: Remove May 2020
-  if (!is.null(data.files.quote.character)){
-    warning(
-      "Argument 'data.files.quote.character' is deprecated; please use 'data.table.quote.character' instead.",
-      call. = F)
-    data.table.quote.character <- data.files.quote.character
-  }
-  # FIXME: Remove May 2020
-  if (!is.null(data.files.url)){
-    warning(
-      "Argument 'data.files.url' is deprecated; please use 'data.url' instead.",
-      call. = F)
-    data.url <- data.files.url
-  }
-  # FIXME: Do not remove until March 2021
-  if (!is.null(data.url)){
-    warning(
-      paste0("Argument 'data.url' is deprecated; please use 'data.table.url' ",
-             "and 'other.entity.url' instead."),
-      call. = F)
-  }
   # FIXME: Remove October 2021
   if (!is.null(provenance)) {
     warning(
@@ -320,20 +242,6 @@ make_eml <- function(
         "Argument 'provenance' is deprecated; please use ",
         "'template_provanence()' instead."),
       call. = F)
-  }
-  # FIXME: Remove May 2020
-  if (!is.null(zip.dir)){
-    warning(
-      "Argument 'zip.dir' is deprecated; please use 'other.entity' instead.",
-      call. = F)
-    other.entity <- zip.dir
-  }
-  # FIXME: Remove May 2020
-  if (!is.null(zip.dir.description)){
-    warning(
-      "Argument 'zip.dir.description' is deprecated; please use 'other.entity.description' instead.",
-      call. = F)
-    other.entity.description <- zip.dir.description
   }
   
   # Read templates and data ---------------------------------------------------
@@ -1353,10 +1261,7 @@ make_eml <- function(
           }
         }
         
-        # FIXME: data.url is deprecated. Remove support for this argument after (11 March 2021)
-        if (!is.null(data.url)) {
-          physical$distribution$online$url[[1]] <- paste0(data.url, "/", k)
-        } else if (!is.null(data.table.url)) {
+        if (!is.null(data.table.url)) {
           # data.table.url isn't required for each data table, but must have a 
           # non-NULL entry in the data.table.url if other data tables have a 
           # URL. A "" or NA indicates to skip URL assignment.
@@ -1420,10 +1325,7 @@ make_eml <- function(
         physical$dataFormat$textFormat <- NULL
         physical$dataFormat$externallyDefinedFormat$formatName <- mime::guess_type(
           file = k, unknown = "Unknown", empty = "Unknown")
-        # FIXME: data.url is deprecated. Remove support for this argument after (11 March 2021)
-        if (!is.null(data.url)) {
-          physical$distribution$online$url[[1]] <- paste0(data.url, "/", k)
-        } else if (!is.null(other.entity.url)) {
+        if (!is.null(other.entity.url)) {
           # other.entity.url isn't required for each data table, but must have a 
           # non-NULL entry in the other.entity.url if other data tables have a 
           # URL. A "" or NA indicates to skip URL assignment.
