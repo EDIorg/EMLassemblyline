@@ -8,7 +8,7 @@
   "description": "\n    For scientists and data managers who need to easily create high quality \n    metadata for data publication. EMLassemblyline is a metadata builder that \n    emphasizes auto-extraction of metadata, appends value added content, and \n    inputs user supplied information through common interfaces thereby \n    minimizing user effort while maximizing metadata features for data \n    discovery and reuse.",
   "name": "EMLassemblyline: A workflow for creating EML",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "2.19.0",
+  "version": "3.0.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -259,14 +259,21 @@
   ],
   "codeRepository": "https://github.com/EDIorg/EMLassemblyline",
   "readme": "https://github.com/EDIorg/EMLassemblyline/blob/master/README.md",
-  "fileSize": "643.506KB",
+  "fileSize": "622.055KB",
   "contIntegration": [
     "https://travis-ci.org/clnsmth/EMLassemblyline",
     "https://codecov.io/github/clnsmth/EMLassemblyline?branch=master"
   ],
   "issueTracker": "https://github.com/EDIorg/EMLassemblyline/issues",
   "releaseNotes": "https://github.com/EDIorg/EMLassemblyline/blob/master/NEWS.md",
-  "contributor": {},
+  "contributor": [
+    {
+      "@type": "Person",
+      "givenName": "Elie",
+      "familyName": "ARNAUD",
+      "email": "earnaud@outlook.com"
+    }
+  ],
   "copyrightHolder": {},
   "funder": {}
 }
