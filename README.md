@@ -6,7 +6,7 @@
 
 # EMLassemblyline
 
-For scientists and data managers to create high quality [EML](https://eml.ecoinformatics.org/) metadata for dataset publication. EMLassemblyline is optimized for automating recurring publications (timeseries or data derived from timeseries sources) but works well for "one-off" publications, especially through the [MetaShARK](https://metashark.test.pndb.fr/) interface. EMLassemblyline prioritizes automated metadata extraction from data objects to minimize required human effort and encourages EML best practices to make publications Findable, Accessible, Interoperable, and Reusable.
+For scientists and data managers to create high quality [EML](https://eml.ecoinformatics.org/) metadata for dataset publication. EMLassemblyline is optimized for automating recurring publications (timeseries or data derived from timeseries sources) but works well for "one-off" publications, especially through the [MetaShARK](https://github.com/earnaud/MetaShARK-v2) interface. EMLassemblyline prioritizes automated metadata extraction from data objects to minimize required human effort and encourages EML best practices to make publications Findable, Accessible, Interoperable, and Reusable.
 
 ## Features
 
