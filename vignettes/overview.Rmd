@@ -5,12 +5,12 @@ output: html_document
 
 ## Basic use case
 
-The basic use case, creating and maintaining EML for a dataset, consists of five steps:
+Creating and maintaining EML for a dataset consists of five steps:
 
-1. [Organize data package](https://ediorg.github.io/EMLassemblyline/articles/organize_data_package.html) contents into a simple directory structure readable by `EMLassemblyline` and according with user preferences.
-2. [Create metadata templates](https://ediorg.github.io/EMLassemblyline/articles/create_metadata_templates.html) using functions to automatically extract information from data entities.
-3. [Edit metadata templates](https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html) with simple text and spreadsheet editors to supply information that could not be automatically extracted.
-4. [Make EML](https://ediorg.github.io/EMLassemblyline/articles/create_eml.html) metadata from templates and value added content created by the `make_eml()` function.
+1. [Organize data package](https://ediorg.github.io/EMLassemblyline/articles/organize_data_package.html) contents into a directory structure readable by EAL and according with user preferences.
+2. [Create metadata templates](https://ediorg.github.io/EMLassemblyline/articles/create_metadata_templates.html) using functions to automatically extract info from the data.
+3. [Edit metadata templates](https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html) with text and spreadsheet editors to supply info that could not be inferred.
+4. [Make EML](https://ediorg.github.io/EMLassemblyline/articles/create_eml.html) metadata from template content.
 5. [Publish data package](https://ediorg.github.io/EMLassemblyline/articles/publish_data_package.html) in a data repository.
 
 Revise EML by simply editing templates and rerunning `make_eml()`.
@@ -19,5 +19,5 @@ Revise EML by simply editing templates and rerunning `make_eml()`.
 
 Advanced use cases include:
 
--  [Automate data publication](https://ediorg.github.io/EMLassemblyline/articles/automate_data_publication.html) for ongoing time series or data products derived from ongoing time series.
--  [Use EMLassemblyline via exchange format](https://ediorg.github.io/EMLassemblyline/articles/emlassemblyline_via_exchange_format.html) to create EML from any metadata storage/organization system.
+-  [Automate data publication](https://ediorg.github.io/EMLassemblyline/articles/automate_data_publication.html) for ongoing time series or data derived from ongoing time series.
+-  [Use EAL via exchange format](https://ediorg.github.io/EMLassemblyline/articles/emlassemblyline_via_exchange_format.html) to create EML from any metadata storage/organization system.

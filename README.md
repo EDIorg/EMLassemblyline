@@ -4,9 +4,9 @@
 [![codecov.io](https://codecov.io/github/EDIorg/EMLassemblyline/coverage.svg?branch=master)](https://codecov.io/github/EDIorg/EMLassemblyline?branch=master)
 [![DOI](https://zenodo.org/badge/84467795.svg)](https://zenodo.org/badge/latestdoi/84467795)
 
-# EMLassemblyline
+# EMLassemblyline (EAL)
 
-For scientists and data managers to create high quality [EML](https://eml.ecoinformatics.org/) metadata for dataset publication. EMLassemblyline is optimized for automating recurring publications (timeseries or data derived from timeseries sources) but works well for "one-off" publications, especially through the [MetaShARK](https://github.com/earnaud/MetaShARK-v2) interface. EMLassemblyline prioritizes automated metadata extraction from data objects to minimize required human effort and encourages EML best practices to make publications Findable, Accessible, Interoperable, and Reusable.
+For scientists and data managers to create high quality [EML](https://eml.ecoinformatics.org/) metadata for dataset publication. EAL is optimized for automating recurring publications (timeseries or data derived from timeseries sources) but works well for "one-off" publications, especially through the [MetaShARK](https://github.com/earnaud/MetaShARK-v2) interface. EAL prioritizes automated metadata extraction from data objects to minimize required human effort and encourages EML best practices to make publications Findable, Accessible, Interoperable, and Reusable.
 
 ## Features
 
@@ -33,7 +33,7 @@ remotes::install_github("EDIorg/EMLassemblyline")
 ## Active projects
 
 * Creating a Shiny interface for editing metadata template files thereby eliminating requirements for text and spreadsheet editors while facilitating use of dictionaries, vocabularies, and ontologies. This is under development in the [MetaShARK](https://github.com/earnaud/MetaShARK-v2) application, developped by the PNDB (French Biodiversity National Data Hub).
-* Aligning EMLassemblyline with a profile of the most commonly used EML elements to provide an exchange interface with other information systems (e.g. [LTER-core-metabase](https://github.com/lter/LTER-core-metabase)).
+* Aligning EAL with a profile of the most commonly used EML elements to provide an exchange interface with other information systems (e.g. [LTER-core-metabase](https://github.com/lter/LTER-core-metabase)).
 * See project [issues](https://github.com/EDIorg/EMLassemblyline/issues) for more.
 
 ## Contributing
@@ -51,5 +51,5 @@ Several people have contributed to this project. [List of contributors](https://
 ## Related materials
 
 [EML Best Practices](https://ediorg.github.io/data-package-best-practices/EMLmetadata/)
-The [EML R library](https://github.com/ropensci/EML) is the foundation of EMLassemblyline.
+The [EML R library](https://github.com/ropensci/EML) is the foundation of EAL.
 [The Ecological Metadata Language (EML)](https://knb.ecoinformatics.org/#external//emlparser/docs/index.html)
