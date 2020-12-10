@@ -1,18 +1,6 @@
-#' Template core metadata (abstract, methods, keywords, personnel, license)
+#' Describe core features of a data package
 #'
-#' @description  
-#'     Use this function to create the core metadata templates required by 
-#'     all data packages. Most templates require user supplied information.
-#'     \href{https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html}{Instructions for editing these templates.}
-#'
-#' @usage 
-#'     template_core_metadata(
-#'       path,
-#'       license,
-#'       file.type = '.txt',
-#'       write.file = TRUE,
-#'       x = NULL
-#'     )
+#' @description Core information to all data packages (abstract, methods, keywords, personnel, license). Describes what the data are, why and how they were created, who was involved in their creation, and under what license the data are released.
 #'
 #' @param path 
 #'     (character) Path to the metadata template directory.
@@ -52,70 +40,16 @@
 #'     Existing templates will not be overwritten by \code{template_core_metadata()}.
 #' 
 #' @examples
-#' # Initialize data package directory for template_core_metadata()
-#' file.copy(
-#'   from = system.file('/examples/pkg_250', package = 'EMLassemblyline'),
-#'   to = tempdir(),
-#'   recursive = TRUE
-#' )
-#' 
+#' \dontrun{
 #' # Set working directory
-#' setwd(paste0(tempdir(), '/pkg_250'))
+#' setwd("/Users/me/Documents/data_packages/pkg_260")
 #' 
-#' # View directory contents (NOTE: Directory is empty)
-#' dir('./metadata_templates')
-#' 
-#' # Template core metadata
+#' # For data licensed under CC0 and using .docx files for the abstract and methods
 #' template_core_metadata(
-#'   path = './metadata_templates',
-#'   license = 'CC0'
-#' )
-#' 
-#' # View directory contents (NOTE: Templates exist)
-#' dir('./metadata_templates')
-#' 
-#' # Rerunning template_core_metadata() does not overwrite files
-#' template_core_metadata(
-#'   path = './metadata_templates',
-#'   license = 'CC0'
-#' )
-#' 
-#' # Use docx files for abstract, methods, and additional_info
-#' # First remove abstract, methods, and additional_info templates
-#' file.remove(
-#'   c(
-#'     './metadata_templates/abstract.txt',
-#'     './metadata_templates/methods.txt',
-#'     './metadata_templates/additional_info.txt'
-#'   )
-#' )
-#' 
-#' # Create docx templates
-#' template_core_metadata(
-#'   path = './metadata_templates',
-#'   license = 'CC0',
-#'   file.type = '.docx'
-#' )
-#' 
-#' # Use md files for abstract, methods, and additional_info
-#' # First remove abstract, methods, and additional_info templates
-#' file.remove(
-#'   c(
-#'     './metadata_templates/abstract.docx',
-#'     './metadata_templates/methods.docx',
-#'     './metadata_templates/additional_info.docx'
-#'   )
-#' )
-#' 
-#' # Create md templates
-#' template_core_metadata(
-#'   path = './metadata_templates',
-#'   license = 'CC0',
-#'   file.type = '.md'
-#' )
-#' 
-#' # Clean up
-#' unlink('.', recursive = TRUE)
+#'   path = "./metadata_templates",
+#'   license = "CC0",
+#'   file.type = ".docx")
+#' }
 #'     
 #' @export     
 #'     

@@ -2,7 +2,7 @@
 % Please edit documentation in R/template_annotations.R
 \name{template_annotations}
 \alias{template_annotations}
-\title{Template metadata annotations (to create linked data)}
+\title{Add semantic meaning}
 \usage{
 template_annotations(
   path,
@@ -67,13 +67,10 @@ Use this if annotating an existing EML file.}
     as new line, and modify the predicate and object fields.
 }
 \description{
-The annotations template (annotations.txt) lists the elements and 
-    corresponding ontology terms for annotating your EML. Run this function 
-    after all your EMLassemblyline metadata templates are complete or if 
-    you're annotating an existing EML file. This function gathers 
-    annotatable elements from your EML and assigns default predicate labels 
-    and URIs. You must provide object labels and URIs from the ontology of 
-    your choosing.
+Adds semantic meaning to dataset features (variables, locations, persons, etc.) through links to ontology terms. Run this function after all your EAL metadata templates are complete or if you're annotating an existing EML file. Annotating a dataset enables greater human understanding and machine actionability (linked data) and vastly improves the accuracy of future user searches and the interoperability of data in general.
+}
+\details{
+This function gathers annotatable elements from your EML and assigns default predicate labels and URIs. You must provide object labels and URIs from the ontology of your choosing.
 }
 \note{
 To set your own default annotations, copy the EMLassemblyline defaults 
@@ -103,69 +100,21 @@ To set your own default annotations, copy the EMLassemblyline defaults
     }
 }
 \examples{
-# From a set of EMLassemblyline metadata templates ----------------------------
-#
-# Create annotations.txt for a dataset of data tables, other entities, and 
-# described by EMLassemblyline metadata templates
+\dontrun{
+# Set working directory
+setwd("/Users/me/Documents/data_packages/pkg_260")
 
-# Copy templates and data objects to a temporary directory
-
-file.copy(
-  from = system.file("/examples/pkg_260", package = "EMLassemblyline"),
-  to = tempdir(),
-  recursive = TRUE
-)
-unlink(paste0(tempdir(), "/pkg_260/metadata_templates/annotations.txt"))
-
-# Create annotations.txt
-
+# For a set of EAL templates describing 2 tables and 2 other entities
 template_annotations(
- path = paste0(tempdir(), "/pkg_260/metadata_templates"),
- data.path = paste0(tempdir(), "/pkg_260/data_objects"),
+ path = "./metadata_templates",
+ data.path = "./data_objects",
  data.table = c("nitrogen.csv", "decomp.csv"),
- other.entity = c("ancillary_data.zip", "processing_and_analysis.R")
-)
-
-# View contents
-
-df <- data.table::fread(
-  paste0(tempdir(), "/pkg_260/metadata_templates/annotations.txt")
-)
-df
-
-# Clean up temporary directory
-
-unlink(paste0(tempdir(), "/pkg_260"), recursive = TRUE, force = TRUE)
-
-# From an EML file ------------------------------------------------------------
-#
-# Create annotations.txt for an EML file
-
-# Copy an EML file to a temporary directory
-
-file.copy(
-  from = system.file("/examples/eml/edi.260.3.xml", package = "EMLassemblyline"),
-  to = tempdir(),
-  recursive = TRUE
-)
-
-# Create annotations.txt
-
+ other.entity = c("ancillary_data.zip", "processing_and_analysis.R"))
+ 
+# For an existing EML file
 template_annotations(
- path = tempdir(),
- eml = "edi.260.3.xml"
-)
-
-# View contents
-
-df <- data.table::fread(
- paste0(tempdir(), "/annotations.txt")
-)
-df
-
-# Clean up temporary directory
-
-unlink(paste0(tempdir(), "/edi.260.3.xml"), force = TRUE)
-unlink(paste0(tempdir(), "/annotations.txt"), force = TRUE)   
+ path = "./metadata_templates",
+ eml = "edi.260.3.xml")
+}
 
 }

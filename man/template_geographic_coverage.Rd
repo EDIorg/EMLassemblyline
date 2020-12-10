@@ -2,7 +2,7 @@
 % Please edit documentation in R/template_geographic_coverage.R
 \name{template_geographic_coverage}
 \alias{template_geographic_coverage}
-\title{Template geographic coverage (where measurements were taken)}
+\title{Describe where the data were collected}
 \usage{
 template_geographic_coverage(
   path,
@@ -46,8 +46,7 @@ to create \code{x}.}
     \strong{/x/templates/catvars_*.txt}.
 }
 \description{
-Use this function to extract the unique location coordinates and names
-    from a data table.
+Use this function to extract the unique location coordinates and names from a table or to create a blank template to manually fill.
 }
 \details{
 An existing geographic coverage template will not be overwritten by 
@@ -57,52 +56,23 @@ An existing geographic coverage template will not be overwritten by
     converted to UTF-8 via \code{enc2utf8()}.
 }
 \examples{
-# Initialize data package directory for template_template_geographic_coverage()
-file.copy(
-  from = system.file('/examples/pkg_255', package = 'EMLassemblyline'),
-  to = tempdir(),
-  recursive = TRUE
-)
-
+\dontrun{
 # Set working directory
-setwd(paste0(tempdir(), '/pkg_255'))
+setwd("/Users/me/Documents/data_packages/pkg_260")
 
-# View directory contents (NOTE: geographic_coverage.txt doesn't exist)
-dir('./metadata_templates')
-
-# Template geographic coverage
+# For a table containing site coordinates and names
 template_geographic_coverage(
-  path = './metadata_templates',
-  data.path = './data_objects',
-  data.table = 'nitrogen.csv',
-  site.col = 'site_name',
-  lat.col = 'site_lat',
-  lon.col = 'site_lon'
-)
-
-# View directory contents (NOTE: geographic_coverage.txt exists)
-dir('./metadata_templates')
-
-# Rerunning template_geographic_coverage() does not overwrite files
+  path = "./metadata_templates",
+  data.path = "./data_objects",
+  data.table = "nitrogen.csv",
+  site.col = "site_name",
+  lat.col = "site_lat",
+  lon.col = "site_lon")
+  
+# For returning an empty template to be filled manually
 template_geographic_coverage(
-  path = './metadata_templates',
-  data.path = './data_objects',
-  data.table = 'nitrogen.csv',
-  site.col = 'site_name',
-  lat.col = 'site_lat',
-  lon.col = 'site_lon'
-)
-
-# Remove template from directory
-file.remove('./metadata_templates/geographic_coverage.txt')
-
-# Create an empty geographic_coverage.txt template
-template_geographic_coverage(
-  path = './metadata_templates',
-  empty = TRUE
-)
-
-# Clean up
-unlink('.', recursive = TRUE)
+  path = "./metadata_templates",
+  empty = TRUE)
+}
 
 }

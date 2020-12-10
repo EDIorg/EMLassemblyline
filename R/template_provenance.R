@@ -1,7 +1,6 @@
-#' Template provenance metadata (source data)
+#' Describe source datasets
 #'
-#' @description  
-#'     Use this function to create the provenance template for listing data entities (i.e. datasets, articles, etc.) that serve as data sources (inputs) to the derived dataset metadata is being created for.
+#' @description Describes any source datasets used in the creation of the derived dataset being described. Explicitly listing the DOIs and/or URLs of input data help future users understand in greater detail how the derived data were created and may some day be able to assign attribution to the creators of referenced datasets.
 #'
 #' @param path 
 #'     (character) Path to the metadata template directory.
@@ -34,14 +33,13 @@
 #'     An existing provenance template will not be overwritten by a call to \code{template_provenance()}.
 #'
 #' @examples 
+#' \dontrun{
 #' # Set working directory
-#' setwd(tempdir())
+#' setwd("/Users/me/Documents/data_packages/pkg_260")
 #' 
-#' # The most common use case is import of a blank template and manual completion
-#' template_provenance(path = ".")
-#' 
-#' # Clean up
-#' unlink('.', recursive = TRUE)
+#' # For an empty template to be filled manually
+#' template_provenance(path = "./metadata_templates")
+#' }
 #'
 #' @export
 #'

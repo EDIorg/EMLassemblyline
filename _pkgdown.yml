@@ -4,8 +4,8 @@ template:
   bootswatch: spacelab
 
 reference:
-  - title: Create templates
-    desc: Templates hold metadata content and are a mix of machine extracted and human supplied information.
+  - title: Template metadata
+    desc: Metadata templates are a mix of machine extracted and human supplied information.
     contents:
     - template_directories
     - template_core_metadata
@@ -15,7 +15,7 @@ reference:
     - template_taxonomic_coverage
     - template_annotations
     - template_provenance
-  - title: Create EML
+  - title: Make EML
     desc: Renders template content into an EML file.
     contents:
     - make_eml
@@ -37,7 +37,7 @@ navbar:
         href: articles/overview.html
       - text: Organize data package
         href: articles/organize_data_package.html
-      - text: Create metadata templates
+      - text: Template metadata
         href: articles/create_metadata_templates.html
       - text: Edit metadata templates
         href: articles/edit_metadata_templates.html

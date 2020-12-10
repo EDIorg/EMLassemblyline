@@ -5,12 +5,6 @@
 #'     \code{EMLassemblyline} files. Any organization scheme is supported. This
 #'     is one recommendation.
 #'
-#' @usage 
-#'     template_directories(
-#'       path, 
-#'       dir.name
-#'     )
-#'
 #' @param path 
 #'     (character) Path to where the data package directory will be created.
 #' @param dir.name
@@ -37,24 +31,18 @@
 #'     be overwritten.
 #'
 #' @examples
+#' \dontrun{
 #' # Set working directory
-#' setwd(tempdir())
+#' setwd("/Users/me/Documents/data_packages")
 #' 
-#' # Template data package directory "pkg_301"
+#' # For data package 260
 #' template_directories(
-#'   path = '.',
-#'   dir.name =  'pkg_301'
-#' )
-#' 
-#' # View directory contents
-#' dir('./pkg_301')
-#'
-#' # Clean up
-#' unlink('./pkg_301', recursive = TRUE)
+#'   path = ".",
+#'   dir.name =  "pkg_260")
+#' }
 #'
 #' @export
 #'
-
 template_directories <- function(path, dir.name){
   
   # Stop if directory exists

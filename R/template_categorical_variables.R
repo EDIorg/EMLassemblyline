@@ -1,9 +1,6 @@
-#' Template categorical variables of a data table (codes and definitions)
+#' Describe categorical variables of a data table
 #'
-#' @description  
-#'     Use this function after table attributes templates are complete. It uses information in attribute templates to extract the unique categorical variables from the corresponding data table.
-#'     table and return for user supplied definitions. 
-#'     \href{https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html}{Instructions for editing this template.}
+#' @description Describes categorical variables of a data table. Use if any columns are classified as categorical in table attributes template.
 #'
 #' @param path 
 #'     (character) Path to the metadata template directory.
@@ -28,28 +25,16 @@
 #'     converted to UTF-8 via \code{enc2utf8()}.
 #'
 #' @examples 
-#' # Initialize data package directory for template_categorical_variables()
-#' file.copy(
-#'   from = system.file('/examples/pkg_255', package = 'EMLassemblyline'),
-#'   to = tempdir(),
-#'   recursive = TRUE
-#' )
-#' 
+#' \dontrun{
 #' # Set working directory
-#' setwd(paste0(tempdir(), '/pkg_255'))
+#' setwd("/Users/me/Documents/data_packages/pkg_260")
 #' 
-#' # Template categorical variables
-#' catvars <- template_categorical_variables(
-#'   path = './metadata_templates',
-#'   data.path = './data_objects')
-#' catvars
+#' # For tables containing categorical variables as classified in the table attributes template
+#' template_categorical_variables(
+#'   path = "./metadata_templates",
+#'   data.path = "./data_objects")
+#' }
 #' 
-#' # View directory contents (NOTE: catvars_*.txt files exist)
-#' dir('./metadata_templates')
-#' 
-#' # Clean up
-#' unlink('.', recursive = TRUE)
-#'
 #' @export
 #'
 template_categorical_variables <- function(

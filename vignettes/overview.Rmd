@@ -8,8 +8,8 @@ output: html_document
 Creating and maintaining EML for a dataset consists of five steps:
 
 1. [Organize data package](https://ediorg.github.io/EMLassemblyline/articles/organize_data_package.html) contents into a directory structure readable by EAL and according with user preferences.
-2. [Create metadata templates](https://ediorg.github.io/EMLassemblyline/articles/create_metadata_templates.html) using functions to automatically extract info from the data.
-3. [Edit metadata templates](https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html) with text and spreadsheet editors to supply info that could not be inferred.
+2. [Template metadata](https://ediorg.github.io/EMLassemblyline/articles/create_metadata_templates.html) using functions to automatically extract info from the data.
+3. [Edit templates](https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html) with text and spreadsheet editors to supply info that could not be inferred.
 4. [Make EML](https://ediorg.github.io/EMLassemblyline/articles/create_eml.html) metadata from template content.
 5. [Publish data package](https://ediorg.github.io/EMLassemblyline/articles/publish_data_package.html) in a data repository.
 

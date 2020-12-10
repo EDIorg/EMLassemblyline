@@ -2,7 +2,7 @@
 % Please edit documentation in R/template_categorical_variables.R
 \name{template_categorical_variables}
 \alias{template_categorical_variables}
-\title{Template categorical variables of a data table (codes and definitions)}
+\title{Describe categorical variables of a data table}
 \usage{
 template_categorical_variables(path, data.path = path, write.file = TRUE)
 }
@@ -18,9 +18,7 @@ template_categorical_variables(path, data.path = path, write.file = TRUE)
 \item{list of data frames}{A list of data frames. One for each categorical variables template.}
 }
 \description{
-Use this function after table attributes templates are complete. It uses information in attribute templates to extract the unique categorical variables from the corresponding data table.
-    table and return for user supplied definitions. 
-    \href{https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html}{Instructions for editing this template.}
+Describes categorical variables of a data table. Use if any columns are classified as categorical in table attributes template.
 }
 \details{
 \code{template_categorical_variables()} knows which columns of a table
@@ -34,26 +32,14 @@ Use this function after table attributes templates are complete. It uses informa
     converted to UTF-8 via \code{enc2utf8()}.
 }
 \examples{
-# Initialize data package directory for template_categorical_variables()
-file.copy(
-  from = system.file('/examples/pkg_255', package = 'EMLassemblyline'),
-  to = tempdir(),
-  recursive = TRUE
-)
-
+\dontrun{
 # Set working directory
-setwd(paste0(tempdir(), '/pkg_255'))
+setwd("/Users/me/Documents/data_packages/pkg_260")
 
-# Template categorical variables
-catvars <- template_categorical_variables(
-  path = './metadata_templates',
-  data.path = './data_objects')
-catvars
-
-# View directory contents (NOTE: catvars_*.txt files exist)
-dir('./metadata_templates')
-
-# Clean up
-unlink('.', recursive = TRUE)
+# For tables containing categorical variables as classified in the table attributes template
+template_categorical_variables(
+  path = "./metadata_templates",
+  data.path = "./data_objects")
+}
 
 }

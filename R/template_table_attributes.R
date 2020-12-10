@@ -1,18 +1,6 @@
-#' Template attributes of a data table (column names, definitions, etc.)
+#' Describe data tables
 #'
-#' @description  
-#'     Use this function to extract column names and classes of a data table 
-#'     and return for user supplied column definitions and missing value codes.
-#'     \href{https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html}{Instructions for editing this template.}
-#'
-#' @usage 
-#'     template_table_attributes(
-#'       path,
-#'       data.path = path,
-#'       data.table = NULL,
-#'       write.file = TRUE,
-#'       x = NULL
-#'     )
+#' @description Describes columns of a data table (classes, units, datetime formats, missing value codes).
 #'
 #' @param path 
 #'     (character) Path to the metadata template directory.
@@ -50,42 +38,19 @@
 #'     converted to UTF-8 via \code{enc2utf8()}.
 #'     
 #' @examples 
-#' # Initialize data package directory for template_table_attributes()
-#' file.copy(
-#'  from = system.file('/examples/pkg_250', package = 'EMLassemblyline'),
-#'  to = tempdir(),
-#'  recursive = TRUE
-#' )
-#' 
+#' \dontrun{
 #' # Set working directory
-#' setwd(paste0(tempdir(), '/pkg_250'))
+#' setwd("/Users/me/Documents/data_packages/pkg_260")
 #' 
-#' # View directory contents (NOTE: attributes_*.txt don't exist)
-#' dir('./metadata_templates')
-#' 
-#' # Template table attributes
+#' # For 2 tables
 #' template_table_attributes(
 #'   path = './metadata_templates',
 #'   data.path = './data_objects',
-#'   data.table = c('decomp.csv', 'nitrogen.csv')
-#' )
-#' 
-#' # View directory contents (NOTE: attributes_*.txt and custom_units.txt exist)
-#' dir('./metadata_templates')
-#' 
-#' # Rerunning template_table_attributes() does not overwrite files
-#' template_table_attributes(
-#'   path = './metadata_templates',
-#'   data.path = './data_objects',
-#'   data.table = c('decomp.csv', 'nitrogen.csv')
-#' )
-#' 
-#' # Clean up
-#' unlink('.', recursive = TRUE)
+#'   data.table = c('decomp.csv', 'nitrogen.csv'))
+#' }
 #'     
 #' @export     
 #'     
-
 template_table_attributes <- function(
   path, 
   data.path = path, 
