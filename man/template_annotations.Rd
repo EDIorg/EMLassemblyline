@@ -41,30 +41,19 @@ annotations.txt for an EML file. Defaults to \code{path}.}
 Use this if annotating an existing EML file.}
 }
 \value{
-\strong{annotations.txt} The tab delimited annotations template, 
-    pre-populated with default annotations, and containing the fields:
+\item{annotations}{Columns:
     \itemize{
-      \item id - A unique identifier for the element being annotated.
-      \item element - The element being annotated.
-      \item context - The context of the subject (i.e. element value) being 
-      annotated (e.g. If the same column name occurs in more than one data 
-      tables, you will need to know which table it came from.).
-      \item subject - The element value to be annotated.
-      \item predicate_label - The predicate label (a.k.a. property) 
-      describing the relation of the subject to the object. This label 
-      should be copied directly from an ontology.
-      \item predicate_uri - The predicate label URI copied directly from an 
-      ontology.
-      \item object_label - The object label (a.k.a. value) describing the 
-      subject. This label should be copied directly from an ontology.
-      \item object_uri - The object URI copied from an ontology.
+    \item{id: A unique identifier for the element being annotated.}
+    \item{element: The element being annotated.}
+    \item{context: The context of the subject (i.e. element value) being annotated (e.g. If the same column name occurs in more than one data tables, you will need to know which table it came from.).}
+    \item{subject: The element value to be annotated.}
+    \item{predicate_label: The predicate label (a.k.a. property) describing the relation of the subject to the object. This label should be copied directly from an ontology.}
+    \item{predicate_uri: The predicate label URI copied directly from an ontology.}
+    \item{object_label: The object label (a.k.a. value) describing the subject. This label should be copied directly from an ontology.}
+    \item{object_uri: The object URI copied from an ontology.}
     }
-    The general user should ignore the id and element fields and focus on
-    the subject, context predicate_label, predicate_uri, object_label, and 
-    object_uri fields. Only the predicate and object fields should be 
-    modified. If you want to add an annotation to any of the listed 
-    subjects, simply copy the full row containing the subject, paste it in 
-    as new line, and modify the predicate and object fields.
+}
+The general user should ignore the id and element fields and focus on the subject, context predicate_label, predicate_uri, object_label, and object_uri fields. Only the predicate and object fields should be modified. If you want to add an annotation to any of the listed subjects, simply copy the full row containing the subject, paste it in as new line, and modify the predicate and object fields.
 }
 \description{
 Adds semantic meaning to dataset features (variables, locations, persons, etc.) through links to ontology terms. Run this function after all your EAL metadata templates are complete or if you're annotating an existing EML file. Annotating a dataset enables greater human understanding and machine actionability (linked data) and vastly improves the accuracy of future user searches and the interoperability of data in general.

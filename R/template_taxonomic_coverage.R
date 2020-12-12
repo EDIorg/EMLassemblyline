@@ -31,11 +31,15 @@
 #'     to create \code{x}.
 #'
 #' @return 
-#'     \strong{taxonomic_coverage.txt} The tab delimited taxonomic coverage 
-#'     template. This file is written to \code{path} unless using \code{x},
-#'     in which case the template is added to 
-#'     \strong{/x/templates/taxonomic_coverage.txt}. Non-resolved taxa result 
-#'     NA.
+#' \item{taxonomic_coverage}{Columns:
+#'     \itemize{
+#'     \item{taxa_raw: Taxon name as it occurs in the data and as it will be listed in the metadata if no value is listed under the name_resolved column. Can be single word or species binomial.}
+#'     \item{name_type: Type of name. Can be "scientific" or "common".}
+#'     \item{name_resolved: Taxons name as found in an authority system.}
+#'     \item{authority_system: Authority system in which the taxa’s name was found. Can be: "\href{https://www.itis.gov/}{ITIS}", "\href{http://www.marinespecies.org/}{WORMS}", "or "\href{https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c}{GBIF}".}
+#'     \item{authority_id: Taxa’s identifier in the authority system (e.g. 168469).}
+#'     }
+#' }
 #'     
 #' @details 
 #'     \code{template_taxonomic_coverage()} searches the most preferred 
@@ -49,9 +53,6 @@
 #'     When taxonomic_coverage.txt is passed to \code{make_eml()}, the 
 #'     authority information is used to get the hierarchical rank names of 
 #'     resolved taxa and rendered into the "taxonomicCoverage" element of EML.
-#'     
-#'     Existing taxonomic_coverage.txt will not be overwritten by subsequent 
-#'     calls to \code{template_taxonomic_coverage()}.
 #'     
 #'     Character encoding of metadata extracted directly from the tables are 
 #'     converted to UTF-8 via \code{enc2utf8()}.

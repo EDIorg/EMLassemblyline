@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create provenance template — template_provenance • EMLassemblyline</title>
+<title>Describe source datasets — template_provenance • EMLassemblyline</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Create provenance template — template_provenance" />
-<meta property="og:description" content="Use this function to create the provenance template for listing data entities (i.e. datasets, articles, etc.) that serve as data sources (inputs) to the derived dataset metadata is being created for." />
+<meta property="og:title" content="Describe source datasets — template_provenance" />
+<meta property="og:description" content="Describes any source datasets used in the creation of the derived dataset being described. Explicitly listing the DOIs and/or URLs of input data help future users understand in greater detail how the derived data were created and may some day be able to assign attribution to the creators of referenced datasets." />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.19.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.0</span>
       </span>
     </div>
 
@@ -95,7 +95,7 @@
       <a href="../articles/organize_data_package.html">Organize data package</a>
     </li>
     <li>
-      <a href="../articles/create_metadata_templates.html">Create metadata templates</a>
+      <a href="../articles/create_metadata_templates.html">Template metadata</a>
     </li>
     <li>
       <a href="../articles/edit_metadata_templates.html">Edit metadata templates</a>
@@ -138,13 +138,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create provenance template</h1>
+    <h1>Describe source datasets</h1>
     <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/template_provenance.R'><code>R/template_provenance.R</code></a></small>
     <div class="hidden name"><code>template_provenance.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Use this function to create the provenance template for listing data entities (i.e. datasets, articles, etc.) that serve as data sources (inputs) to the derived dataset metadata is being created for.</p>
+    <p>Describes any source datasets used in the creation of the derived dataset being described. Explicitly listing the DOIs and/or URLs of input data help future users understand in greater detail how the derived data were created and may some day be able to assign attribution to the creators of referenced datasets.</p>
     </div>
 
     <pre class="usage"><span class='fu'>template_provenance</span>(
@@ -200,13 +200,13 @@ This table has a "long" (i.e. name-value) format accomodating multiple contacts 
     <p>An existing provenance template will not be overwritten by a call to <code>template_provenance()</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Set working directory</span>
-<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>())
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># Set working directory</span>
+<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='st'>"/Users/me/Documents/data_packages/pkg_260"</span>)
 
-<span class='co'># The most common use case is import of a blank template and manual completion</span>
-<span class='fu'>template_provenance</span>(<span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"."</span>)</div><div class='output co'>#&gt; <span class='message'>Templating provenance ...</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
-<span class='co'># Clean up</span>
-<span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(<span class='st'>'.'</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
+<span class='co'># For an empty template to be filled manually</span>
+<span class='fu'>template_provenance</span>(<span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"./metadata_templates"</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

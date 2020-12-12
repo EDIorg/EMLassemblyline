@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create the annotations template — template_annotations • EMLassemblyline</title>
+<title>Add semantic meaning — template_annotations • EMLassemblyline</title>
 
 
 <!-- jquery -->
@@ -39,14 +39,8 @@
 
 
 
-<meta property="og:title" content="Create the annotations template — template_annotations" />
-<meta property="og:description" content="The annotations template (annotations.txt) lists the elements and 
-    corresponding ontology terms for annotating your EML. Run this function 
-    after all your EMLassemblyline metadata templates are complete or if 
-    you're annotating an existing EML file. This function gathers 
-    annotatable elements from your EML and assigns default predicate labels 
-    and URIs. You must provide object labels and URIs from the ontology of 
-    your choosing." />
+<meta property="og:title" content="Add semantic meaning — template_annotations" />
+<meta property="og:description" content="Adds semantic meaning to dataset features (variables, locations, persons, etc.) through links to ontology terms. Run this function after all your EAL metadata templates are complete or if you're annotating an existing EML file. Annotating a dataset enables greater human understanding and machine actionability (linked data) and vastly improves the accuracy of future user searches and the interoperability of data in general." />
 
 
 
@@ -78,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.19.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.0</span>
       </span>
     </div>
 
@@ -101,7 +95,7 @@
       <a href="../articles/organize_data_package.html">Organize data package</a>
     </li>
     <li>
-      <a href="../articles/create_metadata_templates.html">Create metadata templates</a>
+      <a href="../articles/create_metadata_templates.html">Template metadata</a>
     </li>
     <li>
       <a href="../articles/edit_metadata_templates.html">Edit metadata templates</a>
@@ -144,19 +138,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create the annotations template</h1>
+    <h1>Add semantic meaning</h1>
     <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/template_annotations.R'><code>R/template_annotations.R</code></a></small>
     <div class="hidden name"><code>template_annotations.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The annotations template (annotations.txt) lists the elements and 
-    corresponding ontology terms for annotating your EML. Run this function 
-    after all your EMLassemblyline metadata templates are complete or if 
-    you're annotating an existing EML file. This function gathers 
-    annotatable elements from your EML and assigns default predicate labels 
-    and URIs. You must provide object labels and URIs from the ontology of 
-    your choosing.</p>
+    <p>Adds semantic meaning to dataset features (variables, locations, persons, etc.) through links to ontology terms. Run this function after all your EAL metadata templates are complete or if you're annotating an existing EML file. Annotating a dataset enables greater human understanding and machine actionability (linked data) and vastly improves the accuracy of future user searches and the interoperability of data in general.</p>
     </div>
 
     <pre class="usage"><span class='fu'>template_annotations</span>(
@@ -237,6 +225,9 @@ Use this if annotating an existing EML file.</p></td>
     modified. If you want to add an annotation to any of the listed 
     subjects, simply copy the full row containing the subject, paste it in 
     as new line, and modify the predicate and object fields.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This function gathers annotatable elements from your EML and assigns default predicate labels and URIs. You must provide object labels and URIs from the ontology of your choosing.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>To set your own default annotations, copy the EMLassemblyline defaults 
@@ -265,614 +256,22 @@ Use this if annotating an existing EML file.</p></td>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># From a set of EMLassemblyline metadata templates ----------------------------</span>
-<span class='co'>#</span>
-<span class='co'># Create annotations.txt for a dataset of data tables, other entities, and </span>
-<span class='co'># described by EMLassemblyline metadata templates</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># Set working directory</span>
+<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='st'>"/Users/me/Documents/data_packages/pkg_260"</span>)
 
-<span class='co'># Copy templates and data objects to a temporary directory</span>
-
-<span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.copy</a></span>(
-  <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"/examples/pkg_260"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"EMLassemblyline"</span>),
-  <span class='kw'>to</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(),
-  <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"/pkg_260/metadata_templates/annotations.txt"</span>))
-
-<span class='co'># Create annotations.txt</span>
-
+<span class='co'># For a set of EAL templates describing 2 tables and 2 other entities</span>
 <span class='fu'>template_annotations</span>(
- <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"/pkg_260/metadata_templates"</span>),
- <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"/pkg_260/data_objects"</span>),
+ <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"./metadata_templates"</span>,
+ <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='st'>"./data_objects"</span>,
  <span class='kw'>data.table</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"nitrogen.csv"</span>, <span class='st'>"decomp.csv"</span>),
- <span class='kw'>other.entity</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ancillary_data.zip"</span>, <span class='st'>"processing_and_analysis.R"</span>)
-)</div><div class='output co'>#&gt; <span class='message'>Templating annotations ...</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
-<span class='co'># View contents</span>
+ <span class='kw'>other.entity</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ancillary_data.zip"</span>, <span class='st'>"processing_and_analysis.R"</span>))
 
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/fread.html'>fread</a></span>(
-  <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"/pkg_260/metadata_templates/annotations.txt"</span>)
-)
-<span class='no'>df</span></div><div class='output co'>#&gt;                                       id              element      context
-#&gt;  1:                             /dataset             /dataset          eml
-#&gt;  2:                        /nitrogen.csv           /dataTable      dataset
-#&gt;  3:                   /nitrogen.csv/date /dataTable/attribute nitrogen.csv
-#&gt;  4:                   /nitrogen.csv/date /dataTable/attribute nitrogen.csv
-#&gt;  5:                   /nitrogen.csv/ntrt /dataTable/attribute nitrogen.csv
-#&gt;  6:                   /nitrogen.csv/ntrt /dataTable/attribute nitrogen.csv
-#&gt;  7:                    /nitrogen.csv/arm /dataTable/attribute nitrogen.csv
-#&gt;  8:                    /nitrogen.csv/arm /dataTable/attribute nitrogen.csv
-#&gt;  9: /nitrogen.csv/net_primary_production /dataTable/attribute nitrogen.csv
-#&gt; 10: /nitrogen.csv/net_primary_production /dataTable/attribute nitrogen.csv
-#&gt; 11:      /nitrogen.csv/stem_mass_density /dataTable/attribute nitrogen.csv
-#&gt; 12:      /nitrogen.csv/stem_mass_density /dataTable/attribute nitrogen.csv
-#&gt; 13:          /nitrogen.csv/plant_density /dataTable/attribute nitrogen.csv
-#&gt; 14:          /nitrogen.csv/plant_density /dataTable/attribute nitrogen.csv
-#&gt; 15:   /nitrogen.csv/stem_n_concentration /dataTable/attribute nitrogen.csv
-#&gt; 16:   /nitrogen.csv/stem_n_concentration /dataTable/attribute nitrogen.csv
-#&gt; 17:          /nitrogen.csv/n_assimilated /dataTable/attribute nitrogen.csv
-#&gt; 18:          /nitrogen.csv/n_assimilated /dataTable/attribute nitrogen.csv
-#&gt; 19:              /nitrogen.csv/site_name /dataTable/attribute nitrogen.csv
-#&gt; 20:              /nitrogen.csv/site_name /dataTable/attribute nitrogen.csv
-#&gt; 21:               /nitrogen.csv/site_lat /dataTable/attribute nitrogen.csv
-#&gt; 22:               /nitrogen.csv/site_lat /dataTable/attribute nitrogen.csv
-#&gt; 23:               /nitrogen.csv/site_lon /dataTable/attribute nitrogen.csv
-#&gt; 24:               /nitrogen.csv/site_lon /dataTable/attribute nitrogen.csv
-#&gt; 25:                          /decomp.csv           /dataTable      dataset
-#&gt; 26:                     /decomp.csv/type /dataTable/attribute   decomp.csv
-#&gt; 27:                     /decomp.csv/type /dataTable/attribute   decomp.csv
-#&gt; 28:                     /decomp.csv/date /dataTable/attribute   decomp.csv
-#&gt; 29:                     /decomp.csv/date /dataTable/attribute   decomp.csv
-#&gt; 30:                      /decomp.csv/arm /dataTable/attribute   decomp.csv
-#&gt; 31:                      /decomp.csv/arm /dataTable/attribute   decomp.csv
-#&gt; 32:                     /decomp.csv/ntrt /dataTable/attribute   decomp.csv
-#&gt; 33:                     /decomp.csv/ntrt /dataTable/attribute   decomp.csv
-#&gt; 34:                     /decomp.csv/year /dataTable/attribute   decomp.csv
-#&gt; 35:                     /decomp.csv/year /dataTable/attribute   decomp.csv
-#&gt; 36:             /decomp.csv/percent_loss /dataTable/attribute   decomp.csv
-#&gt; 37:             /decomp.csv/percent_loss /dataTable/attribute   decomp.csv
-#&gt; 38:                     /decomp.csv/taxa /dataTable/attribute   decomp.csv
-#&gt; 39:                     /decomp.csv/taxa /dataTable/attribute   decomp.csv
-#&gt; 40:                  /ancillary_data.zip         /otherEntity      dataset
-#&gt; 41:           /processing_and_analysis.R         /otherEntity      dataset
-#&gt; 42:                     /Kelman R Wieder    /ResponsibleParty      dataset
-#&gt; 43:                     /Kelman R Wieder    /ResponsibleParty      dataset
-#&gt; 44:                         /Dale H Vitt    /ResponsibleParty      dataset
-#&gt; 45:                         /Dale H Vitt    /ResponsibleParty      dataset
-#&gt; 46:                      /Melanie A Vile    /ResponsibleParty      dataset
-#&gt; 47:                      /Melanie A Vile    /ResponsibleParty      dataset
-#&gt; 48:                     /Jeremy A Graham    /ResponsibleParty      dataset
-#&gt; 49:                     /Jeremy A Graham    /ResponsibleParty      dataset
-#&gt; 50:                   /Jeremy A Hartsock    /ResponsibleParty      dataset
-#&gt; 51:                   /Jeremy A Hartsock    /ResponsibleParty      dataset
-#&gt; 52:                      /Hope Fillingim    /ResponsibleParty      dataset
-#&gt; 53:                      /Hope Fillingim    /ResponsibleParty      dataset
-#&gt; 54:                       /Melissa House    /ResponsibleParty      dataset
-#&gt; 55:                       /Melissa House    /ResponsibleParty      dataset
-#&gt; 56:                       /James C Quinn    /ResponsibleParty      dataset
-#&gt; 57:                       /James C Quinn    /ResponsibleParty      dataset
-#&gt; 58:                    /Kimberli D Scott    /ResponsibleParty      dataset
-#&gt; 59:                    /Kimberli D Scott    /ResponsibleParty      dataset
-#&gt; 60:                       /Meaghan Petix    /ResponsibleParty      dataset
-#&gt; 61:                       /Meaghan Petix    /ResponsibleParty      dataset
-#&gt; 62:                    /Kelly J McMillen    /ResponsibleParty      dataset
-#&gt; 63:                    /Kelly J McMillen    /ResponsibleParty      dataset
-#&gt; 64:                            /Jane Doe    /ResponsibleParty      dataset
-#&gt; 65:                            /Jane Doe    /ResponsibleParty      dataset
-#&gt; 66:                           /Joe Smith    /ResponsibleParty      dataset
-#&gt; 67:                           /Joe Smith    /ResponsibleParty      dataset
-#&gt; 68:                         /Chase Gacho    /ResponsibleParty      dataset
-#&gt; 69:                         /Chase Gacho    /ResponsibleParty      dataset
-#&gt;                                       id              element      context
-#&gt;                       subject               predicate_label
-#&gt;  1:                   dataset                      is about
-#&gt;  2:              nitrogen.csv                      is about
-#&gt;  3:                      date contains measurements of type
-#&gt;  4:                      date                      has unit
-#&gt;  5:                      ntrt contains measurements of type
-#&gt;  6:                      ntrt                      has unit
-#&gt;  7:                       arm contains measurements of type
-#&gt;  8:                       arm                      has unit
-#&gt;  9:    net_primary_production contains measurements of type
-#&gt; 10:    net_primary_production                      has unit
-#&gt; 11:         stem_mass_density contains measurements of type
-#&gt; 12:         stem_mass_density                      has unit
-#&gt; 13:             plant_density contains measurements of type
-#&gt; 14:             plant_density                      has unit
-#&gt; 15:      stem_n_concentration contains measurements of type
-#&gt; 16:      stem_n_concentration                      has unit
-#&gt; 17:             n_assimilated contains measurements of type
-#&gt; 18:             n_assimilated                      has unit
-#&gt; 19:                 site_name contains measurements of type
-#&gt; 20:                 site_name                      has unit
-#&gt; 21:                  site_lat contains measurements of type
-#&gt; 22:                  site_lat                      has unit
-#&gt; 23:                  site_lon contains measurements of type
-#&gt; 24:                  site_lon                      has unit
-#&gt; 25:                decomp.csv                      is about
-#&gt; 26:                      type contains measurements of type
-#&gt; 27:                      type                      has unit
-#&gt; 28:                      date contains measurements of type
-#&gt; 29:                      date                      has unit
-#&gt; 30:                       arm contains measurements of type
-#&gt; 31:                       arm                      has unit
-#&gt; 32:                      ntrt contains measurements of type
-#&gt; 33:                      ntrt                      has unit
-#&gt; 34:                      year contains measurements of type
-#&gt; 35:                      year                      has unit
-#&gt; 36:              percent_loss contains measurements of type
-#&gt; 37:              percent_loss                      has unit
-#&gt; 38:                      taxa contains measurements of type
-#&gt; 39:                      taxa                      has unit
-#&gt; 40:        ancillary_data.zip                      is about
-#&gt; 41: processing_and_analysis.R                      is about
-#&gt; 42:           Kelman R Wieder                          is a
-#&gt; 43:           Kelman R Wieder                     member of
-#&gt; 44:               Dale H Vitt                          is a
-#&gt; 45:               Dale H Vitt                     member of
-#&gt; 46:            Melanie A Vile                          is a
-#&gt; 47:            Melanie A Vile                     member of
-#&gt; 48:           Jeremy A Graham                          is a
-#&gt; 49:           Jeremy A Graham                     member of
-#&gt; 50:         Jeremy A Hartsock                          is a
-#&gt; 51:         Jeremy A Hartsock                     member of
-#&gt; 52:            Hope Fillingim                          is a
-#&gt; 53:            Hope Fillingim                     member of
-#&gt; 54:             Melissa House                          is a
-#&gt; 55:             Melissa House                     member of
-#&gt; 56:             James C Quinn                          is a
-#&gt; 57:             James C Quinn                     member of
-#&gt; 58:          Kimberli D Scott                          is a
-#&gt; 59:          Kimberli D Scott                     member of
-#&gt; 60:             Meaghan Petix                          is a
-#&gt; 61:             Meaghan Petix                     member of
-#&gt; 62:          Kelly J McMillen                          is a
-#&gt; 63:          Kelly J McMillen                     member of
-#&gt; 64:                  Jane Doe                          is a
-#&gt; 65:                  Jane Doe                     member of
-#&gt; 66:                 Joe Smith                          is a
-#&gt; 67:                 Joe Smith                     member of
-#&gt; 68:               Chase Gacho                          is a
-#&gt; 69:               Chase Gacho                     member of
-#&gt;                       subject               predicate_label
-#&gt;                                                                        predicate_uri
-#&gt;  1:                                       http://purl.obolibrary.org/obo/IAO_0000136
-#&gt;  2:                                       http://purl.obolibrary.org/obo/IAO_0000136
-#&gt;  3: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt;  4:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt;  5: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt;  6:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt;  7: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt;  8:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt;  9: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 10:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 11: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 12:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 13: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 14:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 15: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 16:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 17: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 18:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 19: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 20:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 21: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 22:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 23: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 24:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 25:                                       http://purl.obolibrary.org/obo/IAO_0000136
-#&gt; 26: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 27:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 28: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 29:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 30: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 31:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 32: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 33:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 34: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 35:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 36: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 37:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 38: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 39:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 40:                                       http://purl.obolibrary.org/obo/IAO_0000136
-#&gt; 41:                                       http://purl.obolibrary.org/obo/IAO_0000136
-#&gt; 42:                                  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt; 43:                                                      https://schema.org/memberOf
-#&gt; 44:                                  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt; 45:                                                      https://schema.org/memberOf
-#&gt; 46:                                  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt; 47:                                                      https://schema.org/memberOf
-#&gt; 48:                                  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt; 49:                                                      https://schema.org/memberOf
-#&gt; 50:                                  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt; 51:                                                      https://schema.org/memberOf
-#&gt; 52:                                  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt; 53:                                                      https://schema.org/memberOf
-#&gt; 54:                                  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt; 55:                                                      https://schema.org/memberOf
-#&gt; 56:                                  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt; 57:                                                      https://schema.org/memberOf
-#&gt; 58:                                  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt; 59:                                                      https://schema.org/memberOf
-#&gt; 60:                                  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt; 61:                                                      https://schema.org/memberOf
-#&gt; 62:                                  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt; 63:                                                      https://schema.org/memberOf
-#&gt; 64:                                  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt; 65:                                                      https://schema.org/memberOf
-#&gt; 66:                                  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt; 67:                                                      https://schema.org/memberOf
-#&gt; 68:                                  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt; 69:                                                      https://schema.org/memberOf
-#&gt;                                                                        predicate_uri
-#&gt;     object_label                object_uri
-#&gt;  1:                                       
-#&gt;  2:                                       
-#&gt;  3:                                       
-#&gt;  4:                                       
-#&gt;  5:                                       
-#&gt;  6:                                       
-#&gt;  7:                                       
-#&gt;  8:                                       
-#&gt;  9:                                       
-#&gt; 10:                                       
-#&gt; 11:                                       
-#&gt; 12:                                       
-#&gt; 13:                                       
-#&gt; 14:                                       
-#&gt; 15:                                       
-#&gt; 16:                                       
-#&gt; 17:                                       
-#&gt; 18:                                       
-#&gt; 19:                                       
-#&gt; 20:                                       
-#&gt; 21:                                       
-#&gt; 22:                                       
-#&gt; 23:                                       
-#&gt; 24:                                       
-#&gt; 25:                                       
-#&gt; 26:                                       
-#&gt; 27:                                       
-#&gt; 28:                                       
-#&gt; 29:                                       
-#&gt; 30:                                       
-#&gt; 31:                                       
-#&gt; 32:                                       
-#&gt; 33:                                       
-#&gt; 34:                                       
-#&gt; 35:                                       
-#&gt; 36:                                       
-#&gt; 37:                                       
-#&gt; 38:                                       
-#&gt; 39:                                       
-#&gt; 40:                                       
-#&gt; 41:                                       
-#&gt; 42:       Person https://schema.org/Person
-#&gt; 43:                                       
-#&gt; 44:       Person https://schema.org/Person
-#&gt; 45:                                       
-#&gt; 46:       Person https://schema.org/Person
-#&gt; 47:                                       
-#&gt; 48:       Person https://schema.org/Person
-#&gt; 49:                                       
-#&gt; 50:       Person https://schema.org/Person
-#&gt; 51:                                       
-#&gt; 52:       Person https://schema.org/Person
-#&gt; 53:                                       
-#&gt; 54:       Person https://schema.org/Person
-#&gt; 55:                                       
-#&gt; 56:       Person https://schema.org/Person
-#&gt; 57:                                       
-#&gt; 58:       Person https://schema.org/Person
-#&gt; 59:                                       
-#&gt; 60:       Person https://schema.org/Person
-#&gt; 61:                                       
-#&gt; 62:       Person https://schema.org/Person
-#&gt; 63:                                       
-#&gt; 64:       Person https://schema.org/Person
-#&gt; 65:                                       
-#&gt; 66:       Person https://schema.org/Person
-#&gt; 67:                                       
-#&gt; 68:       Person https://schema.org/Person
-#&gt; 69:                                       
-#&gt;     object_label                object_uri</div><div class='input'>
-<span class='co'># Clean up temporary directory</span>
-
-<span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"/pkg_260"</span>), <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>force</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='co'># From an EML file ------------------------------------------------------------</span>
-<span class='co'>#</span>
-<span class='co'># Create annotations.txt for an EML file</span>
-
-<span class='co'># Copy an EML file to a temporary directory</span>
-
-<span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.copy</a></span>(
-  <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"/examples/eml/edi.260.3.xml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"EMLassemblyline"</span>),
-  <span class='kw'>to</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(),
-  <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
-<span class='co'># Create annotations.txt</span>
-
+<span class='co'># For an existing EML file</span>
 <span class='fu'>template_annotations</span>(
- <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(),
- <span class='kw'>eml</span> <span class='kw'>=</span> <span class='st'>"edi.260.3.xml"</span>
-)</div><div class='output co'>#&gt; <span class='message'>Templating annotations ...</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
-<span class='co'># View contents</span>
-
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/fread.html'>fread</a></span>(
- <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"/annotations.txt"</span>)
-)
-<span class='no'>df</span></div><div class='output co'>#&gt;                                       id              element      context
-#&gt;  1:                             /dataset             /dataset          eml
-#&gt;  2:                          /decomp.csv           /dataTable      dataset
-#&gt;  3:                     /decomp.csv/type /dataTable/attribute   decomp.csv
-#&gt;  4:                     /decomp.csv/type /dataTable/attribute   decomp.csv
-#&gt;  5:                     /decomp.csv/date /dataTable/attribute   decomp.csv
-#&gt;  6:                     /decomp.csv/date /dataTable/attribute   decomp.csv
-#&gt;  7:                      /decomp.csv/arm /dataTable/attribute   decomp.csv
-#&gt;  8:                      /decomp.csv/arm /dataTable/attribute   decomp.csv
-#&gt;  9:                     /decomp.csv/ntrt /dataTable/attribute   decomp.csv
-#&gt; 10:                     /decomp.csv/ntrt /dataTable/attribute   decomp.csv
-#&gt; 11:                     /decomp.csv/year /dataTable/attribute   decomp.csv
-#&gt; 12:                     /decomp.csv/year /dataTable/attribute   decomp.csv
-#&gt; 13:             /decomp.csv/percent_loss /dataTable/attribute   decomp.csv
-#&gt; 14:             /decomp.csv/percent_loss /dataTable/attribute   decomp.csv
-#&gt; 15:                     /decomp.csv/taxa /dataTable/attribute   decomp.csv
-#&gt; 16:                     /decomp.csv/taxa /dataTable/attribute   decomp.csv
-#&gt; 17:                        /nitrogen.csv           /dataTable      dataset
-#&gt; 18:                   /nitrogen.csv/date /dataTable/attribute nitrogen.csv
-#&gt; 19:                   /nitrogen.csv/date /dataTable/attribute nitrogen.csv
-#&gt; 20:                   /nitrogen.csv/ntrt /dataTable/attribute nitrogen.csv
-#&gt; 21:                   /nitrogen.csv/ntrt /dataTable/attribute nitrogen.csv
-#&gt; 22:                    /nitrogen.csv/arm /dataTable/attribute nitrogen.csv
-#&gt; 23:                    /nitrogen.csv/arm /dataTable/attribute nitrogen.csv
-#&gt; 24: /nitrogen.csv/net_primary_production /dataTable/attribute nitrogen.csv
-#&gt; 25: /nitrogen.csv/net_primary_production /dataTable/attribute nitrogen.csv
-#&gt; 26:      /nitrogen.csv/stem_mass_density /dataTable/attribute nitrogen.csv
-#&gt; 27:      /nitrogen.csv/stem_mass_density /dataTable/attribute nitrogen.csv
-#&gt; 28:          /nitrogen.csv/plant_density /dataTable/attribute nitrogen.csv
-#&gt; 29:          /nitrogen.csv/plant_density /dataTable/attribute nitrogen.csv
-#&gt; 30:   /nitrogen.csv/stem_n_concentration /dataTable/attribute nitrogen.csv
-#&gt; 31:   /nitrogen.csv/stem_n_concentration /dataTable/attribute nitrogen.csv
-#&gt; 32:          /nitrogen.csv/n_assimilated /dataTable/attribute nitrogen.csv
-#&gt; 33:          /nitrogen.csv/n_assimilated /dataTable/attribute nitrogen.csv
-#&gt; 34:              /nitrogen.csv/site_name /dataTable/attribute nitrogen.csv
-#&gt; 35:              /nitrogen.csv/site_name /dataTable/attribute nitrogen.csv
-#&gt; 36:               /nitrogen.csv/site_lat /dataTable/attribute nitrogen.csv
-#&gt; 37:               /nitrogen.csv/site_lat /dataTable/attribute nitrogen.csv
-#&gt; 38:               /nitrogen.csv/site_lon /dataTable/attribute nitrogen.csv
-#&gt; 39:               /nitrogen.csv/site_lon /dataTable/attribute nitrogen.csv
-#&gt; 40:                  /ancillary_data.zip         /otherEntity      dataset
-#&gt; 41:           /processing_and_analysis.R         /otherEntity      dataset
-#&gt; 42:                     /Wieder Kelman R    /ResponsibleParty      dataset
-#&gt; 43:                     /Wieder Kelman R    /ResponsibleParty      dataset
-#&gt; 44:                         /Vitt Dale H    /ResponsibleParty      dataset
-#&gt; 45:                         /Vitt Dale H    /ResponsibleParty      dataset
-#&gt; 46:                      /Vile Melanie A    /ResponsibleParty      dataset
-#&gt; 47:                      /Vile Melanie A    /ResponsibleParty      dataset
-#&gt; 48:                     /Graham Jeremy A    /ResponsibleParty      dataset
-#&gt; 49:                     /Graham Jeremy A    /ResponsibleParty      dataset
-#&gt; 50:                   /Hartsock Jeremy A    /ResponsibleParty      dataset
-#&gt; 51:                   /Hartsock Jeremy A    /ResponsibleParty      dataset
-#&gt; 52:                      /Hope Fillingim    /ResponsibleParty      dataset
-#&gt; 53:                      /Hope Fillingim    /ResponsibleParty      dataset
-#&gt; 54:                       /Melissa House    /ResponsibleParty      dataset
-#&gt; 55:                       /Melissa House    /ResponsibleParty      dataset
-#&gt; 56:                       /Quinn James C    /ResponsibleParty      dataset
-#&gt; 57:                       /Quinn James C    /ResponsibleParty      dataset
-#&gt; 58:                    /Scott Kimberli D    /ResponsibleParty      dataset
-#&gt; 59:                    /Scott Kimberli D    /ResponsibleParty      dataset
-#&gt; 60:                       /Meaghan Petix    /ResponsibleParty      dataset
-#&gt; 61:                       /Meaghan Petix    /ResponsibleParty      dataset
-#&gt; 62:                    /McMillen Kelly J    /ResponsibleParty      dataset
-#&gt; 63:                    /McMillen Kelly J    /ResponsibleParty      dataset
-#&gt; 64:                            /Jane Doe    /ResponsibleParty      dataset
-#&gt; 65:                            /Jane Doe    /ResponsibleParty      dataset
-#&gt;                                       id              element      context
-#&gt;                       subject               predicate_label
-#&gt;  1:                   dataset                      is about
-#&gt;  2:                decomp.csv                      is about
-#&gt;  3:                      type contains measurements of type
-#&gt;  4:                      type                      has unit
-#&gt;  5:                      date contains measurements of type
-#&gt;  6:                      date                      has unit
-#&gt;  7:                       arm contains measurements of type
-#&gt;  8:                       arm                      has unit
-#&gt;  9:                      ntrt contains measurements of type
-#&gt; 10:                      ntrt                      has unit
-#&gt; 11:                      year contains measurements of type
-#&gt; 12:                      year                      has unit
-#&gt; 13:              percent_loss contains measurements of type
-#&gt; 14:              percent_loss                      has unit
-#&gt; 15:                      taxa contains measurements of type
-#&gt; 16:                      taxa                      has unit
-#&gt; 17:              nitrogen.csv                      is about
-#&gt; 18:                      date contains measurements of type
-#&gt; 19:                      date                      has unit
-#&gt; 20:                      ntrt contains measurements of type
-#&gt; 21:                      ntrt                      has unit
-#&gt; 22:                       arm contains measurements of type
-#&gt; 23:                       arm                      has unit
-#&gt; 24:    net_primary_production contains measurements of type
-#&gt; 25:    net_primary_production                      has unit
-#&gt; 26:         stem_mass_density contains measurements of type
-#&gt; 27:         stem_mass_density                      has unit
-#&gt; 28:             plant_density contains measurements of type
-#&gt; 29:             plant_density                      has unit
-#&gt; 30:      stem_n_concentration contains measurements of type
-#&gt; 31:      stem_n_concentration                      has unit
-#&gt; 32:             n_assimilated contains measurements of type
-#&gt; 33:             n_assimilated                      has unit
-#&gt; 34:                 site_name contains measurements of type
-#&gt; 35:                 site_name                      has unit
-#&gt; 36:                  site_lat contains measurements of type
-#&gt; 37:                  site_lat                      has unit
-#&gt; 38:                  site_lon contains measurements of type
-#&gt; 39:                  site_lon                      has unit
-#&gt; 40:        ancillary_data.zip                      is about
-#&gt; 41: processing_and_analysis.R                      is about
-#&gt; 42:           Wieder Kelman R                          is a
-#&gt; 43:           Wieder Kelman R                     member of
-#&gt; 44:               Vitt Dale H                          is a
-#&gt; 45:               Vitt Dale H                     member of
-#&gt; 46:            Vile Melanie A                          is a
-#&gt; 47:            Vile Melanie A                     member of
-#&gt; 48:           Graham Jeremy A                          is a
-#&gt; 49:           Graham Jeremy A                     member of
-#&gt; 50:         Hartsock Jeremy A                          is a
-#&gt; 51:         Hartsock Jeremy A                     member of
-#&gt; 52:            Hope Fillingim                          is a
-#&gt; 53:            Hope Fillingim                     member of
-#&gt; 54:             Melissa House                          is a
-#&gt; 55:             Melissa House                     member of
-#&gt; 56:             Quinn James C                          is a
-#&gt; 57:             Quinn James C                     member of
-#&gt; 58:          Scott Kimberli D                          is a
-#&gt; 59:          Scott Kimberli D                     member of
-#&gt; 60:             Meaghan Petix                          is a
-#&gt; 61:             Meaghan Petix                     member of
-#&gt; 62:          McMillen Kelly J                          is a
-#&gt; 63:          McMillen Kelly J                     member of
-#&gt; 64:                  Jane Doe                          is a
-#&gt; 65:                  Jane Doe                     member of
-#&gt;                       subject               predicate_label
-#&gt;                                                                        predicate_uri
-#&gt;  1:                                       http://purl.obolibrary.org/obo/IAO_0000136
-#&gt;  2:                                       http://purl.obolibrary.org/obo/IAO_0000136
-#&gt;  3: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt;  4:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt;  5: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt;  6:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt;  7: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt;  8:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt;  9: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 10:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 11: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 12:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 13: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 14:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 15: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 16:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 17:                                       http://purl.obolibrary.org/obo/IAO_0000136
-#&gt; 18: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 19:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 20: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 21:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 22: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 23:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 24: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 25:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 26: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 27:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 28: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 29:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 30: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 31:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 32: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 33:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 34: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 35:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 36: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 37:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 38: http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
-#&gt; 39:                    http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit
-#&gt; 40:                                       http://purl.obolibrary.org/obo/IAO_0000136
-#&gt; 41:                                       http://purl.obolibrary.org/obo/IAO_0000136
-#&gt; 42:                                  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt; 43:                                                      https://schema.org/memberOf
-#&gt; 44:                                  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt; 45:                                                      https://schema.org/memberOf
-#&gt; 46:                                  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt; 47:                                                      https://schema.org/memberOf
-#&gt; 48:                                  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt; 49:                                                      https://schema.org/memberOf
-#&gt; 50:                                  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt; 51:                                                      https://schema.org/memberOf
-#&gt; 52:                                  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt; 53:                                                      https://schema.org/memberOf
-#&gt; 54:                                  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt; 55:                                                      https://schema.org/memberOf
-#&gt; 56:                                  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt; 57:                                                      https://schema.org/memberOf
-#&gt; 58:                                  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt; 59:                                                      https://schema.org/memberOf
-#&gt; 60:                                  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt; 61:                                                      https://schema.org/memberOf
-#&gt; 62:                                  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt; 63:                                                      https://schema.org/memberOf
-#&gt; 64:                                  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-#&gt; 65:                                                      https://schema.org/memberOf
-#&gt;                                                                        predicate_uri
-#&gt;     object_label                object_uri
-#&gt;  1:                                       
-#&gt;  2:                                       
-#&gt;  3:                                       
-#&gt;  4:                                       
-#&gt;  5:                                       
-#&gt;  6:                                       
-#&gt;  7:                                       
-#&gt;  8:                                       
-#&gt;  9:                                       
-#&gt; 10:                                       
-#&gt; 11:                                       
-#&gt; 12:                                       
-#&gt; 13:                                       
-#&gt; 14:                                       
-#&gt; 15:                                       
-#&gt; 16:                                       
-#&gt; 17:                                       
-#&gt; 18:                                       
-#&gt; 19:                                       
-#&gt; 20:                                       
-#&gt; 21:                                       
-#&gt; 22:                                       
-#&gt; 23:                                       
-#&gt; 24:                                       
-#&gt; 25:                                       
-#&gt; 26:                                       
-#&gt; 27:                                       
-#&gt; 28:                                       
-#&gt; 29:                                       
-#&gt; 30:                                       
-#&gt; 31:                                       
-#&gt; 32:                                       
-#&gt; 33:                                       
-#&gt; 34:                                       
-#&gt; 35:                                       
-#&gt; 36:                                       
-#&gt; 37:                                       
-#&gt; 38:                                       
-#&gt; 39:                                       
-#&gt; 40:                                       
-#&gt; 41:                                       
-#&gt; 42:       Person https://schema.org/Person
-#&gt; 43:                                       
-#&gt; 44:       Person https://schema.org/Person
-#&gt; 45:                                       
-#&gt; 46:       Person https://schema.org/Person
-#&gt; 47:                                       
-#&gt; 48:       Person https://schema.org/Person
-#&gt; 49:                                       
-#&gt; 50:       Person https://schema.org/Person
-#&gt; 51:                                       
-#&gt; 52:       Person https://schema.org/Person
-#&gt; 53:                                       
-#&gt; 54:       Person https://schema.org/Person
-#&gt; 55:                                       
-#&gt; 56:       Person https://schema.org/Person
-#&gt; 57:                                       
-#&gt; 58:       Person https://schema.org/Person
-#&gt; 59:                                       
-#&gt; 60:       Person https://schema.org/Person
-#&gt; 61:                                       
-#&gt; 62:       Person https://schema.org/Person
-#&gt; 63:                                       
-#&gt; 64:       Person https://schema.org/Person
-#&gt; 65:                                       
-#&gt;     object_label                object_uri</div><div class='input'>
-<span class='co'># Clean up temporary directory</span>
-
-<span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"/edi.260.3.xml"</span>), <span class='kw'>force</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"/annotations.txt"</span>), <span class='kw'>force</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
+ <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"./metadata_templates"</span>,
+ <span class='kw'>eml</span> <span class='kw'>=</span> <span class='st'>"edi.260.3.xml"</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

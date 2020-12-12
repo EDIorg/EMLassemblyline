@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create categorical variables template — template_categorical_variables • EMLassemblyline</title>
+<title>Describe categorical variables of a data table — template_categorical_variables • EMLassemblyline</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,8 @@
 
 
 
-<meta property="og:title" content="Create categorical variables template — template_categorical_variables" />
-<meta property="og:description" content="Use this function after table attributes templates are complete. It uses information in attribute templates to extract the unique categorical variables from the corresponding data table.
-    table and return for user supplied definitions. 
-    Instructions for editing this template." />
+<meta property="og:title" content="Describe categorical variables of a data table — template_categorical_variables" />
+<meta property="og:description" content="Describes categorical variables of a data table. Use if any columns are classified as categorical in table attributes template." />
 
 
 
@@ -74,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.19.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.0</span>
       </span>
     </div>
 
@@ -97,7 +95,7 @@
       <a href="../articles/organize_data_package.html">Organize data package</a>
     </li>
     <li>
-      <a href="../articles/create_metadata_templates.html">Create metadata templates</a>
+      <a href="../articles/create_metadata_templates.html">Template metadata</a>
     </li>
     <li>
       <a href="../articles/edit_metadata_templates.html">Edit metadata templates</a>
@@ -140,15 +138,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create categorical variables template</h1>
+    <h1>Describe categorical variables of a data table</h1>
     <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/template_categorical_variables.R'><code>R/template_categorical_variables.R</code></a></small>
     <div class="hidden name"><code>template_categorical_variables.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Use this function after table attributes templates are complete. It uses information in attribute templates to extract the unique categorical variables from the corresponding data table.
-    table and return for user supplied definitions. 
-    <a href='https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html'>Instructions for editing this template.</a></p>
+    <p>Describes categorical variables of a data table. Use if any columns are classified as categorical in table attributes template.</p>
     </div>
 
     <pre class="usage"><span class='fu'>template_categorical_variables</span>(<span class='no'>path</span>, <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='no'>path</span>, <span class='kw'>write.file</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
@@ -188,28 +184,15 @@
     converted to UTF-8 via <code><a href='https://rdrr.io/r/base/Encoding.html'>enc2utf8()</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Initialize data package directory for template_categorical_variables()</span>
-<span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.copy</a></span>(
-  <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>'/examples/pkg_255'</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'EMLassemblyline'</span>),
-  <span class='kw'>to</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(),
-  <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Set working directory</span>
-<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>'/pkg_255'</span>))
+<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='st'>"/Users/me/Documents/data_packages/pkg_260"</span>)
 
-<span class='co'># Template categorical variables</span>
-<span class='no'>catvars</span> <span class='kw'>&lt;-</span> <span class='fu'>template_categorical_variables</span>(
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./metadata_templates'</span>,
-  <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='st'>'./data_objects'</span>)</div><div class='output co'>#&gt; <span class='message'>Templating categorical variables ...</span></div><div class='output co'>#&gt; <span class='message'>catvars_decomp.txt</span></div><div class='output co'>#&gt; <span class='message'>catvars_nitrogen.txt</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'><span class='no'>catvars</span></div><div class='output co'>#&gt; NULL</div><div class='input'>
-<span class='co'># View directory contents (NOTE: catvars_*.txt files exist)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span>(<span class='st'>'./metadata_templates'</span>)</div><div class='output co'>#&gt;  [1] "abstract.txt"            "additional_info.txt"    
-#&gt;  [3] "attributes_decomp.txt"   "attributes_nitrogen.txt"
-#&gt;  [5] "catvars_decomp.txt"      "catvars_nitrogen.txt"   
-#&gt;  [7] "custom_units.txt"        "intellectual_rights.txt"
-#&gt;  [9] "keywords.txt"            "methods.txt"            
-#&gt; [11] "personnel.txt"          </div><div class='input'>
-<span class='co'># Clean up</span>
-<span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(<span class='st'>'.'</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
+<span class='co'># For tables containing categorical variables as classified in the table attributes template</span>
+<span class='fu'>template_categorical_variables</span>(
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"./metadata_templates"</span>,
+  <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='st'>"./data_objects"</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

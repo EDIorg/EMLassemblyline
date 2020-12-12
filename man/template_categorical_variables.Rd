@@ -14,8 +14,13 @@ template_categorical_variables(path, data.path = path, write.file = TRUE)
 \item{write.file}{(logical; optional) Whether to write the template file.}
 }
 \value{
-\item{catvars_tablename.txt}{The tab delimited categorical variable template, where "tablename" is the table name from which the variables were extracted. This file is written to \code{path}}.
-\item{list of data frames}{A list of data frames. One for each categorical variables template.}
+\item{catvars_*}{Columns:
+    \itemize{
+    \item{attributeName: Column name}
+    \item{code: Categorical variable}
+    \item{definition: Definition of categorical variable}
+    }
+}
 }
 \description{
 Describes categorical variables of a data table. Use if any columns are classified as categorical in table attributes template.
@@ -24,9 +29,6 @@ Describes categorical variables of a data table. Use if any columns are classifi
 \code{template_categorical_variables()} knows which columns of a table
     are \code{categorical} based on their definition under the \code{class} 
     column of the attributes_*.txt template.
-    
-    An existing categorical variables template will not be overwritten 
-    by subsequent calls to \code{template_categorical_variables()}.
     
     Character encoding of metadata extracted directly from the tables are 
     converted to UTF-8 via \code{enc2utf8()}.

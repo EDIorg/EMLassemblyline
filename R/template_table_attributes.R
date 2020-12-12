@@ -18,22 +18,28 @@
 #'     to create \code{x}.
 #'
 #' @return 
+#' \item{attributes_*}{Columns:
 #'     \itemize{
-#'         \item{\strong{attributes_*.txt} The tab delimited attributes 
-#'         template where * is the table name from which the attributes were 
-#'         extracted. This file is written to \code{path} unless using \code{x}, 
-#'         in which case the template is added to 
-#'         \strong{/x/templates/attributes_*.txt}.}
-#'         \item{\strong{custom_units.txt} The tab delimited custom units 
-#'         template for defining non-standard units. This file is written to 
-#'         \code{path} unless using \code{x}, in which case the template is 
-#'         added to \strong{/x/templates/custom_units.txt}.}
+#'     \item{attributeName: Column name}
+#'     \item{attributeDefinition: Column definition}
+#'     \item{class: Column class. Valid options are: "numeric" (Numeric variable), "categorical" (Categorical variable, i.e. nominal), "character" (Free text character strings, e.g. notes), "Date" (Date and time variable)}
+#'     \item{unit: Column unit. Required for numeric classes. Select from EML's standard unit dictionary, accessible with \code{view_unit_dictionary()}. Use values in the "id" column. If not found, then define as a custom unit (see custom_units.txt).}
+#'     \item{dateTimeFormatString: Format string. Required for Date classes. Valid format string components are: "Y" (Year), "M" (Month), "D" (Day), "h" (Hour), "m" (Minute), "s" (Second), Common separators of format string components (e.g. "-" "/" "\" ":"") are supported.}
+#'     \item{missingValueCode: Missing value code. Required for columns containing a missing value code).}
+#'     \item{missingValueCodeExplanation: Definition of missing value code.}
 #'     }
+#' }
+#' \item{custom_units}{Describes non-standard units used in a data table attribute template. Columns:
+#'     \itemize{
+#'     \item{id: Unit name listed in the unit column of the table attributes template (e.g. feetPerSecond)}
+#'     \item{unitType: Unit type (e.g. velocity)}
+#'     \item{parentSI: SI equivalent (e.g. metersPerSecond)}
+#'     \item{multiplierToSI: Multiplier to SI equivalent (e.g. 0.3048)}
+#'     \item{Abbreviation: Abbreviation (e.g. ft/s)}
+#'     }
+#' }
 #'     
 #' @details 
-#'     An existing attributes template will not be overwritten by subsequent 
-#'     calls to \code{template_table_attributes()}.
-#'     
 #'     Character encoding of metadata extracted directly from the tables are 
 #'     converted to UTF-8 via \code{enc2utf8()}.
 #'     

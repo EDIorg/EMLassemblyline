@@ -26,15 +26,17 @@
 #'     to create \code{x}.
 #'
 #' @return
-#'     \strong{geographic_coverage.txt} The tab delimited geographic coverage 
-#'     template. This file is written to \code{path} unless using \code{x},
-#'     in which case the template is added to 
-#'     \strong{/x/templates/catvars_*.txt}.
+#' \item{geographical_coverage}{Columns:
+#'     \itemize{
+#'     \item{geographicDescription: Brief description of location.}
+#'     \item{northBoundingCoordinate: North coordinate}
+#'     \item{southBoundingCoordinate: South coordinate}
+#'     \item{eastBoundingCoordinate: East coordinate}
+#'     \item{westBoundingCoordinate: West coordinate}
+#'     }
+#' }
 #'     
 #' @details 
-#'     An existing geographic coverage template will not be overwritten by 
-#'     subsequent calls to \code{template_geographic_coverage()}.
-#'     
 #'     Character encoding of metadata extracted directly from the tables are 
 #'     converted to UTF-8 via \code{enc2utf8()}.
 #'
