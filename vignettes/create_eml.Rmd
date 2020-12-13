@@ -3,38 +3,6 @@ title: "Make EML"
 output: html_document
 ---
 
-## The make_eml() function
+The `make_eml()` function renders templates (and input arguments) into EML metadata (click `make_eml()` for the docs and [__edi.260.1.xml__](https://drive.google.com/file/d/13TfCqLQ4t6awYvLHdmF5oREPDchfGeCG/view?usp=sharing) for an example EML file).
 
-The information rich and machine readable EML metadata file should contain all the necessary content, in the correct format, and in the right schema locations according with best practices informed by scientists who use this information and data repositories who serve it in a human discoverable and readable form. In addition to performing all these tasks, the `make_eml()` function adds another layer of auto-extracted metadata to the EML based on template contents and data object types. Usage of `make_eml()` differs slightly depending on data package contents. The three use cases are:
-
-* **Data tables** The data package only contains data tables
-* **Other entities** The data package only contains non-table data types and other digital objects
-* **Data tables and other entities** The data package contains both data tables and other entities
-
-Below are examples of each use case. First set up the working directory with templates and data objects required by these use cases:
-
-## Make EML for data tables and other entities
-
-A third type of data package contains both data tables and other entities. To make EML for this package type, the core metadata and table attribute templates should be complete, as well as the categorical variables and custom units templates if necessary. The relevant `make_eml()` arguments for this package type are:
-
-*  **path**  Path to template files
-*  **data.path** Path to data files
-*  **eml.path** Path to where the EML file will be written
-*  **dataset.title** Title of the data package
-*  **temporal.coverage** Beginning and ending dates of the data using the format YYYY-MM-DD
-*  **geographic.description** (required if not using the _geographic_coverage.txt_ template) Description of the data packages geographic area.
-*  **geographic.coordinates** (required if not using the _geographic_coverage.txt_ template) A vector of decimal degree coordinates in the order: north, east, south, west, where latitudes south of the equator and longitudes west of the prime meridian are negative.
-*  **maintenance.description** Indicator of whether data collection is ‘ongoing’ or ‘completed’
-*  **data.table** Data table file names.
-*  **data.table.name** Descriptive name(s) of `data.table` in the same order as under `data.table`.
-*  **data.table.description** Data table descriptions listed in the same order as under `data.table`
-*  **data.table.quote.character** (required if data tables contain quote characters) Quote characters used in each data table in the same order as under `data.table`. Use “\”” for quotes and “\’” for apostrophes.
-*  **other.entity** File names of non-tabular data and/or other digital objects
-*  **other.entity.name** Descriptive name(s) of `other.entity` in the same order as under `other.entity`.
-*  **other.entity.description** Other entity descriptions listed in the same order as under `other.entity`
-*  **data.url** (required if uploading data to a repository via URL) A publicly accessible URL to the data
-*  **user.id** (optional) ID(s) of data repository user account(s) to which the data package will be uploaded.
-*  **user.domain** (optional) Domain of the `user.id`(s).
-*  **package.id** (optional) Data package identifier in the format expected by the receiving data repository.
-
-[__Example__](https://drive.google.com/file/d/13TfCqLQ4t6awYvLHdmF5oREPDchfGeCG/view?usp=sharing)
+`make_eml()` insists on access to the data objects to keep users from the monotonous mind-numbing task of gathering physical attributes (e.g. file size, number of rows, checksums, etc.) each time a data object changes. This enables automatic rebuild of revised data object EML as long as the structure remains constant (i.e. variable types and definitions don't change, only new records are added). This highlights the benifit of creating data with stable attributes not to mention for the consideration of downstream user workflows depending on a specific input data structure. Additionally, automated rebuild of EML streamlines the data publication process further by enabling automatic upload of a data package through a repository API, which is common for timeseries data or data derived from time series data packages (e.g. synthesis products). See [Automate data publication](https://ediorg.github.io/EMLassemblyline/articles/automate_data_publication.html) for more on this topic.

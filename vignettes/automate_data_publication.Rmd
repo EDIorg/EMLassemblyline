@@ -5,7 +5,7 @@ output: html_document
 
 ## Why and when?
 
-Recurring data publication was traditionally a manual edit and upload process that can now be automated with programmatic approaches like `EMLassemblyline` and use of data repository APIs. These approaches not only reduce effort, but improve metadata accuracy and enable complex reproducible science workflows. Automated publication and upload is suitable for:
+Recurring data publication was traditionally a manual edit and upload process that can now be automated with programmatic approaches (e.g. EAL) and use of data repository APIs (e.g. [EDIutils](https://ediorg.github.io/EDIutils/)). These approaches not only reduce effort, but improve metadata accuracy and enable automated workflows. Automated publication and upload is suitable for:
 
 * **Ongoing data collection** Data package is updated periodically with new data
 * **Ongoing derived data product** Data package is derived from sources with ongoing collection
@@ -14,10 +14,10 @@ Each use case is demonstrated below.
 
 ## Ongoing data collection
 
-Ongoing data collection can be the addition of new data to a time series, or data changing as a result of an evolving data processing or analytical method. In either case, automated publication requires stabilization of package contents and configuration of `EMLassemblyline` for these contents. If package contents deviate from what can be programmatically input to `EMLassemblyline`, then metadata accuracy decreases and human and machine understanding are compromised. Example automated data publication for ongoing data collection:
+Ongoing data collection can be the addition of new data to a time series or data changing as a result of an evolving data processing or analytical method. In either case, automated publication requires stabilization of package contents and configuration of EAL for these contents. If package contents deviate from what can be programmatically input to EAL, then metadata accuracy decreases and human and machine understanding are compromised. Example automated data publication for ongoing collection:
 
 1. **Upload data** Field technician uploads new raw data to a queue on their project server.
-2. **Process data** The presence of queued data triggers a scripted workflow in which raw data are aggregated and quality control procedures applied to create a publication ready dataset for which `EMLassemblyline` has been configured.
+2. **Process data** The presence of queued data triggers a scripted workflow in which raw data are aggregated and quality control procedures applied to create a publication ready dataset for which EAL has been configured.
 3. **Make EML** The script then updates values input to `make_eml()`’s `temporal.coverage` and `package.id` arguments, and then runs `make_eml()` for the new data.
 4. **Publish** The new data and EML are then published via the data repository API.
 
@@ -29,7 +29,7 @@ Another valuable use case of automated data publication is the creation of data 
 
 5. **Event notification** An event notification is sent by the data repository to the synthesis science team server, which triggers a scripted data processing and publication workflow.
 6. **Download data** The script downloads the updated package.
-7. **Process data** Next the data are processed, analyzed, and formatted into a data product for which the `EMLassemblyline` has been configured.
+7. **Process data** Next the data are processed, analyzed, and formatted into a data product for which the EAL has been configured.
 8. **Make EML** The script then updates values for the `temporal.coverage` and `package.id` arguments, and runs `make_eml()` for the data product.
 9. **Publish** The data product and EML are then published via the data repository API.
 
@@ -42,4 +42,4 @@ At this point the synthesis science teams workflow ends, but is the beginning of
 
 ![An example implementation](automated_publication_derived.png)
 
-Automated data publication coupled with repository event notifications enable highly efficient, reproducible, and valuable science workflows.
+Automated data publication coupled with repository event notifications enable efficient, reproducible, and valuable science workflows.

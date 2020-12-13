@@ -140,37 +140,27 @@
 #'     to work with UTF-8 encoded data and metadata.
 #'
 #' @examples 
-#' # Initialize data package directory for make_eml()
-#' file.copy(
-#'   from = system.file('/examples/pkg_260', package = 'EMLassemblyline'),
-#'   to = tempdir(),
-#'   recursive = TRUE)
+#' \dontrun{
 #' 
 #' # Set working directory
-#' setwd(paste0(tempdir(), '/pkg_260'))
+#' setwd("/Users/me/Documents/data_packages/pkg_260")
 #' 
-#' # Make EML (for data package with data tables and other entities)
-#' 
+#' # For 2 tables and 2 other entities
 #' make_eml(
-#'   path = './metadata_templates',
-#'   data.path = './data_objects',
-#'   eml.path = './eml',
-#'   dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions',
-#'   temporal.coverage = c('2014-05-01', '2015-10-31'),
-#'   maintenance.description = 'completed',
-#'   data.table = c('decomp.csv', 'nitrogen.csv'),
-#'   data.table.description = c('Decomposition data', 'Nitrogen data'),
-#'   other.entity = c('ancillary_data.zip', 'processing_and_analysis.R'),
-#'   other.entity.description = c('Ancillary data', 'Data processing and analysis script'),
-#'   user.id = 'csmith',
-#'   user.domain = 'EDI',
-#'   package.id = 'edi.260.3')
-#' 
-#' # View EML directory contents
-#' dir('./eml')
-#' 
-#' # Clean up
-#' unlink('.', recursive = TRUE)
+#'   path = "./metadata_templates",
+#'   data.path = "./data_objects",
+#'   eml.path = "./eml",
+#'   dataset.title = "Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions",
+#'   temporal.coverage = c("2014-05-01", "2015-10-31"),
+#'   maintenance.description = "Completed: No updates to these data are expected",
+#'   data.table = c("decomp.csv", "nitrogen.csv"),
+#'   data.table.description = c("Decomposition data", "Nitrogen data"),
+#'   other.entity = c("ancillary_data.zip", "processing_and_analysis.R"),
+#'   other.entity.description = c("Ancillary data", "Data processing and analysis script"),
+#'   user.id = "myid",
+#'   user.domain = "EDI",
+#'   package.id = "edi.260.1")
+#' }
 #'
 #' @export
 #'

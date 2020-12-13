@@ -206,15 +206,20 @@ to create <code>x</code>.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><strong>geographic_coverage.txt</strong> The tab delimited geographic coverage 
-    template. This file is written to <code>path</code> unless using <code>x</code>,
-    in which case the template is added to 
-    <strong>/x/templates/catvars_*.txt</strong>.</p>
+    
+
+<dt>geographical_coverage</dt><dd><p>Columns:
+    <ul>
+<li><p>geographicDescription: Brief description of location.</p></li>
+<li><p>northBoundingCoordinate: North coordinate</p></li>
+<li><p>southBoundingCoordinate: South coordinate</p></li>
+<li><p>eastBoundingCoordinate: East coordinate</p></li>
+<li><p>westBoundingCoordinate: West coordinate</p></li>
+</ul></p></dd>
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>An existing geographic coverage template will not be overwritten by 
-    subsequent calls to <code>template_geographic_coverage()</code>.</p>    
-<p>Character encoding of metadata extracted directly from the tables are 
+    <p>Character encoding of metadata extracted directly from the tables are 
     converted to UTF-8 via <code><a href='https://rdrr.io/r/base/Encoding.html'>enc2utf8()</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

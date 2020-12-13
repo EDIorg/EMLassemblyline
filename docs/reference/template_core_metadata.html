@@ -170,9 +170,7 @@
     </tr>
     <tr>
       <th>file.type</th>
-      <td><p>(character; optional) File type for abstract, methods, and additional 
-info metadata templates. Can be: '.txt' (plain text), '.docx' (MS Word),
-or '.md' (markdown).</p></td>
+      <td><p>(character; optional) File type for abstract, methods, and additional info. Can be: ".txt" (plain text), ".docx" (MS Word), or ".md" (markdown). The relative benefits: ".docx" supports basic formatting (super/sub scripts, italics, symbols, accented characters) but doesn't support bulleted lists and formatted equations. ".md" supports less formatting than ".docx" but is open source. ".txt" doesn't support any formatting but is a common file type.</p></td>
     </tr>
     <tr>
       <th>write.file</th>
@@ -189,25 +187,30 @@ to create <code>x</code>.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     
-<ul>
-<li><p><strong>abstract</strong> The abstract template.</p></li>
-<li><p><strong>additional_info</strong> The template for miscellaneous
-        information.</p></li>
-<li><p><strong>intellectual_rights.txt</strong> The intellectual rights 
-        license with the text of CC0 or CCBY.</p></li>
-<li><p><strong>keywords.txt</strong> The tab delimited keywords template.</p></li>
-<li><p><strong>methods</strong> The methods template.</p></li>
-<li><p><strong>personnel.txt</strong> The tab delimited personnel template 
-        for information on persons and funding involved in the creation of 
-        the data package.</p></li>
-<li><p>These files is written to <code>path</code> unless using <code>x</code>,
-        in which case the templates are added to 
-        <strong>/x/templates</strong>.</p></li>
-</ul>
 
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+<dt>abstract</dt><dd><p>Describes the salient features of a dataset in a concise summary much like an abstract does in a journal article. It should cover what the data are and why they were created.</p></dd>
+<dt>methods</dt><dd><p>Describes the data creation methods. Includes enough detail for future users to correctly use the data. Lists instrument descriptions, protocols, etc.</p></dd>
+<dt>keywords</dt><dd><p>Describes the data in a small set of terms. Keywords facilitate search and discovery on scientific terms, as well as names of research groups, field stations, and other organizations. Using a controlled vocabulary or thesaurus vastly improves discovery. We recommend using the <a href='http://vocab.lternet.edu/vocab/vocab/index.php'>LTER Controlled Vocabulary</a> when possible. Columns:
+    <ul>
+<li><p>keyword: One keyword per line</p></li>
+<li><p>keywordThesaurus: URI of the vocabulary from which the keyword originates.</p></li>
+</ul></p></dd>
+<dt>personnel</dt><dd><p>Describes the personnel and funding sources involved in the creation of the data. This facilitates attribution and reporting. Columns:
+    <ul>
+<li><p>givenName: First name</p></li>
+<li><p>middleInitial: Middle initial</p></li>
+<li><p>surName: Last name</p></li>
+<li><p>organizationName: Organization the person belongs to</p></li>
+<li><p>electronicMailAddress: Email address</p></li>
+<li><p>userId: Persons research identifier (e.g. <a href='https://orcid.org/'>ORCID</a>). Links a persons research profile to a data publication.</p></li>
+<li><p>role: Role of the person with respect to the data. Persons serving more than one role are listed on separate lines (e.g. replicate the persons info on separate lines but change the role. Valid options: "creator" (Author of the data. Will appear in the data citation.), "PI" (Principal investigator the data were created under. Will appear with project level metadata.), "contact" (A point of contact for questions about the data. Can be an organization or position (e.g. data manager). To do this, enter the organization or position name under givenName and leave middleInitial and surName empty.), Other roles (e.g. "Field Technician") will be listed as associated parties to the data.</p></li>
+<li><p>projectTitle: Title of project the data were created under. If ancillary projects were involved, then add as new lines below the primary project with the PIs info replicated.</p></li>
+<li><p>fundingAgency: Agency the project was funded by.</p></li>
+<li><p>fundingNumber: Grant or award number.</p></li>
+</ul></p></dd>
+<dt>intellectual_rights</dt><dd><p>Describes how the data may be used. Releasing without restriction (<a href='https://creativecommons.org/publicdomain/zero/1.0/'>CC0</a>) or with minimal attribution (<a href='https://creativecommons.org/licenses/by/4.0/'>CC BY</a>) maximizes value and future use.</p></dd>
+<dt>additional_info</dt><dd><p>Ancillary info not captured by any of the other templates.</p></dd>
 
-    <p>Existing templates will not be overwritten by <code>template_core_metadata()</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {

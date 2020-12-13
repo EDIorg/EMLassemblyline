@@ -208,11 +208,17 @@ to create <code>x</code>.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><strong>taxonomic_coverage.txt</strong> The tab delimited taxonomic coverage 
-    template. This file is written to <code>path</code> unless using <code>x</code>,
-    in which case the template is added to 
-    <strong>/x/templates/taxonomic_coverage.txt</strong>. Non-resolved taxa result 
-    NA.</p>
+    
+
+<dt>taxonomic_coverage</dt><dd><p>Columns:
+    <ul>
+<li><p>taxa_raw: Taxon name as it occurs in the data and as it will be listed in the metadata if no value is listed under the name_resolved column. Can be single word or species binomial.</p></li>
+<li><p>name_type: Type of name. Can be "scientific" or "common".</p></li>
+<li><p>name_resolved: Taxons name as found in an authority system.</p></li>
+<li><p>authority_system: Authority system in which the taxa’s name was found. Can be: "<a href='https://www.itis.gov/'>ITIS</a>", "<a href='http://www.marinespecies.org/'>WORMS</a>", "or "<a href='https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c'>GBIF</a>".</p></li>
+<li><p>authority_id: Taxa’s identifier in the authority system (e.g. 168469).</p></li>
+</ul></p></dd>
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>template_taxonomic_coverage()</code> searches the most preferred 
@@ -225,8 +231,6 @@ to create <code>x</code>.</p></td>
 <p>When taxonomic_coverage.txt is passed to <code><a href='make_eml.html'>make_eml()</a></code>, the 
     authority information is used to get the hierarchical rank names of 
     resolved taxa and rendered into the "taxonomicCoverage" element of EML.</p>    
-<p>Existing taxonomic_coverage.txt will not be overwritten by subsequent 
-    calls to <code>template_taxonomic_coverage()</code>.</p>    
 <p>Character encoding of metadata extracted directly from the tables are 
     converted to UTF-8 via <code><a href='https://rdrr.io/r/base/Encoding.html'>enc2utf8()</a></code>.</p>
 

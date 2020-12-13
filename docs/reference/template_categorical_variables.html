@@ -170,16 +170,18 @@
 
     
 
-<dt>catvars_tablename.txt</dt><dd><p>The tab delimited categorical variable template, where "tablename" is the table name from which the variables were extracted. This file is written to <code>path</code></p></dd>.
-<dt>list of data frames</dt><dd><p>A list of data frames. One for each categorical variables template.</p></dd>
+<dt>catvars_*</dt><dd><p>Columns:
+    <ul>
+<li><p>attributeName: Column name</p></li>
+<li><p>code: Categorical variable</p></li>
+<li><p>definition: Definition of categorical variable</p></li>
+</ul></p></dd>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>template_categorical_variables()</code> knows which columns of a table
     are <code>categorical</code> based on their definition under the <code>class</code> 
     column of the attributes_*.txt template.</p>    
-<p>An existing categorical variables template will not be overwritten 
-    by subsequent calls to <code>template_categorical_variables()</code>.</p>    
 <p>Character encoding of metadata extracted directly from the tables are 
     converted to UTF-8 via <code><a href='https://rdrr.io/r/base/Encoding.html'>enc2utf8()</a></code>.</p>
 

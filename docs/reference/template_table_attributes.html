@@ -187,23 +187,29 @@ to create <code>x</code>.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     
-<ul>
-<li><p><strong>attributes_*.txt</strong> The tab delimited attributes 
-        template where * is the table name from which the attributes were 
-        extracted. This file is written to <code>path</code> unless using <code>x</code>, 
-        in which case the template is added to 
-        <strong>/x/templates/attributes_*.txt</strong>.</p></li>
-<li><p><strong>custom_units.txt</strong> The tab delimited custom units 
-        template for defining non-standard units. This file is written to 
-        <code>path</code> unless using <code>x</code>, in which case the template is 
-        added to <strong>/x/templates/custom_units.txt</strong>.</p></li>
-</ul>
+
+<dt>attributes_*</dt><dd><p>Columns:
+    <ul>
+<li><p>attributeName: Column name</p></li>
+<li><p>attributeDefinition: Column definition</p></li>
+<li><p>class: Column class. Valid options are: "numeric" (Numeric variable), "categorical" (Categorical variable, i.e. nominal), "character" (Free text character strings, e.g. notes), "Date" (Date and time variable)</p></li>
+<li><p>unit: Column unit. Required for numeric classes. Select from EML's standard unit dictionary, accessible with <code><a href='view_unit_dictionary.html'>view_unit_dictionary()</a></code>. Use values in the "id" column. If not found, then define as a custom unit (see custom_units.txt).</p></li>
+<li><p>dateTimeFormatString: Format string. Required for Date classes. Valid format string components are: "Y" (Year), "M" (Month), "D" (Day), "h" (Hour), "m" (Minute), "s" (Second), Common separators of format string components (e.g. "-" "/" "\" ":"") are supported.</p></li>
+<li><p>missingValueCode: Missing value code. Required for columns containing a missing value code).</p></li>
+<li><p>missingValueCodeExplanation: Definition of missing value code.</p></li>
+</ul></p></dd>
+<dt>custom_units</dt><dd><p>Describes non-standard units used in a data table attribute template. Columns:
+    <ul>
+<li><p>id: Unit name listed in the unit column of the table attributes template (e.g. feetPerSecond)</p></li>
+<li><p>unitType: Unit type (e.g. velocity)</p></li>
+<li><p>parentSI: SI equivalent (e.g. metersPerSecond)</p></li>
+<li><p>multiplierToSI: Multiplier to SI equivalent (e.g. 0.3048)</p></li>
+<li><p>Abbreviation: Abbreviation (e.g. ft/s)</p></li>
+</ul></p></dd>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>An existing attributes template will not be overwritten by subsequent 
-    calls to <code>template_table_attributes()</code>.</p>    
-<p>Character encoding of metadata extracted directly from the tables are 
+    <p>Character encoding of metadata extracted directly from the tables are 
     converted to UTF-8 via <code><a href='https://rdrr.io/r/base/Encoding.html'>enc2utf8()</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

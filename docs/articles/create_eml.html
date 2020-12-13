@@ -108,74 +108,13 @@
 
     
     
-<div id="the-make_eml-function" class="section level2">
-<h2 class="hasAnchor">
-<a href="#the-make_eml-function" class="anchor"></a>The make_eml() function</h2>
-<p>The information rich and machine readable EML metadata file should contain all the necessary content, in the correct format, and in the right schema locations according with best practices informed by scientists who use this information and data repositories who serve it in a human discoverable and readable form. In addition to performing all these tasks, the <code><a href="../reference/make_eml.html">make_eml()</a></code> function adds another layer of auto-extracted metadata to the EML based on template contents and data object types. Usage of <code><a href="../reference/make_eml.html">make_eml()</a></code> differs slightly depending on data package contents. The three use cases are:</p>
-<ul>
-<li>
-<strong>Data tables</strong> The data package only contains data tables</li>
-<li>
-<strong>Other entities</strong> The data package only contains non-table data types and other digital objects</li>
-<li>
-<strong>Data tables and other entities</strong> The data package contains both data tables and other entities</li>
-</ul>
-<p>Below are examples of each use case. First set up the working directory with templates and data objects required by these use cases:</p>
-</div>
-<div id="make-eml-for-data-tables-and-other-entities" class="section level2">
-<h2 class="hasAnchor">
-<a href="#make-eml-for-data-tables-and-other-entities" class="anchor"></a>Make EML for data tables and other entities</h2>
-<p>A third type of data package contains both data tables and other entities. To make EML for this package type, the core metadata and table attribute templates should be complete, as well as the categorical variables and custom units templates if necessary. The relevant <code><a href="../reference/make_eml.html">make_eml()</a></code> arguments for this package type are:</p>
-<ul>
-<li>
-<strong>path</strong> Path to template files</li>
-<li>
-<strong>data.path</strong> Path to data files</li>
-<li>
-<strong>eml.path</strong> Path to where the EML file will be written</li>
-<li>
-<strong>dataset.title</strong> Title of the data package</li>
-<li>
-<strong>temporal.coverage</strong> Beginning and ending dates of the data using the format YYYY-MM-DD</li>
-<li>
-<strong>geographic.description</strong> (required if not using the <em>geographic_coverage.txt</em> template) Description of the data packages geographic area.</li>
-<li>
-<strong>geographic.coordinates</strong> (required if not using the <em>geographic_coverage.txt</em> template) A vector of decimal degree coordinates in the order: north, east, south, west, where latitudes south of the equator and longitudes west of the prime meridian are negative.</li>
-<li>
-<strong>maintenance.description</strong> Indicator of whether data collection is ‘ongoing’ or ‘completed’</li>
-<li>
-<strong>data.table</strong> Data table file names.</li>
-<li>
-<strong>data.table.name</strong> Descriptive name(s) of <code>data.table</code> in the same order as under <code>data.table</code>.</li>
-<li>
-<strong>data.table.description</strong> Data table descriptions listed in the same order as under <code>data.table</code>
-</li>
-<li>
-<strong>data.table.quote.character</strong> (required if data tables contain quote characters) Quote characters used in each data table in the same order as under <code>data.table</code>. Use “”” for quotes and “’” for apostrophes.</li>
-<li>
-<strong>other.entity</strong> File names of non-tabular data and/or other digital objects</li>
-<li>
-<strong>other.entity.name</strong> Descriptive name(s) of <code>other.entity</code> in the same order as under <code>other.entity</code>.</li>
-<li>
-<strong>other.entity.description</strong> Other entity descriptions listed in the same order as under <code>other.entity</code>
-</li>
-<li>
-<strong>data.url</strong> (required if uploading data to a repository via URL) A publicly accessible URL to the data</li>
-<li>
-<strong>user.id</strong> (optional) ID(s) of data repository user account(s) to which the data package will be uploaded.</li>
-<li>
-<strong>user.domain</strong> (optional) Domain of the <code>user.id</code>(s).</li>
-<li>
-<strong>package.id</strong> (optional) Data package identifier in the format expected by the receiving data repository.</li>
-</ul>
-</div>
+<p>The <code><a href="../reference/make_eml.html">make_eml()</a></code> function renders templates (and input arguments) into EML metadata (click <code><a href="../reference/make_eml.html">make_eml()</a></code> for the docs and <a href="https://drive.google.com/file/d/13TfCqLQ4t6awYvLHdmF5oREPDchfGeCG/view?usp=sharing"><strong>edi.260.1.xml</strong></a> for an example EML file).</p>
+<p><code><a href="../reference/make_eml.html">make_eml()</a></code> insists on access to the data objects to keep users from the monotonous mind-numbing task of gathering physical attributes (e.g. file size, number of rows, checksums, etc.) each time a data object changes. This enables automatic rebuild of revised data object EML as long as the structure remains constant (i.e. variable types and definitions don’t change, only new records are added). This highlights the benifit of creating data with stable attributes not to mention for the consideration of downstream user workflows depending on a specific input data structure. Additionally, automated rebuild of EML streamlines the data publication process further by enabling automatic upload of a data package through a repository API, which is common for timeseries data or data derived from time series data packages (e.g. synthesis products). See <a href="https://ediorg.github.io/EMLassemblyline/articles/automate_data_publication.html">Automate data publication</a> for more on this topic.</p>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
+      </div>
 
 </div>
 

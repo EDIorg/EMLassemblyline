@@ -179,25 +179,22 @@
 
     
 
-<dt>provenance.txt</dt><dd><p>The tab delimited provenance template written to <code>path</code> with the columns:
-<ul>
-<li><p>dataPackageID - Data package identifier. Supplying a valid packageID and systemID is all that is needed to create a complete provenance record.</p></li>
-<li><p>systemID - System (i.e. data repository) identifier. Currently supported systems are: EDI (Environmental Data Initiative).</p></li>
-<li><p>url - URL linking to an online source (i.e. data, paper, etc.). Required when a source can't be defined by a packageID and systemID.</p></li>
-<li><p>onlineDescription - Description of the data source. Required when a source can't be defined by a packageID and systemID.</p></li>
-<li><p>title - The source title. Required when a source can't be defined by a packageID and systemID.</p></li>
-<li><p>givenName - A creator or contacts given name. Required when a source can't be defined by a packageID and systemID.</p></li>
-<li><p>middleInitial - A creator or contacts middle initial. Required when a source can't be defined by a packageID and systemID.</p></li>
-<li><p>surName - A creator or contacts middle initial. Required when a source can't be defined by a packageID and systemID.</p></li>
-<li><p>role - "creator" and "contact" of the data source. Required when a source can't be defined by a packageID and systemID. Add both the creator and contact as separate rows within the template, where the information in each row is duplicated except for the givenName, middleInitial, surName (or organizationName), and role fields.</p></li>
-<li><p>organizationName - Name of organization the creator or contact belongs to. Required when a source can't be defined by a packageID and systemID.</p></li>
-<li><p>email - Email of the creator or contact. Required when a source can't be defined by a packageID and systemID.</p></li>
+<dt>provenance</dt><dd><p>Columns:
+    <ul>
+<li><p>dataPackageID: Data package identifier. Supplying a valid packageID and systemID (of supported systems) is all that is needed to create a complete provenance record.</p></li>
+<li><p>systemID: System (i.e. data repository) identifier. Currently supported systems are: EDI (Environmental Data Initiative).</p></li>
+<li><p>url: URL linking to an online source (i.e. data, paper, etc.). Required when a source can't be defined by a packageID and systemID.</p></li>
+<li><p>onlineDescription: Description of the data source. Required when a source can't be defined by a packageID and systemID.</p></li>
+<li><p>title: The source title. Required when a source can't be defined by a packageID and systemID.</p></li>
+<li><p>givenName: A creator or contacts given name. Required when a source can't be defined by a packageID and systemID.</p></li>
+<li><p>middleInitial: A creator or contacts middle initial. Required when a source can't be defined by a packageID and systemID.</p></li>
+<li><p>surName: A creator or contacts middle initial. Required when a source can't be defined by a packageID and systemID.</p></li>
+<li><p>role: "creator" and "contact" of the data source. Required when a source can't be defined by a packageID and systemID. Add both the creator and contact as separate rows within the template, where the information in each row is duplicated except for the givenName, middleInitial, surName (or organizationName), and role fields.</p></li>
+<li><p>organizationName: Name of organization the creator or contact belongs to. Required when a source can't be defined by a packageID and systemID.</p></li>
+<li><p>email: Email of the creator or contact. Required when a source can't be defined by a packageID and systemID.</p></li>
 </ul>
 This table has a "long" (i.e. name-value) format accomodating multiple contacts and creators within a single provenance record.</p></dd>
 
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>An existing provenance template will not be overwritten by a call to <code>template_provenance()</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {

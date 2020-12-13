@@ -203,28 +203,21 @@ Use this if annotating an existing EML file.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><strong>annotations.txt</strong> The tab delimited annotations template, 
-    pre-populated with default annotations, and containing the fields:</p><ul>
-<li><p>id - A unique identifier for the element being annotated.</p></li>
-<li><p>element - The element being annotated.</p></li>
-<li><p>context - The context of the subject (i.e. element value) being 
-      annotated (e.g. If the same column name occurs in more than one data 
-      tables, you will need to know which table it came from.).</p></li>
-<li><p>subject - The element value to be annotated.</p></li>
-<li><p>predicate_label - The predicate label (a.k.a. property) 
-      describing the relation of the subject to the object. This label 
-      should be copied directly from an ontology.</p></li>
-<li><p>predicate_uri - The predicate label URI copied directly from an 
-      ontology.</p></li>
-<li><p>object_label - The object label (a.k.a. value) describing the 
-      subject. This label should be copied directly from an ontology.</p></li>
-<li><p>object_uri - The object URI copied from an ontology.</p></li>
-</ul><p>The general user should ignore the id and element fields and focus on
-    the subject, context predicate_label, predicate_uri, object_label, and 
-    object_uri fields. Only the predicate and object fields should be 
-    modified. If you want to add an annotation to any of the listed 
-    subjects, simply copy the full row containing the subject, paste it in 
-    as new line, and modify the predicate and object fields.</p>
+    
+
+<dt>annotations</dt><dd><p>Columns:
+    <ul>
+<li><p>id: A unique identifier for the element being annotated.</p></li>
+<li><p>element: The element being annotated.</p></li>
+<li><p>context: The context of the subject (i.e. element value) being annotated (e.g. If the same column name occurs in more than one data tables, you will need to know which table it came from.).</p></li>
+<li><p>subject: The element value to be annotated.</p></li>
+<li><p>predicate_label: The predicate label (a.k.a. property) describing the relation of the subject to the object. This label should be copied directly from an ontology.</p></li>
+<li><p>predicate_uri: The predicate label URI copied directly from an ontology.</p></li>
+<li><p>object_label: The object label (a.k.a. value) describing the subject. This label should be copied directly from an ontology.</p></li>
+<li><p>object_uri: The object URI copied from an ontology.</p></li>
+</ul></p></dd>
+The general user should ignore the id and element fields and focus on the subject, context predicate_label, predicate_uri, object_label, and object_uri fields. Only the predicate and object fields should be modified. If you want to add an annotation to any of the listed subjects, simply copy the full row containing the subject, paste it in as new line, and modify the predicate and object fields.
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function gathers annotatable elements from your EML and assigns default predicate labels and URIs. You must provide object labels and URIs from the ontology of your choosing.</p>
