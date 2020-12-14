@@ -149,32 +149,32 @@
     to file.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>make_eml</span>(
-  <span class='no'>path</span>,
-  <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='no'>path</span>,
-  <span class='kw'>eml.path</span> <span class='kw'>=</span> <span class='no'>path</span>,
-  <span class='kw'>dataset.title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>temporal.coverage</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>geographic.description</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>geographic.coordinates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>maintenance.description</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>data.table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>data.table.name</span> <span class='kw'>=</span> <span class='no'>data.table</span>,
-  <span class='kw'>data.table.description</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>data.table.quote.character</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>data.table.url</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>other.entity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>other.entity.name</span> <span class='kw'>=</span> <span class='no'>other.entity</span>,
-  <span class='kw'>other.entity.description</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>other.entity.url</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>provenance</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>user.id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>user.domain</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>package.id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>write.file</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>return.obj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>make_eml</span><span class='op'>(</span>
+  <span class='va'>path</span>,
+  data.path <span class='op'>=</span> <span class='va'>path</span>,
+  eml.path <span class='op'>=</span> <span class='va'>path</span>,
+  dataset.title <span class='op'>=</span> <span class='cn'>NULL</span>,
+  temporal.coverage <span class='op'>=</span> <span class='cn'>NULL</span>,
+  geographic.description <span class='op'>=</span> <span class='cn'>NULL</span>,
+  geographic.coordinates <span class='op'>=</span> <span class='cn'>NULL</span>,
+  maintenance.description <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data.table <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data.table.name <span class='op'>=</span> <span class='va'>data.table</span>,
+  data.table.description <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data.table.quote.character <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data.table.url <span class='op'>=</span> <span class='cn'>NULL</span>,
+  other.entity <span class='op'>=</span> <span class='cn'>NULL</span>,
+  other.entity.name <span class='op'>=</span> <span class='va'>other.entity</span>,
+  other.entity.description <span class='op'>=</span> <span class='cn'>NULL</span>,
+  other.entity.url <span class='op'>=</span> <span class='cn'>NULL</span>,
+  provenance <span class='op'>=</span> <span class='cn'>NULL</span>,
+  user.id <span class='op'>=</span> <span class='cn'>NULL</span>,
+  user.domain <span class='op'>=</span> <span class='cn'>NULL</span>,
+  package.id <span class='op'>=</span> <span class='cn'>NULL</span>,
+  write.file <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  return.obj <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  x <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -365,27 +365,29 @@ to create <code>x</code>.</p></td>
     to work with UTF-8 encoded data and metadata.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 
 <span class='co'># Set working directory</span>
-<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='st'>"/Users/me/Documents/data_packages/pkg_260"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='st'>"/Users/me/Documents/data_packages/pkg_260"</span><span class='op'>)</span>
 
 <span class='co'># For 2 tables and 2 other entities</span>
-<span class='fu'>make_eml</span>(
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"./metadata_templates"</span>,
-  <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='st'>"./data_objects"</span>,
-  <span class='kw'>eml.path</span> <span class='kw'>=</span> <span class='st'>"./eml"</span>,
-  <span class='kw'>dataset.title</span> <span class='kw'>=</span> <span class='st'>"Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions"</span>,
-  <span class='kw'>temporal.coverage</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2014-05-01"</span>, <span class='st'>"2015-10-31"</span>),
-  <span class='kw'>maintenance.description</span> <span class='kw'>=</span> <span class='st'>"Completed: No updates to these data are expected"</span>,
-  <span class='kw'>data.table</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"decomp.csv"</span>, <span class='st'>"nitrogen.csv"</span>),
-  <span class='kw'>data.table.description</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Decomposition data"</span>, <span class='st'>"Nitrogen data"</span>),
-  <span class='kw'>other.entity</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ancillary_data.zip"</span>, <span class='st'>"processing_and_analysis.R"</span>),
-  <span class='kw'>other.entity.description</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Ancillary data"</span>, <span class='st'>"Data processing and analysis script"</span>),
-  <span class='kw'>user.id</span> <span class='kw'>=</span> <span class='st'>"myid"</span>,
-  <span class='kw'>user.domain</span> <span class='kw'>=</span> <span class='st'>"EDI"</span>,
-  <span class='kw'>package.id</span> <span class='kw'>=</span> <span class='st'>"edi.260.1"</span>)
-}</div></pre>
+<span class='fu'>make_eml</span><span class='op'>(</span>
+  path <span class='op'>=</span> <span class='st'>"./metadata_templates"</span>,
+  data.path <span class='op'>=</span> <span class='st'>"./data_objects"</span>,
+  eml.path <span class='op'>=</span> <span class='st'>"./eml"</span>,
+  dataset.title <span class='op'>=</span> <span class='st'>"Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions"</span>,
+  temporal.coverage <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"2014-05-01"</span>, <span class='st'>"2015-10-31"</span><span class='op'>)</span>,
+  maintenance.description <span class='op'>=</span> <span class='st'>"Completed: No updates to these data are expected"</span>,
+  data.table <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"decomp.csv"</span>, <span class='st'>"nitrogen.csv"</span><span class='op'>)</span>,
+  data.table.description <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Decomposition data"</span>, <span class='st'>"Nitrogen data"</span><span class='op'>)</span>,
+  other.entity <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"ancillary_data.zip"</span>, <span class='st'>"processing_and_analysis.R"</span><span class='op'>)</span>,
+  other.entity.description <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Ancillary data"</span>, <span class='st'>"Data processing and analysis script"</span><span class='op'>)</span>,
+  user.id <span class='op'>=</span> <span class='st'>"myid"</span>,
+  user.domain <span class='op'>=</span> <span class='st'>"EDI"</span>,
+  package.id <span class='op'>=</span> <span class='st'>"edi.260.1"</span><span class='op'>)</span>
+<span class='op'>}</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -401,7 +403,7 @@ to create <code>x</code>.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

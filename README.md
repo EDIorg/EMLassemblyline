@@ -28,7 +28,7 @@ remotes::install_github("EDIorg/EMLassemblyline")
 
 ## Usage
 
-[An overview of supported use cases](https://ediorg.github.io/EMLassemblyline/)
+[An overview of the EAL use cases](https://ediorg.github.io/EMLassemblyline/articles/overview.html)
 
 ## Active projects
 
@@ -50,6 +50,6 @@ Several people have contributed to this project. [List of contributors](https://
 
 ## Related materials
 
-[EML Best Practices](https://ediorg.github.io/data-package-best-practices/EMLmetadata/)
-The [EML R library](https://github.com/ropensci/EML) is the foundation of EAL.
-[The Ecological Metadata Language (EML)](https://knb.ecoinformatics.org/#external//emlparser/docs/index.html)
+* The [Ecological Metadata Language (EML)](https://knb.ecoinformatics.org/#external//emlparser/docs/index.html)
+* Some [EML Best Practices](https://ediorg.github.io/data-package-best-practices/EMLmetadata/)
+* The [EML R library](https://github.com/ropensci/EML) is the foundation of EAL.

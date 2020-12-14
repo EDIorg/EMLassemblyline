@@ -21,7 +21,7 @@ Ongoing data collection can be the addition of new data to a time series or data
 3. **Make EML** The script then updates values input to `make_eml()`’s `temporal.coverage` and `package.id` arguments, and then runs `make_eml()` for the new data.
 4. **Publish** The new data and EML are then published via the data repository API.
 
-![Processes of automated publication for a dataset with ongoing collection](automated_publication_ongoing.png)
+![](https://github.com/EDIorg/EMLassemblyline/raw/master/vignettes/automated_publication_ongoing.PNG)
 
 ## Ongoing derived data product
 
@@ -40,6 +40,6 @@ At this point the synthesis science teams workflow ends, but is the beginning of
 12. **Process data** The package contents are processed into website content.
 13. **Use information** The public uses this information.
 
-![An example implementation](automated_publication_derived.png)
+![](https://github.com/EDIorg/EMLassemblyline/raw/master/vignettes/automated_publication_derived.PNG)
 
 Automated data publication coupled with repository event notifications enable efficient, reproducible, and valuable science workflows.

@@ -147,17 +147,17 @@
     <p>Use this function to extract the unique location coordinates and names from a table or to create a blank template to manually fill.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>template_geographic_coverage</span>(
-  <span class='no'>path</span>,
-  <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='no'>path</span>,
-  <span class='no'>data.table</span>,
-  <span class='no'>lat.col</span>,
-  <span class='no'>lon.col</span>,
-  <span class='no'>site.col</span>,
-  <span class='kw'>empty</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>write.file</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>template_geographic_coverage</span><span class='op'>(</span>
+  <span class='va'>path</span>,
+  data.path <span class='op'>=</span> <span class='va'>path</span>,
+  <span class='va'>data.table</span>,
+  <span class='va'>lat.col</span>,
+  <span class='va'>lon.col</span>,
+  <span class='va'>site.col</span>,
+  empty <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  write.file <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  x <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -223,24 +223,26 @@ to create <code>x</code>.</p></td>
     converted to UTF-8 via <code><a href='https://rdrr.io/r/base/Encoding.html'>enc2utf8()</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># Set working directory</span>
-<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='st'>"/Users/me/Documents/data_packages/pkg_260"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='st'>"/Users/me/Documents/data_packages/pkg_260"</span><span class='op'>)</span>
 
 <span class='co'># For a table containing site coordinates and names</span>
-<span class='fu'>template_geographic_coverage</span>(
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"./metadata_templates"</span>,
-  <span class='kw'>data.path</span> <span class='kw'>=</span> <span class='st'>"./data_objects"</span>,
-  <span class='kw'>data.table</span> <span class='kw'>=</span> <span class='st'>"nitrogen.csv"</span>,
-  <span class='kw'>site.col</span> <span class='kw'>=</span> <span class='st'>"site_name"</span>,
-  <span class='kw'>lat.col</span> <span class='kw'>=</span> <span class='st'>"site_lat"</span>,
-  <span class='kw'>lon.col</span> <span class='kw'>=</span> <span class='st'>"site_lon"</span>)
-
+<span class='fu'>template_geographic_coverage</span><span class='op'>(</span>
+  path <span class='op'>=</span> <span class='st'>"./metadata_templates"</span>,
+  data.path <span class='op'>=</span> <span class='st'>"./data_objects"</span>,
+  data.table <span class='op'>=</span> <span class='st'>"nitrogen.csv"</span>,
+  site.col <span class='op'>=</span> <span class='st'>"site_name"</span>,
+  lat.col <span class='op'>=</span> <span class='st'>"site_lat"</span>,
+  lon.col <span class='op'>=</span> <span class='st'>"site_lon"</span><span class='op'>)</span>
+  
 <span class='co'># For returning an empty template to be filled manually</span>
-<span class='fu'>template_geographic_coverage</span>(
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"./metadata_templates"</span>,
-  <span class='kw'>empty</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-}</div></pre>
+<span class='fu'>template_geographic_coverage</span><span class='op'>(</span>
+  path <span class='op'>=</span> <span class='st'>"./metadata_templates"</span>,
+  empty <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='op'>}</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -256,7 +258,7 @@ to create <code>x</code>.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
