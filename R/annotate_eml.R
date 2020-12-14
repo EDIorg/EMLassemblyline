@@ -399,6 +399,7 @@ annotate_eml <- function(
 #' 
 #'
 #' @return
+#' \item{eml}{emld list object being annotated}
 #' 
 #' @details 
 #' Match annotatable elements (subjects) to their annotations listed in
@@ -579,7 +580,7 @@ append_rp <- function(responsible.party, annotations.template) {
 #'
 #' @param responsible.party
 #'     (emld list) A ResponsibleParty EML node in the emld list format.
-#' @param annotations.template
+#' @param anno
 #'     (data.frame) The annotations template created within 
 #'     \code{annotate_eml()}.
 #' @param rp

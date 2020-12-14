@@ -16,7 +16,7 @@ annotate_element(element, eml, anno, rp)
 \item{rp}{(data.frame) The responsibleParty table}
 }
 \value{
-
+\item{eml}{emld list object being annotated}
 }
 \description{
 This is a helper function for \code{annotate_eml()}.

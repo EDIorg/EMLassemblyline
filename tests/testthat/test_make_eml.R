@@ -316,7 +316,7 @@ testthat::test_that('Expect template values in EML', {
   # abstract - EML is created even if missing
   
   x1 <- x
-  x1$x$template$abstract.txt <- NULL
+  x1$x$template$abstract.docx <- NULL
   r <- suppressWarnings(
     do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   expect_null(r$dataset$abstract)
@@ -377,7 +377,7 @@ testthat::test_that('Expect template values in EML', {
   # methods - EML is created even if missing
   
   x1 <- x
-  x1$x$template$methods.txt <- NULL
+  x1$x$template$methods.docx <- NULL
   x1$x$template$provenance.txt <- NULL
   r <- suppressWarnings(
     do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))

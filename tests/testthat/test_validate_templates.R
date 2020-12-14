@@ -28,7 +28,7 @@ testthat::test_that("validate_templates()", {
   
   x1 <- x
   # Missing abstract
-  x1$template$abstract.txt <- NULL
+  x1$template$abstract.docx <- NULL
   # Missing attribute names
   x1$template$attributes_decomp.txt$content <- 
     x1$template$attributes_decomp.txt$content[1:3, ]
@@ -91,7 +91,7 @@ testthat::test_that("abstract", {
   # Message if missing
   
   x1 <- x
-  x1$template$abstract.txt <- NULL
+  x1$template$abstract.docx <- NULL
   expect_true(
     stringr::str_detect(
       validate_abstract(x1),
@@ -944,7 +944,7 @@ testthat::test_that("methods", {
   # Message if missing
   
   x1 <- x
-  x1$template$methods.txt <- NULL
+  x1$template$methods.docx <- NULL
   expect_true(
     stringr::str_detect(
       validate_methods(x1),

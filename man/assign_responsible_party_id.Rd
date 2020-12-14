@@ -9,11 +9,11 @@ assign_responsible_party_id(responsible.party, anno, rp)
 \arguments{
 \item{responsible.party}{(emld list) A ResponsibleParty EML node in the emld list format.}
 
+\item{anno}{(data.frame) The annotations template created within 
+\code{annotate_eml()}.}
+
 \item{rp}{(data.frame) A growing set of responsible party metadata to be used
 in \code{annotate_eml()}}
-
-\item{annotations.template}{(data.frame) The annotations template created within 
-\code{annotate_eml()}.}
 }
 \value{
 \item{responsible.party}{(emld list) Annotated responsible party node}

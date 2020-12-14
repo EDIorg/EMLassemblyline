@@ -2853,7 +2853,7 @@ check_duplicate_templates <- function(path) {
 
 #' Check resolvability of URI
 #'
-#' @param uri 
+#' @param uri URI to check
 #'
 #' @return (logical) TRUE if can be resolved, FALSE otherwise
 #'

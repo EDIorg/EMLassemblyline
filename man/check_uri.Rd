@@ -7,7 +7,7 @@
 check_uri(uri)
 }
 \arguments{
-\item{uri}{}
+\item{uri}{URI to check}
 }
 \value{
 (logical) TRUE if can be resolved, FALSE otherwise
