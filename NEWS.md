@@ -1,3 +1,41 @@
+# EMLassemblyline 3.0.0
+
+### Enhancements
+
+* __Semantic annotation:__ EML can now be annotated. This implementation supports two use cases:
+    1. New EML ... created by the EMLassemblyline workflow:
+        - Complete all metadata templates for your dataset (as usual)
+        - Run `template_annotations()` to create the annotations template
+            - The annotations template (annotations.txt) reports the annotatable elements within your metadata and assigns default predicate annotations. You’ll have to add object annotations from ontologies of your choosing. You can remove annotations by deleting rows and add annotations by copying a subject's row, pasting it to a new line, then modifying the object annotation fields.
+            - Default annotations can be changed by the user
+            - Instructions for creating annotations.txt from scratch are included in the function docs (for users gathering annotations in other ways).
+            - Recurring nodes (e.g. ResponsibleParty) only require one set of annotations within annotations.txt
+        - Run `make_eml()`
+    2. Old EML ... created in other ways:
+        - Run template_annotations() for your EML file
+        - Run annotate_eml() to get an annotated revision of your EML file
+        
+    *Note: All annotated elements are assigned ids and their annotations are placed both immediately under the parent element (subject) and within the /eml/annotations node through id+reference pairs. This redundant approach supports variation in where EML metadata consumers prefer to harvest this information and supports annotation of EML elements requiring id+reference pairs.*
+
+* __Provenance metadata template:__ This extends support for provenance metadata of data sources external to the EDI Data Repository. Create the template with `template_provenance()`. Fixes [issue #8](https://github.com/EDIorg/EMLassemblyline/issues/8)
+
+* __Allow creation of partial EML (part 2):__ This completes implementation of issue #34 by moving all evaluation of inputs to make_eml() (and associated warning and error handling) from various locations in the code base to validate_templates(). With this implementation comes a new approach to communicating input issues to the user via template_issues, an object written to the global environment and formatted into a human readable report (message) when passed through issues().
+
+* __UTF-8 character encoding:__ EMLassemblyline extracts metadata from data objects and may malform this content if the character encoding is not supported. In an attempt to minimize this issue and convert metadata into the UTF-8 encoding expected by EML, the Base R function `enc2utf8()` has been implemented anywhere metadata is extracted from data objects and written to file (i.e. templating functions) and anywhere template content is added to the EML (i.e. `make_eml()`). Because this may create EML that inaccuratly represents the data object it describes (e.g. categorical variables encoded in UTF-8 but the data encoded in something else) warnings are now issued when the input data object is not UTF-8 (or ASCII) encoded as estimated by `readr::guess_encoding()`. Additionally, EMLassemblyline documentation now emphasizes the importance of encoding data objects in UTF-8 first and then beginning the metadata creation process. An encoding conversion of TextType metadata (i.e. abstract, methods, additional_info) has not yet been implemented.
+
+### Deprecation
+
+* __import_templates():__ This function has been replaced by `template_core_metadata()` and `template_table_attributes()`.
+* __define_catvars():__ This function has been replaced by `template_categorical_variables()`.
+* __extract_geocoverage():__ This function has been replaced by `template_geographic_coverage()`.
+* __affiliation argument of make_eml():__ This argument has been replaced by `user.domain`
+* __data.files argument of make_eml():__ This argument has been replaced by `data.table`
+* __data.files.description argument of make_eml():__ This argument has been replaced by `data.table.description`
+* __data.files.quote.character argument of make_eml():__ This argument has been replaced by `data.table.quote.character`
+* __data.files.url argument of make_eml():__ This argument has been replaced by `data.table.url`
+* __zip.dir argument of make_eml():__ This argument has been replaced by `other.entity`
+* __zip.dir.description argument of make_eml():__ This argument has been replaced by `other.entity.description`
+
 # EMLassemblyline 2.18.2
 
 ### Bug fix

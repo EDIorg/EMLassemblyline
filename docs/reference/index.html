@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.18.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.0</span>
       </span>
     </div>
 
@@ -94,10 +94,10 @@
       <a href="../articles/organize_data_package.html">Organize data package</a>
     </li>
     <li>
-      <a href="../articles/create_metadata_templates.html">Create metadata templates</a>
+      <a href="../articles/create_tmplts.html">Template metadata</a>
     </li>
     <li>
-      <a href="../articles/edit_metadata_templates.html">Edit metadata templates</a>
+      <a href="../articles/edit_tmplts.html">Edit metadata templates</a>
     </li>
     <li>
       <a href="../articles/create_eml.html">Make EML</a>
@@ -106,10 +106,10 @@
       <a href="../articles/publish_data_package.html">Publish data package</a>
     </li>
     <li>
-      <a href="../articles/automate_data_publication.html">Automate data publication</a>
+      <a href="../articles/auto_pub.html">Automate data publication</a>
     </li>
     <li>
-      <a href="../articles/emlassemblyline_via_exchange_format.html">Use EMLassemblyline via exchange format</a>
+      <a href="../articles/exchange_format.html">Use EMLassemblyline via exchange format</a>
     </li>
   </ul>
 </li>
@@ -151,8 +151,8 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-create-metadata-templates" class="hasAnchor"><a href="#section-create-metadata-templates" class="anchor"></a>Create metadata templates</h2>
-          <p class="section-desc"><p>Functions for creating metadata templates, using automated metadata extraction when possible.</p></p>
+          <h2 id="section-template-metadata" class="hasAnchor"><a href="#section-template-metadata" class="anchor"></a>Template metadata</h2>
+          <p class="section-desc"><p>Metadata templates are a mix of machine extracted and human supplied information.</p></p>
         </th>
       </tr>
       
@@ -163,39 +163,57 @@
       <tr>
         
         <td>
-          <p><code><a href="template_categorical_variables.html">template_categorical_variables()</a></code> </p>
+          <p><code><a href="template_directories.html">template_directories()</a></code> </p>
         </td>
-        <td><p>Create categorical variables template</p></td>
+        <td><p>Initialize directories for templates, data objects, and EML</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="template_core_metadata.html">template_core_metadata()</a></code> </p>
         </td>
-        <td><p>Create core metadata templates</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="template_geographic_coverage.html">template_geographic_coverage()</a></code> </p>
-        </td>
-        <td><p>Create geographic coverage template</p></td>
+        <td><p>Describe core features of a data package</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="template_table_attributes.html">template_table_attributes()</a></code> </p>
         </td>
-        <td><p>Create table attributes template</p></td>
+        <td><p>Describe data tables</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="template_categorical_variables.html">template_categorical_variables()</a></code> </p>
+        </td>
+        <td><p>Describe categorical variables of a data table</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="template_geographic_coverage.html">template_geographic_coverage()</a></code> </p>
+        </td>
+        <td><p>Describe where the data were collected</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="template_taxonomic_coverage.html">template_taxonomic_coverage()</a></code> </p>
         </td>
-        <td><p>Create taxonomic coverage template</p></td>
+        <td><p>Describe biological organisms (taxa)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="template_annotations.html">template_annotations()</a></code> </p>
+        </td>
+        <td><p>Add semantic meaning</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="template_provenance.html">template_provenance()</a></code> </p>
+        </td>
+        <td><p>Describe source datasets</p></td>
       </tr>
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-make-eml-metdata" class="hasAnchor"><a href="#section-make-eml-metdata" class="anchor"></a>Make EML metdata</h2>
-          <p class="section-desc"><p>Function for creating EML from metadata templates, using automated metadata extraction when possible.</p></p>
+          <h2 id="section-make-eml" class="hasAnchor"><a href="#section-make-eml" class="anchor"></a>Make EML</h2>
+          <p class="section-desc"><p>Renders template content into an EML file.</p></p>
         </th>
       </tr>
       
@@ -213,8 +231,8 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-helpers" class="hasAnchor"><a href="#section-helpers" class="anchor"></a>Helpers</h2>
-          <p class="section-desc"><p>Helper functions for creating metadata</p></p>
+          <h2 id="section-utilities" class="hasAnchor"><a href="#section-utilities" class="anchor"></a>Utilities</h2>
+          <p class="section-desc"><p>Helper functions</p></p>
         </th>
       </tr>
       
@@ -225,21 +243,15 @@
       <tr>
         
         <td>
-          <p><code><a href="template_arguments.html">template_arguments()</a></code> </p>
-        </td>
-        <td><p>Initialize inputs to <code>EMLassemblyline</code> functions</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="template_directories.html">template_directories()</a></code> </p>
-        </td>
-        <td><p>Create data package directory</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="view_unit_dictionary.html">view_unit_dictionary()</a></code> </p>
         </td>
-        <td><p>View EML's standard unit dictionary</p></td>
+        <td><p>Browse EML's dictionary for defining units of data attributes</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="template_arguments.html">template_arguments()</a></code> </p>
+        </td>
+        <td><p>Create a list of inputs to EMLassemblyline functions (primarily for internal use only)</p></td>
       </tr>
     </tbody>
     </table>

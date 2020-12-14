@@ -2,18 +2,18 @@
 % Please edit documentation in R/template_taxonomic_coverage.R
 \name{template_taxonomic_coverage}
 \alias{template_taxonomic_coverage}
-\title{Create taxonomic coverage template}
+\title{Describe biological organisms (taxa)}
 \usage{
 template_taxonomic_coverage(
-      path,
-      data.path = path,
-      taxa.table,
-      taxa.col,
-      taxa.name.type,
-      taxa.authority,
-      write.file = TRUE,
-      x = NULL
-    )
+  path,
+  data.path = path,
+  taxa.table,
+  taxa.col,
+  taxa.name.type,
+  taxa.authority,
+  write.file = TRUE,
+  x = NULL
+)
 }
 \arguments{
 \item{path}{(character) Path to the metadata template directory.}
@@ -44,19 +44,18 @@ scientific and common searches, respectively.}
 to create \code{x}.}
 }
 \value{
-\strong{taxonomic_coverage.txt} The tab delimited taxonomic coverage 
-    template. This file is written to \code{path} unless using \code{x},
-    in which case the template is added to 
-    \strong{/x/templates/taxonomic_coverage.txt}. Non-resolved taxa result 
-    NA.
+\item{taxonomic_coverage}{Columns:
+    \itemize{
+    \item{taxa_raw: Taxon name as it occurs in the data and as it will be listed in the metadata if no value is listed under the name_resolved column. Can be single word or species binomial.}
+    \item{name_type: Type of name. Can be "scientific" or "common".}
+    \item{name_resolved: Taxons name as found in an authority system.}
+    \item{authority_system: Authority system in which the taxa’s name was found. Can be: "\href{https://www.itis.gov/}{ITIS}", "\href{http://www.marinespecies.org/}{WORMS}", "or "\href{https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c}{GBIF}".}
+    \item{authority_id: Taxa’s identifier in the authority system (e.g. 168469).}
+    }
+}
 }
 \description{
-Use this function to extract the unique taxa of a data table and 
-    try to resolve (match) to a taxonomic authority system (e.g. 
-    \href{https://www.itis.gov/}{ITIS}) and return for user supplied 
-    inputs if necessary. This information is later used to list the full
-    hierarchical rank names in the metadata.
-    \href{https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html}{Instructions for editing this template.}
+Describes biological organisms (taxa) occuring in the data and helps resolve them to authority systems. If matches can be made, then the full taxonomic hierarchy of scientific and common names are automatically rendered in the final EML metadata. This enables future users to search on any taxonomic level of interest across data packages in data repositories.
 }
 \details{
 \code{template_taxonomic_coverage()} searches the most preferred 
@@ -71,47 +70,23 @@ Use this function to extract the unique taxa of a data table and
     authority information is used to get the hierarchical rank names of 
     resolved taxa and rendered into the "taxonomicCoverage" element of EML.
     
-    Existing taxonomic_coverage.txt will not be overwritten by subsequent 
-    calls to \code{template_taxonomic_coverage()}.
+    Character encoding of metadata extracted directly from the tables are 
+    converted to UTF-8 via \code{enc2utf8()}.
 }
 \examples{
-# Initialize data package directory for template_taxonomic_coverage()
-file.copy(
-  from = system.file('/examples/pkg_255', package = 'EMLassemblyline'),
-  to = tempdir(),
-  recursive = TRUE
-)
-
+\dontrun{
 # Set working directory
-setwd(paste0(tempdir(), '/pkg_255'))
+setwd("/Users/me/Documents/data_packages/pkg_260")
 
-# View directory contents (NOTE: taxonomic_coverage.txt doesn't exist)
-dir('./metadata_templates')
-
+# For a table containing taxa, try resolving scientific names to ITIS, and if no matches can be made, then try WORMS
 # Template taxonomic coverage
 template_taxonomic_coverage(
-  path = './metadata_templates',
-  data.path = './data_objects',
-  taxa.table = 'decomp.csv',
-  taxa.col = 'taxa',
-  taxa.authority = c(3,11),
-  taxa.name.type = 'scientific'
-)
-
-# View directory contents (NOTE: taxonomic_coverage.txt exists)
-dir('./metadata_templates')
-
-# Rerunning template_taxonomic_coverage() does not overwrite file
-template_taxonomic_coverage(
-  path = './metadata_templates',
-  data.path = './data_objects',
-  taxa.table = 'decomp.csv',
-  taxa.col = 'taxa',
-  taxa.authority = c(3,11),
-  taxa.name.type = 'scientific'
-)
-
-# Clean up
-unlink('.', recursive = TRUE)
+  path = "./metadata_templates",
+  data.path = "./data_objects",
+  taxa.table = "decomp.csv",
+  taxa.col = "taxa",
+  taxa.authority = c(3,9),
+  taxa.name.type = "scientific")
+}
 
 }

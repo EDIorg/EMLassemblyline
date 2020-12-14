@@ -2,15 +2,15 @@
 % Please edit documentation in R/template_core_metadata.R
 \name{template_core_metadata}
 \alias{template_core_metadata}
-\title{Create core metadata templates}
+\title{Describe core features of a data package}
 \usage{
 template_core_metadata(
-      path,
-      license,
-      file.type = '.txt',
-      write.file = TRUE,
-      x = NULL
-    )
+  path,
+  license,
+  file.type = ".txt",
+  write.file = TRUE,
+  x = NULL
+)
 }
 \arguments{
 \item{path}{(character) Path to the metadata template directory.}
@@ -19,9 +19,7 @@ template_core_metadata(
 \href{https://creativecommons.org/publicdomain/zero/1.0/}{"CC0"} or 
 \href{https://creativecommons.org/licenses/by/4.0/}{"CCBY"}.}
 
-\item{file.type}{(character; optional) File type for abstract, methods, and additional 
-info metadata templates. Can be: '.txt' (plain text), '.docx' (MS Word),
-or '.md' (markdown).}
+\item{file.type}{(character; optional) File type for abstract, methods, and additional info. Can be: ".txt" (plain text), ".docx" (MS Word), or ".md" (markdown). The relative benefits: ".docx" supports basic formatting (super/sub scripts, italics, symbols, accented characters) but doesn't support bulleted lists and formatted equations. ".md" supports less formatting than ".docx" but is open source. ".txt" doesn't support any formatting but is a common file type.}
 
 \item{write.file}{(logical; optional) Whether to write the template files.}
 
@@ -30,94 +28,44 @@ or '.md' (markdown).}
 to create \code{x}.}
 }
 \value{
-\itemize{
-        \item{\strong{abstract} The abstract template.}
-        \item{\strong{additional_info} The template for miscellaneous
-        information.}
-        \item{\strong{intellectual_rights.txt} The intellectual rights 
-        license with the text of CC0 or CCBY.}
-        \item{\strong{keywords.txt} The tab delimited keywords template.}
-        \item{\strong{methods} The methods template.}
-        \item{\strong{personnel.txt} The tab delimited personnel template 
-        for information on persons and funding involved in the creation of 
-        the data package.}
-        \item{These files is written to \code{path} unless using \code{x},
-        in which case the templates are added to 
-        \strong{/x/templates}.}
+\item{abstract}{Describes the salient features of a dataset in a concise summary much like an abstract does in a journal article. It should cover what the data are and why they were created.}
+\item{methods}{Describes the data creation methods. Includes enough detail for future users to correctly use the data. Lists instrument descriptions, protocols, etc.}
+\item{keywords}{Describes the data in a small set of terms. Keywords facilitate search and discovery on scientific terms, as well as names of research groups, field stations, and other organizations. Using a controlled vocabulary or thesaurus vastly improves discovery. We recommend using the \href{http://vocab.lternet.edu/vocab/vocab/index.php}{LTER Controlled Vocabulary} when possible. Columns:
+    \itemize{
+    \item{keyword: One keyword per line}
+    \item{keywordThesaurus: URI of the vocabulary from which the keyword originates.}
     }
 }
-\description{
-Use this function to create the core metadata templates required by 
-    all data packages. Most templates require user supplied information.
-    \href{https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html}{Instructions for editing these templates.}
+\item{personnel}{Describes the personnel and funding sources involved in the creation of the data. This facilitates attribution and reporting. Columns:
+    \itemize{
+    \item{givenName: First name}
+    \item{middleInitial: Middle initial}
+    \item{surName: Last name}
+    \item{organizationName: Organization the person belongs to}
+    \item{electronicMailAddress: Email address}
+    \item{userId: Persons research identifier (e.g. \href{https://orcid.org/}{ORCID}). Links a persons research profile to a data publication.}
+    \item{role: Role of the person with respect to the data. Persons serving more than one role are listed on separate lines (e.g. replicate the persons info on separate lines but change the role. Valid options: "creator" (Author of the data. Will appear in the data citation.), "PI" (Principal investigator the data were created under. Will appear with project level metadata.), "contact" (A point of contact for questions about the data. Can be an organization or position (e.g. data manager). To do this, enter the organization or position name under givenName and leave middleInitial and surName empty.), Other roles (e.g. "Field Technician") will be listed as associated parties to the data.}
+    \item{projectTitle: Title of project the data were created under. If ancillary projects were involved, then add as new lines below the primary project with the PIs info replicated.}
+    \item{fundingAgency: Agency the project was funded by.}
+    \item{fundingNumber: Grant or award number.}
+    }
 }
-\details{
-Existing templates will not be overwritten by \code{template_core_metadata()}.
+\item{intellectual_rights}{Describes how the data may be used. Releasing without restriction (\href{https://creativecommons.org/publicdomain/zero/1.0/}{CC0}) or with minimal attribution (\href{https://creativecommons.org/licenses/by/4.0/}{CC BY}) maximizes value and future use.}
+\item{additional_info}{Ancillary info not captured by any of the other templates.}
+}
+\description{
+Core information to all data packages (abstract, methods, keywords, personnel, license). Describes what the data are, why and how they were created, who was involved in their creation, and under what license the data are released.
 }
 \examples{
-# Initialize data package directory for template_core_metadata()
-file.copy(
-  from = system.file('/examples/pkg_250', package = 'EMLassemblyline'),
-  to = tempdir(),
-  recursive = TRUE
-)
-
+\dontrun{
 # Set working directory
-setwd(paste0(tempdir(), '/pkg_250'))
+setwd("/Users/me/Documents/data_packages/pkg_260")
 
-# View directory contents (NOTE: Directory is empty)
-dir('./metadata_templates')
-
-# Template core metadata
+# For data licensed under CC0 and using .docx files for the abstract and methods
 template_core_metadata(
-  path = './metadata_templates',
-  license = 'CC0'
-)
-
-# View directory contents (NOTE: Templates exist)
-dir('./metadata_templates')
-
-# Rerunning template_core_metadata() does not overwrite files
-template_core_metadata(
-  path = './metadata_templates',
-  license = 'CC0'
-)
-
-# Use docx files for abstract, methods, and additional_info
-# First remove abstract, methods, and additional_info templates
-file.remove(
-  c(
-    './metadata_templates/abstract.txt',
-    './metadata_templates/methods.txt',
-    './metadata_templates/additional_info.txt'
-  )
-)
-
-# Create docx templates
-template_core_metadata(
-  path = './metadata_templates',
-  license = 'CC0',
-  file.type = '.docx'
-)
-
-# Use md files for abstract, methods, and additional_info
-# First remove abstract, methods, and additional_info templates
-file.remove(
-  c(
-    './metadata_templates/abstract.docx',
-    './metadata_templates/methods.docx',
-    './metadata_templates/additional_info.docx'
-  )
-)
-
-# Create md templates
-template_core_metadata(
-  path = './metadata_templates',
-  license = 'CC0',
-  file.type = '.md'
-)
-
-# Clean up
-unlink('.', recursive = TRUE)
+  path = "./metadata_templates",
+  license = "CC0",
+  file.type = ".docx")
+}
     
 }

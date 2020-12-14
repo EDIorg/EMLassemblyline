@@ -1,0 +1,18 @@
+---
+title: "Template metadata"
+output: html_document
+---
+
+## Functions
+
+Metadata templates store content that is later converted to EML. Most templating functions read a data object, to extract as much information as possible, then writes it to file for the user to validate the inferred content and add any missing info. Each function focuses on a data feature enabling a modular build of the metadata (not all data contain the same features). The current set of templating functions are (click function names for docs):
+
+*  __`template_core_metadata()`__ Describes core information of a data package (abstract, methods, keywords, personnel, license). Communicates what the data are, why and how they were created, who was involved in their creation, and under what terms the data may be used.
+*  __`template_table_attributes()`__ Describes columns of a data table (classes, units, datetime formats, missing value codes).
+*  __`template_categorical_variables()`__ Describes categorical variables of a data table (if any columns are classified as categorical in table attributes template).
+*  __`template_geographic_coverage()`__ Describes where the data were collected.
+*  __`template_taxonomic_coverage()`__ Describes biological organisms occuring in the data and helps resolve them to authority systems. If matches can be made, then the full taxonomic hierarchy of scientific and common names are automatically rendered in the final EML metadata. This enables future users to search on any taxonomic level of interest across data packages in repositories.
+*  __`template_provenance()`__ Describes source datasets. Explicitly listing the DOIs and/or URLs of input data help future users understand in greater detail how the derived data were created and may some day be able to assign attribution to the creators of referenced datasets.
+*  __`template_annotations()`__ Adds semantic meaning to metadata (variables, locations, persons, etc.) through links to ontology terms. This enables greater human understanding and machine actionability (linked data) and greatly improves the discoverability and interoperability of data in general.
+
+_NOTE: Data objects should be UTF-8 encoded so metadata extracted during the templating process will also be UTF-8, which is the required by the EML schema. Non-UTF-8 encoded data may result in metadata appearing as malformed character strings._

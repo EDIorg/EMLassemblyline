@@ -1,0 +1,193 @@
+---
+title: "Edit templates"
+output: html_document
+---
+
+## Overview
+
+Metadata inferred during the templating process should be validated by the user and missing info added. Use spreadsheet and text editors for this process. Template specific guides are listed below.
+
+_NOTES:_
+
+*  _Tabular templates: Leave empty cells blank, don't fill with NAs._
+*  _Free-text templates: Keep template content simple. Complex formatting can lead to errors._
+
+## abstract (.docx, .md, .txt)
+
+Describes the salient features of a dataset in a concise summary much like an abstract does in a journal article. It should cover what the data are and why they were created.
+
+[__Example__](https://docs.google.com/document/d/1c0hkaA8iLKhMBBvnvdvSJq8Y1g4CCUlSJG2a2MFCK08/edit?usp=sharing)
+
+## methods (.docx, .md, .txt)
+
+Describes the data creation methods. Includes enough detail for future users to correctly use the data. Lists instrument descriptions, protocols, etc.
+
+[__Example__](https://docs.google.com/document/d/1a7BIGrmLrU6eTlIsQvWALU4moByYR3eND2_a42bxIkg/edit?usp=sharing)
+
+## keywords.txt
+
+Describes the data in a small set of terms. Keywords facilitate search and discovery on scientific terms, as well as names of research groups, field stations, and other organizations. Using a controlled vocabulary or thesaurus vastly improves discovery. We recommend using the [LTER Controlled Vocabulary](http://vocab.lternet.edu/vocab/vocab/index.php) when possible.
+
+Columns:
+
+*  **keyword** One keyword per line
+*  **keywordThesaurus** URI of the vocabulary from which the keyword originates.
+
+[__Example__](https://docs.google.com/spreadsheets/d/1u9LzpfeyBMet4AMe9SLbHb8pRsHwT_7Qx87ZP-SlTKI/edit?usp=sharing)
+
+## personnel.txt
+
+Describes the personnel and funding sources involved in the creation of the data. This facilitates attribution and reporting.
+
+Columns:
+
+* **givenName** First name
+* **middleInitial** Middle initial
+* **surName** Last name
+* **organizationName** Organization the person belongs to
+* **electronicMailAddress** Email address
+* **userId** Persons research identifier (e.g. [ORCID](https://orcid.org/)). Links a persons research profile to a data publication.
+* **role** Role of the person with respect to the data. Persons serving more than one role are listed on separate lines (e.g. replicate the persons info on separate lines but change the role. Valid options:
+    + **creator** Author of the data. Will appear in the data citation.
+    + **PI** Principal investigator the data were created under. Will appear with project level metadata.
+    + **contact** A point of contact for questions about the data. Can be an organization or position (e.g. data manager). To do this, enter the organization or position name under *givenName* and leave *middleInitial* and *surName* empty.
+    + Other roles (e.g. Field Technician) will be listed as associated parties to the data.
+* Funding information is listed with PIs
+    + **projectTitle** Title of project the data were created under. If ancillary projects were involved, then add as new lines below the primary project with the PIs info replicated.
+    + **fundingAgency** Agency the project was funded by.
+    + **fundingNumber** Grant or award number.
+
+[__Example__](https://docs.google.com/spreadsheets/d/14vFIC1wyR6_tExz3QkI8O82jQepei8po87uxaeJvyak/edit?usp=sharing)
+
+## intellectual_rights.txt
+
+Describes how the data may be used. Releasing without restriction ([CC0](https://creativecommons.org/publicdomain/zero/1.0/)) or with minimal attribution ([CC BY](https://creativecommons.org/licenses/by/4.0/)) maximizes value and future use.
+
+[__Example__](https://docs.google.com/document/d/1sNlIY8lAGg1WfFez-PvmP_qS4B3AHEScyqs7sAigrj8/edit?usp=sharing)
+
+## attributes_*.txt
+
+Describes columns of a data table (classes, units, datetime formats, missing value codes).
+
+Columns:
+
+* **attributeName** Column name
+* **attributeDefinition** Column definition
+* **class** Column class. Valid options are:
+    + **numeric** Numeric variable
+    + **categorical** Categorical variable (i.e. nominal)
+    + **character** Free text character strings (e.g. notes)
+    + **Date** Date and time variable
+* **unit** Column unit. Required for _numeric_ classes. Select from EML's standard unit dictionary, accessible with `view_unit_dictionary()`. Use values in the "id" column. If not found, then define as a custom unit (see custom_units.txt).
+* **dateTimeFormatString** Format string. Required for Date classes. Valid format string components are:
+    + **Y** Year
+    + **M** Month
+    + **D** Day
+    + **h** Hour
+    + **m** Minute
+    + **s** Second
+Common separators of format string components (e.g. - / \ :) are supported.
+* **missingValueCode** Missing value code. Required for columns containing a missing value code).
+* **missingValueCodeExplanation** Definition of missing value code.
+
+[__Example 1__](https://docs.google.com/spreadsheets/d/1VV6SY_757j5R7anJNXGTo7U2PQ_GSgg-F6YZNBwzqM0/edit?usp=sharing), [__Example 2__](https://docs.google.com/spreadsheets/d/1e7eZAQHmQIPKUwaqGjC3htK-7YK9brBuVFVY03HED5E/edit?usp=sharing)
+
+## custom_units.txt
+
+Describes non-standard units used in a data table attribute template.
+
+Columns:
+
+* **id** Unit name listed in the unit column of the table attributes template (e.g. feetPerSecond)
+* **unitType** Unit type (e.g. velocity)
+* **parentSI** SI equivalent (e.g. metersPerSecond)
+* **multiplierToSI** Multiplier to SI equivalent (e.g. 0.3048)
+* **description** Abbreviation (e.g. ft/s)
+
+[__Example__](https://docs.google.com/spreadsheets/d/1XPoFiegWw7BIugkRmmMqBdC6hqKtIEfdN4g-QSImUxI/edit?usp=sharing)
+
+## catvars_*.txt
+
+Describes categorical variables of a data table (if any columns are classified as categorical in table attributes template).
+
+Columns:
+
+* **attributeName** Column name
+* **code** Categorical variable
+* **definition** Definition of categorical variable
+
+[__Example 1__](https://docs.google.com/spreadsheets/d/1cKgLv9ffLtTqHrGX0WbpTCeWQkHXw1lbMRIt6IccuaQ/edit?usp=sharing), [__Example 2__](https://docs.google.com/spreadsheets/d/13lRuvBElEr8RQWQrWUyBei6rlE9xoDRkEOxhysHZ2J4/edit?usp=sharing)
+
+## geographic_coverage.txt
+
+Describes where the data were collected.
+
+Columns:
+
+* **geographicDescription** Brief description of location.
+* **northBoundingCoordinate** North coordinate
+* **southBoundingCoordinate** South coordinate
+* **eastBoundingCoordinate** East coordinate
+* **westBoundingCoordinate** West coordinate
+
+Coordinates must be in decimal degrees and include a minus sign (-) for latitudes south of the equator and longitudes west of the prime meridian. For points, repeat latitude and longitude coordinates in respective north/south and east/west columns.
+
+[__Example__](https://docs.google.com/spreadsheets/d/1lSvQsA6tG35egBp-ueXoCKFxVdd_6rzknBz1gFew3aA/edit?usp=sharing)
+
+## taxonomic_coverage.txt
+
+Describes biological organisms occuring in the data and helps resolve them to authority systems. If matches can be made, then the full taxonomic hierarchy of scientific and common names are automatically rendered in the final EML metadata. This enables future users to search on any taxonomic level of interest across data packages in repositories.
+
+Columns:
+
+* **taxa_raw** Taxon name as it occurs in the data and as it will be listed in the metadata if no value is listed under the name_resolved column. Can be single word or species binomial.
+* **name_type** Type of name. Can be "scientific" or "common".
+* **name_resolved** Taxons name as found in an authority system.
+* **authority_system** Authority system in which the taxa’s name was found. Can be: "[ITIS](https://www.itis.gov/)", "[WORMS](http://www.marinespecies.org/)", "or "[GBIF](https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c)".
+* **authority_id** Taxa’s identifier in the authority system (e.g. 168469).
+
+[__Example__](https://docs.google.com/spreadsheets/d/1jpOmcSq93KOpWnC26pHrxPtt4dFhB9SHXNHLs5Du7MQ/edit?usp=sharing)
+
+## provenance.txt
+
+Describes source datasets. Explicitly listing the DOIs and/or URLs of input data help future users understand in greater detail how the derived data were created and may some day be able to assign attribution to the creators of referenced datasets.
+
+Columns:
+
+* **dataPackageID** Data package identifier. Supplying a valid packageID and systemID (of supported systems) is all that is needed to create a complete provenance record.
+* **systemID** System (i.e. data repository) identifier. Currently supported systems are: EDI (Environmental Data Initiative).
+* **url** URL linking to an online source (i.e. data, paper, etc.). Required when a source can't be defined by a packageID and systemID.
+* **onlineDescription** Description of the data source. Required when a source can't be defined by a packageID and systemID.
+* **title** The source title. Required when a source can't be defined by a packageID and systemID.
+* **givenName** A creator or contacts given name. Required when a source can't be defined by a packageID and systemID.
+* **middleInitial** A creator or contacts middle initial. Required when a source can't be defined by a packageID and systemID.
+* **surName** A creator or contacts middle initial. Required when a source can't be defined by a packageID and systemID.
+* **role** "creator" and "contact" of the data source. Required when a source can't be defined by a packageID and systemID. Add both the creator and contact as separate rows within the template, where the information in each row is duplicated except for the givenName, middleInitial, surName (or organizationName), and role fields.
+* **organizationName** Name of organization the creator or contact belongs to. Required when a source can't be defined by a packageID and systemID.
+* **email** Email of the creator or contact. Required when a source can't be defined by a packageID and systemID.
+
+
+[__Example__](https://docs.google.com/spreadsheets/d/1P7NwIgntemkAciZi3uZgZ_ponZ73cXSh-pEihydwrsM/edit?usp=sharing)
+
+## annotations.txt
+
+Adds semantic meaning to metadata (variables, locations, persons, etc.) through links to ontology terms. This enables greater human understanding and machine actionability (linked data) and greatly improves the discoverability and interoperability of data in general.
+
+Columns:
+
+* **id** A unique identifier for the element being annotated.
+* **element** The element being annotated.
+* **context** The context of the subject (i.e. element value) being annotated (e.g. If the same column name occurs in more than one data tables, you will need to know which table it came from.).
+* **subject** The element value to be annotated.
+* **predicate_label** The predicate label (a.k.a. property) describing the relation of the subject to the object. This label should be copied directly from an ontology.
+* **predicate_uri** The predicate label URI copied directly from an ontology.
+* **object_label** The object label (a.k.a. value) describing the subject. This label should be copied directly from an ontology.
+* **object_uri** The object URI copied from an ontology.
+
+[__Example__](https://docs.google.com/spreadsheets/d/1TOS1-yCKUJEvDZwenZs88ok8L3tQkIAUQp24m-6WuL8/edit?usp=sharing)
+
+## additional_info (.docx, .md, .txt)
+
+Ancillary info not captured by any of the other templates.
+
+[__Example__](https://docs.google.com/document/d/1bbZ8iR9MOtTNGbbcev7fdjNCT7va9I8v-Ryv6jFCJYU/edit?usp=sharing)

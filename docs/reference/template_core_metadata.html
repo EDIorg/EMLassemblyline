@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create core metadata templates — template_core_metadata • EMLassemblyline</title>
+<title>Describe core features of a data package — template_core_metadata • EMLassemblyline</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,8 @@
 
 
 
-<meta property="og:title" content="Create core metadata templates — template_core_metadata" />
-<meta property="og:description" content="Use this function to create the core metadata templates required by 
-    all data packages. Most templates require user supplied information.
-    Instructions for editing these templates." />
+<meta property="og:title" content="Describe core features of a data package — template_core_metadata" />
+<meta property="og:description" content="Core information to all data packages (abstract, methods, keywords, personnel, license). Describes what the data are, why and how they were created, who was involved in their creation, and under what license the data are released." />
 
 
 
@@ -74,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.18.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.0</span>
       </span>
     </div>
 
@@ -97,10 +95,10 @@
       <a href="../articles/organize_data_package.html">Organize data package</a>
     </li>
     <li>
-      <a href="../articles/create_metadata_templates.html">Create metadata templates</a>
+      <a href="../articles/create_tmplts.html">Template metadata</a>
     </li>
     <li>
-      <a href="../articles/edit_metadata_templates.html">Edit metadata templates</a>
+      <a href="../articles/edit_tmplts.html">Edit metadata templates</a>
     </li>
     <li>
       <a href="../articles/create_eml.html">Make EML</a>
@@ -109,10 +107,10 @@
       <a href="../articles/publish_data_package.html">Publish data package</a>
     </li>
     <li>
-      <a href="../articles/automate_data_publication.html">Automate data publication</a>
+      <a href="../articles/auto_pub.html">Automate data publication</a>
     </li>
     <li>
-      <a href="../articles/emlassemblyline_via_exchange_format.html">Use EMLassemblyline via exchange format</a>
+      <a href="../articles/exchange_format.html">Use EMLassemblyline via exchange format</a>
     </li>
   </ul>
 </li>
@@ -140,24 +138,22 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create core metadata templates</h1>
+    <h1>Describe core features of a data package</h1>
     <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/template_core_metadata.R'><code>R/template_core_metadata.R</code></a></small>
     <div class="hidden name"><code>template_core_metadata.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Use this function to create the core metadata templates required by 
-    all data packages. Most templates require user supplied information.
-    <a href='https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html'>Instructions for editing these templates.</a></p>
+    <p>Core information to all data packages (abstract, methods, keywords, personnel, license). Describes what the data are, why and how they were created, who was involved in their creation, and under what license the data are released.</p>
     </div>
 
     <pre class="usage"><span class='fu'>template_core_metadata</span>(
-      <span class='no'>path</span>,
-      <span class='no'>license</span>,
-      <span class='kw'>file.type</span> <span class='kw'>=</span> <span class='st'>'.txt'</span>,
-      <span class='kw'>write.file</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-      <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-    )</pre>
+  <span class='no'>path</span>,
+  <span class='no'>license</span>,
+  <span class='kw'>file.type</span> <span class='kw'>=</span> <span class='st'>".txt"</span>,
+  <span class='kw'>write.file</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -174,9 +170,7 @@
     </tr>
     <tr>
       <th>file.type</th>
-      <td><p>(character; optional) File type for abstract, methods, and additional 
-info metadata templates. Can be: '.txt' (plain text), '.docx' (MS Word),
-or '.md' (markdown).</p></td>
+      <td><p>(character; optional) File type for abstract, methods, and additional info. Can be: ".txt" (plain text), ".docx" (MS Word), or ".md" (markdown). The relative benefits: ".docx" supports basic formatting (super/sub scripts, italics, symbols, accented characters) but doesn't support bulleted lists and formatted equations. ".md" supports less formatting than ".docx" but is open source. ".txt" doesn't support any formatting but is a common file type.</p></td>
     </tr>
     <tr>
       <th>write.file</th>
@@ -193,85 +187,42 @@ to create <code>x</code>.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     
-<ul>
-<li><p><strong>abstract</strong> The abstract template.</p></li>
-<li><p><strong>additional_info</strong> The template for miscellaneous
-        information.</p></li>
-<li><p><strong>intellectual_rights.txt</strong> The intellectual rights 
-        license with the text of CC0 or CCBY.</p></li>
-<li><p><strong>keywords.txt</strong> The tab delimited keywords template.</p></li>
-<li><p><strong>methods</strong> The methods template.</p></li>
-<li><p><strong>personnel.txt</strong> The tab delimited personnel template 
-        for information on persons and funding involved in the creation of 
-        the data package.</p></li>
-<li><p>These files is written to <code>path</code> unless using <code>x</code>,
-        in which case the templates are added to 
-        <strong>/x/templates</strong>.</p></li>
-</ul>
 
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+<dt>abstract</dt><dd><p>Describes the salient features of a dataset in a concise summary much like an abstract does in a journal article. It should cover what the data are and why they were created.</p></dd>
+<dt>methods</dt><dd><p>Describes the data creation methods. Includes enough detail for future users to correctly use the data. Lists instrument descriptions, protocols, etc.</p></dd>
+<dt>keywords</dt><dd><p>Describes the data in a small set of terms. Keywords facilitate search and discovery on scientific terms, as well as names of research groups, field stations, and other organizations. Using a controlled vocabulary or thesaurus vastly improves discovery. We recommend using the <a href='http://vocab.lternet.edu/vocab/vocab/index.php'>LTER Controlled Vocabulary</a> when possible. Columns:
+    <ul>
+<li><p>keyword: One keyword per line</p></li>
+<li><p>keywordThesaurus: URI of the vocabulary from which the keyword originates.</p></li>
+</ul></p></dd>
+<dt>personnel</dt><dd><p>Describes the personnel and funding sources involved in the creation of the data. This facilitates attribution and reporting. Columns:
+    <ul>
+<li><p>givenName: First name</p></li>
+<li><p>middleInitial: Middle initial</p></li>
+<li><p>surName: Last name</p></li>
+<li><p>organizationName: Organization the person belongs to</p></li>
+<li><p>electronicMailAddress: Email address</p></li>
+<li><p>userId: Persons research identifier (e.g. <a href='https://orcid.org/'>ORCID</a>). Links a persons research profile to a data publication.</p></li>
+<li><p>role: Role of the person with respect to the data. Persons serving more than one role are listed on separate lines (e.g. replicate the persons info on separate lines but change the role. Valid options: "creator" (Author of the data. Will appear in the data citation.), "PI" (Principal investigator the data were created under. Will appear with project level metadata.), "contact" (A point of contact for questions about the data. Can be an organization or position (e.g. data manager). To do this, enter the organization or position name under givenName and leave middleInitial and surName empty.), Other roles (e.g. "Field Technician") will be listed as associated parties to the data.</p></li>
+<li><p>projectTitle: Title of project the data were created under. If ancillary projects were involved, then add as new lines below the primary project with the PIs info replicated.</p></li>
+<li><p>fundingAgency: Agency the project was funded by.</p></li>
+<li><p>fundingNumber: Grant or award number.</p></li>
+</ul></p></dd>
+<dt>intellectual_rights</dt><dd><p>Describes how the data may be used. Releasing without restriction (<a href='https://creativecommons.org/publicdomain/zero/1.0/'>CC0</a>) or with minimal attribution (<a href='https://creativecommons.org/licenses/by/4.0/'>CC BY</a>) maximizes value and future use.</p></dd>
+<dt>additional_info</dt><dd><p>Ancillary info not captured by any of the other templates.</p></dd>
 
-    <p>Existing templates will not be overwritten by <code>template_core_metadata()</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Initialize data package directory for template_core_metadata()</span>
-<span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.copy</a></span>(
-  <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>'/examples/pkg_250'</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'EMLassemblyline'</span>),
-  <span class='kw'>to</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(),
-  <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Set working directory</span>
-<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>'/pkg_250'</span>))
+<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='st'>"/Users/me/Documents/data_packages/pkg_260"</span>)
 
-<span class='co'># View directory contents (NOTE: Directory is empty)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span>(<span class='st'>'./metadata_templates'</span>)</div><div class='output co'>#&gt; [1] "README.txt"</div><div class='input'>
-<span class='co'># Template core metadata</span>
+<span class='co'># For data licensed under CC0 and using .docx files for the abstract and methods</span>
 <span class='fu'>template_core_metadata</span>(
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./metadata_templates'</span>,
-  <span class='kw'>license</span> <span class='kw'>=</span> <span class='st'>'CC0'</span>
-)</div><div class='output co'>#&gt; <span class='message'>Templating core metadata ...</span></div><div class='output co'>#&gt; <span class='message'>abstract.txt</span></div><div class='output co'>#&gt; <span class='message'>additional_info.txt</span></div><div class='output co'>#&gt; <span class='message'>intellectual_rights.txt</span></div><div class='output co'>#&gt; <span class='message'>keywords.txt.</span></div><div class='output co'>#&gt; <span class='message'>methods.txt</span></div><div class='output co'>#&gt; <span class='message'>personnel.txt</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
-<span class='co'># View directory contents (NOTE: Templates exist)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span>(<span class='st'>'./metadata_templates'</span>)</div><div class='output co'>#&gt; [1] "abstract.txt"            "additional_info.txt"    
-#&gt; [3] "intellectual_rights.txt" "keywords.txt"           
-#&gt; [5] "methods.txt"             "personnel.txt"          
-#&gt; [7] "README.txt"             </div><div class='input'>
-<span class='co'># Rerunning template_core_metadata() does not overwrite files</span>
-<span class='fu'>template_core_metadata</span>(
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./metadata_templates'</span>,
-  <span class='kw'>license</span> <span class='kw'>=</span> <span class='st'>'CC0'</span>
-)</div><div class='output co'>#&gt; <span class='message'>Templating core metadata ...</span></div><div class='output co'>#&gt; <span class='message'>abstract.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>additional_info.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>intellectual_rights.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>keywords.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>methods.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>personnel.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
-<span class='co'># Use docx files for abstract, methods, and additional_info</span>
-<span class='co'># First remove abstract, methods, and additional_info templates</span>
-<span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.remove</a></span>(
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
-    <span class='st'>'./metadata_templates/abstract.txt'</span>,
-    <span class='st'>'./metadata_templates/methods.txt'</span>,
-    <span class='st'>'./metadata_templates/additional_info.txt'</span>
-  )
-)</div><div class='output co'>#&gt; [1] TRUE TRUE TRUE</div><div class='input'>
-<span class='co'># Create docx templates</span>
-<span class='fu'>template_core_metadata</span>(
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./metadata_templates'</span>,
-  <span class='kw'>license</span> <span class='kw'>=</span> <span class='st'>'CC0'</span>,
-  <span class='kw'>file.type</span> <span class='kw'>=</span> <span class='st'>'.docx'</span>
-)</div><div class='output co'>#&gt; <span class='message'>Templating core metadata ...</span></div><div class='output co'>#&gt; <span class='message'>abstract.docx</span></div><div class='output co'>#&gt; <span class='message'>additional_info.docx</span></div><div class='output co'>#&gt; <span class='message'>intellectual_rights.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>keywords.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>methods.docx</span></div><div class='output co'>#&gt; <span class='message'>personnel.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
-<span class='co'># Use md files for abstract, methods, and additional_info</span>
-<span class='co'># First remove abstract, methods, and additional_info templates</span>
-<span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.remove</a></span>(
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
-    <span class='st'>'./metadata_templates/abstract.docx'</span>,
-    <span class='st'>'./metadata_templates/methods.docx'</span>,
-    <span class='st'>'./metadata_templates/additional_info.docx'</span>
-  )
-)</div><div class='output co'>#&gt; [1] TRUE TRUE TRUE</div><div class='input'>
-<span class='co'># Create md templates</span>
-<span class='fu'>template_core_metadata</span>(
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>'./metadata_templates'</span>,
-  <span class='kw'>license</span> <span class='kw'>=</span> <span class='st'>'CC0'</span>,
-  <span class='kw'>file.type</span> <span class='kw'>=</span> <span class='st'>'.md'</span>
-)</div><div class='output co'>#&gt; <span class='message'>Templating core metadata ...</span></div><div class='output co'>#&gt; <span class='message'>abstract.md</span></div><div class='output co'>#&gt; <span class='message'>additional_info.md</span></div><div class='output co'>#&gt; <span class='message'>intellectual_rights.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>keywords.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>methods.md</span></div><div class='output co'>#&gt; <span class='message'>personnel.txt already exists!</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
-<span class='co'># Clean up</span>
-<span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(<span class='st'>'.'</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"./metadata_templates"</span>,
+  <span class='kw'>license</span> <span class='kw'>=</span> <span class='st'>"CC0"</span>,
+  <span class='kw'>file.type</span> <span class='kw'>=</span> <span class='st'>".docx"</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

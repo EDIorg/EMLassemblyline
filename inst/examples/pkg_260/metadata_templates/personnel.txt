@@ -1,9 +1,8 @@
 givenName	middleInitial	surName	organizationName	electronicMailAddress	userId	role	projectTitle	fundingAgency	fundingNumber
 Kelman	R	Wieder	Villanova University	kelman.wieder@villanova.edu	0000-0001-5856-8473	PI	Nitrogen Addition Experiments in Boreal Ecosystems: Understanding the Fate of Atmospherically Deposited Nitrogen in order to Determine Nitrogen Critical Loads	Cumulative Environmental Management Association (CEMA)	2011-0003
 Melanie	A	Vile	Villanova University	mvile@villanova.edu		PI	Decomposition in the real world	NSF	111001
-Joe		Smith	Villanova University			PI		NSF	101
-Joe		Smith	Villanova University			PI			111001
-Chase		Gacho	University of New Mexico	gachase@unm.edu		PI			
+Joe		Smith	Villanova University			PI	Project title 3	NSF	101
+Chase		Gacho	University of New Mexico	gachase@unm.edu		PI	Project title 4	NSF	111001
 Kelman	R	Wieder	Villanova University	kelman.wieder@villanova.edu	0000-0001-5856-8473	contact			
 Information manager			Villanova University	info@villanova.edu	0000-0001-5856-8473	contact			
 Organization lead			Villanova University	info@villanova.edu		contact			

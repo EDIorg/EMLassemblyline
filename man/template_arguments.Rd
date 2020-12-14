@@ -2,7 +2,7 @@
 % Please edit documentation in R/template_arguments.R
 \name{template_arguments}
 \alias{template_arguments}
-\title{Initialize inputs to \code{EMLassemblyline} functions}
+\title{Create a list of inputs to EMLassemblyline functions (primarily for internal use only)}
 \usage{
 template_arguments(
   path = NULL,
@@ -43,6 +43,16 @@ Initialize the full list of possible inputs to \code{EMLassemblyline}
     functions (i.e. function arguments, metadata templates, and data 
     objects). This enables bridging of upstream metadata and data sources 
     (e.g. metabases, databases, Excel files, web forms, etc.).
+}
+\details{
+Character encoding in tabular metadata templates is converted to UTF-8 
+    via \code{enc2utf8()}. Characters in TextType metadata templates are not
+    yet converted. Note: This may lead to an inaccuracy and disconnect 
+    between values in the data objects and what is reported in the EML (e.g.
+    a categorical variable listed in the EML may not be the same as it's 
+    corresponding value in the data object). To reduce the chance of this,
+    warnings are issued if the input data object from which the metadata was
+    extracted is not UTF-8 encoded.
 }
 \examples{
 # Output arguments and empty versions of metadata templates

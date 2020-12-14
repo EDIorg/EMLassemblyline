@@ -4,34 +4,6 @@
 #'     Render the contents of metadata templates into EML, validate, and write
 #'     to file.
 #'     
-#' @usage 
-#'     make_eml(
-#'       path,
-#'       data.path = path,
-#'       eml.path = path, 
-#'       dataset.title = NULL,
-#'       temporal.coverage = NULL,
-#'       geographic.description = NULL, 
-#'       geographic.coordinates = NULL, 
-#'       maintenance.description = NULL, 
-#'       data.table = NULL, 
-#'       data.table.name = data.table,
-#'       data.table.description = NULL, 
-#'       data.table.quote.character = NULL, 
-#'       data.table.url = NULL,
-#'       other.entity = NULL,
-#'       other.entity.name = other.entity,
-#'       other.entity.description = NULL,
-#'       other.entity.url = NULL,
-#'       provenance = NULL,
-#'       user.id = NULL,
-#'       user.domain = NULL,
-#'       package.id = NULL,
-#'       write.file = TRUE,
-#'       return.obj = FALSE,
-#'       x = NULL
-#'     )
-#'     
 #' @param path 
 #'     (character) Path to the metadata template directory.
 #' @param data.path
@@ -73,11 +45,11 @@
 #'     (character; optional) Quote character used in \code{data.table}. If 
 #'     more than one, then supply as a vector of character strings in the same 
 #'     order as listed in \code{data.table}. If the quote character is a quotation, 
-#'     then enter \code{"\\\""}. If the quote character is an apostrophe, then 
-#'     enter \code{"\\'"}. If wanting to include quote characters for some but 
+#'     then enter \code{'"'}. If the quote character is an apostrophe, then 
+#'     enter \code{"'"}. If wanting to include quote characters for some but 
 #'     not all \code{data.table}, then use a "" for those that don't have a 
 #'     quote character (e.g. \code{data.table.quote.character = 
-#'     c("\\'", "")}).
+#'     c("'", "")}).
 #' @param data.table.url
 #'     (character; optional) The publicly accessible URL from which 
 #'     \code{data.table} can be downloaded. If more than one, then supply as 
@@ -137,8 +109,7 @@
 #' @param write.file
 #'     (logical; optional) Whether to write the EML file.
 #' @param return.obj
-#'     (logical; optional) Whether to return the EML as an R object of class 
-#'     \code{EML object}.
+#'     (logical; optional) Whether to return the EML as an R object of class \code{EML object}. This EML object can be modified and written to file according to the \href{https://github.com/ropensci/EML}{EML R library}.
 #' @param x
 #'     (named list; optional) Alternative input to 
 #'     \code{make_eml()}. Use \code{template_arguments()} 
@@ -158,39 +129,37 @@
 #'     with best practice recommendations of scientists, data managers, and 
 #'     data repositories. The EML is then validated against the schema and 
 #'     written to file.
+#'     
+#'     Character encodings in tabular metadata templates are converted to UTF-8 
+#'     via \code{enc2utf8()}. Characters in TextType metadata templates are not
+#'     yet converted. Note: This may lead to an inaccuracy and disconnect 
+#'     between values in the data objects and what is reported in the EML (e.g.
+#'     a categorical variable listed in the EML may not be the same as it's 
+#'     corresponding value in the data object). For this reason it's important 
+#'     to work with UTF-8 encoded data and metadata.
 #'
 #' @examples 
-#' # Initialize data package directory for make_eml()
-#' file.copy(
-#'   from = system.file('/examples/pkg_260', package = 'EMLassemblyline'),
-#'   to = tempdir(),
-#'   recursive = TRUE)
+#' \dontrun{
 #' 
 #' # Set working directory
-#' setwd(paste0(tempdir(), '/pkg_260'))
+#' setwd("/Users/me/Documents/data_packages/pkg_260")
 #' 
-#' # Make EML (for data package with data tables and other entities)
-#' 
+#' # For 2 tables and 2 other entities
 #' make_eml(
-#'   path = './metadata_templates',
-#'   data.path = './data_objects',
-#'   eml.path = './eml',
-#'   dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions',
-#'   temporal.coverage = c('2014-05-01', '2015-10-31'),
-#'   maintenance.description = 'completed',
-#'   data.table = c('decomp.csv', 'nitrogen.csv'),
-#'   data.table.description = c('Decomposition data', 'Nitrogen data'),
-#'   other.entity = c('ancillary_data.zip', 'processing_and_analysis.R'),
-#'   other.entity.description = c('Ancillary data', 'Data processing and analysis script'),
-#'   user.id = 'csmith',
-#'   user.domain = 'EDI',
-#'   package.id = 'edi.260.3')
-#' 
-#' # View EML directory contents
-#' dir('./eml')
-#' 
-#' # Clean up
-#' unlink('.', recursive = TRUE)
+#'   path = "./metadata_templates",
+#'   data.path = "./data_objects",
+#'   eml.path = "./eml",
+#'   dataset.title = "Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions",
+#'   temporal.coverage = c("2014-05-01", "2015-10-31"),
+#'   maintenance.description = "Completed: No updates to these data are expected",
+#'   data.table = c("decomp.csv", "nitrogen.csv"),
+#'   data.table.description = c("Decomposition data", "Nitrogen data"),
+#'   other.entity = c("ancillary_data.zip", "processing_and_analysis.R"),
+#'   other.entity.description = c("Ancillary data", "Data processing and analysis script"),
+#'   user.id = "myid",
+#'   user.domain = "EDI",
+#'   package.id = "edi.260.1")
+#' }
 #'
 #' @export
 #'
@@ -218,15 +187,7 @@ make_eml <- function(
   package.id = NULL,
   write.file = TRUE,
   return.obj = FALSE,
-  x = NULL,
-  affiliation,
-  data.files,
-  data.files.description,
-  data.files.quote.character,
-  data.files.url,
-  data.url = NULL,
-  zip.dir,
-  zip.dir.description
+  x = NULL
   ) {
   
   # Parameterize --------------------------------------------------------------
@@ -257,68 +218,19 @@ make_eml <- function(
   }
   
   # Pass remaining arguments to validate_arguments()
-  
   validate_arguments(
     fun.name = "make_eml",
     fun.args = as.list(environment()))
   
   # Handle deprecated arguments
   
-  # FIXME: Remove May 2020
-  if (!missing(affiliation)) {
+  # FIXME: Remove October 2021
+  if (!is.null(provenance)) {
     warning(
-      "Argument 'affiliation' is deprecated; please use 'user.domain' instead.",
+      paste0(
+        "Argument 'provenance' is deprecated; please use ",
+        "'template_provanence()' instead."),
       call. = F)
-    user.domain <- affiliation
-  }
-  # FIXME: Remove May 2020
-  if (!missing(data.files)){
-    warning(
-      "Argument 'data.files' is deprecated; please use 'data.table' instead.",
-      call. = F)
-    data.table <- data.files
-  }
-  # FIXME: Remove May 2020
-  if (!missing(data.files.description)){
-    warning(
-      "Argument 'data.files.description' is deprecated; please use 'data.table.description' instead.",
-      call. = F)
-    data.table.description <- data.files.description
-  }
-  # FIXME: Remove May 2020
-  if (!missing(data.files.quote.character)){
-    warning(
-      "Argument 'data.files.quote.character' is deprecated; please use 'data.table.quote.character' instead.",
-      call. = F)
-    data.table.quote.character <- data.files.quote.character
-  }
-  # FIXME: Remove May 2020
-  if (!missing(data.files.url)){
-    warning(
-      "Argument 'data.files.url' is deprecated; please use 'data.url' instead.",
-      call. = F)
-    data.url <- data.files.url
-  }
-  # FIXME: Do not remove until March 2021
-  if (!is.null(data.url)){
-    warning(
-      paste0("Argument 'data.url' is deprecated; please use 'data.table.url' ",
-             "and 'other.entity.url' instead."),
-      call. = F)
-  }
-  # FIXME: Remove May 2020
-  if (!missing(zip.dir)){
-    warning(
-      "Argument 'zip.dir' is deprecated; please use 'other.entity' instead.",
-      call. = F)
-    other.entity <- zip.dir
-  }
-  # FIXME: Remove May 2020
-  if (!missing(zip.dir.description)){
-    warning(
-      "Argument 'zip.dir.description' is deprecated; please use 'other.entity.description' instead.",
-      call. = F)
-    other.entity.description <- zip.dir.description
   }
   
   # Read templates and data ---------------------------------------------------
@@ -387,26 +299,6 @@ make_eml <- function(
   
   x <- remove_empty_templates(x)
   x <- validate_templates("make_eml", x)
-
-  # Modify arguments ----------------------------------------------------------
-  # Modification of some argument content helps with downstream processes.
-  # FIXME: Move this section to validate_arguments()
-  
-  # data.table.name
-  # - Missing values default to data.table
-  
-  if (length(data.table.name) < length(data.table)) {
-    use_i <- which(!(seq_along(data.table) %in% seq_along(data.table.name)))
-    data.table.name[use_i] <- data.table[use_i]
-  }
-  
-  # other.entity.name
-  # - Missing values default to other.entity
-  
-  if (length(other.entity.name) < length(other.entity)) {
-    use_i <- which(!(seq_along(other.entity) %in% seq_along(other.entity.name)))
-    other.entity.name[use_i] <- other.entity[use_i]
-  }
   
   # Modify templates ----------------------------------------------------------
   # Modification of some template content helps with downstream processes.
@@ -945,7 +837,6 @@ make_eml <- function(
   
   # Check for multiple geographic coverage inputs.
   # FIXME: On May 1, 2020 remove support for bounding_boxes.txt
-  
   if (is.null(geographic.coordinates) & !any(stringr::str_detect(
     names(x$template), 
     "geographic_coverage.txt|bounding_boxes.txt"))) {
@@ -953,58 +844,23 @@ make_eml <- function(
     warning("Geographic coverage is recommended.", call. = FALSE)
     
   } else {
-    
-    # Combine multiple sources of geographic coverage and remove duplicate entries
-    
-    o <- unique.data.frame(
-      rbind(
-        data.frame(
-          geographicDescription = character(0),
-          northBoundingCoordinate = character(0),
-          southBoundingCoordinate = character(0),
-          eastBoundingCoordinate = character(0),
-          westBoundingCoordinate = character(0),
-          stringsAsFactors = F),
-        if (!missing(geographic.description) & !missing(geographic.coordinates)) {
-          data.frame(
-            geographicDescription = as.character(geographic.description),
-            northBoundingCoordinate = as.character(geographic.coordinates[1]),
-            southBoundingCoordinate = as.character(geographic.coordinates[3]),
-            eastBoundingCoordinate = as.character(geographic.coordinates[2]),
-            westBoundingCoordinate = as.character(geographic.coordinates[4]),
-            stringsAsFactors = F)
-        },
-        data.frame(
-          geographicDescription = x$template$bounding_boxes.txt$content$geographicDescription,
-          northBoundingCoordinate = x$template$bounding_boxes.txt$content$northBoundingCoordinate,
-          southBoundingCoordinate = x$template$bounding_boxes.txt$content$southBoundingCoordinate,
-          eastBoundingCoordinate = x$template$bounding_boxes.txt$content$eastBoundingCoordinate,
-          westBoundingCoordinate = x$template$bounding_boxes.txt$content$westBoundingCoordinate,
-          stringsAsFactors = F),
-        data.frame(
-          geographicDescription = x$template$geographic_coverage.txt$content$geographicDescription,
-          northBoundingCoordinate = x$template$geographic_coverage.txt$content$northBoundingCoordinate,
-          southBoundingCoordinate = x$template$geographic_coverage.txt$content$southBoundingCoordinate,
-          eastBoundingCoordinate = x$template$geographic_coverage.txt$content$eastBoundingCoordinate,
-          westBoundingCoordinate = x$template$geographic_coverage.txt$content$westBoundingCoordinate,
-          stringsAsFactors = F)))
-    
-    # Create the geographicCoverage node
-    
-    eml$dataset$coverage$geographicCoverage <- lapply(
-      seq_len(nrow(o)),
-      function(k) {
-        message('        <geographicCoverage>')
-        list(
-          geographicDescription = o$geographicDescription[k],
-          boundingCoordinates = list(
-            westBoundingCoordinate = o$westBoundingCoordinate[k],
-            eastBoundingCoordinate = o$eastBoundingCoordinate[k],
-            northBoundingCoordinate = o$northBoundingCoordinate[k],
-            southBoundingCoordinate = o$southBoundingCoordinate[k]))
-      }
-    )
-    
+
+    if (!is.null(x$template$geographic_coverage.txt)) {
+      # Create the geographicCoverage node
+      o <- x$template$geographic_coverage.txt$content
+      eml$dataset$coverage$geographicCoverage <- lapply(
+        seq_len(nrow(o)),
+        function(k) {
+          message('        <geographicCoverage>')
+          list(
+            geographicDescription = o$geographicDescription[k],
+            boundingCoordinates = list(
+              westBoundingCoordinate = o$westBoundingCoordinate[k],
+              eastBoundingCoordinate = o$eastBoundingCoordinate[k],
+              northBoundingCoordinate = o$northBoundingCoordinate[k],
+              southBoundingCoordinate = o$southBoundingCoordinate[k]))
+        })
+    }
   }
 
   # Create <temporalCoverage> -------------------------------------------------
@@ -1050,16 +906,16 @@ make_eml <- function(
       eml$dataset$coverage$taxonomicCoverage$taxonomicClassification <- tc$taxonomicClassification
     }
   }
-
+  
   # Create <maintenance> ------------------------------------------------------
   
   if (!is.null(maintenance.description)) {
     message("    <maintenance>")
     eml$dataset$maintenance$description <- maintenance.description
   }
-
+  
   # Create <contact> ----------------------------------------------------------
-
+  
   if (!is.null(x$template$personnel.txt)) {
     eml$dataset$contact <- lapply(
       which(x$template$personnel.txt$content$role == "contact"),
@@ -1077,7 +933,7 @@ make_eml <- function(
       message("    <publisher>")
       set_person(info_row = k, person_role = "publisher")
     })
-
+  
   # Create <methods> ----------------------------------------------------------
   
   if (any(stringr::str_detect(names(x$template), "methods"))) {
@@ -1087,48 +943,129 @@ make_eml <- function(
         names(x$template)[stringr::str_detect(names(x$template), "methods")]
         ]]$content$methodStep)
   }
-
+  
   # Create <methodStep> (provenance) ------------------------------------------
-  # Get provenance metadata for a data package in the EDI data repository.
-  # FIXME: Support inputs from the provenance.txt metadata template
-  # FIXME: Support provenance metadata models used by other EML based 
-  # repositories
+  # Get provenance metadata from supported systems (repositories) and external 
+  # sources (everything else), then combine as a list of methodStep.
   
-  if (!is.null(provenance)) {
-    o <- lapply(
-      provenance,
-      function(k) {
-        message("      <methodStep> (provenance metadata)")
-        r <- httr::GET(
-          paste0(
-            EDIutils::url_env("production"), 
-            ".lternet.edu/package/provenance/eml/", 
-            stringr::str_replace_all(k, '\\.', '/')))
-        if (r$status_code == 200) {
-          prov <- httr::content(r, encoding = 'UTF-8')
-          # Remove IDs from creator and contact to preempt ID + reference 
-          # errors
-          xml2::xml_set_attr(
-            xml2::xml_find_all(prov, './/dataSource/creator'),
-            'id', NULL)
-          xml2::xml_set_attr(
-            xml2::xml_find_all(prov, './/dataSource/contact'),
-            'id', NULL)
-          # Write .xml to tempdir() and read back in as an emld list object
-          # to be added to the dataset emld list under construction here
-          xml2::write_xml(prov, paste0(tempdir(), "/provenance_metadata.xml"))
-          prov <- EML::read_eml(paste0(tempdir(), "/provenance_metadata.xml"))
-          prov$`@context` <- NULL
-          prov$`@type` <- NULL
-          eml$dataset$methods$methodStep[[
-            length(eml$dataset$methods$methodStep)+1]] <<- prov
-          suppressMessages(file.remove(paste0(tempdir(), "/provenance_metadata.xml")))
-        } else {
-          message("Unable to get provenance metadata.")
-        }
-      })
+  # TODO: Support provenance metadata models used by other EML based 
+  # repositories.
+  
+  if (!is.null(x$template$provenance.txt$content)) {
+    
+    # Identify internal sources
+    internal_sources <- x$template$provenance.txt$content[
+      x$template$provenance.txt$content$dataPackageID != "", ]
+    
+    # Parse internal sources
+    if (nrow(internal_sources) != 0) {
+      data_package_identifiers <- unique(internal_sources$dataPackageID)
+      o <- lapply(
+        data_package_identifiers,
+        function(k) {
+          message("      <methodStep> (provenance metadata)")
+          r <- httr::GET(
+            paste0(
+              EDIutils::url_env("production"),
+              ".lternet.edu/package/provenance/eml/",
+              stringr::str_replace_all(k, '\\.', '/')))
+          if (r$status_code == 200) {
+            prov <- httr::content(r, encoding = 'UTF-8')
+            # Remove IDs from creator and contact to preempt ID + reference
+            # errors
+            xml2::xml_set_attr(
+              xml2::xml_find_all(prov, './/dataSource/creator'),
+              'id', NULL)
+            xml2::xml_set_attr(
+              xml2::xml_find_all(prov, './/dataSource/contact'),
+              'id', NULL)
+            # Write .xml to tempdir() and read back in as an emld list object
+            # to be added to the dataset emld list under construction here
+            xml2::write_xml(prov, paste0(tempdir(), "/provenance_metadata.xml"))
+            prov <- EML::read_eml(paste0(tempdir(), "/provenance_metadata.xml"))
+            prov$`@context` <- NULL
+            prov$`@type` <- NULL
+            eml$dataset$methods$methodStep[[
+              length(eml$dataset$methods$methodStep)+1]] <<- prov
+            suppressMessages(file.remove(paste0(tempdir(), "/provenance_metadata.xml")))
+          } else {
+            message("Unable to get provenance metadata.")
+          }
+        })
+    }
+    
+    # Identify external sources
+    external_sources <- x$template$provenance.txt$content[
+      x$template$provenance.txt$content$dataPackageID == "", ]
+    
+    # Parse external sources.
+    # FIXME: Some elements require an explicit NULL value to prevent them from 
+    # being displayed in the returned EML as closing tags (i.e. </tag>). This 
+    # is an issue in the EML R package. Is there a more concise way of handling
+    # this issue than implemented here?
+
+    if (nrow(external_sources) != 0) {
+      source_titles <- unique(external_sources$title)
+      provenance <- lapply(
+        source_titles,
+        function(title) {
+          message("      <methodStep> (provenance metadata)")
+          d <- x$template$provenance.txt$content[
+            x$template$provenance.txt$content$title == title, ]
+          # Initialize onlineDescription
+          online_description <- d$onlineDescription[1]
+          if (online_description == "") {
+            online_description <- NULL
+          }
+          # Initialize provenance node
+
+          out <- list(
+            dataSource = list(
+              title = title,
+              creator = NULL,
+              distribution = list(
+                online = list(
+                  onlineDescription = online_description,
+                  url = d[1, "url"])),
+              contact = NULL),
+            description = "This provenance metadata does not contain entity specific information.")
+          for (i in 1:nrow(d)) {
+            # Initialize individualName
+            individual_name <- list(
+              givenName = trimws(paste(d$givenName[i], d$middleInitial[i])),
+              surName = d$surName[i])
+            if (individual_name$givenName == "" &
+                individual_name$surName == "") {
+              individual_name <- NULL
+            }
+            # Initialize organizationName
+            organization_name <- d$organizationName[i]
+            if (organization_name == "") {
+              organization_name <- NULL
+            }
+            # Add creator
+            if (d$role[i] == "creator") {
+              out$dataSource$creator[[length(out$dataSource$creator) + 1]] <- 
+                list(
+                  individualName = individual_name,
+                  organizationName = organization_name)
+            }
+            # Add contact
+            if (d$role[i] == "contact") {
+              out$dataSource$contact[[length(out$dataSource$contact) + 1]] <- 
+                list(
+                  individualName = individual_name,
+                  organizationName = organization_name)
+            }
+          }
+          out
+        })
+      # Add to eml
+      eml$dataset$methods$methodStep <- c(eml$dataset$methods$methodStep, provenance)
+    }
+
   }
-  
+
   # Create <project> ----------------------------------------------------------
   # The project metadata corresponding to the first "pi" listed in 
   # personnel.txt will become the primary project. Project metadata listed 
@@ -1138,27 +1075,28 @@ make_eml <- function(
   if (!is.null(x$template$personnel.txt)) {
     use_i <- x$template$personnel.txt$content$role == "pi"
     if (any(use_i)){
-      lapply(
-        which(use_i),
-        function(k) {
-          if (k == min(which(use_i))) {
-            message("    <project>")
-            eml$dataset$project <<- list(
-              title = x$template$personnel.txt$content$projectTitle[k],
-              personnel = set_person(info_row = k, person_role = "pi"),
-              funding = x$template$personnel.txt$content$funding[k])
-          } else {
-            message("      <relatedProject>")
-            eml$dataset$project$relatedProject[[
-              length(eml$dataset$project$relatedProject)+1]] <<- list(
+      invisible(
+        lapply(
+          which(use_i),
+          function(k) {
+            if (k == min(which(use_i))) {
+              message("    <project>")
+              eml$dataset$project <<- list(
                 title = x$template$personnel.txt$content$projectTitle[k],
                 personnel = set_person(info_row = k, person_role = "pi"),
                 funding = x$template$personnel.txt$content$funding[k])
-          }
-        })
+            } else {
+              message("      <relatedProject>")
+              eml$dataset$project$relatedProject[[
+                length(eml$dataset$project$relatedProject)+1]] <<- list(
+                  title = x$template$personnel.txt$content$projectTitle[k],
+                  personnel = set_person(info_row = k, person_role = "pi"),
+                  funding = x$template$personnel.txt$content$funding[k])
+            }
+          }))
     }
   }
-  
+
   # Create <dataTable> --------------------------------------------------------
   
   if (!is.null(x$data.table)) {
@@ -1175,6 +1113,9 @@ make_eml <- function(
         
         # Add attributes.txt contents to the data frame input expected by 
         # EML::set_attributes().
+        # FIXME: Order of attributes listed in the template may not be match 
+        # the order listed in the table so ... reorder attributes according
+        # to the data table listing.
         
         attributes <- data.frame(
           attributeName = tbl_attr$attributeName,
@@ -1309,10 +1250,7 @@ make_eml <- function(
           }
         }
         
-        # FIXME: data.url is deprecated. Remove support for this argument after (11 March 2021)
-        if (!is.null(data.url)) {
-          physical$distribution$online$url[[1]] <- paste0(data.url, "/", k)
-        } else if (!is.null(data.table.url)) {
+        if (!is.null(data.table.url)) {
           # data.table.url isn't required for each data table, but must have a 
           # non-NULL entry in the data.table.url if other data tables have a 
           # URL. A "" or NA indicates to skip URL assignment.
@@ -1376,10 +1314,7 @@ make_eml <- function(
         physical$dataFormat$textFormat <- NULL
         physical$dataFormat$externallyDefinedFormat$formatName <- mime::guess_type(
           file = k, unknown = "Unknown", empty = "Unknown")
-        # FIXME: data.url is deprecated. Remove support for this argument after (11 March 2021)
-        if (!is.null(data.url)) {
-          physical$distribution$online$url[[1]] <- paste0(data.url, "/", k)
-        } else if (!is.null(other.entity.url)) {
+        if (!is.null(other.entity.url)) {
           # other.entity.url isn't required for each data table, but must have a 
           # non-NULL entry in the other.entity.url if other data tables have a 
           # URL. A "" or NA indicates to skip URL assignment.
@@ -1412,6 +1347,16 @@ make_eml <- function(
         x$template$custom_units.txt$content)
   }
   
+  # Create <annotations> ------------------------------------------------------
+
+  if (any(stringr::str_detect(names(x$template), "annotations.txt"))) {
+    message("  <annotations>")
+    eml <- suppressMessages(
+      annotate_eml(
+        annotations = x$template$annotations.txt$content,
+        eml.in = eml))
+  }
+  
   # Write EML -----------------------------------------------------------------
   
   message("</eml>")
@@ -1437,7 +1382,7 @@ make_eml <- function(
   }
   
   # Validate EML --------------------------------------------------------------
-  
+
   message("Validating EML")
   r <- EML::eml_validate(eml)
   if (isTRUE(r)) {

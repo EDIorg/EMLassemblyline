@@ -1,17 +1,22 @@
 #' Validate arguments of EMLassemblyline functions
 #'
 #' @description
-#'     Validate input arguments to `EMLassemblyline` functions.
+#'     Validate input arguments to EMLassemblyline functions.
 #'
 #' @param fun.name
-#'     (character) Function name passed to `validate_x` with 
-#'     `as.character(match.call()[[1]])`.
+#'     (character) Name calling function.
 #' @param fun.args
-#'     (named list) Function arguments and values passed to `validate_x` with 
-#'     `as.list(environment())`.
+#'     (named list) Function arguments and their values.
+#'     
+#' @return 
+#' \item{argument_issues}{Any issues found in the validation process and returned as a list of character strings to the users environment. This object can be saved for later use and viewed in a human readable form with \code{issues()}}.
+#' 
+#' @note Some arise where an arguments value is set to NULL 
 #'     
 #' @details
-#'     Validation checks are function specific.    
+#'     \code{fun.name} defines which checks to call.
+#'     
+#'     \code{fun.args} values are modified when critical issues are found and are reassigned to the calling environment so the calling function may proceed without error.
 #'
 validate_arguments <- function(fun.name, fun.args){
   
@@ -19,6 +24,84 @@ validate_arguments <- function(fun.name, fun.args){
   
   use_i <- sapply(fun.args, function(X) identical(X, quote(expr=)))
   fun.args[use_i] <- list(NULL)
+  
+  # Call from annotate_eml() --------------------------------------------------
+  
+  if (fun.name == 'annotate_eml'){
+    
+    # annotations
+    
+    if (is.null(fun.args$annotations)) {
+      stop('Input argument "annotations" is missing.', call. = FALSE)
+    }
+    
+    if (is.character(fun.args$annotations)) {
+      if (!file.exists(fun.args$annotations)) {
+        stop(
+          paste0(
+            "The file specified by the input argument 'annotations' doesn't ",
+            "exist."
+          ), 
+          call. = FALSE
+        )
+      } 
+    } else if (!is.data.frame(fun.args$annotations)) {
+      stop(
+        "Input argument 'annotations' is not one of the two supported types.", 
+        call. = FALSE
+      )
+    }
+    
+    # eml.in
+    
+    if (is.null(fun.args$eml.in)) {
+      stop('Input argument "eml.in" is missing.', call. = FALSE)
+    }
+    
+    if (is.character(fun.args$eml.in)) {
+      if (!file.exists(fun.args$eml.in)) {
+        stop(
+          paste0(
+            "The file specified by the input argument 'eml.in' doesn't ",
+            "exist."
+          ), 
+          call. = FALSE
+        )
+      } else {
+        eml <- EML::read_eml(fun.args$eml.in)
+        if (!EML::eml_validate(eml)) {
+          stop(
+            "Input argument 'eml.in' is not a valid EML record.", 
+            call. = FALSE
+          )
+        }
+      }
+    } else if (!any(class(fun.args$eml.in) %in% c("emld", "list"))) {
+      stop(
+        "Input argument 'eml.in' is not one of the two supported types.", 
+        call. = FALSE
+      )
+    }
+    
+    # eml.out
+    
+    if (is.character(fun.args$eml.in) & is.null(fun.args$eml.out)) {
+      stop(
+        "Input argument 'eml.out' is missing.",
+        call. = FALSE
+      )
+    }
+    
+    if (!is.null(fun.args$eml.out) & is.character(fun.args$eml.out)) {
+      if (!dir.exists(dirname(fun.args$eml.out))) {
+        stop(
+          "Input argument 'eml.out' is a non-existant path.", 
+          call. = FALSE
+        )
+      }
+    }
+    
+  }
   
   # Call from define_catvars() ------------------------------------------------
   
@@ -169,6 +252,9 @@ validate_arguments <- function(fun.name, fun.args){
   
   if (fun.name == 'make_eml'){
     
+    # Initialize object for collecting issue messages
+    issues <- c()
+    
     # Handle deprecated arguments
     
     if (!is.null(fun.args$affiliation)){
@@ -200,115 +286,63 @@ validate_arguments <- function(fun.name, fun.args){
     }
     
     # path
-    
+
     if (is.null(fun.args$x)) {
       EDIutils::validate_path(fun.args$path)
     }
-    
+
     # data.path
-    
-    EDIutils::validate_path(fun.args$data.path)  
-    
+
+    EDIutils::validate_path(fun.args$data.path)
+
     # eml.path
-    
+
     if (isTRUE(fun.args$write.file)){
       EDIutils::validate_path(fun.args$eml.path)
     }
     
     # dataset.title
-    
-    if (is.null(fun.args$dataset.title)) {
-      warning('A dataset title is required.', call. = FALSE)
-    }
+    issues <- c(issues, validate_title(fun.args))
 
     # data.table
     
     if (!is.null(fun.args$data.table)) {
       table_names <- suppressWarnings(
         EDIutils::validate_file_names(
-          path = fun.args$data.path, 
+          path = fun.args$data.path,
           data.files = fun.args$data.table))
     }
     
     # data.table.description
-    
-    if (!is.null(fun.args$data.table)) {
-      if (is.null(fun.args$data.table.description)) {
-        warning('Data table descriptions are recommended.', call. = FALSE)
-      }
-      if (length(fun.args$data.table) > 
-          length(fun.args$data.table.description)) {
-        warning(
-          'One or more data table descriptions are missing.', call. = FALSE)
-      }
-    }
+    r <- validate_table_description(fun.args)
+    issues <- c(issues, r$issues)
+    fun.args <- r$fun.args
     
     # data.table.name
-    
-    if (!is.null(fun.args$data.table.name)) {
-      if (all(fun.args$data.table %in% fun.args$data.table.name)) {
-        warning(
-          "Data table names are missing. A short name for each data table is ",
-          "recommended. Defaulting to data table file names.", call. = FALSE)
-      }
-    }
-    
-    # data.table.name - If uneven, default missing to data.table file name
-    
-    if (!is.null(fun.args$data.table) & !is.null(fun.args$data.table.name)) {
-      if (length(fun.args$data.table.name) < length(fun.args$data.table)) {
-        warning(
-          "One or more data table names are missing. Defaulting to data table ",
-          "file names", call. = FALSE)
-      }
-    }
+    r <- validate_table_name(fun.args)
+    issues <- c(issues, r$issues)
+    fun.args <- r$fun.args
     
     # data.table.quote.character
-    
-    if (!is.null(fun.args$data.table)) {
-      if (!is.null(fun.args$data.table.quote.character)) {
-        if (length(fun.args$data.table.quote.character) < 
-            length(fun.args$data.table)) {
-          warning(
-            "One or more data table quote characters are missing.",
-            call. = FALSE)
-        }
-      }
-    }
+    r <- validate_table_quote_character(fun.args)
+    issues <- c(issues, r$issues)
+    fun.args <- r$fun.args
     
     # data.table.url
-    
-    if (!is.null(fun.args$data.table.url)) {
-      if (length(fun.args$data.table.url) < length(fun.args$data.table)) {
-        warning("One or more data table URLs are missing.", call. = FALSE)
-      }
-    }
+    r <- validate_table_url(fun.args)
+    issues <- c(issues, r$issues)
+    fun.args <- r$fun.args
     
     # geographic.coordinates and geographic.description
-    
-    if (!is.null(fun.args$geographic.coordinates) & 
-        is.null(fun.args$geographic.description)) {
-      warning('Geographic description is missing.', call. = FALSE)
-    }
-    
-    if (is.null(fun.args$geographic.coordinates) & 
-        !is.null(fun.args$geographic.description)){
-      warning('Geographic coordinates are missing.', call. = FALSE)
-    }
+    r <- validate_geographic_coord_desc(fun.args)
+    issues <- c(issues, r$issues)
+    fun.args <- r$fun.args
 
     # maintenance.description
-    
-    if (is.null(fun.args$maintenance.description)) {
-      warning(
-        paste0(
-          'A maintenance description is recommended. Describe the collection ',
-          'status of this dataset (e.g. "Ongoing collection with quarterly ', 
-          'updates", or "Completed collection, updates to these data are not ',
-          'expected.")'), call. = FALSE)
-    }
+    r <- validate_maintenance_description(fun.args)
+    issues <- c(issues, r$issues)
     
     # other.entity
-    
     if (!is.null(fun.args$other.entity)) {
       other_entity_names <- suppressWarnings(
         EDIutils::validate_file_names(
@@ -316,83 +350,140 @@ validate_arguments <- function(fun.name, fun.args){
           data.files = fun.args$other.entity))
     }
 
-    # other.entity.description
-    
-    if (!is.null(fun.args$other.entity)) {
-      if (is.null(fun.args$other.entity.description)) {
-        warning('Other entity descriptions are recommended.', call. = FALSE)
-      }
-      if (length(fun.args$other.entity) > 
-          length(fun.args$other.entity.description)) {
-        warning(
-          'One or more other entity descriptions are missing.', call. = FALSE)
-      }
-    }
-    
     # other.entity.name
+    r <- validate_other_entity_name(fun.args)
+    issues <- c(issues, r$issues)
+    fun.args <- r$fun.args
     
-    if (!is.null(fun.args$other.entity.name)) {
-      if (all(fun.args$other.entity %in% fun.args$other.entity.name)) {
-        warning(
-          "Other entity names are missing. A short name for each other entity is ",
-          "recommended. Defaulting to other entity file names.", call. = FALSE)
-      }
-    }
-    
-    # other.entity.name - If uneven, default missing to other.entity file name
-    
-    if (!is.null(fun.args$other.entity) & !is.null(fun.args$other.entity.name)) {
-      if (length(fun.args$other.entity.name) < length(fun.args$other.entity)) {
-        warning(
-          "One or more other entity names are missing. Defaulting to other entity ",
-          "file names", call. = FALSE)
-      }
-    }
+    # other.entity.description
+    r <- validate_other_entity_description(fun.args)
+    issues <- c(issues, r$issues)
+    fun.args <- r$fun.args
     
     # other.entity.url
-    
-    if (!is.null(fun.args$other.entity.url)) {
-      if (length(fun.args$other.entity.url) < length(fun.args$other.entity)) {
-        warning("One or more other entity URLs are missing.", call. = FALSE)
-      }
-    }
-    
-    # package.id
-    
-    if (!is.null(fun.args$package.id) & !is.null(fun.args$user.domain)) {
-      if (all(tolower(fun.args$user.domain) %in% c("edi", "lter"))) {
-        if (!isTRUE(stringr::str_detect(
-          fun.args$package.id, '[:alpha:]\\.[:digit:]+\\.[:digit:]'))) {
-          warning(
-            "Warning: 'package.id' is not valid for EDI or LTER. Expected is ",
-            "the form 'edi.xxx.x' (EDI) or 'knb-lter-ccc.xxx.x' (LTER).", 
-            call. = FALSE)
-        }
-      }
-    }
-    
-    # provenance - Warn about unrecognized identifiers
-    
-    if (!is.null(fun.args$provenance)){
-      use_i <- stringr::str_detect(
-        fun.args$provenance, 
-        "(^knb-lter-[:alpha:]+\\.[:digit:]+\\.[:digit:]+)|(^[:alpha:]+\\.[:digit:]+\\.[:digit:]+)")
-      if (!all(use_i)){
-        warning(
-          "Unable to generate provenance metadata for unrecognized identifier:\n",
-          paste(fun.args$provenance[!use_i], collapse = ", "), call. = FALSE)
-      }
-    }
+    r <- validate_other_entity_url(fun.args)
+    issues <- c(issues, r$issues)
+    fun.args <- r$fun.args
 
     # temporal.coverage
+    r <- validate_temporal_coverage(fun.args)
+    issues <- c(issues, r$issues)
+    fun.args <- r$fun.args
+
+    # Return
     
-    if (is.null(fun.args$temporal.coverage)) {
-      warning('Temporal coverage is recommended', call. = FALSE)
+    if (!is.null(issues)) {
+      list2env(
+        list(argument_issues = issues),
+        if(is.null(options("eal.env"))) {
+          .GlobalEnv
+        } else {
+          options("eal.env")[[1]]
+        }
+      )
+      warning(
+        "Argument issues found. Use issues() to see them.",
+        call. = FALSE)
     }
-    if (length(fun.args$temporal.coverage) != 2) {
-      warning('Temporal coverage requires a begin and end date', call. = FALSE)
+    
+    for (i in seq_along(fun.args)) {
+      assign(
+        x = names(fun.args[i]), 
+        value = fun.args[[i]], 
+        envir = parent.frame())
     }
-    # TODO: Validate date format
+    
+  }
+  
+  # Call from template_annotations() ------------------------------------------
+  
+  if (fun.name == 'template_annotations'){
+    
+    # path
+    
+    if (is.null(fun.args$path)) {
+      stop('Input argument "path" is missing.', call. = FALSE)
+    }
+    
+    if (!is.null(fun.args$path)) {
+      EDIutils::validate_path(fun.args$path)
+    }
+    
+    if (file.exists(paste0(fun.args$path, "/annotations.txt"))) {
+      stop(
+        paste0(
+          "annotations.txt already exists. To create a new annotations ",
+          "template, remove this one from 'path'."
+        ), 
+        call. = FALSE
+      )
+    }
+    
+    # data.path
+    
+    if (!is.null(fun.args$data.path)) {
+      EDIutils::validate_path(fun.args$data.path)
+    }
+    
+    # data.table
+    
+    if (!is.null(fun.args$data.table)){
+      table_names <- suppressWarnings(
+        EDIutils::validate_file_names(
+          path = fun.args$data.path, 
+          data.files = fun.args$data.table
+        )
+      )
+    }
+    
+    # other.entity
+    
+    if (!is.null(fun.args$other.entity)){
+      table_names <- suppressWarnings(
+        EDIutils::validate_file_names(
+          path = fun.args$data.path, 
+          data.files = fun.args$other.entity
+        )
+      )
+    }
+    
+    # default.annotations
+    
+    if (!is.null(fun.args$default.annotations)){
+      
+      if (!is.data.frame(fun.args$default.annotations)) {
+        stop(
+          "Input argument 'default.annotations' is not a data frame.", 
+          call. = FALSE
+        )
+      }
+      
+      if (!all(c("element", "predicate_label", "predicate_uri", "object_label", 
+          "object_uri") %in% colnames(fun.args$default.annotations))) {
+        stop(
+          paste0(
+            "The 'default.annotations' data frame is missing one or more of ",
+            "these columns: 'element', 'predicate_label', 'predicate_uri', ",
+            "'object_label', 'object_uri'"
+          ),
+          call. = FALSE
+        )
+      }
+      
+    }
+    
+    # eml
+    
+    if (!is.null(fun.args$eml)) {
+      if (!file.exists(paste0(fun.args$eml.path, "/", fun.args$eml))) {
+        stop(
+          paste0("The file ", fun.args$eml, " cannot be found at 'path'."),
+          call. = FALSE
+        )
+      }
+      
+    }
+
   }
   
   # Call from template_arguments() ------------------------------------------------
@@ -453,69 +544,34 @@ validate_arguments <- function(fun.name, fun.args){
   # Call from template_categorical_variables() -------------------------------------
   
   if (fun.name == 'template_categorical_variables'){
+
+    if (is.null(fun.args$path)) {
+      stop("Input argument 'path' is missing", call. = FALSE)
+    }
     
-    # If not using x ...
+    # Get attribute file names and data file names
     
-    if (is.null(fun.args$x)){
-      
-      # Get attribute file names and data file names
-      
-      files <- list.files(fun.args$path)
-      use_i <- stringr::str_detect(string = files,
-                                   pattern = "^attributes")
-      if (sum(use_i) == 0){
-        stop('There are no attributes.txt files in your dataset working directory. Please fix this.', call. = F)
-      }
-      
-      attribute_files <- files[use_i]
-      table_names_base <- stringr::str_sub(string = attribute_files,
-                                           start = 12,
-                                           end = nchar(attribute_files)-4)
-      data_files <- list.files(fun.args$data.path)
-      use_i <- stringr::str_detect(string = data_files,
-                                   pattern = stringr::str_c("^", table_names_base, collapse = "|"))
-      table_names <- data_files[use_i]
-      data_files <- table_names
-      
-      # Send warning if data table name is repeated more than once
-      
-      if (length(unique(tools::file_path_sans_ext(data_files))) != length(data_files)){
-        stop('Duplicate data file names exist in this directory. Please remove duplicates, even if they are a different file type.', call. = F)
-      }
-      
-      # If using x ...
-      
-    } else if (!is.null(fun.args$x)){
-      
-      # Get attribute file names and data file names
-      
-      files <- names(fun.args$x$template)
-      use_i <- stringr::str_detect(string = files,
-                                   pattern = "^attributes")
-      if (sum(use_i) == 0){
-        stop('There are no attributes.txt files in your dataset working directory. Please fix this.', call. = F)
-      }
-      
-      attribute_files <- files[use_i]
-      
-      table_names_base <- stringr::str_sub(string = attribute_files,
-                                           start = 12,
-                                           end = nchar(attribute_files)-4)
-      
-      data_files <- names(fun.args$x$data.table)
-      
-      use_i <- stringr::str_detect(string = data_files,
-                                   pattern = stringr::str_c("^", table_names_base, collapse = "|"))
-      
-      table_names <- data_files[use_i]
-      data_files <- table_names
-      
-      # Send warning if data table name is repeated more than once
-      
-      if (length(unique(tools::file_path_sans_ext(data_files))) != length(data_files)){
-        stop('Duplicate data file names exist in this directory. Please remove duplicates, even if they are a different file type.', call. = F)
-      }
-      
+    files <- list.files(fun.args$path)
+    use_i <- stringr::str_detect(string = files,
+                                 pattern = "^attributes")
+    if (sum(use_i) == 0){
+      stop('There are no attributes.txt files in your dataset working directory. Please fix this.', call. = F)
+    }
+    
+    attribute_files <- files[use_i]
+    table_names_base <- stringr::str_sub(string = attribute_files,
+                                         start = 12,
+                                         end = nchar(attribute_files)-4)
+    data_files <- list.files(fun.args$data.path)
+    use_i <- stringr::str_detect(string = data_files,
+                                 pattern = stringr::str_c("^", table_names_base, collapse = "|"))
+    table_names <- data_files[use_i]
+    data_files <- table_names
+    
+    # Send warning if data table name is repeated more than once
+    
+    if (length(unique(tools::file_path_sans_ext(data_files))) != length(data_files)){
+      stop('Duplicate data file names exist in this directory. Please remove duplicates, even if they are a different file type.', call. = F)
     }
 
   }
@@ -618,6 +674,17 @@ validate_arguments <- function(fun.name, fun.args){
 
   }
   
+  # Call from template_provenance() -------------------------------------------
+  
+  if (fun.name == 'template_provenance'){
+    
+    # path
+    if (!is.null(fun.args$path)) {
+      EDIutils::validate_path(fun.args$path)
+    }
+    
+  }
+  
   # Call from template_table_attributes() -------------------------------------
   
   if (fun.name == 'template_table_attributes'){
@@ -631,9 +698,31 @@ validate_arguments <- function(fun.name, fun.args){
       data_files <- suppressWarnings(
         EDIutils::validate_file_names(
           path = fun.args$data.path, 
-          data.files = fun.args$data.table
-        )
-      )
+          data.files = fun.args$data.table))
+      
+      # attributeName - Names follow best practices
+      
+      r <- lapply(
+        fun.args$data.table,
+        function(k) {
+          x <- template_arguments(
+            data.path = fun.args$data.path,
+            data.table = k)$x
+          use_i <- stringr::str_detect(
+            colnames(x$data.table[[k]]$content), "(%|[:blank:]|([:punct:]^_))")
+          if (any(use_i)) {
+            paste0(
+              k, " has column names that are not composed of strictly ",
+              "alphanumeric characters and underscores (recommended). This ",
+              "best practice ensures the data may be read by most software ",
+              "applications. Consider revising these columns: ", 
+              paste(
+                colnames(x$data.table[[k]]$content)[use_i], collapse = ", "))
+          }
+        })
+      if (!is.null(unlist(r))) {
+        warning(paste(unlist(r), collapse = "\n"), call. = FALSE)
+      }
 
     }
     
@@ -733,4 +822,754 @@ validate_arguments <- function(fun.name, fun.args){
   
   }
   
+}
+
+
+
+
+
+
+
+
+
+#' Validate dataset title
+#'
+#' @param fun.args
+#'     (named list) Function arguments and their values.
+#'
+#' @return
+#'     \item{character}{Description of issues}
+#'     \item{NULL}{If no issues were found}
+#'
+validate_title <- function(fun.args) {
+  
+  # Each issue is logged as "required" or "optional"
+  required_issues <- c()
+  optional_issues <- c()
+  
+  # Is present
+  r <- validate_title_presence(fun.args)
+  required_issues <- c(required_issues, r)
+  
+  # Is of adequate length
+  r <- validate_title_length(fun.args)
+  optional_issues <- c(optional_issues, r)
+  
+  # A compiled report of issues helps the user fix them
+  if (!is.null(required_issues)) {
+    required_issues <- paste0(
+      "\n",
+      "Dataset title (Required):\n",
+      paste(
+        paste0(seq_along(required_issues), ". "),
+        required_issues,
+        collapse = "\n"), 
+      "\n")
+  }
+  if (!is.null(optional_issues)) {
+    optional_issues <- paste0(
+      "\n",
+      "Dataset title (Optional):\n",
+      paste(
+        paste0(seq_along(optional_issues), ". "),
+        optional_issues,
+        collapse = "\n"), 
+      "\n")
+  }
+  issues <- c(required_issues, optional_issues)
+  
+  return(issues)
+  
+}
+
+
+
+
+
+
+
+
+#' Check for title presence
+#'
+#' @param fun.args
+#'     (named list) Function arguments and their values.
+#'
+#' @return
+#'     \item{character}{Description of issues}
+#'     \item{NULL}{If no issues were found}
+#'
+validate_title_presence <- function(fun.args) {
+  if (is.null(fun.args$dataset.title)) {
+    return("The dataset title is missing.")
+  }
+}
+
+
+
+
+
+
+
+
+#' Check title length
+#'
+#' @param fun.args
+#'     (named list) Function arguments and their values.
+#'
+#' @return
+#'     \item{character}{Description of issues}
+#'     \item{NULL}{If no issues were found}
+#'
+validate_title_length <- function(fun.args) {
+  title <- fun.args$dataset.title
+  if (!is.null(title)) {
+    if (length(stringr::str_split(title, " ")[[1]]) < 5) {
+      return("The dataset title should be at least 5 words.")
+    }
+  }
+}
+
+
+
+
+
+
+
+
+#' Validate data table description
+#'
+#' @param fun.args
+#'     (named list) Function arguments and their values.
+#'
+#' @return
+#'     \item{issues}{Description of issues}
+#'     \item{fun.args}{Updated list of function arguments}
+#'
+validate_table_description <- function(fun.args) {
+  
+  # Each issue is logged as "required" or "optional"
+  required_issues <- c()
+  optional_issues <- c()
+  
+  # Each table has a description, otherwise the description defaults to the 
+  # file name
+  for (i in seq_along(fun.args$data.table)) {
+    tbl <- fun.args$data.table[i]
+    des <- fun.args$data.table.description[i]
+    if (is.na(des) || is.null(des)) {
+      optional_issues <- c(
+        optional_issues,
+        paste0("Missing description for ", tbl, ". Short descriptions of the ",
+               "file contents help future users understand the data. ",
+               "Defaulting to file name."))
+      fun.args$data.table.description[i] <- tbl
+    }
+  }
+  
+  # Compile report
+  if (!is.null(required_issues)) {
+    required_issues <- paste0(
+      "\n",
+      "Table descriptions (Required):\n",
+      paste(
+        paste0(seq_along(required_issues), ". "),
+        required_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  if (!is.null(optional_issues)) {
+    optional_issues <- paste0(
+      "\n",
+      "Table descriptions (Optional):\n",
+      paste(
+        paste0(seq_along(optional_issues), ". "),
+        optional_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  issues <- c(required_issues, optional_issues)
+  
+  return(list(issues = issues, fun.args = fun.args))
+}
+
+
+
+
+
+
+
+
+#' Validate data table names
+#'
+#' @param fun.args
+#'     (named list) Function arguments and their values.
+#'
+#' @return
+#'     \item{issues}{Description of issues}
+#'     \item{fun.args}{Updated list of function arguments}
+#'
+validate_table_name <- function(fun.args) {
+  
+  # Each issue is logged as "required" or "optional"
+  required_issues <- c()
+  optional_issues <- c()
+  
+  # Each table has a name, otherwise the name defaults to the file name
+  for (i in seq_along(fun.args$data.table)) {
+    tbl <- fun.args$data.table[i]
+    name <- fun.args$data.table.name[i]
+    if (is.na(name) || is.null(name)) {
+      optional_issues <- c(
+        optional_issues,
+        paste0("Missing name for ", tbl, ". Short descriptive names of the ",
+               "files help users understand the data. Defaulting to file ",
+               "name."))
+      fun.args$data.table.name[i] <- tbl
+    } else if (tbl == name) {
+      optional_issues <- c(
+        optional_issues,
+        paste0("Missing name for ", tbl, ". Short descriptive names of the ",
+               "files help users understand the data. Defaulting to file ",
+               "name."))
+    }
+  }
+  
+  # Compile report
+  if (!is.null(required_issues)) {
+    required_issues <- paste0(
+      "\n",
+      "Table names (Required):\n",
+      paste(
+        paste0(seq_along(required_issues), ". "),
+        required_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  if (!is.null(optional_issues)) {
+    optional_issues <- paste0(
+      "\n",
+      "Table names (Optional):\n",
+      paste(
+        paste0(seq_along(optional_issues), ". "),
+        optional_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  issues <- c(required_issues, optional_issues)
+  return(list(issues = issues, fun.args = fun.args))
+}
+
+
+
+
+
+
+
+
+#' Validate data table quote characters
+#'
+#' @param fun.args
+#'     (named list) Function arguments and their values.
+#'
+#' @return
+#'     \item{issues}{Description of issues}
+#'     \item{fun.args}{Updated list of function arguments}
+#'
+validate_table_quote_character <- function(fun.args) {
+  
+  # Each issue is logged as "required" or "optional"
+  required_issues <- c()
+  optional_issues <- c()
+  
+  # If quote characters are used, then each table has one otherwise a 
+  # default " is added
+  for (i in seq_along(fun.args$data.table)) {
+    tbl <- fun.args$data.table[i]
+    quo <- fun.args$data.table.quote.character[i]
+    if (!is.null(quo)) {
+      if (is.na(quo)) {
+        required_issues <- c(
+          required_issues,
+          paste0("Missing quote character for ", tbl, ". A quote character ",
+                 "should be specified for each table. Use '' if no quote ",
+                 "character is used. Defaulting to '\"'"))
+        fun.args$data.table.quote.character[i] <- '"'
+      }
+    }
+  }
+  
+  # Compile report
+  if (!is.null(required_issues)) {
+    required_issues <- paste0(
+      "\n",
+      "Table quote character (Required):\n",
+      paste(
+        paste0(seq_along(required_issues), ". "),
+        required_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  if (!is.null(optional_issues)) {
+    optional_issues <- paste0(
+      "\n",
+      "Table quote character (Optional):\n",
+      paste(
+        paste0(seq_along(optional_issues), ". "),
+        optional_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  issues <- c(required_issues, optional_issues)
+  
+  return(list(issues = issues, fun.args = fun.args))
+}
+
+
+
+
+
+
+
+
+#' Validate data table url
+#'
+#' @param fun.args
+#'     (named list) Function arguments and their values.
+#'
+#' @return
+#'     \item{issues}{Description of issues}
+#'     \item{fun.args}{Updated list of function arguments}
+#'
+validate_table_url <- function(fun.args) {
+  
+  # Each issue is logged as "required" or "optional"
+  required_issues <- c()
+  optional_issues <- c()
+  
+  # If urls are used, then each table has one otherwise a default "" is added
+  for (i in seq_along(fun.args$data.table)) {
+    tbl <- fun.args$data.table[i]
+    url <- fun.args$data.table.url[i]
+    if (!is.null(url)) {
+      if (is.na(url)) {
+        required_issues <- c(
+          required_issues,
+          paste0("Missing URL for ", tbl, ". A URL should be specified for ",
+                 'each table. Use "" if no URL is used. Defaulting to "".'))
+        fun.args$data.table.url[i] <- ""
+      }
+    }
+  }
+  
+  # Compile report
+  if (!is.null(required_issues)) {
+    required_issues <- paste0(
+      "\n",
+      "Table URL (Required):\n",
+      paste(
+        paste0(seq_along(required_issues), ". "),
+        required_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  if (!is.null(optional_issues)) {
+    optional_issues <- paste0(
+      "\n",
+      "Table URL (Optional):\n",
+      paste(
+        paste0(seq_along(optional_issues), ". "),
+        optional_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  
+  issues <- c(required_issues, optional_issues)
+  
+  return(list(issues = issues, fun.args = fun.args))
+}
+
+
+
+
+
+
+
+
+#' Validate geographic coordinate and description pair
+#'
+#' @param fun.args
+#'     (named list) Function arguments and their values.
+#'
+#' @return
+#'     \item{issues}{Description of issues}
+#'     \item{fun.args}{Updated list of function arguments}
+#'
+validate_geographic_coord_desc <- function(fun.args) {
+  
+  # Each issue is logged as "required" or "optional"
+  required_issues <- c()
+  optional_issues <- c()
+  
+  # geographic.description is missing
+  if (!is.null(fun.args$geographic.coordinates) & 
+      is.null(fun.args$geographic.description)) {
+    required_issues <- c(
+      required_issues,
+      "Geographic description is missing.")
+    fun.args$geographic.coordinates <- NULL
+  }
+  
+  # geographic.coordinates are missing
+  if (is.null(fun.args$geographic.coordinates) & 
+      !is.null(fun.args$geographic.description)){
+    required_issues <- c(
+      required_issues,
+      "Geographic coordinates are missing.")
+    fun.args$geographic.description <- NULL
+  }
+  
+  # Compile report
+  if (!is.null(required_issues)) {
+    required_issues <- paste0(
+      "\n",
+      "Geographic coverage (Required):\n",
+      paste(
+        paste0(seq_along(required_issues), ". "),
+        required_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  if (!is.null(optional_issues)) {
+    optional_issues <- paste0(
+      "\n",
+      "Geographic coverage (Optional):\n",
+      paste(
+        paste0(seq_along(optional_issues), ". "),
+        optional_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  
+  issues <- c(required_issues, optional_issues)
+  
+  return(list(issues = issues, fun.args = fun.args))
+}
+
+
+
+
+
+
+
+#' Validate maintenance description
+#'
+#' @param fun.args
+#'     (named list) Function arguments and their values.
+#'
+#' @return
+#'     \item{issues}{Description of issues}
+#'     \item{fun.args}{Updated list of function arguments}
+#'
+validate_maintenance_description <- function(fun.args) {
+  
+  # Each issue is logged as "required" or "optional"
+  required_issues <- c()
+  optional_issues <- c()
+  
+  if (is.null(fun.args$maintenance.description)) {
+    optional_issues <- c(
+      optional_issues,
+      paste0(
+        'A maintenance description is recommended. Describe the collection ',
+        'status of this dataset (e.g. "Ongoing collection with quarterly ', 
+        'updates", or "Completed collection, updates to these data are not ',
+        'expected.")'))
+  }
+  
+  # Compile report
+  if (!is.null(required_issues)) {
+    required_issues <- paste0(
+      "\n",
+      "Maintenance description (Required):\n",
+      paste(
+        paste0(seq_along(required_issues), ". "),
+        required_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  if (!is.null(optional_issues)) {
+    optional_issues <- paste0(
+      "\n",
+      "Maintenance description (Optional):\n",
+      paste(
+        paste0(seq_along(optional_issues), ". "),
+        optional_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  
+  issues <- c(required_issues, optional_issues)
+  
+  return(list(issues = issues, fun.args = fun.args))
+}
+
+
+
+
+
+
+
+
+#' Validate other entity names
+#'
+#' @param fun.args
+#'     (named list) Function arguments and their values.
+#'
+#' @return
+#'     \item{issues}{Description of issues}
+#'     \item{fun.args}{Updated list of function arguments}
+#'
+validate_other_entity_name <- function(fun.args) {
+  
+  # Each issue is logged as "required" or "optional"
+  required_issues <- c()
+  optional_issues <- c()
+  
+  # Each table has a name, otherwise the name defaults to the file name
+  for (i in seq_along(fun.args$other.entity)) {
+    othent <- fun.args$other.entity[i]
+    name <- fun.args$other.entity.name[i]
+    if (is.na(name) || is.null(name)) {
+      optional_issues <- c(
+        optional_issues,
+        paste0("Missing name for ", othent, ". Short descriptive names of the ",
+               "files help users understand the data. Defaulting to file ",
+               "name."))
+      fun.args$other.entity.name[i] <- othent
+    } else if (othent == name) {
+      optional_issues <- c(
+        optional_issues,
+        paste0("Missing name for ", othent, ". Short descriptive names of the ",
+               "files help users understand the data. Defaulting to file ",
+               "name."))
+    }
+  }
+  
+  # Compile report
+  if (!is.null(required_issues)) {
+    required_issues <- paste0(
+      "\n",
+      "Other entity names (Required):\n",
+      paste(
+        paste0(seq_along(required_issues), ". "),
+        required_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  if (!is.null(optional_issues)) {
+    optional_issues <- paste0(
+      "\n",
+      "Other entity names (Optional):\n",
+      paste(
+        paste0(seq_along(optional_issues), ". "),
+        optional_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  issues <- c(required_issues, optional_issues)
+  
+  return(list(issues = issues, fun.args = fun.args))
+}
+
+
+
+
+
+
+
+
+#' Validate other entity description
+#'
+#' @param fun.args
+#'     (named list) Function arguments and their values.
+#'
+#' @return
+#'     \item{issues}{Description of issues}
+#'     \item{fun.args}{Updated list of function arguments}
+#'
+validate_other_entity_description <- function(fun.args) {
+  
+  # Each issue is logged as "required" or "optional"
+  required_issues <- c()
+  optional_issues <- c()
+  
+  # Each table has a description, otherwise the description defaults to the 
+  # file name
+  for (i in seq_along(fun.args$other.entity)) {
+    othent <- fun.args$other.entity[i]
+    othent <- fun.args$other.entity.description[i]
+    if (is.na(othent) || is.null(othent)) {
+      optional_issues <- c(
+        optional_issues,
+        paste0("Missing description for ", othent, ". Short descriptions of the ",
+               "file contents help future users understand the data. ",
+               "Defaulting to file name."))
+      fun.args$other.entity.description[i] <- othent
+    }
+  }
+  
+  # Compile report
+  if (!is.null(required_issues)) {
+    required_issues <- paste0(
+      "\n",
+      "Other entity descriptions (Required):\n",
+      paste(
+        paste0(seq_along(required_issues), ". "),
+        required_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  if (!is.null(optional_issues)) {
+    optional_issues <- paste0(
+      "\n",
+      "Other entity descriptions (Optional):\n",
+      paste(
+        paste0(seq_along(optional_issues), ". "),
+        optional_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  issues <- c(required_issues, optional_issues)
+  
+  return(list(issues = issues, fun.args = fun.args))
+}
+
+
+
+
+
+
+
+
+#' Validate other entity url
+#'
+#' @param fun.args
+#'     (named list) Function arguments and their values.
+#'
+#' @return
+#'     \item{issues}{Description of issues}
+#'     \item{fun.args}{Updated list of function arguments}
+#'
+validate_other_entity_url <- function(fun.args) {
+  
+  # Each issue is logged as "required" or "optional"
+  required_issues <- c()
+  optional_issues <- c()
+  
+  # If urls are used, then each table has one otherwise a default "" is added
+  for (i in seq_along(fun.args$other.entity)) {
+    othent <- fun.args$other.entity[i]
+    url <- fun.args$other.entity.url[i]
+    if (!is.null(url)) {
+      if (is.na(url)) {
+        required_issues <- c(
+          required_issues,
+          paste0("Missing URL for ", othent, ". A URL should be specified for ",
+                 'each other entity. Use "" if no URL is used. Defaulting to "".'))
+        fun.args$other.entity.url[i] <- ""
+      }
+    }
+  }
+  
+  # Compile report
+  if (!is.null(required_issues)) {
+    required_issues <- paste0(
+      "\n",
+      "Other entity URL (Required):\n",
+      paste(
+        paste0(seq_along(required_issues), ". "),
+        required_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  if (!is.null(optional_issues)) {
+    optional_issues <- paste0(
+      "\n",
+      "Other entity (Optional):\n",
+      paste(
+        paste0(seq_along(optional_issues), ". "),
+        optional_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  
+  issues <- c(required_issues, optional_issues)
+  
+  return(list(issues = issues, fun.args = fun.args))
+}
+
+
+
+
+
+
+
+
+#' Validate temporal coverage
+#'
+#' @param fun.args
+#'     (named list) Function arguments and their values.
+#'
+#' @return
+#'     \item{issues}{Description of issues}
+#'     \item{fun.args}{Updated list of function arguments}
+#'
+validate_temporal_coverage <- function(fun.args) {
+  
+  # Each issue is logged as "required" or "optional"
+  required_issues <- c()
+  optional_issues <- c()
+  
+  # temporal.coverage is missing
+  if (is.null(fun.args$temporal.coverage)) {
+    optional_issues <- c(
+      optional_issues,
+      "Temporal coverage is missing.")
+  }
+  
+  # temporal.coverage is incomplete
+  if (!is.null(fun.args$temporal.coverage)) {
+    if (length(fun.args$temporal.coverage) != 2){
+      required_issues <- c(
+        required_issues,
+        "Temporal coverage requires a begin and end date.")
+      fun.args$temporal.coverage <- NULL
+    }
+  }
+  
+  # Compile report
+  if (!is.null(required_issues)) {
+    required_issues <- paste0(
+      "\n",
+      "Temporal coverage (Required):\n",
+      paste(
+        paste0(seq_along(required_issues), ". "),
+        required_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  if (!is.null(optional_issues)) {
+    optional_issues <- paste0(
+      "\n",
+      "Temporal coverage (Optional):\n",
+      paste(
+        paste0(seq_along(optional_issues), ". "),
+        optional_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  
+  issues <- c(required_issues, optional_issues)
+  
+  return(list(issues = issues, fun.args = fun.args))
 }

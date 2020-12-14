@@ -3,52 +3,19 @@ title: "Organize data package"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-library(EMLassemblyline)
-```
-
-
 ## The data package
 
-A data package forms a collection of data objects and metadata enabling understanding, use, and citation of a dataset. Metadata play an important role in understanding each object and how they relate to each other. `EMLassemblyline` works for all digital object formats and has been used by the [Environmental Data Initiative](https://environmentaldatainitiative.org/) (EDI) to create and manage well over 250 data packages for a nearly equal number of research scientists. Editing and revisioning data packages on short notice is made easy by `EMLassemblyline` but requires some forethought about file organization.
+A data package forms a collection of data objects and metadata enabling understanding, use, and citation of a dataset. Metadata play an important role in understanding each object and how they relate to each other. EAL works for all digital object formats and has been used by the [Environmental Data Initiative](https://environmentaldatainitiative.org/) (EDI) to create and manage over 500 data packages for a nearly equal number of researchers. Revising data packages with EAL is easy but requires some forethought about file organization.
 
 ## An organization scheme
 
-A simple and useful organization scheme is a single directory for each data package containing:
+A useful organization scheme is a single directory for each data package containing:
 
-*  __data_objects__ A directory of data and other objects to be packaged (e.g. data tables, analysis scripts, .zip files, etc.).
-*  __metadata_templates__ A directory of `EMLassemblyline` metadata templates.
-*  __eml__ A directory of EML files created by `EMLassemblyline`.
-*  __run_EMLassemblyline.R__ An R file for scripting an `EMLassemblyline` workflow.
+*  __data_objects__ A directory of data and other digital objects to be packaged (e.g. data files, scripts, .zip files, etc.).
+*  __metadata_templates__ A directory of EAL template files.
+*  __eml__ A directory of EML files created by EAL.
+*  __run_EMLassemblyline.R__ An R file for scripting an EAL workflow.
 
-```{r remove_directory, echo=FALSE}
+Run `template_directories()` to create this organization scheme.
 
-unlink(
-  x = paste0(tempdir(), '/pkg_301'),
-  recursive = TRUE
-)
-
-# Set working directory
-
-knitr::opts_knit$set(root.dir = tempdir())
-
-```
-
-```{r template_directories, echo=TRUE, paged.print=TRUE, message = TRUE}
-
-# Set working directory
-setwd(tempdir())
-
-# Template a data package directory
-template_directories(
-  path = '.',
-  dir.name = 'pkg_301'
-)
-
-# View directory contents
-dir('./pkg_301')
-
-```
-
-Any organization scheme is possible as long as all the metadata template files belonging to a data package are co-located in a single directory.
+An even simpler organization scheme, albeit more cluttered, is a single directory containing all files belonging to a data package. A third option is to customize file location, use the `path`, `data.path`, and `eml.path` arguments of EAL functions.

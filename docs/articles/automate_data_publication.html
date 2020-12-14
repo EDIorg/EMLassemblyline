@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.18.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.0</span>
       </span>
     </div>
 
@@ -54,7 +54,7 @@
       <a href="../articles/organize_data_package.html">Organize data package</a>
     </li>
     <li>
-      <a href="../articles/create_metadata_templates.html">Create metadata templates</a>
+      <a href="../articles/create_metadata_templates.html">Template metadata</a>
     </li>
     <li>
       <a href="../articles/edit_metadata_templates.html">Edit metadata templates</a>
@@ -94,7 +94,8 @@
 
       
 
-      </header><div class="row">
+      </header><link href="automate_data_publication_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="automate_data_publication_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Automate data publication</h1>
@@ -110,7 +111,7 @@
 <div id="why-and-when" class="section level2">
 <h2 class="hasAnchor">
 <a href="#why-and-when" class="anchor"></a>Why and when?</h2>
-<p>Recurring data publication was traditionally a manual edit and upload process that can now be automated with programmatic approaches like <code>EMLassemblyline</code> and use of data repository APIs. These approaches not only reduce effort, but improve metadata accuracy and enable complex reproducible science workflows. Automated publication and upload is suitable for:</p>
+<p>Recurring data publication was traditionally a manual edit and upload process that can now be automated with programmatic approaches (e.g. EAL) and use of data repository APIs (e.g. <a href="https://ediorg.github.io/EDIutils/">EDIutils</a>). These approaches not only reduce effort, but improve metadata accuracy and enable automated workflows. Automated publication and upload is suitable for:</p>
 <ul>
 <li>
 <strong>Ongoing data collection</strong> Data package is updated periodically with new data</li>
@@ -122,12 +123,12 @@
 <div id="ongoing-data-collection" class="section level2">
 <h2 class="hasAnchor">
 <a href="#ongoing-data-collection" class="anchor"></a>Ongoing data collection</h2>
-<p>Ongoing data collection can be the addition of new data to a time series, or data changing as a result of an evolving data processing or analytical method. In either case, automated publication requires stabilization of package contents and configuration of <code>EMLassemblyline</code> for these contents. If package contents deviate from what can be programmatically input to <code>EMLassemblyline</code>, then metadata accuracy decreases and human and machine understanding are compromised. Example automated data publication for ongoing data collection:</p>
+<p>Ongoing data collection can be the addition of new data to a time series or data changing as a result of an evolving data processing or analytical method. In either case, automated publication requires stabilization of package contents and configuration of EAL for these contents. If package contents deviate from what can be programmatically input to EAL, then metadata accuracy decreases and human and machine understanding are compromised. Example automated data publication for ongoing collection:</p>
 <ol style="list-style-type: decimal">
 <li>
 <strong>Upload data</strong> Field technician uploads new raw data to a queue on their project server.</li>
 <li>
-<strong>Process data</strong> The presence of queued data triggers a scripted workflow in which raw data are aggregated and quality control procedures applied to create a publication ready dataset for which <code>EMLassemblyline</code> has been configured.</li>
+<strong>Process data</strong> The presence of queued data triggers a scripted workflow in which raw data are aggregated and quality control procedures applied to create a publication ready dataset for which EAL has been configured.</li>
 <li>
 <strong>Make EML</strong> The script then updates values input to <code><a href="../reference/make_eml.html">make_eml()</a></code>’s <code>temporal.coverage</code> and <code>package.id</code> arguments, and then runs <code><a href="../reference/make_eml.html">make_eml()</a></code> for the new data.</li>
 <li>
@@ -147,7 +148,7 @@
 <li>
 <strong>Download data</strong> The script downloads the updated package.</li>
 <li>
-<strong>Process data</strong> Next the data are processed, analyzed, and formatted into a data product for which the <code>EMLassemblyline</code> has been configured.</li>
+<strong>Process data</strong> Next the data are processed, analyzed, and formatted into a data product for which the EAL has been configured.</li>
 <li>
 <strong>Make EML</strong> The script then updates values for the <code>temporal.coverage</code> and <code>package.id</code> arguments, and runs <code><a href="../reference/make_eml.html">make_eml()</a></code> for the data product.</li>
 <li>
@@ -167,7 +168,7 @@
 <div class="figure">
 <img src="automated_publication_derived.PNG" alt="An example implementation"><p class="caption">An example implementation</p>
 </div>
-<p>Automated data publication coupled with repository event notifications enable highly efficient, reproducible, and valuable science workflows.</p>
+<p>Automated data publication coupled with repository event notifications enable efficient, reproducible, and valuable science workflows.</p>
 </div>
   </div>
 

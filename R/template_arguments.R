@@ -1,4 +1,4 @@
-#' Initialize inputs to \code{EMLassemblyline} functions
+#' Create a list of inputs to EMLassemblyline functions (primarily for internal use only)
 #'
 #' @description  
 #'     Initialize the full list of possible inputs to \code{EMLassemblyline}
@@ -26,6 +26,16 @@
 #'     (logical) Initialize the output with a set of empty metadata templates?
 #'     This option is useful when wanting to transfer metadata directly into
 #'     the template files without having to call the templating functions.
+#'     
+#' @details 
+#'     Character encoding in tabular metadata templates is converted to UTF-8 
+#'     via \code{enc2utf8()}. Characters in TextType metadata templates are not
+#'     yet converted. Note: This may lead to an inaccuracy and disconnect 
+#'     between values in the data objects and what is reported in the EML (e.g.
+#'     a categorical variable listed in the EML may not be the same as it's 
+#'     corresponding value in the data object). To reduce the chance of this,
+#'     warnings are issued if the input data object from which the metadata was
+#'     extracted is not UTF-8 encoded.
 #'
 #' @return 
 #'     (named list) A list of all \code{EMLassemblyline} arguments, specified 
@@ -106,7 +116,7 @@ template_arguments <- function(
           stringr::str_detect(path_files[i], attr_tmp$regexpr))
       }
       templates <- vector('list', length(path_files[is_template]))
-      names(templates) <- path_files[is_template]
+      names(templates) <- enc2utf8(path_files[is_template])
     }
   } else {
     templates <- NULL
@@ -123,7 +133,7 @@ template_arguments <- function(
         stringr::str_detect(path_files[i], attr_tmp$regexpr))
     }
     templates <- vector('list', length(path_files[is_template]))
-    names(templates) <- path_files[is_template]
+    names(templates) <- enc2utf8(path_files[is_template])
     templates[stringr::str_detect(names(templates), ".docx|.md")] <- NULL
   }
   
@@ -134,7 +144,7 @@ template_arguments <- function(
       path = data.path,
       data.files = data.table)
     data_tables <- vector('list', length(data_table))
-    names(data_tables) <- data_table
+    names(data_tables) <- enc2utf8(as.character(data_table))
   } else {
     data_tables <- NULL
   }
@@ -146,7 +156,7 @@ template_arguments <- function(
       path = data.path,
       data.files = other.entity)
     other_entities <- vector('list', length(other_entity))
-    names(other_entities) <- other_entity
+    names(other_entities) <- enc2utf8(as.character(other_entity))
   } else {
     other_entities <- NULL
   }
@@ -158,18 +168,27 @@ template_arguments <- function(
     # Helper functions for reading templates
     
     read_tbl <- function(f) {
+      
       # FIXME: Convert NA to "" expected by EAL funcitons. Assume NA listed
       # under missingValueCode of the attributes template is "" unless 
       # accompanied by a missingValueCodeExplanation
       
-      as.data.frame(
+      d <- as.data.frame(
         data.table::fread(
           file = f,
           fill = TRUE,
           blank.lines.skip = TRUE,
           sep = "\t",
+          quote = "",
           colClasses = list(
             character = 1:utils::count.fields(f, sep = "\t")[1])))
+      
+      # Re-encode metadata in UTF-8
+      for (k in 1:ncol(d)) {
+        d[ , k] <- enc2utf8(d[ , k])
+      }
+      d
+      
     }
     
     read_txt <- function(f) {
@@ -276,7 +295,7 @@ template_arguments <- function(
         templates[[i]]$content <- read_txt(
           paste0(path, '/', tfound[i]))
       }
-      
+        
       # Read additional information -------------------------------------------
       
       if (stringr::str_detect(
@@ -284,6 +303,16 @@ template_arguments <- function(
         attr_tmp$regexpr[attr_tmp$template_name == "additional_info"])) {
         templates[[i]]$content <- read_txt(
           paste0(path, '/', tfound[i]))
+      }
+      
+      # Read annotations ------------------------------------------------------
+      
+      # FIXME: Use read_tbl()
+      if (stringr::str_detect(
+        tfound[i], 
+        attr_tmp$regexpr[attr_tmp$template_name == "annotations"])) {
+        templates[[i]]$content <- read_tbl(
+          paste0(path, "/", tfound[i]))
       }
       
       # Read attributes (data table) ------------------------------------------
@@ -378,6 +407,15 @@ template_arguments <- function(
           paste0(path, "/", tfound[i]))
       }
       
+      # Read provenance -------------------------------------------------------
+      
+      if (stringr::str_detect(
+        tfound[i], 
+        attr_tmp$regexpr[attr_tmp$template_name == "provenance"])) {
+        templates[[i]]$content <- read_tbl(
+          paste0(path, "/", tfound[i]))
+      }
+      
       # Read taxonomic coverage -----------------------------------------------
       
       if (stringr::str_detect(
@@ -401,23 +439,32 @@ template_arguments <- function(
   
   # FIXME: Warn user of possible empty columns (i.e. "V([:digit:])*")
   if (!is.null(data.table)) {
+    
     for (i in 1:length(data.table)) {
+      f <- paste0(data.path, "/", data.table[i])
+
       if (is.null(sep)){
+        
         data_tables[[i]]$content <- as.data.frame(
           data.table::fread(
-            file = paste0(data.path, "/", data.table[i]),
+            file = f,
             fill = TRUE,
             blank.lines.skip = TRUE))
+        
       } else {
+        
         data_tables[[i]]$content <- utils::read.table(
-          file = paste0(data.path, "/", data.table[i]),
+          file = f,
           header = T,
           sep = sep,
           quote = "\"",
           as.is = TRUE,
           comment.char = "")
+        
       }
+      
     }
+    
   }
   
   # Read other entities -------------------------------------------------------

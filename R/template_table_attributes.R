@@ -1,18 +1,6 @@
-#' Create table attributes template
+#' Describe data tables
 #'
-#' @description  
-#'     Use this function to extract column names and classes of a data table 
-#'     and return for user supplied column definitions and missing value codes.
-#'     \href{https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html}{Instructions for editing this template.}
-#'
-#' @usage 
-#'     template_table_attributes(
-#'       path,
-#'       data.path = path,
-#'       data.table = NULL,
-#'       write.file = TRUE,
-#'       x = NULL
-#'     )
+#' @description Describes columns of a data table (classes, units, datetime formats, missing value codes).
 #'
 #' @param path 
 #'     (character) Path to the metadata template directory.
@@ -30,59 +18,45 @@
 #'     to create \code{x}.
 #'
 #' @return 
+#' \item{attributes_*}{Columns:
 #'     \itemize{
-#'         \item{\strong{attributes_*.txt} The tab delimited attributes 
-#'         template where * is the table name from which the attributes were 
-#'         extracted. This file is written to \code{path} unless using \code{x}, 
-#'         in which case the template is added to 
-#'         \strong{/x/templates/attributes_*.txt}.}
-#'         \item{\strong{custom_units.txt} The tab delimited custom units 
-#'         template for defining non-standard units. This file is written to 
-#'         \code{path} unless using \code{x}, in which case the template is 
-#'         added to \strong{/x/templates/custom_units.txt}.}
+#'     \item{attributeName: Column name}
+#'     \item{attributeDefinition: Column definition}
+#'     \item{class: Column class. Valid options are: "numeric" (Numeric variable), "categorical" (Categorical variable, i.e. nominal), "character" (Free text character strings, e.g. notes), "Date" (Date and time variable)}
+#'     \item{unit: Column unit. Required for numeric classes. Select from EML's standard unit dictionary, accessible with \code{view_unit_dictionary()}. Use values in the "id" column. If not found, then define as a custom unit (see custom_units.txt).}
+#'     \item{dateTimeFormatString: Format string. Required for Date classes. Valid format string components are: "Y" (Year), "M" (Month), "D" (Day), "h" (Hour), "m" (Minute), "s" (Second), Common separators of format string components (e.g. "-" "/" "\" ":"") are supported.}
+#'     \item{missingValueCode: Missing value code. Required for columns containing a missing value code).}
+#'     \item{missingValueCodeExplanation: Definition of missing value code.}
 #'     }
+#' }
+#' \item{custom_units}{Describes non-standard units used in a data table attribute template. Columns:
+#'     \itemize{
+#'     \item{id: Unit name listed in the unit column of the table attributes template (e.g. feetPerSecond)}
+#'     \item{unitType: Unit type (e.g. velocity)}
+#'     \item{parentSI: SI equivalent (e.g. metersPerSecond)}
+#'     \item{multiplierToSI: Multiplier to SI equivalent (e.g. 0.3048)}
+#'     \item{Abbreviation: Abbreviation (e.g. ft/s)}
+#'     }
+#' }
 #'     
 #' @details 
-#'     An existing attributes template will not be overwritten by subsequent 
-#'     calls to \code{template_table_attributes()}.
+#'     Character encoding of metadata extracted directly from the tables are 
+#'     converted to UTF-8 via \code{enc2utf8()}.
 #'     
 #' @examples 
-#' # Initialize data package directory for template_table_attributes()
-#' file.copy(
-#'  from = system.file('/examples/pkg_250', package = 'EMLassemblyline'),
-#'  to = tempdir(),
-#'  recursive = TRUE
-#' )
-#' 
+#' \dontrun{
 #' # Set working directory
-#' setwd(paste0(tempdir(), '/pkg_250'))
+#' setwd("/Users/me/Documents/data_packages/pkg_260")
 #' 
-#' # View directory contents (NOTE: attributes_*.txt don't exist)
-#' dir('./metadata_templates')
-#' 
-#' # Template table attributes
+#' # For 2 tables
 #' template_table_attributes(
 #'   path = './metadata_templates',
 #'   data.path = './data_objects',
-#'   data.table = c('decomp.csv', 'nitrogen.csv')
-#' )
-#' 
-#' # View directory contents (NOTE: attributes_*.txt and custom_units.txt exist)
-#' dir('./metadata_templates')
-#' 
-#' # Rerunning template_table_attributes() does not overwrite files
-#' template_table_attributes(
-#'   path = './metadata_templates',
-#'   data.path = './data_objects',
-#'   data.table = c('decomp.csv', 'nitrogen.csv')
-#' )
-#' 
-#' # Clean up
-#' unlink('.', recursive = TRUE)
+#'   data.table = c('decomp.csv', 'nitrogen.csv'))
+#' }
 #'     
 #' @export     
 #'     
-
 template_table_attributes <- function(
   path, 
   data.path = path, 
@@ -111,8 +85,7 @@ template_table_attributes <- function(
   
   validate_arguments(
     fun.name = 'template_table_attributes',
-    fun.args = as.list(environment())
-  )
+    fun.args = as.list(environment()))
   
   # Read metadata templates and data ------------------------------------------
   
@@ -225,6 +198,12 @@ template_table_attributes <- function(
           lapply(
             x$data.table[[i]]$content, 
             function(k) {
+              # 'character' has no consequence on other steps. 
+              # Then, makes empty cols be recognized as it. 
+              if(length(unique(k)) == 1 && 
+                 (all(is.na(k)) || all(k == ""))
+              )
+                return("empty")
               # An exception for the two component "IDate Date" class created 
               # by data.table::fread(). Returning both components results in 
               # a class vector that is longer than the column vector.
@@ -242,7 +221,8 @@ template_table_attributes <- function(
         integer = "numeric",
         integer64 = "numeric",
         numeric = "numeric",
-        Date = "Date")
+        Date = "Date",
+        empty = "empty")
       
       guess <- unname(guess_map[guess])
       
@@ -250,7 +230,7 @@ template_table_attributes <- function(
       
       use_i <- guess == "character"
       
-      if (sum(use_i) > 0){
+      if (sum(use_i) > 0) {
         potential_date_cols <- colnames(x$data.table[[i]]$content)[use_i]
         potential_date_i <- stringr::str_detect(tolower(potential_date_cols), "date|time|day")
         guess_datetime <- potential_date_cols[potential_date_i]
@@ -271,21 +251,37 @@ template_table_attributes <- function(
       # Guess factor class
       
       use_i <- guess == "character"
+      
       if (sum(use_i) > 0){
         potential_fact_cols <- colnames(x$data.table[[i]]$content)[use_i]
         use_i2 <- match(potential_fact_cols, colnames(x$data.table[[i]]$content))
-        if (length(use_i2) == 1){
+        if (length(use_i2) == 1) {
           unique_lengths <- length(unique(x$data.table[[i]]$content[ ,use_i2]))
         } else {
           unique_lengths <- apply(x$data.table[[i]]$content[ ,use_i2], 2, function(x)length(unique(x)))
         }
-        potential_facts <- unique_lengths <= dim(x$data.table[[i]]$content)[1]*0.3
+        
+        ### OLD ###
+        # potential_facts <- unique_lengths <= dim(x$data.table[[i]]$content)[1]*0.3
+        ### NEW ###
+        # Avoid magical '0.3' by selecting an empirical but logical value
+        # this value is set as the most repeated character string
+        potential_facts <- unique_lengths < sapply(
+          x$data.table[[i]]$content[,names(unique_lengths)],
+          function(col) 
+            max(table(col))
+        )
+        ###
         if (sum(potential_facts) > 0){
           potential_facts <- names(potential_facts[potential_facts == TRUE])
           use_i <- match(potential_facts, attributes[[i]]$attributeName)
           guess[use_i] <- "categorical"
         }
       }
+      
+      # Replace empty col class by "character"
+      
+      guess <- replace(guess, list = which(guess == "empty"), "character")
       
       # Update attributes class
       
@@ -306,6 +302,10 @@ template_table_attributes <- function(
       if (sum(use_i) > 0){
         attributes[[i]]$dateTimeFormatString[use_i] <- "!Add datetime specifier here!"
       }
+      
+      # Encode extracted metadata in UTF-8
+      
+      attributes[[i]]$attributeName <- enc2utf8(attributes[[i]]$attributeName)
       
       # Write template to file or add template to x$template$attributes_*.txt$content
       
@@ -339,7 +339,8 @@ template_table_attributes <- function(
               path,
               "/",
               "attributes_",
-              substr(data.table[i], 1, nchar(data.table[i]) - 4),
+              enc2utf8(
+                substr(data.table[i], 1, nchar(data.table[i]) - 4)),
               ".txt"
             ),
             sep = "\t",

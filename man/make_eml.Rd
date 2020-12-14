@@ -5,31 +5,31 @@
 \title{Make EML metadata}
 \usage{
 make_eml(
-      path,
-      data.path = path,
-      eml.path = path, 
-      dataset.title = NULL,
-      temporal.coverage = NULL,
-      geographic.description = NULL, 
-      geographic.coordinates = NULL, 
-      maintenance.description = NULL, 
-      data.table = NULL, 
-      data.table.name = data.table,
-      data.table.description = NULL, 
-      data.table.quote.character = NULL, 
-      data.table.url = NULL,
-      other.entity = NULL,
-      other.entity.name = other.entity,
-      other.entity.description = NULL,
-      other.entity.url = NULL,
-      provenance = NULL,
-      user.id = NULL,
-      user.domain = NULL,
-      package.id = NULL,
-      write.file = TRUE,
-      return.obj = FALSE,
-      x = NULL
-    )
+  path,
+  data.path = path,
+  eml.path = path,
+  dataset.title = NULL,
+  temporal.coverage = NULL,
+  geographic.description = NULL,
+  geographic.coordinates = NULL,
+  maintenance.description = NULL,
+  data.table = NULL,
+  data.table.name = data.table,
+  data.table.description = NULL,
+  data.table.quote.character = NULL,
+  data.table.url = NULL,
+  other.entity = NULL,
+  other.entity.name = other.entity,
+  other.entity.description = NULL,
+  other.entity.url = NULL,
+  provenance = NULL,
+  user.id = NULL,
+  user.domain = NULL,
+  package.id = NULL,
+  write.file = TRUE,
+  return.obj = FALSE,
+  x = NULL
+)
 }
 \arguments{
 \item{path}{(character) Path to the metadata template directory.}
@@ -72,11 +72,11 @@ as a vector of character strings in the same order as listed in
 \item{data.table.quote.character}{(character; optional) Quote character used in \code{data.table}. If 
 more than one, then supply as a vector of character strings in the same 
 order as listed in \code{data.table}. If the quote character is a quotation, 
-then enter \code{"\\\""}. If the quote character is an apostrophe, then 
-enter \code{"\\'"}. If wanting to include quote characters for some but 
+then enter \code{'"'}. If the quote character is an apostrophe, then 
+enter \code{"'"}. If wanting to include quote characters for some but 
 not all \code{data.table}, then use a "" for those that don't have a 
 quote character (e.g. \code{data.table.quote.character = 
-c("\\'", "")}).}
+c("'", "")}).}
 
 \item{data.table.url}{(character; optional) The publicly accessible URL from which 
 \code{data.table} can be downloaded. If more than one, then supply as 
@@ -136,8 +136,7 @@ is assigned a UUID.}
 
 \item{write.file}{(logical; optional) Whether to write the EML file.}
 
-\item{return.obj}{(logical; optional) Whether to return the EML as an R object of class 
-\code{EML object}.}
+\item{return.obj}{(logical; optional) Whether to return the EML as an R object of class \code{EML object}. This EML object can be modified and written to file according to the \href{https://github.com/ropensci/EML}{EML R library}.}
 
 \item{x}{(named list; optional) Alternative input to 
 \code{make_eml()}. Use \code{template_arguments()} 
@@ -161,38 +160,36 @@ Render the contents of metadata templates into EML, validate, and write
     with best practice recommendations of scientists, data managers, and 
     data repositories. The EML is then validated against the schema and 
     written to file.
+    
+    Character encodings in tabular metadata templates are converted to UTF-8 
+    via \code{enc2utf8()}. Characters in TextType metadata templates are not
+    yet converted. Note: This may lead to an inaccuracy and disconnect 
+    between values in the data objects and what is reported in the EML (e.g.
+    a categorical variable listed in the EML may not be the same as it's 
+    corresponding value in the data object). For this reason it's important 
+    to work with UTF-8 encoded data and metadata.
 }
 \examples{
-# Initialize data package directory for make_eml()
-file.copy(
-  from = system.file('/examples/pkg_260', package = 'EMLassemblyline'),
-  to = tempdir(),
-  recursive = TRUE)
+\dontrun{
 
 # Set working directory
-setwd(paste0(tempdir(), '/pkg_260'))
+setwd("/Users/me/Documents/data_packages/pkg_260")
 
-# Make EML (for data package with data tables and other entities)
-
+# For 2 tables and 2 other entities
 make_eml(
-  path = './metadata_templates',
-  data.path = './data_objects',
-  eml.path = './eml',
-  dataset.title = 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions',
-  temporal.coverage = c('2014-05-01', '2015-10-31'),
-  maintenance.description = 'completed',
-  data.table = c('decomp.csv', 'nitrogen.csv'),
-  data.table.description = c('Decomposition data', 'Nitrogen data'),
-  other.entity = c('ancillary_data.zip', 'processing_and_analysis.R'),
-  other.entity.description = c('Ancillary data', 'Data processing and analysis script'),
-  user.id = 'csmith',
-  user.domain = 'EDI',
-  package.id = 'edi.260.3')
-
-# View EML directory contents
-dir('./eml')
-
-# Clean up
-unlink('.', recursive = TRUE)
+  path = "./metadata_templates",
+  data.path = "./data_objects",
+  eml.path = "./eml",
+  dataset.title = "Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions",
+  temporal.coverage = c("2014-05-01", "2015-10-31"),
+  maintenance.description = "Completed: No updates to these data are expected",
+  data.table = c("decomp.csv", "nitrogen.csv"),
+  data.table.description = c("Decomposition data", "Nitrogen data"),
+  other.entity = c("ancillary_data.zip", "processing_and_analysis.R"),
+  other.entity.description = c("Ancillary data", "Data processing and analysis script"),
+  user.id = "myid",
+  user.domain = "EDI",
+  package.id = "edi.260.1")
+}
 
 }

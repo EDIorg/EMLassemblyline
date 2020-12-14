@@ -1,17 +1,16 @@
 Package: EMLassemblyline
-Title: A workflow for creating EML
-Version: 2.18.2
-Authors@R: person("Colin", "Smith", email = "colin.smith@wisc.edu", role = c("aut", "cre"), comment = "https://orcid.org/0000-0003-2261-9931")
+Title: A tool kit for building EML metadata workflows
+Version: 3.0.0
+Authors@R: c(
+    person("Colin", "Smith", email = "colin.smith@wisc.edu", role = c("aut", "cre"), comment = "https://orcid.org/0000-0003-2261-9931"),
+    person("Elie", "ARNAUD", email = "earnaud@outlook.com", role = "ctb", comment = "https://orcid.org/0000-0003-3416-7653")
+    )
 Description: 
-    For scientists and data managers who need to easily create high quality 
-    metadata for data publication. EMLassemblyline is a metadata builder that 
-    emphasizes auto-extraction of metadata, appends value added content, and 
-    inputs user supplied information through common interfaces thereby 
-    minimizing user effort while maximizing metadata features for data 
-    discovery and reuse.
+    For scientists and data managers to create high quality EML metadata for dataset publication. EMLassemblyline is optimized for automating recurring publications (timeseries or data derived from timeseries sources) but works well for "one-off" publications, especially through the MetaShARK interface. EMLassemblyline prioritizes automated metadata extraction from data objects to minimize required human effort and encourages EML best practices to make publications Findable, Accessible, Interoperable, and Reusable.
 Imports:
+    bit64 (>= 4.0.5),
     data.table (>= 1.12.2),
-    EDIutils (>= 1.0.2),
+    EDIutils (>= 1.2.0),
     EML (>= 2.0.4),
     httr (>= 1.3.1),
     knitr (>= 1.20),
@@ -22,7 +21,8 @@ Imports:
     rmarkdown (>= 1.11),
     stringr (>= 1.2.0),
     stringi (>= 1.1.5),
-    taxonomyCleanr (>= 1.3.0),
+    taxonomyCleanr (>= 1.4.1),
+    tidyr (>= 1.1.2),
     tools (>= 3.6.1),
     uuid (>= 0.1-4),
     xml2 (>= 1.1.1)

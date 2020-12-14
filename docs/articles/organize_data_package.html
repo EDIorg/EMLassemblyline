@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.18.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.0</span>
       </span>
     </div>
 
@@ -54,10 +54,10 @@
       <a href="../articles/organize_data_package.html">Organize data package</a>
     </li>
     <li>
-      <a href="../articles/create_metadata_templates.html">Create metadata templates</a>
+      <a href="../articles/create_tmplts.html">Template metadata</a>
     </li>
     <li>
-      <a href="../articles/edit_metadata_templates.html">Edit metadata templates</a>
+      <a href="../articles/edit_tmplts.html">Edit metadata templates</a>
     </li>
     <li>
       <a href="../articles/create_eml.html">Make EML</a>
@@ -66,10 +66,10 @@
       <a href="../articles/publish_data_package.html">Publish data package</a>
     </li>
     <li>
-      <a href="../articles/automate_data_publication.html">Automate data publication</a>
+      <a href="../articles/auto_pub.html">Automate data publication</a>
     </li>
     <li>
-      <a href="../articles/emlassemblyline_via_exchange_format.html">Use EMLassemblyline via exchange format</a>
+      <a href="../articles/exchange_format.html">Use EMLassemblyline via exchange format</a>
     </li>
   </ul>
 </li>
@@ -94,7 +94,8 @@
 
       
 
-      </header><div class="row">
+      </header><link href="organize_data_package_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="organize_data_package_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Organize data package</h1>
@@ -110,37 +111,24 @@
 <div id="the-data-package" class="section level2">
 <h2 class="hasAnchor">
 <a href="#the-data-package" class="anchor"></a>The data package</h2>
-<p>A data package forms a collection of data objects and metadata enabling understanding, use, and citation of a dataset. Metadata play an important role in understanding each object and how they relate to each other. <code>EMLassemblyline</code> works for all digital object formats and has been used by the <a href="https://environmentaldatainitiative.org/">Environmental Data Initiative</a> (EDI) to create and manage well over 250 data packages for a nearly equal number of research scientists. Editing and revisioning data packages on short notice is made easy by <code>EMLassemblyline</code> but requires some forethought about file organization.</p>
+<p>A data package forms a collection of data objects and metadata enabling understanding, use, and citation of a dataset. Metadata play an important role in understanding each object and how they relate to each other. EAL works for all digital object formats and has been used by the <a href="https://environmentaldatainitiative.org/">Environmental Data Initiative</a> (EDI) to create and manage over 500 data packages for a nearly equal number of researchers. Revising data packages with EAL is easy but requires some forethought about file organization.</p>
 </div>
 <div id="an-organization-scheme" class="section level2">
 <h2 class="hasAnchor">
 <a href="#an-organization-scheme" class="anchor"></a>An organization scheme</h2>
-<p>A simple and useful organization scheme is a single directory for each data package containing:</p>
+<p>A useful organization scheme is a single directory for each data package containing:</p>
 <ul>
 <li>
-<strong>data_objects</strong> A directory of data and other objects to be packaged (e.g. data tables, analysis scripts, .zip files, etc.).</li>
+<strong>data_objects</strong> A directory of data and other digital objects to be packaged (e.g. data files, scripts, .zip files, etc.).</li>
 <li>
-<strong>metadata_templates</strong> A directory of <code>EMLassemblyline</code> metadata templates.</li>
+<strong>metadata_templates</strong> A directory of EAL template files.</li>
 <li>
-<strong>eml</strong> A directory of EML files created by <code>EMLassemblyline</code>.</li>
+<strong>eml</strong> A directory of EML files created by EAL.</li>
 <li>
-<strong>run_EMLassemblyline.R</strong> An R file for scripting an <code>EMLassemblyline</code> workflow.</li>
+<strong>run_EMLassemblyline.R</strong> An R file for scripting an EAL workflow.</li>
 </ul>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="co"># Set working directory</span>
-<span class="fu"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span>())
-
-<span class="co"># Template a data package directory</span>
-<span class="fu"><a href="../reference/template_directories.html">template_directories</a></span>(
-  <span class="kw">path</span> <span class="kw">=</span> <span class="st">'.'</span>,
-  <span class="kw">dir.name</span> <span class="kw">=</span> <span class="st">'pkg_301'</span>
-)</pre></body></html></div>
-<pre><code>## Templating ./pkg_301</code></pre>
-<pre><code>## Done.</code></pre>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="co"># View directory contents</span>
-<span class="fu"><a href="https://rdrr.io/r/base/list.files.html">dir</a></span>(<span class="st">'./pkg_301'</span>)</pre></body></html></div>
-<pre><code>## [1] "data_objects"                      "eml"                              
-## [3] "metadata_templates"                "run_EMLassemblyline_for_pkg_301.R"</code></pre>
-<p>Any organization scheme is possible as long as all the metadata template files belonging to a data package are co-located in a single directory.</p>
+<p>Run <code><a href="../reference/template_directories.html">template_directories()</a></code> to create this organization scheme.</p>
+<p>An even simpler organization scheme, albeit more cluttered, is a single directory containing all files belonging to a data package. A third option is to customize file location, use the <code>path</code>, <code>data.path</code>, and <code>eml.path</code> arguments of EAL functions.</p>
 </div>
   </div>
 

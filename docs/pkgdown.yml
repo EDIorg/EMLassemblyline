@@ -2,13 +2,13 @@ pandoc: 2.7.2
 pkgdown: 1.5.1
 pkgdown_sha: ~
 articles:
-  automate_data_publication: automate_data_publication.html
+  auto_pub: auto_pub.html
   create_eml: create_eml.html
-  create_metadata_templates: create_metadata_templates.html
-  edit_metadata_templates: edit_metadata_templates.html
-  emlassemblyline_via_exchange_format: emlassemblyline_via_exchange_format.html
+  create_tmplts: create_tmplts.html
+  edit_tmplts: edit_tmplts.html
+  exchange_format: exchange_format.html
   organize_data_package: organize_data_package.html
   overview: overview.html
   publish_data_package: publish_data_package.html
-last_built: 2020-08-18T22:28Z
+last_built: 2020-12-14T02:11Z
 

@@ -7,15 +7,21 @@
 validate_arguments(fun.name, fun.args)
 }
 \arguments{
-\item{fun.name}{(character) Function name passed to `validate_x` with 
-`as.character(match.call()[[1]])`.}
+\item{fun.name}{(character) Name calling function.}
 
-\item{fun.args}{(named list) Function arguments and values passed to `validate_x` with 
-`as.list(environment())`.}
+\item{fun.args}{(named list) Function arguments and their values.}
+}
+\value{
+\item{argument_issues}{Any issues found in the validation process and returned as a list of character strings to the users environment. This object can be saved for later use and viewed in a human readable form with \code{issues()}}.
 }
 \description{
-Validate input arguments to `EMLassemblyline` functions.
+Validate input arguments to EMLassemblyline functions.
 }
 \details{
-Validation checks are function specific.
+\code{fun.name} defines which checks to call.
+    
+    \code{fun.args} values are modified when critical issues are found and are reassigned to the calling environment so the calling function may proceed without error.
+}
+\note{
+Some arise where an arguments value is set to NULL
 }

@@ -2,14 +2,9 @@
 % Please edit documentation in R/template_categorical_variables.R
 \name{template_categorical_variables}
 \alias{template_categorical_variables}
-\title{Create categorical variables template}
+\title{Describe categorical variables of a data table}
 \usage{
-template_categorical_variables(
-      path,
-      data.path = path,
-      write.file = TRUE,
-      x = NULL
-    )
+template_categorical_variables(path, data.path = path, write.file = TRUE)
 }
 \arguments{
 \item{path}{(character) Path to the metadata template directory.}
@@ -17,61 +12,36 @@ template_categorical_variables(
 \item{data.path}{(character) Path to the data directory.}
 
 \item{write.file}{(logical; optional) Whether to write the template file.}
-
-\item{x}{(named list; optional) Alternative input to 
-\code{template_categorical_variables()}. Use \code{template_arguments()} 
-to create \code{x}.}
 }
 \value{
-\strong{catvars_*.txt} The tab delimited categorical variable 
-    template, where * is the table name from which the variables were
-    extracted. This file is written to \code{path} unless using \code{x},
-    in which case the template is added to 
-    \strong{/x/templates/catvars_*.txt}.
+\item{catvars_*}{Columns:
+    \itemize{
+    \item{attributeName: Column name}
+    \item{code: Categorical variable}
+    \item{definition: Definition of categorical variable}
+    }
+}
 }
 \description{
-Use this function to extract the unique categorical variables of a data
-    table and return for user supplied definitions. 
-    \href{https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html}{Instructions for editing this template.}
+Describes categorical variables of a data table. Use if any columns are classified as categorical in table attributes template.
 }
 \details{
 \code{template_categorical_variables()} knows which columns of a table
     are \code{categorical} based on their definition under the \code{class} 
     column of the attributes_*.txt template.
     
-    An existing categorical variables template will not be overwritten 
-    by subsequent calls to \code{template_categorical_variables()}.
+    Character encoding of metadata extracted directly from the tables are 
+    converted to UTF-8 via \code{enc2utf8()}.
 }
 \examples{
-# Initialize data package directory for template_categorical_variables()
-file.copy(
-  from = system.file('/examples/pkg_255', package = 'EMLassemblyline'),
-  to = tempdir(),
-  recursive = TRUE
-)
-
+\dontrun{
 # Set working directory
-setwd(paste0(tempdir(), '/pkg_255'))
+setwd("/Users/me/Documents/data_packages/pkg_260")
 
-# View directory contents (NOTE: catvars_*.txt files don't exist)
-dir('./metadata_templates')
-
-# Template categorical variables
+# For tables containing categorical variables as classified in the table attributes template
 template_categorical_variables(
-  path = './metadata_templates',
-  data.path = './data_objects'
-)
-
-# View directory contents (NOTE: catvars_*.txt files exist)
-dir('./metadata_templates')
-
-# Rerunning template_categorical_variables() does not overwrite files
-template_categorical_variables(
-  path = './metadata_templates',
-  data.path = './data_objects'
-)
-
-# Clean up
-unlink('.', recursive = TRUE)
+  path = "./metadata_templates",
+  data.path = "./data_objects")
+}
 
 }

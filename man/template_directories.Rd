@@ -2,12 +2,9 @@
 % Please edit documentation in R/template_directories.R
 \name{template_directories}
 \alias{template_directories}
-\title{Create data package directory}
+\title{Initialize directories for templates, data objects, and EML}
 \usage{
-template_directories(
-      path, 
-      dir.name
-    )
+template_directories(path, dir.name)
 }
 \arguments{
 \item{path}{(character) Path to where the data package directory will be created.}
@@ -40,19 +37,14 @@ Existing directories named with \code{dir.name} at \code{path} will not
     be overwritten.
 }
 \examples{
+\dontrun{
 # Set working directory
-setwd(tempdir())
+setwd("/Users/me/Documents/data_packages")
 
-# Template data package directory "pkg_301"
+# For data package 260
 template_directories(
-  path = '.',
-  dir.name =  'pkg_301'
-)
-
-# View directory contents
-dir('./pkg_301')
-
-# Clean up
-unlink('./pkg_301', recursive = TRUE)
+  path = ".",
+  dir.name =  "pkg_260")
+}
 
 }

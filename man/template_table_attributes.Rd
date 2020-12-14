@@ -2,15 +2,15 @@
 % Please edit documentation in R/template_table_attributes.R
 \name{template_table_attributes}
 \alias{template_table_attributes}
-\title{Create table attributes template}
+\title{Describe data tables}
 \usage{
 template_table_attributes(
-      path,
-      data.path = path,
-      data.table = NULL,
-      write.file = TRUE,
-      x = NULL
-    )
+  path,
+  data.path = path,
+  data.table = NULL,
+  write.file = TRUE,
+  x = NULL
+)
 }
 \arguments{
 \item{path}{(character) Path to the metadata template directory.}
@@ -28,59 +28,44 @@ vector of character strings (e.g.
 to create \code{x}.}
 }
 \value{
-\itemize{
-        \item{\strong{attributes_*.txt} The tab delimited attributes 
-        template where * is the table name from which the attributes were 
-        extracted. This file is written to \code{path} unless using \code{x}, 
-        in which case the template is added to 
-        \strong{/x/templates/attributes_*.txt}.}
-        \item{\strong{custom_units.txt} The tab delimited custom units 
-        template for defining non-standard units. This file is written to 
-        \code{path} unless using \code{x}, in which case the template is 
-        added to \strong{/x/templates/custom_units.txt}.}
+\item{attributes_*}{Columns:
+    \itemize{
+    \item{attributeName: Column name}
+    \item{attributeDefinition: Column definition}
+    \item{class: Column class. Valid options are: "numeric" (Numeric variable), "categorical" (Categorical variable, i.e. nominal), "character" (Free text character strings, e.g. notes), "Date" (Date and time variable)}
+    \item{unit: Column unit. Required for numeric classes. Select from EML's standard unit dictionary, accessible with \code{view_unit_dictionary()}. Use values in the "id" column. If not found, then define as a custom unit (see custom_units.txt).}
+    \item{dateTimeFormatString: Format string. Required for Date classes. Valid format string components are: "Y" (Year), "M" (Month), "D" (Day), "h" (Hour), "m" (Minute), "s" (Second), Common separators of format string components (e.g. "-" "/" "\" ":"") are supported.}
+    \item{missingValueCode: Missing value code. Required for columns containing a missing value code).}
+    \item{missingValueCodeExplanation: Definition of missing value code.}
     }
 }
+\item{custom_units}{Describes non-standard units used in a data table attribute template. Columns:
+    \itemize{
+    \item{id: Unit name listed in the unit column of the table attributes template (e.g. feetPerSecond)}
+    \item{unitType: Unit type (e.g. velocity)}
+    \item{parentSI: SI equivalent (e.g. metersPerSecond)}
+    \item{multiplierToSI: Multiplier to SI equivalent (e.g. 0.3048)}
+    \item{Abbreviation: Abbreviation (e.g. ft/s)}
+    }
+}
+}
 \description{
-Use this function to extract column names and classes of a data table 
-    and return for user supplied column definitions and missing value codes.
-    \href{https://ediorg.github.io/EMLassemblyline/articles/edit_metadata_templates.html}{Instructions for editing this template.}
+Describes columns of a data table (classes, units, datetime formats, missing value codes).
 }
 \details{
-An existing attributes template will not be overwritten by subsequent 
-    calls to \code{template_table_attributes()}.
+Character encoding of metadata extracted directly from the tables are 
+    converted to UTF-8 via \code{enc2utf8()}.
 }
 \examples{
-# Initialize data package directory for template_table_attributes()
-file.copy(
- from = system.file('/examples/pkg_250', package = 'EMLassemblyline'),
- to = tempdir(),
- recursive = TRUE
-)
-
+\dontrun{
 # Set working directory
-setwd(paste0(tempdir(), '/pkg_250'))
+setwd("/Users/me/Documents/data_packages/pkg_260")
 
-# View directory contents (NOTE: attributes_*.txt don't exist)
-dir('./metadata_templates')
-
-# Template table attributes
+# For 2 tables
 template_table_attributes(
   path = './metadata_templates',
   data.path = './data_objects',
-  data.table = c('decomp.csv', 'nitrogen.csv')
-)
-
-# View directory contents (NOTE: attributes_*.txt and custom_units.txt exist)
-dir('./metadata_templates')
-
-# Rerunning template_table_attributes() does not overwrite files
-template_table_attributes(
-  path = './metadata_templates',
-  data.path = './data_objects',
-  data.table = c('decomp.csv', 'nitrogen.csv')
-)
-
-# Clean up
-unlink('.', recursive = TRUE)
+  data.table = c('decomp.csv', 'nitrogen.csv'))
+}
     
 }
