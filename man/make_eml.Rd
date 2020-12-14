@@ -136,8 +136,7 @@ is assigned a UUID.}
 
 \item{write.file}{(logical; optional) Whether to write the EML file.}
 
-\item{return.obj}{(logical; optional) Whether to return the EML as an R object of class 
-\code{EML object}.}
+\item{return.obj}{(logical; optional) Whether to return the EML as an R object of class \code{EML object}. This EML object can be modified and written to file according to the \href{https://github.com/ropensci/EML}{EML R library}.}
 
 \item{x}{(named list; optional) Alternative input to 
 \code{make_eml()}. Use \code{template_arguments()} 
