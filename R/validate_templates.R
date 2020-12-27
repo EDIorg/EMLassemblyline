@@ -2668,11 +2668,11 @@ validate_taxonomic_coverage <- function(x) {
       x$template$taxonomic_coverage.txt$content$name[missing]
     
     # Column names are correct
-    r <- validate_taxonomic_coverage_column_names(x)
+    x <- validate_taxonomic_coverage_column_names(x)
     
     # authority_system is supported
     r <- validate_taxonomic_coverage_authority_system(x)
-    required_issues <- c(required_issues, r)
+    optional_issues <- c(optional_issues, r)
     
     # FIXME: Relax constraints on this check to match those of 
     # taxonomyCleanr::make_taxonomicCoverage()
@@ -2732,6 +2732,8 @@ validate_taxonomic_coverage <- function(x) {
 #' @return
 #'     \item{error}{If column names are invalid}
 #'     \item{NULL}{If no issues were found}
+#'     
+#' @details Adds optional columns when missing so call to taxonomyCleanr::make_taxonomicCoverage() works.
 #'
 validate_taxonomic_coverage_column_names <- function(x) {
   template <- data.table::fread(
@@ -2742,14 +2744,16 @@ validate_taxonomic_coverage_column_names <- function(x) {
   found_colnames <- colnames(x$template$taxonomic_coverage.txt$content)
   if (!all(expected_colnames %in% found_colnames)) {
     stop(
-      "Unsupported column names in taxonomic coverage template:\n",
+      "Missing columns in taxonomic coverage template:\n",
       paste(
-        found_colnames[!(found_colnames %in% expected_colnames)],
-        collapse = ", "), "\n",
-      "Expected column names:\n",
-      paste(expected_colnames, collapse = ", "),
+        expected_colnames[!(expected_colnames %in% found_colnames)],
+        collapse = ", "),
       call. = FALSE)
   }
+  if (!("rank" %in% found_colnames)) {
+    x$template$taxonomic_coverage.txt$content$rank <- NA_character_
+  }
+  return(x)
 }
 
 
@@ -2770,19 +2774,25 @@ validate_taxonomic_coverage_column_names <- function(x) {
 #'     \item{NULL}{If no issues were found}
 #'
 validate_taxonomic_coverage_authority_system <- function(x) {
-  gnr_list <- as.data.frame(taxize::gnr_datasources())
-  authorities_supported <- gnr_list$title[
-    gnr_list$id %in% taxonomyCleanr::view_taxa_authorities()$id]
+  # TODO: Implement better method of harvesting supported authorities from 
+  # taxonomyCleanr
+  authorities_supported <- c(
+    'Catalogue of Life', 'ITIS', 'Integrated Taxonomic Information System',
+    'https://www.itis.gov/', 'itis', 'World Register of Marine Species',
+    'WORMS', 'http://www.marinespecies.org/', 'worms', 
+    'GBIF Backbone Taxonomy', 'GBIF', 'gbif', 'https://gbif.org', 
+    'Tropicos - Missouri Botanical Garden')
   authorities_found <- 
     x$template$taxonomic_coverage.txt$content$authority_system
   unsupported_authorities <- !((authorities_found %in% authorities_supported) | 
                                  (authorities_found == ""))
   if (any(unsupported_authorities)) {
     paste0(
-      "Unsupported authorities for entries: ",
+      "Taxa resolved to unsupported authorities cannot be expanded into ",
+      "their full taxonomic classifications. Unsupported authorities found ",
+      "for entries: ",
       paste(which(unsupported_authorities), collapse = ", "), ". ",
-      "Supported authorities are: ",
-      paste(authorities_supported, collapse = ", "))
+      "Supported authorities are: ITIS, WORMS, GBIF")
   }
 }
 

@@ -11,8 +11,8 @@ template_taxonomic_coverage(
   taxa.col,
   taxa.name.type,
   taxa.authority,
-  write.file = TRUE,
-  x = NULL
+  empty = FALSE,
+  write.file = TRUE
 )
 }
 \arguments{
@@ -20,37 +20,26 @@ template_taxonomic_coverage(
 
 \item{data.path}{(character) Path to the data directory.}
 
-\item{taxa.table}{(character) Table name containing \code{taxa.col}. If inputting more 
-than one table, then supply as a list (e.g. 
-\code{c('table.1', 'table.2')}).}
+\item{taxa.table}{(character) Table with a column listing all unique taxa in the data.}
 
-\item{taxa.col}{(character) Column name containing taxa names. Species binomials are
-accepted. If inputting more than one table, then supply as a list
-\code{c('taxa.col.table.1', 'taxa.col.table.2')}.}
+\item{taxa.col}{(character) Column name in \code{taxa.table} listing all unique taxa.}
 
-\item{taxa.name.type}{(character) Taxa name type. Can be: 
-\code{scientific}, \code{common}, or \code{both}.}
+\item{taxa.name.type}{(character) Type of name in \code{taxa.col}. Can be: \code{scientific} or \code{common}.}
 
-\item{taxa.authority}{(integer) Taxonomic authorities to resolve to as an ordered numeric vector 
-of ID's decreasing in preference. See the list of supported authorities 
-with \code{taxonomyCleanr::view_taxa_authorities()}. Columns 
-"resolve_sci_taxa", and "resolve_comm_taxa" list authorites supporting 
-scientific and common searches, respectively.}
+\item{taxa.authority}{(integer) Taxonomic authorities as an ordered numeric vector of ID's decreasing in preference. Supported authorities: 3 = \href{https://www.itis.gov/}{ITIS}, 9 = \href{http://www.marinespecies.org/}{WORMS}, 11 = \href{https://www.gbif.org/}{GBIF}.}
+
+\item{empty}{(logical) Whether to write an empty template file.}
 
 \item{write.file}{(logical; optional) Whether to write the template file.}
-
-\item{x}{(named list; optional) Alternative input to 
-\code{template_taxonomic_coverage()}. Use \code{template_arguments()} 
-to create \code{x}.}
 }
 \value{
 \item{taxonomic_coverage}{Columns:
     \itemize{
-    \item{taxa_raw: Taxon name as it occurs in the data and as it will be listed in the metadata if no value is listed under the name_resolved column. Can be single word or species binomial.}
+    \item{taxa_raw: Taxon name as it occurs in the data. Can be single word or species binomial.}
     \item{name_type: Type of name. Can be "scientific" or "common".}
-    \item{name_resolved: Taxons name as found in an authority system.}
-    \item{authority_system: Authority system in which the taxa’s name was found. Can be: "\href{https://www.itis.gov/}{ITIS}", "\href{http://www.marinespecies.org/}{WORMS}", "or "\href{https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c}{GBIF}".}
-    \item{authority_id: Taxa’s identifier in the authority system (e.g. 168469).}
+    \item{name_resolved: Taxon name as found in an authority system.}
+    \item{authority_system: Authority system in which the taxa’s name was found. Supported authorities are: "\href{https://www.itis.gov/}{"ITIS"}", "\href{http://www.marinespecies.org/}{"WORMS"}", "or "\href{https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c}{"GBIF"}". For unsupported authorities, list the authority home page URL. For unresolved taxa use \code{NA}.}
+    \item{authority_id: Taxon identifier in the authority system (e.g. 168469).}
     }
 }
 }
@@ -58,20 +47,11 @@ to create \code{x}.}
 Describes biological organisms (taxa) occuring in the data and helps resolve them to authority systems. If matches can be made, then the full taxonomic hierarchy of scientific and common names are automatically rendered in the final EML metadata. This enables future users to search on any taxonomic level of interest across data packages in data repositories.
 }
 \details{
-\code{template_taxonomic_coverage()} searches the most preferred 
-    taxonomic authority for all unique taxa listed in \code{taxa.col} 
-    returning the authority name and corresponding taxa identifier for 
-    direct matches (no fuzzy searching), then the next most preferred 
-    taxonomic authority is search for taxa that have not yet been resolved. 
-    This process repeats for subsequently listed authorities. "NA" is 
-    returned when an authority match is not made.
+\code{template_taxonomic_coverage()} searches the most preferred taxonomic authority for all unique taxa listed in \code{taxa.col} returning the authority name and corresponding taxa identifier for direct matches (no fuzzy searching), then the next most preferred taxonomic authority is search for taxa that have not yet been resolved. This process repeats for subsequently listed authorities. "NA" is returned when an authority match is not made.
     
-    When taxonomic_coverage.txt is passed to \code{make_eml()}, the 
-    authority information is used to get the hierarchical rank names of 
-    resolved taxa and rendered into the "taxonomicCoverage" element of EML.
+    \code{make_eml()} expands taxa, resolved to supported authorities, into full taxonomic classification. Each level of classification is accompanied by an annotation (listing the \code{authority} and \code{authority.id}) and common names (only when \code{authority} is ITIS or WORMS). Taxa resolved to unsupported authorities, or not resolved at all, will be listed as is defined in the "name_resolved", "authority_system", and "authority_id" columns.
     
-    Character encoding of metadata extracted directly from the tables are 
-    converted to UTF-8 via \code{enc2utf8()}.
+    Character encoding of metadata extracted directly from the tables are converted to UTF-8 via \code{enc2utf8()}.
 }
 \examples{
 \dontrun{
@@ -79,7 +59,6 @@ Describes biological organisms (taxa) occuring in the data and helps resolve the
 setwd("/Users/me/Documents/data_packages/pkg_260")
 
 # For a table containing taxa, try resolving scientific names to ITIS, and if no matches can be made, then try WORMS
-# Template taxonomic coverage
 template_taxonomic_coverage(
   path = "./metadata_templates",
   data.path = "./data_objects",
@@ -87,6 +66,12 @@ template_taxonomic_coverage(
   taxa.col = "taxa",
   taxa.authority = c(3,9),
   taxa.name.type = "scientific")
+  
+# For manually resolving taxa to unsupported authorities, use an empty template
+template_taxonomic_coverage(
+  path = "./metadata_templates",
+  empty = TRUE)
+  
 }
 
 }

@@ -1,3 +1,9 @@
+# EMLassemblyline 3.1.0
+
+### Enhancement
+
+* __Improved handling of unsupported taxonomic authorities:__ Methods have been improved for taxa that have been manually resolved to unsupported taxonomic authoritiies (i.e. authorities other than "ITIS", "WORMS", "GBIF"). Values listed in the taxonomic coverage template's "authority_system" and "authority_id" fields, will become annotations in the EML returned by `make_eml()`. See `template_taxonomic_coverage()` function docs for more details. _NOTE: These new methods don't facilitate expansion of a taxon resolved in an unsupported system to the full classification hierarchy that is currently available when using ITIS, WORMS, or GBIF. That will require additional effort._ Additionally, `template_taxonomic_coverage()` now has an `empty` argument for returning an empty template. This enhancement partially addresses [EMLassemblyline issue #50](https://github.com/EDIorg/EMLassemblyline/issues/50).
+
 # EMLassemblyline 3.0.0
 
 ### Enhancements

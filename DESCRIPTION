@@ -1,6 +1,6 @@
 Package: EMLassemblyline
 Title: A tool kit for building EML metadata workflows
-Version: 3.0.0
+Version: 3.1.0
 Authors@R: c(
     person("Colin", "Smith", email = "colin.smith@wisc.edu", role = c("aut", "cre"), comment = "https://orcid.org/0000-0003-2261-9931"),
     person("Elie", "ARNAUD", email = "earnaud@outlook.com", role = "ctb", comment = "https://orcid.org/0000-0003-3416-7653")
@@ -21,7 +21,7 @@ Imports:
     rmarkdown (>= 1.11),
     stringr (>= 1.2.0),
     stringi (>= 1.1.5),
-    taxonomyCleanr (>= 1.4.1),
+    taxonomyCleanr (>= 1.5.0),
     tidyr (>= 1.1.2),
     tools (>= 3.6.1),
     uuid (>= 0.1-4),

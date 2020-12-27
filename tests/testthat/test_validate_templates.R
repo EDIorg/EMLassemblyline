@@ -1709,13 +1709,13 @@ testthat::test_that("taxonomic_coverage", {
   
   expect_error(
     validate_taxonomic_coverage_column_names(x1),
-    regexp = "Unsupported column names in taxonomic coverage template:")
+    regexp = "Missing columns in taxonomic coverage template")
   
   expect_error(
     validate_taxonomic_coverage(x1),
-    regexp = "Unsupported column names in taxonomic coverage template:")
+    regexp = "Missing columns in taxonomic coverage template")
   
-  # authority_system - Unsupported authorities are not allowed
+  # authority_system - Unsupported authorities are allowed
   
   x1 <- x
   x1$template$taxonomic_coverage.txt$content$authority_system[1:2] <- 
@@ -1724,14 +1724,15 @@ testthat::test_that("taxonomic_coverage", {
   expect_true(
     stringr::str_detect(
       validate_taxonomic_coverage_authority_system(x1),
-      "Unsupported authorities for entries: .+. Supported authorities are"))
+      "Taxa resolved to unsupported authorities cannot be expanded into "))
   
   r <- validate_taxonomic_coverage(x1)
   expect_true(
     stringr::str_detect(
       r$issues,
-      "Unsupported authorities for entries: .+. Supported authorities are"))
-  expect_null(r$x$template$taxonomic_coverage.txt)
+      "Taxa resolved to unsupported authorities cannot be expanded into "))
+  expect_true(
+    !is.null(r$x$template$taxonomic_coverage.txt))
   
   # FIXME: Relax constraints to those of 
   # taxonomyCleanr::make_taxonomicCoverage()
@@ -1778,8 +1779,8 @@ testthat::test_that("taxonomic_coverage", {
   expect_true(
     stringr::str_detect(
       r$issues,
-      "Unsupported authorities for entries: .+. Supported authorities are"))
-  expect_null(r$x$template$taxonomic_coverage.txt)
+      "Taxa resolved to unsupported authorities cannot be expanded into "))
+  expect_true(!is.null(r$x$template$taxonomic_coverage.txt))
   
 })
 

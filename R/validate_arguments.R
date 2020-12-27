@@ -732,92 +732,87 @@ validate_arguments <- function(fun.name, fun.args){
   
   if (fun.name == 'template_taxonomic_coverage'){
     
-    # taxa.table
-
-    if (is.null(fun.args$taxa.table)){
-      stop('Input argument "taxa.table" is missing.', call. = F)
-    }
+    # When not returning an empty template, several arguments are required
     
-    if (is.null(fun.args$x)){
+    if (!isTRUE(fun.args$empty)) {
       
-      data_files <- suppressWarnings(
-        EDIutils::validate_file_names(
-          path = fun.args$data.path, 
-          data.files = fun.args$taxa.table
-        )
-      )
-
-    } else if (!is.null(fun.args$x)){
+      # path
       
-      if (!any(fun.args$taxa.table %in% names(fun.args$x$data.table))){
-        stop('Input argument "taxa.table" is invalid.', call. = F)
-
+      if (isTRUE(fun.args$write.file)) {
+        EDIutils::validate_path(fun.args$path)
       }
       
-    }
-
-    # taxa.col
-    
-    if (is.null(fun.args$taxa.col)){
-      stop('Input argument "taxa.col" is missing.')
-    }
-    
-    if (length(fun.args$taxa.col) != length(fun.args$taxa.table)){
-      stop('Each "taxa.table" requires a corresponding "taxa.col".', call. = F)
-    }
-    
-    if (is.null(fun.args$x)){
+      # data.path
       
-      x <- template_arguments(
+      EDIutils::validate_path(fun.args$data.path)
+      
+      # taxa.table
+      
+      if (is.null(fun.args$taxa.table)) {
+        stop('Input argument "taxa.table" is missing.', call. = F)
+      }
+      
+      fun.args$x <- template_arguments(
         data.path = fun.args$data.path,
-        data.table = data_files
-      )
+        data.table = fun.args$taxa.table)$x
+      
+      if (!any(fun.args$taxa.table %in% names(fun.args$x$data.table))) {
+        stop('Input argument "taxa.table" is invalid.', call. = F)
+        
+      }
+      
+      # taxa.col
+      
+      if (is.null(fun.args$taxa.col)){
+        stop('Input argument "taxa.col" is missing.')
+      }
+      
+      if (length(fun.args$taxa.col) != length(fun.args$taxa.table)){
+        stop('Each "taxa.table" requires a corresponding "taxa.col".', call. = F)
+      }
       
       for (i in seq_along(fun.args$taxa.table)){
-        if (!isTRUE(fun.args$taxa.col[i] %in% colnames(x$x$data.table[[data_files[i]]]$content))){
+        if (!isTRUE(fun.args$taxa.col[i] %in% colnames(fun.args$x$data.table[[i]]$content))) {
           stop('Input argument "taxa.col" can not be found in "taxa.table".', call. = F)
         }
       }
       
-    } else if (!is.null(fun.args$x)){
+      # taxa.name.type
       
-      for (i in seq_along(fun.args$taxa.table)){
-        if (!isTRUE(fun.args$taxa.col[i] %in% colnames(fun.args$x$data.table[[fun.args$taxa.table[i]]]$content))){
-          stop('Input argument "taxa.col" can not be found in "taxa.table"', call. = F)
+      if (is.null(fun.args$taxa.name.type)){
+        stop('Input argument "taxa.name.type" is missing.', call. = F)
+      } else {
+        if (!any(tolower(fun.args$taxa.name.type) %in% c('scientific', 'common', 'both'))){
+          stop('Input argument "taxa.name.type" must be "scientific", "common", or "both".', call. = F)
         }
       }
       
-    }
-    
-    # taxa.name.type
-    
-    if (is.null(fun.args$taxa.name.type)){
+      # taxa.authority
       
-      stop('Input argument "taxa.name.type" is missing.', call. = F)
+      if (is.null(fun.args$taxa.authority)){
+        stop('Input argument "taxa.authority" is missing.', call. = F)
+      }
       
-    } else {
+      authorities <- taxonomyCleanr::view_taxa_authorities()
+      authorities <- authorities[authorities$resolve_sci_taxa == 'supported', ]
+      use_i <- as.character(fun.args$taxa.authority) %in% as.character(authorities$id)
       
-      if (!any(tolower(fun.args$taxa.name.type) %in% c('scientific', 'common', 'both'))){
-        
-        stop('Input argument "taxa.name.type" must be "scientific", "common", or "both".', call. = F)
+      if (sum(use_i) != length(use_i)){
+        stop('Input argument "taxa.authority" contains unsupported authority IDs.', call. = F)
       }
       
     }
     
-    # taxa.authority
+    # When returning an empty template, not much is required
     
-    if (is.null(fun.args$taxa.authority)){
-      stop('Input argument "taxa.authority" is missing.', call. = F)
-    }
-    
-    authorities <- taxonomyCleanr::view_taxa_authorities()
-    
-    authorities <- authorities[authorities$resolve_sci_taxa == 'supported', ]
-    
-    use_i <- as.character(fun.args$taxa.authority) %in% as.character(authorities$id)
-    
-    if (sum(use_i) != length(use_i)){
-      stop('Input argument "taxa.authority" contains unsupported authority IDs.', call. = F)
+    if (isTRUE(fun.args$empty)) {
+      
+      # path
+      
+      if (isTRUE(fun.args$write.file)) {
+        EDIutils::validate_path(fun.args$path)
+      }
+      
     }
   
   }

@@ -77,7 +77,7 @@ testthat::test_that('Test usage with file inputs', {
         'decomp.csv',
         'nitrogen.csv'
       ),
-      write.file = FALSE
+      write.file = TRUE
     )
   )
   
@@ -85,10 +85,7 @@ testthat::test_that('Test usage with file inputs', {
   
   expect_message(
     template_table_attributes(
-      path = system.file(
-        '/examples/templates',
-        package = 'EMLassemblyline'
-      ),
+      path = tempdir(),
       data.path = system.file(
         '/examples/data',
         package = 'EMLassemblyline'
@@ -97,7 +94,7 @@ testthat::test_that('Test usage with file inputs', {
         'decomp.csv',
         'nitrogen.csv'
       ),
-      write.file = FALSE
+      write.file = TRUE
     )
   )
   
