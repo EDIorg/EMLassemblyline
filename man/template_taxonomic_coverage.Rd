@@ -38,7 +38,7 @@ template_taxonomic_coverage(
     \item{taxa_raw: Taxon name as it occurs in the data. Can be single word or species binomial.}
     \item{name_type: Type of name. Can be "scientific" or "common".}
     \item{name_resolved: Taxon name as found in an authority system.}
-    \item{authority_system: Authority system in which the taxa’s name was found. Supported authorities are: "\href{https://www.itis.gov/}{"ITIS"}", "\href{http://www.marinespecies.org/}{"WORMS"}", "or "\href{https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c}{"GBIF"}". For unsupported authorities, list the authority home page URL. For unresolved taxa use \code{NA}.}
+    \item{authority_system: Authority system in which the taxa’s name was found. Supported authorities are: "\href{https://www.itis.gov/}{ITIS}", "\href{http://www.marinespecies.org/}{WORMS}", "or "\href{https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c}{GBIF}". For unsupported authorities, list the authority home page URL. For unresolved taxa use \code{NA}.}
     \item{authority_id: Taxon identifier in the authority system (e.g. 168469).}
     }
 }
