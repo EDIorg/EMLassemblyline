@@ -679,6 +679,30 @@ testthat::test_that("Categorical variables", {
   expect_null(
     r$x$template$catvars_nitrogen.txt)
   
+  # Variables classified as "categorical" must be listed in the categorical
+  # variables template
+  
+  x1 <- x
+  x1$template$catvars_nitrogen.txt$content <- 
+    x1$template$catvars_nitrogen.txt$content[
+      x1$template$catvars_nitrogen.txt$content$attributeName != "ntrt", ]
+  
+  expect_true(
+    stringr::str_detect(
+      validate_categorical_variable_listing(
+        "attributes_nitrogen.txt", "catvars_nitrogen.txt", x1),
+      "Missing categorical variable metadata. Variables are listed as"))
+  
+  r <- validate_categorical_variables(x1)
+  expect_true(
+    stringr::str_detect(
+      r$issues,
+      "Missing categorical variable metadata. Variables are listed as"))
+  expect_false(
+    "categorical" %in% r$x$template$attributes_nitrogen.txt$content$class)
+  expect_null(
+    r$x$template$catvars_nitrogen.txt)
+  
   # If multiple validation issues, then report all issues with a warning and
   # corresponding changes to x (the data and metadata list object).
   
