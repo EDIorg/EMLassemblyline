@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Validate data table description — validate_table_description • EMLassemblyline</title>
+<title>Check variables classified as categorical are listed in the categorical variables template — validate_categorical_variable_listing • EMLassemblyline</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Validate data table description — validate_table_description" />
-<meta property="og:description" content="Validate data table description" />
+<meta property="og:title" content="Check variables classified as categorical are listed in the categorical variables template — validate_categorical_variable_listing" />
+<meta property="og:description" content="Check variables classified as categorical are listed in the categorical variables template" />
 
 
 
@@ -138,33 +138,41 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Validate data table description</h1>
-    <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/validate_arguments.R'><code>R/validate_arguments.R</code></a></small>
-    <div class="hidden name"><code>validate_table_description.Rd</code></div>
+    <h1>Check variables classified as categorical are listed in the categorical variables template</h1>
+    <small class="dont-index">Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/R/validate_templates.R'><code>R/validate_templates.R</code></a></small>
+    <div class="hidden name"><code>validate_categorical_variable_listing.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Validate data table description</p>
+    <p>Check variables classified as categorical are listed in the categorical variables template</p>
     </div>
 
-    <pre class="usage"><span class='fu'>validate_table_description</span><span class='op'>(</span><span class='va'>fun.args</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>validate_categorical_variable_listing</span><span class='op'>(</span><span class='va'>attr.file.name</span>, <span class='va'>catvars.file.name</span>, <span class='va'>x</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>fun.args</th>
-      <td><p>(named list) Function arguments and their values.</p></td>
+      <th>attr.file.name</th>
+      <td><p>(character) The table attributes template to apply this function to. 
+Full file name is required.</p></td>
+    </tr>
+    <tr>
+      <th>catvars.file.name</th>
+      <td><p>(character) The categorical variables template to apply this function 
+to. Full file name is required.</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>(named list) The data and metadata object returned by 
+<code><a href='template_arguments.html'>template_arguments()</a></code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
-
-<dt>issues</dt><dd><p>Description of issues</p></dd>
-    <dt>fun.args</dt><dd><p>Updated list of function arguments</p></dd>
-
+    <p>(character or NULL) A character vector of issues if any were found, 
+    otherwise NULL.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
