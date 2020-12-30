@@ -491,6 +491,12 @@ validate_categorical_variables <- function(x) {
         r <- validate_categorical_variable_definitions(catvars_file, x)
         required_issues <- c(required_issues, r)
         
+        # Variables classified as categorical (in the table attributes 
+        # template) must be listed in the categorical variables template.
+        r <- validate_categorical_variable_listing(
+          attribute_file, catvars_file, x)
+        required_issues <- c(required_issues, r)
+        
         # TODO: codes - All codes in a table column are listed (optional)
         
         # TODO: Categorical variables templates without a matching attributes
@@ -635,6 +641,49 @@ validate_categorical_variable_definitions <- function(file.name, x) {
   missing_definitions <- x$template[[file.name]]$content$definition == ""
   if (any(missing_definitions)) {
     "Missing code definitions. Codes are meaningless without definition."
+  }
+}
+
+
+
+
+
+
+
+
+#' Check variables classified as categorical are listed in the categorical variables template
+#'
+#' @param attr.file.name
+#'     (character) The table attributes template to apply this function to. 
+#'     Full file name is required.
+#' @param catvars.file.name
+#'     (character) The categorical variables template to apply this function 
+#'     to. Full file name is required.
+#' @param x
+#'     (named list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' @return
+#'     (character or NULL) A character vector of issues if any were found, 
+#'     otherwise NULL.
+#'
+validate_categorical_variable_listing <- function(attr.file.name, 
+                                                  catvars.file.name, 
+                                                  x) {
+  variables_defined_as_categorical <- 
+    x$template[[attr.file.name]]$content$attributeName[
+      x$template[[attr.file.name]]$content$class %in% "categorical"]
+  categorical_variables_listed <- 
+    unique(x$template[[catvars.file.name]]$content$attributeName)
+  unlisted_categorical_variables <- 
+    !(variables_defined_as_categorical %in% categorical_variables_listed)
+  if (any(unlisted_categorical_variables)) {
+    paste0(
+      "Missing categorical variable metadata. Variables are listed as ",
+      "'categorical' in the table attributes metadata but are not found in ",
+      "the categorical variables metadata. These variables are missing: ",
+      paste(variables_defined_as_categorical[unlisted_categorical_variables], 
+            collapse = ", "))
   }
 }
 

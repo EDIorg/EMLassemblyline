@@ -1,3 +1,9 @@
+# EMLassemblyline 3.2.0
+
+### Enhancement
+
+* __Validate categorical variables:__ Validation of categorical variables has been enhanced with a check that each variable listed as "categorical" in table attributes templates are also listed in the categorical variables template.
+
 # EMLassemblyline 3.1.0
 
 ### Enhancement
