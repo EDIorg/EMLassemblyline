@@ -6,7 +6,7 @@
 
 # EMLassemblyline (EAL)
 
-For scientists and data managers to create high quality [EML](https://eml.ecoinformatics.org/) metadata for dataset publication. EAL is optimized for automating recurring publications (timeseries or data derived from timeseries sources) but works well for "one-off" publications, especially through the [MetaShARK](https://github.com/earnaud/MetaShARK-v2) interface. EAL prioritizes automated metadata extraction from data objects to minimize required human effort and encourages EML best practices to make publications Findable, Accessible, Interoperable, and Reusable.
+For scientists and data managers to create high quality [EML](https://eml.ecoinformatics.org/) metadata for dataset publication. EAL is optimized for automating recurring publications (time series or data derived from time series sources) but works well for "one-off" publications, especially through the [MetaShARK](https://github.com/earnaud/MetaShARK-v2) interface. EAL prioritizes automated metadata extraction from data objects to minimize required human effort and encourages EML best practices to make publications Findable, Accessible, Interoperable, and Reusable.
 
 ## Features
 
