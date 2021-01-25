@@ -1,3 +1,9 @@
+# EMLassemblyline 3.2.1
+
+### Bug fix
+
+* __template_taxonomic_coverage():__ Resolving to ITIS began failing due to a change in title (from "ITIS" to "Integrated Taxonomic Information SystemITIS" listed in the return from `taxize::gnr_datasources()`. This issue has been fixed in the `taxonomyCleanr` dependency.
+
 # EMLassemblyline 3.2.0
 
 ### Enhancement
