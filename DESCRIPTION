@@ -1,6 +1,6 @@
 Package: EMLassemblyline
 Title: A tool kit for building EML metadata workflows
-Version: 3.2.1
+Version: 3.2.2
 Authors@R: c(
     person("Colin", "Smith", email = "colin.smith@wisc.edu", role = c("aut", "cre"), comment = "https://orcid.org/0000-0003-2261-9931"),
     person("Elie", "ARNAUD", email = "earnaud@outlook.com", role = "ctb", comment = "https://orcid.org/0000-0003-3416-7653")
@@ -9,23 +9,23 @@ Description:
     For scientists and data managers to create high quality EML metadata for dataset publication. EMLassemblyline is optimized for automating recurring publications (timeseries or data derived from timeseries sources) but works well for "one-off" publications, especially through the MetaShARK interface. EMLassemblyline prioritizes automated metadata extraction from data objects to minimize required human effort and encourages EML best practices to make publications Findable, Accessible, Interoperable, and Reusable.
 Imports:
     bit64 (>= 4.0.5),
-    data.table (>= 1.12.2),
-    EDIutils (>= 1.2.0),
+    data.table (>= 1.13.6),
+    EDIutils (>= 1.4.0),
     EML (>= 2.0.4),
-    httr (>= 1.3.1),
-    knitr (>= 1.20),
+    httr (>= 1.4.2),
+    knitr (>= 1.30),
     methods,
     mime (>= 0.9),
     reader (>= 1.0.6),
-    readr (>= 1.1.1),
-    rmarkdown (>= 1.11),
-    stringr (>= 1.2.0),
-    stringi (>= 1.1.5),
+    readr (>= 1.4.0),
+    rmarkdown (>= 2.6),
+    stringr (>= 1.4.0),
+    stringi (>= 1.5.3),
     taxonomyCleanr (>= 1.5.1),
     tidyr (>= 1.1.2),
     tools (>= 3.6.1),
     uuid (>= 0.1-4),
-    xml2 (>= 1.1.1)
+    xml2 (>= 1.3.2)
 Suggests: testthat
 License: MIT
 Encoding: UTF-8

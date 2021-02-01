@@ -1,3 +1,9 @@
+# EMLassemblyline 3.2.2
+
+### Bug fix
+
+* __Outdated dependencies:__ Some listed dependencies were outdated resulting in warnings/errors. This has been fixed.
+
 # EMLassemblyline 3.2.1
 
 ### Bug fix
