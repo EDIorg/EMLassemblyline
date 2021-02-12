@@ -3,6 +3,7 @@
 ### Bug fix
 
 * __Outdated dependencies:__ Some listed dependencies were outdated resulting in warnings/errors. This has been fixed.
+* __template_categorical_variables():__ "" numeric categorical variables were being returned in the template as "NA". Now they are correctly returned as "".
 
 # EMLassemblyline 3.2.1
 
