@@ -103,6 +103,26 @@ validate_arguments <- function(fun.name, fun.args){
     
   }
   
+  # Call from eml2eal() -------------------------------------------------------
+  
+  if (fun.name == "eml2eal"){
+    if (!isTRUE(fun.args$empty)){
+      # eml
+      if (!file.exists(fun.args$eml)) {
+        stop("Input argument 'eml' is to a non-existant object.", call. = F)
+      }
+      # file.type
+      if (!(fun.args$file.type %in% c(".docx", ".txt", ".md"))) {
+        stop("Input argument 'file.type' must be '.docx', '.txt', or '.md'.", 
+             call. = F)
+      }
+      # path
+      if (is.null(fun.args$path)) {
+        stop("Input argument 'path' is missing.", call. = FALSE)
+      }
+    }
+  }
+  
   # Call from define_catvars() ------------------------------------------------
   
   if (fun.name == 'define_catvars'){

@@ -1,0 +1,2394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="edi.260.1" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0  https://nis.lternet.edu/schemas/EML/eml-2.2.0/xsd/eml.xsd" system="edi">
+  <access authSystem="https://pasta.edirepository.org/authentication" order="allowFirst" scope="document">
+    <allow>
+      <principal>uid=myid,o=EDI,dc=edirepository,dc=org</principal>
+      <permission>all</permission>
+    </allow>
+    <allow>
+      <principal>public</principal>
+      <permission>read</permission>
+    </allow>
+  </access>
+  <dataset id="dataset">
+    <title>The title of this information rich and wonderful dataset</title>
+    <creator id="Kelman R Wieder 7b1613e8-7fab-11eb-9975-c5e3d9b91702">
+      <individualName>
+        <givenName>Kelman</givenName>
+        <givenName>R</givenName>
+        <surName>Wieder</surName>
+      </individualName>
+      <organizationName>Villanova University</organizationName>
+      <electronicMailAddress>kelman.wieder@villanova.edu</electronicMailAddress>
+      <userId directory="https://orcid.org">https://orcid.org/0000-0001-5856-8473</userId>
+    </creator>
+    <creator id="Dale H Vitt 7b163b0c-7fab-11eb-9975-c5e3d9b91702">
+      <individualName>
+        <givenName>Dale</givenName>
+        <givenName>H</givenName>
+        <surName>Vitt</surName>
+      </individualName>
+      <organizationName>Southern Illinois University</organizationName>
+    </creator>
+    <creator id="Melanie A Vile 7b163b0d-7fab-11eb-9975-c5e3d9b91702">
+      <individualName>
+        <givenName>Melanie</givenName>
+        <givenName>A</givenName>
+        <surName>Vile</surName>
+      </individualName>
+      <organizationName>Villanova University</organizationName>
+      <electronicMailAddress>mvile@villanova.edu</electronicMailAddress>
+    </creator>
+    <creator id="Jeremy A Graham 7b16623a-7fab-11eb-9975-c5e3d9b91702">
+      <individualName>
+        <givenName>Jeremy</givenName>
+        <givenName>A</givenName>
+        <surName>Graham</surName>
+      </individualName>
+      <organizationName>Southern Illinois University</organizationName>
+      <electronicMailAddress>jeremyg@mtu.edu</electronicMailAddress>
+    </creator>
+    <creator id="Jeremy A Hartsock 7b16623b-7fab-11eb-9975-c5e3d9b91702">
+      <individualName>
+        <givenName>Jeremy</givenName>
+        <givenName>A</givenName>
+        <surName>Hartsock</surName>
+      </individualName>
+      <organizationName>Southern Illinois University</organizationName>
+      <electronicMailAddress>hartsock@siu.edu</electronicMailAddress>
+    </creator>
+    <creator id="Hope Fillingim 7b168968-7fab-11eb-9975-c5e3d9b91702">
+      <individualName>
+        <givenName>Hope</givenName>
+        <surName>Fillingim</surName>
+      </individualName>
+      <organizationName>Villanova University</organizationName>
+      <electronicMailAddress>fillingimhope@gmail.com</electronicMailAddress>
+    </creator>
+    <creator id="Melissa House 7b16b08c-7fab-11eb-9975-c5e3d9b91702">
+      <individualName>
+        <givenName>Melissa</givenName>
+        <surName>House</surName>
+      </individualName>
+      <organizationName>Southern Illinois University</organizationName>
+      <electronicMailAddress>mhouse@siu.edu</electronicMailAddress>
+    </creator>
+    <creator id="James C Quinn 7b16b08d-7fab-11eb-9975-c5e3d9b91702">
+      <individualName>
+        <givenName>James</givenName>
+        <givenName>C</givenName>
+        <surName>Quinn</surName>
+      </individualName>
+      <organizationName>Villanova University</organizationName>
+      <electronicMailAddress>jcqui03@gmail.com</electronicMailAddress>
+    </creator>
+    <creator id="Kimberli D Scott 7b16d7ba-7fab-11eb-9975-c5e3d9b91702">
+      <individualName>
+        <givenName>Kimberli</givenName>
+        <givenName>D</givenName>
+        <surName>Scott</surName>
+      </individualName>
+      <organizationName>Villanova University</organizationName>
+      <electronicMailAddress>kscott@villanova.edu</electronicMailAddress>
+    </creator>
+    <creator id="Meaghan Petix 7b16d7bb-7fab-11eb-9975-c5e3d9b91702">
+      <individualName>
+        <givenName>Meaghan</givenName>
+        <surName>Petix</surName>
+      </individualName>
+      <organizationName>Southern Illinois University</organizationName>
+      <electronicMailAddress>meaghan.petix@wsu.edu</electronicMailAddress>
+    </creator>
+    <creator id="Kelly J McMillen 7b16fee8-7fab-11eb-9975-c5e3d9b91702">
+      <individualName>
+        <givenName>Kelly</givenName>
+        <givenName>J</givenName>
+        <surName>McMillen</surName>
+      </individualName>
+      <organizationName>Villanova University</organizationName>
+      <electronicMailAddress>Kelly.Mcmillen@ttu.edu</electronicMailAddress>
+    </creator>
+    <associatedParty>
+      <organizationName>Center for Limnology</organizationName>
+      <electronicMailAddress>cfl@wisc.edu</electronicMailAddress>
+      <userId directory="https://orcid.org">https://orcid.org/0000-0001-5856-8473</userId>
+      <role>Primary Collaborator</role>
+    </associatedParty>
+    <associatedParty>
+      <organizationName>Trout Lake Station</organizationName>
+      <electronicMailAddress>tls@wisc.edu</electronicMailAddress>
+      <role>Secondary Collaborator</role>
+    </associatedParty>
+    <associatedParty id="James C Quinn 7b17260c-7fab-11eb-9975-c5e3d9b91702">
+      <individualName>
+        <givenName>James</givenName>
+        <givenName>C</givenName>
+        <surName>Quinn</surName>
+      </individualName>
+      <organizationName>Villanova University</organizationName>
+      <electronicMailAddress>jcqui03@gmail.com</electronicMailAddress>
+      <role>Instrument Technician</role>
+    </associatedParty>
+    <associatedParty id="Jane Doe 7b17260d-7fab-11eb-9975-c5e3d9b91702">
+      <individualName>
+        <givenName>Jane</givenName>
+        <surName>Doe</surName>
+      </individualName>
+      <organizationName>Center for Limnology</organizationName>
+      <electronicMailAddress>jdoe@email.com</electronicMailAddress>
+      <userId directory="https://orcid.org">https://orcid.org/0000-0001-5856-8473</userId>
+      <role>Equipment Lead</role>
+    </associatedParty>
+    <pubDate>2021-03-07</pubDate>
+    <abstract>
+      <para>
+  Development of the oil sands has led to increasing atmospheric N
+  deposition, with values as high as 17 kg N
+  ha<superscript>-1</superscript> yr<superscript>-1</superscript>;
+  regional background levels &lt;2 kg N ha<superscript>-1</superscript>
+  yr<superscript>-1</superscript>. Bogs, being ombrotrophic, may be
+  especially susceptible to increasing N deposition. To examine
+  responses to N deposition, over five years, we experimentally applied
+  N (as NH<subscript>4</subscript>NO<subscript>3</subscript>) to a bog
+  near Mariana Lakes, Alberta, at rates of 0, 5, 10, 15, 20, and 25 kg N
+  ha<superscript>-1</superscript> yr<superscript>-1</superscript>, plus
+  controls (no water or N addition). In May of each year, we collected
+  mixed vascular plant tissue and Sphagnum fuscum peat and placed
+  homogenized mixtures in nylon bags and placed them approximately 10 cm
+  below the peat surface in early June. Bags were collected again in
+  October of each year, cleaned, dried, and weighed. Decomposition of
+  Sphagnum moss and mixed vascular plant litter was affected by N
+  inputs, on average losing 8 and 38 % of initial mass, respectively,
+  over 5 months of decomposition. Water addition alone had no
+  significant effect on decomposition of cellulose, Sphagnum, or
+  vascular plant litter (p &gt; 0.15).
+</para>
+    </abstract>
+    <keywordSet>
+      <keyword>Villanova Peatland Biogeochemistry Group</keyword>
+      <keyword>peat</keyword>
+      <keyword>vascular</keyword>
+      <keyword>moss</keyword>
+    </keywordSet>
+    <keywordSet>
+      <keyword>bog</keyword>
+      <keyword>decomposition</keyword>
+      <keywordThesaurus>LTER Controlled Vocabulary</keywordThesaurus>
+    </keywordSet>
+    <additionalInfo>
+      <para>
+  Articles derived from this dataset:
+</para>
+      <para>
+  Article 1
+</para>
+      <para>
+  Article 2
+</para>
+      <para>
+  Article 3
+</para>
+    </additionalInfo>
+    <intellectualRights>
+      <para>This data package is released to the "public domain" under Creative Commons CC0 1.0 "No Rights Reserved" (see: https://creativecommons.org/publicdomain/zero/1.0/). It is considered professional etiquette to provide attribution of the original work if this data package is shared in whole or by individual components. A generic citation is provided for this data package on the website https://portal.edirepository.org (herein "website") in the summary metadata page. Communication (and collaboration) with the creators of this data package is recommended to prevent duplicate research or publication. This data package (and its components) is made available "as is" and with no warranty of accuracy or fitness for use. The creators of this data package and the website shall not be liable for any damages resulting from misinterpretation or misuse of the data package or its components. Periodic updates of this data package may be available from the website. Thank you.&#13;
+</para>
+    </intellectualRights>
+    <coverage>
+      <geographicCoverage>
+        <geographicDescription>site_1</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>-89.43</westBoundingCoordinate>
+          <eastBoundingCoordinate>-89.43</eastBoundingCoordinate>
+          <northBoundingCoordinate>45.23</northBoundingCoordinate>
+          <southBoundingCoordinate>45.23</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+      <geographicCoverage>
+        <geographicDescription>site_2</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>-89.44</westBoundingCoordinate>
+          <eastBoundingCoordinate>-89.44</eastBoundingCoordinate>
+          <northBoundingCoordinate>45.24</northBoundingCoordinate>
+          <southBoundingCoordinate>45.24</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+      <geographicCoverage>
+        <geographicDescription>site_3</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>-89.45</westBoundingCoordinate>
+          <eastBoundingCoordinate>-89.45</eastBoundingCoordinate>
+          <northBoundingCoordinate>45.25</northBoundingCoordinate>
+          <southBoundingCoordinate>45.25</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+      <geographicCoverage>
+        <geographicDescription>site_4</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>-89.46</westBoundingCoordinate>
+          <eastBoundingCoordinate>-89.46</eastBoundingCoordinate>
+          <northBoundingCoordinate>45.26</northBoundingCoordinate>
+          <southBoundingCoordinate>45.26</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+      <geographicCoverage>
+        <geographicDescription>site_5</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>-89.47</westBoundingCoordinate>
+          <eastBoundingCoordinate>-89.47</eastBoundingCoordinate>
+          <northBoundingCoordinate>45.27</northBoundingCoordinate>
+          <southBoundingCoordinate>45.27</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+      <geographicCoverage>
+        <geographicDescription>site_6</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>-89.48</westBoundingCoordinate>
+          <eastBoundingCoordinate>-89.48</eastBoundingCoordinate>
+          <northBoundingCoordinate>45.28</northBoundingCoordinate>
+          <southBoundingCoordinate>45.28</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+      <geographicCoverage>
+        <geographicDescription>site_7</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>-89.49</westBoundingCoordinate>
+          <eastBoundingCoordinate>-89.49</eastBoundingCoordinate>
+          <northBoundingCoordinate>45.29</northBoundingCoordinate>
+          <southBoundingCoordinate>45.29</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+      <geographicCoverage>
+        <geographicDescription>site_8</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>-89.5</westBoundingCoordinate>
+          <eastBoundingCoordinate>-89.5</eastBoundingCoordinate>
+          <northBoundingCoordinate>45.3</northBoundingCoordinate>
+          <southBoundingCoordinate>45.3</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+      <geographicCoverage>
+        <geographicDescription>site_9</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>-89.51</westBoundingCoordinate>
+          <eastBoundingCoordinate>-89.51</eastBoundingCoordinate>
+          <northBoundingCoordinate>45.31</northBoundingCoordinate>
+          <southBoundingCoordinate>45.31</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+      <geographicCoverage>
+        <geographicDescription>site_10</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>-89.52</westBoundingCoordinate>
+          <eastBoundingCoordinate>-89.52</eastBoundingCoordinate>
+          <northBoundingCoordinate>45.32</northBoundingCoordinate>
+          <southBoundingCoordinate>45.32</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+      <temporalCoverage>
+        <rangeOfDates>
+          <beginDate>
+            <calendarDate>2020-01-01</calendarDate>
+          </beginDate>
+          <endDate>
+            <calendarDate>2020-01-05</calendarDate>
+          </endDate>
+        </rangeOfDates>
+      </temporalCoverage>
+      <taxonomicCoverage>
+        <taxonomicClassification>
+          <taxonRankName>kingdom</taxonRankName>
+          <taxonRankValue>Plantae</taxonRankValue>
+          <commonName>plants</commonName>
+          <taxonId provider="https://itis.gov">202422</taxonId>
+          <taxonomicClassification>
+            <taxonRankName>subkingdom</taxonRankName>
+            <taxonRankValue>Viridiplantae</taxonRankValue>
+            <commonName>green plants</commonName>
+            <taxonId provider="https://itis.gov">954898</taxonId>
+            <taxonomicClassification>
+              <taxonRankName>infrakingdom</taxonRankName>
+              <taxonRankValue>Streptophyta</taxonRankValue>
+              <commonName>land plants</commonName>
+              <taxonId provider="https://itis.gov">846494</taxonId>
+              <taxonomicClassification>
+                <taxonRankName>superdivision</taxonRankName>
+                <taxonRankValue>Embryophyta</taxonRankValue>
+                <taxonId provider="https://itis.gov">954900</taxonId>
+                <taxonomicClassification>
+                  <taxonRankName>division</taxonRankName>
+                  <taxonRankValue>Tracheophyta</taxonRankValue>
+                  <commonName>vascular plants</commonName>
+                  <commonName>tracheophytes</commonName>
+                  <taxonId provider="https://itis.gov">846496</taxonId>
+                  <taxonomicClassification>
+                    <taxonRankName>subdivision</taxonRankName>
+                    <taxonRankValue>Spermatophytina</taxonRankValue>
+                    <commonName>spermatophytes</commonName>
+                    <commonName>seed plants</commonName>
+                    <taxonId provider="https://itis.gov">846504</taxonId>
+                    <taxonomicClassification>
+                      <taxonRankName>class</taxonRankName>
+                      <taxonRankValue>Magnoliopsida</taxonRankValue>
+                      <taxonId provider="https://itis.gov">18063</taxonId>
+                      <taxonomicClassification>
+                        <taxonRankName>superorder</taxonRankName>
+                        <taxonRankValue>Asteranae</taxonRankValue>
+                        <taxonId provider="https://itis.gov">846535</taxonId>
+                        <taxonomicClassification>
+                          <taxonRankName>order</taxonRankName>
+                          <taxonRankValue>Asterales</taxonRankValue>
+                          <taxonId provider="https://itis.gov">35419</taxonId>
+                          <taxonomicClassification>
+                            <taxonRankName>family</taxonRankName>
+                            <taxonRankValue>Asteraceae</taxonRankValue>
+                            <commonName>sunflowers</commonName>
+                            <taxonId provider="https://itis.gov">35420</taxonId>
+                            <taxonomicClassification>
+                              <taxonRankName>genus</taxonRankName>
+                              <taxonRankValue>Achillea</taxonRankValue>
+                              <commonName>yarrow</commonName>
+                              <taxonId provider="https://itis.gov">35422</taxonId>
+                              <taxonomicClassification>
+                                <taxonRankName>species</taxonRankName>
+                                <taxonRankValue>Achillea millefolium</taxonRankValue>
+                                <commonName>common yarrow</commonName>
+                                <commonName>milenrama</commonName>
+                                <commonName>milfoil</commonName>
+                                <commonName>western yarrow</commonName>
+                                <commonName>bloodwort</commonName>
+                                <commonName>carpenter's weed</commonName>
+                                <commonName>yarrow</commonName>
+                                <taxonId provider="https://itis.gov">35423</taxonId>
+                              </taxonomicClassification>
+                            </taxonomicClassification>
+                          </taxonomicClassification>
+                        </taxonomicClassification>
+                      </taxonomicClassification>
+                    </taxonomicClassification>
+                  </taxonomicClassification>
+                </taxonomicClassification>
+              </taxonomicClassification>
+            </taxonomicClassification>
+          </taxonomicClassification>
+        </taxonomicClassification>
+        <taxonomicClassification>
+          <taxonRankName>kingdom</taxonRankName>
+          <taxonRankValue>Plantae</taxonRankValue>
+          <commonName>plants</commonName>
+          <taxonId provider="https://itis.gov">202422</taxonId>
+          <taxonomicClassification>
+            <taxonRankName>subkingdom</taxonRankName>
+            <taxonRankValue>Viridiplantae</taxonRankValue>
+            <commonName>green plants</commonName>
+            <taxonId provider="https://itis.gov">954898</taxonId>
+            <taxonomicClassification>
+              <taxonRankName>infrakingdom</taxonRankName>
+              <taxonRankValue>Streptophyta</taxonRankValue>
+              <commonName>land plants</commonName>
+              <taxonId provider="https://itis.gov">846494</taxonId>
+              <taxonomicClassification>
+                <taxonRankName>superdivision</taxonRankName>
+                <taxonRankValue>Embryophyta</taxonRankValue>
+                <taxonId provider="https://itis.gov">954900</taxonId>
+                <taxonomicClassification>
+                  <taxonRankName>division</taxonRankName>
+                  <taxonRankValue>Tracheophyta</taxonRankValue>
+                  <commonName>vascular plants</commonName>
+                  <commonName>tracheophytes</commonName>
+                  <taxonId provider="https://itis.gov">846496</taxonId>
+                  <taxonomicClassification>
+                    <taxonRankName>subdivision</taxonRankName>
+                    <taxonRankValue>Spermatophytina</taxonRankValue>
+                    <commonName>spermatophytes</commonName>
+                    <commonName>seed plants</commonName>
+                    <taxonId provider="https://itis.gov">846504</taxonId>
+                    <taxonomicClassification>
+                      <taxonRankName>class</taxonRankName>
+                      <taxonRankValue>Magnoliopsida</taxonRankValue>
+                      <taxonId provider="https://itis.gov">18063</taxonId>
+                      <taxonomicClassification>
+                        <taxonRankName>superorder</taxonRankName>
+                        <taxonRankValue>Asteranae</taxonRankValue>
+                        <taxonId provider="https://itis.gov">846535</taxonId>
+                        <taxonomicClassification>
+                          <taxonRankName>order</taxonRankName>
+                          <taxonRankValue>Asterales</taxonRankValue>
+                          <taxonId provider="https://itis.gov">35419</taxonId>
+                          <taxonomicClassification>
+                            <taxonRankName>family</taxonRankName>
+                            <taxonRankValue>Asteraceae</taxonRankValue>
+                            <commonName>sunflowers</commonName>
+                            <taxonId provider="https://itis.gov">35420</taxonId>
+                            <taxonomicClassification>
+                              <taxonRankName>genus</taxonRankName>
+                              <taxonRankValue>Crepis</taxonRankValue>
+                              <commonName>hawksbeard</commonName>
+                              <taxonId provider="https://itis.gov">37168</taxonId>
+                              <taxonomicClassification>
+                                <taxonRankName>species</taxonRankName>
+                                <taxonRankValue>Crepis tectorum</taxonRankValue>
+                                <commonName>narrowleaf hawksbeard</commonName>
+                                <taxonId provider="https://itis.gov">37212</taxonId>
+                              </taxonomicClassification>
+                            </taxonomicClassification>
+                          </taxonomicClassification>
+                        </taxonomicClassification>
+                      </taxonomicClassification>
+                    </taxonomicClassification>
+                  </taxonomicClassification>
+                </taxonomicClassification>
+              </taxonomicClassification>
+            </taxonomicClassification>
+          </taxonomicClassification>
+        </taxonomicClassification>
+        <taxonomicClassification>
+          <taxonRankName>kingdom</taxonRankName>
+          <taxonRankValue>Plantae</taxonRankValue>
+          <commonName>plants</commonName>
+          <taxonId provider="https://itis.gov">202422</taxonId>
+          <taxonomicClassification>
+            <taxonRankName>subkingdom</taxonRankName>
+            <taxonRankValue>Viridiplantae</taxonRankValue>
+            <commonName>green plants</commonName>
+            <taxonId provider="https://itis.gov">954898</taxonId>
+            <taxonomicClassification>
+              <taxonRankName>infrakingdom</taxonRankName>
+              <taxonRankValue>Streptophyta</taxonRankValue>
+              <commonName>land plants</commonName>
+              <taxonId provider="https://itis.gov">846494</taxonId>
+              <taxonomicClassification>
+                <taxonRankName>superdivision</taxonRankName>
+                <taxonRankValue>Embryophyta</taxonRankValue>
+                <taxonId provider="https://itis.gov">954900</taxonId>
+                <taxonomicClassification>
+                  <taxonRankName>division</taxonRankName>
+                  <taxonRankValue>Tracheophyta</taxonRankValue>
+                  <commonName>vascular plants</commonName>
+                  <commonName>tracheophytes</commonName>
+                  <taxonId provider="https://itis.gov">846496</taxonId>
+                  <taxonomicClassification>
+                    <taxonRankName>subdivision</taxonRankName>
+                    <taxonRankValue>Spermatophytina</taxonRankValue>
+                    <commonName>spermatophytes</commonName>
+                    <commonName>seed plants</commonName>
+                    <taxonId provider="https://itis.gov">846504</taxonId>
+                    <taxonomicClassification>
+                      <taxonRankName>class</taxonRankName>
+                      <taxonRankValue>Magnoliopsida</taxonRankValue>
+                      <taxonId provider="https://itis.gov">18063</taxonId>
+                      <taxonomicClassification>
+                        <taxonRankName>superorder</taxonRankName>
+                        <taxonRankValue>Lilianae</taxonRankValue>
+                        <commonName>monocots</commonName>
+                        <commonName>monocotyledons</commonName>
+                        <taxonId provider="https://itis.gov">846542</taxonId>
+                        <taxonomicClassification>
+                          <taxonRankName>order</taxonRankName>
+                          <taxonRankValue>Poales</taxonRankValue>
+                          <taxonId provider="https://itis.gov">846620</taxonId>
+                          <taxonomicClassification>
+                            <taxonRankName>family</taxonRankName>
+                            <taxonRankValue>Cyperaceae</taxonRankValue>
+                            <commonName>sedges</commonName>
+                            <taxonId provider="https://itis.gov">39357</taxonId>
+                            <taxonomicClassification>
+                              <taxonRankName>genus</taxonRankName>
+                              <taxonRankValue>Cyperus</taxonRankValue>
+                              <commonName>flatsedge</commonName>
+                              <taxonId provider="https://itis.gov">39882</taxonId>
+                            </taxonomicClassification>
+                          </taxonomicClassification>
+                        </taxonomicClassification>
+                      </taxonomicClassification>
+                    </taxonomicClassification>
+                  </taxonomicClassification>
+                </taxonomicClassification>
+              </taxonomicClassification>
+            </taxonomicClassification>
+          </taxonomicClassification>
+        </taxonomicClassification>
+        <taxonomicClassification>
+          <taxonRankName>kingdom</taxonRankName>
+          <taxonRankValue>Plantae</taxonRankValue>
+          <commonName>plants</commonName>
+          <taxonId provider="https://itis.gov">202422</taxonId>
+          <taxonomicClassification>
+            <taxonRankName>subkingdom</taxonRankName>
+            <taxonRankValue>Viridiplantae</taxonRankValue>
+            <commonName>green plants</commonName>
+            <taxonId provider="https://itis.gov">954898</taxonId>
+            <taxonomicClassification>
+              <taxonRankName>infrakingdom</taxonRankName>
+              <taxonRankValue>Streptophyta</taxonRankValue>
+              <commonName>land plants</commonName>
+              <taxonId provider="https://itis.gov">846494</taxonId>
+              <taxonomicClassification>
+                <taxonRankName>superdivision</taxonRankName>
+                <taxonRankValue>Embryophyta</taxonRankValue>
+                <taxonId provider="https://itis.gov">954900</taxonId>
+                <taxonomicClassification>
+                  <taxonRankName>division</taxonRankName>
+                  <taxonRankValue>Tracheophyta</taxonRankValue>
+                  <commonName>vascular plants</commonName>
+                  <commonName>tracheophytes</commonName>
+                  <taxonId provider="https://itis.gov">846496</taxonId>
+                  <taxonomicClassification>
+                    <taxonRankName>subdivision</taxonRankName>
+                    <taxonRankValue>Spermatophytina</taxonRankValue>
+                    <commonName>spermatophytes</commonName>
+                    <commonName>seed plants</commonName>
+                    <taxonId provider="https://itis.gov">846504</taxonId>
+                    <taxonomicClassification>
+                      <taxonRankName>class</taxonRankName>
+                      <taxonRankValue>Magnoliopsida</taxonRankValue>
+                      <taxonId provider="https://itis.gov">18063</taxonId>
+                      <taxonomicClassification>
+                        <taxonRankName>superorder</taxonRankName>
+                        <taxonRankValue>Rosanae</taxonRankValue>
+                        <taxonId provider="https://itis.gov">846548</taxonId>
+                        <taxonomicClassification>
+                          <taxonRankName>order</taxonRankName>
+                          <taxonRankValue>Malpighiales</taxonRankValue>
+                          <taxonId provider="https://itis.gov">822428</taxonId>
+                          <taxonomicClassification>
+                            <taxonRankName>family</taxonRankName>
+                            <taxonRankValue>Euphorbiaceae</taxonRankValue>
+                            <commonName>spurge</commonName>
+                            <taxonId provider="https://itis.gov">28031</taxonId>
+                            <taxonomicClassification>
+                              <taxonRankName>genus</taxonRankName>
+                              <taxonRankValue>Euphorbia</taxonRankValue>
+                              <commonName>spurge</commonName>
+                              <taxonId provider="https://itis.gov">28032</taxonId>
+                              <taxonomicClassification>
+                                <taxonRankName>species</taxonRankName>
+                                <taxonRankValue>Euphorbia glyptosperma</taxonRankValue>
+                                <commonName>ridgeseed spurge</commonName>
+                                <commonName>ribseed sandmat</commonName>
+                                <taxonId provider="https://itis.gov">28074</taxonId>
+                              </taxonomicClassification>
+                            </taxonomicClassification>
+                          </taxonomicClassification>
+                        </taxonomicClassification>
+                      </taxonomicClassification>
+                    </taxonomicClassification>
+                  </taxonomicClassification>
+                </taxonomicClassification>
+              </taxonomicClassification>
+            </taxonomicClassification>
+          </taxonomicClassification>
+        </taxonomicClassification>
+        <taxonomicClassification>
+          <taxonRankName>kingdom</taxonRankName>
+          <taxonRankValue>Plantae</taxonRankValue>
+          <commonName>plants</commonName>
+          <taxonId provider="https://itis.gov">202422</taxonId>
+          <taxonomicClassification>
+            <taxonRankName>subkingdom</taxonRankName>
+            <taxonRankValue>Viridiplantae</taxonRankValue>
+            <commonName>green plants</commonName>
+            <taxonId provider="https://itis.gov">954898</taxonId>
+            <taxonomicClassification>
+              <taxonRankName>infrakingdom</taxonRankName>
+              <taxonRankValue>Streptophyta</taxonRankValue>
+              <commonName>land plants</commonName>
+              <taxonId provider="https://itis.gov">846494</taxonId>
+              <taxonomicClassification>
+                <taxonRankName>superdivision</taxonRankName>
+                <taxonRankValue>Embryophyta</taxonRankValue>
+                <taxonId provider="https://itis.gov">954900</taxonId>
+                <taxonomicClassification>
+                  <taxonRankName>division</taxonRankName>
+                  <taxonRankValue>Tracheophyta</taxonRankValue>
+                  <commonName>vascular plants</commonName>
+                  <commonName>tracheophytes</commonName>
+                  <taxonId provider="https://itis.gov">846496</taxonId>
+                  <taxonomicClassification>
+                    <taxonRankName>subdivision</taxonRankName>
+                    <taxonRankValue>Spermatophytina</taxonRankValue>
+                    <commonName>spermatophytes</commonName>
+                    <commonName>seed plants</commonName>
+                    <taxonId provider="https://itis.gov">846504</taxonId>
+                    <taxonomicClassification>
+                      <taxonRankName>class</taxonRankName>
+                      <taxonRankValue>Magnoliopsida</taxonRankValue>
+                      <taxonId provider="https://itis.gov">18063</taxonId>
+                      <taxonomicClassification>
+                        <taxonRankName>superorder</taxonRankName>
+                        <taxonRankValue>Rosanae</taxonRankValue>
+                        <taxonId provider="https://itis.gov">846548</taxonId>
+                        <taxonomicClassification>
+                          <taxonRankName>order</taxonRankName>
+                          <taxonRankValue>Fabales</taxonRankValue>
+                          <taxonId provider="https://itis.gov">500022</taxonId>
+                          <taxonomicClassification>
+                            <taxonRankName>family</taxonRankName>
+                            <taxonRankValue>Fabaceae</taxonRankValue>
+                            <commonName>peas</commonName>
+                            <commonName>legumes</commonName>
+                            <taxonId provider="https://itis.gov">500059</taxonId>
+                            <taxonomicClassification>
+                              <taxonRankName>genus</taxonRankName>
+                              <taxonRankValue>Lespedeza</taxonRankValue>
+                              <taxonId provider="https://itis.gov">25892</taxonId>
+                              <taxonomicClassification>
+                                <taxonRankName>species</taxonRankName>
+                                <taxonRankValue>Lespedeza capitata</taxonRankValue>
+                                <commonName>roundhead lespedeza</commonName>
+                                <taxonId provider="https://itis.gov">25897</taxonId>
+                              </taxonomicClassification>
+                            </taxonomicClassification>
+                          </taxonomicClassification>
+                        </taxonomicClassification>
+                      </taxonomicClassification>
+                    </taxonomicClassification>
+                  </taxonomicClassification>
+                </taxonomicClassification>
+              </taxonomicClassification>
+            </taxonomicClassification>
+          </taxonomicClassification>
+        </taxonomicClassification>
+        <taxonomicClassification>
+          <taxonRankName>kingdom</taxonRankName>
+          <taxonRankValue>Plantae</taxonRankValue>
+          <commonName>plants</commonName>
+          <taxonId provider="https://itis.gov">202422</taxonId>
+          <taxonomicClassification>
+            <taxonRankName>subkingdom</taxonRankName>
+            <taxonRankValue>Viridiplantae</taxonRankValue>
+            <commonName>green plants</commonName>
+            <taxonId provider="https://itis.gov">954898</taxonId>
+            <taxonomicClassification>
+              <taxonRankName>infrakingdom</taxonRankName>
+              <taxonRankValue>Streptophyta</taxonRankValue>
+              <commonName>land plants</commonName>
+              <taxonId provider="https://itis.gov">846494</taxonId>
+              <taxonomicClassification>
+                <taxonRankName>superdivision</taxonRankName>
+                <taxonRankValue>Embryophyta</taxonRankValue>
+                <taxonId provider="https://itis.gov">954900</taxonId>
+                <taxonomicClassification>
+                  <taxonRankName>division</taxonRankName>
+                  <taxonRankValue>Tracheophyta</taxonRankValue>
+                  <commonName>vascular plants</commonName>
+                  <commonName>tracheophytes</commonName>
+                  <taxonId provider="https://itis.gov">846496</taxonId>
+                  <taxonomicClassification>
+                    <taxonRankName>subdivision</taxonRankName>
+                    <taxonRankValue>Spermatophytina</taxonRankValue>
+                    <commonName>spermatophytes</commonName>
+                    <commonName>seed plants</commonName>
+                    <taxonId provider="https://itis.gov">846504</taxonId>
+                    <taxonomicClassification>
+                      <taxonRankName>class</taxonRankName>
+                      <taxonRankValue>Magnoliopsida</taxonRankValue>
+                      <taxonId provider="https://itis.gov">18063</taxonId>
+                      <taxonomicClassification>
+                        <taxonRankName>superorder</taxonRankName>
+                        <taxonRankValue>Rosanae</taxonRankValue>
+                        <taxonId provider="https://itis.gov">846548</taxonId>
+                        <taxonomicClassification>
+                          <taxonRankName>order</taxonRankName>
+                          <taxonRankValue>Brassicales</taxonRankValue>
+                          <taxonId provider="https://itis.gov">822943</taxonId>
+                          <taxonomicClassification>
+                            <taxonRankName>family</taxonRankName>
+                            <taxonRankValue>Brassicaceae</taxonRankValue>
+                            <commonName>mustards</commonName>
+                            <commonName>crucifers</commonName>
+                            <taxonId provider="https://itis.gov">22669</taxonId>
+                            <taxonomicClassification>
+                              <taxonRankName>genus</taxonRankName>
+                              <taxonRankValue>Lepidium</taxonRankValue>
+                              <commonName>pepperweed</commonName>
+                              <taxonId provider="https://itis.gov">22953</taxonId>
+                              <taxonomicClassification>
+                                <taxonRankName>species</taxonRankName>
+                                <taxonRankValue>Lepidium densiflorum</taxonRankValue>
+                                <commonName>miner's pepperwort</commonName>
+                                <commonName>miners' pepperweed</commonName>
+                                <commonName>prairie pepperweed</commonName>
+                                <commonName>greenflower pepperweed</commonName>
+                                <commonName>peppergrass</commonName>
+                                <commonName>common pepperweed</commonName>
+                                <taxonId provider="https://itis.gov">22960</taxonId>
+                              </taxonomicClassification>
+                            </taxonomicClassification>
+                          </taxonomicClassification>
+                        </taxonomicClassification>
+                      </taxonomicClassification>
+                    </taxonomicClassification>
+                  </taxonomicClassification>
+                </taxonomicClassification>
+              </taxonomicClassification>
+            </taxonomicClassification>
+          </taxonomicClassification>
+        </taxonomicClassification>
+        <taxonomicClassification>
+          <taxonRankName>kingdom</taxonRankName>
+          <taxonRankValue>Plantae</taxonRankValue>
+          <commonName>plants</commonName>
+          <taxonId provider="https://itis.gov">202422</taxonId>
+          <taxonomicClassification>
+            <taxonRankName>subkingdom</taxonRankName>
+            <taxonRankValue>Viridiplantae</taxonRankValue>
+            <commonName>green plants</commonName>
+            <taxonId provider="https://itis.gov">954898</taxonId>
+            <taxonomicClassification>
+              <taxonRankName>infrakingdom</taxonRankName>
+              <taxonRankValue>Streptophyta</taxonRankValue>
+              <commonName>land plants</commonName>
+              <taxonId provider="https://itis.gov">846494</taxonId>
+              <taxonomicClassification>
+                <taxonRankName>superdivision</taxonRankName>
+                <taxonRankValue>Embryophyta</taxonRankValue>
+                <taxonId provider="https://itis.gov">954900</taxonId>
+                <taxonomicClassification>
+                  <taxonRankName>division</taxonRankName>
+                  <taxonRankValue>Tracheophyta</taxonRankValue>
+                  <commonName>vascular plants</commonName>
+                  <commonName>tracheophytes</commonName>
+                  <taxonId provider="https://itis.gov">846496</taxonId>
+                  <taxonomicClassification>
+                    <taxonRankName>subdivision</taxonRankName>
+                    <taxonRankValue>Spermatophytina</taxonRankValue>
+                    <commonName>spermatophytes</commonName>
+                    <commonName>seed plants</commonName>
+                    <taxonId provider="https://itis.gov">846504</taxonId>
+                    <taxonomicClassification>
+                      <taxonRankName>class</taxonRankName>
+                      <taxonRankValue>Magnoliopsida</taxonRankValue>
+                      <taxonId provider="https://itis.gov">18063</taxonId>
+                      <taxonomicClassification>
+                        <taxonRankName>superorder</taxonRankName>
+                        <taxonRankValue>Lilianae</taxonRankValue>
+                        <commonName>monocots</commonName>
+                        <commonName>monocotyledons</commonName>
+                        <taxonId provider="https://itis.gov">846542</taxonId>
+                        <taxonomicClassification>
+                          <taxonRankName>order</taxonRankName>
+                          <taxonRankValue>Poales</taxonRankValue>
+                          <taxonId provider="https://itis.gov">846620</taxonId>
+                          <taxonomicClassification>
+                            <taxonRankName>family</taxonRankName>
+                            <taxonRankValue>Poaceae</taxonRankValue>
+                            <taxonId provider="https://itis.gov">40351</taxonId>
+                            <taxonomicClassification>
+                              <taxonRankName>genus</taxonRankName>
+                              <taxonRankValue>Poa</taxonRankValue>
+                              <taxonId provider="https://itis.gov">41074</taxonId>
+                              <taxonomicClassification>
+                                <taxonRankName>species</taxonRankName>
+                                <taxonRankValue>Poa pratensis</taxonRankValue>
+                                <taxonId provider="https://itis.gov">41088</taxonId>
+                              </taxonomicClassification>
+                            </taxonomicClassification>
+                          </taxonomicClassification>
+                        </taxonomicClassification>
+                      </taxonomicClassification>
+                    </taxonomicClassification>
+                  </taxonomicClassification>
+                </taxonomicClassification>
+              </taxonomicClassification>
+            </taxonomicClassification>
+          </taxonomicClassification>
+        </taxonomicClassification>
+        <taxonomicClassification>
+          <taxonRankName>kingdom</taxonRankName>
+          <taxonRankValue>Plantae</taxonRankValue>
+          <commonName>plants</commonName>
+          <taxonId provider="https://itis.gov">202422</taxonId>
+          <taxonomicClassification>
+            <taxonRankName>subkingdom</taxonRankName>
+            <taxonRankValue>Viridiplantae</taxonRankValue>
+            <commonName>green plants</commonName>
+            <taxonId provider="https://itis.gov">954898</taxonId>
+            <taxonomicClassification>
+              <taxonRankName>infrakingdom</taxonRankName>
+              <taxonRankValue>Streptophyta</taxonRankValue>
+              <commonName>land plants</commonName>
+              <taxonId provider="https://itis.gov">846494</taxonId>
+              <taxonomicClassification>
+                <taxonRankName>superdivision</taxonRankName>
+                <taxonRankValue>Embryophyta</taxonRankValue>
+                <taxonId provider="https://itis.gov">954900</taxonId>
+                <taxonomicClassification>
+                  <taxonRankName>division</taxonRankName>
+                  <taxonRankValue>Tracheophyta</taxonRankValue>
+                  <commonName>vascular plants</commonName>
+                  <commonName>tracheophytes</commonName>
+                  <taxonId provider="https://itis.gov">846496</taxonId>
+                  <taxonomicClassification>
+                    <taxonRankName>subdivision</taxonRankName>
+                    <taxonRankValue>Spermatophytina</taxonRankValue>
+                    <commonName>spermatophytes</commonName>
+                    <commonName>seed plants</commonName>
+                    <taxonId provider="https://itis.gov">846504</taxonId>
+                    <taxonomicClassification>
+                      <taxonRankName>class</taxonRankName>
+                      <taxonRankValue>Magnoliopsida</taxonRankValue>
+                      <taxonId provider="https://itis.gov">18063</taxonId>
+                      <taxonomicClassification>
+                        <taxonRankName>superorder</taxonRankName>
+                        <taxonRankValue>Caryophyllanae</taxonRankValue>
+                        <taxonId provider="https://itis.gov">846539</taxonId>
+                        <taxonomicClassification>
+                          <taxonRankName>order</taxonRankName>
+                          <taxonRankValue>Caryophyllales</taxonRankValue>
+                          <taxonId provider="https://itis.gov">19520</taxonId>
+                          <taxonomicClassification>
+                            <taxonRankName>family</taxonRankName>
+                            <taxonRankValue>Polygonaceae</taxonRankValue>
+                            <commonName>knotweed</commonName>
+                            <commonName>buckwheat</commonName>
+                            <taxonId provider="https://itis.gov">20842</taxonId>
+                            <taxonomicClassification>
+                              <taxonRankName>genus</taxonRankName>
+                              <taxonRankValue>Rumex</taxonRankValue>
+                              <commonName>dock</commonName>
+                              <taxonId provider="https://itis.gov">20933</taxonId>
+                              <taxonomicClassification>
+                                <taxonRankName>species</taxonRankName>
+                                <taxonRankValue>Rumex acetosella</taxonRankValue>
+                                <commonName>sheep sorrel</commonName>
+                                <commonName>field sorrel</commonName>
+                                <commonName>red sorrel</commonName>
+                                <commonName>common sheep sorrel</commonName>
+                                <taxonId provider="https://itis.gov">20934</taxonId>
+                              </taxonomicClassification>
+                            </taxonomicClassification>
+                          </taxonomicClassification>
+                        </taxonomicClassification>
+                      </taxonomicClassification>
+                    </taxonomicClassification>
+                  </taxonomicClassification>
+                </taxonomicClassification>
+              </taxonomicClassification>
+            </taxonomicClassification>
+          </taxonomicClassification>
+        </taxonomicClassification>
+        <taxonomicClassification>
+          <taxonRankName>kingdom</taxonRankName>
+          <taxonRankValue>Plantae</taxonRankValue>
+          <commonName>plants</commonName>
+          <taxonId provider="https://itis.gov">202422</taxonId>
+          <taxonomicClassification>
+            <taxonRankName>subkingdom</taxonRankName>
+            <taxonRankValue>Viridiplantae</taxonRankValue>
+            <commonName>green plants</commonName>
+            <taxonId provider="https://itis.gov">954898</taxonId>
+            <taxonomicClassification>
+              <taxonRankName>infrakingdom</taxonRankName>
+              <taxonRankValue>Streptophyta</taxonRankValue>
+              <commonName>land plants</commonName>
+              <taxonId provider="https://itis.gov">846494</taxonId>
+              <taxonomicClassification>
+                <taxonRankName>superdivision</taxonRankName>
+                <taxonRankValue>Embryophyta</taxonRankValue>
+                <taxonId provider="https://itis.gov">954900</taxonId>
+                <taxonomicClassification>
+                  <taxonRankName>division</taxonRankName>
+                  <taxonRankValue>Tracheophyta</taxonRankValue>
+                  <commonName>vascular plants</commonName>
+                  <commonName>tracheophytes</commonName>
+                  <taxonId provider="https://itis.gov">846496</taxonId>
+                  <taxonomicClassification>
+                    <taxonRankName>subdivision</taxonRankName>
+                    <taxonRankValue>Spermatophytina</taxonRankValue>
+                    <commonName>spermatophytes</commonName>
+                    <commonName>seed plants</commonName>
+                    <taxonId provider="https://itis.gov">846504</taxonId>
+                    <taxonomicClassification>
+                      <taxonRankName>class</taxonRankName>
+                      <taxonRankValue>Magnoliopsida</taxonRankValue>
+                      <taxonId provider="https://itis.gov">18063</taxonId>
+                      <taxonomicClassification>
+                        <taxonRankName>superorder</taxonRankName>
+                        <taxonRankValue>Lilianae</taxonRankValue>
+                        <commonName>monocots</commonName>
+                        <commonName>monocotyledons</commonName>
+                        <taxonId provider="https://itis.gov">846542</taxonId>
+                        <taxonomicClassification>
+                          <taxonRankName>order</taxonRankName>
+                          <taxonRankValue>Poales</taxonRankValue>
+                          <taxonId provider="https://itis.gov">846620</taxonId>
+                          <taxonomicClassification>
+                            <taxonRankName>family</taxonRankName>
+                            <taxonRankValue>Poaceae</taxonRankValue>
+                            <taxonId provider="https://itis.gov">40351</taxonId>
+                            <taxonomicClassification>
+                              <taxonRankName>genus</taxonRankName>
+                              <taxonRankValue>Schizachyrium</taxonRankValue>
+                              <taxonId provider="https://itis.gov">42069</taxonId>
+                              <taxonomicClassification>
+                                <taxonRankName>species</taxonRankName>
+                                <taxonRankValue>Schizachyrium scoparium</taxonRankValue>
+                                <taxonId provider="https://itis.gov">42076</taxonId>
+                              </taxonomicClassification>
+                            </taxonomicClassification>
+                          </taxonomicClassification>
+                        </taxonomicClassification>
+                      </taxonomicClassification>
+                    </taxonomicClassification>
+                  </taxonomicClassification>
+                </taxonomicClassification>
+              </taxonomicClassification>
+            </taxonomicClassification>
+          </taxonomicClassification>
+        </taxonomicClassification>
+        <taxonomicClassification>
+          <taxonRankName>kingdom</taxonRankName>
+          <taxonRankValue>Plantae</taxonRankValue>
+          <commonName>plants</commonName>
+          <taxonId provider="https://itis.gov">202422</taxonId>
+          <taxonomicClassification>
+            <taxonRankName>subkingdom</taxonRankName>
+            <taxonRankValue>Viridiplantae</taxonRankValue>
+            <commonName>green plants</commonName>
+            <taxonId provider="https://itis.gov">954898</taxonId>
+            <taxonomicClassification>
+              <taxonRankName>infrakingdom</taxonRankName>
+              <taxonRankValue>Streptophyta</taxonRankValue>
+              <commonName>land plants</commonName>
+              <taxonId provider="https://itis.gov">846494</taxonId>
+              <taxonomicClassification>
+                <taxonRankName>superdivision</taxonRankName>
+                <taxonRankValue>Embryophyta</taxonRankValue>
+                <taxonId provider="https://itis.gov">954900</taxonId>
+                <taxonomicClassification>
+                  <taxonRankName>division</taxonRankName>
+                  <taxonRankValue>Tracheophyta</taxonRankValue>
+                  <commonName>vascular plants</commonName>
+                  <commonName>tracheophytes</commonName>
+                  <taxonId provider="https://itis.gov">846496</taxonId>
+                  <taxonomicClassification>
+                    <taxonRankName>subdivision</taxonRankName>
+                    <taxonRankValue>Spermatophytina</taxonRankValue>
+                    <commonName>spermatophytes</commonName>
+                    <commonName>seed plants</commonName>
+                    <taxonId provider="https://itis.gov">846504</taxonId>
+                    <taxonomicClassification>
+                      <taxonRankName>class</taxonRankName>
+                      <taxonRankValue>Magnoliopsida</taxonRankValue>
+                      <taxonId provider="https://itis.gov">18063</taxonId>
+                      <taxonomicClassification>
+                        <taxonRankName>superorder</taxonRankName>
+                        <taxonRankValue>Lilianae</taxonRankValue>
+                        <commonName>monocots</commonName>
+                        <commonName>monocotyledons</commonName>
+                        <taxonId provider="https://itis.gov">846542</taxonId>
+                        <taxonomicClassification>
+                          <taxonRankName>order</taxonRankName>
+                          <taxonRankValue>Poales</taxonRankValue>
+                          <taxonId provider="https://itis.gov">846620</taxonId>
+                          <taxonomicClassification>
+                            <taxonRankName>family</taxonRankName>
+                            <taxonRankValue>Poaceae</taxonRankValue>
+                            <taxonId provider="https://itis.gov">40351</taxonId>
+                            <taxonomicClassification>
+                              <taxonRankName>genus</taxonRankName>
+                              <taxonRankValue>Bouteloua</taxonRankValue>
+                              <taxonId provider="https://itis.gov">41491</taxonId>
+                              <taxonomicClassification>
+                                <taxonRankName>species</taxonRankName>
+                                <taxonRankValue>Bouteloua gracilis</taxonRankValue>
+                                <taxonId provider="https://itis.gov">41493</taxonId>
+                              </taxonomicClassification>
+                            </taxonomicClassification>
+                          </taxonomicClassification>
+                        </taxonomicClassification>
+                      </taxonomicClassification>
+                    </taxonomicClassification>
+                  </taxonomicClassification>
+                </taxonomicClassification>
+              </taxonomicClassification>
+            </taxonomicClassification>
+          </taxonomicClassification>
+        </taxonomicClassification>
+        <taxonomicClassification>
+          <taxonRankName>species</taxonRankName>
+          <taxonRankValue>Koeleria cristata</taxonRankValue>
+          <taxonId provider="https://itis.gov">515476</taxonId>
+        </taxonomicClassification>
+        <taxonomicClassification>
+          <taxonRankName>kingdom</taxonRankName>
+          <taxonRankValue>Plantae</taxonRankValue>
+          <commonName>plants</commonName>
+          <taxonId provider="https://itis.gov">202422</taxonId>
+          <taxonomicClassification>
+            <taxonRankName>subkingdom</taxonRankName>
+            <taxonRankValue>Viridiplantae</taxonRankValue>
+            <commonName>green plants</commonName>
+            <taxonId provider="https://itis.gov">954898</taxonId>
+            <taxonomicClassification>
+              <taxonRankName>infrakingdom</taxonRankName>
+              <taxonRankValue>Streptophyta</taxonRankValue>
+              <commonName>land plants</commonName>
+              <taxonId provider="https://itis.gov">846494</taxonId>
+              <taxonomicClassification>
+                <taxonRankName>superdivision</taxonRankName>
+                <taxonRankValue>Embryophyta</taxonRankValue>
+                <taxonId provider="https://itis.gov">954900</taxonId>
+                <taxonomicClassification>
+                  <taxonRankName>division</taxonRankName>
+                  <taxonRankValue>Tracheophyta</taxonRankValue>
+                  <commonName>vascular plants</commonName>
+                  <commonName>tracheophytes</commonName>
+                  <taxonId provider="https://itis.gov">846496</taxonId>
+                  <taxonomicClassification>
+                    <taxonRankName>subdivision</taxonRankName>
+                    <taxonRankValue>Spermatophytina</taxonRankValue>
+                    <commonName>spermatophytes</commonName>
+                    <commonName>seed plants</commonName>
+                    <taxonId provider="https://itis.gov">846504</taxonId>
+                    <taxonomicClassification>
+                      <taxonRankName>class</taxonRankName>
+                      <taxonRankValue>Magnoliopsida</taxonRankValue>
+                      <taxonId provider="https://itis.gov">18063</taxonId>
+                      <taxonomicClassification>
+                        <taxonRankName>superorder</taxonRankName>
+                        <taxonRankValue>Asteranae</taxonRankValue>
+                        <taxonId provider="https://itis.gov">846535</taxonId>
+                        <taxonomicClassification>
+                          <taxonRankName>order</taxonRankName>
+                          <taxonRankValue>Asterales</taxonRankValue>
+                          <taxonId provider="https://itis.gov">35419</taxonId>
+                          <taxonomicClassification>
+                            <taxonRankName>family</taxonRankName>
+                            <taxonRankValue>Asteraceae</taxonRankValue>
+                            <commonName>sunflowers</commonName>
+                            <taxonId provider="https://itis.gov">35420</taxonId>
+                            <taxonomicClassification>
+                              <taxonRankName>genus</taxonRankName>
+                              <taxonRankValue>Liatris</taxonRankValue>
+                              <commonName>blazing star</commonName>
+                              <commonName>gayfeather</commonName>
+                              <taxonId provider="https://itis.gov">37906</taxonId>
+                              <taxonomicClassification>
+                                <taxonRankName>species</taxonRankName>
+                                <taxonRankValue>Liatris aspera</taxonRankValue>
+                                <commonName>tall blazing star</commonName>
+                                <taxonId provider="https://itis.gov">37909</taxonId>
+                              </taxonomicClassification>
+                            </taxonomicClassification>
+                          </taxonomicClassification>
+                        </taxonomicClassification>
+                      </taxonomicClassification>
+                    </taxonomicClassification>
+                  </taxonomicClassification>
+                </taxonomicClassification>
+              </taxonomicClassification>
+            </taxonomicClassification>
+          </taxonomicClassification>
+        </taxonomicClassification>
+        <taxonomicClassification>
+          <taxonRankName>kingdom</taxonRankName>
+          <taxonRankValue>Plantae</taxonRankValue>
+          <commonName>plants</commonName>
+          <taxonId provider="https://itis.gov">202422</taxonId>
+          <taxonomicClassification>
+            <taxonRankName>subkingdom</taxonRankName>
+            <taxonRankValue>Viridiplantae</taxonRankValue>
+            <commonName>green plants</commonName>
+            <taxonId provider="https://itis.gov">954898</taxonId>
+            <taxonomicClassification>
+              <taxonRankName>infrakingdom</taxonRankName>
+              <taxonRankValue>Streptophyta</taxonRankValue>
+              <commonName>land plants</commonName>
+              <taxonId provider="https://itis.gov">846494</taxonId>
+              <taxonomicClassification>
+                <taxonRankName>superdivision</taxonRankName>
+                <taxonRankValue>Embryophyta</taxonRankValue>
+                <taxonId provider="https://itis.gov">954900</taxonId>
+                <taxonomicClassification>
+                  <taxonRankName>division</taxonRankName>
+                  <taxonRankValue>Bryophyta</taxonRankValue>
+                  <commonName>mosses</commonName>
+                  <taxonId provider="https://itis.gov">14189</taxonId>
+                </taxonomicClassification>
+              </taxonomicClassification>
+            </taxonomicClassification>
+          </taxonomicClassification>
+        </taxonomicClassification>
+        <taxonomicClassification>
+          <taxonRankValue>Cyp</taxonRankValue>
+        </taxonomicClassification>
+      </taxonomicCoverage>
+    </coverage>
+    <annotation>
+      <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+      <valueURI label="nitrogen proportion in whole plant">http://purl.dataone.org/odo/ECSO_00002467</valueURI>
+    </annotation>
+    <maintenance>
+      <description>Complete</description>
+    </maintenance>
+    <contact id="Kelman R Wieder 7b16fee9-7fab-11eb-9975-c5e3d9b91702">
+      <individualName>
+        <givenName>Kelman</givenName>
+        <givenName>R</givenName>
+        <surName>Wieder</surName>
+      </individualName>
+      <organizationName>Villanova University</organizationName>
+      <electronicMailAddress>kelman.wieder@villanova.edu</electronicMailAddress>
+      <userId directory="https://orcid.org">https://orcid.org/0000-0001-5856-8473</userId>
+    </contact>
+    <contact>
+      <organizationName>Villanova University</organizationName>
+      <positionName>Information Manager</positionName>
+      <electronicMailAddress>info@villanova.edu</electronicMailAddress>
+      <userId directory="https://orcid.org">https://orcid.org/0000-0001-5856-8473</userId>
+    </contact>
+    <contact>
+      <organizationName>Villanova University</organizationName>
+      <positionName>Organization Lead</positionName>
+      <electronicMailAddress>info@villanova.edu</electronicMailAddress>
+    </contact>
+    <methods>
+      <methodStep>
+        <description>
+          <para>
+  In 2014 and 2015, we quantified decomposition of plant litter material
+  collected from each plot. In late May, we collected vascular plant
+  litter from the surface of each plot, along with
+  <emphasis>Sphagnum</emphasis> peat (<emphasis>S.
+  fuscum</emphasis>-derived), from roughly 5-15 cm below the capitula.
+  We placed nylon mesh litter bags with mixed vascular plant litter
+  (approx. 1.7 g dry mass; roughly equal masses of
+  <emphasis>Rhododendron groenlandicum</emphasis>, <emphasis>Andromeda
+  polifolia</emphasis>, Chamaedaphne calyculata, <emphasis>Smilacina
+  trifolia</emphasis>, and <emphasis>Rubus chamaemorus</emphasis>) or
+  peat approximately 10 cm below the peat surface in early June (in
+  2014, 3 bags per plot of vascular litter and 3 bags of
+  <emphasis>Sphagnum</emphasis> peat; in 2015, 4 bags of each material).
+  Upon retrieval in October of each year, we manually removed debris
+  from each retrieved bag before drying at 55 C for a minimum of 5 days,
+  and weighing.
+</para>
+        </description>
+      </methodStep>
+      <methodStep>
+        <description>
+          <para>This method step describes provenance-based metadata as specified in the LTER EML Best Practices.</para>
+          <para>This provenance metadata does not contain entity specific information.</para>
+        </description>
+        <dataSource>
+          <title>The Bear Brook Watershed in Maine, USA: Long-term soil temperature 2001 - 2016</title>
+          <creator>
+            <individualName>
+              <givenName>Kaizad</givenName>
+              <givenName>F.</givenName>
+              <surName>Patel</surName>
+            </individualName>
+            <organizationName>Pacific Northwest National Laboratory</organizationName>
+            <electronicMailAddress>kaizad.patel@pnnl.gov</electronicMailAddress>
+            <userId directory="https://orcid.org">https://orcid.org/0000-0001-6437-7809</userId>
+          </creator>
+          <creator>
+            <individualName>
+              <givenName>Ivan</givenName>
+              <givenName>J.</givenName>
+              <surName>Fernandez</surName>
+            </individualName>
+            <organizationName>University of Maine</organizationName>
+            <electronicMailAddress>ivanjf@maine.edu</electronicMailAddress>
+            <userId directory="https://orcid.org">https://orcid.org/0000-0002-7220-2205</userId>
+          </creator>
+          <creator>
+            <individualName>
+              <givenName>Sarah</givenName>
+              <givenName>J.</givenName>
+              <surName>Nelson</surName>
+            </individualName>
+            <organizationName>University of Maine; Appalachian Mountain Club</organizationName>
+            <electronicMailAddress>snelson@outdoors.org</electronicMailAddress>
+            <userId directory="https://orcid.org">https://orcid.org/0000-0003-3000-7521</userId>
+          </creator>
+          <creator>
+            <individualName>
+              <givenName>Cheryl</givenName>
+              <givenName>J.</givenName>
+              <surName>Spencer</surName>
+            </individualName>
+            <organizationName>University of Maine</organizationName>
+            <electronicMailAddress>rpt372@maine.edu</electronicMailAddress>
+          </creator>
+          <creator>
+            <individualName>
+              <givenName>Stephen</givenName>
+              <givenName>A.</givenName>
+              <surName>Norton</surName>
+            </individualName>
+            <organizationName>University of Maine</organizationName>
+            <electronicMailAddress>norton@maine.edu</electronicMailAddress>
+          </creator>
+          <distribution>
+            <online>
+              <onlineDescription>This online link references an EML document that describes data used in the creation of this derivative data package.</onlineDescription>
+              <url function="information">https://pasta.lternet.edu/package/metadata/eml/edi/623/1</url>
+            </online>
+          </distribution>
+          <contact>
+            <individualName>
+              <givenName>Kaizad</givenName>
+              <givenName>F.</givenName>
+              <surName>Patel</surName>
+            </individualName>
+            <organizationName>Pacific Northwest National Laboratory</organizationName>
+            <electronicMailAddress>kaizad.patel@pnnl.gov</electronicMailAddress>
+            <userId directory="https://orcid.org">https://orcid.org/0000-0001-6437-7809</userId>
+          </contact>
+          <contact>
+            <individualName>
+              <givenName>Ivan</givenName>
+              <givenName>J.</givenName>
+              <surName>Fernandez</surName>
+            </individualName>
+            <organizationName>University of Maine</organizationName>
+            <electronicMailAddress>ivanjf@maine.edu</electronicMailAddress>
+            <userId directory="https://orcid.org">https://orcid.org/0000-0002-7220-2205</userId>
+          </contact>
+        </dataSource>
+      </methodStep>
+      <methodStep>
+        <description>
+          <para>This method step describes provenance-based metadata as specified in the LTER EML Best Practices.</para>
+          <para>This provenance metadata does not contain entity specific information.</para>
+        </description>
+        <dataSource>
+          <title>LAGOS-NE-LIMNO v1.087.1: A module for LAGOS-NE, a multi-scaled geospatial and temporal database of lake ecological context and water quality for thousands of U.S. Lakes: 1925-2013</title>
+          <creator>
+            <individualName>
+              <givenName>Patricia A</givenName>
+              <surName>Soranno</surName>
+            </individualName>
+            <organizationName>Michigan State University</organizationName>
+            <electronicMailAddress>soranno@msu.edu</electronicMailAddress>
+            <userId directory="http://orcid.org">0000-0003-1668-9271</userId>
+          </creator>
+          <creator>
+            <individualName>
+              <givenName>Kendra S</givenName>
+              <surName>Cheruvelil</surName>
+            </individualName>
+            <organizationName>Michigan State University</organizationName>
+            <electronicMailAddress>ksc@msu.edu</electronicMailAddress>
+            <userId directory="http://orcid.org">0000-0003-1880-2880</userId>
+          </creator>
+          <distribution>
+            <online>
+              <onlineDescription>This online link references an EML document that describes data used in the creation of this derivative data package.</onlineDescription>
+              <url function="information">https://pasta.lternet.edu/package/metadata/eml/edi/101/1</url>
+            </online>
+          </distribution>
+          <contact>
+            <individualName>
+              <givenName>Patricia A</givenName>
+              <surName>Soranno</surName>
+            </individualName>
+            <organizationName>Michigan State University</organizationName>
+            <electronicMailAddress>soranno@msu.edu</electronicMailAddress>
+          </contact>
+        </dataSource>
+      </methodStep>
+      <methodStep>
+        <description>This provenance metadata does not contain entity specific information.</description>
+        <dataSource>
+          <title>"Collaborative Research: Understanding the controls on spatial and temporal variability in ice discharge using a Greenland-wide ice sheet model, 2008-3007"</title>
+          <creator>
+            <individualName>
+              <givenName>Andy</givenName>
+              <surName>Aschwanden</surName>
+            </individualName>
+            <organizationName>Geophysical Institute</organizationName>
+            <electronicMailAddress>aaschwanden@alaska.edu</electronicMailAddress>
+          </creator>
+          <distribution>
+            <online>
+              <onlineDescription>This online link reference a metadata document that describes data used in the creation of this derivative data package.</onlineDescription>
+              <url>https://arcticdata.io/catalog/view/doi:10.18739/A2Z60C21V</url>
+            </online>
+          </distribution>
+          <contact>
+            <individualName>
+              <givenName>Andy</givenName>
+              <surName>Aschwanden</surName>
+            </individualName>
+            <organizationName>Geophysical Institute</organizationName>
+            <electronicMailAddress>aaschwanden@alaska.edu</electronicMailAddress>
+          </contact>
+        </dataSource>
+      </methodStep>
+      <methodStep>
+        <description>This provenance metadata does not contain entity specific information.</description>
+        <dataSource>
+          <title>Dataset 1 title</title>
+          <creator>
+            <individualName>
+              <givenName>Kate</givenName>
+              <givenName>A</givenName>
+              <surName>Wolf</surName>
+            </individualName>
+            <organizationName>Wild Flowers</organizationName>
+            <electronicMailAddress>kwolf@email.com</electronicMailAddress>
+          </creator>
+          <creator>
+            <individualName>
+              <givenName>Patsy</givenName>
+              <givenName>B</givenName>
+              <surName>Cline</surName>
+            </individualName>
+            <organizationName>Nashville sound</organizationName>
+            <electronicMailAddress>pcline@email.com</electronicMailAddress>
+          </creator>
+          <distribution>
+            <online>
+              <onlineDescription>This online link reference a metadata document that describes data used in the creation of this derivative data package.</onlineDescription>
+              <url>https://arcticdata.io/catalog/view/doi:10.18739/A2Z60C21V</url>
+            </online>
+          </distribution>
+          <contact>
+            <individualName>
+              <givenName>Waylon</givenName>
+              <givenName>C</givenName>
+              <surName>Jennings</surName>
+            </individualName>
+            <organizationName>The Texas Longhorns</organizationName>
+            <electronicMailAddress>wayjen@email.com</electronicMailAddress>
+          </contact>
+        </dataSource>
+      </methodStep>
+      <methodStep>
+        <description>This provenance metadata does not contain entity specific information.</description>
+        <dataSource>
+          <title>Dataset 2 title</title>
+          <creator>
+            <individualName>
+              <givenName>John</givenName>
+              <givenName>D</givenName>
+              <surName>Coltrane</surName>
+            </individualName>
+            <organizationName>Blue Train</organizationName>
+            <electronicMailAddress>jcoltrane@email.com</electronicMailAddress>
+          </creator>
+          <distribution>
+            <online>
+              <onlineDescription>This online link reference a metadata document that describes data used in the creation of this derivative data package.</onlineDescription>
+              <url>https://arcticdata.io/catalog/view/doi:10.18739/A2Z60C21V</url>
+            </online>
+          </distribution>
+          <contact>
+            <individualName>
+              <givenName>John</givenName>
+              <givenName>E</givenName>
+              <surName>Coltrane</surName>
+            </individualName>
+            <organizationName>Blue Train</organizationName>
+            <electronicMailAddress>jcoltrane@email.com</electronicMailAddress>
+          </contact>
+        </dataSource>
+      </methodStep>
+    </methods>
+    <project>
+      <title>Nitrogen Addition Experiments in Boreal Ecosystems: Understanding the Fate of Atmospherically Deposited Nitrogen in order to Determine Nitrogen Critical Loads</title>
+      <personnel id="Kelman R Wieder 7b174d3a-7fab-11eb-9975-c5e3d9b91702">
+        <individualName>
+          <givenName>Kelman</givenName>
+          <givenName>R</givenName>
+          <surName>Wieder</surName>
+        </individualName>
+        <organizationName>Villanova University</organizationName>
+        <electronicMailAddress>kelman.wieder@villanova.edu</electronicMailAddress>
+        <userId directory="https://orcid.org">https://orcid.org/0000-0001-5856-8473</userId>
+        <role>Principal Investigator</role>
+      </personnel>
+      <funding>Cumulative Environmental Management Association (CEMA) 2011-0003</funding>
+      <relatedProject>
+        <title>Decomposition in the real world</title>
+        <personnel id="Melanie A Vile 7b177468-7fab-11eb-9975-c5e3d9b91702">
+          <individualName>
+            <givenName>Melanie</givenName>
+            <givenName>A</givenName>
+            <surName>Vile</surName>
+          </individualName>
+          <organizationName>Villanova University</organizationName>
+          <electronicMailAddress>mvile@villanova.edu</electronicMailAddress>
+          <role>Principal Investigator</role>
+        </personnel>
+        <funding>NSF 111001</funding>
+      </relatedProject>
+      <relatedProject>
+        <title>Project title 3</title>
+        <personnel id="Joe Smith 7b177469-7fab-11eb-9975-c5e3d9b91702">
+          <individualName>
+            <givenName>Joe</givenName>
+            <surName>Smith</surName>
+          </individualName>
+          <organizationName>Villanova University</organizationName>
+          <role>Principal Investigator</role>
+        </personnel>
+        <funding>NSF 101</funding>
+      </relatedProject>
+      <relatedProject>
+        <title>Project title 4</title>
+        <personnel id="Chase Gacho 7b179b8c-7fab-11eb-9975-c5e3d9b91702">
+          <individualName>
+            <givenName>Chase</givenName>
+            <surName>Gacho</surName>
+          </individualName>
+          <organizationName>University of New Mexico</organizationName>
+          <electronicMailAddress>gachase@unm.edu</electronicMailAddress>
+          <role>Principal Investigator</role>
+        </personnel>
+        <funding>NSF 111001</funding>
+      </relatedProject>
+    </project>
+    <dataTable id="decomp.csv">
+      <entityName>Decomposition data</entityName>
+      <entityDescription>Decomposition rates measured at a fortnightly frequency in 3 streams</entityDescription>
+      <physical>
+        <objectName>decomp.csv</objectName>
+        <size unit="bytes">15431</size>
+        <authentication method="MD5">90f84458e577ba57c0204dc5a32030dd</authentication>
+        <dataFormat>
+          <textFormat>
+            <numHeaderLines>1</numHeaderLines>
+            <recordDelimiter>\r\n</recordDelimiter>
+            <attributeOrientation>column</attributeOrientation>
+            <simpleDelimited>
+              <fieldDelimiter>,</fieldDelimiter>
+              <quoteCharacter>"</quoteCharacter>
+            </simpleDelimited>
+          </textFormat>
+        </dataFormat>
+      </physical>
+      <annotation>
+        <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+        <valueURI label="Leaf Litter Carbon Pool">http://purl.dataone.org/odo/ECSO_00000034</valueURI>
+      </annotation>
+      <attributeList>
+        <attribute id="decomp.csv/type">
+          <attributeName>type</attributeName>
+          <attributeDefinition>Vegetation type: Sphagnum fuscum or vascular plant tissue</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <enumeratedDomain>
+                  <codeDefinition>
+                    <code>Sphagnum</code>
+                    <definition>Sphagnum</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>Vascular</code>
+                    <definition>Vascular</definition>
+                  </codeDefinition>
+                </enumeratedDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+          <missingValueCode>
+            <code>-99999</code>
+            <codeExplanation>Missing value</codeExplanation>
+          </missingValueCode>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="type of soil core">http://purl.dataone.org/odo/ECSO_00002623</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="decomp.csv/date">
+          <attributeName>date</attributeName>
+          <attributeDefinition>Year of growth: 2011-2015</attributeDefinition>
+          <storageType>date</storageType>
+          <measurementScale>
+            <dateTime>
+              <formatString>YYYY-MM-DD</formatString>
+              <dateTimeDomain/>
+            </dateTime>
+          </measurementScale>
+          <missingValueCode>
+            <code>-99999</code>
+            <codeExplanation>Missing value</codeExplanation>
+          </missingValueCode>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="date and time of measurement">http://purl.dataone.org/odo/ECSO_00002043</valueURI>
+          </annotation>
+          <annotation>
+            <propertyURI label="has unit">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit</propertyURI>
+            <valueURI label="year and day of measurement">http://purl.dataone.org/odo/ECSO_00002072</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="decomp.csv/arm">
+          <attributeName>arm</attributeName>
+          <attributeDefinition>Experimental plots were located along 3 arms; each arm had one replicate each of 8 N treatments</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <enumeratedDomain>
+                  <codeDefinition>
+                    <code>1</code>
+                    <definition>Arm 1</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>2</code>
+                    <definition>Arm 2</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>3</code>
+                    <definition>Arm 3</definition>
+                  </codeDefinition>
+                </enumeratedDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+          <missingValueCode>
+            <code>-99999</code>
+            <codeExplanation>Missing value</codeExplanation>
+          </missingValueCode>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="site identifier">http://purl.dataone.org/odo/ECSO_00002997</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="decomp.csv/ntrt">
+          <attributeName>ntrt</attributeName>
+          <attributeDefinition>Field experimental N treatments were made with 8 applications per plot per year between mid-May and mid-August of each year</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <enumeratedDomain>
+                  <codeDefinition>
+                    <code>C</code>
+                    <definition>"Control, no water, no N added"</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>0</code>
+                    <definition>0 kg N/ha/yr added</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>5</code>
+                    <definition>5 kg N/ha/yr added</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>10</code>
+                    <definition>10 kg N/ha/yr added as NH4NO3</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>15</code>
+                    <definition>15 kg N/ha/yr added</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>20</code>
+                    <definition>20 kg N/ha/yr added as NH4NO3</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>25</code>
+                    <definition>25 kg N/ha/yr added</definition>
+                  </codeDefinition>
+                </enumeratedDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+          <missingValueCode>
+            <code>-99999</code>
+            <codeExplanation>Missing value</codeExplanation>
+          </missingValueCode>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="nitrate concentration">http://purl.dataone.org/odo/ECSO_00002216</valueURI>
+          </annotation>
+          <annotation>
+            <propertyURI label="has unit">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit</propertyURI>
+            <valueURI label="gram per square meter">http://purl.obolibrary.org/obo/UO_0010049</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="decomp.csv/year">
+          <attributeName>year</attributeName>
+          <attributeDefinition>Year collected</attributeDefinition>
+          <storageType>date</storageType>
+          <measurementScale>
+            <dateTime>
+              <formatString>YYYY</formatString>
+              <dateTimeDomain/>
+            </dateTime>
+          </measurementScale>
+          <missingValueCode>
+            <code>-99999</code>
+            <codeExplanation>Missing value</codeExplanation>
+          </missingValueCode>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="year of measurement">http://purl.dataone.org/odo/ECSO_00002050</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="decomp.csv/percent_loss">
+          <attributeName>percent_loss</attributeName>
+          <attributeDefinition>Amount of mass lost expressed as a percent of original mass</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">57.65</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>-99999</code>
+            <codeExplanation>Missing value</codeExplanation>
+          </missingValueCode>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="loss on ignition percentage">http://purl.dataone.org/odo/ECSO_00002294</valueURI>
+          </annotation>
+          <annotation>
+            <propertyURI label="has unit">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit</propertyURI>
+            <valueURI label="percent">http://purl.obolibrary.org/obo/UO_0000187</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="decomp.csv/taxa">
+          <attributeName>taxa</attributeName>
+          <attributeDefinition>Taxa observed at site</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>Taxa observed at site</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+          <missingValueCode>
+            <code>-99999</code>
+            <codeExplanation>Missing value</codeExplanation>
+          </missingValueCode>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="taxonomic classification">http://purl.dataone.org/odo/ECSO_00002730</valueURI>
+          </annotation>
+        </attribute>
+      </attributeList>
+      <numberOfRecords>294</numberOfRecords>
+    </dataTable>
+    <dataTable id="nitrogen.csv">
+      <entityName>Nitrogen data</entityName>
+      <entityDescription>Nitrogen concentrations corresponding to decomposition rates</entityDescription>
+      <physical>
+        <objectName>nitrogen.csv</objectName>
+        <size unit="bytes">6297</size>
+        <authentication method="MD5">e6609e09690640fb64b104fd5e8b6d4e</authentication>
+        <dataFormat>
+          <textFormat>
+            <numHeaderLines>1</numHeaderLines>
+            <recordDelimiter>\r</recordDelimiter>
+            <attributeOrientation>column</attributeOrientation>
+            <simpleDelimited>
+              <fieldDelimiter>,</fieldDelimiter>
+              <quoteCharacter>"</quoteCharacter>
+            </simpleDelimited>
+          </textFormat>
+        </dataFormat>
+      </physical>
+      <annotation>
+        <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+        <valueURI label="nitrogen proportion in whole plant">http://purl.dataone.org/odo/ECSO_00002467</valueURI>
+      </annotation>
+      <attributeList>
+        <attribute id="nitrogen.csv/date">
+          <attributeName>date</attributeName>
+          <attributeDefinition>Year of growth: 2011-2015</attributeDefinition>
+          <storageType>date</storageType>
+          <measurementScale>
+            <dateTime>
+              <formatString>YYYY-MM-DD</formatString>
+              <dateTimeDomain/>
+            </dateTime>
+          </measurementScale>
+          <missingValueCode>
+            <code>-99999</code>
+            <codeExplanation>Missing value</codeExplanation>
+          </missingValueCode>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="date and time of measurement">http://purl.dataone.org/odo/ECSO_00002043</valueURI>
+          </annotation>
+          <annotation>
+            <propertyURI label="has unit">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit</propertyURI>
+            <valueURI label="year and day of measurement">http://purl.dataone.org/odo/ECSO_00002072</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="nitrogen.csv/ntrt">
+          <attributeName>ntrt</attributeName>
+          <attributeDefinition>Field experimental N treatments were made with 8 applications per plot per year between mid May and mid August of each year</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <enumeratedDomain>
+                  <codeDefinition>
+                    <code>C</code>
+                    <definition>"Control, no water, no N added"</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>0</code>
+                    <definition>0 kg N/ha/yr added as NH4NO3</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>5</code>
+                    <definition>5 kg N/ha/yr added as NH4NO3</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>10</code>
+                    <definition>10 kg N/ha/yr added as NH4NO3</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>15</code>
+                    <definition>15 kg N/ha/yr added as NH4NO3</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>20</code>
+                    <definition>20 kg N/ha/yr added as NH4NO3</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>25</code>
+                    <definition>25 kg N/ha/yr added as NH4NO3</definition>
+                  </codeDefinition>
+                </enumeratedDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+          <missingValueCode>
+            <code>-99999</code>
+            <codeExplanation>Missing value</codeExplanation>
+          </missingValueCode>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="nitrate concentration">http://purl.dataone.org/odo/ECSO_00002216</valueURI>
+          </annotation>
+          <annotation>
+            <propertyURI label="has unit">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit</propertyURI>
+            <valueURI label="gram per square meter">http://purl.obolibrary.org/obo/UO_0010049</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="nitrogen.csv/arm">
+          <attributeName>arm</attributeName>
+          <attributeDefinition>Experimental plots were located along 3 arms; each arm had one replicate each of 8 N treatments</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <enumeratedDomain>
+                  <codeDefinition>
+                    <code>1</code>
+                    <definition>Arm 1</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>2</code>
+                    <definition>Arm 2</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>3</code>
+                    <definition>Arm3</definition>
+                  </codeDefinition>
+                </enumeratedDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+          <missingValueCode>
+            <code>-99999</code>
+            <codeExplanation>Missing value</codeExplanation>
+          </missingValueCode>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="site identifier">http://purl.dataone.org/odo/ECSO_00002997</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="nitrogen.csv/net_primary_production">
+          <attributeName>net_primary_production</attributeName>
+          <attributeDefinition>The product of moss linear growth of stems (cm yr-1) and stem mass density (SMD)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>gramsPerMeterSquaredPerYear</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">39.4</minimum>
+                  <maximum exclusive="false">540.7</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>-99999</code>
+            <codeExplanation>Missing value</codeExplanation>
+          </missingValueCode>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="Net Primary Production Biomass Flux">http://purl.dataone.org/odo/ECSO_00001137</valueURI>
+          </annotation>
+          <annotation>
+            <propertyURI label="has unit">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit</propertyURI>
+            <valueURI label="milligram per kilogram per day">http://purl.obolibrary.org/obo/UO_0000311</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="nitrogen.csv/stem_mass_density">
+          <attributeName>stem_mass_density</attributeName>
+          <attributeDefinition>Mass of 1-cm lengths of Sphagnum stems beneath the capitula per m2</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <customUnit>gramsPerSquaredMeterPerCentimeter</customUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">29.5</minimum>
+                  <maximum exclusive="false">268.8</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>-99999</code>
+            <codeExplanation>Missing value</codeExplanation>
+          </missingValueCode>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="mass density">http://purl.dataone.org/odo/ECSO_00000678</valueURI>
+          </annotation>
+          <annotation>
+            <propertyURI label="has unit">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit</propertyURI>
+            <valueURI label="density unit">http://purl.obolibrary.org/obo/UO_0000182</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="nitrogen.csv/plant_density">
+          <attributeName>plant_density</attributeName>
+          <attributeDefinition>Number of plants/area</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>numberPerMeterSquared</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>natural</numberType>
+                <bounds>
+                  <minimum exclusive="false">20191</minimum>
+                  <maximum exclusive="false">87719</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>-99999</code>
+            <codeExplanation>Missing value</codeExplanation>
+          </missingValueCode>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="Plant Material Biomass Density">http://purl.dataone.org/odo/ECSO_00001147</valueURI>
+          </annotation>
+          <annotation>
+            <propertyURI label="has unit">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit</propertyURI>
+            <valueURI label="mass density unit">http://purl.obolibrary.org/obo/UO_0000052</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="nitrogen.csv/stem_n_concentration">
+          <attributeName>stem_n_concentration</attributeName>
+          <attributeDefinition>N concentration in the 0-2 cm stem sections</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <customUnit>milligramsPerGram</customUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">6.83</minimum>
+                  <maximum exclusive="false">12.92</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>-99999</code>
+            <codeExplanation>Missing value</codeExplanation>
+          </missingValueCode>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="nitrogen concentration">http://purl.dataone.org/odo/ECSO_00001883</valueURI>
+          </annotation>
+          <annotation>
+            <propertyURI label="has unit">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit</propertyURI>
+            <valueURI label="concentration unit">http://purl.obolibrary.org/obo/UO_0000051</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="nitrogen.csv/n_assimilated">
+          <attributeName>n_assimilated</attributeName>
+          <attributeDefinition>Amount of N used and stored per area of moss cover per year</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>gramsPerMeterSquaredPerYear</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.4</minimum>
+                  <maximum exclusive="false">5.26</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>-99999</code>
+            <codeExplanation>Missing value</codeExplanation>
+          </missingValueCode>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="http://purl.dataone.org/odo/ECSO_00001883">http://purl.dataone.org/odo/ECSO_00001123</valueURI>
+          </annotation>
+          <annotation>
+            <propertyURI label="has unit">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit</propertyURI>
+            <valueURI label="milligram per kilogram per day">http://purl.obolibrary.org/obo/UO_0000311</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="nitrogen.csv/site_name">
+          <attributeName>site_name</attributeName>
+          <attributeDefinition>Name of site</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>Name of site</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+          <missingValueCode>
+            <code>-99999</code>
+            <codeExplanation>Missing value</codeExplanation>
+          </missingValueCode>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="station name">http://purl.dataone.org/odo/ECSO_00002392</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="nitrogen.csv/site_lat">
+          <attributeName>site_lat</attributeName>
+          <attributeDefinition>Latitude in decimal degrees</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>degree</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">45.23</minimum>
+                  <maximum exclusive="false">46.26</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>-99999</code>
+            <codeExplanation>Missing value</codeExplanation>
+          </missingValueCode>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="latitude coordinate">http://purl.dataone.org/odo/ECSO_00002130</valueURI>
+          </annotation>
+          <annotation>
+            <propertyURI label="has unit">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit</propertyURI>
+            <valueURI label="degree">http://purl.obolibrary.org/obo/UO_0000185</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="nitrogen.csv/site_lon">
+          <attributeName>site_lon</attributeName>
+          <attributeDefinition>Longitude in decimal degrees</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>degree</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">-90.46</minimum>
+                  <maximum exclusive="false">-89.43</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>-99999</code>
+            <codeExplanation>Missing value</codeExplanation>
+          </missingValueCode>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="longitude coordinate">http://purl.dataone.org/odo/ECSO_00002132</valueURI>
+          </annotation>
+          <annotation>
+            <propertyURI label="has unit">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit</propertyURI>
+            <valueURI label="degree">http://purl.obolibrary.org/obo/UO_0000185</valueURI>
+          </annotation>
+        </attribute>
+      </attributeList>
+      <numberOfRecords>104</numberOfRecords>
+    </dataTable>
+    <otherEntity id="ancillary_data.zip">
+      <entityName>Ancillary data</entityName>
+      <entityDescription>Ancillary data including maps and experimental arrangement</entityDescription>
+      <physical>
+        <objectName>ancillary_data.zip</objectName>
+        <size unit="bytes">4189</size>
+        <authentication method="MD5">f128eaf557babfbb85efeaef488e9c94</authentication>
+        <dataFormat>
+          <externallyDefinedFormat>
+            <formatName>application/zip</formatName>
+          </externallyDefinedFormat>
+        </dataFormat>
+      </physical>
+      <annotation>
+        <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+        <valueURI label="environmental feature">http://purl.obolibrary.org/obo/ENVO_00002297</valueURI>
+      </annotation>
+      <entityType>unknown</entityType>
+    </otherEntity>
+    <otherEntity id="processing_and_analysis.R">
+      <entityName>Processing and analysis scripts</entityName>
+      <entityDescription>Processing and analysis scripts used in the paper</entityDescription>
+      <physical>
+        <objectName>processing_and_analysis.R</objectName>
+        <size unit="bytes">2230</size>
+        <authentication method="MD5">bb3e4aba767dfb2d4e3b053e1dfa1985</authentication>
+        <dataFormat>
+          <externallyDefinedFormat>
+            <formatName>text/plain</formatName>
+          </externallyDefinedFormat>
+        </dataFormat>
+      </physical>
+      <annotation>
+        <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+        <valueURI label="analysis code">http://purl.dataone.org/odo/ECSO_00002489</valueURI>
+      </annotation>
+      <entityType>unknown</entityType>
+    </otherEntity>
+  </dataset>
+  <annotations>
+    <annotation references="dataset">
+      <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+      <valueURI label="nitrogen proportion in whole plant">http://purl.dataone.org/odo/ECSO_00002467</valueURI>
+    </annotation>
+    <annotation references="nitrogen.csv">
+      <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+      <valueURI label="nitrogen proportion in whole plant">http://purl.dataone.org/odo/ECSO_00002467</valueURI>
+    </annotation>
+    <annotation references="nitrogen.csv/date">
+      <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+      <valueURI label="date and time of measurement">http://purl.dataone.org/odo/ECSO_00002043</valueURI>
+    </annotation>
+    <annotation references="nitrogen.csv/date">
+      <propertyURI label="has unit">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit</propertyURI>
+      <valueURI label="year and day of measurement">http://purl.dataone.org/odo/ECSO_00002072</valueURI>
+    </annotation>
+    <annotation references="nitrogen.csv/ntrt">
+      <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+      <valueURI label="nitrate concentration">http://purl.dataone.org/odo/ECSO_00002216</valueURI>
+    </annotation>
+    <annotation references="nitrogen.csv/ntrt">
+      <propertyURI label="has unit">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit</propertyURI>
+      <valueURI label="gram per square meter">http://purl.obolibrary.org/obo/UO_0010049</valueURI>
+    </annotation>
+    <annotation references="nitrogen.csv/arm">
+      <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+      <valueURI label="site identifier">http://purl.dataone.org/odo/ECSO_00002997</valueURI>
+    </annotation>
+    <annotation references="nitrogen.csv/net_primary_production">
+      <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+      <valueURI label="Net Primary Production Biomass Flux">http://purl.dataone.org/odo/ECSO_00001137</valueURI>
+    </annotation>
+    <annotation references="nitrogen.csv/net_primary_production">
+      <propertyURI label="has unit">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit</propertyURI>
+      <valueURI label="milligram per kilogram per day">http://purl.obolibrary.org/obo/UO_0000311</valueURI>
+    </annotation>
+    <annotation references="nitrogen.csv/stem_mass_density">
+      <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+      <valueURI label="mass density">http://purl.dataone.org/odo/ECSO_00000678</valueURI>
+    </annotation>
+    <annotation references="nitrogen.csv/stem_mass_density">
+      <propertyURI label="has unit">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit</propertyURI>
+      <valueURI label="density unit">http://purl.obolibrary.org/obo/UO_0000182</valueURI>
+    </annotation>
+    <annotation references="nitrogen.csv/plant_density">
+      <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+      <valueURI label="Plant Material Biomass Density">http://purl.dataone.org/odo/ECSO_00001147</valueURI>
+    </annotation>
+    <annotation references="nitrogen.csv/plant_density">
+      <propertyURI label="has unit">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit</propertyURI>
+      <valueURI label="mass density unit">http://purl.obolibrary.org/obo/UO_0000052</valueURI>
+    </annotation>
+    <annotation references="nitrogen.csv/stem_n_concentration">
+      <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+      <valueURI label="nitrogen concentration">http://purl.dataone.org/odo/ECSO_00001883</valueURI>
+    </annotation>
+    <annotation references="nitrogen.csv/stem_n_concentration">
+      <propertyURI label="has unit">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit</propertyURI>
+      <valueURI label="concentration unit">http://purl.obolibrary.org/obo/UO_0000051</valueURI>
+    </annotation>
+    <annotation references="nitrogen.csv/n_assimilated">
+      <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+      <valueURI label="http://purl.dataone.org/odo/ECSO_00001883">http://purl.dataone.org/odo/ECSO_00001123</valueURI>
+    </annotation>
+    <annotation references="nitrogen.csv/n_assimilated">
+      <propertyURI label="has unit">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit</propertyURI>
+      <valueURI label="milligram per kilogram per day">http://purl.obolibrary.org/obo/UO_0000311</valueURI>
+    </annotation>
+    <annotation references="nitrogen.csv/site_name">
+      <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+      <valueURI label="station name">http://purl.dataone.org/odo/ECSO_00002392</valueURI>
+    </annotation>
+    <annotation references="nitrogen.csv/site_lat">
+      <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+      <valueURI label="latitude coordinate">http://purl.dataone.org/odo/ECSO_00002130</valueURI>
+    </annotation>
+    <annotation references="nitrogen.csv/site_lat">
+      <propertyURI label="has unit">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit</propertyURI>
+      <valueURI label="degree">http://purl.obolibrary.org/obo/UO_0000185</valueURI>
+    </annotation>
+    <annotation references="nitrogen.csv/site_lon">
+      <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+      <valueURI label="longitude coordinate">http://purl.dataone.org/odo/ECSO_00002132</valueURI>
+    </annotation>
+    <annotation references="nitrogen.csv/site_lon">
+      <propertyURI label="has unit">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit</propertyURI>
+      <valueURI label="degree">http://purl.obolibrary.org/obo/UO_0000185</valueURI>
+    </annotation>
+    <annotation references="decomp.csv">
+      <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+      <valueURI label="Leaf Litter Carbon Pool">http://purl.dataone.org/odo/ECSO_00000034</valueURI>
+    </annotation>
+    <annotation references="decomp.csv/type">
+      <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+      <valueURI label="type of soil core">http://purl.dataone.org/odo/ECSO_00002623</valueURI>
+    </annotation>
+    <annotation references="decomp.csv/date">
+      <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+      <valueURI label="date and time of measurement">http://purl.dataone.org/odo/ECSO_00002043</valueURI>
+    </annotation>
+    <annotation references="decomp.csv/date">
+      <propertyURI label="has unit">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit</propertyURI>
+      <valueURI label="year and day of measurement">http://purl.dataone.org/odo/ECSO_00002072</valueURI>
+    </annotation>
+    <annotation references="decomp.csv/arm">
+      <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+      <valueURI label="site identifier">http://purl.dataone.org/odo/ECSO_00002997</valueURI>
+    </annotation>
+    <annotation references="decomp.csv/ntrt">
+      <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+      <valueURI label="nitrate concentration">http://purl.dataone.org/odo/ECSO_00002216</valueURI>
+    </annotation>
+    <annotation references="decomp.csv/ntrt">
+      <propertyURI label="has unit">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit</propertyURI>
+      <valueURI label="gram per square meter">http://purl.obolibrary.org/obo/UO_0010049</valueURI>
+    </annotation>
+    <annotation references="decomp.csv/year">
+      <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+      <valueURI label="year of measurement">http://purl.dataone.org/odo/ECSO_00002050</valueURI>
+    </annotation>
+    <annotation references="decomp.csv/percent_loss">
+      <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+      <valueURI label="loss on ignition percentage">http://purl.dataone.org/odo/ECSO_00002294</valueURI>
+    </annotation>
+    <annotation references="decomp.csv/percent_loss">
+      <propertyURI label="has unit">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#hasUnit</propertyURI>
+      <valueURI label="percent">http://purl.obolibrary.org/obo/UO_0000187</valueURI>
+    </annotation>
+    <annotation references="decomp.csv/taxa">
+      <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+      <valueURI label="taxonomic classification">http://purl.dataone.org/odo/ECSO_00002730</valueURI>
+    </annotation>
+    <annotation references="ancillary_data.zip">
+      <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+      <valueURI label="environmental feature">http://purl.obolibrary.org/obo/ENVO_00002297</valueURI>
+    </annotation>
+    <annotation references="processing_and_analysis.R">
+      <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+      <valueURI label="analysis code">http://purl.dataone.org/odo/ECSO_00002489</valueURI>
+    </annotation>
+    <annotation references="Kelman R Wieder 7b1613e8-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="is a">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</propertyURI>
+      <valueURI label="Person">https://schema.org/Person</valueURI>
+    </annotation>
+    <annotation references="Kelman R Wieder 7b1613e8-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="member of">https://schema.org/memberOf</propertyURI>
+      <valueURI label="Villanova University">https://ror.org/02g7kd627</valueURI>
+    </annotation>
+    <annotation references="Dale H Vitt 7b163b0c-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="is a">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</propertyURI>
+      <valueURI label="Person">https://schema.org/Person</valueURI>
+    </annotation>
+    <annotation references="Dale H Vitt 7b163b0c-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="member of">https://schema.org/memberOf</propertyURI>
+      <valueURI label="Southern Illinois University Edwardsville">https://ror.org/04cqs5j56</valueURI>
+    </annotation>
+    <annotation references="Melanie A Vile 7b163b0d-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="is a">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</propertyURI>
+      <valueURI label="Person">https://schema.org/Person</valueURI>
+    </annotation>
+    <annotation references="Melanie A Vile 7b163b0d-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="member of">https://schema.org/memberOf</propertyURI>
+      <valueURI label="Villanova University">https://ror.org/02g7kd627</valueURI>
+    </annotation>
+    <annotation references="Jeremy A Graham 7b16623a-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="is a">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</propertyURI>
+      <valueURI label="Person">https://schema.org/Person</valueURI>
+    </annotation>
+    <annotation references="Jeremy A Graham 7b16623a-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="member of">https://schema.org/memberOf</propertyURI>
+      <valueURI label="Southern Illinois University Edwardsville">https://ror.org/04cqs5j56</valueURI>
+    </annotation>
+    <annotation references="Jeremy A Hartsock 7b16623b-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="is a">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</propertyURI>
+      <valueURI label="Person">https://schema.org/Person</valueURI>
+    </annotation>
+    <annotation references="Jeremy A Hartsock 7b16623b-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="member of">https://schema.org/memberOf</propertyURI>
+      <valueURI label="Southern Illinois University Edwardsville">https://ror.org/04cqs5j56</valueURI>
+    </annotation>
+    <annotation references="Hope Fillingim 7b168968-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="is a">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</propertyURI>
+      <valueURI label="Person">https://schema.org/Person</valueURI>
+    </annotation>
+    <annotation references="Hope Fillingim 7b168968-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="member of">https://schema.org/memberOf</propertyURI>
+      <valueURI label="Villanova University">https://ror.org/02g7kd627</valueURI>
+    </annotation>
+    <annotation references="Melissa House 7b16b08c-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="is a">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</propertyURI>
+      <valueURI label="Person">https://schema.org/Person</valueURI>
+    </annotation>
+    <annotation references="Melissa House 7b16b08c-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="member of">https://schema.org/memberOf</propertyURI>
+      <valueURI label="Southern Illinois University Edwardsville">https://ror.org/04cqs5j56</valueURI>
+    </annotation>
+    <annotation references="James C Quinn 7b16b08d-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="is a">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</propertyURI>
+      <valueURI label="Person">https://schema.org/Person</valueURI>
+    </annotation>
+    <annotation references="James C Quinn 7b16b08d-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="member of">https://schema.org/memberOf</propertyURI>
+      <valueURI label="Villanova University">https://ror.org/02g7kd627</valueURI>
+    </annotation>
+    <annotation references="Kimberli D Scott 7b16d7ba-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="is a">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</propertyURI>
+      <valueURI label="Person">https://schema.org/Person</valueURI>
+    </annotation>
+    <annotation references="Kimberli D Scott 7b16d7ba-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="member of">https://schema.org/memberOf</propertyURI>
+      <valueURI label="Villanova University">https://ror.org/02g7kd627</valueURI>
+    </annotation>
+    <annotation references="Meaghan Petix 7b16d7bb-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="is a">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</propertyURI>
+      <valueURI label="Person">https://schema.org/Person</valueURI>
+    </annotation>
+    <annotation references="Meaghan Petix 7b16d7bb-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="member of">https://schema.org/memberOf</propertyURI>
+      <valueURI label="Southern Illinois University Edwardsville">https://ror.org/04cqs5j56</valueURI>
+    </annotation>
+    <annotation references="Kelly J McMillen 7b16fee8-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="is a">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</propertyURI>
+      <valueURI label="Person">https://schema.org/Person</valueURI>
+    </annotation>
+    <annotation references="Kelly J McMillen 7b16fee8-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="member of">https://schema.org/memberOf</propertyURI>
+      <valueURI label="Villanova University">https://ror.org/02g7kd627</valueURI>
+    </annotation>
+    <annotation references="Kelman R Wieder 7b16fee9-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="is a">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</propertyURI>
+      <valueURI label="Person">https://schema.org/Person</valueURI>
+    </annotation>
+    <annotation references="Kelman R Wieder 7b16fee9-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="member of">https://schema.org/memberOf</propertyURI>
+      <valueURI label="Villanova University">https://ror.org/02g7kd627</valueURI>
+    </annotation>
+    <annotation references="James C Quinn 7b17260c-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="is a">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</propertyURI>
+      <valueURI label="Person">https://schema.org/Person</valueURI>
+    </annotation>
+    <annotation references="James C Quinn 7b17260c-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="member of">https://schema.org/memberOf</propertyURI>
+      <valueURI label="Villanova University">https://ror.org/02g7kd627</valueURI>
+    </annotation>
+    <annotation references="Jane Doe 7b17260d-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="is a">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</propertyURI>
+      <valueURI label="Person">https://schema.org/Person</valueURI>
+    </annotation>
+    <annotation references="Jane Doe 7b17260d-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="member of">https://schema.org/memberOf</propertyURI>
+      <valueURI label="University of Wisconsinâ€“Madison">https://ror.org/01y2jtd41</valueURI>
+    </annotation>
+    <annotation references="Kelman R Wieder 7b174d3a-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="is a">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</propertyURI>
+      <valueURI label="Person">https://schema.org/Person</valueURI>
+    </annotation>
+    <annotation references="Kelman R Wieder 7b174d3a-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="member of">https://schema.org/memberOf</propertyURI>
+      <valueURI label="Villanova University">https://ror.org/02g7kd627</valueURI>
+    </annotation>
+    <annotation references="Melanie A Vile 7b177468-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="is a">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</propertyURI>
+      <valueURI label="Person">https://schema.org/Person</valueURI>
+    </annotation>
+    <annotation references="Melanie A Vile 7b177468-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="member of">https://schema.org/memberOf</propertyURI>
+      <valueURI label="Villanova University">https://ror.org/02g7kd627</valueURI>
+    </annotation>
+    <annotation references="Joe Smith 7b177469-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="is a">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</propertyURI>
+      <valueURI label="Person">https://schema.org/Person</valueURI>
+    </annotation>
+    <annotation references="Joe Smith 7b177469-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="member of">https://schema.org/memberOf</propertyURI>
+      <valueURI label="Villanova University">https://ror.org/02g7kd627</valueURI>
+    </annotation>
+    <annotation references="Chase Gacho 7b179b8c-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="is a">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</propertyURI>
+      <valueURI label="Person">https://schema.org/Person</valueURI>
+    </annotation>
+    <annotation references="Chase Gacho 7b179b8c-7fab-11eb-9975-c5e3d9b91702">
+      <propertyURI label="member of">https://schema.org/memberOf</propertyURI>
+      <valueURI label="University of New Mexico">https://ror.org/05fs6jp91</valueURI>
+    </annotation>
+  </annotations>
+  <additionalMetadata>
+    <metadata>
+      <unitList>
+        <unit id="gramsPerSquaredMeterPerCentimeter" multiplierToSI="0.1" name="gramsPerSquaredMeterPerCentimeter" parentSI="kilogramsPerSquaredMeterPerMeter" unitType="areal mass density per length">
+          <description>grams per meter squared per centimeter</description>
+        </unit>
+        <unit id="milligramsPerGram" multiplierToSI="1000" name="milligramsPerGram" parentSI="kilogramsPerSquaredMeterPerMeter" unitType="mass">
+          <description>milligrams per gram</description>
+        </unit>
+      </unitList>
+    </metadata>
+  </additionalMetadata>
+</eml:eml>

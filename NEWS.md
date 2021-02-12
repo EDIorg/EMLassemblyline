@@ -1,5 +1,9 @@
 # EMLassemblyline 3.2.2
 
+### Enhancement
+
+* __eml2eal():__ For when you want to work with EML in EAL but don't have the templates and make_eml() function call.
+
 ### Bug fix
 
 * __Outdated dependencies:__ Some listed dependencies were outdated resulting in warnings/errors. This has been fixed.

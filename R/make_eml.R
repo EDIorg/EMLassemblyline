@@ -1032,10 +1032,16 @@ make_eml <- function(
             description = "This provenance metadata does not contain entity specific information.")
           for (i in 1:nrow(d)) {
             # Initialize individualName
-            individual_name <- list(
-              givenName = trimws(paste(d$givenName[i], d$middleInitial[i])),
-              surName = d$surName[i])
-            if (individual_name$givenName == "" &
+            if (trimws(d$middleInitial[i]) != "") {
+              individual_name <- list(
+                givenName = list(trimws(d$givenName[i]), trimws(d$middleInitial[i])),
+                surName = d$surName[i])
+            } else {
+              individual_name <- list(
+                givenName = list(trimws(d$givenName[i])),
+                surName = d$surName[i])
+            }
+            if (individual_name$givenName[[1]] == "" &
                 individual_name$surName == "") {
               individual_name <- NULL
             }
@@ -1044,19 +1050,26 @@ make_eml <- function(
             if (organization_name == "") {
               organization_name <- NULL
             }
+            # Initialize electronicMailAddress
+            email <- d$email[i]
+            if (email == "") {
+              email <- NULL
+            }
             # Add creator
             if (d$role[i] == "creator") {
               out$dataSource$creator[[length(out$dataSource$creator) + 1]] <- 
                 list(
                   individualName = individual_name,
-                  organizationName = organization_name)
+                  organizationName = organization_name,
+                  electronicMailAddress = email)
             }
             # Add contact
             if (d$role[i] == "contact") {
               out$dataSource$contact[[length(out$dataSource$contact) + 1]] <- 
                 list(
                   individualName = individual_name,
-                  organizationName = organization_name)
+                  organizationName = organization_name,
+                  electronicMailAddress = email)
             }
           }
           out

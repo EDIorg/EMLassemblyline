@@ -2827,10 +2827,11 @@ validate_taxonomic_coverage_authority_system <- function(x) {
   # taxonomyCleanr
   authorities_supported <- c(
     'Catalogue of Life', 'ITIS', 'Integrated Taxonomic Information System',
-    'https://www.itis.gov/', 'itis', 'World Register of Marine Species',
-    'WORMS', 'http://www.marinespecies.org/', 'worms', 
-    'GBIF Backbone Taxonomy', 'GBIF', 'gbif', 'https://gbif.org', 
-    'Tropicos - Missouri Botanical Garden')
+    'https://www.itis.gov/', 'https://www.itis.gov', 'https://itis.gov', 
+    'itis', 'World Register of Marine Species', 'WORMS', 
+    'http://www.marinespecies.org/', 'http://www.marinespecies.org', 
+    'http://marinespecies.org', 'worms', 'GBIF Backbone Taxonomy', 'GBIF', 
+    'gbif', 'https://gbif.org', 'Tropicos - Missouri Botanical Garden')
   authorities_found <- 
     x$template$taxonomic_coverage.txt$content$authority_system
   unsupported_authorities <- !((authorities_found %in% authorities_supported) | 
