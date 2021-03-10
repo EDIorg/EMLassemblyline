@@ -1,3 +1,17 @@
+# EMLassemblyline 3.3.0
+
+### Enhancement
+
+* __eml2eal():__ For when you want to work with EML in EAL but don't have the templates and make_eml() function call. This addresses [issue #76](https://github.com/EDIorg/EMLassemblyline/issues/76)
+* __Remove last column name constraint:__ Column names can now be composed of any character strings handled by `data.table::fread()`.
+* __Remove bookend quote characters mistakenly added to values:__ Some file writers will place quotes around a value when it contains commas. This safeguard identifies and removes these.
+
+### Bug fix
+
+* __Outdated dependencies:__ Some listed dependencies were outdated resulting in warnings/errors. This has been fixed.
+* __template_categorical_variables():__ "" numeric categorical variables were being returned in the template as "NA". Now they are correctly returned as "".
+* __Bug fix: table & attrs mismatch if unequal lengths:__ Table B would not match attrs B in this case.
+
 # EMLassemblyline 3.2.1
 
 ### Bug fix

@@ -183,8 +183,12 @@ template_arguments <- function(
           colClasses = list(
             character = 1:utils::count.fields(f, sep = "\t")[1])))
       
-      # Re-encode metadata in UTF-8
+      # Clean up result
       for (k in 1:ncol(d)) {
+        # Remove bookend quote characters mistakenly added by some file writers
+        # where values contain commas
+        d[ , k] <- stringr::str_remove_all(d[ , k], "\"")
+        # Re-encode metadata in UTF-8
         d[ , k] <- enc2utf8(d[ , k])
       }
       d

@@ -91,7 +91,12 @@ template_categorical_variables <- function(
       
       # Get components
       
-      d <- x$data.table[[data_tables[i]]]$content
+      # Read cols as char to prevent data.table::fread() parsing numeric "" to 
+      # NA which cannot be converted back to "" before writing the template.
+      d <- data.table::fread(
+        paste0(data.path, "/", data_tables[i]), 
+        colClasses = "character")
+      
       attributes <- x$template[[names(data_tables)[i]]]$content
       # Do not continue unless data and attributes have made it this far
       if (is.null(d) | is.null(attributes)) {
@@ -146,7 +151,7 @@ template_categorical_variables <- function(
           
           catvars <- catvars[!use_i, ]
           
-          # Tranform contents into the categorical variales template format
+          # Tranform contents into the categorical variables template format
           
           catvars$definition <- ""
           catvars <- dplyr::select(catvars, -missingValueCode)
@@ -186,7 +191,8 @@ template_categorical_variables <- function(
           x = r[[i]]$content,
           file = paste0(path, "/", enc2utf8(i)),
           sep = "\t",
-          quote = FALSE)
+          quote = FALSE,
+          na = "NA")
       }
     }
   }

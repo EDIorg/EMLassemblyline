@@ -137,35 +137,6 @@ template_table_attributes <- function(
   
   if (!is.null(data.table)){
     
-    # Validate column names
-    
-    for (i in 1:length(data.table)){
-      
-      column_names <- colnames(x$data.table[[i]]$content)
-      
-      use_i <- stringr::str_detect(
-        string = column_names,
-        pattern = "\\."
-      )
-
-      if (sum(use_i) > 0){
-        stop(
-          paste(
-            "Invalid column names detected in ",
-            names(x$data.table)[i],
-            ":  ",
-            paste(
-              column_names[use_i],
-              collapse = ", "
-            ),
-            '  Replace characters located at periods "." in the above listed column names with underscores "_"',
-            sep = ""
-          )
-        )
-      }
-      
-    }
-    
     # Extract attributes of each data file
     
     attributes <- list()

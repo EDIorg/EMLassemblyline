@@ -329,7 +329,7 @@ testthat::test_that('Expect template values in EML', {
   r <- suppressWarnings(
     do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   expect_true(
-    length(r$dataset$dataTable) != length(x1$x$data.table))
+    length(r$dataset$dataTable) == length(x1$x$data.table))
 
   # custom_units.txt
   
