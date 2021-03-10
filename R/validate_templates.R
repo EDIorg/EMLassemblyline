@@ -2127,7 +2127,6 @@ validate_table_attributes <- function(x) {
       # fix is to drop the table attributes template from further use.
       if (!is.null(required_issues)) {
         x$template[[attribute_file]] <<- NULL
-        x$data.table[[table_file]] <<- NULL
       }
       
       # Return

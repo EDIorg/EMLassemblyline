@@ -814,7 +814,7 @@ make_eml <- function(
   # Create <additionalInfo> ---------------------------------------------------
   
   if (any(stringr::str_detect(names(x$template), "additional_info"))) {
-    message("   <additionalInfo>")
+    message('    <additionalInfo>')
     eml$dataset$additionalInfo <- x$template[[
       names(x$template)[
         stringr::str_detect(names(x$template), "additional_info")]]]$content
@@ -866,7 +866,7 @@ make_eml <- function(
   # Create <temporalCoverage> -------------------------------------------------
   
   if (!is.null(temporal.coverage)) {
-    message("      <temporalCoverage>")
+    message("        <temporalCoverage>")
     eml$dataset$coverage$temporalCoverage <- list(
       rangeOfDates = list(
         beginDate = list(calendarDate = temporal.coverage[1]),
@@ -889,11 +889,11 @@ make_eml <- function(
   # EML::set_coverage()).
   
   if (!is.null(x$template$taxonomicCoverage.xml)) {
-    message("      <taxonomicCoverage>")
+    message("        <taxonomicCoverage>")
     eml$dataset$coverage$taxonomicCoverage <- 
       x$template$taxonomicCoverage.xml$content
   } else if (!is.null(x$template$taxonomic_coverage.txt)) {
-    message("      <taxonomicCoverage>")
+    message("        <taxonomicCoverage>")
     tc <- try(
       suppressMessages(
         taxonomyCleanr::make_taxonomicCoverage(
@@ -1118,12 +1118,17 @@ make_eml <- function(
     eml$dataset$dataTable <- lapply(
       names(x$data.table),
       function(k) {
-        message(paste0("    <dataTable> (", k, ")"))
         
         # Get corresponding table_attributes.txt
-        
         tbl_attr <- x$template[[
           paste0("attributes_", tools::file_path_sans_ext(k), ".txt")]]$content
+        
+        # Break if no table_attributes.txt
+        if (is.null(tbl_attr)) {
+          return()
+        }
+        
+        message(paste0("    <dataTable> (", k, ")"))
         
         # Add attributes.txt contents to the data frame input expected by 
         # EML::set_attributes().
