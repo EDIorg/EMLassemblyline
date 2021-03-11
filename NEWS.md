@@ -1,3 +1,9 @@
+# EMLassemblyline 3.3.1
+
+### Bug fix
+
+* __tab field delimiters:__ For tab delimited data tables, an empty white space was being written to the EML rather than the expected \\t. This fix addresses [issue #84](https://github.com/EDIorg/EMLassemblyline/issues/84).
+
 # EMLassemblyline 3.3.0
 
 ### Enhancement
