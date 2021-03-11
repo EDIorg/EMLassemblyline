@@ -1283,11 +1283,14 @@ make_eml <- function(
           physical$distribution <- list()
         }
         
-        physical$dataFormat$textFormat$simpleDelimited$fieldDelimiter <- 
-          EDIutils::detect_delimeter(
-            path = data.path,
-            data.files = k,
-            os = EDIutils::detect_os())
+        fdlim <- EDIutils::detect_delimeter(
+          path = data.path,
+          data.files = k,
+          os = EDIutils::detect_os())
+        if (fdlim == "\t") {
+          fdlim <- "\\t" # requires escape char to be written, otherwise is blank
+        }
+        physical$dataFormat$textFormat$simpleDelimited$fieldDelimiter <- fdlim
         
         # Create dataTable
         
