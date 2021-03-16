@@ -1,3 +1,9 @@
+# EMLassemblyline 3.3.2
+
+### Bug fix
+
+* __Updated dependency:__ Delimiter detection was underperforming for MacOS. A new version of `EDIutils` fixes this.
+
 # EMLassemblyline 3.3.1
 
 ### Bug fix

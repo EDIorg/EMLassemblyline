@@ -10,7 +10,7 @@ Description:
 Imports:
     bit64 (>= 4.0.5),
     data.table (>= 1.13.6),
-    EDIutils (>= 1.4.0),
+    EDIutils (>= 1.4.1),
     EML (>= 2.0.4),
     httr (>= 1.4.2),
     knitr (>= 1.30),
