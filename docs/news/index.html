@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.3.2</span>
       </span>
     </div>
 
@@ -141,12 +141,24 @@
       <small>Source: <a href='https://github.com/EDIorg/EMLassemblyline/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="emlassemblyline-331" class="section level1">
-<h1 class="page-header" data-toc-text="3.3.1">
-<a href="#emlassemblyline-331" class="anchor"></a>EMLassemblyline 3.3.1</h1>
+    <div id="emlassemblyline-332" class="section level1">
+<h1 class="page-header" data-toc-text="3.3.2">
+<a href="#emlassemblyline-332" class="anchor"></a>EMLassemblyline 3.3.2</h1>
 <div id="bug-fix" class="section level3">
 <h3 class="hasAnchor">
 <a href="#bug-fix" class="anchor"></a>Bug fix</h3>
+<ul>
+<li>
+<strong>Updated dependency:</strong> Delimiter detection was underperforming for MacOS. A new version of <code>EDIutils</code> fixes this.</li>
+</ul>
+</div>
+</div>
+    <div id="emlassemblyline-331" class="section level1">
+<h1 class="page-header" data-toc-text="3.3.1">
+<a href="#emlassemblyline-331" class="anchor"></a>EMLassemblyline 3.3.1</h1>
+<div id="bug-fix-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#bug-fix-1" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>tab field delimiters:</strong> For tab delimited data tables, an empty white space was being written to the EML rather than the expected \t. This fix addresses <a href="https://github.com/EDIorg/EMLassemblyline/issues/84">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/84'>#84</a></a>.</li>
@@ -169,9 +181,9 @@
 <strong>Remove bookend quote characters mistakenly added to values:</strong> Some file writers will place quotes around a value when it contains commas. This safeguard identifies and removes these.</li>
 </ul>
 </div>
-<div id="bug-fix-1" class="section level3">
+<div id="bug-fix-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-1" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-2" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>Outdated dependencies:</strong> Some listed dependencies were outdated resulting in warnings/errors. This has been fixed.</li>
@@ -185,9 +197,9 @@
     <div id="emlassemblyline-321" class="section level1">
 <h1 class="page-header" data-toc-text="3.2.1">
 <a href="#emlassemblyline-321" class="anchor"></a>EMLassemblyline 3.2.1</h1>
-<div id="bug-fix-2" class="section level3">
+<div id="bug-fix-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-2" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-3" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>template_taxonomic_coverage():</strong> Resolving to ITIS began failing due to a change in title (from “ITIS” to “Integrated Taxonomic Information SystemITIS” listed in the return from <code><a href="https://docs.ropensci.org/taxize/reference/gnr_datasources.html">taxize::gnr_datasources()</a></code>. This issue has been fixed in the <code>taxonomyCleanr</code> dependency.</li>
@@ -294,9 +306,9 @@
     <div id="emlassemblyline-2182" class="section level1">
 <h1 class="page-header" data-toc-text="2.18.2">
 <a href="#emlassemblyline-2182" class="anchor"></a>EMLassemblyline 2.18.2</h1>
-<div id="bug-fix-3" class="section level3">
+<div id="bug-fix-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-3" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-4" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>Patch for updated dependency (part 2):</strong> An updated dependency resulted in <code><a href="../reference/template_table_attributes.html">template_table_attributes()</a></code> errors. This fix is an addendum to the prior fix (2.18.1).</li>
@@ -306,9 +318,9 @@
     <div id="emlassemblyline-2181" class="section level1">
 <h1 class="page-header" data-toc-text="2.18.1">
 <a href="#emlassemblyline-2181" class="anchor"></a>EMLassemblyline 2.18.1</h1>
-<div id="bug-fix-4" class="section level3">
+<div id="bug-fix-5" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-4" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-5" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>Patch for updated dependency:</strong> An updated dependency resulted in <code><a href="../reference/template_table_attributes.html">template_table_attributes()</a></code> errors. This has been fixed.</li>
@@ -352,9 +364,9 @@
     <div id="emlassemblyline-2161" class="section level1">
 <h1 class="page-header" data-toc-text="2.16.1">
 <a href="#emlassemblyline-2161" class="anchor"></a>EMLassemblyline 2.16.1</h1>
-<div id="bug-fix-5" class="section level3">
+<div id="bug-fix-6" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-5" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-6" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>template reader:</strong> Fixed a bug in the metadata template reader.</li>
@@ -408,9 +420,9 @@
     <div id="emlassemblyline-2131" class="section level1">
 <h1 class="page-header" data-toc-text="2.13.1">
 <a href="#emlassemblyline-2131" class="anchor"></a>EMLassemblyline 2.13.1</h1>
-<div id="bug-fix-6" class="section level3">
+<div id="bug-fix-7" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-6" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-7" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>schemaLocation:</strong> Fixed schemaLocation and namespace to be a web resolvable address.</li>
@@ -446,9 +458,9 @@
     <div id="emlassemblyline-2123" class="section level1">
 <h1 class="page-header" data-toc-text="2.12.3">
 <a href="#emlassemblyline-2123" class="anchor"></a>EMLassemblyline 2.12.3</h1>
-<div id="bug-fix-7" class="section level3">
+<div id="bug-fix-8" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-7" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-8" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>Missing &lt;taxonomicCoverage&gt;:</strong> taxonomicCoverage supplied in taxonomic_coverage.txt was missing from the EML. This has been fixed.</li>
@@ -458,9 +470,9 @@
     <div id="emlassemblyline-2122" class="section level1">
 <h1 class="page-header" data-toc-text="2.12.2">
 <a href="#emlassemblyline-2122" class="anchor"></a>EMLassemblyline 2.12.2</h1>
-<div id="bug-fix-8" class="section level3">
+<div id="bug-fix-9" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-8" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-9" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>Missing &lt;access&gt; node:</strong> The access node was not being added to the EML. This has been fixed.</li>
@@ -470,9 +482,9 @@
     <div id="emlassemblyline-2121" class="section level1">
 <h1 class="page-header" data-toc-text="2.12.1">
 <a href="#emlassemblyline-2121" class="anchor"></a>EMLassemblyline 2.12.1</h1>
-<div id="bug-fix-9" class="section level3">
+<div id="bug-fix-10" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-9" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-10" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>Template reader:</strong> A bug in the tabular template reader has been fixed (<a href="https://github.com/EDIorg/EMLassemblyline/commit/42276a0a696a8c6e743cc15e28f4e9c22df1100e">see commit for details</a>).</li>
@@ -516,9 +528,9 @@
     <div id="emlassemblyline-2102" class="section level1">
 <h1 class="page-header" data-toc-text="2.10.2">
 <a href="#emlassemblyline-2102" class="anchor"></a>EMLassemblyline 2.10.2</h1>
-<div id="bug-fix-10" class="section level3">
+<div id="bug-fix-11" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-10" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-11" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>Missing value codes:</strong> Recent changes broke the proper handling of “NA” missing value codes. This has been fixed.</li>
@@ -528,9 +540,9 @@
     <div id="emlassemblyline-2101" class="section level1">
 <h1 class="page-header" data-toc-text="2.10.1">
 <a href="#emlassemblyline-2101" class="anchor"></a>EMLassemblyline 2.10.1</h1>
-<div id="bug-fix-11" class="section level3">
+<div id="bug-fix-12" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-11" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-12" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>Schema validation:</strong> The referenced schema location was not correct. Now it is (<a href="https://github.com/EDIorg/EMLassemblyline/issues/59">issue <a href='https://github.com/EDIorg/EMLassemblyline/issues/59'>#59</a></a>).</li>
@@ -584,9 +596,9 @@
     <div id="emlassemblyline-271" class="section level1">
 <h1 class="page-header" data-toc-text="2.7.1">
 <a href="#emlassemblyline-271" class="anchor"></a>EMLassemblyline 2.7.1</h1>
-<div id="bug-fix-12" class="section level3">
+<div id="bug-fix-13" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-12" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-13" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>Delimiter guessing:</strong> Occasionally the content of tabular templates leads <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html">data.table::fread()</a></code> to guessing a delimiter other than “\t”. This issue has been fixed by explicitly stating the expected field delimiter.</li>
@@ -778,9 +790,9 @@
 </li>
 </ul>
 </div>
-<div id="bug-fix-13" class="section level3">
+<div id="bug-fix-14" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fix-13" class="anchor"></a>Bug fix</h3>
+<a href="#bug-fix-14" class="anchor"></a>Bug fix</h3>
 <ul>
 <li>
 <strong>otherEntity url:</strong> Add EML element <em>//otherEntity/physical/distribution/online/url</em> via <code><a href="../reference/make_eml.html">make_eml()</a></code>. This element was missing though documentation implied its existence.</li>
