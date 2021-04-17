@@ -1,3 +1,9 @@
+# EMLassemblyline 3.3.3
+
+### Bug fix
+
+* __template_table_attributes():__ A minor bug in the column classification logic has been fixed.
+
 # EMLassemblyline 3.3.2
 
 ### Bug fix
