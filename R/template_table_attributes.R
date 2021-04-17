@@ -169,19 +169,18 @@ template_table_attributes <- function(
           lapply(
             x$data.table[[i]]$content, 
             function(k) {
-              # 'character' has no consequence on other steps. 
-              # Then, makes empty cols be recognized as it. 
-              if(length(unique(k)) == 1 && 
-                 (all(is.na(k)) || all(k == ""))
-              )
-                return("empty")
               # An exception for the two component "IDate Date" class created 
               # by data.table::fread(). Returning both components results in 
               # a class vector that is longer than the column vector.
               if (any(c("POSIXct", "POSIXt", "Date") %in% class(k))) {
-                "Date"
+                return("Date")
               } else {
-                class(k)
+                # 'character' has no consequence on other steps. 
+                # Then, makes empty cols be recognized as it. 
+                if (length(unique(k)) == 1 && (all(is.na(k)) || all(k == ""))) {
+                  return("empty")
+                }
+                return(class(k))
               }
             })))
       
