@@ -1,7 +1,4 @@
-#' Annotate EML
-#'
-#' @description  
-#'     Annotate an EML file (.xml) or an emld list object.
+#' Annotate an EML file (.xml) or an emld list object
 #'
 #' @param annotations
 #'     (character; data frame) Path or data frame of the annotations.txt 

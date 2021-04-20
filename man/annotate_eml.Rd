@@ -2,7 +2,7 @@
 % Please edit documentation in R/annotate_eml.R
 \name{annotate_eml}
 \alias{annotate_eml}
-\title{Annotate EML}
+\title{Annotate an EML file (.xml) or an emld list object}
 \usage{
 annotate_eml(annotations = NULL, eml.in = NULL, eml.out = NULL)
 }
@@ -22,7 +22,7 @@ Accepted versions of the emld list object can be created by
     output will be an EML file. The emld list object is always returned.
 }
 \description{
-Annotate an EML file (.xml) or an emld list object.
+Annotate an EML file (.xml) or an emld list object
 }
 \note{
 All annotated elements are assigned ids and their annotations are 
