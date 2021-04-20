@@ -22,8 +22,9 @@ reference:
   - title: Utilities
     desc: Helper functions 
     contents:
-    - view_unit_dictionary
+    - annotate_eml
     - template_arguments
+    - view_unit_dictionary
     
 navbar:
   title: ~
