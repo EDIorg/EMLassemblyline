@@ -1,3 +1,9 @@
+# EMLassemblyline 3.3.4
+
+### Bug fix
+
+* __Schema validation:__ Recent changes to `emld` complicate validation of EML files input to some EAL functions. Validation of such inputs have been suspended until a permanent fix can be made. These changes have no impact on EAL working correctly, unless an invalid EML record is input, in which case the function will fail if there is a critical issue.
+
 # EMLassemblyline 3.3.3
 
 ### Bug fix
