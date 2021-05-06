@@ -646,7 +646,7 @@ make_eml <- function(
   # Construct EML header
   
   eml <- list(
-    schemaLocation = "https://eml.ecoinformatics.org/eml-2.2.0  https://nis.lternet.edu/schemas/EML/eml-2.2.0/xsd/eml.xsd",
+    schemaLocation = "https://eml.ecoinformatics.org/eml-2.2.0/ eml.xsd",
     packageId = package.id,
     system = sys)
   
