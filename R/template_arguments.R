@@ -179,7 +179,6 @@ template_arguments <- function(
           fill = TRUE,
           blank.lines.skip = TRUE,
           sep = "\t",
-          quote = "",
           colClasses = list(
             character = 1:utils::count.fields(f, sep = "\t")[1])))
       
@@ -448,12 +447,8 @@ template_arguments <- function(
       f <- paste0(data.path, "/", data.table[i])
 
       if (is.null(sep)){
-        
-        data_tables[[i]]$content <- as.data.frame(
-          data.table::fread(
-            file = f,
-            fill = TRUE,
-            blank.lines.skip = TRUE))
+
+        data_tables[[i]]$content <- as.data.frame(data.table::fread(file = f))
         
       } else {
         
@@ -485,6 +480,17 @@ template_arguments <- function(
     template = templates,
     data.table = data_tables,
     other.entity = other_entities)
+  
+  # Convert NA to "", but don't convert "NA" since these may be explicitly 
+  # defined missing value codes
+  for (k in names(output$x$template)) {
+    if (is.data.frame(output$x$template[[k]]$content)) {
+      for (m in names(output$x$template[[k]]$content)) {
+        output$x$template[[k]]$content[[m]][
+          is.na(output$x$template[[k]]$content[[m]])] <- ""
+      }
+    }
+  }
   
   output
   

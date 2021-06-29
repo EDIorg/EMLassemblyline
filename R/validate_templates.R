@@ -43,17 +43,8 @@ validate_templates <- function(fun.name, x) {
     
     # Return
     if (!is.null(issues)) {
-      list2env(
-        list(template_issues = issues),
-        if(is.null(options("eal.env"))) {
-          .GlobalEnv
-        } else {
-          options("eal.env")[[1]]
-        }
-      )
-      warning(
-        "Input issues found. Use issues() to see them.",
-        call. = FALSE)
+      list2env(list(template_issues = issues), .GlobalEnv)
+      warning("Input issues found. Use issues() to see them.", call. = FALSE)
     }
     return(x)
     
@@ -73,17 +64,8 @@ validate_templates <- function(fun.name, x) {
     
     # Return
     if (!is.null(issues)) {
-      list2env(
-        list(template_issues = issues),
-        if(is.null(options("eal.env"))) {
-          .GlobalEnv
-        } else {
-          options("eal.env")[[1]]
-        }
-      )
-      warning(
-        "Input issues found. Use issues() to see them.",
-        call. = FALSE)
+      list2env(list(template_issues = issues), .GlobalEnv)
+      warning("Input issues found. Use issues() to see them.", call. = FALSE)
     }
     return(x)
     
@@ -92,6 +74,13 @@ validate_templates <- function(fun.name, x) {
   # Called from make_eml() ----------------------------------------------------
   
   if (fun.name == 'make_eml'){
+    
+    # template_issues object should be removed from the global environment each
+    # time this function is called otherwise issues that have been fixed may 
+    # appear outstanding
+    if (exists("template_issues", where = ".GlobalEnv")) {
+      rm(template_issues, envir = as.environment(".GlobalEnv"))
+    }
     
     # Initialize object for collecting issue messages
     issues <- c()
@@ -154,17 +143,9 @@ validate_templates <- function(fun.name, x) {
     
     # Return
     if (!is.null(issues)) {
-      list2env(
-        list(template_issues = issues),
-        if(is.null(options("eal.env"))) {
-          .GlobalEnv
-        } else {
-          options("eal.env")[[1]]
-        }
-      )
-      warning(
-        "Template issues found. Use issues() to see them.", 
-        call. = FALSE)
+      list2env(list(template_issues = issues), .GlobalEnv)
+      warning("Template issues found. Use issues() to see them.", 
+              call. = FALSE)
     }
     return(x)
   }
@@ -3122,21 +3103,8 @@ compile_provenance <- function(x) {
 #'
 issues <- function() {
   
-  arg <- exists(
-    "argument_issues",
-    if(is.null(options("eal.env"))) {
-      .GlobalEnv
-    } else {
-      options("eal.env")[[1]]
-    })
-  
-  tmp <- exists(
-    "template_issues",
-    if(is.null(options("eal.env"))) {
-      .GlobalEnv
-    } else {
-      options("eal.env")[[1]]
-    })
+  arg <- exists("argument_issues", .GlobalEnv)
+  tmp <- exists("template_issues", .GlobalEnv)
   
   if (arg & tmp) {
     message(c(argument_issues, template_issues))

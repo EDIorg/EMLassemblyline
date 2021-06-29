@@ -1,3 +1,13 @@
+# EMLassemblyline 3.3.4.9000
+
+### Bug fix
+
+* Defer to data.table's handling of quote characters during read operations.
+* Remove an existing validation issues object from the global environment each time a validation suite is run, otherwise resolved issues may appear new.
+* Remove validation checks where not critical to a functions operation.
+* Remove title case coercion from personnel roles.
+* Relax constraints on data table read operation.
+
 # EMLassemblyline 3.3.4
 
 ### Bug fix
