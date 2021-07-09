@@ -276,6 +276,13 @@ validate_arguments <- function(fun.name, fun.args){
   
   if (fun.name == 'make_eml'){
     
+    # argument_issues object should be removed from the global environment each
+    # time this function is called otherwise issues that have been fixed may 
+    # appear outstanding
+    if (exists("argument_issues", where = ".GlobalEnv")) {
+      rm(argument_issues, envir = as.environment(".GlobalEnv"))
+    }
+    
     # Initialize object for collecting issue messages
     issues <- c()
     
@@ -395,15 +402,14 @@ validate_arguments <- function(fun.name, fun.args){
     fun.args <- r$fun.args
 
     # Return
-    
     if (!is.null(issues)) {
       list2env(
         list(argument_issues = issues),
-        if(is.null(options("eal.env"))) {
+        # if(is.null(options("eal.env"))) {
           .GlobalEnv
-        } else {
-          options("eal.env")[[1]]
-        }
+        # } else {
+          # options("eal.env")[[1]]
+        # }
       )
       warning(
         "Argument issues found. Use issues() to see them.",

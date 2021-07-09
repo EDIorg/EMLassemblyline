@@ -347,11 +347,8 @@ make_eml <- function(
     x$template$keywords.txt$content$keyword != "", ]
   
   # personnel.txt:
-  # - Make all roles lowercase for string matching and remove mistankenly 
-  # entered white spaces
+  # - Remove mistankenly entered white spaces
   
-  x$template$personnel.txt$content$role <- tolower(
-    x$template$personnel.txt$content$role)
   x$template$personnel.txt$content <- as.data.frame(
     lapply(
       x$template$personnel.txt$content,
@@ -570,7 +567,7 @@ make_eml <- function(
         associated_party = list(
           organizationName = x$template$personnel.txt$content[info_row,"organizationName"],
           electronicMailAddress = x$template$personnel.txt$content[info_row,"electronicMailAddress"],
-          role = stringr::str_to_title(x$template$personnel.txt$content[info_row,"role"]))
+          role = x$template$personnel.txt$content[info_row,"role"])
         if (nchar(x$template$personnel.txt$content[info_row,"userId"]) == 19){
           associated_party$userId <- list(
             directory = 'https://orcid.org',
@@ -590,7 +587,7 @@ make_eml <- function(
           ),
           organizationName = x$template$personnel.txt$content[info_row,"organizationName"],
           electronicMailAddress = x$template$personnel.txt$content[info_row,"electronicMailAddress"],
-          role = stringr::str_to_title(x$template$personnel.txt$content[info_row,"role"])
+          role = x$template$personnel.txt$content[info_row,"role"]
         )
         
         if (nchar(x$template$personnel.txt$content[info_row,"userId"]) == 19){
@@ -731,7 +728,7 @@ make_eml <- function(
 
   if (!is.null(x$template$personnel.txt)) {
     eml$dataset$creator <- lapply(
-      which(x$template$personnel.txt$content$role == "creator"),
+      which(tolower(x$template$personnel.txt$content$role) == "creator"),
       function(k) {
         message("    <creator>")
         set_person(info_row = k, person_role = "creator")
@@ -744,7 +741,7 @@ make_eml <- function(
     eml$dataset$associatedParty <- lapply(
       which(
         stringr::str_detect(
-          x$template$personnel.txt$content$role,
+          tolower(x$template$personnel.txt$content$role),
           "[^pi|^creator|^contact]")),
       function(k) {
         message("    <associatedParty>")
@@ -919,7 +916,7 @@ make_eml <- function(
   
   if (!is.null(x$template$personnel.txt)) {
     eml$dataset$contact <- lapply(
-      which(x$template$personnel.txt$content$role == "contact"),
+      which(tolower(x$template$personnel.txt$content$role) == "contact"),
       function(k) {
         message("    <contact>")
         set_person(info_row = k, person_role = "contact")
@@ -929,7 +926,7 @@ make_eml <- function(
   # Create <publisher> --------------------------------------------------------
   
   eml$dataset$publisher <- lapply(
-    which(x$template$personnel.txt$content$role == "publisher"),
+    which(tolower(x$template$personnel.txt$content$role) == "publisher"),
     function(k) {
       message("    <publisher>")
       set_person(info_row = k, person_role = "publisher")
@@ -1087,7 +1084,7 @@ make_eml <- function(
   # listed.
   
   if (!is.null(x$template$personnel.txt)) {
-    use_i <- x$template$personnel.txt$content$role == "pi"
+    use_i <- tolower(x$template$personnel.txt$content$role) == "pi"
     if (any(use_i)){
       invisible(
         lapply(

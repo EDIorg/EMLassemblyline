@@ -77,7 +77,6 @@ template_categorical_variables <- function(
   # Validate templates --------------------------------------------------------
   
   x <- remove_empty_templates(x)
-  x <- validate_templates("template_categorical_variables", x)
   
   # Extract categorical variables ---------------------------------------------
   
@@ -223,7 +222,7 @@ template_categorical_variables <- function(
 #'     
 attribute_template_to_table <- function(attributes.template, data.path) {
   table_regex <- paste0(
-    "(?<!^attributes_)",
+    "(?<!^attributes_|^catvars_)",
     stringr::str_extract(
       attributes.template, 
       "(?<=attributes_).*(?=\\.txt)"),
