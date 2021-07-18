@@ -395,8 +395,13 @@ template_arguments <- function(
       if (stringr::str_detect(
         tfound[i], 
         attr_tmp$regexpr[attr_tmp$template_name == "methods"])) {
-        templates[[i]]$content <- read_txt(
-          paste0(path, '/', tfound[i]))
+        if (tfound[i] == "methods.md") {
+          templates[[i]]$content <- set_methods_md(
+            methods_file = paste0(path, '/', tfound[i]))
+        } else {
+          templates[[i]]$content <- read_txt(
+            paste0(path, '/', tfound[i]))
+        }
       }
       
       # Read personnel --------------------------------------------------------

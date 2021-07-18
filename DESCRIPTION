@@ -1,6 +1,6 @@
 Package: EMLassemblyline
 Title: A tool kit for building EML metadata workflows
-Version: 3.3.4
+Version: 3.4.0
 Authors@R: c(
     person("Colin", "Smith", email = "colin.smith@wisc.edu", role = c("aut", "cre"), comment = "https://orcid.org/0000-0003-2261-9931"),
     person("Elie", "ARNAUD", email = "earnaud@outlook.com", role = "ctb", comment = "https://orcid.org/0000-0003-3416-7653")

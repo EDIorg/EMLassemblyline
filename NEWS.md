@@ -1,4 +1,10 @@
-# EMLassemblyline 3.3.4.9000
+# EMLassemblyline 3.4.0.9000
+
+### Enhancement
+
+* Implement support for markdown and LaTex equations embedded in markdown. This only works for methods.md templates. NOTE: LaTex equations must be wrapped in "\$\$", otherwise they won't be parsed correctly. This addresses [issue #85](https://github.com/EDIorg/EMLassemblyline/issues/85).
+
+# EMLassemblyline 3.3.5
 
 ### Bug fix
 

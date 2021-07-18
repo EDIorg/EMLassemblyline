@@ -1398,6 +1398,11 @@ make_eml <- function(
           txt[x] <<- stringr::str_replace_all(txt[x], "&amp;amp;", "&amp;")
         }))
     writeLines(txt, paste0(eml.path, "/", package.id, ".xml"), useBytes = T)
+    
+    if ("methods.md" %in% names(x$template)) {
+      fix_methods(eml = paste0(eml.path, "/", package.id, ".xml"))
+      eml <- EML::read_eml(paste0(eml.path, "/", package.id, ".xml"))
+    }
   }
   
   # Validate EML --------------------------------------------------------------
