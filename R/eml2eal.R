@@ -1382,8 +1382,8 @@ nodeset2txt <- function(nodeset, file.type, path) {
     file.type.pd <- "markdown"
   }
   # Write nodeset to file for pandoc
-  tmpf <- paste0(tempdir(), "/nodeset.xml")
-  xml2::write_xml(nodeset, tmpf)
+  tmpf <- paste0(tempdir(), "/nodeset.html")
+  xml2::write_html(nodeset, tmpf)
   on.exit(unlink(tmpf))
   # Convert
   fname <- paste0(path, "/", name, file.type)
