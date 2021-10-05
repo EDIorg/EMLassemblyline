@@ -1,4 +1,4 @@
-# EMLassemblyline 3.4.0.9000
+# EMLassemblyline 3.4.0
 
 ### Enhancement
 
@@ -8,6 +8,7 @@
 
 * Fix non-resolvable schemaLocation.
 * Fix pandoc xml to .txt, .md, and, .docx translation issue.
+* A resolved issue in the taxonomyCleanr dependency requires a minimum of version 1.5.3.
 
 # EMLassemblyline 3.3.5
 
