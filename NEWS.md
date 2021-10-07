@@ -1,3 +1,9 @@
+# EMLassemblyline 3.4.1
+
+### Bug fix
+
+* A resolved issue in the taxonomyCleanr dependency requires a minimum of version 1.5.4.
+
 # EMLassemblyline 3.4.0
 
 ### Enhancement
