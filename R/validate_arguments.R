@@ -715,6 +715,25 @@ validate_arguments <- function(fun.name, fun.args){
     
   }
   
+
+  # Call from template_raster_attributes() ----------------------------------
+
+  if (fun.name == 'template_raster_attributes'){
+    
+    # path
+    if (!is.null(fun.args$path)) {
+      EDIutils::validate_path(fun.args$path)
+    }
+    
+    # Validate table names
+    
+    data_files <- suppressWarnings(
+      EDIutils::validate_file_names(
+        path = fun.args$data.path, 
+        data.files = fun.args$raster.files))
+    
+  }
+  
   # Call from template_table_attributes() -------------------------------------
   
   if (fun.name == 'template_table_attributes'){
@@ -1598,3 +1617,5 @@ validate_temporal_coverage <- function(fun.args) {
   
   return(list(issues = issues, fun.args = fun.args))
 }
+
+validate_
