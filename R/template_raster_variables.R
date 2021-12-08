@@ -67,9 +67,9 @@ template_raster_variables <- function(
       
     } else {
       
-      cats <- filter(r, numberType == 'categorical')
+      cats_lgl <- r[7] == 'categorical'
       
-      files <- cats$filename
+      files <- r[cats_lgl][1]
       
       output <- data.frame(
         filename = files,
