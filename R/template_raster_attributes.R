@@ -1,3 +1,54 @@
+#' Describe spatial raster files
+#'
+#' @description Describes characteristics of spatial raster files. Use this template to facilitate the creation of the spatialRaster element in EML.
+#' 
+#' @param path 
+#'     (character) Path to the metadata template directory.
+#' @param data.path
+#'     (character) Path to the data directory.
+#' @param raster.files
+#'     (character) File name. If more than one, then supply as a 
+#'     vector of character strings (e.g. 
+#'     \code{raster.files = c('change.tif', 'mean_votes.tif')}).
+#' @param empty
+#'     (logical) Whether to write an empty template file. Default is \code{FALSE}.
+#' @param write.file
+#'     (logical; optional) Whether to write the template file. Default is \code{TRUE}.
+#' @param return.obj
+#'     (logical; optional) Whether to return the provenance template as a data frame. Default is \code{FALSE}.
+#'     
+#' @return
+#' \item{raster_attributes.txt}{Columns:
+#'     \itemize{
+#'     \item{filename: Filename of a spatial raster file}
+#'     \item{description: Description of the raster file}
+#'     \item{geoDescription: Description of the geographic coverage of the raster file}
+#'     \item{url: Accessible url for download of the file}
+#'     \item{definition: Definition of the raster attribute}
+#'     \item{unit: Unit of the raster attribute}
+#'     \item{numberType: ('real', 'natural', 'integer', 'whole')}
+#'     }
+#' }
+#'
+#' @examples
+#' \dontrun{
+#' # Set working directory
+#' setwd("/Users/me/Documents/data_packages/pkg_260")
+#' 
+#' # For an empty template to be filled manually
+#' template_raster_attributes(
+#'     path = "./metadata_templates",
+#'     data.path = "./data_objects",
+#'     empty = TRUE)
+#'     
+#' # For a template with file names
+#' template_raster_attributes(
+#'     path = "./metadata_templates",
+#'     data.path = "./data_objects",
+#'     raster.files = c('change.tif', 'mean_votes.tif'))
+#' }
+#' 
+#' @export
 template_raster_attributes <- function(
   path = NULL,
   data.path = path,
@@ -18,10 +69,10 @@ template_raster_attributes <- function(
   
     empty_output <- data.frame(
        filename = character(),
-       desc = character(),
-       geoDesc = character(),
+       description = character(),
+       geoDescription = character(),
        url = character(),
-       def = character(),
+       definition = character(),
        unit = character(),
        numberType = character(),
        stringsAsFactors = F
@@ -29,10 +80,10 @@ template_raster_attributes <- function(
     
     named_output <- data.frame(
       filename = raster.files,
-      desc = rep("", length(raster.files)),
-      geoDesc = rep("", length(raster.files)),
+      description = rep("", length(raster.files)),
+      geoDescription = rep("", length(raster.files)),
       url = rep("", length(raster.files)),
-      def = rep("", length(raster.files)),
+      definition = rep("", length(raster.files)),
       unit = rep("", length(raster.files)),
       numberType = rep("", length(raster.files)),
       stringsAsFactors = F
