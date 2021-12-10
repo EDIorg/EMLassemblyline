@@ -1956,13 +1956,6 @@ validate_raster_attributes <- function(x) {
 }
 
 
-
-
-
-
-
-
-
 #' Validate the table attributes template (attributes_*.txt)
 #'
 #' @param x
