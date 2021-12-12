@@ -106,7 +106,7 @@ template_geographic_coverage <- function(
       # Validate file name
       
       data_file <- suppressWarnings(
-        EDIutils::validate_file_names(
+        validate_file_names(
           path = data.path, 
           data.files = data.table
         )
