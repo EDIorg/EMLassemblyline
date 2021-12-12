@@ -140,7 +140,7 @@ template_arguments <- function(
   # Initialize data tables ----------------------------------------------------
   
   if (!is.null(data.table)){
-    data_table <- EDIutils::validate_file_names(
+    data_table <- validate_file_names(
       path = data.path,
       data.files = data.table)
     data_tables <- vector('list', length(data_table))
@@ -152,7 +152,7 @@ template_arguments <- function(
   # Initialize other entities -------------------------------------------------
   
   if (!is.null(other.entity)){
-    other_entity <- EDIutils::validate_file_names(
+    other_entity <- validate_file_names(
       path = data.path,
       data.files = other.entity)
     other_entities <- vector('list', length(other_entity))
