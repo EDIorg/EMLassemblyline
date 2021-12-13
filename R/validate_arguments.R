@@ -262,7 +262,7 @@ validate_arguments <- function(fun.name, fun.args){
       # Validate table names
       
       data_files <- suppressWarnings(
-        EDIutils::validate_file_names(
+        validate_file_names(
           path = fun.args$data.path, 
           data.files = fun.args$data.table
         )
@@ -319,17 +319,17 @@ validate_arguments <- function(fun.name, fun.args){
     # path
 
     if (is.null(fun.args$x)) {
-      EDIutils::validate_path(fun.args$path)
+      validate_path(fun.args$path)
     }
 
     # data.path
 
-    EDIutils::validate_path(fun.args$data.path)
+    validate_path(fun.args$data.path)
 
     # eml.path
 
     if (isTRUE(fun.args$write.file)){
-      EDIutils::validate_path(fun.args$eml.path)
+      validate_path(fun.args$eml.path)
     }
     
     # dataset.title
@@ -339,7 +339,7 @@ validate_arguments <- function(fun.name, fun.args){
     
     if (!is.null(fun.args$data.table)) {
       table_names <- suppressWarnings(
-        EDIutils::validate_file_names(
+        validate_file_names(
           path = fun.args$data.path,
           data.files = fun.args$data.table))
     }
@@ -376,7 +376,7 @@ validate_arguments <- function(fun.name, fun.args){
     # other.entity
     if (!is.null(fun.args$other.entity)) {
       other_entity_names <- suppressWarnings(
-        EDIutils::validate_file_names(
+        validate_file_names(
           path = fun.args$data.path, 
           data.files = fun.args$other.entity))
     }
@@ -436,7 +436,7 @@ validate_arguments <- function(fun.name, fun.args){
     }
     
     if (!is.null(fun.args$path)) {
-      EDIutils::validate_path(fun.args$path)
+      validate_path(fun.args$path)
     }
     
     if (file.exists(paste0(fun.args$path, "/annotations.txt"))) {
@@ -452,14 +452,14 @@ validate_arguments <- function(fun.name, fun.args){
     # data.path
     
     if (!is.null(fun.args$data.path)) {
-      EDIutils::validate_path(fun.args$data.path)
+      validate_path(fun.args$data.path)
     }
     
     # data.table
     
     if (!is.null(fun.args$data.table)){
       table_names <- suppressWarnings(
-        EDIutils::validate_file_names(
+        validate_file_names(
           path = fun.args$data.path, 
           data.files = fun.args$data.table
         )
@@ -470,7 +470,7 @@ validate_arguments <- function(fun.name, fun.args){
     
     if (!is.null(fun.args$other.entity)){
       table_names <- suppressWarnings(
-        EDIutils::validate_file_names(
+        validate_file_names(
           path = fun.args$data.path, 
           data.files = fun.args$other.entity
         )
@@ -523,7 +523,7 @@ validate_arguments <- function(fun.name, fun.args){
     # path
     
     if (!is.null(fun.args$path)) {
-      EDIutils::validate_path(fun.args$path)
+      validate_path(fun.args$path)
       attr_tmp <- read_template_attributes()
       path_files <- list.files(fun.args$path)
       if (!length(path_files) == 0) {
@@ -544,14 +544,14 @@ validate_arguments <- function(fun.name, fun.args){
     # data.path
     
     if (!is.null(fun.args$data.path)){
-      EDIutils::validate_path(fun.args$data.path)
+      validate_path(fun.args$data.path)
     }
     
     # data.table
     
     if (!is.null(fun.args$data.table)){
       output <- suppressWarnings(
-        EDIutils::validate_file_names(
+        validate_file_names(
           path = fun.args$data.path,
           data.files = fun.args$data.table
         )
@@ -562,7 +562,7 @@ validate_arguments <- function(fun.name, fun.args){
     
     if (!is.null(fun.args$other.entity)){
       output <- suppressWarnings(
-        EDIutils::validate_file_names(
+        validate_file_names(
           path = fun.args$data.path,
           data.files = fun.args$other.entity
         )
@@ -666,7 +666,7 @@ validate_arguments <- function(fun.name, fun.args){
         # Validate file name
         
         data_file <- suppressWarnings(
-          EDIutils::validate_file_names(
+          validate_file_names(
             path = fun.args$data.path, 
             data.files = fun.args$data.table
           )
@@ -710,7 +710,7 @@ validate_arguments <- function(fun.name, fun.args){
     
     # path
     if (!is.null(fun.args$path)) {
-      EDIutils::validate_path(fun.args$path)
+      validate_path(fun.args$path)
     }
     
   }
@@ -726,7 +726,7 @@ validate_arguments <- function(fun.name, fun.args){
       # Validate table names
       
       data_files <- suppressWarnings(
-        EDIutils::validate_file_names(
+        validate_file_names(
           path = fun.args$data.path, 
           data.files = fun.args$data.table))
       
@@ -769,12 +769,12 @@ validate_arguments <- function(fun.name, fun.args){
       # path
       
       if (isTRUE(fun.args$write.file)) {
-        EDIutils::validate_path(fun.args$path)
+        validate_path(fun.args$path)
       }
       
       # data.path
       
-      EDIutils::validate_path(fun.args$data.path)
+      validate_path(fun.args$data.path)
       
       # taxa.table
       
@@ -840,7 +840,7 @@ validate_arguments <- function(fun.name, fun.args){
       # path
       
       if (isTRUE(fun.args$write.file)) {
-        EDIutils::validate_path(fun.args$path)
+        validate_path(fun.args$path)
       }
       
     }
