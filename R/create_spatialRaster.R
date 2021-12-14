@@ -5,7 +5,7 @@ create_spatialRaster <- function(path, data.path = path, raster_attributes = NUL
   # AND does not have a raster_attributes.txt template at the path directory,
   # then this function can not proceed
   
-  if (is.null(raster_template) & !file.exists(paste0(path, '/raster_attributes.txt'))) {
+  if (is.null(raster_attributes) & !file.exists(paste0(path, '/raster_attributes.txt'))) {
     
     stop("A raster_attributes template is required.", call. = FALSE)
     
@@ -50,7 +50,7 @@ create_spatialRaster <- function(path, data.path = path, raster_attributes = NUL
   
   # Warn that files don't exist
   
-  if (!is.null(unlist(missing_defs))) {
+  if (length(missing_defs) != 0) {
     
     warning(paste0("File '", paste(unlist(missing_defs)), "' does not have a definition in the raster_attributes template (Required).\n"), call. = F)
   }
@@ -80,6 +80,7 @@ create_spatialRaster <- function(path, data.path = path, raster_attributes = NUL
       # Use the argument raster_attributes if provided
       
       raster_template = raster_attributes
+      
     } else {
       
       raster_var <- data.table::fread(
@@ -116,6 +117,42 @@ create_spatialRaster <- function(path, data.path = path, raster_attributes = NUL
       }
     }
   }
+  
+  
+  
+#TODO start putting in the actual guts to this puppy
+  
+
+# Load raster -------------------------------------------------------------
+  
+  raster_object <- lapply(raster_template$filename, function(x) raster::raster(paste0(data.path, x)))
+  
+  # Get spatial reference and convert to EML standard--------------------------
+  
+  # Read the proj4 string
+  
+  proj4str <- lapply(raster_object, raster::crs)
+  
+  lapply(proj4str, function(x) paste('Spatial reference in proj4 format is:', x@projargs))
+  
+  # Assign EML-compliant name - a manually determined translation of proj4str
+  # Allowed values for EML seem to be enumerated here: 
+  #  https://eml.ecoinformatics.org/schema/eml-spatialReference_xsd.html#SpatialReferenceType
+  # Searching projection names at https://spatialreference.org is helpful
+  # for the translation
+  if (proj4str=="+proj=utm +zone=13 +datum=NAD83 +units=m +no_defs +ellps=GRS80 +towgs84=0,0,0"){
+    emlProjection <- "NAD_1983_UTM_Zone_13N"
+  } else if (proj4str=="+proj=utm +zone=13 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"){
+    emlProjection <- "NAD_1983_CSRS98_UTM_Zone_13N"
+  } else if (proj4str == "+proj=utm +zone=19 +datum=WGS84 +units=m +no_defs") {
+    emlProjection <- "WGS_1984_UTM_Zone_19N"
+  } else if (proj4str == "+proj=utm +zone=18 +datum=WGS84 +units=m +no_defs") {
+    emlProjection <- "WGS_1984_UTM_Zone_18N"
+  }else if (proj4str == "+proj=longlat +datum=WGS84 +no_defs") {
+    emlProjection <- "WGS_1984_UTM_Zone_12N"
+  }
+  print(paste("Translated to", emlProjection, 'in EML spatialReference schema'))
+  
   
   
   print('finals')
