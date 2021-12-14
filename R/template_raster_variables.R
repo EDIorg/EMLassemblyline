@@ -33,14 +33,15 @@
 template_raster_variables <- function(
   path = NULL,
   data.path = path,
-  write.file = TRUE) {
+  write.file = TRUE,
+  return.obj = FALSE) {
   
   message('Templating raster categorical variables ...')
  
   # Validate arguments --------------------------------------------------------
   
   validate_arguments(
-    fun.name = 'tempate_raster_attributes',
+    fun.name = 'tempate_raster_variables',
     fun.args = as.list(environment()))
   
   # Read raster attribute template
@@ -67,25 +68,37 @@ template_raster_variables <- function(
       
     } else {
       
-      cats_lgl <- r[7] == 'categorical'
-      
-      files <- r[cats_lgl][1]
+      cats <- subset(r, numberType == 'categorical')
       
       output <- data.frame(
-        filename = files,
-        code = rep("", length(files)),
-        definition = rep("", length(files)),
+        filename = cats$filename,
+        code = rep("", nrow(cats)),
+        definition = rep("", nrow(cats)),
         stringsAsFactors = F)
+
+# Write table to a file --------------------------------------------------------------
+
+      if (isTRUE(write.file)) {
+        
+        suppressWarnings(
+          utils::write.table(
+            output,
+            paste0(path, "/", "raster_catvars.txt"),
+            sep = "\t",
+            row.names = F,
+            quote = F,
+            fileEncoding = "UTF-8"))
+        }
       
-      suppressWarnings(
-        utils::write.table(
-          output,
-          paste0(path, "/", "raster_catvars.txt"),
-          sep = "\t",
-          row.names = F,
-          quote = F,
-          fileEncoding = "UTF-8"))
+# Return values -----------------------------------------------------------
+
+      message("Done.")
+      
+      if (isTRUE(return.obj)){
+        
+          return(output)
+          
+      }
     }
   }
-   
 }
