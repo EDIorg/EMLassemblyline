@@ -178,7 +178,7 @@ create_spatialRaster <- function(path, data.path = path, raster_attributes = NUL
   message('Determining spatial coverage...')
   
   
-  spatialCoverage <- mapply(
+  spatial_coverage <- mapply(
     function(x,y) {
       EML::set_coverage(geographicDescription = y,
         west = x@bbox["x", "min"],
@@ -300,16 +300,51 @@ create_spatialRaster <- function(path, data.path = path, raster_attributes = NUL
   # build physical
   message('building physical...')
   
-  physical <- mapply(function(obj, a, s, f, d) {
+  physical <- mapply(function(n, a, s, f, d) {
     EML::eml$physical(
-      objectName = obj,
+      objectName = n,
       authentication = a,
       size = s,
       dataFormat = f,
-      distribution = d
-    )
-  }, obj = raster_template$filename, a = file_auth, s = file_size, f = data_format, d = distribution)
+      distribution = d)},
+    n = raster_template$filename,
+    a = file_auth,
+    s = file_size,
+    f = data_format,
+    d = distribution)
 
+  # build spatialRaster--------------------------------------------------------
+  message('Building spatialRaster entity...')
+  
+  sr <- mapply(function(n, desc, phys, cov, proj, attrs, eml_proj, obj) {
+    EML::eml$spatialRaster(
+      entityName = n,
+      entityDescription = desc,
+      physical = phys,
+      coverage = cov,
+      additionalInfo = projections,
+      attributeList = attrs,
+      spatialReference = EML::eml$spatialReference(
+        horizCoordSysName = eml_proj),
+      numberOfBands = raster::bandnr(obj),
+      rows = nrow(obj),
+      columns = ncol(obj),
+      horizontalAccuracy = EML::eml$horizontalAccuracy(accuracyReport="Unknown"),
+      verticalAccuracy = EML::eml$verticalAccuracy(accuracyReport="Unknown"),
+      cellSizeXDirection = raster::xres(obj),
+      cellSizeYDirection = raster::yres(obj),
+      rasterOrigin = "Upper Left",
+      verticals = 1,
+      cellGeometry = "pixel",
+      id = n)},
+    n = raster_template$filename,
+    desc = raster_template$description,
+    phys = physical,
+    cov = spatial_coverage,
+    proj = projections,
+    attrs = attr_list,
+    eml_proj = eml_projection,
+    obj = raster_object)
   
   
   
