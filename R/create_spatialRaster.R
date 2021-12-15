@@ -117,13 +117,8 @@ create_spatialRaster <- function(path, data.path = path, raster_attributes = NUL
       }
     }
   }
-  
-  
-  
-#TODO start putting in the actual guts to this puppy
-  
 
-# Load raster -------------------------------------------------------------
+  # Load raster -------------------------------------------------------------
   
   raster_object <- lapply(raster_template$filename, function(x) raster::raster(paste0(data.path, x)))
   
@@ -131,27 +126,118 @@ create_spatialRaster <- function(path, data.path = path, raster_attributes = NUL
   
   # Read the proj4 string
   
-  proj4str <- lapply(raster_object, raster::crs)
+  P <- lapply(raster_object, raster::crs)
   
-  lapply(proj4str, function(x) paste('Spatial reference in proj4 format is:', x@projargs))
+  proj4str <- lapply(proj4str, function(x) paste(x@projargs))
   
-  # Assign EML-compliant name - a manually determined translation of proj4str
+  # Assign EML-compliant name
   # Allowed values for EML seem to be enumerated here: 
-  #  https://eml.ecoinformatics.org/schema/eml-spatialReference_xsd.html#SpatialReferenceType
-  # Searching projection names at https://spatialreference.org is helpful
-  # for the translation
-  if (proj4str=="+proj=utm +zone=13 +datum=NAD83 +units=m +no_defs +ellps=GRS80 +towgs84=0,0,0"){
-    emlProjection <- "NAD_1983_UTM_Zone_13N"
-  } else if (proj4str=="+proj=utm +zone=13 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"){
-    emlProjection <- "NAD_1983_CSRS98_UTM_Zone_13N"
-  } else if (proj4str == "+proj=utm +zone=19 +datum=WGS84 +units=m +no_defs") {
-    emlProjection <- "WGS_1984_UTM_Zone_19N"
-  } else if (proj4str == "+proj=utm +zone=18 +datum=WGS84 +units=m +no_defs") {
-    emlProjection <- "WGS_1984_UTM_Zone_18N"
-  }else if (proj4str == "+proj=longlat +datum=WGS84 +no_defs") {
-    emlProjection <- "WGS_1984_UTM_Zone_12N"
-  }
-  print(paste("Translated to", emlProjection, 'in EML spatialReference schema'))
+  # https://eml.ecoinformatics.org/schema/eml-spatialReference_xsd.html#SpatialReferenceType
+  
+  # TODO this should be mapped
+  
+  eml_projection <- lapply(proj4str, function(x) {
+    
+    if (x=="+proj=utm +zone=13 +datum=NAD83 +units=m +no_defs +ellps=GRS80 +towgs84=0,0,0"){
+      emlProjection <- "NAD_1983_UTM_Zone_13N"
+    } else if (x=="+proj=utm +zone=13 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"){
+      emlProjection <- "NAD_1983_CSRS98_UTM_Zone_13N"
+    } else if (x == "+proj=utm +zone=19 +datum=WGS84 +units=m +no_defs") {
+      emlProjection <- "WGS_1984_UTM_Zone_19N"
+    } else if (x == "+proj=utm +zone=18 +datum=WGS84 +units=m +no_defs") {
+      emlProjection <- "WGS_1984_UTM_Zone_18N"
+    }else if (x == "+proj=longlat +datum=WGS84 +no_defs") {
+      emlProjection <- "WGS_1984_UTM_Zone_12N"
+    }
+    
+  })
+  
+  
+  # Determine coverage (bbox) of raster ---------------------------------------
+  
+  # For EML, this apparently needs to be in decimal degrees, so convert
+  # to SpatialPolygons and then reproject with spTransform
+  
+  # Convert to SpatialPolygons
+  
+  extent <- lapply(raster_object, function(x) as(raster::extent(x), "SpatialPolygons"))
+  
+  # Assign CRS to SpatialPolygon object
+  
+  extent <- mapply(
+    function(x,y) {
+      sp::proj4string(x) = y
+      return(x)
+    }, x = extent, y = proj4str)
+  
+  # Reproject with spTransform
+  
+  extent.geo <- lapply(extent, function(x) sp::spTransform(x, sp::CRS("+proj=longlat +datum=WGS84 +no_defs 
+                                            +ellps=WGS84 +towgs84=0,0,0")))
+  
+  message('Determining spatial coverage...')
+  
+  
+  spatialCoverage <- mapply(
+    function(x,y) {
+      EML::set_coverage(geographicDescription = y,
+        west = x@bbox["x", "min"],
+        east = x@bbox["x", "max"],
+        north = x@bbox["y", "max"],
+        south = x@bbox["y", "min"])
+    }, x = extent.geo, y = raster_template$geoDescription)
+  
+  # projections----------------------------------------------------------------
+  
+  projections <- lapply(proj4str, function(x) {
+    list(section = list(
+      paste0("<title>Raster derived coordinate reference system</title>\n<para>",
+             x, "</para>")))})
+  
+  # Create attributes table----------------------------------------------------
+
+  print('Building attributes...')
+  
+  attr_list <- lapply(
+    raster_template$filename, 
+      function(x) {
+         
+         working_template <- raster_template[raster_template$filename == x]
+         
+         if (working_template$numberType == 'categorical') {
+           
+         # Set categorical-type attributes
+           # extract the relevant catvar info
+           
+           working_factor <- raster_var[raster_var$filename == x]
+           
+           # Change filename to attributeName 
+           
+           names(working_factor)[1] <- 'attributeName'
+           
+           working_factor$attributeName <- 'raster_value'
+           
+           
+           EML::set_attributes(
+             attributes=data.frame(
+               attributeName = "raster_value",
+               attributeDefinition = working_template$definition),
+             factors=working_factor, 
+             col_classes = "factor")
+           
+          } else {
+            
+          # Set numeric-type attributes
+            
+          EML::set_attributes(
+             attributes=data.frame(
+              attributeName = "raster_value",
+              attributeDefinition = working_template$definition,
+              unit = working_template$unit,
+              numberType = working_template$numberType),
+            col_classes="numeric")
+         }
+       })
   
   
   
