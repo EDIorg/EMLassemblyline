@@ -1,4 +1,31 @@
 
+#' Create EML \code{<spatialRaster>} elements
+#'
+#' @param path 
+#'     (character) Path to the metadata template directory.
+#' @param data.path
+#'     (character) Path to the data directory.
+#' @param raster_attributes 
+#'     (data.frame; optional) Alternative to the raster attributes template; enter attributes into a data.frame object and provide as an argument
+#' @param raster_catvars
+#'     (data.frame; optional) Alternative to the raster variables template; enter codes and definitions into a data.frame object and provide as an argument
+#'
+#' @return
+#' \item{\code{<spatialRaster>} element (list) that can be inserted into an EML file or object via \code{make_eml()}.}
+#'  
+#' @examples
+#' \dontrun{
+#' 
+#' # Set working directory
+#' setwd("/Users/me/Documents/data_packages/pkg_260")
+#' 
+#' # For use with raster_attributes.txt (and optionally raster_variables.txt)
+#' create_spatialRaster(
+#'   path = "./metadata_templates",
+#'   data.path = "./data_objects")
+#' }
+#' @export
+#'
 create_spatialRaster <- function(path, data.path = path, raster_attributes = NULL, raster_catvars = NULL) {
   
   # If the user does not provide a direct path to a raster_attributes.txt template
@@ -131,6 +158,21 @@ create_spatialRaster <- function(path, data.path = path, raster_attributes = NUL
   return(sr)
 }
 
+#' Build the <spatialRaster> elements
+#'
+#' @param r
+#'     (list) A single row from the raster_template
+#' @param rv 
+#'     (data.frame) The raster_var object in its entirety
+#' @param path 
+#'     (character) Path to the metadata template directory.
+#' @param data.path
+#'     (character) Path to the data directory.
+#'
+#' @return
+#' \item{A single \code{<spatialRaster>} element (list).}
+#' 
+#'
 build_raster_element <- function(r, rv = raster_var, path = path, data.path = data.path) {
   
   message(paste0('Building <spatialRaster> for ', r$filename, '...'))
