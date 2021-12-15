@@ -117,40 +117,51 @@ create_spatialRaster <- function(path, data.path = path, raster_attributes = NUL
       }
     }
   }
+  sr <- vector("list", nrow(raster_template))
+  for (i in 1:nrow(raster_template)) {
+    sr[[i]] <- build_raster_element(
+      r = raster_template[i,],
+      rv = raster_var,
+      path = path,
+      data.path = data.path)
+    
+  }
+  
 
+  return(sr)
+}
+
+build_raster_element <- function(r, rv = raster_var, path = path, data.path = data.path) {
+  
+  message(paste0('Building <spatialRaster> for ', r$filename, '...'))
+  
   # Load raster -------------------------------------------------------------
   
-  raster_object <- lapply(raster_template$filename, function(x) raster::raster(paste0(data.path, x)))
+  raster_object <- raster::raster(paste0(data.path, r$filename))
   
   # Get spatial reference and convert to EML standard--------------------------
   
   # Read the proj4 string
   
-  P <- lapply(raster_object, raster::crs)
-  
-  proj4str <- lapply(proj4str, function(x) paste(x@projargs))
+  proj4str <- raster::crs(raster_object, asText = TRUE)[[1]]
   
   # Assign EML-compliant name
   # Allowed values for EML seem to be enumerated here: 
   # https://eml.ecoinformatics.org/schema/eml-spatialReference_xsd.html#SpatialReferenceType
   
   # TODO this should be mapped
-  
-  eml_projection <- lapply(proj4str, function(x) {
-    
-    if (x=="+proj=utm +zone=13 +datum=NAD83 +units=m +no_defs +ellps=GRS80 +towgs84=0,0,0"){
-      emlProjection <- "NAD_1983_UTM_Zone_13N"
-    } else if (x=="+proj=utm +zone=13 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"){
-      emlProjection <- "NAD_1983_CSRS98_UTM_Zone_13N"
-    } else if (x == "+proj=utm +zone=19 +datum=WGS84 +units=m +no_defs") {
-      emlProjection <- "WGS_1984_UTM_Zone_19N"
-    } else if (x == "+proj=utm +zone=18 +datum=WGS84 +units=m +no_defs") {
-      emlProjection <- "WGS_1984_UTM_Zone_18N"
-    }else if (x == "+proj=longlat +datum=WGS84 +no_defs") {
-      emlProjection <- "WGS_1984_UTM_Zone_12N"
+
+    if (proj4str=="+proj=utm +zone=13 +datum=NAD83 +units=m +no_defs +ellps=GRS80 +towgs84=0,0,0"){
+      eml_projection <- "NAD_1983_UTM_Zone_13N"
+    } else if (proj4str=="+proj=utm +zone=13 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"){
+      eml_projection <- "NAD_1983_CSRS98_UTM_Zone_13N"
+    } else if (proj4str == "+proj=utm +zone=19 +datum=WGS84 +units=m +no_defs") {
+      eml_projection <- "WGS_1984_UTM_Zone_19N"
+    } else if (proj4str == "+proj=utm +zone=18 +datum=WGS84 +units=m +no_defs") {
+      eml_projection <- "WGS_1984_UTM_Zone_18N"
+    }else if (proj4str == "+proj=longlat +datum=WGS84 +no_defs") {
+      eml_projection <- "WGS_1984_UTM_Zone_12N"
     }
-    
-  })
   
   
   # Determine coverage (bbox) of raster ---------------------------------------
@@ -160,193 +171,134 @@ create_spatialRaster <- function(path, data.path = path, raster_attributes = NUL
   
   # Convert to SpatialPolygons
   
-  extent <- lapply(raster_object, function(x) as(raster::extent(x), "SpatialPolygons"))
+  extent <- as(raster::extent(raster_object), "SpatialPolygons")
   
   # Assign CRS to SpatialPolygon object
   
-  extent <- mapply(
-    function(x,y) {
-      sp::proj4string(x) = y
-      return(x)
-    }, x = extent, y = proj4str)
+  sp::proj4string(extent) <- proj4str
   
   # Reproject with spTransform
   
-  extent.geo <- lapply(extent, function(x) sp::spTransform(x, sp::CRS("+proj=longlat +datum=WGS84 +no_defs 
-                                            +ellps=WGS84 +towgs84=0,0,0")))
+  extent_geo <- sp::spTransform(extent, sp::CRS("+proj=longlat +datum=WGS84 +no_defs 
+                                            +ellps=WGS84 +towgs84=0,0,0"))
   
-  message('Determining spatial coverage...')
+  # TODO sort out mapply
   
+  spatialCoverage <- EML::set_coverage(geographicDescription = enc2utf8(r$geoDescription),
+                                       west = extent_geo@bbox["x", "min"],
+                                       east = extent_geo@bbox["x", "max"],
+                                       north = extent_geo@bbox["y", "max"],
+                                       south = extent_geo@bbox["y", "min"])
   
-  spatial_coverage <- mapply(
-    function(x,y) {
-      EML::set_coverage(geographicDescription = y,
-        west = x@bbox["x", "min"],
-        east = x@bbox["x", "max"],
-        north = x@bbox["y", "max"],
-        south = x@bbox["y", "min"])
-    }, x = extent.geo, y = raster_template$geoDescription)
   
   # projections----------------------------------------------------------------
+  projections <- list(section = list(
+    paste0("<title>Raster derived coordinate reference system</title>\n<para>",
+           proj4str, "</para>")
+  ))
   
-  projections <- lapply(proj4str, function(x) {
-    list(section = list(
-      paste0("<title>Raster derived coordinate reference system</title>\n<para>",
-             x, "</para>")))})
   
   # Create attributes table----------------------------------------------------
 
-  message('Building attributes...')
   
-  attr_list <- lapply(
-    raster_template$filename, 
-      function(x) {
-         
-         working_template <- raster_template[raster_template$filename == x]
-         
-         if (working_template$numberType == 'categorical') {
-           
-         # Set categorical-type attributes
-           # extract the relevant catvar info
-           
-           working_factor <- raster_var[raster_var$filename == x]
-           
-           # Change filename to attributeName 
-           
-           names(working_factor)[1] <- 'attributeName'
-           
-           working_factor$attributeName <- 'raster_value'
-           
-           
-           EML::set_attributes(
-             attributes=data.frame(
-               attributeName = "raster_value",
-               attributeDefinition = working_template$definition),
-             factors=working_factor, 
-             col_classes = "factor")
-           
-          } else {
-            
-          # Set numeric-type attributes
-            
-          EML::set_attributes(
-             attributes=data.frame(
-              attributeName = "raster_value",
-              attributeDefinition = working_template$definition,
-              unit = working_template$unit,
-              numberType = working_template$numberType),
-            col_classes="numeric")
-         }
-       })
+   if (r$numberType == 'categorical') {
+     
+   # Set categorical-type attributes
+     # extract the relevant catvar info
+     
+     r_factor <- subset(rv, filename == r$filename)
+     
+     # Change filename to attributeName 
+     
+     names(r_factor)[1] <- 'attributeName'
+     
+     r_factor$attributeName <- 'raster_value'
+     
+     
+     attr_list <- EML::set_attributes(
+       attributes=data.frame(
+         attributeName = "raster_value",
+         attributeDefinition = r$definition),
+       factors=r_factor, 
+       col_classes = "factor")
+     
+    } else {
+      
+    # Set numeric-type attributes
+      
+      attr_list <- EML::set_attributes(
+       attributes=data.frame(
+        attributeName = "raster_value",
+        attributeDefinition = r$definition,
+        unit = r$unit,
+        numberType = r$numberType),
+      col_classes="numeric")
+   }
   
   # set authentication (md5)---------------------------------------------------
   
-  message('Calculating MD5 sum...')
-  
-  file_auth <- lapply(
-    raster_template$filename,
-    function(x) {
-      fileAuthentication <- EML::eml$authentication(method = "MD5")
-      fileAuthentication$authentication <- tools::md5sum(paste0(data.path, x))
-      return(fileAuthentication)
-    })
+  fileAuthentication <- EML::eml$authentication(method = "MD5")
+  fileAuthentication$authentication <- tools::md5sum(paste0(data.path, r$filename))
+
   
   
   # set file size--------------------------------------------------------------
-  message('Setting file size...')
-  
-  file_size <- lapply(
-    raster_template$filename,
-    function(x) {
-      fileSize <- EML::eml$size(unit = "byte")
-      fileSize$size <- deparse(file.size(paste0(data.path, x)))
-      return(fileSize)
-    })
+  fileSize <- EML::eml$size(unit = "byte")
+  fileSize$size <- deparse(file.size(paste0(data.path, r$filename)))
+
   
   
   # set file format------------------------------------------------------------
-  
-  message('Setting file format...')
-  
-  data_format <- lapply(
-    raster_template$filename,
-    function(x) {
-      fileDataFormat <- EML::eml$dataFormat(
-        externallyDefinedFormat=EML::eml$externallyDefinedFormat(
-          formatName=tools::file_ext(paste0(data.path, x)))
-      )
-      return(fileDataFormat)
-    })
-  
+
+  fileDataFormat <- EML::eml$dataFormat(
+    externallyDefinedFormat=EML::eml$externallyDefinedFormat(
+      formatName=tools::file_ext(paste0(data.path, r$filename))))
+
   # Create rasterPhysical pieces-----------------------------------------------
-  message('Creating rasterPhysical')
-  #rasterBaseName <-  raster_template$filename #basename(rasterFname)
-  directoryName <- dirname(paste0(data.path, raster_template$filename)) #dirname(rasterFname)
-  directoryNameFull <- sub("/$", "", path.expand(directoryName))
-  pathToFile <- path.expand(paste0(data.path, raster_template$filename))
+  directoryName <- dirname(paste0(data.path, r$filename)) #dirname(rasterFname)
+  directoryNameFull <- sub("/$", "", path.expand(dirname(paste0(data.path, r$filename))))
+  pathToFile <- path.expand(paste0(data.path, r$filename))
   
   # set distribution
+  distribution <- EML::eml$distribution(
+            EML::eml$online(url = r$url))
+
   
-  
-  message('Setting distribution...')
-  
-  distribution <- lapply(raster_template$url,
-         function(x) {
-          dist <- EML::eml$distribution(
-            EML::eml$online(url = x))
-           return(dist)
-           })
   
   # build physical
-  message('building physical...')
+  spatialRasterPhysical <- EML::eml$physical(
+    objectName = r$filename,
+    authentication = fileAuthentication,
+    size = fileSize,
+    dataFormat = fileDataFormat,
+    distribution = distribution
+  )
   
-  physical <- mapply(function(n, a, s, f, d) {
-    EML::eml$physical(
-      objectName = n,
-      authentication = a,
-      size = s,
-      dataFormat = f,
-      distribution = d)},
-    n = raster_template$filename,
-    a = file_auth,
-    s = file_size,
-    f = data_format,
-    d = distribution)
-
   # build spatialRaster--------------------------------------------------------
-  message('Building spatialRaster entity...')
   
-  sr <- mapply(function(n, desc, phys, cov, proj, attrs, eml_proj, obj) {
-    EML::eml$spatialRaster(
-      entityName = n,
-      entityDescription = desc,
-      physical = phys,
-      coverage = cov,
-      additionalInfo = projections,
-      attributeList = attrs,
-      spatialReference = EML::eml$spatialReference(
-        horizCoordSysName = eml_proj),
-      numberOfBands = raster::bandnr(obj),
-      rows = nrow(obj),
-      columns = ncol(obj),
-      horizontalAccuracy = EML::eml$horizontalAccuracy(accuracyReport="Unknown"),
-      verticalAccuracy = EML::eml$verticalAccuracy(accuracyReport="Unknown"),
-      cellSizeXDirection = raster::xres(obj),
-      cellSizeYDirection = raster::yres(obj),
-      rasterOrigin = "Upper Left",
-      verticals = 1,
-      cellGeometry = "pixel",
-      id = n)},
-    n = raster_template$filename,
-    desc = raster_template$description,
-    phys = physical,
-    cov = spatial_coverage,
-    proj = projections,
-    attrs = attr_list,
-    eml_proj = eml_projection,
-    obj = raster_object)
+  sr <- EML::eml$spatialRaster(
+    entityName = r$filename,
+    entityDescription = r$description,
+    physical = spatialRasterPhysical,
+    coverage = spatialCoverage,
+    additionalInfo = projections,
+    attributeList = attr_list,
+    spatialReference = EML::eml$spatialReference(
+      horizCoordSysName = eml_projection),
+    numberOfBands = raster::bandnr(raster_object),
+    rows = nrow(raster_object),
+    columns = ncol(raster_object),
+    horizontalAccuracy = EML::eml$horizontalAccuracy(accuracyReport="Unknown"),
+    verticalAccuracy = EML::eml$verticalAccuracy(accuracyReport="Unknown"),
+    cellSizeXDirection = raster::xres(raster_object),
+    cellSizeYDirection = raster::yres(raster_object),
+    rasterOrigin = "Upper Left",
+    verticals = 1,
+    cellGeometry = "pixel",
+    id = r$filename
+  )
   
-  
-  
-  print('finals')
+  return(sr)
 }
+  
+  
