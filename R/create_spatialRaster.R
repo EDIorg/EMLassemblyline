@@ -196,7 +196,7 @@ create_spatialRaster <- function(path, data.path = path, raster_attributes = NUL
   
   # Create attributes table----------------------------------------------------
 
-  print('Building attributes...')
+  message('Building attributes...')
   
   attr_list <- lapply(
     raster_template$filename, 
@@ -238,6 +238,78 @@ create_spatialRaster <- function(path, data.path = path, raster_attributes = NUL
             col_classes="numeric")
          }
        })
+  
+  # set authentication (md5)---------------------------------------------------
+  
+  message('Calculating MD5 sum...')
+  
+  file_auth <- lapply(
+    raster_template$filename,
+    function(x) {
+      fileAuthentication <- EML::eml$authentication(method = "MD5")
+      fileAuthentication$authentication <- tools::md5sum(paste0(data.path, x))
+      return(fileAuthentication)
+    })
+  
+  
+  # set file size--------------------------------------------------------------
+  message('Setting file size...')
+  
+  file_size <- lapply(
+    raster_template$filename,
+    function(x) {
+      fileSize <- EML::eml$size(unit = "byte")
+      fileSize$size <- deparse(file.size(paste0(data.path, x)))
+      return(fileSize)
+    })
+  
+  
+  # set file format------------------------------------------------------------
+  
+  message('Setting file format...')
+  
+  data_format <- lapply(
+    raster_template$filename,
+    function(x) {
+      fileDataFormat <- EML::eml$dataFormat(
+        externallyDefinedFormat=EML::eml$externallyDefinedFormat(
+          formatName=tools::file_ext(paste0(data.path, x)))
+      )
+      return(fileDataFormat)
+    })
+  
+  # Create rasterPhysical pieces-----------------------------------------------
+  message('Creating rasterPhysical')
+  #rasterBaseName <-  raster_template$filename #basename(rasterFname)
+  directoryName <- dirname(paste0(data.path, raster_template$filename)) #dirname(rasterFname)
+  directoryNameFull <- sub("/$", "", path.expand(directoryName))
+  pathToFile <- path.expand(paste0(data.path, raster_template$filename))
+  
+  # set distribution
+  
+  
+  message('Setting distribution...')
+  
+  distribution <- lapply(raster_template$url,
+         function(x) {
+          dist <- EML::eml$distribution(
+            EML::eml$online(url = x))
+           return(dist)
+           })
+  
+  # build physical
+  message('building physical...')
+  
+  physical <- mapply(function(obj, a, s, f, d) {
+    EML::eml$physical(
+      objectName = obj,
+      authentication = a,
+      size = s,
+      dataFormat = f,
+      distribution = d
+    )
+  }, obj = raster_template$filename, a = file_auth, s = file_size, f = data_format, d = distribution)
+
   
   
   
