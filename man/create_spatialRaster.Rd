@@ -16,19 +16,18 @@ create_spatialRaster(
 
 \item{data.path}{(character) Path to the data directory.}
 
-\item{raster_attributes}{(data.frame; optional) Alternative to the raster attributes template; enter attributes into a data.frame object and provide as an argument}
+\item{raster_attributes}{(data.frame; optional) Alternative to the raster attributes template; enter attributes into a data.frame object and provide as an argument.}
 
-\item{raster_catvars}{(data.frame; optional) Alternative to the raster variables template; enter codes and definitions into a data.frame object and provide as an argument}
+\item{raster_catvars}{(data.frame; optional) Alternative to the raster variables template; enter codes and definitions into a data.frame object and provide as an argument.}
 }
 \value{
-\item{\code{<spatialRaster>} element (list) that can be inserted into an EML file or object via \code{make_eml()}.}
+\item{spatialRaster}{\code{<spatialRaster>} element (list) that can be inserted into an EML file or object via \code{make_eml()}.}
 }
 \description{
-Create EML \code{<spatialRaster>} elements
+Creates a list of <spatialRaster> elements by parsing user-provided information and physical files. Can be called from \code{make_eml()} or as a stand-alone function.
 }
 \examples{
 \dontrun{
-
 # Set working directory
 setwd("/Users/me/Documents/data_packages/pkg_260")
 
@@ -52,4 +51,5 @@ spatialRaster <- create_spatialRaster(
   data.path = "./data_objects",
   raster_attributes = my_attributes)
 }
+
 }

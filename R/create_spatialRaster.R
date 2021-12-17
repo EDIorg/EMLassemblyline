@@ -1,21 +1,22 @@
 
 #' Create EML \code{<spatialRaster>} elements
 #'
+#' @description Creates a list of <spatialRaster> elements by parsing user-provided information and physical files. Can be called from \code{make_eml()} or as a stand-alone function.
+#'
 #' @param path 
 #'     (character) Path to the metadata template directory.
 #' @param data.path
 #'     (character) Path to the data directory.
 #' @param raster_attributes 
-#'     (data.frame; optional) Alternative to the raster attributes template; enter attributes into a data.frame object and provide as an argument
+#'     (data.frame; optional) Alternative to the raster attributes template; enter attributes into a data.frame object and provide as an argument.
 #' @param raster_catvars
-#'     (data.frame; optional) Alternative to the raster variables template; enter codes and definitions into a data.frame object and provide as an argument
+#'     (data.frame; optional) Alternative to the raster variables template; enter codes and definitions into a data.frame object and provide as an argument.
 #'
 #' @return
-#' \item{\code{<spatialRaster>} element (list) that can be inserted into an EML file or object via \code{make_eml()}.}
-#'  
+#' \item{spatialRaster}{\code{<spatialRaster>} element (list) that can be inserted into an EML file or object via \code{make_eml()}.}
+#'
 #' @examples
 #' \dontrun{
-#' 
 #' # Set working directory
 #' setwd("/Users/me/Documents/data_packages/pkg_260")
 #' 
@@ -39,6 +40,7 @@
 #'   data.path = "./data_objects",
 #'   raster_attributes = my_attributes)
 #' }
+#' 
 #' @export
 #'
 create_spatialRaster <- function(path, data.path = path, raster_attributes = NULL, raster_catvars = NULL) {
@@ -52,11 +54,11 @@ create_spatialRaster <- function(path, data.path = path, raster_attributes = NUL
     stop("A raster_attributes template is required.", call. = FALSE)
     
   } else if (!is.null(raster_attributes)) {
-    
+
     # Use the argument raster_attributes if provided
     
     raster_template = raster_attributes
-  } else { 
+  } else {
     
     # read table
     
@@ -113,7 +115,7 @@ create_spatialRaster <- function(path, data.path = path, raster_attributes = NUL
   # bring in and validate Raster factors
     if (is.null(raster_catvars) & !file.exists(paste0(path, '/raster_catvars.txt'))) {
       
-      # if raster_catvars doesnt exist, stop
+    # if raster_catvars doesnt exist, stop
       
       stop('raster_catvars.txt does not exist. Expected file named "raster_catvars.txt" to exist.')
       
@@ -185,7 +187,7 @@ create_spatialRaster <- function(path, data.path = path, raster_attributes = NUL
 #'     (character) Path to the data directory.
 #'
 #' @return
-#' \item{A single \code{<spatialRaster>} element (list).}
+#' \item{spatialRaster}{A single \code{<spatialRaster>} element (list).}
 #' 
 #'
 build_raster_element <- function(r, rv = raster_var, path = path, data.path = data.path) {

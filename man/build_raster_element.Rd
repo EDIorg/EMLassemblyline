@@ -16,7 +16,7 @@ build_raster_element(r, rv = raster_var, path = path, data.path = data.path)
 \item{data.path}{(character) Path to the data directory.}
 }
 \value{
-\item{A single \code{<spatialRaster>} element (list).}
+\item{spatialRaster}{A single \code{<spatialRaster>} element (list).}
 }
 \description{
 Build the <spatialRaster> elements
