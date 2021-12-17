@@ -1,3 +1,7 @@
+# EMLassemblyline 3.5.0
+
+* Integrated some EDIutils functions and removed the package dependency
+
 # EMLassemblyline 3.4.1
 
 ### Bug fix

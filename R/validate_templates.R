@@ -1665,9 +1665,9 @@ validate_provenance_data_package_id <- function(x) {
         function(x) {
           provenance <- try(
             suppressMessages(
-              EDIutils::api_get_provenance_metadata(x)), 
+              api_get_provenance_metadata(x)), 
             silent = TRUE)
-          if ("try-error" %in% class(provenance)) {
+          if (is.null(provenance)) {
             x
           }
         }))

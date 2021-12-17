@@ -244,7 +244,7 @@ make_eml <- function(
         data.path = data.path)$x
     } else if (!is.null(data.table) & is.null(other.entity)) {
       table_names <- suppressWarnings(
-        EDIutils::validate_file_names(
+        validate_file_names(
           path = data.path, 
           data.files = data.table))
       x <- template_arguments(
@@ -253,7 +253,7 @@ make_eml <- function(
         data.table = table_names)$x
     } else if (!is.null(data.table) & !is.null(other.entity)) {
       table_names <- suppressWarnings(
-        EDIutils::validate_file_names(
+        validate_file_names(
           path = data.path, 
           data.files = data.table))
       x <- template_arguments(
@@ -773,7 +773,7 @@ make_eml <- function(
     use_i <- x$template$keywords.txt$content$keywordThesaurus == ""
     if (any(use_i)) {
       r <- try(
-        EDIutils::vocab_resolve_terms(
+        vocab_resolve_terms(
           x = x$template$keywords.txt$content$keyword[use_i],
           cv = "lter"),
         silent = T)
@@ -964,7 +964,7 @@ make_eml <- function(
           message("      <methodStep> (provenance metadata)")
           r <- httr::GET(
             paste0(
-              EDIutils::url_env("production"),
+              url_env("production"),
               ".lternet.edu/package/provenance/eml/",
               stringr::str_replace_all(k, '\\.', '/')))
           if (r$status_code == 200) {
@@ -1239,15 +1239,14 @@ make_eml <- function(
         
         # Set physical
         # FIXME: Auto-detect numHeaderLines
-        # FIXME: Move EDIutils::get_eol() to EMLassemblyline?
         physical <- suppressMessages(
           EML::set_physical(
             paste0(data.path, "/", k),
             numHeaderLines = "1",
-            recordDelimiter = EDIutils::get_eol(
+            recordDelimiter = get_eol(
               path = data.path,
               file.name = k,
-              os = EDIutils::detect_os()),
+              os = detect_os()),
             attributeOrientation = "column",
             url = "placeholder"))
         
@@ -1280,10 +1279,10 @@ make_eml <- function(
           physical$distribution <- list()
         }
         
-        fdlim <- EDIutils::detect_delimeter(
+        fdlim <- detect_delimeter(
           path = data.path,
           data.files = k,
-          os = EDIutils::detect_os())
+          os = detect_os())
         if (fdlim == "\t") {
           fdlim <- "\\t" # requires escape char to be written, otherwise is blank
         }
