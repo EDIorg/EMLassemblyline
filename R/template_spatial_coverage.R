@@ -21,12 +21,22 @@
 #'     rows).
 #' 
 #' @return
+#' A list with two items:
 #' \item{spatial_coverage}{Columns:
 #'     \itemize{
 #'     \item{file: file name for reference.}
 #'     \item{site_name: sites names from the column <site.col>.}
 #'     \item{wkt: a well-known text polygon covering the given site.}
 #'    }
+#' }
+#' \item{geographical_coverage}{Columns:
+#'     \itemize{
+#'     \item{geographicDescription: Brief description of location.}
+#'     \item{northBoundingCoordinate: North coordinate}
+#'     \item{southBoundingCoordinate: South coordinate}
+#'     \item{eastBoundingCoordinate: East coordinate}
+#'     \item{westBoundingCoordinate: West coordinate}
+#'     }
 #' }
 #' 
 #' @importFrom sf read_sf st_convex_hull st_bbox st_as_text 
@@ -50,7 +60,7 @@
 #'
 template_spatial_coverage <- function(
   path, 
-  data.path, 
+  data.path = path, 
   site.col, # FIXME in doc when example data is set
   write.file = TRUE,
   overwrite = FALSE
@@ -61,12 +71,12 @@ template_spatial_coverage <- function(
   
   # assumes: if .spatial_coverage.txt is written, geographic_coverage.txt is too.
   written <- isTRUE(file.exists(paste0(path, "/.spatial_coverage.txt")))
-  if(written && isFALSE(overwrite))
+  if(written & isFALSE(overwrite))
     message(".spatial_coverage.txt already exists!")
-  if(written && !isFALSE(overwrite)) # overwrite can == "append"
+  if(written & !isFALSE(overwrite)) # overwrite can == "append"
     message(".spatial_coverage.txt will be overwritten.")
   # if all is written and no overwrite allowed, stop.
-  if(written && isFALSE(overwrite))
+  if(written & isFALSE(overwrite))
     return(NULL)
 
   data.files <- dir(data.path, full.names = TRUE)
@@ -84,7 +94,7 @@ template_spatial_coverage <- function(
   
   # Coverages ----
   
-  if(written && 
+  if(written & 
      overwrite == "append") {
     shp_coverage <- utils::read.csv(
       paste0(path, "/.spatial_coverage.txt"),
@@ -100,7 +110,7 @@ template_spatial_coverage <- function(
   }
   
   
-  if(file.exists(paste0(path, "/geographic_coverage.txt")) && 
+  if(file.exists(paste0(path, "/geographic_coverage.txt")) & 
      overwrite == "append") {
     geo_coverage <- utils::read.csv(
       paste0(path, "/geographic_coverage.txt"), 
@@ -123,16 +133,16 @@ template_spatial_coverage <- function(
     if(grepl("zip$", shp.file))
       shp.file <- dirname(unzip(shp.file, exdir = tempdir())[1])
     # Get shp data
-    shp <- read_sf(shp.file) # shp itself
+    shp <- sf::read_sf(shp.file) # shp itself
     # Ensure the column is available in the shp
     if(isFALSE(site.col %in% names(shp))) {
       message(sprintf("Column '%s' not found in '%s'.", site.col, basename(shp.file)))
       return(NULL)
     }
     # Get coverage polygons
-    st_conv_cov <- st_convex_hull(shp$geometry)
+    st_conv_cov <- sf::st_convex_hull(shp$geometry)
     # Get bounding boxes -- based on convex hull shapes
-    bboxes <- sapply(st_conv_cov, st_bbox)
+    bboxes <- sapply(st_conv_cov, sf::st_bbox)
     
     # Write coverage
     shp_coverage <<- rbind(
@@ -140,7 +150,7 @@ template_spatial_coverage <- function(
       data.frame(
         file = basename(shp.file),
         site_name = shp[[site.col]],
-        wkt = st_as_text(st_conv_cov)
+        wkt = sf::st_as_text(st_conv_cov)
       )
     ) |>
       unique()
@@ -203,8 +213,40 @@ template_spatial_coverage <- function(
 is.shp.dir <- function(dir.path) {
   return(
     # check for folder path & presence of main file of the shp ESRI format
-    (dir.exists(dir.path) && length(dir(dir.path, pattern = "shp/?$")) > 0) ||
+    (dir.exists(dir.path) & length(dir(dir.path, pattern = "shp/?$")) > 0) |
       # OR check for zip path & presence of main file of the shp ESRI format
-      (grepl("zip$", dir.path) && grepl("shp/?$", unzip(dir.path, list=TRUE)[1,1]))
+      (grepl("zip$", dir.path) & grepl("shp/?$", unzip(dir.path, list=TRUE)[1,1]))
   )
+}
+
+#' Write shapefile in a folder
+#' 
+#' @param shp 
+#'    (sf) object to write.
+#' @param path
+#'    (character) folder in which to create a shp file. Will contain a 
+#'    folder named \code{name}. 
+#' @param name
+#'    (character) name of the file that will be created.
+write_shp_dir <- function(shp, path, name) {
+  # Missing arguments
+  if(any(missing(shp) | isFALSE(any(class(shp) == "sf"))))
+    stop("No shp object to write.")
+  if(missing(path))
+    stop("No destination given.")
+  if(missing(name))
+    stop("No name given to file.")
+  
+  # Curate arguments
+  if(isFALSE(dir.exists(path)))
+    dir.create(path, recursive = TRUE)
+  
+  # (Over)Write shp folder
+  file_name <- fs::path(path, name)
+  if(dir.exists(file_name))
+    unlink(file_name, recursive = TRUE)
+  message(sprintf("Writing %s .", file_name))
+  sf::st_write(shp, file_name, driver = "ESRI Shapefile")
+  
+  return(file_name)
 }

@@ -6,7 +6,7 @@
 \usage{
 template_spatial_coverage(
   path,
-  data.path,
+  data.path = path,
   site.col,
   write.file = TRUE,
   overwrite = FALSE
@@ -28,12 +28,22 @@ or "append" (add new coverage to existing one, and do remove duplicated
 rows).}
 }
 \value{
+A list with two items:
 \item{spatial_coverage}{Columns:
     \itemize{
     \item{file: file name for reference.}
     \item{site_name: sites names from the column <site.col>.}
     \item{wkt: a well-known text polygon covering the given site.}
    }
+}
+\item{geographical_coverage}{Columns:
+    \itemize{
+    \item{geographicDescription: Brief description of location.}
+    \item{northBoundingCoordinate: North coordinate}
+    \item{southBoundingCoordinate: South coordinate}
+    \item{eastBoundingCoordinate: East coordinate}
+    \item{westBoundingCoordinate: West coordinate}
+    }
 }
 }
 \description{
