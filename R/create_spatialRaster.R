@@ -23,7 +23,7 @@
 #' spatialRaster <- create_spatialRaster(
 #'   path = "./metadata_templates",
 #'   data.path = "./data_objects")
-#' }
+#' 
 #' 
 #' # For use without a template
 #' 

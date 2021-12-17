@@ -33,8 +33,23 @@ Create EML \code{<spatialRaster>} elements
 setwd("/Users/me/Documents/data_packages/pkg_260")
 
 # For use with raster_attributes.txt (and optionally raster_variables.txt)
-create_spatialRaster(
+spatialRaster <- create_spatialRaster(
   path = "./metadata_templates",
   data.path = "./data_objects")
+
+
+# For use without a template
+
+my_attributes <- data.frame(
+  filename = 'my_raster_file.tiff',
+  geoDescription = 'Greater Rio Grande valley area',
+  definition = 'Normalized Difference Vegetation Index',
+  unit = 'dimensionless',
+  numberType = 'real')
+
+spatialRaster <- create_spatialRaster(
+  path = "./metadata_templates",
+  data.path = "./data_objects",
+  raster_attributes = my_attributes)
 }
 }
