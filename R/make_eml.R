@@ -1316,7 +1316,6 @@ make_eml <- function(
   #  Create <spatialRaster> -------------------------------------------------
   
   if (any(stringr::str_detect(list.files(path), "raster_attributes.txt"))) {
-    message("  <spatialRaster>")
     eml$dataset$spatialRaster <- create_spatialRaster(path = path, data.path = data.path)
   }
   

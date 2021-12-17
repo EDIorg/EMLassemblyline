@@ -192,7 +192,7 @@ create_spatialRaster <- function(path, data.path = path, raster_attributes = NUL
 #'
 build_raster_element <- function(r, rv = raster_var, path = path, data.path = data.path) {
   
-  message(paste0('Building <spatialRaster> for ', r$filename, '...'))
+  message(paste0('  <spatialRaster> (', r$filename, ')'))
   
   # Load raster -------------------------------------------------------------
   
