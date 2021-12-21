@@ -13,7 +13,6 @@ template_geographic_coverage(
   site.col,
   empty = FALSE,
   write.file = TRUE,
-  overwrite = FALSE,
   x = NULL
 )
 }
