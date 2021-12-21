@@ -8,7 +8,7 @@
   "description": "\n    For scientists and data managers to create high quality EML metadata for dataset publication. EMLassemblyline is optimized for automating recurring publications (timeseries or data derived from timeseries sources) but works well for \"one-off\" publications, especially through the MetaShARK interface. EMLassemblyline prioritizes automated metadata extraction from data objects to minimize required human effort and encourages EML best practices to make publications Findable, Accessible, Interoperable, and Reusable.",
   "name": "EMLassemblyline: A tool kit for building EML metadata workflows",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "3.4.0",
+  "version": "3.5.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -73,13 +73,6 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=data.table"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "EDIutils",
-      "name": "EDIutils",
-      "version": ">= 1.4.1",
-      "sameAs": "https://github.com/EDIorg/EDIutils"
     },
     {
       "@type": "SoftwareApplication",
@@ -207,7 +200,7 @@
       "@type": "SoftwareApplication",
       "identifier": "taxonomyCleanr",
       "name": "taxonomyCleanr",
-      "version": ">= 1.5.3",
+      "version": ">= 1.5.4",
       "sameAs": "https://github.com/EDIorg/taxonomyCleanr"
     },
     {
@@ -258,7 +251,7 @@
   ],
   "codeRepository": "https://github.com/EDIorg/EMLassemblyline",
   "readme": "https://github.com/EDIorg/EMLassemblyline/blob/master/README.md",
-  "fileSize": "3337.18KB",
+  "fileSize": "3359.687KB",
   "contIntegration": ["https://travis-ci.org/EDIorg/EMLassemblyline", "https://codecov.io/github/EDIorg/EMLassemblyline?branch=master"],
   "issueTracker": "https://github.com/EDIorg/EMLassemblyline/issues",
   "releaseNotes": "https://github.com/EDIorg/EMLassemblyline/blob/master/NEWS.md",
