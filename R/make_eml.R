@@ -831,7 +831,7 @@ make_eml <- function(
   eml$dataset$coverage <- list()
   
   # Create <geographicCoverage> -----------------------------------------------
-  browser()
+  
   # Check for multiple geographic coverage inputs.
   # FIXME: On May 1, 2020 remove support for bounding_boxes.txt
   if (is.null(geographic.coordinates) & !any(stringr::str_detect(
