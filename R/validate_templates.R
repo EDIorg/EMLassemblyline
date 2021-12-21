@@ -1941,17 +1941,19 @@ validate_provenance_email <- function(x) {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
+#' Validate the raster attributes template (raster_attributes.txt)
+#'
+#' @param x
+#'     (named list) The data and metadata object returned by 
+#'     \code{template_arguments()}.
+#'
+#' TODO
+#'
+validate_raster_attributes <- function(x) {
+  
+  # TODO 
+  
+}
 
 
 #' Validate the table attributes template (attributes_*.txt)
