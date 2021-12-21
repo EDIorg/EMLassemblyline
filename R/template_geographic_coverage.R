@@ -71,6 +71,7 @@ template_geographic_coverage <- function(
   site.col, 
   empty = FALSE, 
   write.file = TRUE, 
+  overwrite = FALSE,
   x = NULL){
   
   message('Templating geographic coverage ...')
@@ -162,7 +163,7 @@ template_geographic_coverage <- function(
   
   # Extract geographic coverage -----------------------------------------------
   
-  if (isTRUE(f_exists)){
+  if (isTRUE(f_exists) && isFALSE(overwrite)){
     
     message("geographic_coverage.txt already exists!")
     
@@ -171,6 +172,8 @@ template_geographic_coverage <- function(
     message('geographic_coverage.txt')
     
     if (!isTRUE(empty)){
+      
+      # Get content from data file
       
       df_table <- x$data.table[[data_file]]$content
       
@@ -259,6 +262,25 @@ template_geographic_coverage <- function(
     # Write geographic_coverage.txt -------------------------------------------
     
     if (isTRUE(write.file)){
+      
+      # Add existing geographic coverage if already existing
+      if(overwrite == "append") {
+        
+        geocoverage_out <- rbind(
+          utils::read.csv(
+            paste0(
+              path,
+              "/",
+              "geographic_coverage.txt"
+            ), 
+            TRUE,
+            sep = "\t"
+          ),
+          geocoverage_out
+        ) |>
+          unique() # avoid repeated coverages
+        
+      }
       
       suppressWarnings(
         utils::write.table(
