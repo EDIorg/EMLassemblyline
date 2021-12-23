@@ -46,7 +46,7 @@ template_raster_variables <- function(
   
   # Read raster attribute template
   
-  if (!file.exists(paste0(path, 'raster_attributes.txt'))) {
+  if (!file.exists(paste0(path, '/raster_attributes.txt'))) {
   
     # if raster_attributes doesnt exist, stop
     
@@ -77,17 +77,18 @@ template_raster_variables <- function(
         stringsAsFactors = F)
 
 # Write table to a file --------------------------------------------------------------
-
-      if (isTRUE(write.file)) {
-        
-        suppressWarnings(
-          utils::write.table(
-            output,
-            paste0(path, "/", "raster_catvars.txt"),
-            sep = "\t",
-            row.names = F,
-            quote = F,
-            fileEncoding = "UTF-8"))
+      if (!is.null(path)){
+        if (isTRUE(write.file)) {
+          
+          suppressWarnings(
+            utils::write.table(
+              output,
+              paste0(path, "/", "raster_catvars.txt"),
+              sep = "\t",
+              row.names = F,
+              quote = F,
+              fileEncoding = "UTF-8"))
+          }
         }
       
 # Return values -----------------------------------------------------------
