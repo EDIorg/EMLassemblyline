@@ -28,14 +28,23 @@
 #' @return
 #' \item{raster_attributes.txt}{Columns:
 #'     \itemize{
-#'     \item{filename: Filename of a raster (raster only)}
-#'     \item{extname: Filename without extension of a shapefile (shapefile only)}
+#'     \item{filename: Filename of a raster}
 #'     \item{description: Description of the spatial file}
 #'     \item{geoDescription: Description of the geographic coverage of the spatial file}
 #'     \item{url: Accessible url for download of the file}
-#'     \item{definition: Definition of an attribute (raster only)}
-#'     \item{unit: Unit of an attribute (raster only)}
-#'     \item{numberType: ('real', 'natural', 'integer', 'whole', 'categorical') (raster only)}
+#'     \item{definition: Definition of an attribute}
+#'     \item{unit: Unit of an attribute}
+#'     \item{numberType: ('real', 'natural', 'integer', 'whole', 'categorical')}
+#'     }
+#' }
+#' 
+#' \item{shape_attributes.txt}{Columns:
+#'     \itemize{
+#'     \item{extname: Filename without extension of a shapefile}
+#'     \item{root_dir: Name of directory (within a specified path) that holds shapefile components}
+#'     \item{description: Description of the spatial file}
+#'     \item{geoDescription: Description of the geographic coverage of the spatial file}
+#'     \item{url: Accessible url for download of the file}
 #'     }
 #' }
 #'
@@ -105,6 +114,7 @@ template_spatial_attributes <- function(
     
     empty_output <- data.frame(
       extname = character(),
+      root_dir = character(),
       description = character(),
       geoDescription = character(),
       url = character(),
@@ -113,6 +123,7 @@ template_spatial_attributes <- function(
     
     named_output <- data.frame(
       extname = tools::file_path_sans_ext(spatial.files),
+      root_dir = rep("", length(spatial.files)),
       description = rep("", length(spatial.files)),
       geoDescription = rep("", length(spatial.files)),
       url = rep("", length(spatial.files)),
