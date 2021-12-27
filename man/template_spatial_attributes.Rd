@@ -57,6 +57,7 @@ vector of character strings (e.g.
     \item{description: Description of the spatial file}
     \item{geoDescription: Description of the geographic coverage of the spatial file}
     \item{url: Accessible url for download of the file}
+    \item{overwrite: Allow the build_shape_element function to overwrite existing directory? (TRUE or FALSE)}
     }
 }
 }

@@ -1,4 +1,3 @@
-
 #' Create EML \code{<spatialRaster>} elements
 #'
 #' @description Creates a list of <spatialRaster> elements by parsing user-provided information and physical files. Can be called from \code{make_eml()} or as a stand-alone function.

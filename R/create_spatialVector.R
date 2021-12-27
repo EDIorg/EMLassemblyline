@@ -1,4 +1,47 @@
-create_spatialVector <- function(path, data.path = path, vector_attributes = NULL, overwrite) {
+#' Create EML \code{<spatialVector>} elements
+#'
+#' @description Creates a list of <spatialVector> elements by parsing user-provided information and physical files. Can be called from \code{make_eml()} or as a stand-alone function.
+#'
+#' @param path 
+#'     (character) Path to the metadata template directory.
+#' @param data.path
+#'     (character) Path to the data directory.
+#' @param vector_attributes 
+#'     (data.frame; optional) Alternative to a vector attributes template; enter attributes into a data.frame object and provide as an argument.
+#'
+#' @return
+#' \item{spatialVector}{\code{<spatialVector>} element (list) that can be inserted into an EML file or object via \code{make_eml()}.}
+#'
+#' @examples
+#' \dontrun{
+#' # Set working directory
+#' setwd("/Users/me/Documents/data_packages/pkg_260")
+#' 
+#' # For use with shape_attributes.txt
+#' spatialVector <- create_spatialVector(
+#'   path = "./metadata_templates",
+#'   data.path = "./data_objects")
+#' 
+#' 
+#' # For use without a template
+#' 
+#' my_attributes <- data.frame(
+#'   extname = "my_shape_layer",
+#'   root_dir = "Shapefile Folder",
+#'   description  = "Experimental Plots",
+#'   geoDescription = 'Greater Rio Grande valley area',
+#'   overwrite = TRUE
+#'   )
+#' 
+#' spatialVector <- create_spatialVector(
+#'   path = "./metadata_templates",
+#'   data.path = "./data_objects",
+#'   vector_attributes = my_attributes)
+#' }
+#' 
+#' @export
+#'
+create_spatialVector <- function(path, data.path = path, vector_attributes = NULL) {
   
   # If the user does not provide a direct path to a raster_attributes.txt template
   # AND does not have a raster_attributes.txt template at the path directory,
@@ -85,6 +128,19 @@ create_spatialVector <- function(path, data.path = path, vector_attributes = NUL
   
 }
 
+#' Build the <spatialVector> elements
+#'
+#' @param s
+#'     (list) A single row from the vector_template
+#' @param path 
+#'     (character) Path to the metadata template directory.
+#' @param data.path
+#'     (character) Path to the data directory.
+#'
+#' @return
+#' \item{spatialVector}{A single \code{<spatialVector>} element (list).}
+#' 
+#'
 build_shape_element <- function(s, path = path, data.path = data.path) {
   
   message(paste0('  <spatialVector> (', s$extname, ')'))

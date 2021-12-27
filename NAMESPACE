@@ -3,6 +3,7 @@
 export(annotate_eml)
 export(api_get_provenance_metadata)
 export(create_spatialRaster)
+export(create_spatialVector)
 export(detect_delimeter)
 export(detect_os)
 export(eml2eal)
