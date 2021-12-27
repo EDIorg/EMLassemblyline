@@ -319,6 +319,12 @@ build_raster_element <- function(r, rv = raster_var, path = path, data.path = da
   pathToFile <- path.expand(paste0(data.path, r$filename))
   
   # set distribution
+  
+  # TODO can we not include distribution if the url == ""?
+  ## Will eml$physical work with ""?
+  ## Will it work without distribution?
+  
+  
   distribution <- EML::eml$distribution(
             EML::eml$online(url = r$url))
 

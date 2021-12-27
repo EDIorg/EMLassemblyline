@@ -45,6 +45,7 @@
 #'     \item{description: Description of the spatial file}
 #'     \item{geoDescription: Description of the geographic coverage of the spatial file}
 #'     \item{url: Accessible url for download of the file}
+#'     \item{overwrite: Allow the build_shape_element function to overwrite existing directory? (TRUE or FALSE)}
 #'     }
 #' }
 #'
@@ -118,6 +119,7 @@ template_spatial_attributes <- function(
       description = character(),
       geoDescription = character(),
       url = character(),
+      overwrite = character(),
       stringsAsFactors = F
     )
     
@@ -127,6 +129,7 @@ template_spatial_attributes <- function(
       description = rep("", length(spatial.files)),
       geoDescription = rep("", length(spatial.files)),
       url = rep("", length(spatial.files)),
+      overwrite = rep("FALSE", length(spatial.files)),
       stringsAsFactors = F
     )
   }
