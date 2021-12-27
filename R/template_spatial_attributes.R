@@ -8,12 +8,12 @@
 #'     (character) Path to the data directory.
 #' @param spatial.type
 #'     (character) Type of spatial data.
-#'     \item{Currently Supported}{
+#'     Currently Supported:
 #'         \itemize{
 #'         \item{raster: Filename of raster data}
 #'         \item{shape: Filename (without extension) of a shapefile}
 #'         }
-#'     }
+#'     
 #' @param spatial.files
 #'     (character) File name. If more than one, then supply as a 
 #'     vector of character strings (e.g. 

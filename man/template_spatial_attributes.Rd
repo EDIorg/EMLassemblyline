@@ -20,12 +20,11 @@ template_spatial_attributes(
 \item{data.path}{(character) Path to the data directory.}
 
 \item{spatial.type}{(character) Type of spatial data.
-\item{Currently Supported}{
+Currently Supported:
     \itemize{
     \item{raster: Filename of raster data}
     \item{shape: Filename (without extension) of a shapefile}
-    }
-}}
+    }}
 
 \item{spatial.files}{(character) File name. If more than one, then supply as a 
 vector of character strings (e.g. 
