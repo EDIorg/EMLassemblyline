@@ -1319,6 +1319,12 @@ make_eml <- function(
     eml$dataset$spatialRaster <- create_spatialRaster(path = path, data.path = data.path)
   }
   
+  # Create <spatialVector> --------------------------------------------------
+
+  if (any(stringr::str_detect(list.files(path), "shape_attributes.txt"))) {
+    eml$dataset$spatialVector <- create_spatialRaster(path = path, data.path = data.path)
+  }
+  
   # Create <otherEntity> ------------------------------------------------------
   
   if (!is.null(x$other.entity)) {
