@@ -74,7 +74,14 @@ create_spatialVector <- function(path, data.path = path, vector_attributes = NUL
   
   vector_template <- vector_template[!(vector_template$extname %in% missing_descs),]
   
-  # TODO insert the build_vector_element() function here
+  sv <- vector("list", nrow(vector_template))
+  for (i in 1:nrow(vector_template)) {
+    sv[[i]] <- build_shape_element(
+      s = vector_template[i,],
+      path = path,
+      data.path = data.path)
+    
+  }
   
 }
 
@@ -135,14 +142,14 @@ build_shape_element <- function(s, path = path, data.path = data.path) {
     
   }
   
-  system(
+  invisible(system(
     paste0(
       "zip -jXDr ",
       paste0(shQuote(new_dir, type = "sh"), ".zip"),
       " ",
       shQuote(new_dir, type = "sh")
-    )
-  )
+    ), intern = TRUE
+  ))
   
   zipped_name <- paste0(s$extname, ".zip")
   
@@ -155,7 +162,7 @@ build_shape_element <- function(s, path = path, data.path = data.path) {
   # read data
   
   this_vector <- sf::st_read(
-    dsn = paste0(data.path, s$root_dir))
+    dsn = paste0(data.path, s$root_dir), quiet = TRUE)
   
   # construct EML -----------------------------------------------------
   
