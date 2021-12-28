@@ -1,15 +1,15 @@
 context("create_spatialVector()")
 library(EMLassemblyline)
 
+#FIXME once there is test data
+
 testthat::test_that("create_spatialVector validates template", {
   
   
   # Create shape_attribute object
-  s <- template_spatial_attributes(spatial.type = 'shape', spatial.files = c('shapeTest', 'missingShape', 'missingDef'), write.file = FALSE, return.obj = TRUE)
+  s <- template_spatial_attributes(spatial.type = 'shape', spatial.files = c('missingDef', 'missingShape'), write.file = FALSE, return.obj = TRUE)
   
   # Add test files
-  
-  cat(NULL,file=paste0(tempdir(), '/shapeTest'))
   cat(NULL,file=paste0(tempdir(), '/missingDef'))
   
   # Create filler 
@@ -19,7 +19,7 @@ testthat::test_that("create_spatialVector validates template", {
   
   # Remove def form "missingDef
   
-  s[3,3] <- ""
+  s[1,3] <- ""
   
   # Test that "missingShape" can't be found, "missingDef" has no definition.
   

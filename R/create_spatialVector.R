@@ -117,6 +117,10 @@ create_spatialVector <- function(path, data.path = path, vector_attributes = NUL
   
   vector_template <- vector_template[!(vector_template$extname %in% missing_descs),]
   
+  if (nrow(vector_template) == 0) {
+    stop("See warning messages:\n")
+  }
+  
   sv <- vector("list", nrow(vector_template))
   for (i in 1:nrow(vector_template)) {
     sv[[i]] <- build_shape_element(

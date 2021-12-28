@@ -10,8 +10,9 @@
 #'     (character) Type of spatial data.
 #'     Currently Supported:
 #'         \itemize{
-#'         \item{raster: Filename of raster data}
-#'         \item{shape: Filename (without extension) of a shapefile}
+#'         \item{raster: Generate a template for raster data}
+#'         \item{vector: Generate a template for KML or GeoJSON vector data}
+#'         \item{shape: Generate a template for an ESRI shapefile}
 #'         }
 #'     
 #' @param spatial.files
@@ -28,13 +29,25 @@
 #' @return
 #' \item{raster_attributes.txt}{Columns:
 #'     \itemize{
-#'     \item{filename: Filename of a raster}
+#'     \item{filename: Filename of some raster data}
 #'     \item{description: Description of the spatial file}
 #'     \item{geoDescription: Description of the geographic coverage of the spatial file}
 #'     \item{url: Accessible url for download of the file}
 #'     \item{definition: Definition of an attribute}
 #'     \item{unit: Unit of an attribute}
 #'     \item{numberType: ('real', 'natural', 'integer', 'whole', 'categorical')}
+#'     }
+#' }
+#' 
+#' \item{vector_attributes.txt}{Columns:
+#'     \itemize{
+#'     \item{filename: Filename of some vector data}
+#'     \item{layer: Name of directory (within a specified path) that holds shapefile components}
+#'     \item{driver: Name of vector data format. ('kml', 'geojson') }
+#'     \item{description: Description of the spatial file}
+#'     \item{geoDescription: Description of the geographic coverage of the spatial file}
+#'     \item{url: Accessible url for download of the file}
+#'     \item{overwrite: Allow the build_shape_element function to overwrite existing directory? (TRUE or FALSE)}
 #'     }
 #' }
 #' 
@@ -126,6 +139,29 @@ template_spatial_attributes <- function(
     named_output <- data.frame(
       extname = tools::file_path_sans_ext(spatial.files),
       root_dir = rep("", length(spatial.files)),
+      description = rep("", length(spatial.files)),
+      geoDescription = rep("", length(spatial.files)),
+      url = rep("", length(spatial.files)),
+      overwrite = rep("FALSE", length(spatial.files)),
+      stringsAsFactors = F
+    )
+  } else if (spatial.type == "vector") {
+    
+    empty_output <- data.frame(
+      filename = character(),
+      layer = character(),
+      driver = character(),
+      description = character(),
+      geoDescription = character(),
+      url = character(),
+      overwrite = character(),
+      stringsAsFactors = F
+    )
+    
+    named_output <- data.frame(
+      filename = tools::file_path_sans_ext(spatial.files),
+      layer = rep("", length(spatial.files)),
+      driver = rep("", length(spatial.files)),
       description = rep("", length(spatial.files)),
       geoDescription = rep("", length(spatial.files)),
       url = rep("", length(spatial.files)),
