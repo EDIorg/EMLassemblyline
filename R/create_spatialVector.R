@@ -436,6 +436,23 @@ build_shape_element <- function(s, path = path, data.path = data.path) {
   
 }
 
+
+
+
+#' Build the <spatialVector> elements for KML files
+#'
+#' @param s
+#'     (list) A single row from the vector_template object.
+#' @param path 
+#'     (character) Path to the metadata template directory.
+#' @param data.path
+#'     (character) Path to the data directory.
+#'
+#' @return
+#' \item{spatialVector}{A single \code{<spatialVector>} element (list).}
+#' \item{KML file}{If the original KML file has multiple layers, returns a KML file for each layer specified in vector attributes template.}
+#' 
+#'
 build_vector_element <- function(v, path = path, data.path = data.path) {
   
   message(paste0('  <spatialVector> (', v$filename, ', ', v$layer, ' layer)'))
