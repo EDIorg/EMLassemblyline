@@ -22,8 +22,9 @@ template_spatial_attributes(
 \item{spatial.type}{(character) Type of spatial data.
 Currently Supported:
     \itemize{
-    \item{raster: Filename of raster data}
-    \item{shape: Filename (without extension) of a shapefile}
+    \item{raster: Generate a template for raster data}
+    \item{vector: Generate a template for KML or GeoJSON vector data}
+    \item{shape: Generate a template for an ESRI shapefile}
     }}
 
 \item{spatial.files}{(character) File name. If more than one, then supply as a 
@@ -39,13 +40,25 @@ vector of character strings (e.g.
 \value{
 \item{raster_attributes.txt}{Columns:
     \itemize{
-    \item{filename: Filename of a raster}
+    \item{filename: Filename of some raster data}
     \item{description: Description of the spatial file}
     \item{geoDescription: Description of the geographic coverage of the spatial file}
     \item{url: Accessible url for download of the file}
     \item{definition: Definition of an attribute}
     \item{unit: Unit of an attribute}
     \item{numberType: ('real', 'natural', 'integer', 'whole', 'categorical')}
+    }
+}
+
+\item{vector_attributes.txt}{Columns:
+    \itemize{
+    \item{filename: Filename of some vector data}
+    \item{layer: Name of directory (within a specified path) that holds shapefile components}
+    \item{driver: Name of vector data format. ('kml', 'geojson') }
+    \item{description: Description of the spatial file}
+    \item{geoDescription: Description of the geographic coverage of the spatial file}
+    \item{url: Accessible url for download of the file}
+    \item{overwrite: Allow the build_shape_element function to overwrite existing directory? (TRUE or FALSE)}
     }
 }
 

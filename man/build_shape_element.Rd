@@ -2,12 +2,12 @@
 % Please edit documentation in R/create_spatialVector.R
 \name{build_shape_element}
 \alias{build_shape_element}
-\title{Build the <spatialVector> elements}
+\title{Build the <spatialVector> elements for shapefiles}
 \usage{
 build_shape_element(s, path = path, data.path = data.path)
 }
 \arguments{
-\item{s}{(list) A single row from the vector_template}
+\item{s}{(list) A single row from the shape_template object.}
 
 \item{path}{(character) Path to the metadata template directory.}
 
@@ -17,5 +17,5 @@ build_shape_element(s, path = path, data.path = data.path)
 \item{spatialVector}{A single \code{<spatialVector>} element (list).}
 }
 \description{
-Build the <spatialVector> elements
+Build the <spatialVector> elements for shapefiles
 }

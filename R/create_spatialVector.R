@@ -80,65 +80,119 @@ create_spatialVector <- function(path, data.path = path, vector_attributes = NUL
   # Validate template -------------------------------------------------------
   
   # Check that files exist
-
-  missing_shapes <- mapply(
-    function(x, y) {
-      if (y == ""){
-
-        if(!any(stringr::str_detect(list.files(data.path), x))) {x}
-
-      } else {
-
-        # Check in specified root_dir
-
-        if(!any(stringr::str_detect(list.files(paste0(data.path, "/", y)), x))) {x}
-
-
-
-      }
-    },
-    x = shape_template$extname,
-    y = shape_template$root_dir
-  )
   
-  # Warn that files don't exist
-  
-  if (!is.null(unlist(missing_shapes))) {
+  if (exists('shape_template')) {
     
-    warning(paste0("Could not locate '", paste(unlist(missing_shapes)), "' at '", data.path, "'\n"), call. = F)
-  }
+    missing_shapes <- mapply(
+      function(x, y) {
+        if (y == ""){
   
-  # Remove missing files from template
+          if(!any(stringr::str_detect(list.files(data.path), x))) {x}
   
-  shape_template <- shape_template[!(shape_template$extname %in% missing_shapes),]
+        } else {
   
-  # Check that attributeDefinitions exist
+          # Check in specified root_dir
   
-  missing_descs <- shape_template$extname[shape_template$description == ""]
+          if(!any(stringr::str_detect(list.files(paste0(data.path, "/", y)), x))) {x}
   
-  # Warn that files don't exist
   
-  if (length(missing_descs) != 0) {
+  
+        }
+      },
+      x = shape_template$extname,
+      y = shape_template$root_dir
+    )
     
-    warning(paste0("File '", paste(unlist(missing_descs)), "' does not have a description in the vector_attributes template (Required).\n"), call. = F)
-  }
-  
-  # Remove files with missing definitions from template
-  
-  shape_template <- shape_template[!(shape_template$extname %in% missing_descs),]
-  
-  if (nrow(shape_template) == 0) {
-    stop("See warning messages:\n")
-  }
-  
-  sv <- vector("list", nrow(shape_template))
-  for (i in 1:nrow(shape_template)) {
-    sv[[i]] <- build_shape_element(
-      s = shape_template[i,],
-      path = path,
-      data.path = data.path)
+    # Warn that files don't exist
     
+    if (!is.null(unlist(missing_shapes))) {
+      
+      warning(paste0("Could not locate '", paste(unlist(missing_shapes)), "' at '", data.path, "'\n"), call. = F)
+    }
+    
+    # Remove missing files from template
+    
+    shape_template <- shape_template[!(shape_template$extname %in% missing_shapes),]
+    
+    # Check that attributeDefinitions exist
+    
+    missing_shape_descs <- shape_template$extname[shape_template$description == ""]
+    
+    # Warn that files don't exist
+    
+    if (length(missing_shape_descs) != 0) {
+      
+      warning(paste0("File '", paste(unlist(missing_shape_descs)), "' does not have a description in the shape_attributes template (Required).\n"), call. = F)
+    }
+    
+    # Remove files with missing definitions from template
+    
+    shape_template <- shape_template[!(shape_template$extname %in% missing_shape_descs),]
+    
+    if (nrow(shape_template) == 0) {
+      stop("See warning messages:\n")
+    }
+    
+    sv_shape <- vector("list", nrow(shape_template))
+    for (i in 1:nrow(shape_template)) {
+      sv_shape[[i]] <- build_shape_element(
+        s = shape_template[i,],
+        path = path,
+        data.path = data.path)
+      
+    }
   }
+  
+  if (exists('vector_template')) {
+    
+    missing_vectors <- lapply(raster_template$filename, function(x) {
+      if(!any(stringr::str_detect(list.files(data.path), x))) x })
+    
+    # Warn that files don't exist
+    
+    if (!is.null(unlist(missing_vectors))) {
+      
+      warning(paste0("Could not locate '", paste(unlist(missing_vectors)), "' at '", data.path, "'\n"), call. = F)
+    }
+    
+    # Remove missing files from template
+    
+    vector_template <- vector_template[!(vector_template$filename %in% missing_vectors),]
+    
+    
+    # TODO probably need to check that the layer specified exists
+    
+    # TODO if no layer specified, default to all layers?
+    
+    # Check that attributeDefinitions exist
+    
+    missing_vector_descs <- vector_template$extname[vector_template$description == ""]
+    
+    # Warn that descriptions don't exist
+    
+    if (length(missing_vector_descs) != 0) {
+      
+      warning(paste0("File '", paste(unlist(missing_vector_descs)), "' does not have a description in the vector_attributes template (Required).\n"), call. = F)
+    }
+    
+    # Remove files with missing definitions from template
+    
+    vector_template <- vector_template[!(vector_template$extname %in% missing_vector_descs),]
+    
+    # if (nrow(vector_template) == 0) {
+    #   stop("See warning messages:\n")
+    # }
+    # 
+    # sv_vector <- vector("list", nrow(vector_template))
+    # for (i in 1:nrow(vector_template)) {
+    #   sv_vector[[i]] <- build_vector_element(
+    #     v = vector_template[i,],
+    #     path = path,
+    #     data.path = data.path)
+      
+    # }
+  }
+
   
 }
 
@@ -345,4 +399,146 @@ build_shape_element <- function(s, path = path, data.path = data.path) {
   
 }
 
-build_vector_element <- function()
+build_vector_element <- function(v, path = path, data.path = data.path) {
+  
+  message(paste0('  <spatialVector> (', v$filename, ')'))
+  
+  if (tolower(v$driver) == 'geojson') {
+    
+    file_extension  <- "geojson"
+    data_one_format <- "GeoJSON"
+    
+  } else if (tolower(v$driver) == 'kml') {
+    
+    file_extension  <- "kml"
+    data_one_format <- "Google Earth Keyhole Markup Language (KML)"
+    
+  } else warning("Driver not supported. Choose KML or GeoJSON", call. = FALSE)
+  
+  
+  # read data
+  # TODO best way to read data?
+  this_vector <- sf::st_read(
+    dsn = paste0(data.path, v$filename),
+    layer = v$layer,
+    quiet = TRUE)
+  
+  new_vector_name <- paste0(data.path, '/', tools::file_path_sans_ext(v$filename), "_", v$layer, ".", file_extension)
+  
+  # construct EML -----------------------------------------------------
+  
+  # geographic coverage
+  
+  if (v$geoDescription == "") warning("Entity ", s$extname," does not have a geographic description.", call. = FALSE)
+  
+  spatialCoverage <- EML::set_coverage(
+    geographicDescription = v$geoDescription,
+    westBoundingCoordinate =  sf::st_bbox(this_vector)[["xmin"]],
+    eastBoundingCoordinate =  sf::st_bbox(this_vector)[["xmax"]],
+    northBoundingCoordinate = sf::st_bbox(this_vector)[["ymax"]],
+    southBoundingCoordinate = sf::st_bbox(this_vector)[["ymin"]]
+  )
+  
+  # write to kml ------------------------------------------------------------
+
+  if (file.exists(new_vector_name) && v$overwrite == FALSE) {
+    
+    stop("file to be created (", paste0(vector_name_string, file_extension), ") already exists in working directory (set overwrite to TRUE)")
+    
+  }
+  
+  sf::st_write(
+    obj = this_vector,
+    dsn = new_vector_name,
+    driver = file_extension
+  )
+  
+  # attributes ---------------------------------------------------------------
+  
+  # TODO not sure about supporting this
+  
+  # set physical ----------------------------------------------------------------
+  
+  # distribution
+  
+
+  fileDistribution <- EML::eml$distribution(
+    EML::eml$online(url = v$url))
+  
+  # data format
+  
+  fileDataFormat <- EML::eml$dataFormat(
+    externallyDefinedFormat = EML::eml$externallyDefinedFormat(
+      formatName = data_one_format)
+  )
+  
+  # file size
+  
+  fileSize <- EML::eml$size(unit = "byte")
+  fileSize$size <- file.size(new_vector_name)
+  
+  # authentication
+  
+  fileAuthentication <- EML::eml$authentication(method = "MD5")
+  fileAuthentication$authentication <- tools::md5sum(new_vector_name)
+  
+  # construct physical
+  
+  spatialVectorPhysical <- EML::eml$physical(
+    objectName = basename(new_vector_name),
+    authentication = fileAuthentication,
+    size = fileSize,
+    dataFormat = fileDataFormat,
+    distribution = fileDistribution
+  )
+  
+  # create spatialVector entity ---------------------------------------------
+  
+  sv <- EML::eml$spatialVector(
+    entityName = basename(new_vector_name),
+    entityDescription = v$description,
+    physical = spatialVectorPhysical,
+    coverage = spatialCoverage,
+    #attributeList = attributes,
+    geometricObjectCount = nrow(this_vector)
+  )
+  
+  
+  # add geometry type -------------------------------------------------------
+  
+  sfGeometry <- attr(this_vector$geometry, "class")[[1]]
+  
+  if (grepl("polygon", sfGeometry, ignore.case = TRUE)) {
+    
+    objectGeometry <- "Polygon"
+    
+  } else if (grepl("point", sfGeometry, ignore.case = TRUE)) {
+    
+    objectGeometry <- "Point"
+    
+  } else if (grepl("linestring", sfGeometry, ignore.case = TRUE)) {
+    
+    objectGeometry <- "LineString"
+    
+  } else {
+    
+    stop(paste0("undetermined geometry: ", attr(this_vector$geometry, "class")[[1]]))
+    
+  }
+  
+  sv$geometry <- objectGeometry
+  
+  
+  # add spatial reference  --------------------------------------------------
+  
+  #TODO this needs the mapping function
+  
+  sv$spatialReference <- EML::eml$spatialReference(
+    horizCoordSysName = "GCS_WGS_1984"
+  )
+  
+  # return ------------------------------------------------------------------
+  
+  return(sv)  
+  
+}

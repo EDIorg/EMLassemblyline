@@ -4,7 +4,12 @@
 \alias{create_spatialVector}
 \title{Create EML \code{<spatialVector>} elements}
 \usage{
-create_spatialVector(path, data.path = path, vector_attributes = NULL)
+create_spatialVector(
+  path,
+  data.path = path,
+  vector_attributes = NULL,
+  shape_attributes = NULL
+)
 }
 \arguments{
 \item{path}{(character) Path to the metadata template directory.}
@@ -12,6 +17,8 @@ create_spatialVector(path, data.path = path, vector_attributes = NULL)
 \item{data.path}{(character) Path to the data directory.}
 
 \item{vector_attributes}{(data.frame; optional) Alternative to a vector attributes template; enter attributes into a data.frame object and provide as an argument.}
+
+\item{shape_attributes}{(data.frame; optional) Alternative to a shape attributes template; enter attributes into a data.frame object and provide as an argument.}
 }
 \value{
 \item{spatialVector}{\code{<spatialVector>} element (list) that can be inserted into an EML file or object via \code{make_eml()}.}
@@ -43,7 +50,7 @@ my_attributes <- data.frame(
 spatialVector <- create_spatialVector(
   path = "./metadata_templates",
   data.path = "./data_objects",
-  vector_attributes = my_attributes)
+  shape_attributes = my_attributes)
 }
 
 }

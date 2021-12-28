@@ -25,7 +25,8 @@ Imports:
     tools (>= 3.6.1),
     uuid (>= 0.1-4),
     xml2 (>= 1.3.2),
-    raster
+    raster,
+    sf
 Suggests: testthat
 License: MIT
 Encoding: UTF-8
