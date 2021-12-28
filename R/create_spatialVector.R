@@ -53,45 +53,35 @@ create_spatialVector <- function(path, data.path = path, vector_attributes = NUL
   
   if (is.null(c(vector_attributes, shape_attributes)) & !any(c('shape_attributes.txt', 'vector_attributes.txt') %in% list.files(path))) { # TODO eventually, this function should handle any vector data
     
-    stop("A vector_attributes template is required.", call. = FALSE)
-    
-  }
+    stop("A vector_attributes template is required.", call. = FALSE)}
   
   if (!is.null(vector_attributes)) {
-    
-    # Use the argument vector_attributes if provided
-    print('vec')
+
     vector_template = vector_attributes
     
   } else if ('vector_attributes.txt' %in% list.files(path)) {
     
-    print('vec tem')
     vector_template <- data.table::fread(
       paste0(path, '/vector_attributes.txt'),
       colClasses = "character",
-      sep = '\t') 
-  }
+      sep = '\t')}
   
   if (!is.null(shape_attributes)) {
-    print('shape')
+    
     shape_template = shape_attributes
     
   } else if ('shape_attributes.txt' %in% list.files(path)) {
     
-    # read table
-    print('shape_tem')
     shape_template <- data.table::fread(
       paste0(path, '/shape_attributes.txt'),
       colClasses = "character",
-      sep = '\t') 
-    
-  }
+      sep = '\t')}
   
   # Validate template -------------------------------------------------------
   
   # Check that files exist
 
-  missing_files <- mapply(
+  missing_shapes <- mapply(
     function(x, y) {
       if (y == ""){
 
@@ -107,24 +97,24 @@ create_spatialVector <- function(path, data.path = path, vector_attributes = NUL
 
       }
     },
-    x = vector_template$extname,
-    y = vector_template$root_dir
+    x = shape_template$extname,
+    y = shape_template$root_dir
   )
   
   # Warn that files don't exist
   
-  if (!is.null(unlist(missing_files))) {
+  if (!is.null(unlist(missing_shapes))) {
     
-    warning(paste0("Could not locate '", paste(unlist(missing_files)), "' at '", data.path, "'\n"), call. = F)
+    warning(paste0("Could not locate '", paste(unlist(missing_shapes)), "' at '", data.path, "'\n"), call. = F)
   }
   
   # Remove missing files from template
   
-  vector_template <- vector_template[!(vector_template$extname %in% missing_files),]
+  shape_template <- shape_template[!(shape_template$extname %in% missing_shapes),]
   
   # Check that attributeDefinitions exist
   
-  missing_descs <- vector_template$extname[vector_template$description == ""]
+  missing_descs <- shape_template$extname[shape_template$description == ""]
   
   # Warn that files don't exist
   
@@ -135,16 +125,16 @@ create_spatialVector <- function(path, data.path = path, vector_attributes = NUL
   
   # Remove files with missing definitions from template
   
-  vector_template <- vector_template[!(vector_template$extname %in% missing_descs),]
+  shape_template <- shape_template[!(shape_template$extname %in% missing_descs),]
   
-  if (nrow(vector_template) == 0) {
+  if (nrow(shape_template) == 0) {
     stop("See warning messages:\n")
   }
   
-  sv <- vector("list", nrow(vector_template))
-  for (i in 1:nrow(vector_template)) {
+  sv <- vector("list", nrow(shape_template))
+  for (i in 1:nrow(shape_template)) {
     sv[[i]] <- build_shape_element(
-      s = vector_template[i,],
+      s = shape_template[i,],
       path = path,
       data.path = data.path)
     
@@ -152,10 +142,10 @@ create_spatialVector <- function(path, data.path = path, vector_attributes = NUL
   
 }
 
-#' Build the <spatialVector> elements
+#' Build the <spatialVector> elements for shapefiles
 #'
 #' @param s
-#'     (list) A single row from the vector_template
+#'     (list) A single row from the shape_template object.
 #' @param path 
 #'     (character) Path to the metadata template directory.
 #' @param data.path
