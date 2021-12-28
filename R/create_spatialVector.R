@@ -220,7 +220,17 @@ print(vector_template)
     }
   }
 
-  
+
+# Return the spatialVector elements ---------------------------------------
+
+  if (exists("sv_vector") & exists("sv_shape")) {
+    sv <- c(sv_vector, sv_shape)
+    return(sv)
+  } else if (exists("sv_vector")) {
+    return(sv_vector)
+  } else if (exists("sv_shape")) {
+    return(sv_shape)
+    }
 }
 
 #' Build the <spatialVector> elements for shapefiles
