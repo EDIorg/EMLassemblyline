@@ -77,7 +77,7 @@ create_spatialVector <- function(path, data.path = path, vector_attributes = NUL
       colClasses = "character",
       sep = '\t')}
   
-  # Validate template -------------------------------------------------------
+  # Validate shape template -------------------------------------------------------
   
   # Check that files exist
   
@@ -143,9 +143,12 @@ create_spatialVector <- function(path, data.path = path, vector_attributes = NUL
     }
   }
   
+
+# Validate vector template ------------------------------------------------
+  
   if (exists('vector_template')) {
     
-    missing_vectors <- lapply(raster_template$filename, function(x) {
+    missing_vectors <- lapply(vector_template$filename, function(x) {
       if(!any(stringr::str_detect(list.files(data.path), x))) x })
     
     # Warn that files don't exist
@@ -160,13 +163,9 @@ create_spatialVector <- function(path, data.path = path, vector_attributes = NUL
     vector_template <- vector_template[!(vector_template$filename %in% missing_vectors),]
     
     
-    # TODO probably need to check that the layer specified exists
+    # Check that description exist
     
-    # TODO if no layer specified, default to all layers?
-    
-    # Check that attributeDefinitions exist
-    
-    missing_vector_descs <- vector_template$extname[vector_template$description == ""]
+    missing_vector_descs <- vector_template$filename[vector_template$description == ""]
     
     # Warn that descriptions don't exist
     
@@ -177,20 +176,48 @@ create_spatialVector <- function(path, data.path = path, vector_attributes = NUL
     
     # Remove files with missing definitions from template
     
-    vector_template <- vector_template[!(vector_template$extname %in% missing_vector_descs),]
+    vector_template <- vector_template[!(vector_template$filename %in% missing_vector_descs),]
     
-    # if (nrow(vector_template) == 0) {
-    #   stop("See warning messages:\n")
-    # }
-    # 
-    # sv_vector <- vector("list", nrow(vector_template))
-    # for (i in 1:nrow(vector_template)) {
-    #   sv_vector[[i]] <- build_vector_element(
-    #     v = vector_template[i,],
-    #     path = path,
-    #     data.path = data.path)
+    # Check that specified layer exists
+    missing_layers <- mapply(
+      function(x, y) { 
+        if (!x %in% sf::st_layers(y)$name) TRUE else FALSE },
+      x = vector_template$layer,
+      y = paste0(data.path, '/', vector_template$filename))
+    
+    # Warn that layers don't exist
+    if (sum(missing_layers > 0)) {
       
-    # }
+      missing_rows <- vector_template[missing_layers,]
+      
+      for (i in 1:nrow(missing_rows)){
+        warning(paste0("Layer '", missing_rows[i,]$layer, "' was not found in '", missing_rows[i,]$filename, "'.\n"), call. = F)
+      } 
+    }
+    
+    # Remove missing layers
+
+    vector_template <- vector_template[!missing_layers,]
+print(vector_template)    
+    # TODO if no layer specified, default to all layers?
+    
+    # For the time being, every layer needs to be specified. 
+    
+    # In the future, possible layer == '' or layer not found defaults to otherEntity. otherEntity generates warning "Created as other entity." 
+    
+    
+    if (nrow(vector_template) == 0) {
+      stop("See warning messages:\n")
+    }
+
+    sv_vector <- vector("list", nrow(vector_template))
+    for (i in 1:nrow(vector_template)) {
+      sv_vector[[i]] <- build_vector_element(
+        v = vector_template[i,],
+        path = path,
+        data.path = data.path)
+
+    }
   }
 
   
@@ -401,7 +428,7 @@ build_shape_element <- function(s, path = path, data.path = data.path) {
 
 build_vector_element <- function(v, path = path, data.path = data.path) {
   
-  message(paste0('  <spatialVector> (', v$filename, ')'))
+  message(paste0('  <spatialVector> (', v$filename, ', ', v$layer, ' layer)'))
   
   if (tolower(v$driver) == 'geojson') {
     
@@ -416,20 +443,20 @@ build_vector_element <- function(v, path = path, data.path = data.path) {
   } else warning("Driver not supported. Choose KML or GeoJSON", call. = FALSE)
   
   
-  # read data
-  # TODO best way to read data?
-  this_vector <- sf::st_read(
-    dsn = paste0(data.path, v$filename),
-    layer = v$layer,
-    quiet = TRUE)
+
+# Read kml data -----------------------------------------------------------
   
-  new_vector_name <- paste0(data.path, '/', tools::file_path_sans_ext(v$filename), "_", v$layer, ".", file_extension)
+  this_vector <- sf::st_read(
+      dsn = paste0(data.path, v$filename),
+      layer = v$layer,
+      quiet = TRUE)
+  
   
   # construct EML -----------------------------------------------------
   
   # geographic coverage
   
-  if (v$geoDescription == "") warning("Entity ", s$extname," does not have a geographic description.", call. = FALSE)
+  if (v$geoDescription == "") warning("Entity ", v$filename," does not have a geographic description.", call. = FALSE)
   
   spatialCoverage <- EML::set_coverage(
     geographicDescription = v$geoDescription,
@@ -441,17 +468,34 @@ build_vector_element <- function(v, path = path, data.path = data.path) {
   
   # write to kml ------------------------------------------------------------
 
-  if (file.exists(new_vector_name) && v$overwrite == FALSE) {
+  
+  # if there is only 1 layer in original, don't rewrite the file
+  
+  if (length(sf::st_layers(paste0(data.path, '/', v$filename))$name) == 1) {
     
-    stop("file to be created (", paste0(vector_name_string, file_extension), ") already exists in working directory (set overwrite to TRUE)")
+    new_vector_name <- paste0(data.path, '/', v$filename)
+  
+  } else {
+    
+    # TODO handle the kml snippet already existing
+    
+    new_vector_name <- paste0(data.path, '/', tools::file_path_sans_ext(v$filename), "_", v$layer, ".", file_extension)
+      
+    if (file.exists(new_vector_name) && v$overwrite == FALSE) {
+      
+      stop("file to be created (", paste0(vector_name_string, file_extension), ") already exists in working directory (set overwrite to TRUE)")
+      
+    }
+    
+    sf::st_write(
+      obj = this_vector,
+      dsn = new_vector_name,
+      driver = file_extension,
+      delete_dsn = TRUE,
+      quiet = TRUE)
     
   }
   
-  sf::st_write(
-    obj = this_vector,
-    dsn = new_vector_name,
-    driver = file_extension
-  )
   
   # attributes ---------------------------------------------------------------
   
