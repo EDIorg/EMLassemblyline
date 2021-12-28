@@ -8,6 +8,10 @@
 #'     (character) Path to the data directory.
 #' @param vector_attributes 
 #'     (data.frame; optional) Alternative to a vector attributes template; enter attributes into a data.frame object and provide as an argument.
+#' @param shape_attributes 
+#'     (data.frame; optional) Alternative to a shape attributes template; enter attributes into a data.frame object and provide as an argument.
+#'
+#'
 #'
 #' @return
 #' \item{spatialVector}{\code{<spatialVector>} element (list) that can be inserted into an EML file or object via \code{make_eml()}.}
@@ -36,31 +40,47 @@
 #' spatialVector <- create_spatialVector(
 #'   path = "./metadata_templates",
 #'   data.path = "./data_objects",
-#'   vector_attributes = my_attributes)
+#'   shape_attributes = my_attributes)
 #' }
 #' 
 #' @export
 #'
-create_spatialVector <- function(path, data.path = path, vector_attributes = NULL) {
+create_spatialVector <- function(path, data.path = path, vector_attributes = NULL, shape_attributes = NULL) {
   
   # If the user does not provide a direct path to a raster_attributes.txt template
   # AND does not have a raster_attributes.txt template at the path directory,
   # then this function can not proceed
   
-  if (is.null(vector_attributes) & !file.exists(paste0(path, '/shape_attributes.txt'))) { # TODO eventually, this function should handle any vector data
+  if (is.null(c(vector_attributes, shape_attributes)) & !any(c('shape_attributes.txt', 'vector_attributes.txt') %in% list.files(path))) { # TODO eventually, this function should handle any vector data
     
     stop("A vector_attributes template is required.", call. = FALSE)
     
-  } else if (!is.null(vector_attributes)) {
+  }
+  
+  if (!is.null(vector_attributes)) {
     
     # Use the argument vector_attributes if provided
-    
+    print('vec')
     vector_template = vector_attributes
-  } else {
+    
+  } else if ('vector_attributes.txt' %in% list.files(path)) {
+    
+    print('vec tem')
+    vector_template <- data.table::fread(
+      paste0(path, '/vector_attributes.txt'),
+      colClasses = "character",
+      sep = '\t') 
+  }
+  
+  if (!is.null(shape_attributes)) {
+    print('shape')
+    shape_template = shape_attributes
+    
+  } else if ('shape_attributes.txt' %in% list.files(path)) {
     
     # read table
-    
-    vector_template <- data.table::fread(
+    print('shape_tem')
+    shape_template <- data.table::fread(
       paste0(path, '/shape_attributes.txt'),
       colClasses = "character",
       sep = '\t') 
@@ -334,3 +354,5 @@ build_shape_element <- function(s, path = path, data.path = data.path) {
   return(sv)
   
 }
+
+build_vector_element <- function()
