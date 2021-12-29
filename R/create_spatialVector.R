@@ -178,6 +178,14 @@ create_spatialVector <- function(path, data.path = path, vector_attributes = NUL
     
     vector_template <- vector_template[!(vector_template$filename %in% missing_vector_descs),]
     
+    # If layer is not specified, but there is only one layer, default to that
+    
+    for (i in 1:nrow(vector_template)) {
+      if (vector_template[i,]$layer == "" & length(sf::st_layers(paste0(data.path, vector_template[i,]$filename))$name) == 1) {
+        
+        vector_template[i,]$layer <- sf::st_layers(paste0(data.path, vector_template[i,]$filename))$name
+    }}
+    
     # Check that specified layer exists
     missing_layers <- mapply(
       function(x, y) { 
@@ -191,14 +199,16 @@ create_spatialVector <- function(path, data.path = path, vector_attributes = NUL
       missing_rows <- vector_template[missing_layers,]
       
       for (i in 1:nrow(missing_rows)){
-        warning(paste0("Layer '", missing_rows[i,]$layer, "' was not found in '", missing_rows[i,]$filename, "'.\n"), call. = F)
+
+          warning(paste0("Layer '", missing_rows[i,]$layer, "' was not found in '", missing_rows[i,]$filename, "'.\n"), call. = F)
+        
       } 
     }
     
     # Remove missing layers
 
     vector_template <- vector_template[!missing_layers,]
-print(vector_template)    
+
     # TODO if no layer specified, default to all layers?
     
     # For the time being, every layer needs to be specified. 
