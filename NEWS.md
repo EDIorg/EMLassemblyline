@@ -1,3 +1,7 @@
+# EMLassemblyline 3.5.1
+
+* Removed version requirements from dependencies. Removed unused EDIutils from list of dependencies.
+
 # EMLassemblyline 3.5.0
 
 * Integrated some EDIutils functions and removed the package dependency
