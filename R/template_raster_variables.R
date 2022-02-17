@@ -1,6 +1,6 @@
 #' Describe categorical variables associated with a raster file
 #' 
-#' @description Describes teh categorical variable represented in a raster file. Use if any raster files have numberType of "categorical" in raster_attributes.txt.
+#' @description Describes the categorical variable represented in a raster file. Use if any raster files have numberType of "categorical" in raster_attributes.txt.
 #'
 #' @param path 
 #'     (character) Path to the metadata template directory.
