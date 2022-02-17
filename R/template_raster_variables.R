@@ -41,7 +41,7 @@ template_raster_variables <- function(
   # Validate arguments --------------------------------------------------------
   
   validate_arguments(
-    fun.name = 'tempate_raster_variables',
+    fun.name = 'template_raster_variables',
     fun.args = as.list(environment()))
   
   # Read raster attribute template
