@@ -152,10 +152,12 @@ Columns:
 
 Describes source datasets. Explicitly listing the DOIs and/or URLs of input data help future users understand in greater detail how the derived data were created and may some day be able to assign attribution to the creators of referenced datasets.
 
+Provenance metadata can be automatically generated for supported repositories simply by specifying an identifier (i.e. EDI) in the systemID column. For unsupported repositories, the systemID column should be left blank.
+
 Columns:
 
 * **dataPackageID** Data package identifier. Supplying a valid packageID and systemID (of supported systems) is all that is needed to create a complete provenance record.
-* **systemID** System (i.e. data repository) identifier. Currently supported systems are: EDI (Environmental Data Initiative).
+* **systemID** System (i.e. data repository) identifier. Currently supported systems are: EDI (Environmental Data Initiative). Leave this column blank unless specifying a supported system.
 * **url** URL linking to an online source (i.e. data, paper, etc.). Required when a source can't be defined by a packageID and systemID.
 * **onlineDescription** Description of the data source. Required when a source can't be defined by a packageID and systemID.
 * **title** The source title. Required when a source can't be defined by a packageID and systemID.
