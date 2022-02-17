@@ -42,7 +42,7 @@
 #' \item{vector_attributes.txt}{Columns:
 #'     \itemize{
 #'     \item{filename: Filename of some vector data}
-#'     \item{layer: Name of directory (within a specified path) that holds shapefile components}
+#'     \item{layer: Name of the layer to be processed (if multiple layers in the file)}
 #'     \item{driver: Name of vector data format. ('kml', 'geojson') }
 #'     \item{description: Description of the spatial file}
 #'     \item{geoDescription: Description of the geographic coverage of the spatial file}
