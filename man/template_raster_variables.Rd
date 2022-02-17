@@ -28,7 +28,7 @@ template_raster_variables(
 }
 }
 \description{
-Describes teh categorical variable represented in a raster file. Use if any raster files have numberType of "categorical" in raster_attributes.txt.
+Describes the categorical variable represented in a raster file. Use if any raster files have numberType of "categorical" in raster_attributes.txt.
 }
 \examples{
 \dontrun{

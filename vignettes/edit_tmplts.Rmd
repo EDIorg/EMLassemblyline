@@ -186,6 +186,65 @@ Columns:
 
 [__Example__](https://docs.google.com/spreadsheets/d/1TOS1-yCKUJEvDZwenZs88ok8L3tQkIAUQp24m-6WuL8/edit?usp=sharing)
 
+## shape_attributes.txt
+
+Describes an ESRI shapefile.
+
+Columns:
+
+* **extname** The filename (without extension) of an ESRI shapefile (e.g. Culebra_plots would be the extname of a shapefile consisting of Culebra_plots.shp, Culebra_plots.dbf, etc.)
+* **root_dir** Name of directory that holds shapefile components.
+* **description** Description of the spatial file.
+* **geoDescription** Description of the geographic coverage of the spatial file.
+* **url** Accessible url for download of the file.
+* **overwrite** If set to TRUE, this will allow the build_shape_element function to overwrite existing directory (the directory specified in root_dir)
+
+[__Example__](https://docs.google.com/spreadsheets/d/1TOS1-yCKUJEvDZwenZs88ok8L3tQkIAUQp24m-6WuL8/edit?usp=sharing)
+
+## vector_attributes.txt
+
+Describes spatial vector data (GeoJSON or KML).
+
+Columns:
+
+* **filename** Filename of some vector data.
+* **layer** The layer to be processed (if multiple layers in the file).
+* **driver** Name of vector data format. ('kml', 'geojson')
+* **description** Description of the spatial file.
+* **geoDescription** Description of the geographic coverage of the spatial file.
+* **url** Accessible url for download of the file.
+* **overwrite** If set to TRUE, this will allow the build_shape_element function to overwrite existing directory (the directory specified in root_dir)
+
+[__Example__](https://docs.google.com/spreadsheets/d/1TOS1-yCKUJEvDZwenZs88ok8L3tQkIAUQp24m-6WuL8/edit?usp=sharing)
+
+## raster_attributes.txt
+
+Describes spatial raster data.
+
+Columns:
+
+* **filename** Filename of some raster data.
+* **description** Description of the spatial file.
+* **geoDescription** Description of the geographic coverage of the spatial file.
+* **url** Accessible url for download of the file.
+* **definition** Definition of an attribute.
+* **unit** Unit of an attribute.
+* **numberType** The type of data for the attribute ('real', 'natural', 'integer', 'whole', 'categorical'). For categorical variables, choose categorical.
+
+[__Example__](https://docs.google.com/spreadsheets/d/1TOS1-yCKUJEvDZwenZs88ok8L3tQkIAUQp24m-6WuL8/edit?usp=sharing)
+
+## raster_catvars.txt
+
+Describes the categorical variables associated with spatial raster data.
+
+Columns:
+
+* **filename** Filename of a spatial raster file.
+* **code** Categorical variable.
+* **definition** Definition of a categorical variable.
+
+[__Example__](https://docs.google.com/spreadsheets/d/1TOS1-yCKUJEvDZwenZs88ok8L3tQkIAUQp24m-6WuL8/edit?usp=sharing)
+
 ## additional_info (.docx, .md, .txt)
 
 Ancillary info not captured by any of the other templates.
