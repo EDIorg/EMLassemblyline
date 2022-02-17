@@ -1,6 +1,6 @@
 Package: EMLassemblyline
 Title: A tool kit for building EML metadata workflows
-Version: 3.5.0
+Version: 3.5.1
 Authors@R: c(
     person("Colin", "Smith", email = "colin.smith@wisc.edu", role = c("aut", "cre"), comment = "https://orcid.org/0000-0003-2261-9931"),
     person("Elie", "ARNAUD", email = "earnaud@outlook.com", role = "ctb", comment = "https://orcid.org/0000-0003-3416-7653")
@@ -8,18 +8,18 @@ Authors@R: c(
 Description: 
     For scientists and data managers to create high quality EML metadata for dataset publication. EMLassemblyline is optimized for automating recurring publications (timeseries or data derived from timeseries sources) but works well for "one-off" publications, especially through the MetaShARK interface. EMLassemblyline prioritizes automated metadata extraction from data objects to minimize required human effort and encourages EML best practices to make publications Findable, Accessible, Interoperable, and Reusable.
 Imports:
-    bit64 (>= 4.0.5),
-    data.table (>= 1.13.6),
+    bit64,
+    data.table,
     EML (>= 2.0.5),
-    httr (>= 1.4.2),
-    knitr (>= 1.30),
+    httr,
+    knitr,
     methods,
-    mime (>= 0.9),
-    reader (>= 1.0.6),
-    readr (>= 1.4.0),
-    rmarkdown (>= 2.6),
-    stringr (>= 1.4.0),
-    stringi (>= 1.5.3),
+    mime,
+    reader,
+    readr,
+    rmarkdown,
+    stringr,
+    stringi,
     taxonomyCleanr (>= 1.5.4),
     tidyr (>= 1.1.2),
     tools (>= 3.6.1),
@@ -33,8 +33,7 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.2
 Remotes:
-    EDIorg/taxonomyCleanr,
-    EDIorg/EDIutils
+    EDIorg/taxonomyCleanr
 URL: https://github.com/EDIorg/EMLassemblyline
 BugReports: https://github.com/EDIorg/EMLassemblyline/issues
 VignetteBuilder: knitr

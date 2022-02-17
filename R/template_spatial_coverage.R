@@ -211,11 +211,13 @@ template_spatial_coverage <- function(
 }
 
 is.shp.dir <- function(dir.path) {
-  return(
+  return(  
     # check for folder path & presence of main file of the shp ESRI format
-    (dir.exists(dir.path) & length(dir(dir.path, pattern = "shp/?$")) > 0) |
+    if(dir.exists(dir.path) & length(dir(dir.path, pattern = "shp/?$")) > 0){
       # OR check for zip path & presence of main file of the shp ESRI format
-      (grepl("zip$", dir.path) & grepl("shp/?$", unzip(dir.path, list=TRUE)[1,1]))
+      grepl("zip$", dir.path) & grepl("shp/?$", unzip(dir.path, list=TRUE)[1,1])
+    } else
+      FALSE
   )
 }
 
