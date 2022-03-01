@@ -1245,8 +1245,7 @@ make_eml <- function(
             numHeaderLines = "1",
             recordDelimiter = get_eol(
               path = data.path,
-              file.name = k,
-              os = detect_os()),
+              file.name = k),
             attributeOrientation = "column",
             url = "placeholder"))
         
