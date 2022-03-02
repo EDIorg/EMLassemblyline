@@ -742,7 +742,7 @@ validate_arguments <- function(fun.name, fun.args){
     
     # path
     if (!is.null(fun.args$path)) {
-      EDIutils::validate_path(fun.args$path)
+      validate_path(fun.args$path)
     }
   }
   
