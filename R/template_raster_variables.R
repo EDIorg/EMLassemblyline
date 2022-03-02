@@ -68,13 +68,13 @@ template_raster_variables <- function(
     }
     
 
-    if(!is.null(r) & !"categorical" %in% r$numberType & isFALSE(empty)) {
+    if(!"categorical" %in% r$numberType & isFALSE(empty)) {
       
       message('No categorical variables declared. Declare files with categorical variables by designating numberType as "categorical".')
       
     } else {
       
-      if (!file.exists(paste0(path, '/raster_attributes.txt')) | !"categorical" %in% r$numberType) {
+      if (!file.exists(paste0(path, '/raster_attributes.txt')) | !"categorical" %in% r$numberType | isTRUE(empty)) {
         output <- data.frame(
           filename = "",
           code = "",
