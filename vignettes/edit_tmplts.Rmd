@@ -199,7 +199,7 @@ Columns:
 * **url** Accessible url for download of the file.
 * **overwrite** If set to TRUE, this will allow the build_shape_element function to overwrite existing directory (the directory specified in root_dir)
 
-[__Example__](https://docs.google.com/spreadsheets/d/1TOS1-yCKUJEvDZwenZs88ok8L3tQkIAUQp24m-6WuL8/edit?usp=sharing)
+[__Example__](https://docs.google.com/spreadsheets/d/1c8vnu_wlEJOnugGSIm2zzd26Gv749UBjYFVMY5Dc5qI/edit?usp=sharing)
 
 ## vector_attributes.txt
 
@@ -215,7 +215,7 @@ Columns:
 * **url** Accessible url for download of the file.
 * **overwrite** If set to TRUE, this will allow the build_shape_element function to overwrite existing directory (the directory specified in root_dir)
 
-[__Example__](https://docs.google.com/spreadsheets/d/1TOS1-yCKUJEvDZwenZs88ok8L3tQkIAUQp24m-6WuL8/edit?usp=sharing)
+[__Example__](https://docs.google.com/spreadsheets/d/1yStyFZAeiD91ebGM4wiS-66JWF4LS88hFWptX87XmoQ/edit?usp=sharing)
 
 ## raster_attributes.txt
 
@@ -231,7 +231,7 @@ Columns:
 * **unit** Unit of an attribute.
 * **numberType** The type of data for the attribute ('real', 'natural', 'integer', 'whole', 'categorical'). For categorical variables, choose categorical.
 
-[__Example__](https://docs.google.com/spreadsheets/d/1TOS1-yCKUJEvDZwenZs88ok8L3tQkIAUQp24m-6WuL8/edit?usp=sharing)
+[__Example__](https://docs.google.com/spreadsheets/d/1DaMqcnVAXOZ1rxD2ECDQWNnmXCgjUGhWvrJCPFhuO9s/edit?usp=sharing)
 
 ## raster_catvars.txt
 
@@ -243,7 +243,7 @@ Columns:
 * **code** Categorical variable.
 * **definition** Definition of a categorical variable.
 
-[__Example__](https://docs.google.com/spreadsheets/d/1TOS1-yCKUJEvDZwenZs88ok8L3tQkIAUQp24m-6WuL8/edit?usp=sharing)
+[__Example__](https://docs.google.com/spreadsheets/d/1yStyFZAeiD91ebGM4wiS-66JWF4LS88hFWptX87XmoQ/edit?usp=sharing)
 
 ## additional_info (.docx, .md, .txt)
 
