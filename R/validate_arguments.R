@@ -723,13 +723,13 @@ validate_arguments <- function(fun.name, fun.args){
     
     # path
     if (!is.null(fun.args$path)) {
-      EDIutils::validate_path(fun.args$path)
+      validate_path(fun.args$path)
     }
     
     # Validate file names
     
     data_files <- suppressWarnings(
-      EDIutils::validate_file_names(
+      validate_file_names(
         path = fun.args$data.path, 
         data.files = fun.args$spatial.files))
     
