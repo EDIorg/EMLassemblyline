@@ -8,6 +8,11 @@
 #'     (character) Path to the data directory.
 #' @param write.file
 #'     (logical; optional) Whether to write the template file.
+#' @param empty
+#'     (logical) Whether template should be empty. If FALSE, raster_attrbutes.txt must exist and have at least one categorical type specified.
+#' @param return.obj
+#'     (logical) Whether to return table as an R object.
+#'
 #'
 #' @return
 #' \item{raster_catvars.txt}{Columns:
@@ -34,6 +39,7 @@ template_raster_variables <- function(
   path = NULL,
   data.path = path,
   write.file = TRUE,
+  empty = FALSE,
   return.obj = FALSE) {
   
   message('Templating raster categorical variables ...')
@@ -46,35 +52,47 @@ template_raster_variables <- function(
   
   # Read raster attribute template
   
-  if (!file.exists(paste0(path, '/raster_attributes.txt'))) {
-  
-    # if raster_attributes doesnt exist, stop
+  if (!file.exists(paste0(path, '/raster_attributes.txt')) & isFALSE(empty)) {
     
     message('raster_attributes.txt does not exist')
     
   } else {
     
     # read table
+    if (file.exists(paste0(path, '/raster_attributes.txt'))) {
+      r <- data.table::fread(
+        paste0(path, '/raster_attributes.txt'),
+        colClasses = "character")
+    } else {
+      r <-  NULL
+    }
     
-    r <- data.table::fread(
-      paste0(path, '/raster_attributes.txt'),
-      colClasses = "character")
-    
-    if(!"categorical" %in% r$numberType) {
-      
-      # if no files are marked as categorical, stop
+
+    if(!is.null(r) & !"categorical" %in% r$numberType & isFALSE(empty)) {
       
       message('No categorical variables declared. Declare files with categorical variables by designating numberType as "categorical".')
       
     } else {
       
-      cats <- subset(r, numberType == 'categorical')
+      if (!file.exists(paste0(path, '/raster_attributes.txt')) | !"categorical" %in% r$numberType) {
+        output <- data.frame(
+          filename = "",
+          code = "",
+          definition = "",
+          stringsAsFactors = F)
+        
+        message("raster_attributes.txt does not exist or no categorical variables found.\nWriting empty raster_catvars.txt.")
+      } else {
+        
+        cats <- subset(r, numberType == 'categorical')
+        
+        output <- data.frame(
+          filename = cats$filename,
+          code = rep("", nrow(cats)),
+          definition = rep("", nrow(cats)),
+          stringsAsFactors = F)
+      }
       
-      output <- data.frame(
-        filename = cats$filename,
-        code = rep("", nrow(cats)),
-        definition = rep("", nrow(cats)),
-        stringsAsFactors = F)
 
 # Write table to a file --------------------------------------------------------------
       if (!is.null(path)){
