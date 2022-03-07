@@ -1,3 +1,7 @@
+# EMLassemblyline 3.5.2
+
+* Fix keyword resolver. Keywords were not resolving to the LTER vocabulary due to a regression that occurred during the EDIutils deprecation. The missing functions have been added back to EAL.
+
 # EMLassemblyline 3.5.1
 
 * Removed version requirements from dependencies. Removed unused EDIutils from list of dependencies.
