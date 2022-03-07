@@ -1,6 +1,13 @@
 # EMLassemblyline 3.5.2
 
-* Fix keyword resolver. Keywords were not resolving to the LTER vocabulary due to a regression that occurred during the EDIutils deprecation. The missing functions have been added back to EAL.
+### Enhancements
+
+* Update the get_eol function - The get_eol() function was refactored for efficiency and clarity in the hymetDP package. The refactored function, unit tests, and updated implementation have been ported here.
+* Update provenance.txt documentation - Added some minor details to the provenance.txt documentation.
+
+### Bug fix
+
+* Fix keyword resolver - Keywords were not resolving to the LTER vocabulary due to a regression that occurred during the EDIutils deprecation. The missing functions have been added back to EAL.
 
 # EMLassemblyline 3.5.1
 

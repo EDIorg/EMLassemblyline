@@ -290,19 +290,21 @@ fix_methods <- function(eml) {
 
 
 
-# Get end of line (EOL) character
-#
-# @description
-#     Get EOL character of input file(s).
-#
-# @param path
-#     (character) A path to the target file directory.
-# @param file.name
-#     (character) The target file name.
-#
-# @return
-#     A character string representation of the EOL character.
-#
+#' Get end of line (EOL) character
+#'
+#' @description
+#'     Get EOL character of input file(s).
+#'
+#' @param path
+#'     (character) A path to the target file directory.
+#' @param file.name
+#'     (character) The target file name.
+#'
+#' @return
+#'     A character string representation of the EOL character.
+#'
+#' @noRd
+#'
 get_eol <- function(path, file.name){
   file_name <- validate_file_names(path, file.name)
   output <- readChar(paste0(path, '/', file.name), nchars = 10000)
