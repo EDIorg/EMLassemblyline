@@ -295,79 +295,22 @@ fix_methods <- function(eml) {
 #' @description
 #'     Get EOL character of input file(s).
 #'
-#' @usage get_eol(path, file.name, os)
-#'
 #' @param path
 #'     (character) A path to the target file directory.
 #' @param file.name
 #'     (character) The target file name.
-#' @param os
-#'     (character) The operating system in which this function is called
-#'     called. Valid options are generated from \code{detect_os}.
 #'
 #' @return
 #'     A character string representation of the EOL character.
 #'
-#' @export
+#' @noRd
 #'
-get_eol <- function(path, file.name, os){
-  
-  # Detect end of line character ----------------------------------------------
-  
-  if (os == 'mac'){ # Macintosh OS
-    
-    command <- paste0(
-      'od -c "',
-      path,
-      '/',
-      file.name,
-      '"'
-    )
-    
-    output <- system(
-      command,
-      intern = T
-    )
-    
-    use_i <- stringr::str_detect(
-      output,
-      '\\\\r  \\\\n'
-    )
-    
-    if (sum(use_i) > 0){
-      eol <- '\\r\\n'
-    } else {
-      use_i <- stringr::str_detect(
-        output,
-        '\\\\n'
-      )
-      if (sum(use_i) > 0){
-        eol <- '\\n'
-      } else {
-        eol <- '\\r'
-      }
-    }
-    
-  } else if ((os == 'win') | (os == 'lin')){ # Windows & Linux OS
-    
-    output <- readChar(
-      paste0(
-        path,
-        '/',
-        file.name
-      ),
-      nchars = 10000
-    )
-    
-    eol <- parse_delim(output)
-    
-  }
-  
-  eol
-  
+get_eol <- function(path, file.name){
+  file_name <- validate_file_names(path, file.name)
+  output <- readChar(paste0(path, '/', file.name), nchars = 10000)
+  eol <- parse_delim(output)
+  return(eol)
 }
-
-
 
 
 
@@ -662,6 +605,321 @@ validate_path <- function(path){
 
 
 
+#' Get the ID for an LTER controlled vocab term
+#'
+#' @description  
+#'     Get the identification number for a valid term in the LTER Controlled 
+#'     Vocabulary.
+#'
+#' @usage 
+#'     vocab_lter_id(x)
+#'
+#' @param x 
+#'     (character) A valid term in the LTER Controlled Vocabulary.
+#'
+#' @return 
+#'     (numeric) The identification number for a LTER Controlled Vocabulary 
+#'     term.
+#'
+#' @noRd
+#'
+vocab_lter_id <- function(x){
+  
+  # Check arguments -----------------------------------------------------------
+  
+  if (is.character(x) != T){
+    stop('Input argument "x" is not of class "character"!')
+  }
+  if (length(x) != 1){
+    stop('Input argument "x" has a length > 1! Only single terms are allowed.')
+  }
+  
+  # Get the term ID and report ------------------------------------------------
+  
+  if (isTRUE(vocab_lter_term(x = x))){
+    
+    # Construct the search term and query
+    
+    term <- stringr::str_replace_all(
+      string = x, 
+      pattern = ' ', 
+      replacement = '+'
+    )
+    
+    search_output <- xml2::read_xml(
+      paste0(
+        'http://vocab.lternet.edu/vocab/vocab/services.php/?task=search&arg=',
+        term
+      )
+    )
+    
+    nodeset <- xml2::xml_find_all(search_output, './/result/term/term_id')
+    node_term_id <- as.numeric(xml2::xml_text(nodeset))
+    
+    # Report the result
+    
+    node_term_id
+    
+  } else {
+    stop(
+      paste0('\n"',
+             x,
+             '" could not be found in the LTER Controlled Vocabulary'
+      )
+    )
+  }
+  
+}
+
+
+
+
+
+
+
+
+#' Get the scope of an LTER Controlled Vocabulary term
+#'
+#' @description  
+#'     Get the scope description for a term in the LTER Controlled Vocabulary.
+#'
+#' @usage 
+#'     vocab_lter_scope(id)
+#'
+#' @param id 
+#'     (numeric) An identification number of a valid term in the LTER 
+#'     Controlled Vocabulary.
+#'
+#' @return 
+#'     (character) The scope description for a LTER Controlled Vocabulary 
+#'     term. Note, not all terms have descriptions.
+#'
+#' @export
+#'
+
+
+vocab_lter_scope <- function(id){
+  
+  # Check arguments -----------------------------------------------------------
+  
+  if (is.numeric(id) != T){
+    stop('Input argument "id" is not of class "numeric"!')
+  }
+  if (length(id) != 1){
+    stop('Input argument "id" has a length > 1! Only single identification numbers are allowed.')
+  }
+  
+  # Get the scope description -------------------------------------------------
+  
+  # Query for input ID
+  
+  search_output <- xml2::read_xml(
+    paste0(
+      'http://vocab.lternet.edu/vocab/vocab/services.php/?task=fetchNotes&arg=',
+      as.character(id)
+    )
+  )
+  
+  # Parse results
+  
+  if (length(xml2::xml_find_all(search_output, './/result')) != 0){
+    
+    nodeset <- xml2::xml_find_all(search_output, './/result/term/note_text')
+    node_terms <- xml2::xml_text(nodeset)
+    # Clean up formatting tags
+    node_terms <- stringr::str_replace_all(string = node_terms, pattern = '<p>|</p>', replacement = '')
+    node_terms <- stringr::str_replace_all(string = node_terms, pattern = '\n', replacement = ' ')
+    node_terms <- stringr::str_replace_all(string = node_terms, pattern = '<.*?>', replacement = '')
+    
+  } else {
+    
+    node_terms <- 'No scope description available.'
+    
+  }
+  
+  # Return result -------------------------------------------------------------
+  
+  node_terms
+  
+}
+
+
+
+
+
+
+
+
+#' Search for an LTER Controlled Vocabulary term
+#'
+#' @description  
+#'     Search for a term in the LTER Controlled Vocabulary (Long Term 
+#'     Ecological Research Network).
+#'
+#' @usage 
+#'     vocab_lter_term(x, messages = FALSE, interactive = FALSE)
+#'
+#' @param x 
+#'     (character) A term to search for.
+#' @param messages 
+#'     (logical) Display diagnostic messages, e.g. alternative spelling options.
+#' @param interactive 
+#'     (logical) Query user to select from alternative terms and returns back
+#'     selection.
+#'
+#' @return 
+#'     Logical value (TRUE/FALSE) indicating whether the searched term could
+#'     be found. 
+#'     
+#'     If messages = TRUE, then alternative spellings and near misses 
+#'     are displayed. 
+#'     
+#'     If interactive mode = TRUE, then a user selected term is returned.
+#'
+#' @noRd
+#'
+vocab_lter_term <- function(x, messages = FALSE, interactive = FALSE){
+  
+  # The LTER controlled vocabulary produces different results for a standard
+  # search and fuzzy (similar) search. Both searches are run and results 
+  # combined, then direct matches sought and if not found then all results
+  # are presented as near misses.
+  
+  # Check arguments -----------------------------------------------------------
+  
+  if (is.character(x) != T){
+    stop('Input argument "x" is not of class "character"!')
+  }
+  if (length(x) != 1){
+    stop('Input argument "x" has a length > 1! Only single terms are allowed.')
+  }
+  if (!missing(messages) & isTRUE(messages) & !missing(interactive) & isTRUE(interactive)){
+    stop('Both arguments "messages" & "interactive" can not be used at the same time. Please select one or the other.')
+  }
+  
+  # Construct the query and search --------------------------------------------
+  
+  term <- stringr::str_replace_all(
+    string = x, 
+    pattern = ' ', 
+    replacement = '+'
+  )
+  
+  # Standard search
+  
+  search_output <- xml2::read_xml(
+    paste0(
+      'http://vocab.lternet.edu/vocab/vocab/services.php/?task=search&arg=',
+      term
+    )
+  )
+  
+  # Fuzzy search
+  
+  fuzzy_output <- xml2::read_xml(
+    paste0(
+      'http://vocab.lternet.edu/vocab/vocab/services.php/?task=fetchSimilar&arg=',
+      term
+    )
+  )
+  
+  # Parse the responses and combine -------------------------------------------
+  
+  
+  
+  term_list <- c()
+  
+  # Get standard terms
+  
+  if (length(xml2::xml_find_all(search_output, './/result')) != 0){
+    nodeset <- xml2::xml_find_all(search_output, './/result/term/string')
+    node_terms <- xml2::xml_text(nodeset)
+    term_list <- c(term_list, node_terms)
+  }
+  
+  # Get fuzzy terms
+  
+  if (length(xml2::xml_find_all(fuzzy_output, './/result')) != 0){
+    nodeset <- xml2::xml_find_all(fuzzy_output, './/result/string')
+    node_terms <- xml2::xml_text(nodeset)
+    term_list <- c(term_list, node_terms)
+  }
+  
+  # Remove duplicates
+  
+  term_list <- unique(term_list)
+  
+  # Is the search term listed? ------------------------------------------------
+  
+  if (sum(term_list == x) == 1){
+    term_found <- T
+  } else {
+    term_found <- F
+  }
+  
+  # Report near misses --------------------------------------------------------
+  
+  if (!missing(messages) & isTRUE(messages) & (!isTRUE(term_found)) & (length(term_list) != 0)){
+    
+    msg <- message(
+      paste0(
+        'The term "',
+        x,
+        '" could not be found in the LTER Controlled Vocabulary. Possible alternatives:',
+        '\n',
+        paste0(
+          term_list, 
+          collapse = '\n'
+        ),
+        '\n'
+      )
+    )
+    
+  }
+  
+  # Interactive mode ----------------------------------------------------------
+  
+  if (!missing(interactive) & isTRUE(interactive) & (!isTRUE(term_found)) & (length(term_list) != 0)){
+    
+    msg <- message(
+      paste0(
+        'The term "',
+        x,
+        '" could not be found in the LTER Controlled Vocabulary. Possible alternatives:',
+        '\n'
+      )
+    )
+    
+    term_list <- c(term_list, 'NONE OF THE ABOVE')
+    
+    print.data.frame(as.data.frame(term_list))
+    answer <- readline('Enter the row number of the term you would like to use: ')
+    alternative_term <- as.character(term_list[as.numeric(answer)])
+    message(paste0('You selected ... ', alternative_term, '\n'))
+    
+  }
+  
+  # Output results ------------------------------------------------------------
+  
+  if (!missing(interactive) & isTRUE(interactive) & (!isTRUE(term_found)) & (length(term_list) != 0)){
+    
+    alternative_term
+    
+  } else {
+    
+    term_found
+    
+  }
+  
+}
+
+
+
+
+
+
+
+
 #' Resolve terms to a controlled vocabulary
 #'
 #' @description  
@@ -688,10 +946,8 @@ validate_path <- function(path){
 #'     (character) Controlled vocabulary names corresponding to successfully
 #'     resolved terms.
 #'
-#' @export
+#' @noRd
 #'
-
-
 vocab_resolve_terms <- function(x, cv, messages = FALSE, interactive = FALSE){
   
   # Check arguments -----------------------------------------------------------
