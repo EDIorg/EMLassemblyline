@@ -799,6 +799,11 @@ vocab_lter_term <- function(x, messages = FALSE, interactive = FALSE){
   
   # Construct the query and search --------------------------------------------
   
+  # Assume case insensitivity and convert to lower case, which is used by the 
+  # LTER CV
+  
+  x <- tolower(x)
+  
   term <- stringr::str_replace_all(
     string = x, 
     pattern = ' ', 
@@ -822,7 +827,7 @@ vocab_lter_term <- function(x, messages = FALSE, interactive = FALSE){
       term
     )
   )
-  
+
   # Parse the responses and combine -------------------------------------------
   
   
