@@ -1173,12 +1173,13 @@ make_eml <- function(
           a <- x$data.table[[k]]$content[[tbl_attr$attributeName[i]]][
             !is.na(x$data.table[[k]]$content[[tbl_attr$attributeName[i]]])]
           a <- a[a != tbl_attr$missingValueCode[i]]
+          a <- as.numeric(a)
           if (all(is.na(a))) {
             attributes$minimum[i] <- NA
             attributes$maximum[i] <- NA
           } else {
-            attributes$minimum[i] <- as.numeric(min(a, na.rm = T))
-            attributes$maximum[i] <- as.numeric(max(a, na.rm = T))
+            attributes$minimum[i] <- min(a, na.rm = T)
+            attributes$maximum[i] <- max(a, na.rm = T)
           }
           is_integer <-function(x, tol = .Machine$double.eps^0.5) {
             abs(x - round(x)) < tol
