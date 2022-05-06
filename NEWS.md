@@ -1,4 +1,10 @@
-# EMLassemblyline 3.5.2.9000
+EMLassemblyline 3.5.2.9000 (YYYY-MM-DD)
+=======================================
+
+### BUG FIXES
+
+  * Now imports taxonomyCleanr >= 1.6.1 so the EDIutils package is not 
+  required.
 
 # EMLassemblyline 3.5.2
 
