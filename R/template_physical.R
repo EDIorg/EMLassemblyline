@@ -152,7 +152,6 @@ template_physical <- function(
   }
   message("Done.")
   return(res)
-  
 }
 
 
@@ -210,7 +209,7 @@ get_physical <- function(path, type) {
     res$url <- NA_character_
     res$numberOfRecords <- NA_character_
   }
-  return(res)
+  return(as.data.frame(res))
 }
 
 
