@@ -422,18 +422,8 @@ template_arguments <- function(
         attr_tmp$regexpr[attr_tmp$template_name == "physical"])) {
         templates[[i]]$content <- read_tbl(
           paste0(path, "/", tfound[i]))
-      } else {
-        browser()
-        # templates[[i]]$content <- template_physical(
-        test <- template_physical(
-          path = path,
-          data.path = data.path,
-          data.table = data.table,
-          other.entity = other.entity,
-          write.file = FALSE
-        )
       }
-      
+
       # Read provenance -------------------------------------------------------
       
       if (stringr::str_detect(

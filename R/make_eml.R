@@ -295,6 +295,43 @@ make_eml <- function(
     }
   }
 
+  # Update physical template --------------------------------------------------
+  
+  # Physical metadata is now either:
+  #   1. Automatically calculated and added here (The original behavior).
+  browser()
+  #   2. Partially supplied by the user via physical.txt (the use case where
+  #      one or more objects are offline but need to be described in the 
+  #      metadata) and empty fields are filled with values calculated below
+  #      with template_physical() and make_eml() arguments.
+  browser()
+  #   3. Entirely supplied in physical.txt, in which case nothing is added 
+  #      here.
+  browser()
+  
+  # TODO CASE 1:
+  # - Create physical metadata (physical_temp)
+  # This code was pull directly from template_arguments(). Need to update 
+  # it for this new make_eml() context
+  if (!is.null(templates)) {
+    if (!("physical.txt" %in% names(templates))) {
+      physical_temp <- template_physical(
+        path = path,
+        data.path = data.path,
+        data.table = data.table,
+        other.entity = other.entity,
+        write.file = FALSE
+      )
+    }
+  }
+  # - Add physicals supplied via make_eml() to physical_temp
+  
+  # TODO CASE 2:
+  # if x$templates$physical.txt$content is not NULL then replace empties with values calculated here, 
+  
+  # TODO CASE 3:
+  # Is implicitly handled by the above operations. 
+  
   # Validate templates --------------------------------------------------------
   
   x <- remove_empty_templates(x)
