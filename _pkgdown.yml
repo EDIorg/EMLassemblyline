@@ -14,6 +14,7 @@ reference:
     - template_geographic_coverage
     - template_taxonomic_coverage
     - template_annotations
+    - template_physical
     - template_provenance
   - title: Make EML
     desc: Renders template content into an EML file.

@@ -10,7 +10,8 @@ template_physical(
   data.table = NULL,
   other.entity = NULL,
   empty = FALSE,
-  write.file = TRUE
+  write.file = TRUE,
+  overwrite = FALSE
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ than one, then supply as a vector of character strings (e.g.
 \item{empty}{(logical) Whether to write an empty template file.}
 
 \item{write.file}{(logical; optional) Whether to write the template file. Default is \code{TRUE}.}
+
+\item{overwrite}{(logical) Overwrite the template with new content?}
 }
 \value{
 \item{physical}{Columns:

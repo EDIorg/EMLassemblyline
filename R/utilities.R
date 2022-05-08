@@ -482,7 +482,7 @@ template_physical_make_eml <- function(path,
                                        other.entity.url,
                                        physical) {
   
-  # Both sources of physical metadata
+  # Get both sources of physical metadata
   physt <- physical # Physical metadata from template
   physc <- suppressMessages( # Physical metadata calculated here
     template_physical(
@@ -539,14 +539,16 @@ template_physical_make_eml <- function(path,
   # Fill empty fields of the user supplied metadata template with values
   # calculated here
   if (!is.null(physt)) {
-    browser()
     i <- physt == ""
     physt[i] <- physc[i]
     res <- physt
   } else {
     res <- physc
   }
-  browser()
+
+  # EML::write_eml() requires escape char to be written, otherwise is blank
+  res$fieldDelimiter[res$fieldDelimiter == "\t"] <- "\\t"
+  
   return(res)
 }
 

@@ -278,7 +278,7 @@ make_eml <- function(
   #      (the use case where one or more objects are offline and the physical
   #      metadata can't be calculated by make_eml()).
   #   3. Entirely supplied in physical.txt.
-  browser()
+  
   x$template$physical$content <- template_physical_make_eml(
     path = path,
     data.path = data.path,
@@ -293,7 +293,6 @@ make_eml <- function(
     other.entity.url = other.entity.url,
     physical = x$template$physical$content
   )
-  browser()
   
   # Clean templates of extraneous NA values -----------------------------------
   # Users often add NAs to templates where EMLassemblyline expects "". This 
@@ -1264,6 +1263,7 @@ make_eml <- function(
         }
         
         # Set physical
+        browser()
         # FIXME: Auto-detect numHeaderLines
         physical <- suppressMessages(
           EML::set_physical(
@@ -1344,6 +1344,7 @@ make_eml <- function(
     eml$dataset$otherEntity <- lapply(
       names(x$other.entity),
       function(k) {
+        browser()
         message(paste0("    <otherEntity> (", k, ")"))
         # Set physical
         # FIXME: Some sub-routine in EML::set_physical() doesn't like the .zip 
