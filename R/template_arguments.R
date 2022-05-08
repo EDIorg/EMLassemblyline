@@ -422,6 +422,14 @@ template_arguments <- function(
         attr_tmp$regexpr[attr_tmp$template_name == "physical"])) {
         templates[[i]]$content <- read_tbl(
           paste0(path, "/", tfound[i]))
+        browser()
+        if (any(is.na(templates[[i]]$content$missingValueCode))) {
+          # Ensure any NA missing value codes are expressed as strings 
+          # (i.e. "NA") otherwise they will not be recognized by downstream
+          # functions
+          templates[[i]]$content$missingValueCode[
+            is.na(templates[[i]]$content$missingValueCode)] <- "NA"
+        }
       }
 
       # Read provenance -------------------------------------------------------
@@ -505,7 +513,7 @@ template_arguments <- function(
       }
     }
   }
-  
+  browser()
   output
   
 }

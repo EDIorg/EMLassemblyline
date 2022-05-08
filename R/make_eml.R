@@ -270,6 +270,31 @@ make_eml <- function(
     data_read_2_x <- TRUE
   }
   
+  # Update physical template --------------------------------------------------
+  
+  # Physical metadata is now either:
+  #   1. Automatically calculated here (The original behavior).
+  #   2. Partially predefined in physical.txt and partially calculated here 
+  #      (the use case where one or more objects are offline and the physical
+  #      metadata can't be calculated by make_eml()).
+  #   3. Entirely supplied in physical.txt.
+  browser()
+  x$template$physical$content <- template_physical_make_eml(
+    path = path,
+    data.path = data.path,
+    data.table = data.table,
+    data.table.name = data.table.name,
+    data.table.description = data.table.description,
+    data.table.quote.character = data.table.quote.character,
+    data.table.url = data.table.url,
+    other.entity = other.entity,
+    other.entity.name = other.entity.name,
+    other.entity.description = other.entity.description,
+    other.entity.url = other.entity.url,
+    physical = x$template$physical$content
+  )
+  browser()
+  
   # Clean templates of extraneous NA values -----------------------------------
   # Users often add NAs to templates where EMLassemblyline expects "". This 
   # removes NAs from where they shouldn't be and replaces them with "". NOTE:
@@ -294,43 +319,6 @@ make_eml <- function(
       }
     }
   }
-
-  # Update physical template --------------------------------------------------
-  
-  # Physical metadata is now either:
-  #   1. Automatically calculated and added here (The original behavior).
-  browser()
-  #   2. Partially supplied by the user via physical.txt (the use case where
-  #      one or more objects are offline but need to be described in the 
-  #      metadata) and empty fields are filled with values calculated below
-  #      with template_physical() and make_eml() arguments.
-  browser()
-  #   3. Entirely supplied in physical.txt, in which case nothing is added 
-  #      here.
-  browser()
-  
-  # TODO CASE 1:
-  # - Create physical metadata (physical_temp)
-  # This code was pull directly from template_arguments(). Need to update 
-  # it for this new make_eml() context
-  if (!is.null(templates)) {
-    if (!("physical.txt" %in% names(templates))) {
-      physical_temp <- template_physical(
-        path = path,
-        data.path = data.path,
-        data.table = data.table,
-        other.entity = other.entity,
-        write.file = FALSE
-      )
-    }
-  }
-  # - Add physicals supplied via make_eml() to physical_temp
-  
-  # TODO CASE 2:
-  # if x$templates$physical.txt$content is not NULL then replace empties with values calculated here, 
-  
-  # TODO CASE 3:
-  # Is implicitly handled by the above operations. 
   
   # Validate templates --------------------------------------------------------
   

@@ -26,6 +26,8 @@
 #'     (logical) Whether to write an empty template file.
 #' @param write.file
 #'     (logical; optional) Whether to write the template file. Default is \code{TRUE}.
+#' @param overwrite
+#'     (logical) Overwrite the template with new content?
 #'
 #' @return
 #' \item{physical}{Columns:
@@ -65,13 +67,14 @@ template_physical <- function(
   data.table = NULL, 
   other.entity = NULL,
   empty = FALSE, 
-  write.file = TRUE) {
+  write.file = TRUE,
+  overwrite = FALSE) {
   
   message('Templating physical attributes for data objects ...')
   
   # TODO Validate arguments
   
-  if (file.exists(paste0(path, "/", "physical.txt"))) {
+  if (file.exists(paste0(path, "/", "physical.txt")) & !overwrite) {
     message("physical.txt already exists!")
     return(NULL)
   }

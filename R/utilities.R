@@ -445,6 +445,117 @@ set_methods_md <- function(methods_file) {
 
 
 
+#' Calculate and combine physical metadata
+#' 
+#' This is a helper function in the \code{make_eml()} context for calculating
+#' physical metadata of data objects defined in \code{make_eml()} arguments
+#' and combining with any physical metadata supplied by the user in the 
+#' optional physical.txt metadata template based on logic defined in the
+#' \code{template_physical()} documentation.
+#'
+#' @param path See \code{make_eml()} for definition
+#' @param data.path See \code{make_eml()} for definition
+#' @param data.table See \code{make_eml()} for definition
+#' @param data.table.name See \code{make_eml()} for definition
+#' @param data.table.description See \code{make_eml()} for definition
+#' @param data.table.quote.character See \code{make_eml()} for definition
+#' @param data.table.url See \code{make_eml()} for definition
+#' @param other.entity See \code{make_eml()} for definition
+#' @param other.entity.name See \code{make_eml()} for definition
+#' @param other.entity.description See \code{make_eml()} for definition
+#' @param other.entity.url See \code{make_eml()} for definition
+#' @param physical (data.frame) The physical metadata template as read by
+#' \code{template_arguments()}.
+#'     
+#' @noRd
+#' 
+template_physical_make_eml <- function(path,
+                                       data.path,
+                                       data.table,
+                                       data.table.name,
+                                       data.table.description,
+                                       data.table.quote.character,
+                                       data.table.url,
+                                       other.entity,
+                                       other.entity.name,
+                                       other.entity.description,
+                                       other.entity.url,
+                                       physical) {
+  
+  # Both sources of physical metadata
+  physt <- physical # Physical metadata from template
+  physc <- suppressMessages( # Physical metadata calculated here
+    template_physical(
+      path = path,
+      data.path = data.path,
+      data.table = data.table,
+      other.entity = other.entity,
+      write.file = FALSE,
+      overwrite = TRUE
+    )
+  )
+  
+  # Add metadata for data.table
+  i <- match(data.table, physc$objectName)
+  if (!is.null(data.table.name)) { # data.table.name
+    physc$entityName[i] <- data.table.name
+  } else {
+    physc$entityName[i] <- data.table
+  }
+  if (!is.null(data.table.description)) { # data.table.description
+    physc$entityDescription[i] <- data.table.description
+  } else {
+    physc$entityDescription[i] <- NA_character_
+  }
+  if (!is.null(data.table.quote.character)) { # data.table.quote.character
+    physc$quoteCharacter[i] <- data.table.quote.character
+  } else {
+    physc$quoteCharacter[i] <- NA_character_
+  }
+  if (!is.null(data.table.url)) { # data.table.url
+    physc$url[i] <- data.table.url
+  } else {
+    physc$url[i] <- NA_character_
+  }
+  
+  # Add metadata for other.entity
+  i <- match(other.entity, physc$objectName)
+  if (!is.null(other.entity.name)) { # other.entity.name
+    physc$entityName[i] <- other.entity.name
+  } else {
+    physc$entityName[i] <- other.entity
+  }
+  if (!is.null(other.entity.description)) { # other.entity.description
+    physc$entityDescription[i] <- other.entity.description
+  } else {
+    physc$entityDescription[i] <- NA_character_
+  }
+  if (!is.null(other.entity.url)) { # other.entity.url
+    physc$url[i] <- other.entity.url
+  } else {
+    physc$url[i] <- NA_character_
+  }
+  
+  # Fill empty fields of the user supplied metadata template with values
+  # calculated here
+  if (!is.null(physt)) {
+    browser()
+    i <- physt == ""
+    physt[i] <- physc[i]
+    res <- physt
+  } else {
+    res <- physc
+  }
+  browser()
+  return(res)
+}
+
+
+
+
+
+
+
 
 #' Make URL for PASTA+ environment
 #'
