@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5.3</span>
       </span>
     </div>
 
@@ -79,6 +79,15 @@
     </div>
 
     <div class="section level2">
+<h2 class="page-header" data-toc-text="3.5.3" id="emlassemblyline-353-2022-05-09">EMLassemblyline 3.5.3 (2022-05-09)<a class="anchor" aria-label="anchor" href="#emlassemblyline-353-2022-05-09"></a></h2>
+<div class="section level4">
+<h4 id="bug-fixes-3-5-3">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-3-5-3"></a></h4>
+<ul><li>Now imports taxonomyCleanr &gt;= 1.6.1 so the EDIutils package is not required (<a href="https://github.com/EDIorg/EMLassemblyline/issues/112" class="external-link">#112</a>).</li></ul></div>
+<div class="section level4">
+<h4 id="minor-improvements-3-5-3">MINOR IMPROVEMENTS<a class="anchor" aria-label="anchor" href="#minor-improvements-3-5-3"></a></h4>
+<ul><li>To identify EML files created with EMLassemblyline, the application and version number are now included in the additionalMetadata element (<a href="https://github.com/EDIorg/EMLassemblyline/issues/109" class="external-link">#109</a>).</li></ul></div>
+</div>
+    <div class="section level2">
 <h2 class="page-header" data-toc-text="3.5.2" id="emlassemblyline-352">EMLassemblyline 3.5.2<a class="anchor" aria-label="anchor" href="#emlassemblyline-352"></a></h2>
 <div class="section level4">
 <h4 id="enhancements-3-5-2">Enhancements<a class="anchor" aria-label="anchor" href="#enhancements-3-5-2"></a></h4>
@@ -87,30 +96,25 @@
 </ul></div>
 <div class="section level4">
 <h4 id="bug-fix-3-5-2">Bug fix<a class="anchor" aria-label="anchor" href="#bug-fix-3-5-2"></a></h4>
-<ul><li>Fix keyword resolver - Keywords were not resolving to the LTER vocabulary due to a regression that occurred during the EDIutils deprecation. The missing functions have been added back to EAL.</li>
-</ul></div>
+<ul><li>Fix keyword resolver - Keywords were not resolving to the LTER vocabulary due to a regression that occurred during the EDIutils deprecation. The missing functions have been added back to EAL.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="3.5.1" id="emlassemblyline-351">EMLassemblyline 3.5.1<a class="anchor" aria-label="anchor" href="#emlassemblyline-351"></a></h2>
-<ul><li>Removed version requirements from dependencies. Removed unused EDIutils from list of dependencies.</li>
-</ul></div>
+<ul><li>Removed version requirements from dependencies. Removed unused EDIutils from list of dependencies.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="3.5.0" id="emlassemblyline-350">EMLassemblyline 3.5.0<a class="anchor" aria-label="anchor" href="#emlassemblyline-350"></a></h2>
-<ul><li>Integrated some EDIutils functions and removed the package dependency</li>
-</ul></div>
+<ul><li>Integrated some EDIutils functions and removed the package dependency</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="3.4.1" id="emlassemblyline-341">EMLassemblyline 3.4.1<a class="anchor" aria-label="anchor" href="#emlassemblyline-341"></a></h2>
 <div class="section level4">
 <h4 id="bug-fix-3-4-1">Bug fix<a class="anchor" aria-label="anchor" href="#bug-fix-3-4-1"></a></h4>
-<ul><li>A resolved issue in the taxonomyCleanr dependency requires a minimum of version 1.5.4.</li>
-</ul></div>
+<ul><li>A resolved issue in the taxonomyCleanr dependency requires a minimum of version 1.5.4.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="3.4.0" id="emlassemblyline-340">EMLassemblyline 3.4.0<a class="anchor" aria-label="anchor" href="#emlassemblyline-340"></a></h2>
 <div class="section level4">
 <h4 id="enhancement-3-4-0">Enhancement<a class="anchor" aria-label="anchor" href="#enhancement-3-4-0"></a></h4>
-<ul><li>Implement support for markdown and LaTex equations embedded in markdown. This only works for methods.md templates. NOTE: LaTex equations must be wrapped in “$$”, otherwise they won’t be parsed correctly. This addresses <a href="https://github.com/EDIorg/EMLassemblyline/issues/85" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/85" class="external-link">#85</a>.</li>
-</ul></div>
+<ul><li>Implement support for markdown and LaTex equations embedded in markdown. This only works for methods.md templates. NOTE: LaTex equations must be wrapped in “$$”, otherwise they won’t be parsed correctly. This addresses <a href="https://github.com/EDIorg/EMLassemblyline/issues/85" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/85" class="external-link">#85</a>.</li></ul></div>
 <div class="section level4">
 <h4 id="bug-fix-3-4-0">Bug fix<a class="anchor" aria-label="anchor" href="#bug-fix-3-4-0"></a></h4>
 <ul><li>Fix non-resolvable schemaLocation.</li>
@@ -134,32 +138,28 @@
 <div class="section level4">
 <h4 id="bug-fix-3-3-4">Bug fix<a class="anchor" aria-label="anchor" href="#bug-fix-3-3-4"></a></h4>
 <ul><li>
-<strong>Schema validation:</strong> Recent changes to <code>emld</code> complicate validation of EML files input to some EAL functions. Validation of such inputs have been suspended until a permanent fix can be made. These changes have no impact on EAL working correctly, unless an invalid EML record is input, in which case the function will fail if there is a critical issue.</li>
-</ul></div>
+<strong>Schema validation:</strong> Recent changes to <code>emld</code> complicate validation of EML files input to some EAL functions. Validation of such inputs have been suspended until a permanent fix can be made. These changes have no impact on EAL working correctly, unless an invalid EML record is input, in which case the function will fail if there is a critical issue.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="3.3.3" id="emlassemblyline-333">EMLassemblyline 3.3.3<a class="anchor" aria-label="anchor" href="#emlassemblyline-333"></a></h2>
 <div class="section level4">
 <h4 id="bug-fix-3-3-3">Bug fix<a class="anchor" aria-label="anchor" href="#bug-fix-3-3-3"></a></h4>
 <ul><li>
-<strong>template_table_attributes():</strong> A minor bug in the column classification logic has been fixed.</li>
-</ul></div>
+<strong>template_table_attributes():</strong> A minor bug in the column classification logic has been fixed.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="3.3.2" id="emlassemblyline-332">EMLassemblyline 3.3.2<a class="anchor" aria-label="anchor" href="#emlassemblyline-332"></a></h2>
 <div class="section level4">
 <h4 id="bug-fix-3-3-2">Bug fix<a class="anchor" aria-label="anchor" href="#bug-fix-3-3-2"></a></h4>
 <ul><li>
-<strong>Updated dependency:</strong> Delimiter detection was underperforming for MacOS. A new version of <code>EDIutils</code> fixes this.</li>
-</ul></div>
+<strong>Updated dependency:</strong> Delimiter detection was underperforming for MacOS. A new version of <code>EDIutils</code> fixes this.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="3.3.1" id="emlassemblyline-331">EMLassemblyline 3.3.1<a class="anchor" aria-label="anchor" href="#emlassemblyline-331"></a></h2>
 <div class="section level4">
 <h4 id="bug-fix-3-3-1">Bug fix<a class="anchor" aria-label="anchor" href="#bug-fix-3-3-1"></a></h4>
 <ul><li>
-<strong>tab field delimiters:</strong> For tab delimited data tables, an empty white space was being written to the EML rather than the expected \t. This fix addresses <a href="https://github.com/EDIorg/EMLassemblyline/issues/84" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/84" class="external-link">#84</a>.</li>
-</ul></div>
+<strong>tab field delimiters:</strong> For tab delimited data tables, an empty white space was being written to the EML rather than the expected \t. This fix addresses <a href="https://github.com/EDIorg/EMLassemblyline/issues/84" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/84" class="external-link">#84</a>.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="3.3.0" id="emlassemblyline-330">EMLassemblyline 3.3.0<a class="anchor" aria-label="anchor" href="#emlassemblyline-330"></a></h2>
@@ -188,24 +188,21 @@
 <div class="section level4">
 <h4 id="bug-fix-3-2-1">Bug fix<a class="anchor" aria-label="anchor" href="#bug-fix-3-2-1"></a></h4>
 <ul><li>
-<strong>template_taxonomic_coverage():</strong> Resolving to ITIS began failing due to a change in title (from “ITIS” to “Integrated Taxonomic Information SystemITIS” listed in the return from <code><a href="https://docs.ropensci.org/taxize/reference/gnr_datasources.html" class="external-link">taxize::gnr_datasources()</a></code>. This issue has been fixed in the <code>taxonomyCleanr</code> dependency.</li>
-</ul></div>
+<strong>template_taxonomic_coverage():</strong> Resolving to ITIS began failing due to a change in title (from “ITIS” to “Integrated Taxonomic Information SystemITIS” listed in the return from <code><a href="https://docs.ropensci.org/taxize/reference/gnr_datasources.html" class="external-link">taxize::gnr_datasources()</a></code>. This issue has been fixed in the <code>taxonomyCleanr</code> dependency.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="3.2.0" id="emlassemblyline-320">EMLassemblyline 3.2.0<a class="anchor" aria-label="anchor" href="#emlassemblyline-320"></a></h2>
 <div class="section level4">
 <h4 id="enhancement-3-2-0">Enhancement<a class="anchor" aria-label="anchor" href="#enhancement-3-2-0"></a></h4>
 <ul><li>
-<strong>Validate categorical variables:</strong> Validation of categorical variables has been enhanced with a check that each variable listed as “categorical” in table attributes templates are also listed in the categorical variables template.</li>
-</ul></div>
+<strong>Validate categorical variables:</strong> Validation of categorical variables has been enhanced with a check that each variable listed as “categorical” in table attributes templates are also listed in the categorical variables template.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="3.1.0" id="emlassemblyline-310">EMLassemblyline 3.1.0<a class="anchor" aria-label="anchor" href="#emlassemblyline-310"></a></h2>
 <div class="section level4">
 <h4 id="enhancement-3-1-0">Enhancement<a class="anchor" aria-label="anchor" href="#enhancement-3-1-0"></a></h4>
 <ul><li>
-<strong>Improved handling of unsupported taxonomic authorities:</strong> Methods have been improved for taxa that have been manually resolved to unsupported taxonomic authoritiies (i.e. authorities other than “ITIS”, “WORMS”, “GBIF”). Values listed in the taxonomic coverage template’s “authority_system” and “authority_id” fields, will become annotations in the EML returned by <code><a href="../reference/make_eml.html">make_eml()</a></code>. See <code><a href="../reference/template_taxonomic_coverage.html">template_taxonomic_coverage()</a></code> function docs for more details. <em>NOTE: These new methods don’t facilitate expansion of a taxon resolved in an unsupported system to the full classification hierarchy that is currently available when using ITIS, WORMS, or GBIF. That will require additional effort.</em> Additionally, <code><a href="../reference/template_taxonomic_coverage.html">template_taxonomic_coverage()</a></code> now has an <code>empty</code> argument for returning an empty template. This enhancement partially addresses <a href="https://github.com/EDIorg/EMLassemblyline/issues/50" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/50" class="external-link">#50</a>.</li>
-</ul></div>
+<strong>Improved handling of unsupported taxonomic authorities:</strong> Methods have been improved for taxa that have been manually resolved to unsupported taxonomic authoritiies (i.e. authorities other than “ITIS”, “WORMS”, “GBIF”). Values listed in the taxonomic coverage template’s “authority_system” and “authority_id” fields, will become annotations in the EML returned by <code><a href="../reference/make_eml.html">make_eml()</a></code>. See <code><a href="../reference/template_taxonomic_coverage.html">template_taxonomic_coverage()</a></code> function docs for more details. <em>NOTE: These new methods don’t facilitate expansion of a taxon resolved in an unsupported system to the full classification hierarchy that is currently available when using ITIS, WORMS, or GBIF. That will require additional effort.</em> Additionally, <code><a href="../reference/template_taxonomic_coverage.html">template_taxonomic_coverage()</a></code> now has an <code>empty</code> argument for returning an empty template. This enhancement partially addresses <a href="https://github.com/EDIorg/EMLassemblyline/issues/50" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/50" class="external-link">#50</a>.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="3.0.0" id="emlassemblyline-300">EMLassemblyline 3.0.0<a class="anchor" aria-label="anchor" href="#emlassemblyline-300"></a></h2>
@@ -213,10 +210,8 @@
 <h4 id="enhancements-3-0-0">Enhancements<a class="anchor" aria-label="anchor" href="#enhancements-3-0-0"></a></h4>
 <ul><li>
 <p><strong>Semantic annotation:</strong> EML can now be annotated. This implementation supports two use cases:</p>
-<ol style="list-style-type: decimal"><li>New EML … created by the EMLassemblyline workflow:
-<ul><li>Complete all metadata templates for your dataset (as usual)</li>
-<li>Run <code><a href="../reference/template_annotations.html">template_annotations()</a></code> to create the annotations template
-<ul><li>The annotations template (annotations.txt) reports the annotatable elements within your metadata and assigns default predicate annotations. You’ll have to add object annotations from ontologies of your choosing. You can remove annotations by deleting rows and add annotations by copying a subject’s row, pasting it to a new line, then modifying the object annotation fields.</li>
+<ol style="list-style-type: decimal"><li>New EML … created by the EMLassemblyline workflow:<ul><li>Complete all metadata templates for your dataset (as usual)</li>
+<li>Run <code><a href="../reference/template_annotations.html">template_annotations()</a></code> to create the annotations template<ul><li>The annotations template (annotations.txt) reports the annotatable elements within your metadata and assigns default predicate annotations. You’ll have to add object annotations from ontologies of your choosing. You can remove annotations by deleting rows and add annotations by copying a subject’s row, pasting it to a new line, then modifying the object annotation fields.</li>
 <li>Default annotations can be changed by the user</li>
 <li>Instructions for creating annotations.txt from scratch are included in the function docs (for users gathering annotations in other ways).</li>
 <li>Recurring nodes (e.g. ResponsibleParty) only require one set of annotations within annotations.txt</li>
@@ -224,8 +219,7 @@
 <li>Run <code><a href="../reference/make_eml.html">make_eml()</a></code>
 </li>
 </ul></li>
-<li>Old EML … created in other ways:
-<ul><li>Run template_annotations() for your EML file</li>
+<li>Old EML … created in other ways:<ul><li>Run template_annotations() for your EML file</li>
 <li>Run annotate_eml() to get an annotated revision of your EML file</li>
 </ul></li>
 </ol><p><em>Note: All annotated elements are assigned ids and their annotations are placed both immediately under the parent element (subject) and within the /eml/annotations node through id+reference pairs. This redundant approach supports variation in where EML metadata consumers prefer to harvest this information and supports annotation of EML elements requiring id+reference pairs.</em></p>
@@ -270,24 +264,21 @@
 <div class="section level4">
 <h4 id="bug-fix-2-18-2">Bug fix<a class="anchor" aria-label="anchor" href="#bug-fix-2-18-2"></a></h4>
 <ul><li>
-<strong>Patch for updated dependency (part 2):</strong> An updated dependency resulted in <code><a href="../reference/template_table_attributes.html">template_table_attributes()</a></code> errors. This fix is an addendum to the prior fix (2.18.1).</li>
-</ul></div>
+<strong>Patch for updated dependency (part 2):</strong> An updated dependency resulted in <code><a href="../reference/template_table_attributes.html">template_table_attributes()</a></code> errors. This fix is an addendum to the prior fix (2.18.1).</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.18.1" id="emlassemblyline-2181">EMLassemblyline 2.18.1<a class="anchor" aria-label="anchor" href="#emlassemblyline-2181"></a></h2>
 <div class="section level4">
 <h4 id="bug-fix-2-18-1">Bug fix<a class="anchor" aria-label="anchor" href="#bug-fix-2-18-1"></a></h4>
 <ul><li>
-<strong>Patch for updated dependency:</strong> An updated dependency resulted in <code><a href="../reference/template_table_attributes.html">template_table_attributes()</a></code> errors. This has been fixed.</li>
-</ul></div>
+<strong>Patch for updated dependency:</strong> An updated dependency resulted in <code><a href="../reference/template_table_attributes.html">template_table_attributes()</a></code> errors. This has been fixed.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.18.0" id="emlassemblyline-2180">EMLassemblyline 2.18.0<a class="anchor" aria-label="anchor" href="#emlassemblyline-2180"></a></h2>
 <div class="section level4">
 <h4 id="enhancement-2-18-0">Enhancement<a class="anchor" aria-label="anchor" href="#enhancement-2-18-0"></a></h4>
 <ul><li>
-<strong>Allow creation of partial EML:</strong> During the draft process it is very useful to see a partial EML document, even if incomplete or invalid. Additionally, developers using EMLassemblyline as a backend (e.g. <a href="https://github.com/earnaud/MetaShARK-v2" class="external-link">MetaShARK</a> and <a href="https://github.com/lkuiucsb/Excel-to-EML" class="external-link">Excel-to-EML</a>) may not want the current set of input requirements for their applications. To accomodate these use cases, validation checks on inputs to <code><a href="../reference/make_eml.html">make_eml()</a></code> (often communicating best practice recommendations) have been refactored to return warnings rather than errors. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/34" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/34" class="external-link">#34</a>.</li>
-</ul></div>
+<strong>Allow creation of partial EML:</strong> During the draft process it is very useful to see a partial EML document, even if incomplete or invalid. Additionally, developers using EMLassemblyline as a backend (e.g. <a href="https://github.com/earnaud/MetaShARK-v2" class="external-link">MetaShARK</a> and <a href="https://github.com/lkuiucsb/Excel-to-EML" class="external-link">Excel-to-EML</a>) may not want the current set of input requirements for their applications. To accomodate these use cases, validation checks on inputs to <code><a href="../reference/make_eml.html">make_eml()</a></code> (often communicating best practice recommendations) have been refactored to return warnings rather than errors. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/34" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/34" class="external-link">#34</a>.</li></ul></div>
 <div class="section level4">
 <h4 id="bug-fixes-2-18-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-2-18-0"></a></h4>
 <ul><li>
@@ -301,16 +292,14 @@
 <div class="section level4">
 <h4 id="enhancement-2-17-0">Enhancement<a class="anchor" aria-label="anchor" href="#enhancement-2-17-0"></a></h4>
 <ul><li>
-<strong>Create EML for non-EDI repositories:</strong> Create EML for non-EDI repositories by refactoring the logic around the <code><a href="../reference/make_eml.html">make_eml()</a></code> function arguments <code>user.id</code>, <code>user.domain</code>, and <code>package.id</code>. Details are listed in the function documentation.</li>
-</ul></div>
+<strong>Create EML for non-EDI repositories:</strong> Create EML for non-EDI repositories by refactoring the logic around the <code><a href="../reference/make_eml.html">make_eml()</a></code> function arguments <code>user.id</code>, <code>user.domain</code>, and <code>package.id</code>. Details are listed in the function documentation.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.16.1" id="emlassemblyline-2161">EMLassemblyline 2.16.1<a class="anchor" aria-label="anchor" href="#emlassemblyline-2161"></a></h2>
 <div class="section level4">
 <h4 id="bug-fix-2-16-1">Bug fix<a class="anchor" aria-label="anchor" href="#bug-fix-2-16-1"></a></h4>
 <ul><li>
-<strong>template reader:</strong> Fixed a bug in the metadata template reader.</li>
-</ul></div>
+<strong>template reader:</strong> Fixed a bug in the metadata template reader.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.16.0" id="emlassemblyline-2160">EMLassemblyline 2.16.0<a class="anchor" aria-label="anchor" href="#emlassemblyline-2160"></a></h2>
@@ -341,24 +330,21 @@
 <div class="section level4">
 <h4 id="enhancement-2-14-0">Enhancement<a class="anchor" aria-label="anchor" href="#enhancement-2-14-0"></a></h4>
 <ul><li>
-<strong>Boiler plate EMLassemblyline process:</strong> Add boilerplate function calls to /inst/templates/run_EMLassemblyline.R. This script is added to the users workspace via <code><a href="../reference/template_directories.html">template_directories()</a></code>. The boilerplate is meant to be a reminder and save the user a little time. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/36" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/36" class="external-link">#36</a>.</li>
-</ul></div>
+<strong>Boiler plate EMLassemblyline process:</strong> Add boilerplate function calls to /inst/templates/run_EMLassemblyline.R. This script is added to the users workspace via <code><a href="../reference/template_directories.html">template_directories()</a></code>. The boilerplate is meant to be a reminder and save the user a little time. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/36" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/36" class="external-link">#36</a>.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.13.1" id="emlassemblyline-2131">EMLassemblyline 2.13.1<a class="anchor" aria-label="anchor" href="#emlassemblyline-2131"></a></h2>
 <div class="section level4">
 <h4 id="bug-fix-2-13-1">Bug fix<a class="anchor" aria-label="anchor" href="#bug-fix-2-13-1"></a></h4>
 <ul><li>
-<strong>schemaLocation:</strong> Fixed schemaLocation and namespace to be a web resolvable address.</li>
-</ul></div>
+<strong>schemaLocation:</strong> Fixed schemaLocation and namespace to be a web resolvable address.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.13.0" id="emlassemblyline-2130">EMLassemblyline 2.13.0<a class="anchor" aria-label="anchor" href="#emlassemblyline-2130"></a></h2>
 <div class="section level4">
 <h4 id="enhancement-2-13-0">Enhancement<a class="anchor" aria-label="anchor" href="#enhancement-2-13-0"></a></h4>
 <ul><li>
-<strong>TextType:</strong> Conversion of abstract.docx, methods.docx, and additional_info.docx to EML has been improved.</li>
-</ul></div>
+<strong>TextType:</strong> Conversion of abstract.docx, methods.docx, and additional_info.docx to EML has been improved.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.12.4" id="emlassemblyline-2124">EMLassemblyline 2.12.4<a class="anchor" aria-label="anchor" href="#emlassemblyline-2124"></a></h2>
@@ -375,29 +361,25 @@
 <div class="section level4">
 <h4 id="bug-fix-2-12-3">Bug fix<a class="anchor" aria-label="anchor" href="#bug-fix-2-12-3"></a></h4>
 <ul><li>
-<strong>Missing &lt;taxonomicCoverage&gt;:</strong> taxonomicCoverage supplied in taxonomic_coverage.txt was missing from the EML. This has been fixed.</li>
-</ul></div>
+<strong>Missing &lt;taxonomicCoverage&gt;:</strong> taxonomicCoverage supplied in taxonomic_coverage.txt was missing from the EML. This has been fixed.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.12.2" id="emlassemblyline-2122">EMLassemblyline 2.12.2<a class="anchor" aria-label="anchor" href="#emlassemblyline-2122"></a></h2>
 <div class="section level4">
 <h4 id="bug-fix-2-12-2">Bug fix<a class="anchor" aria-label="anchor" href="#bug-fix-2-12-2"></a></h4>
 <ul><li>
-<strong>Missing &lt;access&gt; node:</strong> The access node was not being added to the EML. This has been fixed.</li>
-</ul></div>
+<strong>Missing &lt;access&gt; node:</strong> The access node was not being added to the EML. This has been fixed.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.12.1" id="emlassemblyline-2121">EMLassemblyline 2.12.1<a class="anchor" aria-label="anchor" href="#emlassemblyline-2121"></a></h2>
 <div class="section level4">
 <h4 id="bug-fix-2-12-1">Bug fix<a class="anchor" aria-label="anchor" href="#bug-fix-2-12-1"></a></h4>
 <ul><li>
-<strong>Template reader:</strong> A bug in the tabular template reader has been fixed (<a href="https://github.com/EDIorg/EMLassemblyline/commit/42276a0a696a8c6e743cc15e28f4e9c22df1100e" class="external-link">see commit for details</a>).</li>
-</ul></div>
+<strong>Template reader:</strong> A bug in the tabular template reader has been fixed (<a href="https://github.com/EDIorg/EMLassemblyline/commit/42276a0a696a8c6e743cc15e28f4e9c22df1100e" class="external-link">see commit for details</a>).</li></ul></div>
 <div class="section level4">
 <h4 id="enhancement-2-12-1">Enhancement<a class="anchor" aria-label="anchor" href="#enhancement-2-12-1"></a></h4>
 <ul><li>
-<strong><code><a href="../reference/make_eml.html">make_eml()</a></code> code:</strong> (For developers) The underlying code of <code><a href="../reference/make_eml.html">make_eml()</a></code> is now more concise and understandable.</li>
-</ul></div>
+<strong><code><a href="../reference/make_eml.html">make_eml()</a></code> code:</strong> (For developers) The underlying code of <code><a href="../reference/make_eml.html">make_eml()</a></code> is now more concise and understandable.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.11.1" id="emlassemblyline-2111">EMLassemblyline 2.11.1<a class="anchor" aria-label="anchor" href="#emlassemblyline-2111"></a></h2>
@@ -414,61 +396,53 @@
 <div class="section level4">
 <h4 id="enhancement-2-11-0">Enhancement<a class="anchor" aria-label="anchor" href="#enhancement-2-11-0"></a></h4>
 <ul><li>
-<strong>NAs in templates:</strong> Users often add NAs to templates where EMLassemblyline expects "". This enhancement ignores these extraneous NAs.</li>
-</ul></div>
+<strong>NAs in templates:</strong> Users often add NAs to templates where EMLassemblyline expects "". This enhancement ignores these extraneous NAs.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.10.2" id="emlassemblyline-2102">EMLassemblyline 2.10.2<a class="anchor" aria-label="anchor" href="#emlassemblyline-2102"></a></h2>
 <div class="section level4">
 <h4 id="bug-fix-2-10-2">Bug fix<a class="anchor" aria-label="anchor" href="#bug-fix-2-10-2"></a></h4>
 <ul><li>
-<strong>Missing value codes:</strong> Recent changes broke the proper handling of “NA” missing value codes. This has been fixed.</li>
-</ul></div>
+<strong>Missing value codes:</strong> Recent changes broke the proper handling of “NA” missing value codes. This has been fixed.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.10.1" id="emlassemblyline-2101">EMLassemblyline 2.10.1<a class="anchor" aria-label="anchor" href="#emlassemblyline-2101"></a></h2>
 <div class="section level4">
 <h4 id="bug-fix-2-10-1">Bug fix<a class="anchor" aria-label="anchor" href="#bug-fix-2-10-1"></a></h4>
 <ul><li>
-<strong>Schema validation:</strong> The referenced schema location was not correct. Now it is (<a href="https://github.com/EDIorg/EMLassemblyline/issues/59" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/59" class="external-link">#59</a>).</li>
-</ul></div>
+<strong>Schema validation:</strong> The referenced schema location was not correct. Now it is (<a href="https://github.com/EDIorg/EMLassemblyline/issues/59" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/59" class="external-link">#59</a>).</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.10.0" id="emlassemblyline-2100">EMLassemblyline 2.10.0<a class="anchor" aria-label="anchor" href="#emlassemblyline-2100"></a></h2>
 <div class="section level4">
 <h4 id="enhancement-2-10-0">Enhancement<a class="anchor" aria-label="anchor" href="#enhancement-2-10-0"></a></h4>
 <ul><li>
-<strong>Schema validation:</strong> A schema validation error sporadically occurs under EML 2.1.1. Upgrading to EML 2.2.0 fixes this (<a href="https://github.com/EDIorg/EMLassemblyline/issues/59" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/59" class="external-link">#59</a>).</li>
-</ul></div>
+<strong>Schema validation:</strong> A schema validation error sporadically occurs under EML 2.1.1. Upgrading to EML 2.2.0 fixes this (<a href="https://github.com/EDIorg/EMLassemblyline/issues/59" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/59" class="external-link">#59</a>).</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.9.0" id="emlassemblyline-290">EMLassemblyline 2.9.0<a class="anchor" aria-label="anchor" href="#emlassemblyline-290"></a></h2>
 <div class="section level4">
 <h4 id="enhancement-2-9-0">Enhancement<a class="anchor" aria-label="anchor" href="#enhancement-2-9-0"></a></h4>
 <ul><li>
-<strong>Template checks:</strong> A new suite of checks on metadata template content have been added to more effectively communicate issues and reduce errors. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/6" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/6" class="external-link">#6</a>, <a href="https://github.com/EDIorg/EMLassemblyline/issues/35" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/35" class="external-link">#35</a>, <a href="https://github.com/EDIorg/EMLassemblyline/issues/37" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/37" class="external-link">#37</a>, and <a href="https://github.com/EDIorg/EMLassemblyline/issues/53" class="external-link">issue # 53</a>.</li>
-</ul></div>
+<strong>Template checks:</strong> A new suite of checks on metadata template content have been added to more effectively communicate issues and reduce errors. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/6" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/6" class="external-link">#6</a>, <a href="https://github.com/EDIorg/EMLassemblyline/issues/35" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/35" class="external-link">#35</a>, <a href="https://github.com/EDIorg/EMLassemblyline/issues/37" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/37" class="external-link">#37</a>, and <a href="https://github.com/EDIorg/EMLassemblyline/issues/53" class="external-link">issue # 53</a>.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.8.0" id="emlassemblyline-280">EMLassemblyline 2.8.0<a class="anchor" aria-label="anchor" href="#emlassemblyline-280"></a></h2>
 <div class="section level4">
 <h4 id="enhancement-2-8-0">Enhancement<a class="anchor" aria-label="anchor" href="#enhancement-2-8-0"></a></h4>
 <ul><li>
-<strong>Online distribution:</strong> The previous implementation for providing URLs by which the data can be publicly downloaded required all data objects to be co-located in the same directory, which is too restrictive. Now URLs can be explicitly listed for each data object. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/56" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/56" class="external-link">#56</a>.</li>
-</ul></div>
+<strong>Online distribution:</strong> The previous implementation for providing URLs by which the data can be publicly downloaded required all data objects to be co-located in the same directory, which is too restrictive. Now URLs can be explicitly listed for each data object. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/56" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/56" class="external-link">#56</a>.</li></ul></div>
 <div class="section level4">
 <h4 id="deprecation-2-8-0">Deprecation<a class="anchor" aria-label="anchor" href="#deprecation-2-8-0"></a></h4>
 <ul><li>
-<strong>data.url:</strong> The <code>data.url</code> argument has been deprecated in favor of <code>data.table.url</code> and <code>other.entity.url</code> but will be supported until March 11, 2021.</li>
-</ul></div>
+<strong>data.url:</strong> The <code>data.url</code> argument has been deprecated in favor of <code>data.table.url</code> and <code>other.entity.url</code> but will be supported until March 11, 2021.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.7.1" id="emlassemblyline-271">EMLassemblyline 2.7.1<a class="anchor" aria-label="anchor" href="#emlassemblyline-271"></a></h2>
 <div class="section level4">
 <h4 id="bug-fix-2-7-1">Bug fix<a class="anchor" aria-label="anchor" href="#bug-fix-2-7-1"></a></h4>
 <ul><li>
-<strong>Delimiter guessing:</strong> Occasionally the content of tabular templates leads <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">data.table::fread()</a></code> to guessing a delimiter other than “\t”. This issue has been fixed by explicitly stating the expected field delimiter.</li>
-</ul></div>
+<strong>Delimiter guessing:</strong> Occasionally the content of tabular templates leads <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">data.table::fread()</a></code> to guessing a delimiter other than “\t”. This issue has been fixed by explicitly stating the expected field delimiter.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.7.0" id="emlassemblyline-270">EMLassemblyline 2.7.0<a class="anchor" aria-label="anchor" href="#emlassemblyline-270"></a></h2>
@@ -557,8 +531,7 @@
 <ul><li>
 <strong>Website:</strong> Improved documentation with vignettes demonstrating common and advanced use cases. Implemented with <code>pkgdown</code>.</li>
 <li>
-<strong>Templating functions:</strong> Functions creating metadata templates are grouped under the prefix <code>template_*</code> to simplify user understanding.
-<ul><li>
+<strong>Templating functions:</strong> Functions creating metadata templates are grouped under the prefix <code>template_*</code> to simplify user understanding.<ul><li>
 <code><a href="../reference/template_arguments.html">template_arguments()</a></code> Create template for all user inputs to <code>EMLassemblyline</code> (i.e. metadata template content and function arguments) to entirely programmatic workflows with focus on supporting content ingestion from upstream metadata sources.</li>
 <li>
 <code>template_categorical_variable()</code> Create categorical variables template (previously named <code>define_catvars()</code>).</li>
@@ -622,8 +595,7 @@
 <div class="section level4">
 <h4 id="bug-fix-2-5-0">Bug fix<a class="anchor" aria-label="anchor" href="#bug-fix-2-5-0"></a></h4>
 <ul><li>
-<strong>otherEntity url:</strong> Add EML element <em>//otherEntity/physical/distribution/online/url</em> via <code><a href="../reference/make_eml.html">make_eml()</a></code>. This element was missing though documentation implied its existence.</li>
-</ul></div>
+<strong>otherEntity url:</strong> Add EML element <em>//otherEntity/physical/distribution/online/url</em> via <code><a href="../reference/make_eml.html">make_eml()</a></code>. This element was missing though documentation implied its existence.</li></ul></div>
 </div>
   </div>
 
@@ -639,7 +611,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer></div>
