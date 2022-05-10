@@ -420,12 +420,17 @@ template_arguments <- function(
       if (stringr::str_detect(
         tfound[i], 
         attr_tmp$regexpr[attr_tmp$template_name == "physical"])) {
-        templates[[i]]$content <- read_tbl(
-          paste0(path, "/", tfound[i]))
-        # Ensure any NA missing value codes are expressed as strings 
-        # (i.e. "NA") otherwise they will not be recognized by downstream
-        # functions
-        templates[[i]]$content[is.na(templates[[i]]$content)] <- "NA"
+        
+        # Quote character representation in the physical.txt template is
+        # dictated by the original implementation as arguments to make_eml() 
+        # as "'" for single quote and '"' as double quotes. Representation
+        # of quotes in these two contexts differs. This code aligns the 
+        # template context with make_eml().
+        
+        d <- read_tbl(paste0(path, "/", tfound[i]))
+        d$quoteCharacter[d$quoteCharacter == "''"] <- '"'
+        templates[[i]]$content <- d
+        
       }
 
       # Read provenance -------------------------------------------------------

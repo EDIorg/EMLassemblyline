@@ -2,7 +2,7 @@
 % Please edit documentation in R/template_physical.R
 \name{template_physical}
 \alias{template_physical}
-\title{Describe physical attributes of data objects}
+\title{Describe physical format of data objects}
 \usage{
 template_physical(
   path,
@@ -38,39 +38,47 @@ than one, then supply as a vector of character strings (e.g.
 \value{
 \item{physical}{Columns:
     \itemize{
+    \item{objectName: File name of the data object.}
     \item{type: Object type. Can be: dataTable, otherEntity.}
     \item{entityName: A short descriptive name for the object.}
-    \item{entityDescription: Description of the object.}
-    \item{objectName: File name of the object.}
-    \item{size: File size in bytes}
+    \item{entityDescription: A more Description of the object.}
+    \item{size: File size in bytes.}
     \item{authentication: File hash value.}
-    \item{authentication_method: Method of calculating the file has value. Defaults to "MD5"}
+    \item{authentication_method: Method of calculating the file has value. Defaults to "MD5".}
     \item{numHeaderLines: Number of header lines. Defaults to 1.}
     \item{recordDelimiter: Record delimiter (i.e. newline character).}
     \item{attributeOrientation: Can be "column" or "row". Defaults to "column".}
     \item{fieldDelimiter: Field delimiter.}
-    \item{quoteCharacter: Quote character used to enclose character type data.}
-    \item{formatName: Format of data object. Only for non-tabular data.}
+    \item{quoteCharacter: Quote character used to enclose character type data. Can be "'" (i.e. single quote) or '"' (i.e. double quote). Note: If editing with a spread sheet editor you may want to check the final result in a text editor to ensure the quote characters are accurately represented.}
+    \item{entityType: The entity's type is typically the name of the type of data represented in the entity, such as "photograph". Only use with otherEntity types.}
+    \item{formatName: Format of data object. Only used with otherEntity.}
     \item{url: The publicly accessible URL from which the data object can be downloaded.}
-    \item{numberOfRecords: Number of records in the data object}
+    \item{numberOfRecords: Number of records of the data object.}
     }
 }
 }
 \description{
 This is an optional template that can be used to define the 
-physical attributes of data objects. The \code{make_eml()} function will 
+physical format of data objects. The \code{make_eml()} function will 
 automatically calculate these values if the physical template is absent or 
 empty.
 
-Use this template to define physical attributes of remote data that cannot 
-be accessed by \code{make_eml()}.
+One use case of this template is to define the physical format of remote 
+data that cannot be accessed and subsequently calculated by 
+\code{make_eml()}.
 }
 \details{
-\code{make_eml()} will calculate values for empty fields and ignore
-fields containing NA. Note, some fields only apply to one object type.
+\code{make_eml()} will calculate values for empty fields and ignore non-empty fields containing user specified values. This allows dynamic regeneration of physical metadata that is likely to change between versions, while allowing specification of unchanging content.
 }
 \examples{
 \dontrun{
+
+physical <- template_physical(
+  path = "./metadata_templates",
+  data.path = "./data_objects",
+  data.table = c("decomp.csv", "nitrogen.csv"),
+  other.entity = c("ancillary_data.zip", "processing_and_analysis.R")
+)
 
 }
 

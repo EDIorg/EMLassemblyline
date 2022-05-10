@@ -482,9 +482,19 @@ template_physical_make_eml <- function(path,
                                        other.entity.url,
                                        physical) {
   
-  # Get both sources of physical metadata
-  physt <- physical # Physical metadata from template
-  physc <- suppressMessages( # Physical metadata calculated here
+  # Physical metadata from template
+  physt <- physical
+  
+  # When no arguments from make_eml(), get required object names from template
+  if (is.null(data.table)) {
+    data.table <- physt$objectName[physt$type == "dataTable"]
+  }
+  if (is.null(other.entity)) {
+    other.entity <- physt$objectName[physt$type == "otherEntity"]
+  }
+  
+  # Calculate physical metadata here
+  physc <- suppressMessages(
     template_physical(
       path = path,
       data.path = data.path,
@@ -505,17 +515,17 @@ template_physical_make_eml <- function(path,
   if (!is.null(data.table.description)) { # data.table.description
     physc$entityDescription[i] <- data.table.description
   } else {
-    physc$entityDescription[i] <- NA_character_
+    physc$entityDescription[i] <- ""
   }
   if (!is.null(data.table.quote.character)) { # data.table.quote.character
     physc$quoteCharacter[i] <- data.table.quote.character
   } else {
-    physc$quoteCharacter[i] <- NA_character_
+    physc$quoteCharacter[i] <- ""
   }
   if (!is.null(data.table.url)) { # data.table.url
     physc$url[i] <- data.table.url
   } else {
-    physc$url[i] <- NA_character_
+    physc$url[i] <- ""
   }
   
   # Add metadata for other.entity
@@ -528,12 +538,12 @@ template_physical_make_eml <- function(path,
   if (!is.null(other.entity.description)) { # other.entity.description
     physc$entityDescription[i] <- other.entity.description
   } else {
-    physc$entityDescription[i] <- NA_character_
+    physc$entityDescription[i] <- ""
   }
   if (!is.null(other.entity.url)) { # other.entity.url
     physc$url[i] <- other.entity.url
   } else {
-    physc$url[i] <- NA_character_
+    physc$url[i] <- ""
   }
   
   # Fill empty fields of the user supplied metadata template with values
@@ -545,10 +555,16 @@ template_physical_make_eml <- function(path,
   } else {
     res <- physc
   }
-
+  
   # EML::write_eml() requires escape char to be written, otherwise is blank
   res$fieldDelimiter[res$fieldDelimiter == "\t"] <- "\\t"
   
+  # entityType is required for otherEntity. Add if missing.
+  i <- (res$type == "otherEntity") & 
+    (res$entityType == "" | is.na(res$entityType)) 
+  if (any(i)) {
+    res$entityType[i] <- "Unknown"
+  }
   return(res)
 }
 

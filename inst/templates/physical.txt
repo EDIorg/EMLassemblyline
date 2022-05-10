@@ -1,1 +1,1 @@
-type	entityName	entityDescription	objectName	size	authentication	authentication_method	numHeaderLines	recordDelimiter	attributeOrientation	fieldDelimiter	quoteCharacter	formatName	url	numberOfRecords
+type	entityName	entityDescription	objectName	size	authentication	authentication_method	numHeaderLines	recordDelimiter	attributeOrientation	fieldDelimiter	quoteCharacter	entityName	formatName	url	numberOfRecords
