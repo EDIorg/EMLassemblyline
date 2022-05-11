@@ -1338,13 +1338,19 @@ make_eml <- function(
   }
   
   # Create <additionalMetadata> -----------------------------------------------
-  
   if (!is.null(x$template$custom_units.txt)) {
     message("  <additionalMetadata>")
     eml$additionalMetadata[[
       length(eml$dataset$additionalMetadata)+1]]$metadata$unitList <- EML::set_unitList(
         x$template$custom_units.txt$content)
   }
+
+  message("  <additionalMetadata>")
+  eml$additionalMetadata[[
+    length(eml$additionalMetadata)+1]] <- EML::eml$additionalMetadata(
+      metadata = list(emlEditor = list(
+        "app" = "EMLassemblyline",
+        "release" = read.dcf(system.file("DESCRIPTION", package = "EMLassemblyline"))[[3]])))
   
   # Create <annotations> ------------------------------------------------------
 

@@ -1,4 +1,20 @@
-# EMLassemblyline 3.5.2.9000
+EMLassemblyline 3.5.3.9000 (YYYY-MM-DD)
+=======================================
+
+
+
+EMLassemblyline 3.5.3 (2022-05-09)
+=======================================
+
+### BUG FIXES
+
+  * Now imports taxonomyCleanr >= 1.6.1 so the EDIutils package is not 
+  required (#112).
+  
+### MINOR IMPROVEMENTS
+
+  * To identify EML files created with EMLassemblyline, the application and 
+  version number are now included in the additionalMetadata element (#109).
 
 # EMLassemblyline 3.5.2
 
