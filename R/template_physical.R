@@ -40,15 +40,15 @@
 #'     \item{size: File size in bytes.}
 #'     \item{authentication: File hash value.}
 #'     \item{authentication_method: Method of calculating the file has value. Defaults to "MD5".}
-#'     \item{numHeaderLines: Number of header lines. Defaults to 1.}
-#'     \item{recordDelimiter: Record delimiter (i.e. newline character).}
-#'     \item{attributeOrientation: Can be "column" or "row". Defaults to "column".}
-#'     \item{fieldDelimiter: Field delimiter.}
-#'     \item{quoteCharacter: Quote character used to enclose character type data. Can be "'" (i.e. single quote) or '"' (i.e. double quote). Note: If editing with a spread sheet editor you may want to check the final result in a text editor to ensure the quote characters are accurately represented.}
-#'     \item{entityType: The entity's type is typically the name of the type of data represented in the entity, such as "photograph". Only use with otherEntity types.}
-#'     \item{formatName: Format of data object. Only used with otherEntity.}
+#'     \item{numHeaderLines: Number of header lines. Only for dataTable types. Defaults to 1.}
+#'     \item{recordDelimiter: Record delimiter (i.e. newline character). Only for dataTable types.}
+#'     \item{attributeOrientation: Can be "column" or "row". Only for dataTable types. Defaults to "column".}
+#'     \item{fieldDelimiter: Field delimiter. Only for dataTable types.}
+#'     \item{quoteCharacter: Quote character used to enclose character type data. Can be "'" (i.e. single quote) or '"' (i.e. double quote). Only for dataTable types. Note: If editing with a spread sheet editor you may want to check the final result in a text editor to ensure the quote characters are accurately represented.}
+#'     \item{entityType: The entity's type is typically the name of the type of data represented in the entity, such as "photograph". Only for otherEntity types.}
+#'     \item{formatName: Format of data object. Only for otherEntity types.}
 #'     \item{url: The publicly accessible URL from which the data object can be downloaded.}
-#'     \item{numberOfRecords: Number of records of the data object.}
+#'     \item{numberOfRecords: Number of records of the data object. Only for dataTable types.}
 #'     }
 #' }
 #'     
@@ -88,7 +88,6 @@ template_physical <- function(
   
   # Create empty template -----------------------------------------------------
   
-  # TODO Add "empty" type to get_physical() to return an empty ... or read blank from /inst
   res <- data.frame(
     objectName = character(0),    
     type = character(0),
@@ -163,6 +162,8 @@ template_physical <- function(
   message("Done.")
   return(res)
 }
+
+
 
 
 
