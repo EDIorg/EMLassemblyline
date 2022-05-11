@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5.3.9000</span>
       </span>
     </div>
 
@@ -41,7 +43,7 @@
   <a href="../reference/index.html">Functions</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -79,7 +81,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/EDIorg/EMLassemblyline/">
+  <a href="https://github.com/EDIorg/EMLassemblyline/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -94,22 +96,22 @@
 
       
 
-      </header><script src="create_tmplts_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Template metadata</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/EDIorg/EMLassemblyline/blob/master/vignettes/create_tmplts.Rmd"><code>vignettes/create_tmplts.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/EDIorg/EMLassemblyline/blob/HEAD/vignettes/create_tmplts.Rmd" class="external-link"><code>vignettes/create_tmplts.Rmd</code></a></small>
       <div class="hidden name"><code>create_tmplts.Rmd</code></div>
 
     </div>
 
     
     
-<div id="functions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#functions" class="anchor"></a>Functions</h2>
+<div class="section level2">
+<h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a>
+</h2>
 <p>Metadata templates store content that is later converted to EML. Most templating functions read a data object, to extract as much information as possible, then writes it to file for the user to validate the inferred content and add any missing info. Each function focuses on a data feature enabling a modular build of the metadata (not all data contain the same features). The current set of templating functions are (click function names for docs):</p>
 <ul>
 <li>
@@ -121,11 +123,13 @@
 <li>
 <strong><code><a href="../reference/template_geographic_coverage.html">template_geographic_coverage()</a></code></strong> Describes where the data were collected.</li>
 <li>
-<strong><code><a href="../reference/template_taxonomic_coverage.html">template_taxonomic_coverage()</a></code></strong> Describes biological organisms occuring in the data and helps resolve them to authority systems. If matches can be made, then the full taxonomic hierarchy of scientific and common names are automatically rendered in the final EML metadata. This enables future users to search on any taxonomic level of interest across data packages in repositories.</li>
+<strong><code><a href="../reference/template_taxonomic_coverage.html">template_taxonomic_coverage()</a></code></strong> Describes biological organisms occurring in the data and helps resolve them to authority systems. If matches can be made, then the full taxonomic hierarchy of scientific and common names are automatically rendered in the final EML metadata. This enables future users to search on any taxonomic level of interest across data packages in repositories.</li>
 <li>
 <strong><code><a href="../reference/template_provenance.html">template_provenance()</a></code></strong> Describes source datasets. Explicitly listing the DOIs and/or URLs of input data help future users understand in greater detail how the derived data were created and may some day be able to assign attribution to the creators of referenced datasets.</li>
 <li>
 <strong><code><a href="../reference/template_annotations.html">template_annotations()</a></code></strong> Adds semantic meaning to metadata (variables, locations, persons, etc.) through links to ontology terms. This enables greater human understanding and machine actionability (linked data) and greatly improves the discoverability and interoperability of data in general.</li>
+<li>
+<strong><code><a href="../reference/template_physical.html">template_physical()</a></code></strong> Describe physical format of data objects (file description, size, MD5 hash, object type) providing explicit control over some metadata inferred by <code><a href="../reference/make_eml.html">make_eml()</a></code>. Also supports creation of EML describing data objects inaccessible to <code><a href="../reference/make_eml.html">make_eml()</a></code>, possibly because of file size.</li>
 </ul>
 <p><em>NOTE: Data objects should be UTF-8 encoded so metadata extracted during the templating process will also be UTF-8, which is the required by the EML schema. Non-UTF-8 encoded data may result in metadata appearing as malformed character strings.</em></p>
 </div>
@@ -142,11 +146,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Colin Smith.</p>
+  <p></p>
+<p>Developed by Colin Smith.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer>
@@ -154,6 +160,8 @@
 
   
 
+
+  
 
   </body>
 </html>
