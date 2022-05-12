@@ -1,6 +1,10 @@
-EMLassemblyline 3.5.3.9000 (YYYY-MM-DD)
-=======================================
+EMLassemblyline 3.5.4 (2022-05-12)
+==================================
 
+### BUG FIXES
+
+  * Now imports taxonomyCleanr >= 1.6.2. The EDIutils package was still listed
+  for taxonomyCleanr 1.6.1 (#113).
 
 
 EMLassemblyline 3.5.3 (2022-05-09)
