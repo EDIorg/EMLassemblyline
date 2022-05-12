@@ -7,7 +7,7 @@
   "codeRepository": "https://github.com/EDIorg/EMLassemblyline",
   "issueTracker": "https://github.com/EDIorg/EMLassemblyline/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "3.5.3",
+  "version": "3.5.4",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -204,7 +204,7 @@
       "@type": "SoftwareApplication",
       "identifier": "taxonomyCleanr",
       "name": "taxonomyCleanr",
-      "version": ">= 1.6.1",
+      "version": ">= 1.6.2",
       "sameAs": "https://github.com/EDIorg/taxonomyCleanr"
     },
     "14": {
@@ -250,5 +250,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "3486.591KB"
+  "fileSize": "3539.693KB"
 }
