@@ -634,7 +634,7 @@ eml2physical <- function(eml, path) {
           recordDelimiter = xml_val(tbl,"./physical/dataFormat/textFormat/recordDelimiter"),
           attributeOrientation = xml_val(tbl,"./physical/dataFormat/textFormat/attributeOrientation"),
           fieldDelimiter = xml_val(tbl,"./physical/dataFormat/textFormat/simpleDelimited/fieldDelimiter"),
-          quoteCharacter = paste0("\\", xml_val(tbl,"./physical/dataFormat/textFormat/simpleDelimited/quoteCharacter")),
+          quoteCharacter = paste0(xml_val(tbl,"./physical/dataFormat/textFormat/simpleDelimited/quoteCharacter")),
           entityType = "",
           formatName = "",
           url = xml_val(tbl,"./physical/distribution/online/url"),
@@ -680,8 +680,14 @@ eml2physical <- function(eml, path) {
   other_res <- data.table::rbindlist(other_res)
   res <- dplyr::bind_rows(table_res, other_res)
     
-  invisible(write_template(res, 'physical.txt', path))
-    
+  f <- paste0(path, "/", enc2utf8('physical.txt'))
+  
+  if (file.exists(f)) {
+    invisible(warning(f, " exists and will not be overwritten", call. = FALSE))
+  } else {
+    invisible(data.table::fwrite(x = res, file=f, sep = '\t'))
+  }
+  
   return(res)
 }
 
