@@ -441,9 +441,11 @@ eml2make_eml <- function(eml, path) {
     data.table.name = "/eml:eml/dataset/dataTable/entityName",
     data.table.description = "/eml:eml/dataset/dataTable/entityDescription",
     data.table.quote.character = "/eml:eml/dataset/dataTable/physical/dataFormat/textFormat/simpleDelimited/quoteCharacter",
+    data.table.url = "/eml:eml/dataset/dataTable/physical/distribution/online/url",
     other.entity = "/eml:eml/dataset/otherEntity/physical/objectName",
     other.entity.name = "/eml:eml/dataset/otherEntity/entityName",
     other.entity.description = "/eml:eml/dataset/otherEntity/entityDescription",
+    other.entity.url = "/eml:eml/dataset/otherEntity/physical/distribution/online/url",
     user.id = "/eml:eml/access/allow/principal",
     user.domain = "/eml:eml/@system",
     package.id = "/eml:eml/@packageId")
@@ -627,8 +629,7 @@ eml2physical <- function(eml, path) {
           entityDescription = xml_val(tbl, "./entityDescription"),
           size = xml_val(tbl, "./physical/size"),
           authentication = xml_val(tbl, "./physical/authentication"),
-          authentication_method = xml2::xml_attr(
-            xml2::xml_find_first(tbl, "./physical/authentication"), "method"),
+          authentication_method = xml_val(tbl, "./physical/authentication/@method"),
           numHeaderLines = xml_val(tbl,"./physical/dataFormat/textFormat/numHeaderLines"),
           recordDelimiter = xml_val(tbl,"./physical/dataFormat/textFormat/recordDelimiter"),
           attributeOrientation = xml_val(tbl,"./physical/dataFormat/textFormat/attributeOrientation"),
