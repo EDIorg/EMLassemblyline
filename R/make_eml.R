@@ -860,50 +860,49 @@ make_eml <- function(
                 northBoundingCoordinate = o$northBoundingCoordinate[k],
                 southBoundingCoordinate = o$southBoundingCoordinate[k]))
             # if spatial coverage is present:
-            # TODO build spatial coverage as facultative here
-            #  
-            # , if(FALSE) { # test if spatial coverage is present in x variable
-            #   # .spc.path = path.to.spatial.coverage
-            #   # .spc = data.table::fread(.spc.path, data.table = F, stringsAsFactors = F, sep = "\t")
-            # 
-            #   spatialCoverage = lapply(
-            #     .spc$wkt[.spc$wkt != ""], function(wkt) {
-            #       # try might break code execution in {sf}
-            #       polygon = try(sf::st_as_sfc(wkt))
-            #       # do not write coverage if error raised
-            #       if(length(class(polygon)) != 1 && class(polygon) != "try-error") {
-            #         # Get proper coordinates (without duplicating last row)
-            #         coords = sf::st_coordinates(polygon) |> head(-1)
-            # 
-            #         list(
-            #           datasetGPolygonOuterGRing = {
-            #             lapply(
-            #               1:nrow(coords),
-            #               function(ind){
-            #                 row = coords[ind,]
-            #                 list(
-            #                   gRingLongitude = row["Y"],
-            #                   gRingLatitude = row["X"]
-            #                 )
-            #               }
-            #             ) |>
-            #               setNames(rep("gRingPoint", nrow(coords)))
-            #           }
-            #         )
-            #       } else { # error raised: return NULL (nothing in lists)
-            #         NULL
-            #       }
-            #     }
-            #   )
-            #   names(spatialCoverage) = rep("datasetGPolygon", length(spatialCoverage))
-            # # }
+            , if (!is.null(x$template$spatial_coverage.txt)) {
+              # Assuming this is a valid file content
+              spc <- x$template$spatial_coverage.txt$content
+              spatial_coverage <- lapply(
+                spc$wkt[spc$wkt != ""], function(wkt) {
+                  # try might break code execution in {sf}
+                  polygon <- try(sf::st_as_sfc(wkt))
+                  # do not write coverage if error raised
+                  if (length(class(polygon)) != 1 &&
+                    class(polygon) != "try-error") {
+                    # Get proper coordinates (without duplicating last row)
+                    coords <- sf::st_coordinates(polygon) %>% head(-1)
+
+                    list(
+                      datasetGPolygonOuterGRing = {
+                        lapply(
+                          seq_along(coords),
+                          function(ind) {
+                            row <- coords[ind, ]
+                            list(
+                              gRingLongitude = row["Y"],
+                              gRingLatitude = row["X"]
+                            )
+                          }
+                        ) %>%
+                          setNames(rep("gRingPoint", nrow(coords)))
+                      }
+                    )
+                  } else { # error raised: return NULL (nothing in lists)
+                    NULL
+                  }
+                }
+              )
+              names(spatial_coverage) <- rep("datasetGPolygon",
+                                             length(spatial_coverage))
+            }
           )
         })
     }
   }
 
   # Create <temporalCoverage> -------------------------------------------------
-  
+
   if (!is.null(temporal.coverage)) {
     message("        <temporalCoverage>")
     eml$dataset$coverage$temporalCoverage <- list(

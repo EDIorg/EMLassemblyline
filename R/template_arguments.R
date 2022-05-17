@@ -424,6 +424,15 @@ template_arguments <- function(
           paste0(path, "/", tfound[i]))
       }
       
+      # Read spatial coverage -----------------------------------------------
+
+      if (stringr::str_detect(
+        tfound[i],
+        attr_tmp$regexpr[attr_tmp$template_name == "spatial_coverage"])) {
+        templates[[i]]$content <- read_tbl(
+          paste0(path, "/", tfound[i]))
+      }
+
       # Read taxonomic coverage -----------------------------------------------
       
       if (stringr::str_detect(
