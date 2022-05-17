@@ -237,6 +237,27 @@ make_eml <- function(
   # The reading function (template_arguments()) ignores empty templates located
   # at path, thereby simplifying logic required to populate EML nodes below.
   
+  # Get data object names from physical.txt if not specified as arguments to 
+  # make_eml()
+  if (is.null(data.table) & is.null(other.entity)) {
+    x <- template_arguments(path = path)$x
+    if (is.null(data.table)) {
+      data.table <- x$template$physical.txt$content$objectName[
+        x$template$physical.txt$content$type == "dataTable"]
+      if (length(data.table) == 0) {
+        data.table <- NULL
+      }
+    }
+    if (is.null(other.entity)) {
+      other.entity <- x$template$physical.txt$content$objectName[
+        x$template$physical.txt$content$type == "otherEntity"]
+      if (length(other.entity) == 0) {
+        other.entity <- NULL
+      }
+    }
+    x <- NULL
+  }
+  
   if (is.null(x)) {
     if (is.null(data.table) & is.null(other.entity)) {      
       x <- template_arguments(
@@ -270,6 +291,30 @@ make_eml <- function(
     data_read_2_x <- TRUE
   }
   
+  # Update physical template --------------------------------------------------
+  
+  # Physical metadata is now either:
+  #   1. Automatically calculated here (The original behavior).
+  #   2. Partially predefined in physical.txt and partially calculated here 
+  #      (the use case where one or more objects are offline and the physical
+  #      metadata can't be calculated by make_eml()).
+  #   3. Entirely supplied in physical.txt.
+  
+  x$template$physical.txt$content <- template_physical_make_eml(
+    path = path,
+    data.path = data.path,
+    data.table = data.table,
+    data.table.name = data.table.name,
+    data.table.description = data.table.description,
+    data.table.quote.character = data.table.quote.character,
+    data.table.url = data.table.url,
+    other.entity = other.entity,
+    other.entity.name = other.entity.name,
+    other.entity.description = other.entity.description,
+    other.entity.url = other.entity.url,
+    physical = x$template$physical$content
+  )
+  
   # Clean templates of extraneous NA values -----------------------------------
   # Users often add NAs to templates where EMLassemblyline expects "". This 
   # removes NAs from where they shouldn't be and replaces them with "". NOTE:
@@ -294,7 +339,7 @@ make_eml <- function(
       }
     }
   }
-
+  
   # Validate templates --------------------------------------------------------
   
   x <- remove_empty_templates(x)
@@ -1239,63 +1284,19 @@ make_eml <- function(
         }
         
         # Set physical
-        # FIXME: Auto-detect numHeaderLines
-        physical <- suppressMessages(
-          EML::set_physical(
-            paste0(data.path, "/", k),
-            numHeaderLines = "1",
-            recordDelimiter = get_eol(
-              path = data.path,
-              file.name = k),
-            attributeOrientation = "column",
-            url = "placeholder"))
-        
-        if (!is.null(data.table.quote.character)) {
-          # data.table.quote.character isn't required for each data table, but 
-          # must have a non-NULL entry if other data tables have a quote 
-          # character. A "" or NA indicates to skip assignment.
-          quote_character <- data.table.quote.character[
-            which(k == names(x$data.table))]
-          if ((quote_character == "") | is.na(quote_character)) {
-            physical$dataFormat$textFormat$simpleDelimited$quoteCharacter <- 
-              NULL
-          } else {
-            physical$dataFormat$textFormat$simpleDelimited$quoteCharacter <- 
-              quote_character
-          }
-        }
-        
-        if (!is.null(data.table.url)) {
-          # data.table.url isn't required for each data table, but must have a 
-          # non-NULL entry in the data.table.url if other data tables have a 
-          # URL. A "" or NA indicates to skip URL assignment.
-          url <- data.table.url[which(k == names(x$data.table))]
-          if ((url == "") | is.na(url)) {
-            physical$distribution <- list()
-          } else {
-            physical$distribution$online$url <- url
-          }
-        } else {
-          physical$distribution <- list()
-        }
-        
-        fdlim <- detect_delimeter(
-          path = data.path,
-          data.files = k,
-          os = detect_os())
-        if (fdlim == "\t") {
-          fdlim <- "\\t" # requires escape char to be written, otherwise is blank
-        }
-        physical$dataFormat$textFormat$simpleDelimited$fieldDelimiter <- fdlim
+        physical <- make_physical(
+          objectName = k, 
+          template = x$template$physical.txt$content
+        )
         
         # Create dataTable
-        
+        i <- which(k == x$template$physical.txt$content$objectName)
         data_table <- list(
-          entityName = data.table.name[which(k == names(x$data.table))],
-          entityDescription = data.table.description[which(k == names(x$data.table))],
+          entityName = x$template$physical.txt$content$entityName[i],
+          entityDescription = x$template$physical.txt$content$entityDescription[i],
           physical = physical,
           attributeList = attributeList,
-          numberOfRecords = as.character(nrow(x$data.table[[k]]$content)))
+          numberOfRecords = x$template$physical.txt$content$numberOfRecords[i])
         
         # FIXME: EML v2.0.0 handles absense of missingValue codes differently
         # than EML v 1.0.3. This fixes the issue here, though it may be better
@@ -1321,38 +1322,18 @@ make_eml <- function(
       function(k) {
         message(paste0("    <otherEntity> (", k, ")"))
         # Set physical
-        # FIXME: Some sub-routine in EML::set_physical() doesn't like the .zip 
-        # file extension, so we suppress the warning here so users aren't 
-        # uneccessarily burdened by it. Not a great solution since helpful 
-        # warnings will be lost.
-        physical <- suppressWarnings(
-          suppressMessages(
-            EML::set_physical(
-              paste0(data.path, "/", k))))
-        physical$dataFormat$textFormat <- NULL
-        physical$dataFormat$externallyDefinedFormat$formatName <- mime::guess_type(
-          file = k, unknown = "Unknown", empty = "Unknown")
-        if (!is.null(other.entity.url)) {
-          # other.entity.url isn't required for each data table, but must have a 
-          # non-NULL entry in the other.entity.url if other data tables have a 
-          # URL. A "" or NA indicates to skip URL assignment.
-          url <- other.entity.url[which(k == names(x$other.entity))]
-          if ((url == "") | is.na(url)) {
-            physical$distribution <- list()
-          } else {
-            physical$distribution$online$url <- url
-          }
-        } else {
-          physical$distribution <- list()
-        }
+        physical <- make_physical(
+          objectName = k, 
+          template = x$template$physical.txt$content
+        )
+        
         # Create otherEntity
+        i <- which(k == x$template$physical.txt$content$objectName)
         list(
-          entityName = other.entity.name[
-            which(k == names(x$other.entity))],
-          entityDescription = other.entity.description[
-            which(k == names(x$other.entity))],
+          entityName = x$template$physical.txt$content$entityName[i],
+          entityDescription = x$template$physical.txt$content$entityDescription[i],
           physical = physical,
-          entityType = "unknown")
+          entityType = x$template$physical.txt$content$entityType[i])
       })
   }
   
@@ -1425,4 +1406,65 @@ make_eml <- function(
     eml
   }
   
+}
+
+
+
+
+
+
+
+# TODO document make_physical()
+make_physical <- function(objectName, template) {
+  i <- which(objectName == template$objectName)
+  
+  # Physical metadata varies by object type. Handle types separately.
+  
+  if (template$type[i] == "dataTable") {
+    res <- suppressMessages(
+      EML::set_physical(
+        objectName = template$objectName[i],
+        numHeaderLines = template$numHeaderLines[i],
+        recordDelimiter = template$recordDelimiter[i],
+        fieldDelimiter = template$fieldDelimiter[i],
+        attributeOrientation = "column",
+        size = template$size[i],
+        sizeUnit = "bytes",
+        authentication = template$authentication[i],
+        authMethod = template$authentication_method[i]
+      )
+    )
+    # Assign quoteCharacter. A "" or NA_character_ means skip assignment.
+    if (template$quoteCharacter[i] == "" | is.na(template$quoteCharacter[i])) {
+      res$dataFormat$textFormat$simpleDelimited$quoteCharacter <- 
+        NULL
+    } else {
+      res$dataFormat$textFormat$simpleDelimited$quoteCharacter <- 
+        template$quoteCharacter[i]
+    }
+  }
+  
+  if (template$type[i] == "otherEntity") {
+    res <- suppressMessages(
+      EML::set_physical(
+        objectName = template$objectName[i],
+        size = template$size[i],
+        sizeUnit = "bytes",
+        authentication = template$authentication[i],
+        authMethod = template$authentication_method[i]
+      )
+    )
+    res$dataFormat$textFormat <- NULL # Remove EML:: defaults
+    res$dataFormat$externallyDefinedFormat$formatName <- 
+      template$formatName[i]
+  }
+  
+  # Assign distribution URL. A "" or NA_character_ means skip assignment.
+  if (template$url[i] == "" | is.na(template$url[i])) {
+    res$distribution <- list()
+  } else {
+    res$distribution$online$url <- template$url[i]
+  }
+
+  return(res)
 }

@@ -123,11 +123,13 @@
 <li>
 <strong><code><a href="../reference/template_geographic_coverage.html">template_geographic_coverage()</a></code></strong> Describes where the data were collected.</li>
 <li>
-<strong><code><a href="../reference/template_taxonomic_coverage.html">template_taxonomic_coverage()</a></code></strong> Describes biological organisms occuring in the data and helps resolve them to authority systems. If matches can be made, then the full taxonomic hierarchy of scientific and common names are automatically rendered in the final EML metadata. This enables future users to search on any taxonomic level of interest across data packages in repositories.</li>
+<strong><code><a href="../reference/template_taxonomic_coverage.html">template_taxonomic_coverage()</a></code></strong> Describes biological organisms occurring in the data and helps resolve them to authority systems. If matches can be made, then the full taxonomic hierarchy of scientific and common names are automatically rendered in the final EML metadata. This enables future users to search on any taxonomic level of interest across data packages in repositories.</li>
 <li>
 <strong><code><a href="../reference/template_provenance.html">template_provenance()</a></code></strong> Describes source datasets. Explicitly listing the DOIs and/or URLs of input data help future users understand in greater detail how the derived data were created and may some day be able to assign attribution to the creators of referenced datasets.</li>
 <li>
 <strong><code><a href="../reference/template_annotations.html">template_annotations()</a></code></strong> Adds semantic meaning to metadata (variables, locations, persons, etc.) through links to ontology terms. This enables greater human understanding and machine actionability (linked data) and greatly improves the discoverability and interoperability of data in general.</li>
+<li>
+<strong><code><a href="../reference/template_physical.html">template_physical()</a></code></strong> Describe physical format of data objects (file description, size, MD5 hash, object type) providing explicit control over some metadata inferred by <code><a href="../reference/make_eml.html">make_eml()</a></code>. Also supports creation of EML describing data objects inaccessible to <code><a href="../reference/make_eml.html">make_eml()</a></code>, possibly because of file size.</li>
 </ul>
 <p><em>NOTE: Data objects should be UTF-8 encoded so metadata extracted during the templating process will also be UTF-8, which is the required by the EML schema. Non-UTF-8 encoded data may result in metadata appearing as malformed character strings.</em></p>
 </div>

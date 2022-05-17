@@ -193,3 +193,28 @@ Columns:
 Ancillary info not captured by any of the other templates.
 
 [__Example__](https://docs.google.com/document/d/1bbZ8iR9MOtTNGbbcev7fdjNCT7va9I8v-Ryv6jFCJYU/edit?usp=sharing)
+
+## physical.txt
+
+Describe physical format of data objects (file description, size, MD5 hash, object type) providing explicit control over some metadata inferred by `make_eml()`. Also supports creation of EML describing data objects inaccessible to `make_eml()`, possibly because of file size.
+
+Columns:
+
+* **objectName** File name of the data object.
+* **type** Object type. Can be: dataTable, otherEntity.
+* **entityName** A short descriptive name for the object.
+* **entityDescription** A more Description of the object.
+* **size** File size in bytes.
+* **authentication** File hash value.
+* **authentication_method** Method of calculating the file has value. Defaults to "MD5".
+* **numHeaderLines** Number of header lines. Only for dataTable types. Defaults to 1.
+* **recordDelimiter** Record delimiter (i.e. newline character). Only for dataTable types.
+* **attributeOrientation** Can be "column" or "row". Only for dataTable types. Defaults to "column".
+* **fieldDelimiter** Field delimiter. Only for dataTable types.
+* **quoteCharacter** Quote character used to enclose character type data. Can be "'" (i.e. single quote) or '"' (i.e. double quote). Only for dataTable types. Note: If editing with a spread sheet editor you may * **want to check the final result in a text editor to ensure the quote characters are accurately represented.
+* **entityType** The entity's type is typically the name of the type of data represented in the entity, such as "photograph". Only for otherEntity types.
+* **formatName** Format of data object. Only for otherEntity types.
+* **url** The publicly accessible URL from which the data object can be downloaded.
+* **numberOfRecords** Number of records of the data object. Only for dataTable types.
+
+[__Example__](https://docs.google.com/spreadsheets/d/1In-AqzNJCZ_ARfspR2m1UvyWtYcX_6_8cVu6iDKTqNk/edit?usp=sharing)

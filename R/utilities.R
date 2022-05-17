@@ -445,6 +445,135 @@ set_methods_md <- function(methods_file) {
 
 
 
+#' Calculate and combine physical metadata
+#' 
+#' This is a helper function in the \code{make_eml()} context for calculating
+#' physical metadata of data objects defined in \code{make_eml()} arguments
+#' and combining with any physical metadata supplied by the user in the 
+#' optional physical.txt metadata template based on logic defined in the
+#' \code{template_physical()} documentation.
+#'
+#' @param path See \code{make_eml()} for definition
+#' @param data.path See \code{make_eml()} for definition
+#' @param data.table See \code{make_eml()} for definition
+#' @param data.table.name See \code{make_eml()} for definition
+#' @param data.table.description See \code{make_eml()} for definition
+#' @param data.table.quote.character See \code{make_eml()} for definition
+#' @param data.table.url See \code{make_eml()} for definition
+#' @param other.entity See \code{make_eml()} for definition
+#' @param other.entity.name See \code{make_eml()} for definition
+#' @param other.entity.description See \code{make_eml()} for definition
+#' @param other.entity.url See \code{make_eml()} for definition
+#' @param physical (data.frame) The physical metadata template as read by
+#' \code{template_arguments()}.
+#'     
+#' @noRd
+#' 
+template_physical_make_eml <- function(path,
+                                       data.path,
+                                       data.table,
+                                       data.table.name,
+                                       data.table.description,
+                                       data.table.quote.character,
+                                       data.table.url,
+                                       other.entity,
+                                       other.entity.name,
+                                       other.entity.description,
+                                       other.entity.url,
+                                       physical) {
+  
+  # Physical metadata from template
+  physt <- physical
+  
+  # When no arguments from make_eml(), get required object names from template
+  if (is.null(data.table)) {
+    data.table <- physt$objectName[physt$type == "dataTable"]
+  }
+  if (is.null(other.entity)) {
+    other.entity <- physt$objectName[physt$type == "otherEntity"]
+  }
+  
+  # Calculate physical metadata here
+  physc <- suppressMessages(
+    template_physical(
+      path = path,
+      data.path = data.path,
+      data.table = data.table,
+      other.entity = other.entity,
+      write.file = FALSE,
+      overwrite = TRUE
+    )
+  )
+  
+  # Add metadata for data.table
+  i <- match(data.table, physc$objectName)
+  if (!is.null(data.table.name)) { # data.table.name
+    physc$entityName[i] <- data.table.name
+  } else {
+    physc$entityName[i] <- data.table
+  }
+  if (!is.null(data.table.description)) { # data.table.description
+    physc$entityDescription[i] <- data.table.description
+  } else {
+    physc$entityDescription[i] <- ""
+  }
+  if (!is.null(data.table.quote.character)) { # data.table.quote.character
+    physc$quoteCharacter[i] <- data.table.quote.character
+  } else {
+    physc$quoteCharacter[i] <- ""
+  }
+  if (!is.null(data.table.url)) { # data.table.url
+    physc$url[i] <- data.table.url
+  } else {
+    physc$url[i] <- ""
+  }
+  
+  # Add metadata for other.entity
+  i <- match(other.entity, physc$objectName)
+  if (!is.null(other.entity.name)) { # other.entity.name
+    physc$entityName[i] <- other.entity.name
+  } else {
+    physc$entityName[i] <- other.entity
+  }
+  if (!is.null(other.entity.description)) { # other.entity.description
+    physc$entityDescription[i] <- other.entity.description
+  } else {
+    physc$entityDescription[i] <- ""
+  }
+  if (!is.null(other.entity.url)) { # other.entity.url
+    physc$url[i] <- other.entity.url
+  } else {
+    physc$url[i] <- ""
+  }
+  
+  # Fill empty fields of the user supplied metadata template with values
+  # calculated here
+  if (!is.null(physt)) {
+    i <- physt == ""
+    physt[i] <- physc[i]
+    res <- physt
+  } else {
+    res <- physc
+  }
+  
+  # EML::write_eml() requires escape char to be written, otherwise is blank
+  res$fieldDelimiter[res$fieldDelimiter == "\t"] <- "\\t"
+  
+  # entityType is required for otherEntity. Add if missing.
+  i <- (res$type == "otherEntity") & 
+    (res$entityType == "" | is.na(res$entityType)) 
+  if (any(i)) {
+    res$entityType[i] <- "Unknown"
+  }
+  return(res)
+}
+
+
+
+
+
+
+
 
 #' Make URL for PASTA+ environment
 #'

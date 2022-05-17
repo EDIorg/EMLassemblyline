@@ -378,6 +378,47 @@
 <p>Ancillary info not captured by any of the other templates.</p>
 <p><a href="https://docs.google.com/document/d/1bbZ8iR9MOtTNGbbcev7fdjNCT7va9I8v-Ryv6jFCJYU/edit?usp=sharing" class="external-link"><strong>Example</strong></a></p>
 </div>
+<div class="section level2">
+<h2 id="physical-txt">physical.txt<a class="anchor" aria-label="anchor" href="#physical-txt"></a>
+</h2>
+<p>Describe physical format of data objects (file description, size, MD5 hash, object type) providing explicit control over some metadata inferred by <code><a href="../reference/make_eml.html">make_eml()</a></code>. Also supports creation of EML describing data objects inaccessible to <code><a href="../reference/make_eml.html">make_eml()</a></code>, possibly because of file size.</p>
+<p>Columns:</p>
+<ul>
+<li>
+<strong>objectName</strong> File name of the data object.</li>
+<li>
+<strong>type</strong> Object type. Can be: dataTable, otherEntity.</li>
+<li>
+<strong>entityName</strong> A short descriptive name for the object.</li>
+<li>
+<strong>entityDescription</strong> A more Description of the object.</li>
+<li>
+<strong>size</strong> File size in bytes.</li>
+<li>
+<strong>authentication</strong> File hash value.</li>
+<li>
+<strong>authentication_method</strong> Method of calculating the file has value. Defaults to “MD5”.</li>
+<li>
+<strong>numHeaderLines</strong> Number of header lines. Only for dataTable types. Defaults to 1.</li>
+<li>
+<strong>recordDelimiter</strong> Record delimiter (i.e. newline character). Only for dataTable types.</li>
+<li>
+<strong>attributeOrientation</strong> Can be “column” or “row”. Only for dataTable types. Defaults to “column”.</li>
+<li>
+<strong>fieldDelimiter</strong> Field delimiter. Only for dataTable types.</li>
+<li>
+<strong>quoteCharacter</strong> Quote character used to enclose character type data. Can be “‘" (i.e. single quote) or’”’ (i.e. double quote). Only for dataTable types. Note: If editing with a spread sheet editor you may * **want to check the final result in a text editor to ensure the quote characters are accurately represented.</li>
+<li>
+<strong>entityType</strong> The entity’s type is typically the name of the type of data represented in the entity, such as “photograph”. Only for otherEntity types.</li>
+<li>
+<strong>formatName</strong> Format of data object. Only for otherEntity types.</li>
+<li>
+<strong>url</strong> The publicly accessible URL from which the data object can be downloaded.</li>
+<li>
+<strong>numberOfRecords</strong> Number of records of the data object. Only for dataTable types.</li>
+</ul>
+<p><a href="https://docs.google.com/spreadsheets/d/1In-AqzNJCZ_ARfspR2m1UvyWtYcX_6_8cVu6iDKTqNk/edit?usp=sharing" class="external-link"><strong>Example</strong></a></p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
