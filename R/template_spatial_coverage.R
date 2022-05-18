@@ -59,7 +59,7 @@
 #'   site_col = "nom")
 #' 
 #' # You will get both geographic_coverage.txt and 
-#' # spatial_coverage.txt written based on this shapefile.
+#' # .spatial_coverage.txt written based on this shapefile.
 #' # You can view the example result by using the {leaflet}
 #' # package:
 #' 
@@ -80,13 +80,16 @@ template_spatial_coverage <- function(
   # Checks ----
   
   ### TODO Surely add more controls here ###
+  stopifnot(dir.exists(path))
+  stopifnot(dir.exists(data_path))
+  stopifnot(!missing(site_col))
   
-  # assumes: if spatial_coverage.txt is written, geographic_coverage.txt is too
-  written <- isTRUE(file.exists(paste0(path, "/spatial_coverage.txt")))
+  # assumes: if .spatial_coverage.txt is written, geographic_coverage.txt is too
+  written <- isTRUE(file.exists(paste0(path, "/.spatial_coverage.txt")))
   if (written & isFALSE(overwrite))
-    message("spatial_coverage.txt already exists!")
+    message(".spatial_coverage.txt already exists!")
   if (written & !isFALSE(overwrite)) # overwrite can == "append"
-    message("spatial_coverage.txt will be overwritten.")
+    message(".spatial_coverage.txt will be overwritten.")
   # if all is written and no overwrite allowed, stop.
   if (written & isFALSE(overwrite))
     return(NULL)
@@ -110,7 +113,7 @@ template_spatial_coverage <- function(
   # If asked, append new coverage to existing one
   if (written & overwrite == "append") {
     shp_coverage <- utils::read.csv(
-      paste0(path, "/spatial_coverage.txt"),
+      paste0(path, "/.spatial_coverage.txt"),
       TRUE,
       sep = "\t"
     )
@@ -189,7 +192,7 @@ template_spatial_coverage <- function(
         shp_coverage,
         gsub(
           "//", "/", # remove "//" from path
-          paste0(path, "/spatial_coverage.txt")
+          paste0(path, "/.spatial_coverage.txt")
         ),
         sep = "\t",
         row.names = F,
@@ -197,7 +200,7 @@ template_spatial_coverage <- function(
         fileEncoding = "UTF-8"
       )
     )
-    message("spatial_coverage.txt")
+    message(".spatial_coverage.txt")
     
     suppressWarnings(
       utils::write.table(

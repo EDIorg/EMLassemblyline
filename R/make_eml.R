@@ -860,9 +860,9 @@ make_eml <- function(
                 northBoundingCoordinate = o$northBoundingCoordinate[k],
                 southBoundingCoordinate = o$southBoundingCoordinate[k]))
             # if spatial coverage is present:
-            , if (!is.null(x$template$spatial_coverage.txt)) {
+            , if (!is.null(x$template$.spatial_coverage.txt)) {
               # Assuming this is a valid file content
-              spc <- x$template$spatial_coverage.txt$content
+              spc <- x$template$.spatial_coverage.txt$content
               spatial_coverage <- lapply(
                 spc$wkt[spc$wkt != ""], function(wkt) {
                   # try might break code execution in {sf}

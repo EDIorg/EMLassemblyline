@@ -70,7 +70,7 @@ geo_cov <- template_spatial_coverage(
   site_col = "nom")
 
 # You will get both geographic_coverage.txt and 
-# spatial_coverage.txt written based on this shapefile.
+# .spatial_coverage.txt written based on this shapefile.
 # You can view the example result by using the {leaflet}
 # package:
 

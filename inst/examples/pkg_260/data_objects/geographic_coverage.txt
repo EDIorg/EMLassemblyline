@@ -1,0 +1,2 @@
+geographicDescription	northBoundingCoordinate	southBoundingCoordinate	eastBoundingCoordinate	westBoundingCoordinate
+Finistère	48.7538212734968	47.7012814892613	-3.386654639843	-5.141276481967
