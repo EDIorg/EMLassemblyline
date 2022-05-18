@@ -1,11 +1,2 @@
 geographicDescription	northBoundingCoordinate	southBoundingCoordinate	eastBoundingCoordinate	westBoundingCoordinate
-site_1	45.23	45.23	-89.43	-89.43
-site_2	45.24	45.24	-89.44	-89.44
-site_3	45.25	45.25	-89.45	-89.45
-site_4	45.26	45.26	-89.46	-89.46
-site_5	45.27	45.27	-89.47	-89.47
-site_6	45.28	45.28	-89.48	-89.48
-site_7	45.29	45.29	-89.49	-89.49
-site_8	45.3	45.3	-89.5	-89.5
-site_9	45.31	45.31	-89.51	-89.51
-site_10	45.32	45.32	-89.52	-89.52
+Finistère	48.7538212734968	47.7012814892613	-3.386654639843	-5.141276481967

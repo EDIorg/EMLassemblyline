@@ -45,14 +45,28 @@
 #'
 #' @examples
 #' \dontrun{
+#' 
+#' # Data used in this example represents the french department
+#' # of Finistere.
+#' 
 #' # Set working directory
 #' setwd("/Users/me/Documents/data_packages/pkg_260")
 #'
 #' # For a shapefile containing site names in column "site_name"
-#' template_spatial_coverage(
+#' geo_cov <- template_spatial_coverage(
 #'   path = "./metadata_templates",
 #'   data_path = "./data_objects",
 #'   site_col = "nom")
+#' 
+#' # You will get both geographic_coverage.txt and 
+#' # spatial_coverage.txt written based on this shapefile.
+#' # You can view the example result by using the {leaflet}
+#' # package:
+#' 
+#' library(leaflet)
+#' leaflet() |>
+#'   addTiles() |>
+#'   addPolygons(data = polygon[[1]])
 #' }
 #'
 template_spatial_coverage <- function(
@@ -216,7 +230,7 @@ is_shp_dir <- function(dir_path) {
   (dir.exists(dir_path) && length(dir(dir_path, pattern = "shp/?$")) > 0) ||
     # OR check for zip path & presence of main file of the shp ESRI format
     (grepl("zip$", dir_path) &&
-       any(grepl("shp/?$", unzip(shp_zip, list = TRUE)[, 1])))
+       any(grepl("shp/?$", unzip(dir_path, list = TRUE)[, 1])))
 }
 
 #' Write shapefile in a folder
