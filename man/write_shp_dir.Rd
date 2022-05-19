@@ -9,7 +9,7 @@ write_shp_dir(shp, path, name)
 \arguments{
 \item{shp}{(sf) object to write.}
 
-\item{path}{(character) folder in which to create a shp file. Will contain a 
+\item{path}{(character) folder in which to create a shp file. Will contain a
 folder named \code{name}.}
 
 \item{name}{(character) name of the file that will be created.}

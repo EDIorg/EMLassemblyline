@@ -18,6 +18,7 @@ Imports:
     reader,
     readr,
     rmarkdown,
+    sf,
     stringr,
     stringi,
     taxonomyCleanr (>= 1.5.4),

@@ -6,24 +6,25 @@
 \usage{
 template_spatial_coverage(
   path,
-  data.path = path,
-  site.col,
-  write.file = TRUE,
+  data_path = path,
+  site_col,
+  write_file = TRUE,
   overwrite = FALSE
 )
 }
 \arguments{
 \item{path}{(character) Path to the metadata template directory.}
 
-\item{data.path}{(character) Path to the data directory. Defaults to "\code{<path>}/data_objects".}
+\item{data_path}{(character) Path to the data directory. Defaults to
+"\code{<path>}/data_objects".}
 
-\item{site.col}{(character) Column name containing site names. If multiple shp files are 
-present in data.path, this column shall be common to all of them.}
+\item{site_col}{(character) Column name containing site names. If multiple shp files are
+present in data_path, this column shall be common to all of them.}
 
-\item{write.file}{(logical; optional) Whether to write the template file.}
+\item{write_file}{(logical; optional) Whether to write the template file.}
 
 \item{overwrite}{(various; optional) Can be either FALSE (stop the function if template is
-already written), TRUE (replace the template if it is already writtent) 
+already written), TRUE (replace the template if it is already writtent)
 or "append" (add new coverage to existing one, and do remove duplicated
 rows).}
 }
@@ -32,7 +33,7 @@ A list with two items:
 \item{spatial_coverage}{Columns:
     \itemize{
     \item{file: file name for reference.}
-    \item{site_name: sites names from the column <site.col>.}
+    \item{site_name: sites names from the column <site_col>.}
     \item{wkt: a well-known text polygon covering the given site.}
    }
 }
@@ -48,23 +49,35 @@ A list with two items:
 }
 \description{
 Use this function to extract the unique location coordinates and
- names from a shapefile or to create a blank template to manually fill. For 
+ names from a shapefile or to create a blank template to manually fill. For
  each feature in the shapefile, the coverage will create a covering polygon
- with \{sf\}'s convex hull algorithm (draws a covering area with little precision).
+ with \{sf\}'s convex hull algorithm (draws a covering area with little
+  precision).
 }
 \examples{
 \dontrun{
+
+# Data used in this example represents the french department
+# of Finistere.
+
 # Set working directory
 setwd("/Users/me/Documents/data_packages/pkg_260")
 
 # For a shapefile containing site names in column "site_name"
-template_spatial_coverage(
+geo_cov <- template_spatial_coverage(
   path = "./metadata_templates",
-  data.path = "./data_objects",
-  site.col = "site_name")
-  
-# Or with defaults
-template_spatial_coverage(site.col = "site_name")
+  data_path = "./data_objects",
+  site_col = "nom")
+
+# You will get both geographic_coverage.txt and 
+# .spatial_coverage.txt written based on this shapefile.
+# You can view the example result by using the {leaflet}
+# package:
+
+library(leaflet)
+leaflet() |>
+  addTiles() |>
+  addPolygons(data = polygon[[1]])
 }
 
 }

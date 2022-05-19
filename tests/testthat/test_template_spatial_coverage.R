@@ -20,76 +20,67 @@ testthat::test_that('Test usage with file inputs', {
   expect_error(
     suppressMessages(
       template_spatial_coverage(
-        # path = system.file(
-        #   '/examples/pkg_260/data_objects/',
-        #   package = 'EMLassemblyline'
-        # ), 
-        data.path = system.file(
+        data_path = system.file(
           '/examples/pkg_260/data_objects/',
           package = 'EMLassemblyline'
         ),
-        site.col = 'nom', # FIXME when example data is set
-        write.file = FALSE,
+        site_col = "nom",
+        write_file = FALSE,
         overwrite = TRUE
       ) 
     )
   )
   
-  # Missing data.path results in error
+  # Missing data_path results in error
   
   expect_error(
     suppressMessages(
       template_spatial_coverage(
         path = system.file(
+          '/examples/pkg_260/metadata_templates/',
+          package = 'EMLassemblyline'
+        ),
+        site_col = "nom",
+        write_file = FALSE,
+        overwrite = TRUE
+      )
+    )
+  )
+  
+  # Missing site_col results in error
+  
+  expect_error(
+    suppressMessages(
+      template_spatial_coverage(
+        path = system.file(
+          '/examples/pkg_260/metadata_templates/',
+          package = 'EMLassemblyline'
+        ),
+        data_path = system.file(
           '/examples/pkg_260/data_objects/',
           package = 'EMLassemblyline'
         ),
-        # data.path = system.file(
-        #   '/examples/pkg_260/data_objects/',
-        #   package = 'EMLassemblyline'
-        # ),
-        site.col = 'nom', # FIXME when example data is set
-        write.file = FALSE,
+        write_file = FALSE,
         overwrite = TRUE
       ) 
     )
   )
   
-  # Missing site.col results in error
+  # Misspelled site_col results in error
   
   expect_error(
     suppressMessages(
       template_spatial_coverage(
         path = system.file(
+          '/examples/pkg_260/metadata_templates/',
+          package = 'EMLassemblyline'
+        ),
+        data_path = system.file(
           '/examples/pkg_260/data_objects/',
           package = 'EMLassemblyline'
         ),
-        data.path = system.file(
-          '/examples/pkg_260/data_objects/',
-          package = 'EMLassemblyline'
-        ),
-        # site.col = 'nom', # FIXME when example data is set
-        write.file = FALSE,
-        overwrite = TRUE
-      ) 
-    )
-  )
-  
-  # Misspelled site.col results in error
-  
-  expect_error(
-    suppressMessages(
-      template_spatial_coverage(
-        path = system.file(
-          '/examples/pkg_260/data_objects/',
-          package = 'EMLassemblyline'
-        ),
-        data.path = system.file(
-          '/examples/pkg_260/data_objects/',
-          package = 'EMLassemblyline'
-        ),
-        site.col = 'noooooom', # FIXME when example data is set
-        write.file = FALSE,
+        site_col = "noooom",
+        write_file = FALSE,
         overwrite = TRUE
       ) 
     )
@@ -100,17 +91,17 @@ testthat::test_that('Test usage with file inputs', {
   expect_message(
     template_spatial_coverage(
       path = system.file(
+        '/examples/pkg_260/metadata_templates/',
+        package = 'EMLassemblyline'
+      ),
+      data_path = system.file(
         '/examples/pkg_260/data_objects/',
         package = 'EMLassemblyline'
       ),
-      data.path = system.file(
-        '/examples/pkg_260/data_objects/',
-        package = 'EMLassemblyline'
-      ),
-      site.col = 'nom', # FIXME when example data is set
-      write.file = FALSE,
+      site_col = "nom",
+      write_file = FALSE,
       overwrite = TRUE
-    ) 
+    )
   )
   
   # Writing to file results in messages
@@ -121,12 +112,12 @@ testthat::test_that('Test usage with file inputs', {
         '/examples/pkg_260/data_objects/',
         package = 'EMLassemblyline'
       ),
-      data.path = system.file(
+      data_path = system.file(
         '/examples/pkg_260/data_objects/',
         package = 'EMLassemblyline'
       ),
-      site.col = 'nom', # FIXME when example data is set
-      write.file = TRUE,
+      site_col = "nom",
+      write_file = TRUE,
       overwrite = TRUE
     ) 
   )
@@ -149,18 +140,18 @@ testthat::test_that('Test written coverage', {
       '/examples/pkg_260/data_objects/',
       package = 'EMLassemblyline'
     ),
-    data.path = system.file(
+    data_path = system.file(
       '/examples/pkg_260/data_objects/',
       package = 'EMLassemblyline'
     ),
-    site.col = 'nom', # FIXME when example data is set
-    write.file = TRUE,
+    site_col = "nom",
+    write_file = FALSE,
     overwrite = TRUE
   )
   
-  y <- utils::read.csv(
+  y <- data.table::fread(
     system.file(
-      '/examples/pkg_260/metadata_templates/.spatial_coverage.txt', # FIXME when example data is set
+      '/examples/pkg_260/metadata_templates/.spatial_coverage.txt',
       package = 'EMLassemblyline'
     ),
     header = TRUE,
@@ -180,7 +171,7 @@ testthat::test_that('Test overwriting coverage', {
     site_name = LETTERS[1:5],
     wkt = LETTERS[1:5]
   )
-  utils::write.csv(
+  data.table::fwrite(
     random,
     system.file(
       '/examples/pkg_260/data_objects/.spatial_coverage.txt',
@@ -195,18 +186,18 @@ testthat::test_that('Test overwriting coverage', {
       '/examples/pkg_260/data_objects/',
       package = 'EMLassemblyline'
     ),
-    data.path = system.file(
+    data_path = system.file(
       '/examples/pkg_260/data_objects/',
       package = 'EMLassemblyline'
     ),
-    site.col = 'nom', # FIXME when example data is set
-    write.file = TRUE,
+    site_col = "nom",
+    write_file = TRUE,
     overwrite = TRUE
   )
   
   # check it has changed -- shall have, shouldn't be identical
   expect_false(identical(
-    utils::read(system.file(
+    data.table::fread(system.file(
       '/examples/pkg_260/data_objects/.spatial_coverage.txt',
       package = 'EMLassemblyline'
     )),
@@ -229,7 +220,7 @@ testthat::test_that('Test overwriting coverage', {
 #       '/examples/templates', 
 #       package = 'EMLassemblyline'
 #     ),
-#     data.path = system.file(
+#     data_path = system.file(
 #       '/examples/data',
 #       package = 'EMLassemblyline'
 #     ),
@@ -251,26 +242,26 @@ testthat::test_that('Test overwriting coverage', {
 #   expect_message(
 #     template_geographic_coverage(
 #       path = '/some/path',
-#       data.path = '/some/data.path', 
+#       data_path = '/some/data_path', 
 #       data.table = 'nitrogen.csv', 
-#       site.col = 'site_name',
+#       site_col = 'site_name',
 #       lat.col = 'site_lat', 
 #       lon.col = 'site_lon',
 #       x = x_no_coverage,
-#       write.file = FALSE
+#       write_file = FALSE
 #     )
 #   )
 #   
 #   output <- suppressMessages(
 #     template_geographic_coverage(
 #       path = '/some/path',
-#       data.path = '/some/data.path', 
+#       data_path = '/some/data_path', 
 #       data.table = 'nitrogen.csv', 
-#       site.col = 'site_name',
+#       site_col = 'site_name',
 #       lat.col = 'site_lat', 
 #       lon.col = 'site_lon',
 #       x = x_no_coverage,
-#       write.file = FALSE
+#       write_file = FALSE
 #     )
 #   )
 #   
@@ -292,44 +283,44 @@ testthat::test_that('Test overwriting coverage', {
 #   
 #   expect_message(
 #     template_geographic_coverage(
-#       data.path = system.file(
+#       data_path = system.file(
 #         '/examples/data',
 #         package = 'EMLassemblyline'
 #       ), 
 #       data.table = 'nitrogen.csv', 
-#       site.col = 'site_name',
+#       site_col = 'site_name',
 #       lat.col = 'site_lat', 
 #       lon.col = 'site_lon',
 #       x = x_no_coverage,
-#       write.file = FALSE
+#       write_file = FALSE
 #     )
 #   )
 #   
 #   output <- suppressMessages(
 #     template_geographic_coverage(
-#       data.path = system.file(
+#       data_path = system.file(
 #         '/examples/data',
 #         package = 'EMLassemblyline'
 #       ), 
 #       data.table = 'nitrogen.csv', 
-#       site.col = 'site_name',
+#       site_col = 'site_name',
 #       lat.col = 'site_lat', 
 #       lon.col = 'site_lon',
 #       x = x_no_coverage,
-#       write.file = FALSE
+#       write_file = FALSE
 #     )
 #   )
 #   
-#   # Missing data.path has no effect
+#   # Missing data_path has no effect
 #   
 #   expect_message(
 #     template_geographic_coverage(
 #       data.table = 'nitrogen.csv', 
-#       site.col = 'site_name',
+#       site_col = 'site_name',
 #       lat.col = 'site_lat', 
 #       lon.col = 'site_lon',
 #       x = x_no_coverage,
-#       write.file = FALSE
+#       write_file = FALSE
 #     )
 #   )
 #   
@@ -338,16 +329,16 @@ testthat::test_that('Test overwriting coverage', {
 #   expect_error(
 #     suppressMessages(
 #       template_geographic_coverage(
-#         site.col = 'site_name',
+#         site_col = 'site_name',
 #         lat.col = 'site_lat', 
 #         lon.col = 'site_lon',
 #         x = x_no_coverage,
-#         write.file = FALSE
+#         write_file = FALSE
 #       )
 #     )
 #   )
 #   
-#   # Missing site.col results in error
+#   # Missing site_col results in error
 #   
 #   expect_error(
 #     suppressMessages(
@@ -356,7 +347,7 @@ testthat::test_that('Test overwriting coverage', {
 #         lat.col = 'site_lat', 
 #         lon.col = 'site_lon',
 #         x = x_no_coverage,
-#         write.file = FALSE
+#         write_file = FALSE
 #       )
 #     )
 #   )
@@ -367,10 +358,10 @@ testthat::test_that('Test overwriting coverage', {
 #     suppressMessages(
 #       template_geographic_coverage(
 #         data.table = 'nitrogen.csv', 
-#         site.col = 'site_name', 
+#         site_col = 'site_name', 
 #         lon.col = 'site_lon',
 #         x = x_no_coverage,
-#         write.file = FALSE
+#         write_file = FALSE
 #       )
 #     )
 #   )
@@ -381,25 +372,25 @@ testthat::test_that('Test overwriting coverage', {
 #     suppressMessages(
 #       template_geographic_coverage(
 #         data.table = 'nitrogen.csv', 
-#         site.col = 'site_name', 
+#         site_col = 'site_name', 
 #         lat.col = 'site_lat',
 #         x = x_no_coverage,
-#         write.file = FALSE
+#         write_file = FALSE
 #       )
 #     )
 #   )
 #   
-#   # Misspelled site.col results in error
+#   # Misspelled site_col results in error
 #   
 #   expect_error(
 #     suppressMessages(
 #       template_geographic_coverage(
 #         data.table = 'nitrogen.csv', 
-#         site.col = 'site_nameeee', 
+#         site_col = 'site_nameeee', 
 #         lat.col = 'site_lat',
 #         lon.col = 'site_lon',
 #         x = x_no_coverage,
-#         write.file = FALSE
+#         write_file = FALSE
 #       )
 #     )
 #   )
@@ -410,11 +401,11 @@ testthat::test_that('Test overwriting coverage', {
 #     suppressMessages(
 #       template_geographic_coverage(
 #         data.table = 'nitrogen.csv', 
-#         site.col = 'site_name', 
+#         site_col = 'site_name', 
 #         lat.col = 'site_lattt',
 #         lon.col = 'site_lon',
 #         x = x_no_coverage,
-#         write.file = FALSE
+#         write_file = FALSE
 #       )
 #     )
 #   )
@@ -425,26 +416,26 @@ testthat::test_that('Test overwriting coverage', {
 #     suppressMessages(
 #       template_geographic_coverage(
 #         data.table = 'nitrogen.csv', 
-#         site.col = 'site_name', 
+#         site_col = 'site_name', 
 #         lat.col = 'site_lat',
 #         lon.col = 'site_lonnn',
 #         x = x_no_coverage,
-#         write.file = FALSE
+#         write_file = FALSE
 #       )
 #     )
 #   )
 #   
-#   # write.file = TRUE result in error
+#   # write_file = TRUE result in error
 #   
 #   expect_error(
 #     suppressMessages(
 #       template_geographic_coverage(
 #         data.table = 'nitrogen.csv', 
-#         site.col = 'site_name', 
+#         site_col = 'site_name', 
 #         lat.col = 'site_lat',
 #         lon.col = 'site_lon',
 #         x = x_no_coverage,
-#         write.file = TRUE
+#         write_file = TRUE
 #       )
 #     )
 #   )
@@ -455,11 +446,11 @@ testthat::test_that('Test overwriting coverage', {
 #     suppressWarnings(
 #       template_geographic_coverage(
 #         data.table = 'nitrogen.csv', 
-#         site.col = 'site_name', 
+#         site_col = 'site_name', 
 #         lat.col = 'site_lat',
 #         lon.col = 'site_lon',
 #         x = x_list,
-#         write.file = FALSE
+#         write_file = FALSE
 #       ) 
 #     )
 #   )
@@ -545,7 +536,7 @@ testthat::test_that('Test overwriting coverage', {
 #   template_geographic_coverage(
 #     path = tempdir(),
 #     data.table = 'nitrogen.csv', 
-#     site.col = 'site_name',
+#     site_col = 'site_name',
 #     lat.col = 'site_lat', 
 #     lon.col = 'site_lon')
 #   

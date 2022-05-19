@@ -277,7 +277,7 @@ template_geographic_coverage <- function(
             sep = "\t"
           ),
           geocoverage_out
-        ) |>
+        ) %>%
           unique() # avoid repeated coverages
         
       }
