@@ -715,22 +715,23 @@ validate_arguments <- function(fun.name, fun.args){
     
   }
   
+  
 
-  # Call from template_raster_attributes() ----------------------------------
-
-  if (fun.name == 'template_raster_attributes'){
+  # Call from template_spatial_attributes() ---------------------------------
+  
+  if (fun.name == 'template_spatial_attributes'){
     
     # path
     if (!is.null(fun.args$path)) {
-      EDIutils::validate_path(fun.args$path)
+      validate_path(fun.args$path)
     }
     
     # Validate file names
     
     data_files <- suppressWarnings(
-      EDIutils::validate_file_names(
+      validate_file_names(
         path = fun.args$data.path, 
-        data.files = fun.args$raster.files))
+        data.files = fun.args$spatial.files))
     
   }
   
@@ -741,9 +742,11 @@ validate_arguments <- function(fun.name, fun.args){
     
     # path
     if (!is.null(fun.args$path)) {
-      EDIutils::validate_path(fun.args$path)
+      validate_path(fun.args$path)
     }
   }
+  
+  
   
   # Call from template_table_attributes() -------------------------------------
   
