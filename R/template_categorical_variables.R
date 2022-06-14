@@ -222,7 +222,7 @@ template_categorical_variables <- function(
 #'     
 attribute_template_to_table <- function(attributes.template, data.path) {
   table_regex <- paste0(
-    "(?<!^attributes_|^catvars_)",
+    "^(?<!^attributes_|^catvars_)",
     stringr::str_extract(
       attributes.template, 
       "(?<=attributes_).*(?=\\.txt)"),
