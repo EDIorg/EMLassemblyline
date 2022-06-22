@@ -243,6 +243,7 @@ eml2eal <- function(eml, path, file.type = ".txt") {
   invisible(try(eml2methods(eml, path, file.type)))
   eml <- xml2::read_xml(f) # reload eml modified by eml2methods()
   invisible(try(eml2personnel(eml, path)))
+  invisible(try(eml2physical(eml, path)))
   invisible(try(eml2provenance(eml, path)))
   eml <- xml2::read_xml(f) # reload eml modified by eml2provenance()
   invisible(try(eml2table_attributes(eml, path)))
@@ -440,9 +441,11 @@ eml2make_eml <- function(eml, path) {
     data.table.name = "/eml:eml/dataset/dataTable/entityName",
     data.table.description = "/eml:eml/dataset/dataTable/entityDescription",
     data.table.quote.character = "/eml:eml/dataset/dataTable/physical/dataFormat/textFormat/simpleDelimited/quoteCharacter",
+    data.table.url = "/eml:eml/dataset/dataTable/physical/distribution/online/url",
     other.entity = "/eml:eml/dataset/otherEntity/physical/objectName",
     other.entity.name = "/eml:eml/dataset/otherEntity/entityName",
     other.entity.description = "/eml:eml/dataset/otherEntity/entityDescription",
+    other.entity.url = "/eml:eml/dataset/otherEntity/physical/distribution/online/url",
     user.id = "/eml:eml/access/allow/principal",
     user.domain = "/eml:eml/@system",
     package.id = "/eml:eml/@packageId")
@@ -601,6 +604,92 @@ eml2personnel <- function(eml, path) {
 
 
 
+
+
+
+#' Create physical template from EML
+#'
+#' @param eml (xml_document xml_node) EML
+#' @param path (character) Path to write to
+#' 
+#' @details Gets physical nodes and parses to template.
+#' 
+#' @return personnel template
+#' 
+eml2physical <- function(eml, path) {
+  tbls <- xml2::xml_find_all(eml, "/eml:eml/dataset/dataTable")
+  if (!is_empty_nodeset(tbls)) {
+    table_res <- lapply(                 # for each table
+      tbls,
+      function(tbl) {
+        list(
+          objectName = xml_val(tbl, "./physical/objectName"),
+          type = 'dataTable',
+          entityName = xml_val(tbl, "./entityName"),
+          entityDescription = xml_val(tbl, "./entityDescription"),
+          size = xml_val(tbl, "./physical/size"),
+          authentication = xml_val(tbl, "./physical/authentication"),
+          authentication_method = xml_val(tbl, "./physical/authentication/@method"),
+          numHeaderLines = xml_val(tbl,"./physical/dataFormat/textFormat/numHeaderLines"),
+          recordDelimiter = xml_val(tbl,"./physical/dataFormat/textFormat/recordDelimiter"),
+          attributeOrientation = xml_val(tbl,"./physical/dataFormat/textFormat/attributeOrientation"),
+          fieldDelimiter = xml_val(tbl,"./physical/dataFormat/textFormat/simpleDelimited/fieldDelimiter"),
+          quoteCharacter = paste0(xml_val(tbl,"./physical/dataFormat/textFormat/simpleDelimited/quoteCharacter")),
+          entityType = "",
+          formatName = "",
+          url = xml_val(tbl,"./physical/distribution/online/url"),
+          numberOfRecords = xml_val(tbl, "./numberOfRecords")
+        )
+      })
+    names(table_res) <- xml_val(tbls, "./physical/objectName")
+  } else {
+    table_res <- data.frame()
+  }
+  
+  oths <- xml2::xml_find_all(eml, "/eml:eml/dataset/otherEntity")
+  if (!is_empty_nodeset(tbls)) {
+    other_res <- lapply(                 # for each table
+      oths,
+      function(oth) {
+        list(
+          objectName = xml_val(oth, "./physical/objectName"),
+          type = 'otherEntity',
+          entityName = xml_val(oth, "./entityName"),
+          entityDescription = xml_val(oth, "./entityDescription"),
+          size = xml_val(oth, "./physical/size"),
+          authentication = xml_val(oth, "./physical/authentication"),
+          authentication_method = xml2::xml_attr(
+            xml2::xml_find_first(oth, "./physical/authentication"), "method"),
+          numHeaderLines = "",
+          recordDelimiter = "",
+          attributeOrientation = "",
+          fieldDelimiter = "",
+          quoteCharacter = "",
+          entityType = xml_val(oth, "./entityType"),
+          formatName = xml_val(oth, "./physical/dataFormat/externallyDefinedFormat/formatName"),
+          url = xml_val(oth,"./physical/distribution/online/url"),
+          numberOfRecords = ""
+        )
+      })
+    names(other_res) <- xml_val(oths, "./physical/objectName")
+  } else {
+    other_res <- data.frame()
+  }
+  
+  table_res <- data.table::rbindlist(table_res)
+  other_res <- data.table::rbindlist(other_res)
+  res <- dplyr::bind_rows(table_res, other_res)
+    
+  f <- paste0(path, "/", enc2utf8('physical.txt'))
+  
+  if (file.exists(f)) {
+    invisible(warning(f, " exists and will not be overwritten", call. = FALSE))
+  } else {
+    invisible(data.table::fwrite(x = res, file=f, sep = '\t'))
+  }
+  
+  return(res)
+}
 
 
 
@@ -1492,3 +1581,5 @@ xml_val <- function(nodeset, xpath) {
       trim = T))
   return(res)
 }
+
+
