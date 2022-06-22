@@ -1,3 +1,44 @@
+EMLassemblyline 3.5.5.9000 (YYYY-MM-DD)
+=======================================
+
+### BUG FIXES
+
+  * Now has improved file name matching so similarly named files don't raise 
+  issues.
+
+EMLassemblyline 3.5.4 (2022-05-12)
+==================================
+
+### BUG FIXES
+
+  * Now imports taxonomyCleanr >= 1.6.2. The EDIutils package was still listed
+  for taxonomyCleanr 1.6.1 (#113).
+
+
+EMLassemblyline 3.5.3 (2022-05-09)
+=======================================
+
+### BUG FIXES
+
+  * Now imports taxonomyCleanr >= 1.6.1 so the EDIutils package is not 
+  required (#112).
+  
+### MINOR IMPROVEMENTS
+
+  * To identify EML files created with EMLassemblyline, the application and 
+  version number are now included in the additionalMetadata element (#109).
+
+# EMLassemblyline 3.5.2
+
+### Enhancements
+
+* Update the get_eol function - The get_eol() function was refactored for efficiency and clarity in the hymetDP package. The refactored function, unit tests, and updated implementation have been ported here.
+* Update provenance.txt documentation - Added some minor details to the provenance.txt documentation.
+
+### Bug fix
+
+* Fix keyword resolver - Keywords were not resolving to the LTER vocabulary due to a regression that occurred during the EDIutils deprecation. The missing functions have been added back to EAL.
+
 # EMLassemblyline 3.5.1
 
 * Removed version requirements from dependencies. Removed unused EDIutils from list of dependencies.

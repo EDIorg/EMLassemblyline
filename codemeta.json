@@ -1,14 +1,13 @@
 {
-  "@context": [
-    "https://doi.org/10.5063/schema/codemeta-2.0",
-    "http://schema.org"
-  ],
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "EMLassemblyline",
-  "description": "\n    For scientists and data managers to create high quality EML metadata for dataset publication. EMLassemblyline is optimized for automating recurring publications (timeseries or data derived from timeseries sources) but works well for \"one-off\" publications, especially through the MetaShARK interface. EMLassemblyline prioritizes automated metadata extraction from data objects to minimize required human effort and encourages EML best practices to make publications Findable, Accessible, Interoperable, and Reusable.",
+  "description": " For scientists and data managers to create high quality EML metadata for dataset publication. EMLassemblyline is optimized for automating recurring publications (timeseries or data derived from timeseries sources) but works well for \"one-off\" publications, especially through the MetaShARK interface. EMLassemblyline prioritizes automated metadata extraction from data objects to minimize required human effort and encourages EML best practices to make publications Findable, Accessible, Interoperable, and Reusable.",
   "name": "EMLassemblyline: A tool kit for building EML metadata workflows",
+  "codeRepository": "https://github.com/EDIorg/EMLassemblyline",
+  "issueTracker": "https://github.com/EDIorg/EMLassemblyline/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "3.5.1",
+  "version": "3.5.4.9000",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -22,6 +21,21 @@
       "familyName": "Smith",
       "email": "colin.smith@wisc.edu",
       "@id": "https://orcid.org/0000-0003-2261-9931"
+    }
+  ],
+  "contributor": [
+    {
+      "@type": "Person",
+      "givenName": "Elie",
+      "familyName": "ARNAUD",
+      "email": "earnaud@outlook.com",
+      "@id": "https://orcid.org/0000-0003-3416-7653"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Kyle",
+      "familyName": "Zollo-Venecek",
+      "@id": "https://orcid.org/0000-0002-1615-590X"
     }
   ],
   "maintainer": [
@@ -47,8 +61,8 @@
       "sameAs": "https://CRAN.R-project.org/package=testthat"
     }
   ],
-  "softwareRequirements": [
-    {
+  "softwareRequirements": {
+    "1": {
       "@type": "SoftwareApplication",
       "identifier": "bit64",
       "name": "bit64",
@@ -60,7 +74,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=bit64"
     },
-    {
+    "2": {
       "@type": "SoftwareApplication",
       "identifier": "data.table",
       "name": "data.table",
@@ -72,7 +86,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=data.table"
     },
-    {
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "EML",
       "name": "EML",
@@ -85,7 +99,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=EML"
     },
-    {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "httr",
       "name": "httr",
@@ -97,7 +111,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=httr"
     },
-    {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "knitr",
       "name": "knitr",
@@ -109,12 +123,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=knitr"
     },
-    {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "methods",
       "name": "methods"
     },
-    {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "mime",
       "name": "mime",
@@ -126,7 +140,19 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=mime"
     },
-    {
+    "8": {
+      "@type": "SoftwareApplication",
+      "identifier": "raster",
+      "name": "raster",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=raster"
+    },
+    "9": {
       "@type": "SoftwareApplication",
       "identifier": "reader",
       "name": "reader",
@@ -138,7 +164,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=reader"
     },
-    {
+    "10": {
       "@type": "SoftwareApplication",
       "identifier": "readr",
       "name": "readr",
@@ -150,7 +176,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=readr"
     },
-    {
+    "11": {
       "@type": "SoftwareApplication",
       "identifier": "rmarkdown",
       "name": "rmarkdown",
@@ -162,7 +188,19 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=rmarkdown"
     },
-    {
+    "12": {
+      "@type": "SoftwareApplication",
+      "identifier": "sf",
+      "name": "sf",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=sf"
+    },
+    "13": {
       "@type": "SoftwareApplication",
       "identifier": "stringr",
       "name": "stringr",
@@ -174,7 +212,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=stringr"
     },
-    {
+    "14": {
       "@type": "SoftwareApplication",
       "identifier": "stringi",
       "name": "stringi",
@@ -186,14 +224,14 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=stringi"
     },
-    {
+    "15": {
       "@type": "SoftwareApplication",
       "identifier": "taxonomyCleanr",
       "name": "taxonomyCleanr",
-      "version": ">= 1.5.4",
+      "version": ">= 1.6.2",
       "sameAs": "https://github.com/EDIorg/taxonomyCleanr"
     },
-    {
+    "16": {
       "@type": "SoftwareApplication",
       "identifier": "tidyr",
       "name": "tidyr",
@@ -205,12 +243,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=tidyr"
     },
-    {
+    "17": {
       "@type": "SoftwareApplication",
       "identifier": "tools",
       "name": "tools"
     },
-    {
+    "18": {
       "@type": "SoftwareApplication",
       "identifier": "uuid",
       "name": "uuid",
@@ -222,7 +260,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=uuid"
     },
-    {
+    "19": {
       "@type": "SoftwareApplication",
       "identifier": "xml2",
       "name": "xml2",
@@ -234,34 +272,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=xml2"
     },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "raster",
-      "name": "raster",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=raster"
-    }
-  ],
-  "codeRepository": "https://github.com/EDIorg/EMLassemblyline",
-  "readme": "https://github.com/EDIorg/EMLassemblyline/blob/master/README.md",
-  "fileSize": "3505.177KB",
-  "contIntegration": ["https://travis-ci.org/EDIorg/EMLassemblyline", "https://codecov.io/github/EDIorg/EMLassemblyline?branch=master"],
-  "issueTracker": "https://github.com/EDIorg/EMLassemblyline/issues",
-  "releaseNotes": "https://github.com/EDIorg/EMLassemblyline/blob/master/NEWS.md",
-  "contributor": [
-    {
-      "@type": "Person",
-      "givenName": "Elie",
-      "familyName": "ARNAUD",
-      "email": "earnaud@outlook.com",
-      "@id": "https://orcid.org/0000-0003-3416-7653"
-    }
-  ],
-  "copyrightHolder": {},
-  "funder": {}
+    "SystemRequirements": null
+  },
+  "fileSize": "4862.228KB"
 }

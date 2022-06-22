@@ -8,6 +8,7 @@ template_raster_variables(
   path = NULL,
   data.path = path,
   write.file = TRUE,
+  empty = FALSE,
   return.obj = FALSE
 )
 }
@@ -17,6 +18,10 @@ template_raster_variables(
 \item{data.path}{(character) Path to the data directory.}
 
 \item{write.file}{(logical; optional) Whether to write the template file.}
+
+\item{empty}{(logical) Whether template should be empty. If FALSE, raster_attrbutes.txt must exist and have at least one categorical type specified.}
+
+\item{return.obj}{(logical) Whether to return table as an R object.}
 }
 \value{
 \item{raster_catvars.txt}{Columns:

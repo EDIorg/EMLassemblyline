@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5.4</span>
       </span>
     </div>
 
@@ -41,7 +43,7 @@
   <a href="../reference/index.html">Functions</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -79,7 +81,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/EDIorg/EMLassemblyline/">
+  <a href="https://github.com/EDIorg/EMLassemblyline/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -94,23 +96,23 @@
 
       
 
-      </header><script src="auto_pub_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Automate data publication</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/EDIorg/EMLassemblyline/blob/master/vignettes/auto_pub.Rmd"><code>vignettes/auto_pub.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/EDIorg/EMLassemblyline/blob/HEAD/vignettes/auto_pub.Rmd" class="external-link"><code>vignettes/auto_pub.Rmd</code></a></small>
       <div class="hidden name"><code>auto_pub.Rmd</code></div>
 
     </div>
 
     
     
-<div id="why-and-when" class="section level2">
-<h2 class="hasAnchor">
-<a href="#why-and-when" class="anchor"></a>Why and when?</h2>
-<p>Recurring data publication was traditionally a manual edit and upload process that can now be automated with programmatic approaches (e.g. EAL) and use of data repository APIs (e.g. <a href="https://ediorg.github.io/EDIutils/">EDIutils</a>). These approaches not only reduce effort, but improve metadata accuracy and enable automated workflows. Automated publication and upload is suitable for:</p>
+<div class="section level2">
+<h2 id="why-and-when">Why and when?<a class="anchor" aria-label="anchor" href="#why-and-when"></a>
+</h2>
+<p>Recurring data publication was traditionally a manual edit and upload process that can now be automated with programmatic approaches (e.g. EAL) and use of data repository APIs (e.g. <a href="https://ediorg.github.io/EDIutils/" class="external-link">EDIutils</a>). These approaches not only reduce effort, but improve metadata accuracy and enable automated workflows. Automated publication and upload is suitable for:</p>
 <ul>
 <li>
 <strong>Ongoing data collection</strong> Data package is updated periodically with new data</li>
@@ -119,9 +121,9 @@
 </ul>
 <p>Each use case is demonstrated below.</p>
 </div>
-<div id="ongoing-data-collection" class="section level2">
-<h2 class="hasAnchor">
-<a href="#ongoing-data-collection" class="anchor"></a>Ongoing data collection</h2>
+<div class="section level2">
+<h2 id="ongoing-data-collection">Ongoing data collection<a class="anchor" aria-label="anchor" href="#ongoing-data-collection"></a>
+</h2>
 <p>Ongoing data collection can be the addition of new data to a time series or data changing as a result of an evolving data processing or analytical method. In either case, automated publication requires stabilization of package contents and configuration of EAL for these contents. If package contents deviate from what can be programmatically input to EAL, then metadata accuracy decreases and human and machine understanding are compromised. Example automated data publication for ongoing collection:</p>
 <ol style="list-style-type: decimal">
 <li>
@@ -135,9 +137,9 @@
 </ol>
 <p><img src="https://github.com/EDIorg/EMLassemblyline/raw/master/vignettes/automated_publication_ongoing.PNG"></p>
 </div>
-<div id="ongoing-derived-data-product" class="section level2">
-<h2 class="hasAnchor">
-<a href="#ongoing-derived-data-product" class="anchor"></a>Ongoing derived data product</h2>
+<div class="section level2">
+<h2 id="ongoing-derived-data-product">Ongoing derived data product<a class="anchor" aria-label="anchor" href="#ongoing-derived-data-product"></a>
+</h2>
 <p>Another valuable use case of automated data publication is the creation of data packages that are derived from sources with ongoing collection. The derived package may produce a stand alone product, or may be part of a larger science workflow with additional downstream processes. The derived package publication relies event notification, which are a service some data repositories provide. The event notification is sent to the subscriber when a source data package is updated. Building upon the previous workflow:</p>
 <ol start="5" style="list-style-type: decimal">
 <li>
@@ -178,11 +180,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Colin Smith.</p>
+  <p></p>
+<p>Developed by Colin Smith.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer>
@@ -190,6 +194,8 @@
 
   
 
+
+  
 
   </body>
 </html>

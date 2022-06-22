@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5.4</span>
       </span>
     </div>
 
@@ -41,7 +43,7 @@
   <a href="../reference/index.html">Functions</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -79,7 +81,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/EDIorg/EMLassemblyline/">
+  <a href="https://github.com/EDIorg/EMLassemblyline/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -94,21 +96,21 @@
 
       
 
-      </header><script src="create_eml_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Make EML</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/EDIorg/EMLassemblyline/blob/master/vignettes/create_eml.Rmd"><code>vignettes/create_eml.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/EDIorg/EMLassemblyline/blob/HEAD/vignettes/create_eml.Rmd" class="external-link"><code>vignettes/create_eml.Rmd</code></a></small>
       <div class="hidden name"><code>create_eml.Rmd</code></div>
 
     </div>
 
     
     
-<p>The <code><a href="../reference/make_eml.html">make_eml()</a></code> function renders templates (and input arguments) into EML metadata (click <code><a href="../reference/make_eml.html">make_eml()</a></code> for the docs and <a href="https://drive.google.com/file/d/13TfCqLQ4t6awYvLHdmF5oREPDchfGeCG/view?usp=sharing"><strong>edi.260.1.xml</strong></a> for an example EML file).</p>
-<p><code><a href="../reference/make_eml.html">make_eml()</a></code> insists on access to the data objects to keep users from the monotonous mind-numbing task of gathering physical attributes (e.g. file size, number of rows, checksums, etc.) each time a data object changes. This enables automatic rebuild of revised data object EML as long as the structure remains constant (i.e. variable types and definitions don’t change, only new records are added). This highlights the benifit of creating data with stable attributes not to mention for the consideration of downstream user workflows depending on a specific input data structure. Additionally, automated rebuild of EML streamlines the data publication process further by enabling automatic upload of a data package through a repository API, which is common for timeseries data or data derived from time series data packages (e.g. synthesis products). See <a href="https://ediorg.github.io/EMLassemblyline/articles/auto_pub.html">“Automate data publication”</a> for more on this topic.</p>
+<p>The <code><a href="../reference/make_eml.html">make_eml()</a></code> function renders templates (and input arguments) into EML metadata (click <code><a href="../reference/make_eml.html">make_eml()</a></code> for the docs and <a href="https://drive.google.com/file/d/13TfCqLQ4t6awYvLHdmF5oREPDchfGeCG/view?usp=sharing" class="external-link"><strong>edi.260.1.xml</strong></a> for an example EML file).</p>
+<p><code><a href="../reference/make_eml.html">make_eml()</a></code> insists on access to the data objects to keep users from the monotonous mind-numbing task of gathering physical attributes (e.g. file size, number of rows, checksums, etc.) each time a data object changes. This enables automatic rebuild of revised data object EML as long as the structure remains constant (i.e. variable types and definitions don’t change, only new records are added). This highlights the benifit of creating data with stable attributes not to mention for the consideration of downstream user workflows depending on a specific input data structure. Additionally, automated rebuild of EML streamlines the data publication process further by enabling automatic upload of a data package through a repository API, which is common for timeseries data or data derived from time series data packages (e.g. synthesis products). See <a href="https://ediorg.github.io/EMLassemblyline/articles/auto_pub.html" class="external-link">“Automate data publication”</a> for more on this topic.</p>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -120,11 +122,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Colin Smith.</p>
+  <p></p>
+<p>Developed by Colin Smith.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer>
@@ -132,6 +136,8 @@
 
   
 
+
+  
 
   </body>
 </html>

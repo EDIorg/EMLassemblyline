@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5.4</span>
       </span>
     </div>
 
@@ -41,7 +43,7 @@
   <a href="../reference/index.html">Functions</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -79,7 +81,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/EDIorg/EMLassemblyline/">
+  <a href="https://github.com/EDIorg/EMLassemblyline/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -94,22 +96,22 @@
 
       
 
-      </header><script src="edit_tmplts_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Edit templates</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/EDIorg/EMLassemblyline/blob/master/vignettes/edit_tmplts.Rmd"><code>vignettes/edit_tmplts.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/EDIorg/EMLassemblyline/blob/HEAD/vignettes/edit_tmplts.Rmd" class="external-link"><code>vignettes/edit_tmplts.Rmd</code></a></small>
       <div class="hidden name"><code>edit_tmplts.Rmd</code></div>
 
     </div>
 
     
     
-<div id="overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
 <p>Metadata inferred during the templating process should be validated by the user and missing info added. Use spreadsheet and text editors for this process. Template specific guides are listed below.</p>
 <p><em>NOTES:</em></p>
 <ul>
@@ -117,22 +119,22 @@
 <li><em>Free-text templates: Keep template content simple. Complex formatting can lead to errors.</em></li>
 </ul>
 </div>
-<div id="abstract--docx--md--txt" class="section level2">
-<h2 class="hasAnchor">
-<a href="#abstract--docx--md--txt" class="anchor"></a>abstract (.docx, .md, .txt)</h2>
+<div class="section level2">
+<h2 id="abstract--docx--md--txt">abstract (.docx, .md, .txt)<a class="anchor" aria-label="anchor" href="#abstract--docx--md--txt"></a>
+</h2>
 <p>Describes the salient features of a dataset in a concise summary much like an abstract does in a journal article. It should cover what the data are and why they were created.</p>
-<p><a href="https://docs.google.com/document/d/1c0hkaA8iLKhMBBvnvdvSJq8Y1g4CCUlSJG2a2MFCK08/edit?usp=sharing"><strong>Example</strong></a></p>
+<p><a href="https://docs.google.com/document/d/1c0hkaA8iLKhMBBvnvdvSJq8Y1g4CCUlSJG2a2MFCK08/edit?usp=sharing" class="external-link"><strong>Example</strong></a></p>
 </div>
-<div id="methods--docx--md--txt" class="section level2">
-<h2 class="hasAnchor">
-<a href="#methods--docx--md--txt" class="anchor"></a>methods (.docx, .md, .txt)</h2>
+<div class="section level2">
+<h2 id="methods--docx--md--txt">methods (.docx, .md, .txt)<a class="anchor" aria-label="anchor" href="#methods--docx--md--txt"></a>
+</h2>
 <p>Describes the data creation methods. Includes enough detail for future users to correctly use the data. Lists instrument descriptions, protocols, etc.</p>
-<p><a href="https://docs.google.com/document/d/1a7BIGrmLrU6eTlIsQvWALU4moByYR3eND2_a42bxIkg/edit?usp=sharing"><strong>Example</strong></a></p>
+<p><a href="https://docs.google.com/document/d/1a7BIGrmLrU6eTlIsQvWALU4moByYR3eND2_a42bxIkg/edit?usp=sharing" class="external-link"><strong>Example</strong></a></p>
 </div>
-<div id="keywords-txt" class="section level2">
-<h2 class="hasAnchor">
-<a href="#keywords-txt" class="anchor"></a>keywords.txt</h2>
-<p>Describes the data in a small set of terms. Keywords facilitate search and discovery on scientific terms, as well as names of research groups, field stations, and other organizations. Using a controlled vocabulary or thesaurus vastly improves discovery. We recommend using the <a href="http://vocab.lternet.edu/vocab/vocab/index.php">LTER Controlled Vocabulary</a> when possible.</p>
+<div class="section level2">
+<h2 id="keywords-txt">keywords.txt<a class="anchor" aria-label="anchor" href="#keywords-txt"></a>
+</h2>
+<p>Describes the data in a small set of terms. Keywords facilitate search and discovery on scientific terms, as well as names of research groups, field stations, and other organizations. Using a controlled vocabulary or thesaurus vastly improves discovery. We recommend using the <a href="http://vocab.lternet.edu/vocab/vocab/index.php" class="external-link">LTER Controlled Vocabulary</a> when possible.</p>
 <p>Columns:</p>
 <ul>
 <li>
@@ -140,11 +142,11 @@
 <li>
 <strong>keywordThesaurus</strong> URI of the vocabulary from which the keyword originates.</li>
 </ul>
-<p><a href="https://docs.google.com/spreadsheets/d/1u9LzpfeyBMet4AMe9SLbHb8pRsHwT_7Qx87ZP-SlTKI/edit?usp=sharing"><strong>Example</strong></a></p>
+<p><a href="https://docs.google.com/spreadsheets/d/1u9LzpfeyBMet4AMe9SLbHb8pRsHwT_7Qx87ZP-SlTKI/edit?usp=sharing" class="external-link"><strong>Example</strong></a></p>
 </div>
-<div id="personnel-txt" class="section level2">
-<h2 class="hasAnchor">
-<a href="#personnel-txt" class="anchor"></a>personnel.txt</h2>
+<div class="section level2">
+<h2 id="personnel-txt">personnel.txt<a class="anchor" aria-label="anchor" href="#personnel-txt"></a>
+</h2>
 <p>Describes the personnel and funding sources involved in the creation of the data. This facilitates attribution and reporting.</p>
 <p>Columns:</p>
 <ul>
@@ -159,7 +161,7 @@
 <li>
 <strong>electronicMailAddress</strong> Email address</li>
 <li>
-<strong>userId</strong> Persons research identifier (e.g. <a href="https://orcid.org/">ORCID</a>). Links a persons research profile to a data publication.</li>
+<strong>userId</strong> Persons research identifier (e.g. <a href="https://orcid.org/" class="external-link">ORCID</a>). Links a persons research profile to a data publication.</li>
 <li>
 <strong>role</strong> Role of the person with respect to the data. Persons serving more than one role are listed on separate lines (e.g. replicate the persons info on separate lines but change the role. Valid options:
 <ul>
@@ -183,17 +185,17 @@
 </ul>
 </li>
 </ul>
-<p><a href="https://docs.google.com/spreadsheets/d/14vFIC1wyR6_tExz3QkI8O82jQepei8po87uxaeJvyak/edit?usp=sharing"><strong>Example</strong></a></p>
+<p><a href="https://docs.google.com/spreadsheets/d/14vFIC1wyR6_tExz3QkI8O82jQepei8po87uxaeJvyak/edit?usp=sharing" class="external-link"><strong>Example</strong></a></p>
 </div>
-<div id="intellectual_rights-txt" class="section level2">
-<h2 class="hasAnchor">
-<a href="#intellectual_rights-txt" class="anchor"></a>intellectual_rights.txt</h2>
-<p>Describes how the data may be used. Releasing without restriction (<a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>) or with minimal attribution (<a href="https://creativecommons.org/licenses/by/4.0/">CC BY</a>) maximizes value and future use.</p>
-<p><a href="https://docs.google.com/document/d/1sNlIY8lAGg1WfFez-PvmP_qS4B3AHEScyqs7sAigrj8/edit?usp=sharing"><strong>Example</strong></a></p>
+<div class="section level2">
+<h2 id="intellectual_rights-txt">intellectual_rights.txt<a class="anchor" aria-label="anchor" href="#intellectual_rights-txt"></a>
+</h2>
+<p>Describes how the data may be used. Releasing without restriction (<a href="https://creativecommons.org/publicdomain/zero/1.0/" class="external-link">CC0</a>) or with minimal attribution (<a href="https://creativecommons.org/licenses/by/4.0/" class="external-link">CC BY</a>) maximizes value and future use.</p>
+<p><a href="https://docs.google.com/document/d/1sNlIY8lAGg1WfFez-PvmP_qS4B3AHEScyqs7sAigrj8/edit?usp=sharing" class="external-link"><strong>Example</strong></a></p>
 </div>
-<div id="attributes_-txt" class="section level2">
-<h2 class="hasAnchor">
-<a href="#attributes_-txt" class="anchor"></a>attributes_*.txt</h2>
+<div class="section level2">
+<h2 id="attributes_-txt">attributes_*.txt<a class="anchor" aria-label="anchor" href="#attributes_-txt"></a>
+</h2>
 <p>Describes columns of a data table (classes, units, datetime formats, missing value codes).</p>
 <p>Columns:</p>
 <ul>
@@ -238,11 +240,11 @@
 <li>
 <strong>missingValueCodeExplanation</strong> Definition of missing value code.</li>
 </ul>
-<p><a href="https://docs.google.com/spreadsheets/d/1VV6SY_757j5R7anJNXGTo7U2PQ_GSgg-F6YZNBwzqM0/edit?usp=sharing"><strong>Example 1</strong></a>, <a href="https://docs.google.com/spreadsheets/d/1e7eZAQHmQIPKUwaqGjC3htK-7YK9brBuVFVY03HED5E/edit?usp=sharing"><strong>Example 2</strong></a></p>
+<p><a href="https://docs.google.com/spreadsheets/d/1VV6SY_757j5R7anJNXGTo7U2PQ_GSgg-F6YZNBwzqM0/edit?usp=sharing" class="external-link"><strong>Example 1</strong></a>, <a href="https://docs.google.com/spreadsheets/d/1e7eZAQHmQIPKUwaqGjC3htK-7YK9brBuVFVY03HED5E/edit?usp=sharing" class="external-link"><strong>Example 2</strong></a></p>
 </div>
-<div id="custom_units-txt" class="section level2">
-<h2 class="hasAnchor">
-<a href="#custom_units-txt" class="anchor"></a>custom_units.txt</h2>
+<div class="section level2">
+<h2 id="custom_units-txt">custom_units.txt<a class="anchor" aria-label="anchor" href="#custom_units-txt"></a>
+</h2>
 <p>Describes non-standard units used in a data table attribute template.</p>
 <p>Columns:</p>
 <ul>
@@ -257,11 +259,11 @@
 <li>
 <strong>description</strong> Abbreviation (e.g. ft/s)</li>
 </ul>
-<p><a href="https://docs.google.com/spreadsheets/d/1XPoFiegWw7BIugkRmmMqBdC6hqKtIEfdN4g-QSImUxI/edit?usp=sharing"><strong>Example</strong></a></p>
+<p><a href="https://docs.google.com/spreadsheets/d/1XPoFiegWw7BIugkRmmMqBdC6hqKtIEfdN4g-QSImUxI/edit?usp=sharing" class="external-link"><strong>Example</strong></a></p>
 </div>
-<div id="catvars_-txt" class="section level2">
-<h2 class="hasAnchor">
-<a href="#catvars_-txt" class="anchor"></a>catvars_*.txt</h2>
+<div class="section level2">
+<h2 id="catvars_-txt">catvars_*.txt<a class="anchor" aria-label="anchor" href="#catvars_-txt"></a>
+</h2>
 <p>Describes categorical variables of a data table (if any columns are classified as categorical in table attributes template).</p>
 <p>Columns:</p>
 <ul>
@@ -272,11 +274,11 @@
 <li>
 <strong>definition</strong> Definition of categorical variable</li>
 </ul>
-<p><a href="https://docs.google.com/spreadsheets/d/1cKgLv9ffLtTqHrGX0WbpTCeWQkHXw1lbMRIt6IccuaQ/edit?usp=sharing"><strong>Example 1</strong></a>, <a href="https://docs.google.com/spreadsheets/d/13lRuvBElEr8RQWQrWUyBei6rlE9xoDRkEOxhysHZ2J4/edit?usp=sharing"><strong>Example 2</strong></a></p>
+<p><a href="https://docs.google.com/spreadsheets/d/1cKgLv9ffLtTqHrGX0WbpTCeWQkHXw1lbMRIt6IccuaQ/edit?usp=sharing" class="external-link"><strong>Example 1</strong></a>, <a href="https://docs.google.com/spreadsheets/d/13lRuvBElEr8RQWQrWUyBei6rlE9xoDRkEOxhysHZ2J4/edit?usp=sharing" class="external-link"><strong>Example 2</strong></a></p>
 </div>
-<div id="geographic_coverage-txt" class="section level2">
-<h2 class="hasAnchor">
-<a href="#geographic_coverage-txt" class="anchor"></a>geographic_coverage.txt</h2>
+<div class="section level2">
+<h2 id="geographic_coverage-txt">geographic_coverage.txt<a class="anchor" aria-label="anchor" href="#geographic_coverage-txt"></a>
+</h2>
 <p>Describes where the data were collected.</p>
 <p>Columns:</p>
 <ul>
@@ -292,11 +294,11 @@
 <strong>westBoundingCoordinate</strong> West coordinate</li>
 </ul>
 <p>Coordinates must be in decimal degrees and include a minus sign (-) for latitudes south of the equator and longitudes west of the prime meridian. For points, repeat latitude and longitude coordinates in respective north/south and east/west columns.</p>
-<p><a href="https://docs.google.com/spreadsheets/d/1lSvQsA6tG35egBp-ueXoCKFxVdd_6rzknBz1gFew3aA/edit?usp=sharing"><strong>Example</strong></a></p>
+<p><a href="https://docs.google.com/spreadsheets/d/1lSvQsA6tG35egBp-ueXoCKFxVdd_6rzknBz1gFew3aA/edit?usp=sharing" class="external-link"><strong>Example</strong></a></p>
 </div>
-<div id="taxonomic_coverage-txt" class="section level2">
-<h2 class="hasAnchor">
-<a href="#taxonomic_coverage-txt" class="anchor"></a>taxonomic_coverage.txt</h2>
+<div class="section level2">
+<h2 id="taxonomic_coverage-txt">taxonomic_coverage.txt<a class="anchor" aria-label="anchor" href="#taxonomic_coverage-txt"></a>
+</h2>
 <p>Describes biological organisms occuring in the data and helps resolve them to authority systems. If matches can be made, then the full taxonomic hierarchy of scientific and common names are automatically rendered in the final EML metadata. This enables future users to search on any taxonomic level of interest across data packages in repositories.</p>
 <p>Columns:</p>
 <ul>
@@ -307,22 +309,23 @@
 <li>
 <strong>name_resolved</strong> Taxons name as found in an authority system.</li>
 <li>
-<strong>authority_system</strong> Authority system in which the taxa’s name was found. Can be: “<a href="https://www.itis.gov/">ITIS</a>”, “<a href="http://www.marinespecies.org/">WORMS</a>”, “or”<a href="https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c">GBIF</a>".</li>
+<strong>authority_system</strong> Authority system in which the taxa’s name was found. Can be: “<a href="https://www.itis.gov/" class="external-link">ITIS</a>”, “<a href="http://www.marinespecies.org/" class="external-link">WORMS</a>”, “or”<a href="https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c" class="external-link">GBIF</a>".</li>
 <li>
 <strong>authority_id</strong> Taxa’s identifier in the authority system (e.g. 168469).</li>
 </ul>
-<p><a href="https://docs.google.com/spreadsheets/d/1jpOmcSq93KOpWnC26pHrxPtt4dFhB9SHXNHLs5Du7MQ/edit?usp=sharing"><strong>Example</strong></a></p>
+<p><a href="https://docs.google.com/spreadsheets/d/1jpOmcSq93KOpWnC26pHrxPtt4dFhB9SHXNHLs5Du7MQ/edit?usp=sharing" class="external-link"><strong>Example</strong></a></p>
 </div>
-<div id="provenance-txt" class="section level2">
-<h2 class="hasAnchor">
-<a href="#provenance-txt" class="anchor"></a>provenance.txt</h2>
+<div class="section level2">
+<h2 id="provenance-txt">provenance.txt<a class="anchor" aria-label="anchor" href="#provenance-txt"></a>
+</h2>
 <p>Describes source datasets. Explicitly listing the DOIs and/or URLs of input data help future users understand in greater detail how the derived data were created and may some day be able to assign attribution to the creators of referenced datasets.</p>
+<p>Provenance metadata can be automatically generated for supported repositories simply by specifying an identifier (i.e. EDI) in the systemID column. For unsupported repositories, the systemID column should be left blank.</p>
 <p>Columns:</p>
 <ul>
 <li>
 <strong>dataPackageID</strong> Data package identifier. Supplying a valid packageID and systemID (of supported systems) is all that is needed to create a complete provenance record.</li>
 <li>
-<strong>systemID</strong> System (i.e. data repository) identifier. Currently supported systems are: EDI (Environmental Data Initiative).</li>
+<strong>systemID</strong> System (i.e. data repository) identifier. Currently supported systems are: EDI (Environmental Data Initiative). Leave this column blank unless specifying a supported system.</li>
 <li>
 <strong>url</strong> URL linking to an online source (i.e. data, paper, etc.). Required when a source can’t be defined by a packageID and systemID.</li>
 <li>
@@ -342,11 +345,11 @@
 <li>
 <strong>email</strong> Email of the creator or contact. Required when a source can’t be defined by a packageID and systemID.</li>
 </ul>
-<p><a href="https://docs.google.com/spreadsheets/d/1P7NwIgntemkAciZi3uZgZ_ponZ73cXSh-pEihydwrsM/edit?usp=sharing"><strong>Example</strong></a></p>
+<p><a href="https://docs.google.com/spreadsheets/d/1P7NwIgntemkAciZi3uZgZ_ponZ73cXSh-pEihydwrsM/edit?usp=sharing" class="external-link"><strong>Example</strong></a></p>
 </div>
-<div id="annotations-txt" class="section level2">
-<h2 class="hasAnchor">
-<a href="#annotations-txt" class="anchor"></a>annotations.txt</h2>
+<div class="section level2">
+<h2 id="annotations-txt">annotations.txt<a class="anchor" aria-label="anchor" href="#annotations-txt"></a>
+</h2>
 <p>Adds semantic meaning to metadata (variables, locations, persons, etc.) through links to ontology terms. This enables greater human understanding and machine actionability (linked data) and greatly improves the discoverability and interoperability of data in general.</p>
 <p>Columns:</p>
 <ul>
@@ -367,13 +370,13 @@
 <li>
 <strong>object_uri</strong> The object URI copied from an ontology.</li>
 </ul>
-<p><a href="https://docs.google.com/spreadsheets/d/1TOS1-yCKUJEvDZwenZs88ok8L3tQkIAUQp24m-6WuL8/edit?usp=sharing"><strong>Example</strong></a></p>
+<p><a href="https://docs.google.com/spreadsheets/d/1TOS1-yCKUJEvDZwenZs88ok8L3tQkIAUQp24m-6WuL8/edit?usp=sharing" class="external-link"><strong>Example</strong></a></p>
 </div>
-<div id="additional_info--docx--md--txt" class="section level2">
-<h2 class="hasAnchor">
-<a href="#additional_info--docx--md--txt" class="anchor"></a>additional_info (.docx, .md, .txt)</h2>
+<div class="section level2">
+<h2 id="additional_info--docx--md--txt">additional_info (.docx, .md, .txt)<a class="anchor" aria-label="anchor" href="#additional_info--docx--md--txt"></a>
+</h2>
 <p>Ancillary info not captured by any of the other templates.</p>
-<p><a href="https://docs.google.com/document/d/1bbZ8iR9MOtTNGbbcev7fdjNCT7va9I8v-Ryv6jFCJYU/edit?usp=sharing"><strong>Example</strong></a></p>
+<p><a href="https://docs.google.com/document/d/1bbZ8iR9MOtTNGbbcev7fdjNCT7va9I8v-Ryv6jFCJYU/edit?usp=sharing" class="external-link"><strong>Example</strong></a></p>
 </div>
   </div>
 
@@ -388,11 +391,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Colin Smith.</p>
+  <p></p>
+<p>Developed by Colin Smith.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer>
@@ -400,6 +405,8 @@
 
   
 
+
+  
 
   </body>
 </html>

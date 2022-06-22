@@ -1214,12 +1214,13 @@ make_eml <- function(
           a <- x$data.table[[k]]$content[[tbl_attr$attributeName[i]]][
             !is.na(x$data.table[[k]]$content[[tbl_attr$attributeName[i]]])]
           a <- a[a != tbl_attr$missingValueCode[i]]
+          a <- as.numeric(a)
           if (all(is.na(a))) {
             attributes$minimum[i] <- NA
             attributes$maximum[i] <- NA
           } else {
-            attributes$minimum[i] <- as.numeric(min(a, na.rm = T))
-            attributes$maximum[i] <- as.numeric(max(a, na.rm = T))
+            attributes$minimum[i] <- min(a, na.rm = T)
+            attributes$maximum[i] <- max(a, na.rm = T)
           }
           is_integer <-function(x, tol = .Machine$double.eps^0.5) {
             abs(x - round(x)) < tol
@@ -1286,8 +1287,7 @@ make_eml <- function(
             numHeaderLines = "1",
             recordDelimiter = get_eol(
               path = data.path,
-              file.name = k,
-              os = detect_os()),
+              file.name = k),
             attributeOrientation = "column",
             url = "placeholder"))
         
@@ -1410,13 +1410,19 @@ make_eml <- function(
   }
   
   # Create <additionalMetadata> -----------------------------------------------
-  
   if (!is.null(x$template$custom_units.txt)) {
     message("  <additionalMetadata>")
     eml$additionalMetadata[[
       length(eml$dataset$additionalMetadata)+1]]$metadata$unitList <- EML::set_unitList(
         x$template$custom_units.txt$content)
   }
+
+  message("  <additionalMetadata>")
+  eml$additionalMetadata[[
+    length(eml$additionalMetadata)+1]] <- EML::eml$additionalMetadata(
+      metadata = list(emlEditor = list(
+        "app" = "EMLassemblyline",
+        "release" = read.dcf(system.file("DESCRIPTION", package = "EMLassemblyline"))[[3]])))
   
   # Create <annotations> ------------------------------------------------------
 
