@@ -5,7 +5,7 @@ output: html_document
 
 ## The data package
 
-A data package forms a collection of data objects and metadata enabling understanding, use, and citation of a dataset. Metadata play an important role in understanding each object and how they relate to each other. EAL works for all digital object formats and has been used by the [Environmental Data Initiative](https://environmentaldatainitiative.org/) (EDI) to create and manage over 500 data packages for a nearly equal number of researchers. Revising data packages with EAL is easy but requires some forethought about file organization.
+A data package forms a collection of data objects and metadata enabling understanding, use, and citation of a dataset. Metadata play an important role in understanding each object and how they relate to each other. EAL works for all digital object formats and has been used by the [Environmental Data Initiative](https://edirepository.org/) (EDI) to create and manage over 500 data packages for a nearly equal number of researchers. Revising data packages with EAL is easy but requires some forethought about file organization.
 
 ## An organization scheme
 
