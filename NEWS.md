@@ -1,6 +1,10 @@
-EMLassemblyline 3.5.4.9000 (YYYY-MM-DD)
+EMLassemblyline 3.5.5.9000 (YYYY-MM-DD)
 =======================================
 
+### BUG FIXES
+
+  * Now has improved file name matching so similarly named files don't raise 
+  issues.
 
 EMLassemblyline 3.5.4 (2022-05-12)
 ==================================
