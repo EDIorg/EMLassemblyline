@@ -33,6 +33,7 @@ LazyData: true
 RoxygenNote: 7.1.1
 Remotes:
     EDIorg/taxonomyCleanr
-URL: https://github.com/EDIorg/EMLassemblyline
+URL: https://github.com/EDIorg/EMLassemblyline,
+    https://ediorg.github.io/EMLassemblyline/
 BugReports: https://github.com/EDIorg/EMLassemblyline/issues
 VignetteBuilder: knitr
