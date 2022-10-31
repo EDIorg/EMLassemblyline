@@ -227,7 +227,7 @@ template_geographic_coverage <- function(
       }
       
       geocoverage_out <- data.frame(
-        geographicDescription = enc2utf8(site_out), # Encode extracted metadata in UTF-8
+        geographicDescription = enc2utf8(as.character(site_out)), # Encode extracted metadata in UTF-8
         northBoundingCoordinate = latitude_out,
         southBoundingCoordinate = latitude_out,
         eastBoundingCoordinate = longitude_out,
