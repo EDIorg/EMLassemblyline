@@ -1,10 +1,12 @@
-EMLassemblyline 3.5.5.9000 (YYYY-MM-DD)
-=======================================
+EMLassemblyline 3.5.5 (2022-10-31)
+==================================
 
 ### BUG FIXES
 
-  * Now has improved file name matching so similarly named files don't raise 
-  issues.
+  * `template_geographic_coverage()` now accepts numeric values to the 
+  `site.col` parameter (#121).
+  * EMLassemblyline now does a better job of distinguishing metadata template
+  files from other files in the same directory.
 
 EMLassemblyline 3.5.4 (2022-05-12)
 ==================================

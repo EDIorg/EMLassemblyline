@@ -4,16 +4,17 @@
   "identifier": "EMLassemblyline",
   "description": " For scientists and data managers to create high quality EML metadata for dataset publication. EMLassemblyline is optimized for automating recurring publications (timeseries or data derived from timeseries sources) but works well for \"one-off\" publications, especially through the MetaShARK interface. EMLassemblyline prioritizes automated metadata extraction from data objects to minimize required human effort and encourages EML best practices to make publications Findable, Accessible, Interoperable, and Reusable.",
   "name": "EMLassemblyline: A tool kit for building EML metadata workflows",
+  "relatedLink": "https://ediorg.github.io/EMLassemblyline/",
   "codeRepository": "https://github.com/EDIorg/EMLassemblyline",
   "issueTracker": "https://github.com/EDIorg/EMLassemblyline/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "3.5.4",
+  "version": "3.5.5",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.1.0 (2021-05-18)",
+  "runtimePlatform": "R version 4.2.1 (2022-06-23)",
   "author": [
     {
       "@type": "Person",
@@ -250,5 +251,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "3539.693KB"
+  "fileSize": "1604.377KB"
 }
