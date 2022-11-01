@@ -17,3 +17,4 @@ validate_taxonomic_coverage_authority_system(x)
 \description{
 Check authority_system values in the taxonomic coverage template
 }
+\keyword{internal}

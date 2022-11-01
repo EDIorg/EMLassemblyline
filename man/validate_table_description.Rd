@@ -16,3 +16,4 @@ validate_table_description(fun.args)
 \description{
 Validate data table description
 }
+\keyword{internal}

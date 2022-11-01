@@ -17,3 +17,4 @@ validate_provenance_email(x)
 \description{
 Check for email in external resources in the provenance template
 }
+\keyword{internal}

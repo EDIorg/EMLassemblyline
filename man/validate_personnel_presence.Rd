@@ -23,3 +23,4 @@ Checks performed by this function:
         \item{Personnel template is not empty}
     }
 }
+\keyword{internal}

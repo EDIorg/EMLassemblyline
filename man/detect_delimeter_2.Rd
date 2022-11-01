@@ -17,3 +17,4 @@ If ambiguity exists, a manual overide option is presented.
 \description{
 Secondary check on delimeter detection with manual override
 }
+\keyword{internal}

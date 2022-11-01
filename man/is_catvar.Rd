@@ -15,3 +15,4 @@ is_catvar(nodeset)
 \description{
 Is attribute a categorical variable?
 }
+\keyword{internal}

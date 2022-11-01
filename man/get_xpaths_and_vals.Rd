@@ -15,3 +15,4 @@ get_xpaths_and_vals(nodeset)
 \description{
 Get all xpaths and values in a nodeset
 }
+\keyword{internal}

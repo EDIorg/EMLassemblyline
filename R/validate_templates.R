@@ -23,6 +23,8 @@
 #'     All issues are compiled into a single report and returned to the user 
 #'     with a warning. This approach of not "failing fast" allows the user to 
 #'     address several issues at once.
+#'     
+#' @keywords internal
 #'
 validate_templates <- function(fun.name, x) {
   message("Checking inputs")
@@ -177,6 +179,8 @@ validate_templates <- function(fun.name, x) {
 #'         \item{Abstract is not empty}
 #'     }
 #'
+#' @keywords internal
+#'
 validate_abstract <- function(x) {
   msg <- NULL
   attr_tmp <- read_template_attributes()
@@ -236,7 +240,9 @@ validate_abstract <- function(x) {
 #'     
 #'     Checks on annotation presence are only a reminder that it is possible 
 #'     to annotate these elements.
-#'
+#' 
+#' @keywords internal
+#' 
 validate_annotation <- function(x) {
   
   # Each issue is logged as "required" or "optional"
@@ -309,7 +315,9 @@ validate_annotation <- function(x) {
 #' @return
 #'     \item{error}{If column names are invalid}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_annotation_column_names <- function(x) {
   template <- data.table::fread(
     system.file(
@@ -342,7 +350,9 @@ validate_annotation_column_names <- function(x) {
 #' @return
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_annotation_completeness <- function(x) {
   anno <- x$template$annotations.txt$content
   anno[anno == ""] <- NA_character_
@@ -376,7 +386,9 @@ validate_annotation_completeness <- function(x) {
 #' @return
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_annotation_uri <- function(x) {
   # Predicate URI
   unresolvable_predicate <- unlist(
@@ -437,7 +449,9 @@ validate_annotation_uri <- function(x) {
 #'         \item{Categorical variable template olumn names are correct}
 #'         \item{Categorical codes are defined}
 #'     }
-#'
+#' 
+#' @keywords internal
+#' 
 validate_categorical_variables <- function(x) {
   attr_tmp <- read_template_attributes()
   
@@ -547,7 +561,9 @@ validate_categorical_variables <- function(x) {
 #' @return
 #'     (character or NULL) A character vector of issues if any were found, 
 #'     otherwise NULL.
-#'
+#' 
+#' @keywords internal
+#' 
 validate_categorical_variable_template_presence <- function(file.name, x) {
   categorical_variables <- x$template[[file.name]]$content$class %in% 
     "categorical"
@@ -582,7 +598,9 @@ validate_categorical_variable_template_presence <- function(file.name, x) {
 #'
 #' @return
 #'     (error or NULL) An error of issues if any were found, otherwise NULL.
-#'
+#' 
+#' @keywords internal
+#' 
 validate_categorical_variable_column_names <- function(file.name, x) {
   expected_colnames <- colnames(
     data.table::fread(
@@ -616,7 +634,9 @@ validate_categorical_variable_column_names <- function(file.name, x) {
 #' @return
 #'     (character or NULL) A character vector of issues if any were found, 
 #'     otherwise NULL.
-#'
+#' 
+#' @keywords internal
+#' 
 validate_categorical_variable_definitions <- function(file.name, x) {
   attr_tmp <- read_template_attributes()
   missing_definitions <- x$template[[file.name]]$content$definition == ""
@@ -647,7 +667,9 @@ validate_categorical_variable_definitions <- function(file.name, x) {
 #' @return
 #'     (character or NULL) A character vector of issues if any were found, 
 #'     otherwise NULL.
-#'
+#' 
+#' @keywords internal
+#' 
 validate_categorical_variable_listing <- function(attr.file.name, 
                                                   catvars.file.name, 
                                                   x) {
@@ -701,7 +723,9 @@ validate_categorical_variable_listing <- function(attr.file.name,
 #'         \item{Decimal degree is expected}
 #'         \item{The cordinate range is valid}
 #'     }
-#'
+#' 
+#' @keywords internal
+#' 
 validate_geographic_coverage <- function(x) {
   
   # Objects for catching required and optional issues
@@ -794,7 +818,9 @@ validate_geographic_coverage <- function(x) {
 #' @return
 #'     (character or NULL) A character vector of issues if any were found, 
 #'     otherwise NULL.
-#'
+#' 
+#' @keywords internal
+#' 
 validate_geographic_coverage_presence <- function(x) {
   missing_geographic_coverage <- !any(
     names(x$template) == "geographic_coverage.txt")
@@ -821,7 +847,9 @@ validate_geographic_coverage_presence <- function(x) {
 #' @return
 #'     (Error or NULL) An error if any issues were found, 
 #'     otherwise NULL.
-#'
+#' 
+#' @keywords internal
+#' 
 validate_geographic_coverage_column_names <- function(x) {
   template <- data.table::fread(
     system.file(
@@ -855,6 +883,8 @@ validate_geographic_coverage_column_names <- function(x) {
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
 #'
+#' @keywords internal
+#' 
 validate_geographic_coverage_completeness <- function(x) {
   x$template$geographic_coverage.txt$content[
     x$template$geographic_coverage.txt$content == ""] <- NA
@@ -885,7 +915,9 @@ validate_geographic_coverage_completeness <- function(x) {
 #' @return
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_geographic_coverage_coordinate_format <- function(x) {
   coordinates <- x$template$geographic_coverage.txt$content[, -1]
   complete_definitions <- complete.cases(
@@ -917,7 +949,9 @@ validate_geographic_coverage_coordinate_format <- function(x) {
 #' @return
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_geographic_coverage_coordinate_range <- function(x) {
   coordinates <- suppressWarnings(
     as.data.frame(
@@ -971,7 +1005,9 @@ validate_geographic_coverage_coordinate_range <- function(x) {
 #'     \itemize{
 #'         \item{Intellectual rights is not empty}
 #'     }
-#'
+#' 
+#' @keywords internal
+#' 
 validate_intellectual_rights <- function(x) {
   msg <- NULL
   attr_tmp <- read_template_attributes()
@@ -1023,7 +1059,9 @@ validate_intellectual_rights <- function(x) {
 #'     \itemize{
 #'         \item{Keywords is not empty}
 #'     }
-#'
+#' 
+#' @keywords internal
+#' 
 validate_keywords <- function(x) {
   msg <- NULL
   attr_tmp <- read_template_attributes()
@@ -1069,7 +1107,9 @@ validate_keywords <- function(x) {
 #'     \itemize{
 #'         \item{Methods is not empty}
 #'     }
-#'
+#' 
+#' @keywords internal
+#' 
 validate_methods <- function(x) {
   msg <- NULL
   attr_tmp <- read_template_attributes()
@@ -1130,7 +1170,9 @@ validate_methods <- function(x) {
 #'     
 #'     Checks are grouped by required and optional criteria. If any required
 #'     checks fail, then the entire template is removed from \code{x}.
-#'
+#' 
+#' @keywords internal
+#' 
 validate_personnel <- function(x) {
   
   # Objects for catching required and optional issues
@@ -1227,7 +1269,9 @@ validate_personnel <- function(x) {
 #'     \itemize{
 #'         \item{Personnel template is not empty}
 #'     }
-#'
+#' 
+#' @keywords internal
+#' 
 validate_personnel_presence <- function(x) {
   attr_tmp <- read_template_attributes()
   missing_personnel <- !any(
@@ -1259,7 +1303,9 @@ validate_personnel_presence <- function(x) {
 #' @return
 #'     \item{error}{If column names are invalid}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_personnel_column_names <- function(x) {
   template <- data.table::fread(
     system.file(
@@ -1291,7 +1337,9 @@ validate_personnel_column_names <- function(x) {
 #' @return
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_personnel_creator <- function(x) {
   creators <- tolower(
     x$template$personnel.txt$content$role) == "creator"
@@ -1315,7 +1363,9 @@ validate_personnel_creator <- function(x) {
 #' @return
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_personnel_contact <- function(x) {
   contacts <- tolower(
     x$template$personnel.txt$content$role) == "contact"
@@ -1339,7 +1389,9 @@ validate_personnel_contact <- function(x) {
 #' @return
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_personnel_roles <- function(x) {
   missing_roles <- x$template$personnel.txt$content$role == ""
   if (any(missing_roles)) {
@@ -1363,7 +1415,9 @@ validate_personnel_roles <- function(x) {
 #' @return
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_personnel_pi <- function(x) {
   principal_investigators <- tolower(
     x$template$personnel.txt$content$role) == "pi"
@@ -1394,7 +1448,9 @@ validate_personnel_pi <- function(x) {
 #'     
 #' @details 
 #'     Project info should be included with each PI.
-#'
+#' 
+#' @keywords internal
+#' 
 validate_personnel_project <- function(x) {
   project_info <- x$template$personnel.txt$content[
     tolower(x$template$personnel.txt$content$role) == "pi",
@@ -1438,7 +1494,9 @@ validate_personnel_project <- function(x) {
 #'     
 #' @details 
 #'     Only one publisher is allowed.
-#'
+#' 
+#' @keywords internal
+#' 
 validate_personnel_publisher <- function(x) {
   msg <- NULL
   publisher <- which(
@@ -1490,7 +1548,9 @@ validate_personnel_publisher <- function(x) {
 #'     
 #'     Checks are grouped by required and optional criteria. If any required
 #'     checks fail, then the entire template is removed from \code{x}.
-#'
+#' 
+#' @keywords internal
+#' 
 validate_provenance <- function(x) {
   
   # Objects for catching required and optional issues
@@ -1594,7 +1654,9 @@ validate_provenance <- function(x) {
 #' @return
 #'     \item{error}{If column names are invalid}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_provenance_column_names <- function(x) {
   template <- data.table::fread(
     system.file(
@@ -1626,7 +1688,9 @@ validate_provenance_column_names <- function(x) {
 #' @return
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_provenance_system_id <- function(x) {
   unsupported_system_ids <- 
     tolower(x$template$provenance.txt$content$systemID) != "edi" &
@@ -1652,7 +1716,9 @@ validate_provenance_system_id <- function(x) {
 #' @return
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_provenance_data_package_id <- function(x) {
   valid_system_ids <- tolower(
     x$template$provenance.txt$content$systemID) == "edi"
@@ -1695,7 +1761,9 @@ validate_provenance_data_package_id <- function(x) {
 #' @return
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_provenance_url_presence <- function(x) {
   external_resources <- x$template$provenance.txt$content[
     !(x$template$provenance.txt$content$dataPackageID != "" &
@@ -1736,7 +1804,9 @@ validate_provenance_url_presence <- function(x) {
 #' @return
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_provenance_url_resolvability <- function(x) {
   external_resources <- x$template$provenance.txt$content[
     !(x$template$provenance.txt$content$dataPackageID != "" &
@@ -1773,7 +1843,9 @@ validate_provenance_url_resolvability <- function(x) {
 #' @return
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_provenance_online_description <- function(x) {
   external_resources <- x$template$provenance.txt$content[
     !(x$template$provenance.txt$content$dataPackageID != "" &
@@ -1805,7 +1877,9 @@ validate_provenance_online_description <- function(x) {
 #' @return
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_provenance_title <- function(x) {
   external_resources <- x$template$provenance.txt$content[
     !(x$template$provenance.txt$content$dataPackageID != "" &
@@ -1838,6 +1912,8 @@ validate_provenance_title <- function(x) {
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
 #'
+#' @keywords internal
+#' 
 validate_provenance_individual_organization_name <- function(x) {
   external_resources <- x$template$provenance.txt$content[
     !(x$template$provenance.txt$content$dataPackageID != "" &
@@ -1883,7 +1959,9 @@ validate_provenance_individual_organization_name <- function(x) {
 #' @return
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_provenance_contact_creator <- function(x) {
   external_resources <- x$template$provenance.txt$content[
     !(x$template$provenance.txt$content$dataPackageID != "" &
@@ -1925,7 +2003,9 @@ validate_provenance_contact_creator <- function(x) {
 #' @return
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_provenance_email <- function(x) {
   external_resources <- x$template$provenance.txt$content[
     !(x$template$provenance.txt$content$dataPackageID != "" &
@@ -1986,7 +2066,9 @@ validate_provenance_email <- function(x) {
 #'         \item{All missing value codes are defined}
 #'         \item{False "numeric" attributes are reclassified as "character"}
 #'     }
-#'
+#' 
+#' @keywords internal
+#' 
 validate_table_attributes <- function(x) {
   attr_tmp <- read_template_attributes()
   
@@ -2139,7 +2221,9 @@ validate_table_attributes <- function(x) {
 #' @return
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_table_attribute_template_presence <- function(file.name, x) {
   if (!(file.name %in% names(x$template))) {
     paste0(
@@ -2168,7 +2252,9 @@ validate_table_attribute_template_presence <- function(file.name, x) {
 #' @return
 #'     \item{error}{If column names are invalid}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_table_attribute_template_column_names <- function(file.name, x) {
   expected_colnames <- colnames(
     data.table::fread(
@@ -2205,7 +2291,9 @@ validate_table_attribute_template_column_names <- function(file.name, x) {
 #' @return
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_table_attribute_name_presence <- function(template.name, data.name, x) {
   expected_colnames <- colnames(x$data.table[[data.name]]$content)
   found_colnames <- x$template[[template.name]]$content$attributeName
@@ -2245,7 +2333,9 @@ validate_table_attribute_name_presence <- function(template.name, data.name, x) 
 #' @details 
 #'     This function will not run unless all attributes listed in 
 #'     \code{template.name} are also listed in \code{data.name}.
-#'
+#' 
+#' @keywords internal
+#' 
 validate_table_attribute_name_order <- function(template.name, data.name, x) {
   all_columns_present <- is.null(
     validate_table_attribute_name_presence(
@@ -2281,7 +2371,9 @@ validate_table_attribute_name_order <- function(template.name, data.name, x) {
 #' @return
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_table_attribute_definitions <- function(file.name, x) {
   missing_definitions <- 
     x$template[[file.name]]$content$attributeDefinition == ""
@@ -2314,7 +2406,8 @@ validate_table_attribute_definitions <- function(file.name, x) {
 #' @return
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' @keywords internal
+#' 
 validate_table_attribute_class_presence <- function(file.name, x) {
   missing_classes <- x$template[[file.name]]$content$class == ""
   if (any(missing_classes)) {
@@ -2345,7 +2438,9 @@ validate_table_attribute_class_presence <- function(file.name, x) {
 #' @return
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_table_attribute_class_type <- function(file.name, x) {
   classes <- x$template[[file.name]]$content$class
   invalid_classes <- 
@@ -2381,7 +2476,9 @@ validate_table_attribute_class_type <- function(file.name, x) {
 #' @return
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_table_attribute_unit_presence <- function(file.name, x) {
   missing_units <- 
     (tolower(x$template[[file.name]]$content$class) == "numeric") & 
@@ -2415,7 +2512,9 @@ validate_table_attribute_unit_presence <- function(file.name, x) {
 #' @return
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_table_attribute_unit_definition <- function(file.name, x) {
   defined_units <- c(
     EML::get_unitList()$units$id,
@@ -2455,7 +2554,9 @@ validate_table_attribute_unit_definition <- function(file.name, x) {
 #' @return
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_table_attribute_date_format_presence <- function(file.name, x) {
   missing_format_specifier <- 
     (tolower(x$template[[file.name]]$content$class) == "date") & 
@@ -2503,7 +2604,9 @@ validate_table_attribute_date_format_presence <- function(file.name, x) {
 #' @return
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_table_attribute_missing_value_code_quantity <- function(
   file.name, x) {
   multiple_missing_value_codes <- stringr::str_detect(
@@ -2539,7 +2642,9 @@ validate_table_attribute_missing_value_code_quantity <- function(
 #' @return
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_table_attribute_missing_value_code_ws <- function(file.name, x) {
   white_space_missing_value_codes <- stringr::str_detect(
     x$template[[file.name]]$content$missingValueCode,
@@ -2574,7 +2679,9 @@ validate_table_attribute_missing_value_code_ws <- function(file.name, x) {
 #' @return
 #'     \item{character}{Description of validation issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_table_attribute_missing_value_code_definition <- function(
   file.name, x) {
   incomplete_code_definition <- 
@@ -2617,7 +2724,9 @@ validate_table_attribute_missing_value_code_definition <- function(
 #'     found, otherwise NULL.}
 #'     \item{x}{(list) A potentially modified \code{x} if relevant issues were
 #'     found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_table_attribute_false_numeric <- function(
   template.name, data.name, x) {
   
@@ -2682,7 +2791,9 @@ validate_table_attribute_false_numeric <- function(
 #'         \item{Use raw names when a resolved name is missing. This ensures
 #'         the taxon is not ommitted from the taxonomic coverage metadata.}
 #'     }
-#'
+#' 
+#' @keywords internal
+#' 
 validate_taxonomic_coverage <- function(x) {
   
   # Objects for catching required and optional issues
@@ -2763,7 +2874,9 @@ validate_taxonomic_coverage <- function(x) {
 #'     \item{NULL}{If no issues were found}
 #'     
 #' @details Adds optional columns when missing so call to taxonomyCleanr::make_taxonomicCoverage() works.
-#'
+#' 
+#' @keywords internal
+#' 
 validate_taxonomic_coverage_column_names <- function(x) {
   template <- data.table::fread(
     system.file(
@@ -2801,7 +2914,9 @@ validate_taxonomic_coverage_column_names <- function(x) {
 #' @return
 #'     \item{error}{If column names are invalid}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_taxonomic_coverage_authority_system <- function(x) {
   # TODO: Implement better method of harvesting supported authorities from 
   # taxonomyCleanr
@@ -2842,7 +2957,9 @@ validate_taxonomic_coverage_authority_system <- function(x) {
 #' @return
 #'     \item{error}{If column names are invalid}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_taxonomic_coverage_completeness <- function(x) {
   authorities <- x$template$taxonomic_coverage.txt$content$authority_system
   ids <- x$template$taxonomic_coverage.txt$content$authority_id
@@ -2896,7 +3013,9 @@ check_duplicate_templates <- function(path) {
 #' @param uri URI to check
 #'
 #' @return (logical) TRUE if can be resolved, FALSE otherwise
-#'
+#' 
+#' @keywords internal
+#' 
 check_uri <- function(uri) {
   r <- try(
     httr::GET(uri), 
@@ -2934,7 +3053,9 @@ check_uri <- function(uri) {
 #'     entries. This info can be supplied in the \code{geographic.coverage} and 
 #'     \code{geographic.description} arguments of \code{make_eml()} as well as 
 #'     in the geographic_coverage and bounding_boxes templates.
-#'     
+#' 
+#' @keywords internal
+#' 
 compile_geographic_coverage <- function(x) {
   
   geographic.coordinates <- NULL
@@ -3017,7 +3138,9 @@ compile_geographic_coverage <- function(x) {
 #'     Combine multiple sources of provenance and remove duplicate 
 #'     entries. This info can be supplied in the \code{provenance} 
 #'     argument of \code{make_eml()} as well as in the provenance template.
-#'     
+#' 
+#' @keywords internal
+#' 
 compile_provenance <- function(x) {
   
   provenance <- NULL
@@ -3199,7 +3322,9 @@ remove_empty_templates <- function(x) {
 #' @return
 #'     (character or NULL) A description of validation issues if any are 
 #'     found, otherwise NULL.
-#'     
+#' 
+#' @keywords internal
+#' 
 validate_table_encoding <- function(f) {
   encoding_guess <- readr::guess_encoding(f, n_max = -1)
   if (!any(c("UTF-8", "ASCII") %in% encoding_guess)) {

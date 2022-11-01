@@ -33,3 +33,4 @@ Checks performed by this function:
         the taxon is not ommitted from the taxonomic coverage metadata.}
     }
 }
+\keyword{internal}

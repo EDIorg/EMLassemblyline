@@ -15,3 +15,4 @@ get_anno_element(nodeset)
 \description{
 Get element for annotations template
 }
+\keyword{internal}

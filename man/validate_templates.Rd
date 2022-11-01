@@ -33,3 +33,4 @@ Each template has a unique set of metadata providing valuable
     with a warning. This approach of not "failing fast" allows the user to 
     address several issues at once.
 }
+\keyword{internal}

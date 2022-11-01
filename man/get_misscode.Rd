@@ -18,3 +18,4 @@ Get missing value code
 \details{
 Get from \code{./missingValueCode/code}. Use first and warn if > 2.
 }
+\keyword{internal}

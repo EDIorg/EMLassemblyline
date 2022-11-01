@@ -20,3 +20,4 @@ Check column names of taxonomic coverage template
 \details{
 Adds optional columns when missing so call to taxonomyCleanr::make_taxonomicCoverage() works.
 }
+\keyword{internal}

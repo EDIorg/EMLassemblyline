@@ -20,3 +20,4 @@ Create keywords template from EML
 \details{
 Gets keywordSet nodes and parses to template.
 }
+\keyword{internal}

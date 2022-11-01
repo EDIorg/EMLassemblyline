@@ -16,3 +16,4 @@ validate_temporal_coverage(fun.args)
 \description{
 Validate temporal coverage
 }
+\keyword{internal}

@@ -22,3 +22,4 @@ Create intellectual_rights template from EML
 \details{
 Gets intellectualRights node and parses to template via pandoc.
 }
+\keyword{internal}

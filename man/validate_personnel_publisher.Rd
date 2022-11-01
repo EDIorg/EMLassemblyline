@@ -22,3 +22,4 @@ Check for one publisher in the personnel template
 \details{
 Only one publisher is allowed.
 }
+\keyword{internal}

@@ -20,3 +20,4 @@ Create geographic coverage template from EML
 \details{
 Gets geographicCoverage nodes and parses to template.
 }
+\keyword{internal}

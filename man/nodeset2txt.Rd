@@ -22,3 +22,4 @@ Convert nodeset to EAL text type template
 \details{
 Converts EML text type \code{nodeset} (i.e. abstract, methods, additionalInfo, intellectualRights) to EAL \code{file.type} via pandoc
 }
+\keyword{internal}

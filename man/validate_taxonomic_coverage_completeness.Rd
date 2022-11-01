@@ -17,3 +17,4 @@ validate_taxonomic_coverage_completeness(x)
 \description{
 Check completeness of the taxonomic coverage template
 }
+\keyword{internal}

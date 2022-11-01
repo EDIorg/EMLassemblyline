@@ -16,3 +16,4 @@ validate_other_entity_description(fun.args)
 \description{
 Validate other entity description
 }
+\keyword{internal}

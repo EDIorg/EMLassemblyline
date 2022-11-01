@@ -22,3 +22,4 @@ Create additional_info template from EML
 \details{
 Gets additionalInfo node and parses to template via pandoc.
 }
+\keyword{internal}

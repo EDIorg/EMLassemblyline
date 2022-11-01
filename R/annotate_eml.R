@@ -407,6 +407,8 @@ annotate_eml <- function(
 #' elements only supported through ID references are added to 
 #' /eml/dataset/annotations (e.g. ResponsibleParty).
 #' 
+#' @keywords internal
+#' 
 annotate_element <- function(element, eml, anno, rp) {
   
   if (element == "dataset") {
@@ -520,6 +522,8 @@ annotate_element <- function(element, eml, anno, rp) {
 #'     \item{responsible.party}{(emld list) Annotated responsible party node}
 #'     \item{rp}{(data.frame) the rp object}
 #' 
+#' @keywords internal
+#' 
 append_rp <- function(responsible.party, annotations.template) {
   
   subject <- paste(
@@ -587,6 +591,8 @@ append_rp <- function(responsible.party, annotations.template) {
 #' @return
 #'     \item{responsible.party}{(emld list) Annotated responsible party node}
 #'     \item{rp}{(data.frame) the rp object}
+#' 
+#' @keywords internal
 #' 
 assign_responsible_party_id <- function(responsible.party, anno, rp) {
   

@@ -27,3 +27,4 @@ Check all column names are listed in the same order as in the data
 This function will not run unless all attributes listed in 
     \code{template.name} are also listed in \code{data.name}.
 }
+\keyword{internal}

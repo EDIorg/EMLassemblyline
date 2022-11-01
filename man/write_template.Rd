@@ -24,3 +24,4 @@ Write template to file
 \details{
 Only works for tabular templates.
 }
+\keyword{internal}

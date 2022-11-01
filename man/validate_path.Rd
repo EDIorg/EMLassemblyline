@@ -16,3 +16,4 @@ A warning message if the path leads to a non-existant directory.
 Use \code{dir.exists} to determine whether the input path is valid and 
     returns an error message if not.
 }
+\keyword{internal}

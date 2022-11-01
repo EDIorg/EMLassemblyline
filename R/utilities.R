@@ -25,9 +25,8 @@
 #'     \item{";"}{semi-colon}
 #'     \item{"|"}{pipe}
 #'
-#' @export
+#' @keywords internal
 #'
-
 detect_delimeter <- function(path, data.files, os){
   
   # Validate data tables
@@ -131,6 +130,8 @@ detect_delimeter <- function(path, data.files, os){
 #'
 #' @return
 #'   (character) Delimiter
+#'   
+#' @keywords internal
 #' 
 delimiter_infer <- function(x){
   
@@ -177,8 +178,9 @@ delimiter_infer <- function(x){
 #' 
 #' @return
 #'     If ambiguity exists, a manual overide option is presented.
-#'     
-
+#' 
+#' @keywords internal
+#' 
 detect_delimeter_2 <- function(data.file, delim.guess){
   
   # Get file extension
@@ -244,10 +246,9 @@ detect_delimeter_2 <- function(data.file, delim.guess){
 #' @return 
 #'     \item{win}{Windows OS}
 #'     \item{mac}{Mac OS}
+#' 
+#' @keywords internal
 #'
-#' @export
-#'
-
 detect_os <- function(){
   sysinfo <- Sys.info()['sysname']
   if (sysinfo == 'Darwin'){
@@ -273,7 +274,9 @@ detect_os <- function(){
 #' @return (.xml) The EML file with fixed methods section (see details). 
 #'
 #' @details This function is the second step in creating an EML methods section from an .md file. Some parsing constraints in \code{EML::write_eml()} require this fix.
-#'
+#' 
+#' @keywords internal
+#' 
 fix_methods <- function(eml) {
   eml2 <- xml2::read_xml(eml)
   nodes_2_modify <- xml2::xml_find_all(eml2, ".//*[starts-with(name(), 'markdown')]") # Nodes to modify are prefixed with 'markdown'
@@ -304,6 +307,8 @@ fix_methods <- function(eml) {
 #'     A character string representation of the EOL character.
 #'
 #' @noRd
+#' 
+#' @keywords internal
 #'
 get_eol <- function(path, file.name){
   file_name <- validate_file_names(path, file.name)
@@ -334,11 +339,9 @@ get_eol <- function(path, file.name){
 #'
 #' @return
 #'     ("xml_document" "xml_node") EML metadata.
-#'     
+#' 
+#' @keywords internal
 #'
-#' @export
-#'
-
 api_get_provenance_metadata <- function(package.id, environment = 'production'){
   
   message(paste('Retrieving provenance metadata for ', package.id))
@@ -414,6 +417,8 @@ parse_delim <- function(x){
 #' @details Text and LaTeX equations in \code{methods_file} are parsed into /eml/dataset/methodStep/description/markdown nodes. A second step applied by \code{fix_methods()} on the resultant EML file corrects the node names. Without this second step, the EML file will fail on schema validation.
 #' 
 #' @note LaTex equations must be wrapped in $$ (e.g. $$<my_equation>$$), otherwise they won't be parsed correctly from the text.
+#' 
+#' @keywords internal
 #'
 set_methods_md <- function(methods_file) {
   md <- readr::read_file(methods_file)
@@ -457,10 +462,9 @@ set_methods_md <- function(methods_file) {
 #' @param environment
 #'     (character) Data repository environment to perform the evaluation in.
 #'     Can be: 'development', 'staging', 'production'.
+#' 
+#' @keywords internal
 #'
-#' @export
-#'
-
 url_env <- function(environment){
   
   environment <- tolower(environment)
@@ -502,9 +506,8 @@ url_env <- function(environment){
 #'     
 #'     The full names of files listed in the data.files argument.
 #'
-#' @export
+#' @keywords internal
 #'
-
 validate_file_names <- function(path, data.files){
   
   # Validate file presence ----------------------------------------------------
@@ -585,9 +588,8 @@ validate_file_names <- function(path, data.files){
 #' @return 
 #'     A warning message if the path leads to a non-existant directory.
 #'
-#' @export
+#' @keywords internal
 #'
-
 validate_path <- function(path){
   
   # Validate path -------------------------------------------------------------
@@ -620,8 +622,8 @@ validate_path <- function(path){
 #' @return 
 #'     (numeric) The identification number for a LTER Controlled Vocabulary 
 #'     term.
-#'
-#' @noRd
+#' 
+#' @keywords internal
 #'
 vocab_lter_id <- function(x){
   
@@ -693,11 +695,9 @@ vocab_lter_id <- function(x){
 #' @return 
 #'     (character) The scope description for a LTER Controlled Vocabulary 
 #'     term. Note, not all terms have descriptions.
+#' 
+#' @keywords internal
 #'
-#' @export
-#'
-
-
 vocab_lter_scope <- function(id){
   
   # Check arguments -----------------------------------------------------------
@@ -775,8 +775,8 @@ vocab_lter_scope <- function(id){
 #'     are displayed. 
 #'     
 #'     If interactive mode = TRUE, then a user selected term is returned.
-#'
-#' @noRd
+#' 
+#' @keywords internal
 #'
 vocab_lter_term <- function(x, messages = FALSE, interactive = FALSE){
   
@@ -945,8 +945,8 @@ vocab_lter_term <- function(x, messages = FALSE, interactive = FALSE){
 #' @return 
 #'     (character) Controlled vocabulary names corresponding to successfully
 #'     resolved terms.
-#'
-#' @noRd
+#' 
+#' @keywords internal
 #'
 vocab_resolve_terms <- function(x, cv, messages = FALSE, interactive = FALSE){
   
@@ -1021,6 +1021,8 @@ vocab_resolve_terms <- function(x, cv, messages = FALSE, interactive = FALSE){
 #' @return (file, logical) Template and TRUE if written
 #' 
 #' @details Only works for tabular templates.
+#' 
+#' @keywords internal
 #' 
 write_template <- function(tmplt, name, path, force = FALSE) {
   f <- paste0(path, "/", enc2utf8(name))

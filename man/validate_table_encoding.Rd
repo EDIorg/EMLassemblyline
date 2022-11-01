@@ -16,3 +16,4 @@ validate_table_encoding(f)
 \description{
 Validate character encoding of tabular files
 }
+\keyword{internal}

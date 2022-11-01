@@ -17,3 +17,4 @@ validate_geographic_coverage_coordinate_range(x)
 \description{
 Check geographic coordinate ranges
 }
+\keyword{internal}

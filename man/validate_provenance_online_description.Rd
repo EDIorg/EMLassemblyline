@@ -17,3 +17,4 @@ validate_provenance_online_description(x)
 \description{
 Check for description of external resources in the provenance template
 }
+\keyword{internal}

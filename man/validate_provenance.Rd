@@ -39,3 +39,4 @@ This function compiles provenance input as \code{provenance} to
     Checks are grouped by required and optional criteria. If any required
     checks fail, then the entire template is removed from \code{x}.
 }
+\keyword{internal}

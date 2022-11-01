@@ -17,3 +17,4 @@ validate_provenance_title(x)
 \description{
 Check for title of external resources in the provenance template
 }
+\keyword{internal}

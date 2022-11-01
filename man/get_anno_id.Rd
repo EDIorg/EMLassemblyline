@@ -15,3 +15,4 @@ get_anno_id(nodeset)
 \description{
 Get id for annotations template
 }
+\keyword{internal}

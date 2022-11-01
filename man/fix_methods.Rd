@@ -18,3 +18,4 @@ Fix methods section of EML file
 \details{
 This function is the second step in creating an EML methods section from an .md file. Some parsing constraints in \code{EML::write_eml()} require this fix.
 }
+\keyword{internal}

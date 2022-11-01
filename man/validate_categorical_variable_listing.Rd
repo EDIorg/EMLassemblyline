@@ -23,3 +23,4 @@ to. Full file name is required.}
 \description{
 Check variables classified as categorical are listed in the categorical variables template
 }
+\keyword{internal}

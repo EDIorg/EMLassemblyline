@@ -20,3 +20,4 @@ Create taxonomic coverage template from EML
 \details{
 Gets taxonomicClassification nodes and parses to template.
 }
+\keyword{internal}

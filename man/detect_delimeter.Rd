@@ -28,3 +28,4 @@ detect_delimeter(
 \description{
 Detect and return field delimiters of input files (tables).
 }
+\keyword{internal}

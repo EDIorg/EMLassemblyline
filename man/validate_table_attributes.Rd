@@ -40,3 +40,4 @@ Checks performed on each data tables attribute metadata:
         \item{False "numeric" attributes are reclassified as "character"}
     }
 }
+\keyword{internal}

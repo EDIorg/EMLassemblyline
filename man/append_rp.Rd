@@ -19,3 +19,4 @@ append_rp(responsible.party, annotations.template)
 \description{
 This is a helper function for \code{annotate_eml()}
 }
+\keyword{internal}

@@ -23,3 +23,4 @@ is required.}
 \description{
 Check all column names of a data table are listed
 }
+\keyword{internal}

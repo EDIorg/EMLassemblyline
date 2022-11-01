@@ -17,3 +17,4 @@ validate_provenance_individual_organization_name(x)
 \description{
 Check individual and organization name of external resources in the provenance template
 }
+\keyword{internal}

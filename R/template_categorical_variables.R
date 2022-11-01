@@ -219,7 +219,9 @@ template_categorical_variables <- function(
 #'
 #' @return
 #'     (character) Data table file name
-#'     
+#' 
+#' @keywords internal
+#' 
 attribute_template_to_table <- function(attributes.template, data.path) {
   table_regex <- paste0(
     "^(?<!^attributes_|^catvars_)",
@@ -245,7 +247,9 @@ attribute_template_to_table <- function(attributes.template, data.path) {
 #'
 #' @return
 #'     (character) Table attributes file name
-#'     
+#' 
+#' @keywords internal
+#' 
 table_to_attribute_template <- function(data.table) {
   attribute_template <- paste0(
     "attributes_",

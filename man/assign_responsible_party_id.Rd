@@ -22,3 +22,4 @@ in \code{annotate_eml()}}
 \description{
 This is a helper function for \code{annotate_eml()}
 }
+\keyword{internal}

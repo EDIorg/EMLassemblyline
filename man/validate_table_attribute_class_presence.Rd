@@ -20,3 +20,4 @@ to. Full file name is required.}
 \description{
 Check for attribute class presence
 }
+\keyword{internal}

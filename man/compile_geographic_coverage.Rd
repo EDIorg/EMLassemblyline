@@ -23,3 +23,4 @@ Combine multiple sources of geographic coverage and remove duplicate
     \code{geographic.description} arguments of \code{make_eml()} as well as 
     in the geographic_coverage and bounding_boxes templates.
 }
+\keyword{internal}

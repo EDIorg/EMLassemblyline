@@ -17,3 +17,4 @@ has_parent(nodeset, parent)
 \description{
 Has parent node
 }
+\keyword{internal}

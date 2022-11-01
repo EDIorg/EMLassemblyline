@@ -22,3 +22,4 @@ Create methods template from EML
 \details{
 Gets methods node, removes provenance methodStep, subsumes sampling and qualityControl, and parses to template via pandoc.
 }
+\keyword{internal}

@@ -16,3 +16,4 @@ validate_geographic_coord_desc(fun.args)
 \description{
 Validate geographic coordinate and description pair
 }
+\keyword{internal}

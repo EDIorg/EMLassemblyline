@@ -20,3 +20,4 @@ Create provenance template from EML
 \details{
 Gets provenance nodes and parses to template.
 }
+\keyword{internal}

@@ -25,3 +25,4 @@ Validate input arguments to EMLassemblyline functions.
 \note{
 Some arise where an arguments value is set to NULL
 }
+\keyword{internal}

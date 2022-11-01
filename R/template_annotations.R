@@ -468,6 +468,7 @@ template_annotations <- function(
 #'   eml = "edi.260.3.xml"
 #' )
 #' 
+#' @keywords internal
 #' 
 read_eml <- function(path, eml) {
   

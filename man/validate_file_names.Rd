@@ -22,3 +22,4 @@ A warning message if the data files don't exist at path, and which of
 \description{
 Identify whether input data file names exist in the specified directory.
 }
+\keyword{internal}
