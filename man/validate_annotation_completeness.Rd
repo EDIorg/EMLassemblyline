@@ -17,3 +17,4 @@ validate_annotation_completeness(x)
 \description{
 Check completeness of the annotations template
 }
+\keyword{internal}

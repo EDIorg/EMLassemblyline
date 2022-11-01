@@ -20,3 +20,4 @@ Full file name is required.}
 \description{
 Check for presence of the categorical variables template
 }
+\keyword{internal}

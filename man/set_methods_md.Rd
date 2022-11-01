@@ -21,3 +21,4 @@ Text and LaTeX equations in \code{methods_file} are parsed into /eml/dataset/met
 \note{
 LaTex equations must be wrapped in $$ (e.g. $$<my_equation>$$), otherwise they won't be parsed correctly from the text.
 }
+\keyword{internal}

@@ -20,3 +20,4 @@ Get parallel node values
 \details{
 Works for dataTable and otherEntity, not others
 }
+\keyword{internal}

@@ -33,3 +33,4 @@ Checks performed by this function:
     Checks are grouped by required and optional criteria. If any required
     checks fail, then the entire template is removed from \code{x}.
 }
+\keyword{internal}

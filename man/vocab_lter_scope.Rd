@@ -17,3 +17,4 @@ Controlled Vocabulary.}
 \description{
 Get the scope description for a term in the LTER Controlled Vocabulary.
 }
+\keyword{internal}

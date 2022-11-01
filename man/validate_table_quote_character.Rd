@@ -16,3 +16,4 @@ validate_table_quote_character(fun.args)
 \description{
 Validate data table quote characters
 }
+\keyword{internal}

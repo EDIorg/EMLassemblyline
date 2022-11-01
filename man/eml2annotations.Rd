@@ -20,3 +20,4 @@ Create annotations template from EML
 \details{
 Gets annotation nodes, listed under subjects or \code{/eml:eml/annotations}, and parse to template.
 }
+\keyword{internal}

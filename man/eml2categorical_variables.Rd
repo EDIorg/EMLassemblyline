@@ -20,3 +20,4 @@ Create categorical variable template(s) from EML
 \details{
 Gets categorical variable nodes and parses to template.
 }
+\keyword{internal}

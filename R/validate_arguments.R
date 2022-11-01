@@ -17,7 +17,9 @@
 #'     \code{fun.name} defines which checks to call.
 #'     
 #'     \code{fun.args} values are modified when critical issues are found and are reassigned to the calling environment so the calling function may proceed without error.
-#'
+#' 
+#' @keywords internal
+#' 
 validate_arguments <- function(fun.name, fun.args){
   
   # Parameterize --------------------------------------------------------------
@@ -865,7 +867,9 @@ validate_arguments <- function(fun.name, fun.args){
 #' @return
 #'     \item{character}{Description of issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_title <- function(fun.args) {
   
   # Each issue is logged as "required" or "optional"
@@ -922,7 +926,9 @@ validate_title <- function(fun.args) {
 #' @return
 #'     \item{character}{Description of issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_title_presence <- function(fun.args) {
   if (is.null(fun.args$dataset.title)) {
     return("The dataset title is missing.")
@@ -944,7 +950,9 @@ validate_title_presence <- function(fun.args) {
 #' @return
 #'     \item{character}{Description of issues}
 #'     \item{NULL}{If no issues were found}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_title_length <- function(fun.args) {
   title <- fun.args$dataset.title
   if (!is.null(title)) {
@@ -969,7 +977,9 @@ validate_title_length <- function(fun.args) {
 #' @return
 #'     \item{issues}{Description of issues}
 #'     \item{fun.args}{Updated list of function arguments}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_table_description <- function(fun.args) {
   
   # Each issue is logged as "required" or "optional"
@@ -1032,7 +1042,9 @@ validate_table_description <- function(fun.args) {
 #' @return
 #'     \item{issues}{Description of issues}
 #'     \item{fun.args}{Updated list of function arguments}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_table_name <- function(fun.args) {
   
   # Each issue is logged as "required" or "optional"
@@ -1099,7 +1111,9 @@ validate_table_name <- function(fun.args) {
 #' @return
 #'     \item{issues}{Description of issues}
 #'     \item{fun.args}{Updated list of function arguments}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_table_quote_character <- function(fun.args) {
   
   # Each issue is logged as "required" or "optional"
@@ -1164,7 +1178,9 @@ validate_table_quote_character <- function(fun.args) {
 #' @return
 #'     \item{issues}{Description of issues}
 #'     \item{fun.args}{Updated list of function arguments}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_table_url <- function(fun.args) {
   
   # Each issue is logged as "required" or "optional"
@@ -1228,7 +1244,9 @@ validate_table_url <- function(fun.args) {
 #' @return
 #'     \item{issues}{Description of issues}
 #'     \item{fun.args}{Updated list of function arguments}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_geographic_coord_desc <- function(fun.args) {
   
   # Each issue is logged as "required" or "optional"
@@ -1294,7 +1312,9 @@ validate_geographic_coord_desc <- function(fun.args) {
 #' @return
 #'     \item{issues}{Description of issues}
 #'     \item{fun.args}{Updated list of function arguments}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_maintenance_description <- function(fun.args) {
   
   # Each issue is logged as "required" or "optional"
@@ -1353,7 +1373,9 @@ validate_maintenance_description <- function(fun.args) {
 #' @return
 #'     \item{issues}{Description of issues}
 #'     \item{fun.args}{Updated list of function arguments}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_other_entity_name <- function(fun.args) {
   
   # Each issue is logged as "required" or "optional"
@@ -1421,7 +1443,9 @@ validate_other_entity_name <- function(fun.args) {
 #' @return
 #'     \item{issues}{Description of issues}
 #'     \item{fun.args}{Updated list of function arguments}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_other_entity_description <- function(fun.args) {
   
   # Each issue is logged as "required" or "optional"
@@ -1484,7 +1508,9 @@ validate_other_entity_description <- function(fun.args) {
 #' @return
 #'     \item{issues}{Description of issues}
 #'     \item{fun.args}{Updated list of function arguments}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_other_entity_url <- function(fun.args) {
   
   # Each issue is logged as "required" or "optional"
@@ -1548,7 +1574,9 @@ validate_other_entity_url <- function(fun.args) {
 #' @return
 #'     \item{issues}{Description of issues}
 #'     \item{fun.args}{Updated list of function arguments}
-#'
+#' 
+#' @keywords internal
+#' 
 validate_temporal_coverage <- function(fun.args) {
   
   # Each issue is logged as "required" or "optional"

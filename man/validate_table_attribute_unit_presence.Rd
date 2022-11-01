@@ -20,3 +20,4 @@ to. Full file name is required.}
 \description{
 Check each numeric attribute has a unit
 }
+\keyword{internal}

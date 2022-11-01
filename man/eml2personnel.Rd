@@ -20,3 +20,4 @@ Create personnel template from EML
 \details{
 Gets personnel and project nodes and parses to template.
 }
+\keyword{internal}

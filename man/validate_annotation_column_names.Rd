@@ -17,3 +17,4 @@ validate_annotation_column_names(x)
 \description{
 Check column names of the annotations template
 }
+\keyword{internal}

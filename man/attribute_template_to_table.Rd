@@ -17,3 +17,4 @@ attribute_template_to_table(attributes.template, data.path)
 \description{
 Convert attributes file name to the corresponding data table file name
 }
+\keyword{internal}

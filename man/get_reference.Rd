@@ -15,3 +15,4 @@ get_reference(nodeset)
 \description{
 Get referenced node
 }
+\keyword{internal}

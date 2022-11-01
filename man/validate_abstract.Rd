@@ -23,3 +23,4 @@ Checks performed by this function:
         \item{Abstract is not empty}
     }
 }
+\keyword{internal}

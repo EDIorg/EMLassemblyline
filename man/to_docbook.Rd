@@ -15,3 +15,4 @@ to_docbook(file = NULL)
 \description{
 This function is not exported from the EML R Package but useful here
 }
+\keyword{internal}

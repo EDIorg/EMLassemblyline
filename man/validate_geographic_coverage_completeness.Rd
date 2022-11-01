@@ -17,3 +17,4 @@ validate_geographic_coverage_completeness(x)
 \description{
 Check completeness of the geographic coverage template
 }
+\keyword{internal}

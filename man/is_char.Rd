@@ -15,3 +15,4 @@ is_char(nodeset)
 \description{
 Is attribute a character?
 }
+\keyword{internal}

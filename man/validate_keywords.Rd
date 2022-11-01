@@ -23,3 +23,4 @@ Checks performed by this function:
         \item{Keywords is not empty}
     }
 }
+\keyword{internal}

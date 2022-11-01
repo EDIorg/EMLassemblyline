@@ -18,3 +18,4 @@ Get class of table attribute
 \details{
 Wrapper to \code{is_num(nodeset)}, \code{is_char(nodeset)}, \code{is_catvar(nodeset)}, \code{is_date(nodeset)}
 }
+\keyword{internal}

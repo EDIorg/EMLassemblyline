@@ -15,3 +15,4 @@ is_empty_nodeset(nodeset)
 \description{
 Is empty nodeset?
 }
+\keyword{internal}

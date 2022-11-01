@@ -20,3 +20,4 @@ Check for project information in the personnel template
 \details{
 Project info should be included with each PI.
 }
+\keyword{internal}

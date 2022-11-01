@@ -15,3 +15,4 @@ is_num(nodeset)
 \description{
 Is attribute a numeric variable?
 }
+\keyword{internal}

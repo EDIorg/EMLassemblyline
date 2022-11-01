@@ -16,3 +16,4 @@ validate_title_length(fun.args)
 \description{
 Check title length
 }
+\keyword{internal}

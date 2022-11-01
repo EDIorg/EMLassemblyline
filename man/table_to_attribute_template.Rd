@@ -15,3 +15,4 @@ table_to_attribute_template(data.table)
 \description{
 Convert data table file name to the corresponding attributes file name
 }
+\keyword{internal}

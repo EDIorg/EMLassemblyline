@@ -513,6 +513,9 @@ template_arguments <- function(
 #'     (character) Full path to file to be read into docbook
 #' @return
 #'     (xml) Docbook XML R object
+#'     
+#' @keywords internal
+#'     
 to_docbook <- function(file = NULL) {
   if (!tools::file_ext(file) %in% c("xml", "dbk", "db")) {
     ## Not xml yet, so use pandoc to generate docbook

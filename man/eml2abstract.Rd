@@ -22,3 +22,4 @@ Create abstract template from EML
 \details{
 Gets abstract node and parses to template via pandoc.
 }
+\keyword{internal}

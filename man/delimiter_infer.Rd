@@ -15,3 +15,4 @@ delimiter_infer(x)
 \description{
 Infer field delimiter from file name
 }
+\keyword{internal}

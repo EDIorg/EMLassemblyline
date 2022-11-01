@@ -17,3 +17,4 @@ validate_geographic_coverage_presence(x)
 \description{
 Check geographic coverage template presence
 }
+\keyword{internal}

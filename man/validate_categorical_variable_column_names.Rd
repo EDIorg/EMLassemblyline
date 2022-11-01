@@ -19,3 +19,4 @@ to. Full file name is required.}
 \description{
 Check column names of categorical variables template
 }
+\keyword{internal}

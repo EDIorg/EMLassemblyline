@@ -15,3 +15,4 @@ This function uses \code{Sys.info} to detect the user's operating system
     and outputs an abbreviated character string to be used as inputs to OS
     specific function calls.
 }
+\keyword{internal}

@@ -27,6 +27,7 @@ reference:
   desc: Helper functions
   contents:
   - annotate_eml
+  - issues
   - template_arguments
   - view_unit_dictionary
 navbar:

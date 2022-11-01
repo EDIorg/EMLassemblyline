@@ -18,3 +18,4 @@ Get unit
 \details{
 Get unit from \code{./unit/standardUnit} or \code{./attribute/measurementScale/ratio/unit/customUnit}
 }
+\keyword{internal}

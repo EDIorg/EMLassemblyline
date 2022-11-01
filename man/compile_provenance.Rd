@@ -22,3 +22,4 @@ Combine multiple sources of provenance and remove duplicate
     entries. This info can be supplied in the \code{provenance} 
     argument of \code{make_eml()} as well as in the provenance template.
 }
+\keyword{internal}

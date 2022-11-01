@@ -23,3 +23,4 @@ Checks performed by this function:
         \item{Intellectual rights is not empty}
     }
 }
+\keyword{internal}

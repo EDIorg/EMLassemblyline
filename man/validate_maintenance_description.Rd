@@ -16,3 +16,4 @@ validate_maintenance_description(fun.args)
 \description{
 Validate maintenance description
 }
+\keyword{internal}

@@ -15,3 +15,4 @@ rm_pred(xpath)
 \description{
 Remove xpath predicates
 }
+\keyword{internal}

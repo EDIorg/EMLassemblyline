@@ -16,3 +16,4 @@ validate_table_name(fun.args)
 \description{
 Validate data table names
 }
+\keyword{internal}

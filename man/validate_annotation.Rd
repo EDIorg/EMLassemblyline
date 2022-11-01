@@ -31,3 +31,4 @@ Checks performed on each data tables attribute metadata:
     Checks on annotation presence are only a reminder that it is possible 
     to annotate these elements.
 }
+\keyword{internal}

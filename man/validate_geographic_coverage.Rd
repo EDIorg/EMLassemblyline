@@ -34,3 +34,4 @@ This function compiles geographic coverage input as
         \item{The cordinate range is valid}
     }
 }
+\keyword{internal}

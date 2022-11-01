@@ -15,3 +15,4 @@ cnvmt(txt)
 \description{
 Convert empty text to empty EAL text
 }
+\keyword{internal}

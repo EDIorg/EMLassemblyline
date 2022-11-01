@@ -15,3 +15,4 @@ get_anno_context(nodeset)
 \description{
 Get context for annotations template
 }
+\keyword{internal}

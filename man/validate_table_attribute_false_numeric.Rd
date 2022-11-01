@@ -25,3 +25,4 @@ is required.}
 \description{
 Check numeric attributes for non-numeric values
 }
+\keyword{internal}

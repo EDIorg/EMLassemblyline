@@ -17,3 +17,4 @@ validate_geographic_coverage_column_names(x)
 \description{
 Check column names of geographic coverage template
 }
+\keyword{internal}

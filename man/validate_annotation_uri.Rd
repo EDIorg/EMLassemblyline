@@ -17,3 +17,4 @@ validate_annotation_uri(x)
 \description{
 Check URIs are resolvable in the annotations template
 }
+\keyword{internal}

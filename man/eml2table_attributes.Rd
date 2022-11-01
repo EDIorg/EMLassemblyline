@@ -20,3 +20,4 @@ Create table attributes template(s) from EML
 \details{
 Gets table attribute nodes and parses to template.
 }
+\keyword{internal}

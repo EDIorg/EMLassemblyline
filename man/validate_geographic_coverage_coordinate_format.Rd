@@ -17,3 +17,4 @@ validate_geographic_coverage_coordinate_format(x)
 \description{
 Check for decimal degree format in the geographic coverage template
 }
+\keyword{internal}

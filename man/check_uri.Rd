@@ -15,3 +15,4 @@ check_uri(uri)
 \description{
 Check resolvability of URI
 }
+\keyword{internal}

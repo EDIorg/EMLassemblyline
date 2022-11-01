@@ -15,3 +15,4 @@ is_date(nodeset)
 \description{
 Is attribute a Date?
 }
+\keyword{internal}

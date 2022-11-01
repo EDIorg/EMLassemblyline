@@ -31,3 +31,4 @@ This function validates the table attributes classified as categorical
         \item{Categorical codes are defined}
     }
 }
+\keyword{internal}

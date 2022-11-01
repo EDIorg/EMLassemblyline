@@ -20,3 +20,4 @@ Get XML values
 \details{
 Simplifies code by wrapping \code{cnvmt(xml2::xml_text(xml2::xml_find_all(...), trim = T))}
 }
+\keyword{internal}

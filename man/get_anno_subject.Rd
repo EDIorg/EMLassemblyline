@@ -15,3 +15,4 @@ get_anno_subject(nodeset)
 \description{
 Get subject for annotations template
 }
+\keyword{internal}

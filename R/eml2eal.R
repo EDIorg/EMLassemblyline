@@ -3,7 +3,9 @@
 #' @param txt (character) Text
 #'
 #' @return (character) EAL representation of empty values in tabular templates
-#'
+#' 
+#' @keywords internal
+#' 
 cnvmt <- function(txt) {
   if (length(txt) == 0) {
     return("")
@@ -28,7 +30,9 @@ cnvmt <- function(txt) {
 #' @details Gets abstract node and parses to template via pandoc.
 #'
 #' @return abstract template
-#'
+#' 
+#' @keywords internal
+#' 
 eml2abstract <- function(eml, path, file.type) {
   abstract <- xml2::xml_find_all(eml, "/eml:eml/dataset/abstract")
   if (!is_empty_nodeset(abstract)) {
@@ -53,6 +57,8 @@ eml2abstract <- function(eml, path, file.type) {
 #' 
 #' @return additional_info template
 #' 
+#' @keywords internal
+#' 
 eml2additional_info <- function(eml, path, file.type) {
   addinf <- xml2::xml_find_all(eml, "/eml:eml/dataset/additionalInfo")
   if (!is_empty_nodeset(addinf)) {
@@ -75,6 +81,8 @@ eml2additional_info <- function(eml, path, file.type) {
 #' @details Gets annotation nodes, listed under subjects or \code{/eml:eml/annotations}, and parse to template.
 #' 
 #' @return annotations template
+#' 
+#' @keywords internal
 #' 
 eml2annotations <- function(eml, path) {
   annos <- xml2::xml_find_all(eml, ".//annotation")
@@ -120,6 +128,8 @@ eml2annotations <- function(eml, path) {
 #' 
 #' @return categorical variable template(s)
 #' 
+#' @keywords internal
+#' 
 eml2categorical_variables <- function(eml, path) {
   tbls <- xml2::xml_find_all(eml, "/eml:eml/dataset/dataTable")
   if (!is_empty_nodeset(tbls)) {
@@ -164,6 +174,8 @@ eml2categorical_variables <- function(eml, path) {
 #' @details Gets unitlist nodes and parses to template.
 #' 
 #' @return custom units template
+#' 
+#' @keywords internal
 #' 
 eml2custom_units <- function(eml, path) {
   units <- xml2::xml_find_all(
@@ -336,6 +348,8 @@ eml2eal_losses <- function(eml, eml.eal) {
 #' 
 #' @return geographic coverage template
 #' 
+#' @keywords internal
+#' 
 eml2geographic_coverage <- function(eml, path) {
   geocovs <- xml2::xml_find_all(
     eml, "/eml:eml/dataset/coverage/geographicCoverage")
@@ -374,6 +388,8 @@ eml2geographic_coverage <- function(eml, path) {
 #' 
 #' @return intellectual_rights template
 #' 
+#' @keywords internal
+#' 
 eml2intellectual_rights <- function(eml, path, file.type) {
   intlrghts <- xml2::xml_find_all(eml, "/eml:eml/dataset/intellectualRights")
   if (!is_empty_nodeset(intlrghts)) {
@@ -396,6 +412,8 @@ eml2intellectual_rights <- function(eml, path, file.type) {
 #' @details Gets keywordSet nodes and parses to template.
 #' 
 #' @return keywords template
+#' 
+#' @keywords internal
 #' 
 eml2keywords <- function(eml, path) {
   sets <- xml2::xml_find_all(eml, "/eml:eml/dataset/keywordSet")
@@ -429,6 +447,8 @@ eml2keywords <- function(eml, path) {
 #' @details Gets relevants nodes and parse to script.
 #' 
 #' @return run_EMLassemblyline_for_pkg.R script containing the \code{make_eml()} function call
+#' 
+#' @keywords internal
 #' 
 eml2make_eml <- function(eml, path) {
   # args and their xpaths
@@ -532,6 +552,8 @@ eml2make_eml <- function(eml, path) {
 #' 
 #' @return methods template
 #' 
+#' @keywords internal
+#' 
 eml2methods <- function(eml, path, file.type) {
   mthdsstps <- xml2::xml_find_all(eml, "/eml:eml/dataset/methods/methodStep") # Remove provenenace
   if (!is_empty_nodeset(mthdsstps)) {
@@ -560,6 +582,8 @@ eml2methods <- function(eml, path, file.type) {
 #' @details Gets personnel and project nodes and parses to template.
 #' 
 #' @return personnel template
+#' 
+#' @keywords internal
 #' 
 eml2personnel <- function(eml, path) {
   # Get responsible parties
@@ -614,6 +638,8 @@ eml2personnel <- function(eml, path) {
 #' @details Gets provenance nodes and parses to template.
 #' 
 #' @return provenance template
+#' 
+#' @keywords internal
 #' 
 eml2provenance <- function(eml, path) {
   mthdstps <- xml2::xml_find_all(eml, "/eml:eml/dataset/methods/methodStep")
@@ -701,6 +727,8 @@ eml2provenance <- function(eml, path) {
 #' 
 #' @return table attributes template(s)
 #' 
+#' @keywords internal
+#' 
 eml2table_attributes <- function(eml, path) {
   tbls <- xml2::xml_find_all(eml, "/eml:eml/dataset/dataTable")
   if (!is_empty_nodeset(tbls)) {
@@ -747,6 +775,8 @@ eml2table_attributes <- function(eml, path) {
 #' @details Gets taxonomicClassification nodes and parses to template.
 #' 
 #' @return taxonomic coverage template
+#' 
+#' @keywords internal
 #' 
 eml2taxonomic_coverage <- function(eml, path) {
   txclss <- xml2::xml_find_all(
@@ -798,6 +828,8 @@ eml2taxonomic_coverage <- function(eml, path) {
 #' 
 #' @return (character) Value for context field of annotations template
 #' 
+#' @keywords internal
+#' 
 get_anno_context <- function(nodeset) {
   self <- xml2::xml_name(nodeset)
   if (self == "dataset") {
@@ -830,6 +862,8 @@ get_anno_context <- function(nodeset) {
 #' 
 #' @return (character) Value for element field of annotations template
 #' 
+#' @keywords internal
+#' 
 get_anno_element <- function(nodeset) {
   self <- xml2::xml_name(nodeset)
   if (self == "dataset") {
@@ -857,6 +891,8 @@ get_anno_element <- function(nodeset) {
 #' @param nodeset (xml_nodeset) Subject nodeset
 #' 
 #' @return (character) Value for id field of annotations template
+#' 
+#' @keywords internal
 #' 
 get_anno_id <- function(nodeset) {
   self <- xml2::xml_name(nodeset)
@@ -896,6 +932,8 @@ get_anno_id <- function(nodeset) {
 #' 
 #' @return (character) Value for subject field of annotations template
 #' 
+#' @keywords internal
+#' 
 get_anno_subject <- function(nodeset) {
   self <- xml2::xml_name(nodeset)
   if (self == "dataset") {
@@ -928,6 +966,8 @@ get_anno_subject <- function(nodeset) {
 #' 
 #' @return (character) numeric, character, categorical, or Date
 #' 
+#' @keywords internal
+#' 
 get_class <- function(nodeset) {
   cls <-  c(
     numeric = suppressWarnings(is_num(nodeset)),        # warnings handled by validate_eml_content()
@@ -952,6 +992,8 @@ get_class <- function(nodeset) {
 #' @details Get from \code{./missingValueCode/code}. Use first and warn if > 2.
 #' 
 #' @return (character) Missing value code
+#' 
+#' @keywords internal
 #' 
 get_misscode <- function(nodeset) {
   codes <- xml2::xml_find_all(nodeset, "./missingValueCode/code")
@@ -981,6 +1023,8 @@ get_misscode <- function(nodeset) {
 #' 
 #' @return (character) Missing value code definition
 #' 
+#' @keywords internal
+#' 
 get_misscodedef <- function(nodeset) {
   defs <- xml2::xml_find_all(nodeset, "./missingValueCode/codeExplanation")
   if (!is_empty_nodeset(defs)) {
@@ -1009,6 +1053,8 @@ get_misscodedef <- function(nodeset) {
 #' @return (character) "" if node is missing from one nodeset but not the other
 #' 
 #' @details Works for dataTable and otherEntity, not others
+#' 
+#' @keywords internal
 #' 
 get_parallel_nodes <- function(eml, xpath) {
   nodesets <- xml2::xml_find_all(
@@ -1047,6 +1093,8 @@ get_parallel_nodes <- function(eml, xpath) {
 #' 
 #' @return (character) givenName[1], givenName[2] (i.e. middleInitial), surName, organizationName, electronicMailAddress, userId, role, title (i.e. projectTitle), funding (i.e. fundingAgency + fundingNumber)
 #' 
+#' @keywords internal
+#' 
 get_proj <- function(eml) {
   xpaths <- c(
     "/eml:eml/dataset/project", 
@@ -1084,6 +1132,8 @@ get_proj <- function(eml) {
 #' 
 #' @return (xml_nodeset) nodeset with matching id attribute
 #' 
+#' @keywords internal
+#' 
 get_reference <- function(nodeset) {
   ref <- xml_val(nodeset, './/@references')
   if (ref != "") {
@@ -1108,6 +1158,8 @@ get_reference <- function(nodeset) {
 #' @details Get from \code{/eml:eml/dataset/creator}, \code{/eml:eml/dataset/contact}, \code{/eml:eml/dataset/associatedParty}.
 #' 
 #' @return (character) givenName[1], givenName[2] (i.e. middleInitial), surName, organizationName, electronicMailAddress, userId, role
+#' 
+#' @keywords internal
 #' 
 get_resparty <- function(nodeset) {
   res <- list(
@@ -1141,6 +1193,8 @@ get_resparty <- function(nodeset) {
 #' 
 #' @return (character) unit
 #' 
+#' @keywords internal
+#' 
 get_unit <- function(nodeset) {
   res <- xml_val(nodeset, ".//unit")
   return(res)
@@ -1158,6 +1212,8 @@ get_unit <- function(nodeset) {
 #' @param nodeset (xml_nodeset/xml_node) A nodeset
 #' 
 #' @return (list) All xpaths and values in \code{nodeset}, where xpaths are stored as value names
+#' 
+#' @keywords internal
 #' 
 get_xpaths_and_vals <- function(nodeset) {
   res <- list()
@@ -1190,6 +1246,8 @@ get_xpaths_and_vals <- function(nodeset) {
 #' 
 #' @return (logical) TRUE if \code{parent} is in the list of parents
 #' 
+#' @keywords internal
+#' 
 has_parent <- function(nodeset, parent) {
   parents <- xml2::xml_name(xml2::xml_parents(nodeset))
   return(parent %in% parents)
@@ -1208,6 +1266,8 @@ has_parent <- function(nodeset, parent) {
 #' @param nodeset (xml_nodeset) Attribute nodeset at \code{/eml:eml/dataset/dataTable[x]/attributeList/attribute[y]}
 #' 
 #' @return (logical) TRUE if nodeset has \code{./measurementScale/nominal/nonNumericDomain/enumeratedDomain} or \code{./measurementScale/ordinal/nonNumericDomain/enumeratedDomain}
+#' 
+#' @keywords internal
 #' 
 is_catvar <- function(nodeset) {
   xpaths <- c(
@@ -1240,6 +1300,8 @@ is_catvar <- function(nodeset) {
 #' 
 #' @return (logical) TRUE if nodeset has \code{./measurementScale/nominal/nonNumericDomain/textDomain} or \code{./measurementScale/ordinal/nonNumericDomain/textDomain}
 #' 
+#' @keywords internal
+#' 
 is_char <- function(nodeset) {
   xpaths <- c(
     nominal = "./measurementScale/nominal/nonNumericDomain/textDomain",
@@ -1271,6 +1333,8 @@ is_char <- function(nodeset) {
 #' 
 #' @return (logical) TRUE if nodeset has \code{./measurementScale/dateTime}
 #' 
+#' @keywords internal
+#' 
 is_date <- function(nodeset) {
   dttmdomain <- xml2::xml_find_all(nodeset, "./measurementScale/dateTime")
   res <- !is_empty_nodeset(dttmdomain)
@@ -1290,6 +1354,8 @@ is_date <- function(nodeset) {
 #' 
 #' @return (logical) TRUE if nodeset length = 0
 #' 
+#' @keywords internal
+#' 
 is_empty_nodeset <- function(nodeset) {
   res <- length(nodeset) == 0
   return(res)
@@ -1307,6 +1373,8 @@ is_empty_nodeset <- function(nodeset) {
 #' @param nodeset (xml_nodeset) Attribute nodeset at \code{/eml:eml/dataset/dataTable[x]/attributeList/attribute[y]}
 #' 
 #' @return (logical) TRUE if nodeset has \code{./attribute/measurementScale/interval} or \code{./attribute/measurementScale/ratio}
+#' 
+#' @keywords internal
 #' 
 is_num <- function(nodeset) {
   xpaths <- c(
@@ -1341,6 +1409,8 @@ is_num <- function(nodeset) {
 #' 
 #' @return (logical) TRUE if nodeset has provenance
 #' 
+#' @keywords internal
+#' 
 is_prov <- function(nodeset) {  
   dasource <- xml2::xml_find_all(nodeset, "./dataSource")
   res <- !is_empty_nodeset(dasource)
@@ -1363,6 +1433,8 @@ is_prov <- function(nodeset) {
 #' @details Converts EML text type \code{nodeset} (i.e. abstract, methods, additionalInfo, intellectualRights) to EAL \code{file.type} via pandoc
 #' 
 #' @return abstract, methods, additional_info, or intellectual_rights
+#' 
+#' @keywords internal
 #' 
 nodeset2txt <- function(nodeset, file.type, path) {
   # Map names: EML to EAL
@@ -1407,6 +1479,8 @@ nodeset2txt <- function(nodeset, file.type, path) {
 #' 
 #' @return (character) \code{xpath} with predicates removed
 #' 
+#' @keywords internal
+#' 
 rm_pred <- function(xpath) {  
   res <- stringr::str_remove_all(xpath, "\\[[:digit:]*\\]")
   return(res)
@@ -1424,6 +1498,8 @@ rm_pred <- function(xpath) {
 #' @param eml (character) Full path to EML file
 #' 
 #' @return Warnings/errors/messages of unsupported content found in the EML. This supplements warnings/errors/messages returned by \code{eml2*} functions, which are more context specific.
+#' 
+#' @keywords internal
 #' 
 validate_eml_content <- function(eml) {
   # FIXME: emld::eml_validate() has a new set of constraints causing 
@@ -1484,6 +1560,8 @@ validate_eml_content <- function(eml) {
 #' @return (character) Value of \code{xpath} within \code{nodeset}. Returns "" if returned character string has length = 1.
 #' 
 #' @details Simplifies code by wrapping \code{cnvmt(xml2::xml_text(xml2::xml_find_all(...), trim = T))}
+#' 
+#' @keywords internal
 #' 
 xml_val <- function(nodeset, xpath) {
   res <- cnvmt(

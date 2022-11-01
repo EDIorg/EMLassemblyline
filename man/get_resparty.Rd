@@ -18,3 +18,4 @@ Get responsible party
 \details{
 Get from \code{/eml:eml/dataset/creator}, \code{/eml:eml/dataset/contact}, \code{/eml:eml/dataset/associatedParty}.
 }
+\keyword{internal}

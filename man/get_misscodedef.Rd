@@ -18,3 +18,4 @@ Get missing value code definition
 \details{
 Get from \code{./attribute/missingValueCode/codeExplanation}. Use first and warn if > 2.
 }
+\keyword{internal}

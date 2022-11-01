@@ -18,3 +18,4 @@ Get project information
 \details{
 Get from \code{/eml:eml/dataset/project} or \code{/eml:eml/dataset/project/relatedProject}.
 }
+\keyword{internal}

@@ -23,3 +23,4 @@ Checks performed by this function:
         \item{Methods is not empty}
     }
 }
+\keyword{internal}

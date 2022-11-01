@@ -17,3 +17,4 @@ validate_provenance_contact_creator(x)
 \description{
 Check creator and contact in the provenance template
 }
+\keyword{internal}
