@@ -30,3 +30,4 @@ object annotations are retrieved and assigned to the EML. Annotatable
 elements only supported through ID references are added to 
 /eml/dataset/annotations (e.g. ResponsibleParty).
 }
+\keyword{internal}

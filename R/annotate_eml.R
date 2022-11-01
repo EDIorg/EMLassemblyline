@@ -407,7 +407,7 @@ annotate_eml <- function(
 #' elements only supported through ID references are added to 
 #' /eml/dataset/annotations (e.g. ResponsibleParty).
 #' 
-#' @keyword internal
+#' @keywords internal
 #' 
 annotate_element <- function(element, eml, anno, rp) {
   
