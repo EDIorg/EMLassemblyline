@@ -1,0 +1,17 @@
+pandoc: 2.19.2
+pkgdown: 2.0.6
+pkgdown_sha: ~
+articles:
+  auto_pub: auto_pub.html
+  create_eml: create_eml.html
+  create_tmplts: create_tmplts.html
+  edit_tmplts: edit_tmplts.html
+  exchange_format: exchange_format.html
+  organize_data_package: organize_data_package.html
+  overview: overview.html
+  publish_data_package: publish_data_package.html
+last_built: 2022-11-01T01:26Z
+urls:
+  reference: https://ediorg.github.io/EMLassemblyline/reference
+  article: https://ediorg.github.io/EMLassemblyline/articles
+
