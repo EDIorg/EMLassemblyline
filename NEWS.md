@@ -13,6 +13,8 @@ EMLassemblyline 3.X.X (202X-XX-XX)
   branches. Test coverage is hosted on Codecov.
   * R-CMD-check is now run on pull requests to main and development branches. 
   Note, this replaces use of Travis CI.
+  * Test suite runs faster now that unnecessary HTTP requests have been 
+  removed.
 
 EMLassemblyline 3.5.5 (2022-10-31)
 ==================================
