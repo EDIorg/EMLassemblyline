@@ -1,1 +1,8 @@
-keyword	keywordThesaurusVillanova Peatland Biogeochemistry Group	bog	peat		vascular	moss	decomposition	
+keyword	keywordThesaurus
+Villanova Peatland Biogeochemistry Group	Project vocabulary
+bog	Project vocabulary
+peat	Project vocabulary
+	
+vascular	LTER Vocabulary
+moss	LTER Vocabulary
+decomposition	LTER Vocabulary
