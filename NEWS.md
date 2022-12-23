@@ -1,3 +1,19 @@
+EMLassemblyline 3.X.X (202X-XX-XX)
+==================================
+
+### DOCUMENTATION
+
+  * pkgdown is now run on pushes to main and development branches and published 
+  to the gh-pages branch.
+
+
+### TESTS
+
+  * Test-coverage is now run on all pull requests to main and development 
+  branches. Test coverage is hosted on Codecov.
+  * R-CMD-check is now run on pull requests to main and development branches. 
+  Note, this replaces use of Travis CI.
+
 EMLassemblyline 3.5.5 (2022-10-31)
 ==================================
 
