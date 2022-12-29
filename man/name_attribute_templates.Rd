@@ -17,8 +17,10 @@ extensions.}
 Create attribute template names from file names
 }
 \examples{
+\dontrun{
 f <- c("decomp.csv", "nitrogen.csv")
 name_attribute_templates(f)
+}
 
 }
 \keyword{internal}

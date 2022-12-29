@@ -16,6 +16,7 @@ init_attributes(nrows = 0)
 Initialize an empty attributes template
 }
 \examples{
+\dontrun{
 # Default settings return an empty data frame with column names of the 
 # attributes template.
 df = init_attributes()
@@ -25,6 +26,7 @@ colnames(df)
 # Control the number of rows with the nrows parameter
 df = init_attributes(nrows = 3)
 nrow(df)
+}
 
 }
 \keyword{internal}

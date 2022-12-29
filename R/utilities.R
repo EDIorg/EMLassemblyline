@@ -329,6 +329,7 @@ get_eol <- function(path, file.name){
 #' @keywords internal
 #'
 #' @examples
+#' \dontrun{
 #' # Default settings return an empty data frame with column names of the 
 #' # attributes template.
 #' df = init_attributes()
@@ -338,6 +339,7 @@ get_eol <- function(path, file.name){
 #' # Control the number of rows with the nrows parameter
 #' df = init_attributes(nrows = 3)
 #' nrow(df)
+#' }
 #' 
 init_attributes <- function(nrows = 0) {
   df <- data.frame(
@@ -445,8 +447,10 @@ parse_delim <- function(x){
 #' @keywords internal
 #' 
 #' @examples 
+#' \dontrun{
 #' f <- c("decomp.csv", "nitrogen.csv")
 #' name_attribute_templates(f)
+#' }
 #' 
 name_attribute_templates <- function(files) {
   res <- paste0("attributes_", tools::file_path_sans_ext(files), ".txt")
