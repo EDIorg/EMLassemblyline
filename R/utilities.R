@@ -320,6 +320,44 @@ get_eol <- function(path, file.name){
 
 
 
+#' Initialize an empty attributes template
+#'
+#' @param nrows (numeric) Number of rows to initialize the data frame with.
+#'
+#' @return (data.frame) The attributes table.
+#' 
+#' @keywords internal
+#'
+#' @examples
+#' \dontrun{
+#' # Default settings return an empty data frame with column names of the 
+#' # attributes template.
+#' df = init_attributes()
+#' nrow(df)
+#' colnames(df)
+#' 
+#' # Control the number of rows with the nrows parameter
+#' df = init_attributes(nrows = 3)
+#' nrow(df)
+#' }
+#' 
+init_attributes <- function(nrows = 0) {
+  df <- data.frame(
+    attributeName = character(nrows),
+    attributeDefinition = character(nrows),
+    class = character(nrows),
+    unit = character(nrows),
+    dateTimeFormatString = character(nrows),
+    missingValueCode = character(nrows),
+    missingValueCodeExplanation = character(nrows),
+    stringsAsFactors = FALSE
+  )
+  return(df)
+}
+
+
+
+
 
 #' Get provenance metadata
 #'
@@ -397,6 +435,28 @@ parse_delim <- function(x){
   eol
   
 }
+
+
+#' Create attribute template names from file names
+#'
+#' @param files (character vector) Names of data object files, including file 
+#' extensions.
+#' 
+#' @return (character vector) Names of attribute templates.
+#' 
+#' @keywords internal
+#' 
+#' @examples 
+#' \dontrun{
+#' f <- c("decomp.csv", "nitrogen.csv")
+#' name_attribute_templates(f)
+#' }
+#' 
+name_attribute_templates <- function(files) {
+  res <- paste0("attributes_", tools::file_path_sans_ext(files), ".txt")
+  return(res)
+}
+
 
 
 
@@ -1026,11 +1086,19 @@ vocab_resolve_terms <- function(x, cv, messages = FALSE, interactive = FALSE){
 #' 
 write_template <- function(tmplt, name, path, force = FALSE) {
   f <- paste0(path, "/", enc2utf8(name))
+  message(name)
   if (file.exists(f) & !isTRUE(force)) {
     warning(f, " exists and will not be overwritten", call. = FALSE)
     return(FALSE)
   } else {
-    data.table::fwrite(x = tmplt, file = f, sep = "\t", quote = FALSE)
+    utils::write.table(
+      x = tmplt,
+      file = f, 
+      sep = "\t", 
+      row.names = F, 
+      quote = F, 
+      fileEncoding = "UTF-8"
+    )
     return(TRUE)
   }
 }

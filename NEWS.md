@@ -1,6 +1,11 @@
 EMLassemblyline 3.X.X (202X-XX-XX)
 ==================================
 
+### NEW FEATURES
+  
+  * New function added, `template_other_entity_attributes()`, to create 
+  attributes templates for other entity data objects. Is part of (#45).
+
 ### DOCUMENTATION
 
   * pkgdown is now run on pushes to main and development branches and published 
