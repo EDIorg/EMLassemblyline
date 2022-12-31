@@ -446,6 +446,7 @@ template_arguments <- function(
   # Read data objects ---------------------------------------------------------
   
   d <- read_data_objects(data.path)
+  # TODO parse d into data.table and other.entity below
   
   # Read data tables ----------------------------------------------------------
   

@@ -11,8 +11,15 @@ read_data_objects(data.path)
 potentially metadata template files.}
 }
 \value{
-(list) Named list of parsed data objects, or NA when the object
-could not be read.
+(list) Named list of parsed data objects with the files:
+\itemize{
+\item{content: The data object, in it's R representation. This value will be
+\code{NA} if the object could not be read.}
+\item{eml_entity_type: What type of data entity the data object will be 
+represented as in EML.}
+\item{mime_type: The data object's MIME type.}
+\item{file_path: The data object's file path.}
+}
 }
 \description{
 Attempts to read data objects through a series of parsers informed by the

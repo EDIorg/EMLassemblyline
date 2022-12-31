@@ -493,8 +493,15 @@ name_attribute_templates <- function(files) {
 #' @param path (character) Path to a directory containing data objects, and
 #' potentially metadata template files.
 #'
-#' @return (list) Named list of parsed data objects, or NA when the object
-#' could not be read.
+#' @return (list) Named list of parsed data objects with the files:
+#' \itemize{
+#' \item{content: The data object, in it's R representation. This value will be
+#' \code{NA} if the object could not be read.}
+#' \item{eml_entity_type: What type of data entity the data object will be 
+#' represented as in EML.}
+#' \item{mime_type: The data object's MIME type.}
+#' \item{file_path: The data object's file path.}
+#' }
 #' 
 #' @keywords internal
 #' 
@@ -512,16 +519,33 @@ read_data_objects <- function(data.path) {
   tmplt_files <- is_template(dir_files)
   data_files <- dir_files[!tmplt_files]
   
-  # Knowing the mime type of the data object narrows the set of possible
-  # data parsers, which we can input the files to.
+  # Knowing the data object's mime type narrows the set of possible data 
+  # parsers.
   mime_types <- sapply(data_files, mime::guess_type)
   
-  browser()
-  # - Iterate through data objects, attempting to read each through a series
-  #   of readers based on mime type. If none, message "Data object x couldn't be 
-  #   read."
-  # - Later, identify data type by R object type.
-  
+  # Reading data objects within a simple logic structure, grouped by mime type,
+  # enables extension to new data types in the future. Also, adding file 
+  # metadata now, simplifies access by downstream processes.
+  data_objects <- vector(mode = "list", length = length(mime_types))
+  for (i in seq_along(mime_types)) {
+    type <- unname(mime_types[i])
+    file_path <- names(mime_types[i])
+    # Tabular data objects
+    if (type %in% c("text/csv", "text/tab-separated-values")) {
+      data_objects[[i]]$content <- as.data.frame(
+        data.table::fread(file = file_path)
+      )
+      data_objects[[i]]$eml_entity_type <- "dataTable"
+    # Unknown data objects
+    } else {
+      data_objects[[i]]$content <- NA
+      data_objects[[i]]$eml_entity_type <- "otherEntity"
+    }
+    names(data_objects)[i] <- basename(file_path)
+    data_objects[[i]]$mime_type <- type
+    data_objects[[i]]$file_path <- file_path
+  }
+  return(data_objects)
 }
 
 
