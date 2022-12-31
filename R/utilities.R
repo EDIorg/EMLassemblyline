@@ -33,7 +33,7 @@ detect_delimeter <- function(path, data.files, os){
   
   data_files <- validate_file_names(path, data.files)
   
-  # Detect field delimiters ---------------------------------------------------
+  # Detect field delimiters
   # Loop through each table using reader::get.delim() to return the field
   # delimiter. Note: reader::get.delim() performance seems to be operating 
   # system specific.
@@ -94,7 +94,7 @@ detect_delimeter <- function(path, data.files, os){
       
     }
     
-    # Infer field delimiter (if necessary) ------------------------------------
+    # Infer field delimiter (if necessary)
     
     # If the field delimiter can't be determined, then infer it from the file 
     # name.
@@ -103,7 +103,7 @@ detect_delimeter <- function(path, data.files, os){
       delim_guess[i] <- delimiter_infer(data_path[i])
     }
     
-    # Check delimiters and provide manual override ----------------------------
+    # Check delimiters and provide manual override
     
     delim_guess[i] <- detect_delimeter_2(
       data.file = data_files[i],
@@ -112,7 +112,7 @@ detect_delimeter <- function(path, data.files, os){
     
   }
   
-  # Return --------------------------------------------------------------------
+  # Return
   
   delim_guess
   
@@ -356,7 +356,34 @@ init_attributes <- function(nrows = 0) {
 }
 
 
-
+#' Is a metadata template file
+#' 
+#' Check which files are metadata templates and which are not.
+#'
+#' @param files (character) Vector of file names. Can be full file paths or
+#' or base names.
+#'
+#' @return (logical) TRUE where \code{files} is recognized as a metadata 
+#' template.
+#' 
+#' @keywords internal
+#' 
+#' @examples 
+#' \dontrun{
+#' testdir <- paste0(tempdir(), "/pkg")
+#' dir_files <- copy_test_package(testdir)
+#' i <- is_template(dir_files)
+#' i
+#' unlink(testdir, recursive = TRUE, force = TRUE)
+#' }
+#' 
+is_template <- function(files) {
+  tmplt_char <- read_template_characteristics()
+  file_basenames <- basename(files)
+  pat <- paste(tmplt_char$regexpr, collapse = "|")
+  i <- grepl(pat, file_basenames)
+  return(i)
+}
 
 
 #' Get provenance metadata
@@ -409,7 +436,7 @@ api_get_provenance_metadata <- function(package.id, environment = 'production'){
 
 
 
-# Parse delimiter from string -------------------------------------------------
+# Parse delimiter from string
 
 parse_delim <- function(x){
   
@@ -455,6 +482,81 @@ parse_delim <- function(x){
 name_attribute_templates <- function(files) {
   res <- paste0("attributes_", tools::file_path_sans_ext(files), ".txt")
   return(res)
+}
+
+
+#' Read data objects
+#' 
+#' Attempts to read data objects through a series of parsers informed by the
+#' data object mime type.
+#'
+#' @param path (character) Path to a directory containing data objects, and
+#' potentially metadata template files.
+#'
+#' @return (list) Named list of parsed data objects, or NA when the object
+#' could not be read.
+#' 
+#' @keywords internal
+#' 
+#' @examples 
+#' \dontrun{
+#' 
+#' }
+#' 
+read_data_objects <- function(data.path) {
+  
+  # It is reasonably safe to assume that data objects are any file in 
+  # data.path that are also not metadata templates. Doing so pairs down the 
+  # list if data files to attempt reads against.
+  dir_files <- list.files(data.path, full.names = TRUE)
+  tmplt_files <- is_template(dir_files)
+  data_files <- dir_files[!tmplt_files]
+  
+  # Knowing the mime type of the data object narrows the set of possible
+  # data parsers, which we can input the files to.
+  mime_types <- sapply(data_files, mime::guess_type)
+  
+  browser()
+  # - Iterate through data objects, attempting to read each through a series
+  #   of readers based on mime type. If none, message "Data object x couldn't be 
+  #   read."
+  # - Later, identify data type by R object type.
+  
+}
+
+
+#' Read template characteristics table
+#' 
+#' The template characteristics table contains information to aid in template 
+#' reading and parsing operations.
+#'
+#' @return (data.frame) The template characteristics table.
+#'
+#' @keywords internal
+#' 
+#' @examples 
+#' \dontrun{
+#' tmplt_chars <- read_template_characteristics
+#' tmplt_chars
+#' }
+#'
+read_template_characteristics <- function() {
+  char_file <- system.file(
+    "/templates/template_characteristics.txt", 
+    package = "EMLassemblyline"
+  )
+  tmplt_chars <- as.data.frame(
+    data.table::fread(
+      file = char_file,
+      fill = TRUE,
+      blank.lines.skip = TRUE,
+      sep = "\t",
+      colClasses = list(
+        character = 1:utils::count.fields(char_file, sep = "\t")[1]
+      )
+    )
+  )
+  return(tmplt_chars)
 }
 
 
@@ -570,7 +672,7 @@ url_env <- function(environment){
 #'
 validate_file_names <- function(path, data.files){
   
-  # Validate file presence ----------------------------------------------------
+  # Validate file presence
   
   # Index data.files in path
   files <- list.files(path)
@@ -587,7 +689,7 @@ validate_file_names <- function(path, data.files){
     )
   }
   
-  # Check file naming convention ----------------------------------------------
+  # Check file naming convention
   
   # Index file names that are not composed of alphanumerics and underscores
   use_i <- stringr::str_detect(
@@ -608,14 +710,14 @@ validate_file_names <- function(path, data.files){
     )
   }
   
-  # Get file names ------------------------------------------------------------
+  # Get file names
   
   files <- list.files(path)
   use_i <- stringr::str_detect(string = files,
                                pattern = stringr::str_c("^", data.files, collapse = "|"))
   data_files <- files[use_i]
   
-  # Reorder file names to match input ordering --------------------------------
+  # Reorder file names to match input ordering
   
   data_files_out <- c()
   for (i in 1:length(data.files)){
@@ -652,7 +754,7 @@ validate_file_names <- function(path, data.files){
 #'
 validate_path <- function(path){
   
-  # Validate path -------------------------------------------------------------
+  # Validate path
   
   if (!dir.exists(path)){
     stop('The directory specified by the argument "path" does not exist! Please enter the correct path for your dataset working directory.')
@@ -687,7 +789,7 @@ validate_path <- function(path){
 #'
 vocab_lter_id <- function(x){
   
-  # Check arguments -----------------------------------------------------------
+  # Check arguments
   
   if (is.character(x) != T){
     stop('Input argument "x" is not of class "character"!')
@@ -696,7 +798,7 @@ vocab_lter_id <- function(x){
     stop('Input argument "x" has a length > 1! Only single terms are allowed.')
   }
   
-  # Get the term ID and report ------------------------------------------------
+  # Get the term ID and report
   
   if (isTRUE(vocab_lter_term(x = x))){
     
@@ -760,7 +862,7 @@ vocab_lter_id <- function(x){
 #'
 vocab_lter_scope <- function(id){
   
-  # Check arguments -----------------------------------------------------------
+  # Check arguments
   
   if (is.numeric(id) != T){
     stop('Input argument "id" is not of class "numeric"!')
@@ -769,7 +871,7 @@ vocab_lter_scope <- function(id){
     stop('Input argument "id" has a length > 1! Only single identification numbers are allowed.')
   }
   
-  # Get the scope description -------------------------------------------------
+  # Get the scope description
   
   # Query for input ID
   
@@ -797,7 +899,7 @@ vocab_lter_scope <- function(id){
     
   }
   
-  # Return result -------------------------------------------------------------
+  # Return result
   
   node_terms
   
@@ -845,7 +947,7 @@ vocab_lter_term <- function(x, messages = FALSE, interactive = FALSE){
   # combined, then direct matches sought and if not found then all results
   # are presented as near misses.
   
-  # Check arguments -----------------------------------------------------------
+  # Check arguments
   
   if (is.character(x) != T){
     stop('Input argument "x" is not of class "character"!')
@@ -857,7 +959,7 @@ vocab_lter_term <- function(x, messages = FALSE, interactive = FALSE){
     stop('Both arguments "messages" & "interactive" can not be used at the same time. Please select one or the other.')
   }
   
-  # Construct the query and search --------------------------------------------
+  # Construct the query and search
   
   term <- stringr::str_replace_all(
     string = x, 
@@ -883,7 +985,7 @@ vocab_lter_term <- function(x, messages = FALSE, interactive = FALSE){
     )
   )
   
-  # Parse the responses and combine -------------------------------------------
+  # Parse the responses and combine
   
   
   
@@ -909,7 +1011,7 @@ vocab_lter_term <- function(x, messages = FALSE, interactive = FALSE){
   
   term_list <- unique(term_list)
   
-  # Is the search term listed? ------------------------------------------------
+  # Is the search term listed?
   
   if (sum(term_list == x) == 1){
     term_found <- T
@@ -917,7 +1019,7 @@ vocab_lter_term <- function(x, messages = FALSE, interactive = FALSE){
     term_found <- F
   }
   
-  # Report near misses --------------------------------------------------------
+  # Report near misses
   
   if (!missing(messages) & isTRUE(messages) & (!isTRUE(term_found)) & (length(term_list) != 0)){
     
@@ -937,7 +1039,7 @@ vocab_lter_term <- function(x, messages = FALSE, interactive = FALSE){
     
   }
   
-  # Interactive mode ----------------------------------------------------------
+  # Interactive mode
   
   if (!missing(interactive) & isTRUE(interactive) & (!isTRUE(term_found)) & (length(term_list) != 0)){
     
@@ -959,7 +1061,7 @@ vocab_lter_term <- function(x, messages = FALSE, interactive = FALSE){
     
   }
   
-  # Output results ------------------------------------------------------------
+  # Output results
   
   if (!missing(interactive) & isTRUE(interactive) & (!isTRUE(term_found)) & (length(term_list) != 0)){
     
@@ -1010,7 +1112,7 @@ vocab_lter_term <- function(x, messages = FALSE, interactive = FALSE){
 #'
 vocab_resolve_terms <- function(x, cv, messages = FALSE, interactive = FALSE){
   
-  # Check arguments -----------------------------------------------------------
+  # Check arguments
   
   if (is.character(x) != T){
     stop('Input argument "x" is not of class "character"!')
@@ -1022,14 +1124,14 @@ vocab_resolve_terms <- function(x, cv, messages = FALSE, interactive = FALSE){
     stop('Both arguments "messages" & "interactive" can not be used at the same time. Please select one or the other.')
   }
   
-  # Initialize output ---------------------------------------------------------
+  # Initialize output
   
   output <- data.frame(
     term = x,
     controlled_vocabulary = character(length(x)),
     stringsAsFactors = F)
   
-  # Call specified vocabularies -----------------------------------------------
+  # Call specified vocabularies
   
   if (cv == 'lter'){
     
@@ -1055,7 +1157,7 @@ vocab_resolve_terms <- function(x, cv, messages = FALSE, interactive = FALSE){
     
   }
   
-  # Return output -------------------------------------------------------------
+  # Return output
   
   output
   

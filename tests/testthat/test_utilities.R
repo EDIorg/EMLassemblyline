@@ -41,6 +41,22 @@ test_that("get_eol works", {
 })
 
 
+testthat::test_that("is_template()", {
+  testdir <- paste0(tempdir(), "/pkg")
+  dir_files <- copy_test_package(testdir)
+  i <- is_template(dir_files)
+  not_tmplts <- basename(dir_files[!i])
+  expected <- c(
+    "ancillary_data.zip",
+    "decomp.csv",
+    "nitrogen.csv", 
+    "processing_and_analysis.R"
+  )
+  expect_true(setequal(x = not_tmplts, y = expected))
+  unlink(testdir, recursive = TRUE, force = TRUE)
+})
+
+
 testthat::test_that('init_attributes() default settings', {
   # Default returns a data frame with expected columns and no rows.
   res <- init_attributes()
@@ -68,6 +84,15 @@ testthat::test_that('name_attribute_templates()', {
   tmplts <- name_attribute_templates(f)
   expected <- c("attributes_decomp.txt", "attributes_nitrogen.txt")
   expect_true(setequal(tmplts, expected))
+})
+
+
+testthat::test_that('read_data_objects()', {
+  test_dir <- paste0(tempdir(), "/pkg")
+  pkg_files <- copy_test_package(test_dir)
+  d <- read_data_objects(test_dir)
+  # Result should list likely data file names and associated R objects, with 
+  # unsupported types being an NA object
 })
 
 

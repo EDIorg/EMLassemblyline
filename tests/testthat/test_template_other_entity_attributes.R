@@ -22,13 +22,9 @@ testthat::test_that("Templates can be returned as a list of data frames.", {
 
 
 testthat::test_that("Templates can be returned as files.", {
-  
-  # dirpath <- paste0(tempdir(), "/templates")
-  # dir.create(dirpath, showWarnings = FALSE)
   files <- c("file1.pdf", "file2.R")
   expected <- name_attribute_templates(files)
   on.exit(unlink(paste0(tempdir(), '/', expected), force = TRUE))
-  
   res <- template_other_entity_attributes(
     path = tempdir(),
     other.entity = files,

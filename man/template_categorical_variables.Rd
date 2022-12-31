@@ -2,46 +2,63 @@
 % Please edit documentation in R/template_categorical_variables.R
 \name{template_categorical_variables}
 \alias{template_categorical_variables}
-\title{Describe categorical variables of a data table}
+\title{Describe categorical variables of an attributes template}
 \usage{
-template_categorical_variables(path, data.path = path, write.file = TRUE)
+template_categorical_variables(
+  path,
+  data.path = path,
+  empty = FALSE,
+  write.file = TRUE
+)
 }
 \arguments{
 \item{path}{(character) Path to the metadata template directory.}
 
 \item{data.path}{(character) Path to the data directory.}
 
-\item{write.file}{(logical; optional) Whether to write the template file.}
+\item{empty}{(logical) Whether to create an empty template.}
+
+\item{write.file}{(logical) Whether to write the template to file. If 
+\code{FALSE}, a list of data frames will be returned.}
 }
 \value{
-\item{catvars_*}{Columns:
-    \itemize{
-    \item{attributeName: Column name}
-    \item{code: Categorical variable}
-    \item{definition: Definition of categorical variable}
-    }
+Tables (one for each attributes template containing categorical classes), as 
+tab delimited files if \code{write.file = TRUE}, or a list of data frames if 
+\code{write.file = FALSE}. Table columns:
+\itemize{
+\item{attributeName: Column name}
+\item{code: Categorical variable}
+\item{definition: Definition of categorical variable}
 }
 }
 \description{
-Describes categorical variables of a data table. Use if any columns are classified as categorical in table attributes template.
+Describes categorical variables of an attributes template. Use if any 
+attributes are classified as "categorical" in the table attributes template.
 }
 \details{
-\code{template_categorical_variables()} knows which columns of a table
-    are \code{categorical} based on their definition under the \code{class} 
-    column of the attributes_*.txt template.
-    
-    Character encoding of metadata extracted directly from the tables are 
-    converted to UTF-8 via \code{enc2utf8()}.
+\code{template_categorical_variables()} knows which attributes of a 
+data object are \code{categorical} based on their definition under the 
+\code{class} column of the attributes template.
+}
+\note{
+Currently, this function is unable to extract metadata from data 
+objects that are not recognized as data tables. As a result, for these data 
+types the template will be returned empty. For guidance on manually 
+completing the template, see documentation on 
+\code{template_categorical_variables()} and the associated vignette on 
+editing templates.
 }
 \examples{
 \dontrun{
 # Set working directory
 setwd("/Users/me/Documents/data_packages/pkg_260")
 
-# For tables containing categorical variables as classified in the table attributes template
+# For tables containing categorical variables as classified in the 
+# attributes template
 template_categorical_variables(
   path = "./metadata_templates",
-  data.path = "./data_objects")
+  data.path = "./data_objects"
+)
 }
 
 }

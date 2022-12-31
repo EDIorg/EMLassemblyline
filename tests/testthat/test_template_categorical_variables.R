@@ -248,3 +248,62 @@ testthat::test_that('Missing value codes', {
     missing.value.code = "NA")
 
 })
+
+
+testthat::test_that("Templates can be returned as a list of data frames.", {
+  # Setup
+  meta <- c("attributes_decomp.txt", "attributes_nitrogen.txt")
+  data <- c("decomp.csv", "nitrogen.csv")
+  on.exit(unlink(past0(tempdir(), "/", c(meta, data)), force = TRUE))
+  for (m in meta) {
+    f <- paste0("/examples/pkg_260/metadata_templates/", m)
+    file.copy(system.file(f, package = "EMLassemblyline"), tempdir())
+  }
+  for (d in data) {
+    f <- paste0("/examples/pkg_260/data_objects/", d)
+    file.copy(system.file(f, package = "EMLassemblyline"), tempdir())
+  }
+  # Execute
+  res <- template_categorical_variables(path = tempdir(), write.file = FALSE)
+  # Assert
+  expect_equal(typeof(res), "list")
+  expect_true(
+    setequal(
+      x = names(res), 
+      y = c("catvars_decomp.txt", "catvars_nitrogen.txt")
+    )
+  )
+  for (r in res) {
+    expect_equal(class(r[1]), "data.frame")
+  }
+})
+
+
+testthat::test_that("Templates can be returned as files.", {
+  # TODO implement this
+  # files <- c("file1.pdf", "file2.R")
+  # expected <- name_attribute_templates(files)
+  # on.exit(unlink(paste0(tempdir(), '/', expected), force = TRUE))
+  # res <- template_other_entity_attributes(
+  #   path = tempdir(),
+  #   other.entity = files,
+  #   write.file = TRUE
+  # )
+  # expect_true(all(is.element(expected, dir(tempdir()))))
+})
+
+
+
+testthat::test_that("Categorical attributes, of any data object, result in a categorical variables template, even those without support for data reads", {
+  # TODO implement
+  # attribute_templates <- c(
+  #   "attributes_ancillary_data.txt",
+  #   "attributes_decomp.txt",
+  #   "attributes_nitrogen.txt"
+  # )
+  # expected <- c(
+  #   "catvars_ancillary_data.txt",
+  #   "catvars_decomp.txt",
+  #   "catvars_nitrogen.txt"
+  # )
+})

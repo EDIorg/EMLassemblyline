@@ -443,6 +443,10 @@ template_arguments <- function(
     
   }
   
+  # Read data objects ---------------------------------------------------------
+  
+  d <- read_data_objects(data.path)
+  
   # Read data tables ----------------------------------------------------------
   
   # FIXME: Warn user of possible empty columns (i.e. "V([:digit:])*")

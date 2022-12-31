@@ -1,40 +1,46 @@
-#' Describe categorical variables of a data table
+#' Describe categorical variables of an attributes template
 #'
-#' @description Describes categorical variables of a data table. Use if any columns are classified as categorical in table attributes template.
+#' Describes categorical variables of an attributes template. Use if any 
+#' attributes are classified as "categorical" in the table attributes template.
 #'
-#' @param path 
-#'     (character) Path to the metadata template directory.
-#' @param data.path
-#'     (character) Path to the data directory.
-#' @param write.file
-#'     (logical; optional) Whether to write the template file.
+#' @param path (character) Path to the metadata template directory.
+#' @param data.path (character) Path to the data directory.
+#' @param empty (logical) Whether to create an empty template.
+#' @param write.file (logical) Whether to write the template to file. If 
+#' \code{FALSE}, a list of data frames will be returned.
 #'
 #' @return 
-#' \item{catvars_*}{Columns:
-#'     \itemize{
-#'     \item{attributeName: Column name}
-#'     \item{code: Categorical variable}
-#'     \item{definition: Definition of categorical variable}
-#'     }
+#' Tables (one for each attributes template containing categorical classes), as 
+#' tab delimited files if \code{write.file = TRUE}, or a list of data frames if 
+#' \code{write.file = FALSE}. Table columns:
+#' \itemize{
+#' \item{attributeName: Column name}
+#' \item{code: Categorical variable}
+#' \item{definition: Definition of categorical variable}
 #' }
 #'     
-#' @details 
-#'     \code{template_categorical_variables()} knows which columns of a table
-#'     are \code{categorical} based on their definition under the \code{class} 
-#'     column of the attributes_*.txt template.
-#'     
-#'     Character encoding of metadata extracted directly from the tables are 
-#'     converted to UTF-8 via \code{enc2utf8()}.
+#' @details \code{template_categorical_variables()} knows which attributes of a 
+#' data object are \code{categorical} based on their definition under the 
+#' \code{class} column of the attributes template.
+#' 
+#' @note Currently, this function is unable to extract metadata from data 
+#' objects that are not recognized as data tables. As a result, for these data 
+#' types the template will be returned empty. For guidance on manually 
+#' completing the template, see documentation on 
+#' \code{template_categorical_variables()} and the associated vignette on 
+#' editing templates.
 #'
 #' @examples 
 #' \dontrun{
 #' # Set working directory
 #' setwd("/Users/me/Documents/data_packages/pkg_260")
 #' 
-#' # For tables containing categorical variables as classified in the table attributes template
+#' # For tables containing categorical variables as classified in the 
+#' # attributes template
 #' template_categorical_variables(
 #'   path = "./metadata_templates",
-#'   data.path = "./data_objects")
+#'   data.path = "./data_objects"
+#' )
 #' }
 #' 
 #' @export
@@ -42,23 +48,22 @@
 template_categorical_variables <- function(
   path, 
   data.path = path, 
+  empty = FALSE,
   write.file = TRUE) {
   
-  message('Templating categorical variables ...')
-  
-  # Validate arguments --------------------------------------------------------
+  message('Templating categorical variables')
   
   validate_arguments(
     fun.name = 'template_categorical_variables',
-    fun.args = as.list(environment()))
+    fun.args = as.list(environment())
+  )
   
   # Read templates and data ---------------------------------------------------
   
-  # Read all templates in path then parse the table attribute file names to get 
-  # the corresponding data table names. Once all file names are known, re-read
-  # all templates and data files.
+  # FIXME Read all templates and data objects in a single pass.
   
-  x <- template_arguments(path = path)$x
+  
+  x <- template_arguments(path = path, data.path)$x
   
   attribute_template_names <- stringr::str_subset(
     names(x$template),
@@ -69,10 +74,14 @@ template_categorical_variables <- function(
     attribute_template_to_table,
     data.path = data.path)
   
+  # FIXME Read all templates and data objects in a single pass.
   x <- template_arguments(
     path = path,
     data.path = data.path,
     data.table = data_tables)$x
+  
+  # TODO identify which objects are data tables and list under the data_tables
+  # object
   
   # Validate templates --------------------------------------------------------
   
@@ -231,29 +240,4 @@ attribute_template_to_table <- function(attributes.template, data.path) {
     "\\.[:alpha:]*$")
   table <- stringr::str_subset(dir(data.path), table_regex)
   return(table)
-}
-
-
-
-
-
-
-
-
-#' Convert data table file name to the corresponding attributes file name
-#'
-#' @param data.table
-#'     (character) File name of data table, including file extension
-#'
-#' @return
-#'     (character) Table attributes file name
-#' 
-#' @keywords internal
-#' 
-table_to_attribute_template <- function(data.table) {
-  attribute_template <- paste0(
-    "attributes_",
-    stringr::str_remove(data.table, "\\.[:alpha:]*"),
-    ".txt")
-  return(attribute_template)
 }

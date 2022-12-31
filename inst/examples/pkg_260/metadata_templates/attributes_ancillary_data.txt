@@ -1,0 +1,5 @@
+attributeName	attributeDefinition	class	unit	dateTimeFormatString	missingValueCode	missingValueCodeExplanation
+date	Date of measurement	Date		YYYY-MM-DD	-99999	Missing value
+variable	Variable of measurement	categorical			-99999	Missing value
+value	Value of measurement	numeric	dimensionless		-99999	Missing value
+unit	Unit of measurement	character			-99999	Missing value

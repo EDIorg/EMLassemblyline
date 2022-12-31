@@ -8,8 +8,8 @@
 #' extension. If more than one, supply as a vector of character strings (e.g. 
 #' \code{other.entity = c("ancillary_data.zip", "processing_and_analysis.R")}).
 #' @param empty (logical) Whether to create an empty template.
-#' @param write.file (logical; optional) Whether to write the template to file. 
-#' If \code{FALSE}, a list of data frames will be returned.
+#' @param write.file (logical) Whether to write the template to file. If 
+#' \code{FALSE}, a list of data frames will be returned.
 #'
 #' @return 
 #' Tables (one for each \code{other.entity}), as tab delimited files if 
