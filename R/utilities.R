@@ -507,7 +507,10 @@ name_attribute_templates <- function(files) {
 #' 
 #' @examples 
 #' \dontrun{
-#' 
+#' test_dir <- paste0(tempdir(), "/pkg")
+#' pkg_files <- copy_test_package(test_dir)
+#' d <- read_data_objects(test_dir)
+#' unlink(test_dir, recursive = TRUE, force = TRUE)
 #' }
 #' 
 read_data_objects <- function(data.path) {

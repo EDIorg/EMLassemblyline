@@ -254,7 +254,7 @@ testthat::test_that("Templates can be returned as a list of data frames.", {
   # Setup
   meta <- c("attributes_decomp.txt", "attributes_nitrogen.txt")
   data <- c("decomp.csv", "nitrogen.csv")
-  on.exit(unlink(past0(tempdir(), "/", c(meta, data)), force = TRUE))
+  on.exit(unlink(paste0(tempdir(), "/", c(meta, data)), force = TRUE))
   for (m in meta) {
     f <- paste0("/examples/pkg_260/metadata_templates/", m)
     file.copy(system.file(f, package = "EMLassemblyline"), tempdir())
@@ -274,7 +274,7 @@ testthat::test_that("Templates can be returned as a list of data frames.", {
     )
   )
   for (r in res) {
-    expect_equal(class(r[1]), "data.frame")
+    expect_equal(class(r$content), "data.frame")
   }
 })
 

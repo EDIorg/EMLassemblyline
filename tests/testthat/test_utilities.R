@@ -87,12 +87,40 @@ testthat::test_that('name_attribute_templates()', {
 })
 
 
-testthat::test_that('read_data_objects()', {
+testthat::test_that("read_data_objects()", {
+  # Parameterize the test
   test_dir <- paste0(tempdir(), "/pkg")
   pkg_files <- copy_test_package(test_dir)
+  expected_object_names <- c(
+    "ancillary_data.zip",
+    "decomp.csv",
+    "nitrogen.csv",
+    "processing_and_analysis.R"
+  )
+  expected_object_properties <- c(
+    "content", 
+    "eml_entity_type", 
+    "mime_type", 
+    "file_path"
+  )
+  other_entities <- c("ancillary_data.zip", "processing_and_analysis.R")
+  
+  # Assert properties of the returned object
   d <- read_data_objects(test_dir)
-  # Result should list likely data file names and associated R objects, with 
-  # unsupported types being an NA object
+  expect_type(d, "list")
+  for (i in seq_along(d)) {
+    expect_true(is.element(names(d[i]), expected_object_names))
+    expect_true(setequal(names(d[[i]]), expected_object_properties))
+    if (is.element(names(d[i]), other_entities)) {
+      expect_true(is.na(d[[i]]$content))
+    }
+    expect_true(!is.na(d[[i]]$eml_entity_type))
+    expect_true(!is.na(d[[i]]$mime_type))
+    expect_true(!is.na(d[[i]]$file_path))
+  }
+  
+  # Clean up
+  unlink(test_dir, recursive = TRUE, force = TRUE)
 })
 
 
