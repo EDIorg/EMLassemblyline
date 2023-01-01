@@ -96,7 +96,7 @@ template_arguments <- function(
     fill = TRUE,
     blank.lines.skip = TRUE)
   
-  attr_tmp <- read_template_attributes()
+  attr_tmp <- read_template_characteristics()
   
   # Initialize arguments ------------------------------------------------------
   
@@ -445,7 +445,7 @@ template_arguments <- function(
   
   # Read data objects ---------------------------------------------------------
   
-  # d <- read_data_objects(data.path)
+  # data_objects <- read_data_objects(data.path)
   # TODO parse d into data.table and other.entity below
   
   # Read data tables ----------------------------------------------------------

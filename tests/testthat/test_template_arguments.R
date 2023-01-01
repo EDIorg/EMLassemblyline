@@ -13,7 +13,7 @@ attr_args <- data.table::fread(
   fill = TRUE,
   blank.lines.skip = TRUE)
 
-attr_tmp <- read_template_attributes()
+attr_tmp <- read_template_characteristics()
 
 # List files at path and data.path
 

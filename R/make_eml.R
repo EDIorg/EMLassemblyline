@@ -194,7 +194,7 @@ make_eml <- function(
   
   # Get attributes of template files
   
-  attr_tmp <- read_template_attributes()
+  attr_tmp <- read_template_characteristics()
   
   # Validate arguments --------------------------------------------------------
   
