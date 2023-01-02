@@ -59,22 +59,16 @@ template_categorical_variables <- function(
   )
   
   # Read templates and data ---------------------------------------------------
-  
-  # FIXME Read all templates and data objects in a single pass.
-  
-  
+
   x <- template_arguments(path = path, data.path)$x
-  
   attribute_template_names <- stringr::str_subset(
     names(x$template),
-    "(?<=attributes_).*(?=\\.txt)")
+    "(?<=attributes_).*(?=\\.txt)"
+  )
+  data_objects <- name_data_objects(attribute_template_names, data.path)
   
-  data_tables <- sapply(
-    attribute_template_names,
-    attribute_template_to_table,
-    data.path = data.path)
-  
-  # FIXME Read all templates and data objects in a single pass.
+  # TODO template_arguments() needs a data.object parameter because attributes
+  # and catvars templates can come from non-dataTable types.
   x <- template_arguments(
     path = path,
     data.path = data.path,
@@ -210,34 +204,4 @@ template_categorical_variables <- function(
   # Return --------------------------------------------------------------------
 
   return(r)
-}
-
-
-
-
-
-
-
-
-#' Convert attributes file name to the corresponding data table file name
-#'
-#' @param attributes.template 
-#'     (character) Table attributes template file name, including file extension
-#' @param data.path
-#'     (character) Path to the data directory
-#'
-#' @return
-#'     (character) Data table file name
-#' 
-#' @keywords internal
-#' 
-attribute_template_to_table <- function(attributes.template, data.path) {
-  table_regex <- paste0(
-    "^(?<!^attributes_|^catvars_)",
-    stringr::str_extract(
-      attributes.template, 
-      "(?<=attributes_).*(?=\\.txt)"),
-    "\\.[:alpha:]*$")
-  table <- stringr::str_subset(dir(data.path), table_regex)
-  return(table)
 }

@@ -464,7 +464,7 @@ parse_delim <- function(x){
 }
 
 
-#' Create attribute template names from file names
+#' Create attributes template file names from data object file names
 #'
 #' @param files (character vector) Names of data object files, including file 
 #' extensions.
@@ -476,12 +476,40 @@ parse_delim <- function(x){
 #' @examples 
 #' \dontrun{
 #' f <- c("decomp.csv", "nitrogen.csv")
-#' name_attribute_templates(f)
+#' name_attributes_templates(f)
 #' }
 #' 
-name_attribute_templates <- function(files) {
+name_attributes_templates <- function(files) {
   res <- paste0("attributes_", tools::file_path_sans_ext(files), ".txt")
   return(res)
+}
+
+
+#' Create data object file names from attributes template file names
+#'
+#' @param files (character) File names of attributes templates, including the 
+#' file extension.
+#' @param data.path (character) Path to the data directory.
+#'
+#' @return (character) File names of the data objects corresponding with 
+#' \code{files}.
+#' 
+#' @keywords internal
+#' 
+#' @examples 
+#' \dontrun{
+#' 
+#' }
+#' 
+name_data_objects <- function(files, data.path) {
+  table_regex <- paste0(
+    "^(?<!^attributes_|^catvars_)",
+    stringr::str_extract(
+      files, 
+      "(?<=attributes_).*(?=\\.txt)"),
+    "\\.[:alpha:]*$")
+  table <- stringr::str_subset(dir(data.path), table_regex)
+  return(table)
 }
 
 

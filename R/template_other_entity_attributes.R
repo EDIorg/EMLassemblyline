@@ -81,7 +81,7 @@ template_other_entity_attributes <- function(
   for (i in seq_along(other.entity)) {
     templates[[i]] <- init_attributes()
   }
-  f <- name_attribute_templates(other.entity)
+  f <- name_attributes_templates(other.entity)
   names(templates) <- f
   if (write.file) {
     for (i in seq_along(templates)) {

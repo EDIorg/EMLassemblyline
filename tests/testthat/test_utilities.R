@@ -79,11 +79,22 @@ testthat::test_that('init_attributes() default settings', {
 })
 
 
-testthat::test_that('name_attribute_templates()', {
+testthat::test_that('name_attributes_templates()', {
   f <- c("decomp.csv", "nitrogen.csv")
-  tmplts <- name_attribute_templates(f)
+  tmplts <- name_attributes_templates(f)
   expected <- c("attributes_decomp.txt", "attributes_nitrogen.txt")
   expect_true(setequal(tmplts, expected))
+})
+
+
+testthat::test_that('name_data_objects()', {
+  testdir <- paste0(tempdir(), "/pkg")
+  dir_files <- copy_test_package(testdir)
+  attr_files <- c("attributes_decomp.txt", "attributes_nitrogen.txt")
+  data_objects <- name_data_objects(attr_files, testdir)
+  expected <- c("decomp.csv", "nitrogen.csv")
+  expect_true(setequal(expected, data_objects))
+  unlink(testdir, recursive = TRUE, force = TRUE)
 })
 
 

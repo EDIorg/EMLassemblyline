@@ -445,44 +445,23 @@ template_arguments <- function(
   
   # Read data objects ---------------------------------------------------------
   
-  # data_objects <- read_data_objects(data.path)
-  # TODO parse d into data.table and other.entity below
+  if (!is.null(data.path)) {
+    data_objects <- read_data_objects(data.path)
+  }
   
   # Read data tables ----------------------------------------------------------
   
-  # FIXME: Warn user of possible empty columns (i.e. "V([:digit:])*")
   if (!is.null(data.table)) {
-    
-    for (i in 1:length(data.table)) {
-      f <- paste0(data.path, "/", data.table[i])
-
-      if (is.null(sep)){
-
-        data_tables[[i]]$content <- as.data.frame(data.table::fread(file = f))
-        
-      } else {
-        
-        data_tables[[i]]$content <- utils::read.table(
-          file = f,
-          header = T,
-          sep = sep,
-          quote = "\"",
-          as.is = TRUE,
-          comment.char = "")
-        
-      }
-      
-    }
-    
+    i <- which(names(data_objects) %in% data.table)
+    data_tables <- data_objects[i]
   }
   
   # Read other entities -------------------------------------------------------
   
-  # if (!is.null(other.entity)) {
-  #   # for (i in 1:length(other.entity)) {
-  #   #   other_entities[[i]]$content <- NA
-  #   # }
-  # }
+  if (!is.null(other.entity)) {
+    i <- which(names(data_objects) %in% other.entity)
+    other_entities <- data_objects[i]
+  }
   
   # Combine components & return -----------------------------------------------
   

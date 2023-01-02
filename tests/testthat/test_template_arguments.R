@@ -363,7 +363,6 @@ testthat::test_that("Inputs = empty templates", {
 # Inputs = data tables --------------------------------------------------------
 
 testthat::test_that("Inputs = data tables", {
-  
   file.copy(
     from  = system.file('/examples/pkg_260', package = 'EMLassemblyline'),
     to = tempdir(),
@@ -381,13 +380,11 @@ testthat::test_that("Inputs = data tables", {
     expect_true(nrow(output$x$data.table[[i]]$content) > 1)
   }
   unlink(paste0(tempdir(), "/pkg_260/data_objects"), force = T, recursive = T)
-  
 })
 
 # Inputs = other entities -----------------------------------------------------
 
 testthat::test_that("Inputs = other entities", {
-  
   file.copy(
     from  = system.file('/examples/pkg_260', package = 'EMLassemblyline'),
     to = tempdir(),
@@ -400,9 +397,8 @@ testthat::test_that("Inputs = other entities", {
   expect_true(
     all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
   for (i in 1:length(names(output$x$other.entity))) {
-    expect_true(is.null(output$x$other.entity[[i]]$content))
+    expect_true(is.na(output$x$other.entity[[i]]$content))
   }
   unlink(paste0(tempdir(), "/pkg_260/data_objects"), force = T, recursive = T)
-  
 })
 
