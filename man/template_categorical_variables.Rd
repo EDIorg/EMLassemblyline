@@ -38,7 +38,10 @@ attributes are classified as "categorical" in the table attributes template.
 \details{
 \code{template_categorical_variables()} knows which attributes of a 
 data object are \code{categorical} based on their definition under the 
-\code{class} column of the attributes template.
+\code{class} column of the attributes template. If any categorical variables
+are found, this function reads the corresponding data object (if supported)
+and returns a list of the categorical variables and the unique categorical 
+codes.
 }
 \note{
 Currently, this function is unable to extract metadata from data 

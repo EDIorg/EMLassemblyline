@@ -9,6 +9,7 @@ template_arguments(
   data.path = NULL,
   data.table = NULL,
   other.entity = NULL,
+  data.objects = NULL,
   sep = NULL,
   empty = FALSE
 )
@@ -27,8 +28,11 @@ a vector (e.g. \code{data.table = c('decomp.csv', 'nitrogen.csv')}).}
 then supply as a vector (e.g. 
 \code{other.entity = c('ancillary_data.zip', 'processing_and_analysis.R')}).}
 
-\item{sep}{(character) Data table field delimiter. Use this if this function fails
-to read your \code{data.table}.}
+\item{data.objects}{(character) File names of data objects. This generalizes 
+data read operations and is no less accurate than using \code{data.table} or
+\code{other.entity}. However, specific data types (e.g. \code{data.table} 
+and \code{other.entity}) should be used to declare which entity type the 
+data object will be listed under in the finalized EML metadata.}
 
 \item{empty}{(logical) Initialize the output with a set of empty metadata templates?
 This option is useful when wanting to transfer metadata directly into

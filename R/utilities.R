@@ -430,6 +430,31 @@ api_get_provenance_metadata <- function(package.id, environment = 'production'){
 }
 
 
+#' List attribute templates in a directory
+#'
+#' @param path (character) Path to the metadata template directory.
+#'
+#' @return (character) File names of attribute templates.
+#' 
+#' @keywords internal
+#' 
+#' @examples 
+#' \dontrun{
+#' 
+#' }
+#' 
+list_attribute_templates <- function(path) {
+  dir_files <- list.files(path)
+  i <- grepl(
+    pattern = "(?<=attributes_).*(?=\\.txt)", 
+    x = dir_files, 
+    perl = TRUE
+  )
+  attr_files <- dir_files[i]
+  return(attr_files)
+}
+
+
 
 
 
@@ -485,6 +510,27 @@ name_attributes_templates <- function(files) {
 }
 
 
+#' Create categorical variables template file names from data object file names
+#'
+#' @param files (character vector) Names of data object files, including file 
+#' extensions.
+#' 
+#' @return (character vector) Names of categorical variables templates.
+#' 
+#' @keywords internal
+#' 
+#' @examples 
+#' \dontrun{
+#' f <- c("decomp.csv", "nitrogen.csv")
+#' name_catvars_templates(f)
+#' }
+#' 
+name_catvars_templates <- function(files) {
+  res <- paste0("catvars_", tools::file_path_sans_ext(files), ".txt")
+  return(res)
+}
+
+
 #' Create data object file names from attributes template file names
 #'
 #' @param files (character) File names of attributes templates, including the 
@@ -498,18 +544,27 @@ name_attributes_templates <- function(files) {
 #' 
 #' @examples 
 #' \dontrun{
-#' 
+#' testdir <- paste0(tempdir(), "/pkg")
+#' dir_files <- copy_test_package(testdir)
+#' attr_files <- c("attributes_decomp.txt", "attributes_nitrogen.txt")
+#' name_data_objects(attr_files, testdir)
+#' unlink(testdir, recursive = TRUE, force = TRUE)
 #' }
 #' 
 name_data_objects <- function(files, data.path) {
-  table_regex <- paste0(
-    "^(?<!^attributes_|^catvars_)",
-    stringr::str_extract(
-      files, 
-      "(?<=attributes_).*(?=\\.txt)"),
-    "\\.[:alpha:]*$")
-  table <- stringr::str_subset(dir(data.path), table_regex)
-  return(table)
+  match_obj <- regexpr(
+  pattern = "(?<=attributes_).*(?=\\.txt)",
+  text = files,
+  perl = TRUE
+)
+data_object_basenames <- regmatches(x = files, m = match_obj)
+is_not_template <- !is_template(dir(data.path))
+data_object_file_names <- grep(
+  pattern = paste(data_object_basenames, collapse = "|"), 
+  x = dir(data.path)[is_not_template], 
+  value = TRUE
+)
+return(data_object_file_names)
 }
 
 
@@ -518,15 +573,13 @@ name_data_objects <- function(files, data.path) {
 #' Attempts to read data objects through a series of parsers informed by the
 #' data object mime type.
 #'
-#' @param path (character) Path to a directory containing data objects, and
-#' potentially metadata template files.
+#' @param data.path (character) Path to the data directory.
+#' @param data.objects (character) File names of data objects.
 #'
 #' @return (list) Named list of parsed data objects with the files:
 #' \itemize{
 #' \item{content: The data object, in it's R representation. This value will be
 #' \code{NA} if the object could not be read.}
-#' \item{eml_entity_type: What type of data entity the data object will be 
-#' represented as in EML.}
 #' \item{mime_type: The data object's MIME type.}
 #' \item{file_path: The data object's file path.}
 #' }
@@ -537,41 +590,36 @@ name_data_objects <- function(files, data.path) {
 #' \dontrun{
 #' test_dir <- paste0(tempdir(), "/pkg")
 #' pkg_files <- copy_test_package(test_dir)
-#' d <- read_data_objects(test_dir)
+#' d <- read_data_objects(
+#'   data.path = test_dir,
+#'   data_objects = c(
+#'     "ancillary_data.zip",
+#'     "decomp.csv",
+#'     "nitrogen.csv",
+#'     "processing_and_analysis.R"
+#'   )
+#' )
+#' View(d)
 #' unlink(test_dir, recursive = TRUE, force = TRUE)
 #' }
 #' 
-read_data_objects <- function(data.path) {
-  
-  # It is reasonably safe to assume that data objects are any file in 
-  # data.path that are also not metadata templates. Doing so pairs down the 
-  # list if data files to attempt reads against.
-  dir_files <- list.files(data.path, full.names = TRUE)
-  tmplt_files <- is_template(dir_files)
-  data_files <- dir_files[!tmplt_files]
-  
-  # Knowing the data object's mime type narrows the set of possible data 
-  # parsers.
+read_data_objects <- function(data.path, data.objects) {
+  data_files <- paste0(data.path, "/", data.objects)
   mime_types <- sapply(data_files, mime::guess_type)
-  
-  # Reading data objects within a simple logic structure, grouped by mime type,
-  # enables extension to new data types in the future. Also, adding file 
-  # metadata now, simplifies access by downstream processes.
   data_objects <- vector(mode = "list", length = length(mime_types))
   for (i in seq_along(mime_types)) {
     type <- unname(mime_types[i])
     file_path <- names(mime_types[i])
-    # Tabular data objects
+    # Data tables
     if (type %in% c("text/csv", "text/tab-separated-values")) {
       data_objects[[i]]$content <- as.data.frame(
         data.table::fread(file = file_path)
       )
-      data_objects[[i]]$eml_entity_type <- "dataTable"
-    # Unknown data objects
+    # Other entities
     } else {
       data_objects[[i]]$content <- NA
-      data_objects[[i]]$eml_entity_type <- "otherEntity"
     }
+    # Metadata to facilitate downstream processes
     names(data_objects)[i] <- basename(file_path)
     data_objects[[i]]$mime_type <- type
     data_objects[[i]]$file_path <- file_path

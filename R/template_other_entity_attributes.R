@@ -77,7 +77,8 @@ template_other_entity_attributes <- function(
     # TODO Read data objects for metadata extraction.
   }
   
-  templates <- list()
+  
+  templates <- vector(mode = "list", length = length(other.entity))
   for (i in seq_along(other.entity)) {
     templates[[i]] <- init_attributes()
   }

@@ -21,7 +21,10 @@
 #'     
 #' @details \code{template_categorical_variables()} knows which attributes of a 
 #' data object are \code{categorical} based on their definition under the 
-#' \code{class} column of the attributes template.
+#' \code{class} column of the attributes template. If any categorical variables
+#' are found, this function reads the corresponding data object (if supported)
+#' and returns a list of the categorical variables and the unique categorical 
+#' codes.
 #' 
 #' @note Currently, this function is unable to extract metadata from data 
 #' objects that are not recognized as data tables. As a result, for these data 
@@ -57,35 +60,55 @@ template_categorical_variables <- function(
     fun.name = 'template_categorical_variables',
     fun.args = as.list(environment())
   )
-  
-  # Read templates and data ---------------------------------------------------
 
-  x <- template_arguments(path = path, data.path)$x
-  attribute_template_names <- stringr::str_subset(
-    names(x$template),
-    "(?<=attributes_).*(?=\\.txt)"
-  )
-  data_objects <- name_data_objects(attribute_template_names, data.path)
-  
-  # TODO template_arguments() needs a data.object parameter because attributes
-  # and catvars templates can come from non-dataTable types.
+  # Read templates, then use these to identify the list of data objects and 
+  # read these in.
+  x <- template_arguments(path, data.path)$x
+  attr_files <- list_attribute_templates(path)
+  data_objects <- name_data_objects(attr_files, data.path)
   x <- template_arguments(
     path = path,
     data.path = data.path,
-    data.table = data_tables)$x
-  
-  # TODO identify which objects are data tables and list under the data_tables
-  # object
-  
-  # Validate templates --------------------------------------------------------
-  
+    data.objects = data_objects
+  )$x
   x <- remove_empty_templates(x)
   
-  # Extract categorical variables ---------------------------------------------
+  # If there are no data.objects, there is no more work to be done.
+  if (is.null(x$data.objects)) {
+    return(NULL)
+  }
   
-  # Categorical variables are classified in each data tables attribute 
-  # template. For each categorical variable found, extract unique codes, except
-  # for declared missing value codes, and return in a long data frame.
+  templates <- names(x$template)
+  res <- vector(mode = "list", length = length(x$data.objects))
+  # Iterate over the data objects and extract categorical variable codes when
+  # possible.
+  for (i in seq_along(x$data.objects)) {
+    catvars_file <- name_catvars_templates(names(x$data.objects)[i])
+    # Don't overwrite existing categorical variables templates.
+    if (is.element(catvars_file, templates)) {
+      message(catvars_file, " already exists!")
+      next
+    }
+    # An attributes template, corresponding with the current data object, is 
+    # required for continued processing.
+    attrs_file <- name_attributes_templates(names(x$data.objects)[i])
+    if (!is.element(attrs_file, templates)) {
+      next
+    }
+    # Try extracting categorical variables from the current data object using 
+    # one of the supported parsing algorithms, indicated by MIME type.
+    mime_type <- x$data.objects[[i]]$mime_type
+    if (mime_type == "text/csv") {
+      res[[i]] <- catvars_from_textcsv(
+        data_object = x$data.objects[[i]]$content, 
+        attrs_tmplt = x$template[[attrs_file]]$content
+      )
+    }
+    #   - Initialize catvars template (similar to init_attributes())
+    #   - iterate over categoricals extracting unique values
+    #   - drop missing value codes
+  }
+  # TODO remove NULLs
   
   r <- lapply(
     seq_along(data_tables),
@@ -93,17 +116,18 @@ template_categorical_variables <- function(
       
       # Get components
       
+      # TODO Should this be preserved?
       # Read cols as char to prevent data.table::fread() parsing numeric "" to 
       # NA which cannot be converted back to "" before writing the template.
-      d <- data.table::fread(
-        paste0(data.path, "/", data_tables[i]), 
-        colClasses = "character")
+      # d <- data.table::fread(
+      #   paste0(data.path, "/", data_tables[i]), 
+      #   colClasses = "character")
       
-      attributes <- x$template[[names(data_tables)[i]]]$content
+      # attributes <- x$template[[names(data_tables)[i]]]$content
       # Do not continue unless data and attributes have made it this far
-      if (is.null(d) | is.null(attributes)) {
-        return(NULL)
-      }
+      # if (is.null(d) | is.null(attributes)) {
+      #   return(NULL)
+      # }
       
       categorical_variables <- attributes$attributeName[
         attributes$class == "categorical"]
@@ -204,4 +228,37 @@ template_categorical_variables <- function(
   # Return --------------------------------------------------------------------
 
   return(r)
+}
+
+
+#' Create a categorical variables template for a MIME Type text/csv data object
+#'
+#' @param data_object (data.frame) The data object.
+#' @param attrs_tmplt (data.frame) The attributes template corresponding to 
+#' \code{data_object}.
+#'
+#' @return (data.frame or NULL) Returns a \code{data.frame} if categorical variables 
+#' are listed in \code{attrs_tmplt} corresponding categorical codes are found
+#' in \code{data_object}, otherwise \code{NULL}.
+#' 
+#' @keywords internal
+#'
+#' @examples
+#' \dontrun{
+#' 
+#' }
+#' 
+catvars_from_textcsv <- function(data_object, attrs_tmplt) {
+  # If no categorical variables are declared in the attributes template, for 
+  # the current data object, then there are none to extract.
+  is_categorical <- attrs_tmplt$class %in% "categorical"
+  if (!any(is_categorical)) {
+    return(NULL)
+  }
+  df <- data_object[ , which(is_categorical)]
+  browser()
+  test <- sapply(df, unique)
+  # TODO reshape result into long data frame
+  stack(test)
+
 }

@@ -4,19 +4,18 @@
 \alias{read_data_objects}
 \title{Read data objects}
 \usage{
-read_data_objects(data.path)
+read_data_objects(data.path, data.objects)
 }
 \arguments{
-\item{path}{(character) Path to a directory containing data objects, and
-potentially metadata template files.}
+\item{data.path}{(character) Path to the data directory.}
+
+\item{data.objects}{(character) File names of data objects.}
 }
 \value{
 (list) Named list of parsed data objects with the files:
 \itemize{
 \item{content: The data object, in it's R representation. This value will be
 \code{NA} if the object could not be read.}
-\item{eml_entity_type: What type of data entity the data object will be 
-represented as in EML.}
 \item{mime_type: The data object's MIME type.}
 \item{file_path: The data object's file path.}
 }
@@ -29,7 +28,16 @@ data object mime type.
 \dontrun{
 test_dir <- paste0(tempdir(), "/pkg")
 pkg_files <- copy_test_package(test_dir)
-d <- read_data_objects(test_dir)
+d <- read_data_objects(
+  data.path = test_dir,
+  data_objects = c(
+    "ancillary_data.zip",
+    "decomp.csv",
+    "nitrogen.csv",
+    "processing_and_analysis.R"
+  )
+)
+View(d)
 unlink(test_dir, recursive = TRUE, force = TRUE)
 }
 

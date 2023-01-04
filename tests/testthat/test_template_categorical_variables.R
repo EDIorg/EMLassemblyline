@@ -251,31 +251,22 @@ testthat::test_that('Missing value codes', {
 
 
 testthat::test_that("Templates can be returned as a list of data frames.", {
-  # # Setup
-  # meta <- c("attributes_decomp.txt", "attributes_nitrogen.txt")
-  # data <- c("decomp.csv", "nitrogen.csv")
-  # on.exit(unlink(paste0(tempdir(), "/", c(meta, data)), force = TRUE))
-  # for (m in meta) {
-  #   f <- paste0("/examples/pkg_260/metadata_templates/", m)
-  #   file.copy(system.file(f, package = "EMLassemblyline"), tempdir())
-  # }
-  # for (d in data) {
-  #   f <- paste0("/examples/pkg_260/data_objects/", d)
-  #   file.copy(system.file(f, package = "EMLassemblyline"), tempdir())
-  # }
-  # # Execute
-  # res <- template_categorical_variables(path = tempdir(), write.file = FALSE)
-  # # Assert
-  # expect_equal(typeof(res), "list")
-  # expect_true(
-  #   setequal(
-  #     x = names(res), 
-  #     y = c("catvars_decomp.txt", "catvars_nitrogen.txt")
-  #   )
-  # )
-  # for (r in res) {
-  #   expect_equal(class(r$content), "data.frame")
-  # }
+  testdir <- paste0(tempdir(), "/pkg")
+  pkg_files <- copy_test_package(testdir)
+  catvars_files <- dir(testdir, pattern = "catvars", full.names = TRUE)
+  file.remove(catvars_files)
+  res <- template_categorical_variables(path = testdir, write.file = FALSE)
+  expect_equal(typeof(res), "list")
+  expect_true(
+    setequal(
+      x = names(res),
+      y = c("catvars_decomp.txt", "catvars_nitrogen.txt")
+    )
+  )
+  for (r in res) {
+    expect_equal(class(r$content), "data.frame")
+  }
+  unlink(testdir, recursive = TRUE, force = TRUE)
 })
 
 

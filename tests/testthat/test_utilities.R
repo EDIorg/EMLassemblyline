@@ -79,10 +79,32 @@ testthat::test_that('init_attributes() default settings', {
 })
 
 
+testthat::test_that("list_attribute_templates()", {
+  testdir <- paste0(tempdir(), "/pkg")
+  pkg_files <- copy_test_package(testdir)
+  attr_files <- list_attribute_templates(testdir)
+  expected <- c(
+    "attributes_ancillary_data.txt",
+    "attributes_nitrogen.txt",
+    "attributes_decomp.txt"
+  )
+  expect_true(setequal(attr_files, expected))
+  unlink(testdir, recursive = TRUE, force = TRUE)
+})
+
+
 testthat::test_that('name_attributes_templates()', {
   f <- c("decomp.csv", "nitrogen.csv")
   tmplts <- name_attributes_templates(f)
   expected <- c("attributes_decomp.txt", "attributes_nitrogen.txt")
+  expect_true(setequal(tmplts, expected))
+})
+
+
+testthat::test_that('name_catvars_templates()', {
+  f <- c("decomp.csv", "nitrogen.csv")
+  tmplts <- name_catvars_templates(f)
+  expected <- c("catvars_decomp.txt", "catvars_nitrogen.txt")
   expect_true(setequal(tmplts, expected))
 })
 
@@ -110,14 +132,16 @@ testthat::test_that("read_data_objects()", {
   )
   expected_object_properties <- c(
     "content", 
-    "eml_entity_type", 
     "mime_type", 
     "file_path"
   )
   other_entities <- c("ancillary_data.zip", "processing_and_analysis.R")
   
   # Assert properties of the returned object
-  d <- read_data_objects(test_dir)
+  d <- read_data_objects(
+    data.path = test_dir, 
+    data.objects = expected_object_names
+  )
   expect_type(d, "list")
   for (i in seq_along(d)) {
     expect_true(is.element(names(d[i]), expected_object_names))
@@ -125,7 +149,6 @@ testthat::test_that("read_data_objects()", {
     if (is.element(names(d[i]), other_entities)) {
       expect_true(is.na(d[[i]]$content))
     }
-    expect_true(!is.na(d[[i]]$eml_entity_type))
     expect_true(!is.na(d[[i]]$mime_type))
     expect_true(!is.na(d[[i]]$file_path))
   }

@@ -21,7 +21,11 @@ Create data object file names from attributes template file names
 }
 \examples{
 \dontrun{
-
+testdir <- paste0(tempdir(), "/pkg")
+dir_files <- copy_test_package(testdir)
+attr_files <- c("attributes_decomp.txt", "attributes_nitrogen.txt")
+name_data_objects(attr_files, testdir)
+unlink(testdir, recursive = TRUE, force = TRUE)
 }
 
 }
