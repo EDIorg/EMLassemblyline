@@ -36,7 +36,7 @@ testthat::test_that("Inputs = NULL", {
   expect_true(class(output) == "list")
   expect_true(all(names(output) %in% attr_args$argument_name))
   expect_true(
-    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+    all(names(output$x) %in% c('template', 'data.table', 'other.entity', 'data.objects')))
   expect_true(is.null(output$x$template))
   expect_true(is.null(output$x$data.table))
   expect_true(is.null(output$x$other.entity))
@@ -116,7 +116,7 @@ testthat::test_that("Inputs = empty templates", {
   expect_true(class(output) == "list")
   expect_true(all(names(output) %in% attr_args$argument_name))
   expect_true(
-    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+    all(names(output$x) %in% c('template', 'data.table', 'other.entity', 'data.objects')))
   
   tnames <- names(output$x$template)
   for (i in 1:length(tnames)) {
@@ -168,7 +168,7 @@ testthat::test_that("Inputs = the 'empty' argument", {
   expect_true(class(output) == "list")
   expect_true(all(names(output) %in% attr_args$argument_name))
   expect_true(
-    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+    all(names(output$x) %in% c('template', 'data.table', 'other.entity', 'data.objects')))
   
   expected_templates <- c(
     "abstract.txt", "additional_info.txt", "custom_units.txt", 
@@ -216,7 +216,7 @@ testthat::test_that("Inputs = empty templates", {
   expect_true(class(output) == "list")
   expect_true(all(names(output) %in% attr_args$argument_name))
   expect_true(
-    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+    all(names(output$x) %in% c('template', 'data.table', 'other.entity', 'data.objects')))
   
   tnames <- names(output$x$template)
   for (i in 1:length(tnames)) {
@@ -267,7 +267,7 @@ testthat::test_that("Inputs = empty templates", {
   expect_true(class(output) == "list")
   expect_true(all(names(output) %in% attr_args$argument_name))
   expect_true(
-    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+    all(names(output$x) %in% c('template', 'data.table', 'other.entity', 'data.objects')))
   
   tnames <- names(output$x$template)
   for (i in 1:length(tnames)) {
@@ -318,7 +318,7 @@ testthat::test_that("Inputs = empty templates", {
   expect_true(class(output) == "list")
   expect_true(all(names(output) %in% attr_args$argument_name))
   expect_true(
-    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+    all(names(output$x) %in% c('template', 'data.table', 'other.entity', 'data.objects')))
   
   tnames <- names(output$x$template)
   for (i in 1:length(tnames)) {
@@ -372,7 +372,7 @@ testthat::test_that("Inputs = data tables", {
   expect_true(class(output) == "list")
   expect_true(all(names(output) %in% attr_args$argument_name))
   expect_true(
-    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+    all(names(output$x) %in% c('template', 'data.table', 'other.entity', 'data.objects')))
   for (i in 1:length(names(output$x$data.table))) {
     expect_true(is.data.frame(output$x$data.table[[i]]$content))
     expect_true(ncol(output$x$data.table[[i]]$content) > 1)
@@ -394,7 +394,7 @@ testthat::test_that("Inputs = other entities", {
   expect_true(class(output) == "list")
   expect_true(all(names(output) %in% attr_args$argument_name))
   expect_true(
-    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+    all(names(output$x) %in% c('template', 'data.table', 'other.entity', 'data.objects')))
   for (i in 1:length(names(output$x$other.entity))) {
     expect_true(is.na(output$x$other.entity[[i]]$content))
   }

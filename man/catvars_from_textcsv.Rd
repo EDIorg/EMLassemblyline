@@ -9,12 +9,12 @@ catvars_from_textcsv(data_object, attrs_tmplt, empty = FALSE)
 \arguments{
 \item{data_object}{(data.frame) The data object.}
 
-\item{attrs_tmplt}{(data.frame) The attributes template corresponding to 
+\item{attrs_tmplt}{(data.frame) The attributes template corresponding to
 \code{data_object}.}
 }
 \value{
-(data.frame or NULL) Returns a \code{data.frame} if categorical 
-variables are listed in \code{attrs_tmplt} corresponding categorical codes 
+(data.frame or NULL) Returns a \code{data.frame} if categorical
+variables are listed in \code{attrs_tmplt} corresponding categorical codes
 are found in \code{data_object}, otherwise \code{NULL}.
 }
 \description{

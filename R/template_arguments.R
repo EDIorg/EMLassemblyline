@@ -146,10 +146,10 @@ template_arguments <- function(
     data_object <- validate_file_names(
       path = data.path,
       data.files = data.objects)
-    data_object <- vector('list', length(data_object))
-    names(data_object) <- enc2utf8(as.character(data_object))
+    data_objects <- vector('list', length(data_object))
+    names(data_objects) <- enc2utf8(as.character(data_object))
   } else {
-    data_object <- NULL
+    data_objects <- NULL
   }
   
   # Initialize data tables ----------------------------------------------------

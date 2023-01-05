@@ -18,13 +18,13 @@ template_categorical_variables(
 
 \item{empty}{(logical) Whether to create an empty template.}
 
-\item{write.file}{(logical) Whether to write the template to file. If 
+\item{write.file}{(logical) Whether to write the template to file. If
 \code{FALSE}, a list of data frames will be returned.}
 }
 \value{
-If \code{write.file = TRUE}, tab delimited files (one for each attributes 
-template containing categorical classes) is written to \code{path}. If 
-\code{write.file = FALSE} a list of data frames are returned. Columns of 
+If \code{write.file = TRUE}, tab delimited files (one for each attributes
+template containing categorical classes) is written to \code{path}. If
+\code{write.file = FALSE} a list of data frames are returned. Columns of
 this template:
 \itemize{
 \item{attributeName: Column name}
@@ -33,20 +33,20 @@ this template:
 }
 }
 \description{
-Use this function if data objects contain any attributes classified 
+Use this function if data objects contain any attributes classified
 "categorical" in an attributes template.
 }
 \details{
-\code{template_categorical_variables()} knows which attributes of a 
-data object are \code{categorical} based on their definition under the 
+\code{template_categorical_variables()} knows which attributes of a
+data object are \code{categorical} based on their definition under the
 \code{class} column of the attributes template. If any categorical variables
-are found, this function reads the corresponding data object (when 
-supported) and returns a list of the categorical variables and their unique 
+are found, this function reads the corresponding data object (when
+supported) and returns a list of the categorical variables and their unique
 codes.
 }
 \note{
 Currently, the only supported data object type is "text/csv". For all
-other types, returned templates will be empty. For guidance on manual 
+other types, returned templates will be empty. For guidance on manual
 completion of this template, see the vignette on editing templates.
 }
 \examples{
