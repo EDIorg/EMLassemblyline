@@ -206,7 +206,7 @@ testthat::test_that("make_eml()", {
   
   # Parameterize
   
-  attr_tmp <- read_template_attributes()
+  attr_tmp <- read_template_characteristics()
   x <- template_arguments(
     path = system.file(
       '/examples/pkg_260/metadata_templates',

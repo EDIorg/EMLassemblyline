@@ -2,7 +2,7 @@
 context('Template arguments')
 library(EMLassemblyline)
 
-# Parameterize ----------------------------------------------------------------
+# Parameterize
 
 # Read attributes of EMLassemblyline function arguments and templates
 
@@ -13,7 +13,7 @@ attr_args <- data.table::fread(
   fill = TRUE,
   blank.lines.skip = TRUE)
 
-attr_tmp <- read_template_attributes()
+attr_tmp <- read_template_characteristics()
 
 # List files at path and data.path
 
@@ -27,7 +27,6 @@ data_path_files <- list.files(
     '/examples/data',
     package = 'EMLassemblyline'))
 
-# Inputs = NULL ---------------------------------------------------------------
 # NULL inputs should assign NULL values to arguments names and the template 
 # node.
 
@@ -37,14 +36,14 @@ testthat::test_that("Inputs = NULL", {
   expect_true(class(output) == "list")
   expect_true(all(names(output) %in% attr_args$argument_name))
   expect_true(
-    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+    all(names(output$x) %in% c('template', 'data.table', 'other.entity', 'data.objects')))
   expect_true(is.null(output$x$template))
   expect_true(is.null(output$x$data.table))
   expect_true(is.null(output$x$other.entity))
 
 })
 
-# Inputs = missing templates --------------------------------------------------
+# Inputs = missing templates
 # A path without templates results in error.
 
 testthat::test_that("Inputs = missing templates", {
@@ -58,7 +57,7 @@ testthat::test_that("Inputs = missing templates", {
 
 })
 
-# Inputs = duplicate templates ------------------------------------------------
+# Inputs = duplicate templates
 # Duplicate templates result in error.
 
 testthat::test_that("Inputs = duplicate templates", {
@@ -97,7 +96,7 @@ testthat::test_that("Inputs = duplicate templates", {
   
 })
 
-# Inputs = empty templates ----------------------------------------------------
+# Inputs = empty templates
 # Empty templates at path should be read into x
 
 testthat::test_that("Inputs = empty templates", {
@@ -117,7 +116,7 @@ testthat::test_that("Inputs = empty templates", {
   expect_true(class(output) == "list")
   expect_true(all(names(output) %in% attr_args$argument_name))
   expect_true(
-    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+    all(names(output$x) %in% c('template', 'data.table', 'other.entity', 'data.objects')))
   
   tnames <- names(output$x$template)
   for (i in 1:length(tnames)) {
@@ -158,7 +157,7 @@ testthat::test_that("Inputs = empty templates", {
 
 })
 
-# Inputs = the 'empty' argument -----------------------------------------------
+# Inputs = the 'empty' argument
 # All templates should be added to the list object with empty values when the 
 # argument empty = TRUE.
 
@@ -169,7 +168,7 @@ testthat::test_that("Inputs = the 'empty' argument", {
   expect_true(class(output) == "list")
   expect_true(all(names(output) %in% attr_args$argument_name))
   expect_true(
-    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+    all(names(output$x) %in% c('template', 'data.table', 'other.entity', 'data.objects')))
   
   expected_templates <- c(
     "abstract.txt", "additional_info.txt", "custom_units.txt", 
@@ -200,7 +199,7 @@ testthat::test_that("Inputs = the 'empty' argument", {
   
 })
 
-# Inputs = completed templates ------------------------------------------------
+# Inputs = completed templates
 # Completed templates should be read into x
 
 testthat::test_that("Inputs = empty templates", {
@@ -217,7 +216,7 @@ testthat::test_that("Inputs = empty templates", {
   expect_true(class(output) == "list")
   expect_true(all(names(output) %in% attr_args$argument_name))
   expect_true(
-    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+    all(names(output$x) %in% c('template', 'data.table', 'other.entity', 'data.objects')))
   
   tnames <- names(output$x$template)
   for (i in 1:length(tnames)) {
@@ -268,7 +267,7 @@ testthat::test_that("Inputs = empty templates", {
   expect_true(class(output) == "list")
   expect_true(all(names(output) %in% attr_args$argument_name))
   expect_true(
-    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+    all(names(output$x) %in% c('template', 'data.table', 'other.entity', 'data.objects')))
   
   tnames <- names(output$x$template)
   for (i in 1:length(tnames)) {
@@ -319,7 +318,7 @@ testthat::test_that("Inputs = empty templates", {
   expect_true(class(output) == "list")
   expect_true(all(names(output) %in% attr_args$argument_name))
   expect_true(
-    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+    all(names(output$x) %in% c('template', 'data.table', 'other.entity', 'data.objects')))
   
   tnames <- names(output$x$template)
   for (i in 1:length(tnames)) {
@@ -360,10 +359,9 @@ testthat::test_that("Inputs = empty templates", {
   
 })
 
-# Inputs = data tables --------------------------------------------------------
+# Inputs = data tables
 
 testthat::test_that("Inputs = data tables", {
-  
   file.copy(
     from  = system.file('/examples/pkg_260', package = 'EMLassemblyline'),
     to = tempdir(),
@@ -374,20 +372,18 @@ testthat::test_that("Inputs = data tables", {
   expect_true(class(output) == "list")
   expect_true(all(names(output) %in% attr_args$argument_name))
   expect_true(
-    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+    all(names(output$x) %in% c('template', 'data.table', 'other.entity', 'data.objects')))
   for (i in 1:length(names(output$x$data.table))) {
     expect_true(is.data.frame(output$x$data.table[[i]]$content))
     expect_true(ncol(output$x$data.table[[i]]$content) > 1)
     expect_true(nrow(output$x$data.table[[i]]$content) > 1)
   }
   unlink(paste0(tempdir(), "/pkg_260/data_objects"), force = T, recursive = T)
-  
 })
 
-# Inputs = other entities -----------------------------------------------------
+# Inputs = other entities
 
 testthat::test_that("Inputs = other entities", {
-  
   file.copy(
     from  = system.file('/examples/pkg_260', package = 'EMLassemblyline'),
     to = tempdir(),
@@ -398,11 +394,36 @@ testthat::test_that("Inputs = other entities", {
   expect_true(class(output) == "list")
   expect_true(all(names(output) %in% attr_args$argument_name))
   expect_true(
-    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+    all(names(output$x) %in% c('template', 'data.table', 'other.entity', 'data.objects')))
   for (i in 1:length(names(output$x$other.entity))) {
-    expect_true(is.null(output$x$other.entity[[i]]$content))
+    expect_true(is.na(output$x$other.entity[[i]]$content))
   }
   unlink(paste0(tempdir(), "/pkg_260/data_objects"), force = T, recursive = T)
-  
+})
+
+
+testthat::test_that("data.object facilitates general data object reads.", {
+  testdir <- paste0(tempdir(), "/pkg")
+  files <- copy_test_package(testdir)
+  data_objects <- c(
+    "nitrogen.csv", 
+    "decomp.csv",
+    "ancillary_data.zip", 
+    "processing_and_analysis.R"
+  )
+  res <- template_arguments(data.path = testdir, data.objects = data_objects)$x
+  expected_names <- c("template", "data.table", "other.entity", "data.objects")
+  expect_type(res, "list")
+  expect_true(setequal(names(res), expected_names))
+  expect_type(res$data.table, "NULL")
+  expect_type(res$other.entity, "NULL")
+  expect_type(res$data.objects, "list")
+  expect_true(setequal(names(res$data.objects), data_objects))
+  for (i in seq_along(res$data.objects)) {
+    expect_true(!is.null(res$data.objects[[i]]$content))
+    expect_true(!is.null(res$data.objects[[i]]$mime_type))
+    expect_true(!is.null(res$data.objects[[i]]$file_path))
+  }
+  unlink(testdir, recursive = TRUE, force = TRUE)
 })
 

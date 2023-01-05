@@ -23,8 +23,8 @@ extension. If more than one, supply as a vector of character strings (e.g.
 
 \item{empty}{(logical) Whether to create an empty template.}
 
-\item{write.file}{(logical; optional) Whether to write the template to file. 
-If \code{FALSE}, a list of data frames will be returned.}
+\item{write.file}{(logical) Whether to write the template to file. If 
+\code{FALSE}, a list of data frames will be returned.}
 }
 \value{
 Tables (one for each \code{other.entity}), as tab delimited files if 

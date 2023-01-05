@@ -8,8 +8,8 @@
 #' extension. If more than one, supply as a vector of character strings (e.g. 
 #' \code{other.entity = c("ancillary_data.zip", "processing_and_analysis.R")}).
 #' @param empty (logical) Whether to create an empty template.
-#' @param write.file (logical; optional) Whether to write the template to file. 
-#' If \code{FALSE}, a list of data frames will be returned.
+#' @param write.file (logical) Whether to write the template to file. If 
+#' \code{FALSE}, a list of data frames will be returned.
 #'
 #' @return 
 #' Tables (one for each \code{other.entity}), as tab delimited files if 
@@ -77,11 +77,12 @@ template_other_entity_attributes <- function(
     # TODO Read data objects for metadata extraction.
   }
   
-  templates <- list()
+  
+  templates <- vector(mode = "list", length = length(other.entity))
   for (i in seq_along(other.entity)) {
     templates[[i]] <- init_attributes()
   }
-  f <- name_attribute_templates(other.entity)
+  f <- name_attributes_templates(other.entity)
   names(templates) <- f
   if (write.file) {
     for (i in seq_along(templates)) {
