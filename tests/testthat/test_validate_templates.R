@@ -7,7 +7,7 @@ testthat::test_that("validate_templates()", {
   
   # Parameterize
   
-  attr_tmp <- read_template_attributes()
+  attr_tmp <- read_template_characteristics()
   x <- template_arguments(
     path = system.file(
       '/examples/pkg_260/metadata_templates',
@@ -198,7 +198,7 @@ testthat::test_that("attributes.txt", {
   
   # Parameterize
   
-  attr_tmp <- read_template_attributes()
+  attr_tmp <- read_template_characteristics()
   x <- template_arguments(
     path = system.file(
       '/examples/pkg_260/metadata_templates',
@@ -604,7 +604,7 @@ testthat::test_that("Categorical variables", {
   
   # Parameterize
   
-  attr_tmp <- read_template_attributes()
+  attr_tmp <- read_template_characteristics()
   x <- template_arguments(
     path = system.file(
       '/examples/pkg_260/metadata_templates',
@@ -744,7 +744,7 @@ testthat::test_that("geographic_coverage", {
   
   # Parameterize
   
-  attr_tmp <- read_template_attributes()
+  attr_tmp <- read_template_characteristics()
   x <- template_arguments(
     system.file(
       '/examples/pkg_260/metadata_templates',
@@ -983,7 +983,7 @@ testthat::test_that("personnel", {
   
   # Parameterize
   
-  attr_tmp <- read_template_attributes()
+  attr_tmp <- read_template_characteristics()
   x <- template_arguments(
     system.file(
       '/examples/pkg_260/metadata_templates',
@@ -1207,7 +1207,7 @@ testthat::test_that("provenance", {
   
   # Parameterize
   
-  attr_tmp <- read_template_attributes()
+  attr_tmp <- read_template_characteristics()
   
   unlink(
     paste0(tempdir(), "/pkg_260"), 
@@ -1528,7 +1528,7 @@ testthat::test_that("compile_provenance()", {
   # metadata is being added correctly
   
   # Parameterize do.call()
-  attr_tmp <- read_template_attributes()
+  attr_tmp <- read_template_characteristics()
   
   unlink(
     paste0(tempdir(), "/pkg_260"), 
@@ -1681,7 +1681,7 @@ testthat::test_that("taxonomic_coverage", {
   
   # Parameterize
   
-  attr_tmp <- read_template_attributes()
+  attr_tmp <- read_template_characteristics()
   
   unlink(
     paste0(tempdir(), "/pkg_260"), 

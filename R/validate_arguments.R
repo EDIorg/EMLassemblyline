@@ -526,7 +526,7 @@ validate_arguments <- function(fun.name, fun.args){
     
     if (!is.null(fun.args$path)) {
       validate_path(fun.args$path)
-      attr_tmp <- read_template_attributes()
+      attr_tmp <- read_template_characteristics()
       path_files <- list.files(fun.args$path)
       if (!length(path_files) == 0) {
         is_template <- rep(FALSE, length(path_files))

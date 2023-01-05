@@ -5,7 +5,7 @@ library(EMLassemblyline)
 # 
 # # Get template file attributes
 # 
-# attr_tmp <- read_template_attributes()
+# attr_tmp <- read_template_characteristics()
 # 
 # # Test usage with file inputs -------------------------------------------------
 # 
