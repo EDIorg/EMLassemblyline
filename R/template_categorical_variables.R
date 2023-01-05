@@ -78,23 +78,26 @@ template_categorical_variables <- function(
     return(NULL)
   }
   
-  templates <- names(x$template)
-  res <- vector(mode = "list", length = length(x$data.objects))
   # Iterate over the data objects and extract categorical variable codes when
   # possible.
+  templates <- names(x$template)
+  res <- vector(mode = "list", length = length(x$data.objects))
   for (i in seq_along(x$data.objects)) {
     catvars_file <- name_catvars_templates(names(x$data.objects)[i])
+    
     # Don't overwrite existing categorical variables templates.
     if (is.element(catvars_file, templates)) {
       message(catvars_file, " already exists!")
       next
     }
+    
     # An attributes template, corresponding with the current data object, is 
     # required for continued processing.
     attrs_file <- name_attributes_templates(names(x$data.objects)[i])
     if (!is.element(attrs_file, templates)) {
       next
     }
+    
     # Try extracting categorical variables from the current data object using 
     # one of the supported parsing algorithms, indicated by MIME type.
     mime_type <- x$data.objects[[i]]$mime_type
@@ -104,112 +107,11 @@ template_categorical_variables <- function(
         attrs_tmplt = x$template[[attrs_file]]$content
       )
     }
-    #   - Initialize catvars template (similar to init_attributes())
-    #   - iterate over categoricals extracting unique values
-    #   - drop missing value codes
   }
-  # TODO remove NULLs
+  names(res) <- name_catvars_templates(names(x$data.objects))
+  res <- Filter(Negate(is.null), res)
   
-  r <- lapply(
-    seq_along(data_tables),
-    function(i, data_tables) {
-      
-      # Get components
-      
-      # TODO Should this be preserved?
-      # Read cols as char to prevent data.table::fread() parsing numeric "" to 
-      # NA which cannot be converted back to "" before writing the template.
-      # d <- data.table::fread(
-      #   paste0(data.path, "/", data_tables[i]), 
-      #   colClasses = "character")
-      
-      # attributes <- x$template[[names(data_tables)[i]]]$content
-      # Do not continue unless data and attributes have made it this far
-      # if (is.null(d) | is.null(attributes)) {
-      #   return(NULL)
-      # }
-      
-      categorical_variables <- attributes$attributeName[
-        attributes$class == "categorical"]
-      
-      missing_value_codes <- dplyr::select(
-        attributes, attributeName, missingValueCode)
-      
-      categorical_variables_file_name <- stringr::str_replace(
-        names(data_tables)[i], 
-        "attributes_", 
-        "catvars_")
-      
-      # Continue if categorical variables exist for this data table and if
-      # a categorical variables template doesn't already exist
-      
-      if (length(categorical_variables) == 0) {
-        message("No categorical variables found.")
-      } else {
-        
-        if (categorical_variables_file_name %in% names(x$template)) {
-          message(categorical_variables_file_name, " already exists!")
-        } else {
-          message(categorical_variables_file_name)
-          
-          # Compile components for the categorical variables template
-          
-          catvars <- dplyr::select(d, categorical_variables)
-          catvars <- tidyr::gather(catvars, "attributeName", "code")
-          catvars <- dplyr::distinct(catvars)
-          catvars <- dplyr::right_join(missing_value_codes, catvars, by = "attributeName")
-          
-          # Remove missing value codes listed in the table attributes template 
-          # since these will be listed in the EML metadata separately. NOTE: 
-          # Because EAL templates use "" instead of NA, all "" from the template
-          # are converted to NA to facilitate matching.
-          
-          use_i <- apply(
-            catvars, 
-            1, 
-            function(x) {
-              if (x[["missingValueCode"]] == "NA") {
-                x[["missingValueCode"]] <- NA_character_
-              }
-              missing_value_code <- x[["missingValueCode"]] %in% x[["code"]]
-              return(missing_value_code)
-            })
-          
-          catvars <- catvars[!use_i, ]
-          
-          # Tranform contents into the categorical variables template format
-          
-          catvars$definition <- ""
-          catvars <- dplyr::select(catvars, -missingValueCode)
-          
-          # Order results
-          
-          catvars <- dplyr::arrange(catvars, attributeName, code)
-          
-          # Encode extracted metadata in UTF-8
-          
-          catvars$attributeName <- enc2utf8(as.character(catvars$attributeName))
-          catvars$code <- enc2utf8(as.character(catvars$code))
-          
-          # List under "content" to accord with structure returned by 
-          # template_arguments()
-          
-          catvars <- list(content = catvars)
-          
-          return(catvars)
-          
-        }
-      }
-    },
-    data_tables = data_tables)
-  
-  names(r) <- stringr::str_replace(
-    names(data_tables), 
-    "attributes_", 
-    "catvars_")
-  
-  # Write to file -------------------------------------------------------------
-  
+  browser()
   if (write.file) {
     for (i in names(r)) {
       if (!is.null(r[[i]])) {
@@ -223,10 +125,6 @@ template_categorical_variables <- function(
     }
   }
   
-  message("Done.")
-  
-  # Return --------------------------------------------------------------------
-
   return(r)
 }
 
@@ -249,16 +147,41 @@ template_categorical_variables <- function(
 #' }
 #' 
 catvars_from_textcsv <- function(data_object, attrs_tmplt) {
+  
   # If no categorical variables are declared in the attributes template, for 
   # the current data object, then there are none to extract.
   is_categorical <- attrs_tmplt$class %in% "categorical"
   if (!any(is_categorical)) {
     return(NULL)
   }
-  df <- data_object[ , which(is_categorical)]
-  browser()
-  test <- sapply(df, unique)
-  # TODO reshape result into long data frame
-  stack(test)
-
+  
+  # Construct a data frame of the categorical variables as a basis for the 
+  # catvars template.
+  df <- data_object[ , which(is_categorical), drop = FALSE]
+  
+  # Remove missing value codes declared in the attributes template, since
+  # these will be listed separately in the EML. This matching requires 
+  # comparison of column values against a missing value code represented in 
+  # character type, so as a precaution, each column is first coerced to 
+  # character.
+  df <- as.data.frame(lapply(df, as.character))
+  for (colname in names(df)) {
+    i <- attrs_tmplt$attributeName == colname
+    mv_code <- attrs_tmplt$missingValueCode[i]
+    is_mv_code <- df[[colname]] == mv_code
+    df[[colname]][is_mv_code] <- NA_character_
+  }
+  
+  # Continue shaping the catvars data frame.
+  univals <- sapply(X = df, FUN = unique)
+  df <- stack(univals)
+  df <- as.data.frame(lapply(df, as.character))
+  colnames(df)[colnames(df) == "ind"] <- "attributeName"
+  colnames(df)[colnames(df) == "values"] <- "code"
+  df$definition <- ""
+  df <- df[, c("attributeName", "code", "definition")]
+  
+  # Finish removal of missing value codes (now represented as NA)
+  df <- df[complete.cases(df), ]
+  return(df)
 }
