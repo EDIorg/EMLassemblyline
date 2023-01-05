@@ -19,9 +19,11 @@
 #'     (character) File names of other entity data objects. If more than one, 
 #'     then supply as a vector (e.g. 
 #'     \code{other.entity = c('ancillary_data.zip', 'processing_and_analysis.R')}).
-#' @param sep
-#'     (character) Data table field delimiter. Use this if this function fails
-#'     to read your \code{data.table}.
+#' @param data.objects (character) File names of data objects. This generalizes 
+#' data read operations and is no less accurate than using \code{data.table} or
+#' \code{other.entity}. However, specific data types (e.g. \code{data.table} 
+#' and \code{other.entity}) should be used to declare which entity type the 
+#' data object will be listed under in the finalized EML metadata.
 #' @param empty
 #'     (logical) Initialize the output with a set of empty metadata templates?
 #'     This option is useful when wanting to transfer metadata directly into
@@ -69,6 +71,7 @@ template_arguments <- function(
   data.path = NULL, 
   data.table = NULL,
   other.entity = NULL, 
+  data.objects = NULL,
   sep = NULL,
   empty = FALSE) {
   
@@ -96,7 +99,7 @@ template_arguments <- function(
     fill = TRUE,
     blank.lines.skip = TRUE)
   
-  attr_tmp <- read_template_attributes()
+  attr_tmp <- read_template_characteristics()
   
   # Initialize arguments ------------------------------------------------------
   
@@ -135,6 +138,18 @@ template_arguments <- function(
     templates <- vector('list', length(path_files[is_template]))
     names(templates) <- enc2utf8(path_files[is_template])
     templates[stringr::str_detect(names(templates), ".docx|.md")] <- NULL
+  }
+  
+  # Initialize data objects ----------------------------------------------------
+  
+  if (!is.null(data.objects)){
+    data_object <- validate_file_names(
+      path = data.path,
+      data.files = data.objects)
+    data_objects <- vector('list', length(data_object))
+    names(data_objects) <- enc2utf8(as.character(data_object))
+  } else {
+    data_objects <- NULL
   }
   
   # Initialize data tables ----------------------------------------------------
@@ -443,48 +458,35 @@ template_arguments <- function(
     
   }
   
+  # Read data objects ---------------------------------------------------------
+  
+  if (!is.null(c(data.path, data.objects))) {
+    data_objects <- read_data_objects(data.path, data.objects)
+  }
+  
   # Read data tables ----------------------------------------------------------
   
-  # FIXME: Warn user of possible empty columns (i.e. "V([:digit:])*")
   if (!is.null(data.table)) {
-    
-    for (i in 1:length(data.table)) {
-      f <- paste0(data.path, "/", data.table[i])
-
-      if (is.null(sep)){
-
-        data_tables[[i]]$content <- as.data.frame(data.table::fread(file = f))
-        
-      } else {
-        
-        data_tables[[i]]$content <- utils::read.table(
-          file = f,
-          header = T,
-          sep = sep,
-          quote = "\"",
-          as.is = TRUE,
-          comment.char = "")
-        
-      }
-      
-    }
-    
+    data_objects <- read_data_objects(data.path, data.table)
+    i <- which(names(data_objects) %in% data.table)
+    data_tables <- data_objects[i]
   }
   
   # Read other entities -------------------------------------------------------
   
-  # if (!is.null(other.entity)) {
-  #   # for (i in 1:length(other.entity)) {
-  #   #   other_entities[[i]]$content <- NA
-  #   # }
-  # }
+  if (!is.null(other.entity)) {
+    data_objects <- read_data_objects(data.path, other.entity)
+    i <- which(names(data_objects) %in% other.entity)
+    other_entities <- data_objects[i]
+  }
   
   # Combine components & return -----------------------------------------------
   
   output$x <- list(
     template = templates,
     data.table = data_tables,
-    other.entity = other_entities)
+    other.entity = other_entities,
+    data.objects = data_objects)
   
   # Convert NA to "", but don't convert "NA" since these may be explicitly 
   # defined missing value codes
