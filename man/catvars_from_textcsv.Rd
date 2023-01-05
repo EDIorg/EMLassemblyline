@@ -4,7 +4,7 @@
 \alias{catvars_from_textcsv}
 \title{Create a categorical variables template for a MIME Type text/csv data object}
 \usage{
-catvars_from_textcsv(data_object, attrs_tmplt)
+catvars_from_textcsv(data_object, attrs_tmplt, empty = FALSE)
 }
 \arguments{
 \item{data_object}{(data.frame) The data object.}
@@ -13,17 +13,11 @@ catvars_from_textcsv(data_object, attrs_tmplt)
 \code{data_object}.}
 }
 \value{
-(data.frame or NULL) Returns a \code{data.frame} if categorical variables 
-are listed in \code{attrs_tmplt} corresponding categorical codes are found
-in \code{data_object}, otherwise \code{NULL}.
+(data.frame or NULL) Returns a \code{data.frame} if categorical 
+variables are listed in \code{attrs_tmplt} corresponding categorical codes 
+are found in \code{data_object}, otherwise \code{NULL}.
 }
 \description{
 Create a categorical variables template for a MIME Type text/csv data object
-}
-\examples{
-\dontrun{
-
-}
-
 }
 \keyword{internal}

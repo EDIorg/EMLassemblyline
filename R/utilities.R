@@ -1,3 +1,51 @@
+#' Copy test package files to directory path
+#'
+#' @param path (character) Directory path where test files will be copied.
+#'
+#' @return (character) Full paths of files copied to \code{path}.
+#' 
+#' @export
+#' 
+#' @examples 
+#' \dontrun{
+#' testdir <- paste0(tempdir(), "/pkg")
+#' pkg_files <- copy_test_package(testdir)
+#' pkg_files
+#' unlink(testdir, recursive = TRUE, force = TRUE)
+#' }
+#' 
+copy_test_package <- function(path) {
+  unlink(path, recursive = TRUE, force = TRUE)
+  dir.create(path)
+  invisible(
+    file.copy(
+      from = list.files(
+        path = system.file(
+          '/examples/pkg_260/data_objects',
+          package = 'EMLassemblyline'
+        ),
+        full.names = TRUE
+      ), 
+      to = path
+    )
+  )
+  invisible(
+    file.copy(
+      from = list.files(
+        path = system.file(
+          '/examples/pkg_260/metadata_templates',
+          package = 'EMLassemblyline'
+        ),
+        full.names = TRUE
+      ), 
+      to = path
+    )
+  )
+  dir_files <- dir(path, full.names = TRUE)
+  return(dir_files)
+}
+
+
 #' Get field delimiters of input files
 #'
 #' @description  
@@ -324,7 +372,7 @@ get_eol <- function(path, file.name){
 #'
 #' @param nrows (numeric) Number of rows to initialize the data frame with.
 #'
-#' @return (data.frame) The attributes table.
+#' @return (data.frame) The attributes template.
 #' 
 #' @keywords internal
 #'
@@ -350,6 +398,38 @@ init_attributes <- function(nrows = 0) {
     dateTimeFormatString = character(nrows),
     missingValueCode = character(nrows),
     missingValueCodeExplanation = character(nrows),
+    stringsAsFactors = FALSE
+  )
+  return(df)
+}
+
+
+#' Initialize an empty categorical variables template
+#'
+#' @param nrows (numeric) Number of rows to initialize the data frame with.
+#'
+#' @return (data.frame) The categorical variables template.
+#' 
+#' @keywords internal
+#'
+#' @examples
+#' \dontrun{
+#' # Default settings return an empty data frame with column names of the 
+#' # categorical variables template.
+#' df = init_catvars()
+#' nrow(df)
+#' colnames(df)
+#' 
+#' # Control the number of rows with the nrows parameter
+#' df = init_catvars(nrows = 3)
+#' nrow(df)
+#' }
+#' 
+init_catvars <- function(nrows = 0) {
+  df <- data.frame(
+    attributeName = character(nrows),
+    code = character(nrows),
+    definition = character(nrows),
     stringsAsFactors = FALSE
   )
   return(df)
@@ -1305,5 +1385,32 @@ write_template <- function(tmplt, name, path, force = FALSE) {
       fileEncoding = "UTF-8"
     )
     return(TRUE)
+  }
+}
+
+
+#' Write a list of templates to file
+#'
+#' @param tmplts (data.frame) List of templates to write.
+#' @param nms (character) Template file names (including extensions) in the 
+#' same order as \code{tmplts}.
+#' @param path (character) Path to write to.
+#' @param force (logical) Overwrite existing template?
+#'
+#' @return (file, logical) Template and TRUE if written.
+#' 
+#' @details This is a wrapper around \code{write_template()}.
+#' 
+#' @keywords internal
+#' 
+write_templates <- function(tmplts, nms, path, force = FALSE) {
+  for (i in seq_along(tmplts)) {
+    invisible(
+      write_template(
+        tmplt = tmplts[[i]], 
+        name = nms[i], 
+        path = path
+      )
+    )
   }
 }

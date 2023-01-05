@@ -2,7 +2,6 @@
 context('Create categorical variables template')
 library(EMLassemblyline)
 
-# Test usage with file inputs -------------------------------------------------
 
 testthat::test_that('Test usage with file inputs', {
   
@@ -99,10 +98,8 @@ testthat::test_that('Test usage with file inputs', {
   
 })
 
-# Missing value codes ---------------------------------------------------------
-# Missing value codes should not be listed as categorical variables.
 
-testthat::test_that('Missing value codes', {
+testthat::test_that("Missing value codes should not be listed as catvars.", {
   
   x <- template_arguments(
     path = system.file(
@@ -251,50 +248,53 @@ testthat::test_that('Missing value codes', {
 
 
 testthat::test_that("Templates can be returned as a list of data frames.", {
+  # Setup
   testdir <- paste0(tempdir(), "/pkg")
   pkg_files <- copy_test_package(testdir)
+  on.exit(unlink(testdir, recursive = TRUE, force = TRUE))
   catvars_files <- dir(testdir, pattern = "catvars", full.names = TRUE)
   file.remove(catvars_files)
+  # Test
   res <- template_categorical_variables(path = testdir, write.file = FALSE)
   expect_equal(typeof(res), "list")
-  expect_true(
-    setequal(
-      x = names(res),
-      y = c("catvars_decomp.txt", "catvars_nitrogen.txt")
-    )
-  )
+  expect_true(setequal(x = names(res), y = basename(catvars_files)))
   for (r in res) {
-    expect_equal(class(r$content), "data.frame")
+    expect_equal(class(r[1]), "data.frame")
   }
-  unlink(testdir, recursive = TRUE, force = TRUE)
 })
 
 
 testthat::test_that("Templates can be returned as files.", {
-  # TODO implement this
-  # files <- c("file1.pdf", "file2.R")
-  # expected <- name_attributes_templates(files)
-  # on.exit(unlink(paste0(tempdir(), '/', expected), force = TRUE))
-  # res <- template_other_entity_attributes(
-  #   path = tempdir(),
-  #   other.entity = files,
-  #   write.file = TRUE
-  # )
-  # expect_true(all(is.element(expected, dir(tempdir()))))
+  # Setup
+  testdir <- paste0(tempdir(), "/pkg")
+  pkg_files <- copy_test_package(testdir)
+  on.exit(unlink(testdir, force = TRUE))
+  catvars_files <- dir(testdir, pattern = "catvars", full.names = TRUE)
+  file.remove(catvars_files)
+  expected <- basename(catvars_files)
+  # Test
+  res <- template_categorical_variables(path = testdir, write.file = TRUE)
+  expect_true(all(is.element(expected, dir(testdir))))
 })
 
 
-
-testthat::test_that("Categorical attributes, of any data object, result in a categorical variables template, even those without support for data reads", {
-  # TODO implement
-  # attribute_templates <- c(
-  #   "attributes_ancillary_data.txt",
-  #   "attributes_decomp.txt",
-  #   "attributes_nitrogen.txt"
-  # )
-  # expected <- c(
-  #   "catvars_ancillary_data.txt",
-  #   "catvars_decomp.txt",
-  #   "catvars_nitrogen.txt"
-  # )
+testthat::test_that("Return empty templates if instructed.", {
+  # Setup
+  testdir <- paste0(tempdir(), "/pkg")
+  pkg_files <- copy_test_package(testdir)
+  on.exit(unlink(testdir, recursive = TRUE, force = TRUE))
+  catvars_files <- dir(testdir, pattern = "catvars", full.names = TRUE)
+  file.remove(catvars_files)
+  # Test
+  res <- template_categorical_variables(
+    path = testdir, 
+    empty = TRUE,
+    write.file = FALSE
+  )
+  expect_equal(typeof(res), "list")
+  expect_true(setequal(x = names(res), y = basename(catvars_files)))
+  for (r in res) {
+    expect_equal(class(r[1]), "data.frame")
+    expect_equal(nrow(r[1]), 0)
+  }
 })

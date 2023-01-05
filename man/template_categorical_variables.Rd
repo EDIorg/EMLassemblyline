@@ -2,7 +2,7 @@
 % Please edit documentation in R/template_categorical_variables.R
 \name{template_categorical_variables}
 \alias{template_categorical_variables}
-\title{Describe categorical variables of an attributes template}
+\title{Describes categorical variables of data objects}
 \usage{
 template_categorical_variables(
   path,
@@ -22,9 +22,10 @@ template_categorical_variables(
 \code{FALSE}, a list of data frames will be returned.}
 }
 \value{
-Tables (one for each attributes template containing categorical classes), as 
-tab delimited files if \code{write.file = TRUE}, or a list of data frames if 
-\code{write.file = FALSE}. Table columns:
+If \code{write.file = TRUE}, tab delimited files (one for each attributes 
+template containing categorical classes) is written to \code{path}. If 
+\code{write.file = FALSE} a list of data frames are returned. Columns of 
+this template:
 \itemize{
 \item{attributeName: Column name}
 \item{code: Categorical variable}
@@ -32,36 +33,38 @@ tab delimited files if \code{write.file = TRUE}, or a list of data frames if
 }
 }
 \description{
-Describes categorical variables of an attributes template. Use if any 
-attributes are classified as "categorical" in the table attributes template.
+Use this function if data objects contain any attributes classified 
+"categorical" in an attributes template.
 }
 \details{
 \code{template_categorical_variables()} knows which attributes of a 
 data object are \code{categorical} based on their definition under the 
 \code{class} column of the attributes template. If any categorical variables
-are found, this function reads the corresponding data object (if supported)
-and returns a list of the categorical variables and the unique categorical 
+are found, this function reads the corresponding data object (when 
+supported) and returns a list of the categorical variables and their unique 
 codes.
 }
 \note{
-Currently, this function is unable to extract metadata from data 
-objects that are not recognized as data tables. As a result, for these data 
-types the template will be returned empty. For guidance on manually 
-completing the template, see documentation on 
-\code{template_categorical_variables()} and the associated vignette on 
-editing templates.
+Currently, the only supported data object type is "text/csv". For all
+other types, returned templates will be empty. For guidance on manual 
+completion of this template, see the vignette on editing templates.
 }
 \examples{
 \dontrun{
-# Set working directory
-setwd("/Users/me/Documents/data_packages/pkg_260")
+# Create a temporary directory with files for this example
+testdir <- paste0(tempdir(), "/pkg")
+pkg_files <- copy_test_package(testdir)
+catvars_files <- dir(testdir, pattern = "catvars", full.names = TRUE)
+file.remove(catvars_files)
 
-# For tables containing categorical variables as classified in the 
-# attributes template
-template_categorical_variables(
-  path = "./metadata_templates",
-  data.path = "./data_objects"
-)
+# Return templates as data frames
+tmplts <- template_categorical_variables(path = testdir, write.file = FALSE)
+
+# Return templates as files
+template_categorical_variables(path = testdir, write.file = TRUE)
+
+# Clean up files of this example
+unlink(testdir, force = TRUE)
 }
 
 }

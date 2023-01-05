@@ -79,6 +79,24 @@ testthat::test_that('init_attributes() default settings', {
 })
 
 
+testthat::test_that("init_catvars() default settings", {
+  # Default returns a data frame with expected columns and no rows.
+  res <- init_catvars()
+  expected_cols <- c(
+    "attributeName",
+    "code",
+    "definition"
+  )
+  actual_cols <- colnames(res)
+  expect_true(setequal(expected_cols, actual_cols))
+  expect_equal(nrow(res), 0)
+  
+  # Control the number of rows with the nrows parameter
+  res <- init_catvars(nrows = 3)
+  expect_equal(nrow(res), 3)
+})
+
+
 testthat::test_that("list_attribute_templates()", {
   testdir <- paste0(tempdir(), "/pkg")
   pkg_files <- copy_test_package(testdir)
