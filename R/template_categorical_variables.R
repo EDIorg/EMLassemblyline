@@ -51,10 +51,12 @@
 #'
 #' @export
 #'
-template_categorical_variables <- function(path,
-                                           data.path = path,
-                                           empty = FALSE,
-                                           write.file = TRUE) {
+template_categorical_variables <- function(
+    path,
+    data.path = path,
+    empty = FALSE,
+    write.file = TRUE) {
+  
   message("Templating categorical variables")
   validate_arguments(
     fun.name = "template_categorical_variables",

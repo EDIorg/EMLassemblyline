@@ -7,7 +7,7 @@
 template_other_entity_attributes(
   path,
   data.path = path,
-  other.entity = NULL,
+  other.entity,
   empty = FALSE,
   write.file = TRUE
 )
