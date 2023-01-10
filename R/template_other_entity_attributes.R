@@ -12,9 +12,9 @@
 #' \code{FALSE}, a list of data frames will be returned.
 #'
 #' @return 
-#' Tables (one for each \code{other.entity}), as tab delimited files if 
-#' \code{write.file = TRUE}, or a list of data frames if 
-#' \code{write.file = FALSE}. Table columns:
+#' If \code{write.file = TRUE}, tab delimited files (one for each 
+#' \code{other.entity}) are written to \code{path}. If \code{write.file = FALSE}
+#' a list of data frames are returned. Columns of this template:
 #' \itemize{
 #' \item{attributeName: Column name}
 #' \item{attributeDefinition: Column definition}
@@ -30,28 +30,39 @@
 #' (Hour), "m" (Minute), "s" (Second), Common separators of format string 
 #' components (e.g. "-" "/" "\" ":"") are supported.}
 #' \item{missingValueCode: Missing value code. Required for columns containing 
-#' 
 #' a missing value code).}
 #' \item{missingValueCodeExplanation: Definition of missing value code.}
 #' }
 #'     
 #' @note Currently, this function is unable to extract metadata from objects 
 #' listed in the \code{other.entity} parameter. As a result, the template will 
-#' be returned empty. For guidance on manually completing the template, see 
-#' documentation on \code{template_table_attributes()} and the associated 
-#' vignette on editing templates.
+#' be returned empty. For guidance on manual completion of this template, see 
+#' the vignette on editing templates.
 #'     
 #' @examples 
 #' \dontrun{
-#' # Set working directory
-#' setwd("/Users/me/Documents/data_packages/pkg_260")
+#' # Create a temporary directory with files for this example
+#' testdir <- paste0(tempdir(), "/pkg")
+#' pkg_files <- copy_test_package(testdir)
+#' attributes_files <- dir(testdir, pattern = "attributes", full.names = TRUE)
+#' file.remove(attributes_files)
 #' 
-#' # For 2 other entities
-#' template_other_entity_attributes(
-#'   path = './metadata_templates',
+#' # Return templates as data frames
+#' tmplts <- template_other_entity_attributes(
+#'   path = testdir, 
 #'   other.entity = c("ancillary_data.zip", "processing_and_analysis.R"),
-#'   empty = TRUE
+#'   write.file = FALSE
 #' )
+#' 
+#' # Return templates as files
+#' tmplts <- template_other_entity_attributes(
+#'   path = testdir, 
+#'   other.entity = c("ancillary_data.zip", "processing_and_analysis.R"),
+#'   write.file = TRUE
+#' )
+#' 
+#' # Clean up files of this example
+#' #unlink(testdir, force = TRUE)
 #' }
 #'     
 #' @export     
@@ -59,41 +70,31 @@
 template_other_entity_attributes <- function(
     path,
     data.path = path,
-    other.entity = NULL,
+    other.entity,
     empty = FALSE,
     write.file = TRUE) {
   
   message("Templating other entity attributes")
-  
-  if (missing(path)) {
-    path <- NULL
-  }
-  
   # TODO Validate arguments
+  x <- template_arguments(
+    path = path,
+    data.path = data.path,
+    data.objects = other.entity
+  )$x
   
-  if (is.null(other.entity)) {
-    return(NULL)
-  } else {
-    # TODO Read data objects for metadata extraction.
-  }
-  
-  
-  templates <- vector(mode = "list", length = length(other.entity))
-  for (i in seq_along(other.entity)) {
-    templates[[i]] <- init_attributes()
-  }
-  f <- name_attributes_templates(other.entity)
-  names(templates) <- f
-  if (write.file) {
-    for (i in seq_along(templates)) {
-      invisible(
-        write_template(
-          tmplt = templates[[i]], 
-          name = names(templates)[i], 
-          path = path
-        )
-      )
+  templates <- vector(mode = "list", length = length(x$data.objects))
+  names(templates) <- name_attributes_templates(names(x$data.objects))
+  for (i in seq_along(x$data.objects)) {
+    mime_type <- x$data.objects[[i]]$mime_type
+    if (mime_type == "text/csv") {
+      # TODO message "Describe as data table instead."
+    } else {
+      templates[[i]] <- init_attributes()
     }
+  }
+  
+  if (write.file) {
+    write_templates(templates, names(templates), path)
   } else {
     return(templates)
   }
