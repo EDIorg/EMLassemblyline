@@ -23,7 +23,7 @@ template_categorical_variables(
 }
 \value{
 If \code{write.file = TRUE}, tab delimited files (one for each attributes
-template containing categorical classes) is written to \code{path}. If
+template containing categorical classes) are written to \code{path}. If
 \code{write.file = FALSE} a list of data frames are returned. Columns of
 this template:
 \itemize{

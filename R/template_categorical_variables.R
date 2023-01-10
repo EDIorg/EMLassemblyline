@@ -11,7 +11,7 @@
 #'
 #' @return
 #' If \code{write.file = TRUE}, tab delimited files (one for each attributes
-#' template containing categorical classes) is written to \code{path}. If
+#' template containing categorical classes) are written to \code{path}. If
 #' \code{write.file = FALSE} a list of data frames are returned. Columns of
 #' this template:
 #' \itemize{
@@ -51,10 +51,12 @@
 #'
 #' @export
 #'
-template_categorical_variables <- function(path,
-                                           data.path = path,
-                                           empty = FALSE,
-                                           write.file = TRUE) {
+template_categorical_variables <- function(
+    path,
+    data.path = path,
+    empty = FALSE,
+    write.file = TRUE) {
+  
   message("Templating categorical variables")
   validate_arguments(
     fun.name = "template_categorical_variables",
