@@ -1,0 +1,3 @@
+attributeName	attributeDefinition	class	unit	dateTimeFormatString	missingValueCode	missingValueCodeExplanation
+SITE_ID	Description for: SITE_ID	character	""	""	""	""
+SITE_NAME	Description for: SITE_NAME	character	""	""	""	""

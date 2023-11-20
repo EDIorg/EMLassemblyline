@@ -4,12 +4,20 @@
 \alias{template_categorical_variables}
 \title{Describe categorical variables of a data table}
 \usage{
-template_categorical_variables(path, data.path = path, write.file = TRUE)
+template_categorical_variables(
+  path,
+  data.path = path,
+  data.table = NULL,
+  write.file = TRUE
+)
 }
 \arguments{
 \item{path}{(character) Path to the metadata template directory.}
 
 \item{data.path}{(character) Path to the data directory.}
+
+\item{data.table}{(character) File names of data tables. If more than one, then supply as 
+a vector (e.g. \code{data.table = c('decomp.csv', 'nitrogen.csv')}).}
 
 \item{write.file}{(logical; optional) Whether to write the template file.}
 }
@@ -41,7 +49,11 @@ setwd("/Users/me/Documents/data_packages/pkg_260")
 # For tables containing categorical variables as classified in the table attributes template
 template_categorical_variables(
   path = "./metadata_templates",
-  data.path = "./data_objects")
+  data.path = "./data_objects",
+  data.table = setNames(
+    c("decomp.csv", "nitrogen.csv"), 
+    c("attributes_decomp.txt", "attributes_nitrogen.txt")
+  ))
 }
 
 }

@@ -457,7 +457,7 @@ validate_categorical_variables <- function(x) {
   
   # Categorical variable metadata only matters for specified tables
   output <- lapply(
-    names(x$data.table),
+    c(names(x$data.table), names(x$spatial.raster), names(x$spatial.vector)),
     function(table_file) {
       
       # Variables are classified as categorical in the table attributes 
@@ -2074,7 +2074,7 @@ validate_table_attributes <- function(x) {
   
   # Attribute metadata only matters for specified tables
   output <- lapply(
-    names(x$data.table),
+    c(names(x$data.table), names(x$spatial.raster), names(x$spatial.vector)),
     function(table_file) {
       
       # Attribute metadata is specified in the table attributes template
@@ -2295,7 +2295,11 @@ validate_table_attribute_template_column_names <- function(file.name, x) {
 #' @keywords internal
 #' 
 validate_table_attribute_name_presence <- function(template.name, data.name, x) {
-  expected_colnames <- colnames(x$data.table[[data.name]]$content)
+  expected_colnames <- c(
+    colnames(x$data.table[[data.name]]$content),
+    colnames(x$spatial.raster[[data.name]]$content),
+    colnames(x$spatial.vector[[data.name]]$content)
+  )
   found_colnames <- x$template[[template.name]]$content$attributeName
   if (!all(expected_colnames %in% found_colnames)) {
     paste0(
@@ -2341,7 +2345,11 @@ validate_table_attribute_name_order <- function(template.name, data.name, x) {
     validate_table_attribute_name_presence(
       template.name, data.name, x))
   if (all_columns_present) {
-    expected_colnames <- colnames(x$data.table[[data.name]]$content)
+    expected_colnames <- c(
+      colnames(x$data.table[[data.name]]$content),
+      colnames(x$spatial.raster[[data.name]]$content),
+      colnames(x$spatial.vector[[data.name]]$content)
+    )
     found_colnames <- x$template[[template.name]]$content$attributeName
     if (!all(found_colnames == expected_colnames)) {
       paste0(
@@ -2740,7 +2748,11 @@ validate_table_attribute_false_numeric <- function(
         x$template[[template.name]]$content$attributeName %in% attribute)
       missing_value_code <- 
         x$template[[template.name]]$content$missingValueCode[row_number]
-      column_data <- x$data.table[[data.name]]$content[[attribute]]
+      column_data <- c(
+        x$data.table[[data.name]]$content[[attribute]],
+        x$spatial.raster[[data.name]]$content[[attribute]],
+        x$spatial.vector[[data.name]]$content[[attribute]]
+      )
       column_data[column_data %in% missing_value_code] <- NA
       na_before_coercion <- sum(is.na(column_data))
       na_after_coercion <- suppressWarnings(sum(is.na(as.numeric(column_data))))
@@ -2983,7 +2995,7 @@ check_duplicate_templates <- function(path) {
   # variables have been consolidated into their respective single templates
   # (i.e. "table_attributes.txt" and "table_categorical_variables.txt").
   attr_tmp <- attr_tmp[
-    !stringr::str_detect(attr_tmp$template_name, "attributes|catvars"), ]
+    !stringr::str_detect(attr_tmp$template_name, "attributes|catvars|information"), ]
   for (i in 1:length(attr_tmp$template_name)) {
     use_i <- stringr::str_detect(
       list.files(path), 

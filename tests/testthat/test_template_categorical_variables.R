@@ -6,7 +6,7 @@ library(EMLassemblyline)
 
 testthat::test_that('Test usage with file inputs', {
   
-  # write.file = TRUE writes files to path
+  # data.table = 'decomp.csv' results in only categorical variables template for 'decomp.csv' is created
   
   file.copy(
     from = system.file(
@@ -31,6 +31,49 @@ testthat::test_that('Test usage with file inputs', {
     )
   )
   
+  template_categorical_variables(
+    path = paste0(
+      tempdir(),
+      '/templates'
+    ), 
+    data.path = system.file(
+      '/examples/data',
+      package = 'EMLassemblyline'
+    ),
+    data.table = setNames(
+      c('decomp.csv'), 
+      c('attributes_decomp.txt')
+    ),
+    write.file = TRUE
+  )
+  
+  expect_false(
+    file.exists(
+      paste0(
+        tempdir(),
+        '/templates/catvars_nitrogen.txt'
+      )
+    )
+  )
+  
+  # write.file = TRUE writes files to path
+  
+  file.copy(
+    from = system.file(
+      '/examples/templates',
+      package = 'EMLassemblyline'
+    ),
+    to = tempdir(),
+    recursive = TRUE
+  )
+  
+  file.remove(
+    paste0(
+      tempdir(),
+      '/templates/catvars_decomp.txt'
+    )
+  )
+  
   expect_message(
     suppressWarnings(
       template_categorical_variables(
@@ -41,6 +84,10 @@ testthat::test_that('Test usage with file inputs', {
         data.path = system.file(
           '/examples/data',
           package = 'EMLassemblyline'
+        ),
+        data.table = setNames(
+          c('decomp.csv', 'nitrogen.csv'), 
+          c('attributes_decomp.txt', 'attributes_nitrogen.txt')
         ),
         write.file = TRUE
       ) 
@@ -60,6 +107,10 @@ testthat::test_that('Test usage with file inputs', {
           '/examples/data',
           package = 'EMLassemblyline'
         ),
+        data.table = setNames(
+          c('decomp.csv', 'nitrogen.csv'), 
+          c('attributes_decomp.txt', 'attributes_nitrogen.txt')
+        ),
         write.file = FALSE
       )
     )
@@ -73,6 +124,10 @@ testthat::test_that('Test usage with file inputs', {
         data.path = system.file(
           '/examples/data',
           package = 'EMLassemblyline'
+        ),
+        data.table = setNames(
+          c('decomp.csv', 'nitrogen.csv'), 
+          c('attributes_decomp.txt', 'attributes_nitrogen.txt')
         ),
         write.file = FALSE
       )
@@ -91,6 +146,10 @@ testthat::test_that('Test usage with file inputs', {
         data.path = system.file(
           '/examples/data',
           package = 'EMLassemblyline'
+        ),
+        data.table = setNames(
+          c('decomp.csv', 'nitrogen.csv'), 
+          c('attributes_decomp.txt', 'attributes_nitrogen.txt')
         ),
         write.file = FALSE
       )

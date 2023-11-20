@@ -1,0 +1,2 @@
+spatialReference	horizontalAccuracy	verticalAccuracy	cellSizeXDirection	cellSizeYDirection	numberOfBands	rasterOrigin	rows	columns	verticals	cellGeometry
+RGF_1993_Lambert_93	bla	blabla	7000	7000	1	Lower Left	2108	4972	1	matrix

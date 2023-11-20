@@ -15,6 +15,12 @@
 #' @param data.table
 #'     (character) File names of data tables. If more than one, then supply as 
 #'     a vector (e.g. \code{data.table = c('decomp.csv', 'nitrogen.csv')}).
+#' @param spatial.raster
+#'     (character) File names of raster files. If more than one, then supply as 
+#'     a vector.
+#' @param spatial.vector
+#'     (character) File names of vector files. If more than one, then supply as 
+#'     a vector.
 #' @param other.entity
 #'     (character) File names of other entity data objects. If more than one, 
 #'     then supply as a vector (e.g. 
@@ -59,6 +65,8 @@
 #'   path = "./metadata_templates",
 #'   data.path = "./data_objects",
 #'   data.table = c("decomp.csv", "nitrogen.csv"),
+#'   spatial.raster = "geotiff_test_file.tif",
+#'   spatial.vector = c("shapefile_test", "geojson_test_file.GeoJSON"),
 #'   other.entity = c("ancillary_data.zip", "processing_and_analysis.R"))
 #'     
 #' @export
@@ -68,6 +76,8 @@ template_arguments <- function(
   path = NULL, 
   data.path = NULL, 
   data.table = NULL,
+  spatial.raster = NULL,
+  spatial.vector = NULL,
   other.entity = NULL, 
   sep = NULL,
   empty = FALSE) {
@@ -147,6 +157,30 @@ template_arguments <- function(
     names(data_tables) <- enc2utf8(as.character(data_table))
   } else {
     data_tables <- NULL
+  }
+  
+  # Initialize raster ---------------------------------------------------------
+  
+  if (!is.null(spatial.raster)){
+    spatial_raster <- validate_file_names(
+      path = data.path,
+      data.files = spatial.raster)
+    spatial_rasters <- vector('list', length(spatial_raster))
+    names(spatial_rasters) <- enc2utf8(as.character(spatial_raster))
+  } else {
+    spatial_rasters <- NULL
+  }
+  
+  # Initialize vector ---------------------------------------------------------
+  
+  if (!is.null(spatial.vector)){
+    spatial_vector <- validate_file_names(
+      path = data.path,
+      data.files = spatial.vector)
+    spatial_vectors <- vector('list', length(spatial_vector))
+    names(spatial_vectors) <- enc2utf8(as.character(spatial_vector))
+  } else {
+    spatial_vectors <- NULL
   }
   
   # Initialize other entities -------------------------------------------------
@@ -352,6 +386,15 @@ template_arguments <- function(
           paste0(path, "/", tfound[i]))
       }
       
+      # Read raster and vector information ------------------------------------
+
+      if (stringr::str_detect(
+        tfound[i],
+        attr_tmp$regexpr[attr_tmp$template_name == "information"])) {
+        templates[[i]]$content <- read_tbl(
+          paste0(path, "/", tfound[i]))
+      }
+            
       # Read geographic bounding boxes ----------------------------------------
       
       if (stringr::str_detect(
@@ -470,6 +513,35 @@ template_arguments <- function(
     }
     
   }
+
+  # Read spatial raster -------------------------------------------------------
+
+  if (!is.null(spatial.raster)) {
+    
+    for (i in 1:length(spatial.raster)) {
+      f <- paste0(data.path, "/", spatial.raster[i])
+      
+      if (mime::guess_type(f) != "image/tiff") {
+        spatial_rasters[[i]]$content <- as.data.frame(terra::rast(f))
+      } else {
+        spatial_rasters[[i]]$content <- data.frame()
+      }
+
+    }
+    
+  }
+  
+  # Read spatial vector -------------------------------------------------------
+  
+  if (!is.null(spatial.vector)) {
+    
+    for (i in 1:length(spatial.vector)) {
+      f <- paste0(data.path, "/", spatial.vector[i])
+      
+      spatial_vectors[[i]]$content <- as.data.frame(terra::vect(f))
+      
+    }
+  }
   
   # Read other entities -------------------------------------------------------
   
@@ -484,6 +556,8 @@ template_arguments <- function(
   output$x <- list(
     template = templates,
     data.table = data_tables,
+    spatial.raster = spatial_rasters,
+    spatial.vector = spatial_vectors,
     other.entity = other_entities)
   
   # Convert NA to "", but don't convert "NA" since these may be explicitly 

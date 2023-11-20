@@ -1,0 +1,5 @@
+attributeName	attributeDefinition	class	unit	dateTimeFormatString	missingValueCode	missingValueCodeExplanation
+Var0	 volume per volume of phytoplankton in micrometer cubed per milliliter	numeric	dimensionless	""	""	""
+Var0Dim0	lower depth relative to surface of Waypoint in meter	numeric	dimensionless	""	""	""
+Var0Dim1	date of time instant in ISO 8601 DateTime	character	""	""	""	""
+Var0Dim2	taxon name of phytoplankton in AlgaeBase	character	""	""	""	""

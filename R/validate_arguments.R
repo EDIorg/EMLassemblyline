@@ -366,6 +366,54 @@ validate_arguments <- function(fun.name, fun.args){
     issues <- c(issues, r$issues)
     fun.args <- r$fun.args
     
+    # spatial.raster
+    
+    if (!is.null(fun.args$spatial.raster)) {
+      raster_names <- suppressWarnings(
+        validate_file_names(
+          path = fun.args$data.path,
+          data.files = fun.args$spatial.raster))
+    }
+    
+    # spatial.raster.description
+    r <- validate_raster_description(fun.args)
+    issues <- c(issues, r$issues)
+    fun.args <- r$fun.args
+    
+    # spatial.raster.name
+    r <- validate_raster_name(fun.args)
+    issues <- c(issues, r$issues)
+    fun.args <- r$fun.args
+    
+    # spatial.raster.url
+    r <- validate_raster_url(fun.args)
+    issues <- c(issues, r$issues)
+    fun.args <- r$fun.args
+    
+    # spatial.vector
+    
+    if (!is.null(fun.args$spatial.vector)) {
+      vector_names <- suppressWarnings(
+        validate_file_names(
+          path = fun.args$data.path,
+          data.files = fun.args$spatial.vector))
+    }
+    
+    # spatial.vector.description
+    r <- validate_vector_description(fun.args)
+    issues <- c(issues, r$issues)
+    fun.args <- r$fun.args
+    
+    # spatial.vector.name
+    r <- validate_vector_name(fun.args)
+    issues <- c(issues, r$issues)
+    fun.args <- r$fun.args
+    
+    # spatial.vector.url
+    r <- validate_vector_url(fun.args)
+    issues <- c(issues, r$issues)
+    fun.args <- r$fun.args
+    
     # geographic.coordinates and geographic.description
     r <- validate_geographic_coord_desc(fun.args)
     issues <- c(issues, r$issues)
@@ -608,6 +656,109 @@ validate_arguments <- function(fun.name, fun.args){
 
   }
   
+  # Call from template_netcdf_catvars() -------------------------------------
+  
+  if (fun.name == 'template_netcdf_catvars'){
+    
+    if (is.null(fun.args$path)) {
+      stop("Input argument 'path' is missing", call. = FALSE)
+    }
+    
+    # Get attribute file names and data file names
+    
+    files <- list.files(fun.args$path)
+    use_i <- stringr::str_detect(string = files,
+                                 pattern = "^attributes")
+    if (sum(use_i) == 0){
+      stop('There are no attributes.txt files in your dataset working directory. Please fix this.', call. = F)
+    }
+    
+    attribute_files <- files[use_i]
+    table_names_base <- stringr::str_sub(string = attribute_files,
+                                         start = 12,
+                                         end = nchar(attribute_files)-4)
+    netcdf <- list.files(fun.args$data.path)
+    use_i <- stringr::str_detect(string = netcdf,
+                                 pattern = stringr::str_c("^", table_names_base, collapse = "|"))
+    table_names <- netcdf[use_i]
+    netcdf <- table_names
+    
+    # Send warning if data table name is repeated more than once
+    
+    if (length(unique(tools::file_path_sans_ext(netcdf))) != length(netcdf)){
+      stop('Duplicate data file names exist in this directory. Please remove duplicates, even if they are a different file type.', call. = F)
+    }
+    
+  }
+  
+  # Call from template_raster_catvars() ---------------------------------------
+  if (fun.name == 'template_raster_catvars'){
+    
+    if (is.null(fun.args$path)) {
+      stop("Input argument 'path' is missing", call. = FALSE)
+    }
+    
+    # Get attribute file names and data file names
+    
+    files <- list.files(fun.args$path)
+    use_i <- stringr::str_detect(string = files,
+                                 pattern = "^attributes")
+    if (sum(use_i) == 0){
+      stop('There are no attributes.txt files in your dataset working directory. Please fix this.', call. = F)
+    }
+    
+    attribute_files <- files[use_i]
+    raster_names_base <- stringr::str_sub(string = attribute_files,
+                                          start = 12,
+                                          end = nchar(attribute_files)-4)
+    raster_files <- list.files(fun.args$data.path)
+    use_i <- stringr::str_detect(string = raster_files,
+                                 pattern = stringr::str_c("^", raster_names_base, collapse = "|"))
+    raster_names <- raster_files[use_i]
+    raster_files <- raster_names
+    
+    # Send warning if data table name is repeated more than once
+    
+    if (length(unique(tools::file_path_sans_ext(raster_files))) != length(raster_files)){
+      stop('Duplicate data file names exist in this directory. Please remove duplicates, even if they are a different file type.', call. = F)
+    }
+    
+  }
+  
+  # Call from template_vector_catvars() ---------------------------------------
+  if (fun.name == 'template_vector_catvars'){
+    
+    if (is.null(fun.args$path)) {
+      stop("Input argument 'path' is missing", call. = FALSE)
+    }
+    
+    # Get attribute file names and data file names
+    
+    files <- list.files(fun.args$path)
+    use_i <- stringr::str_detect(string = files,
+                                 pattern = "^attributes")
+    if (sum(use_i) == 0){
+      stop('There are no attributes.txt files in your dataset working directory. Please fix this.', call. = F)
+    }
+    
+    attribute_files <- files[use_i]
+    vector_names_base <- stringr::str_sub(string = attribute_files,
+                                         start = 12,
+                                         end = nchar(attribute_files)-4)
+    vector_files <- list.files(fun.args$data.path)
+    use_i <- stringr::str_detect(string = vector_files,
+                                 pattern = stringr::str_c("^", vector_names_base, collapse = "|"))
+    vector_names <- vector_files[use_i]
+    vector_files <- vector_names
+    
+    # Send warning if data table name is repeated more than once
+    
+    if (length(unique(tools::file_path_sans_ext(vector_files))) != length(vector_files)){
+      stop('Duplicate data file names exist in this directory. Please remove duplicates, even if they are a different file type.', call. = F)
+    }
+    
+  }
+  
   # Call from template_core_metadata() ----------------------------------------
   
   if (fun.name == 'template_core_metadata'){
@@ -717,6 +868,60 @@ validate_arguments <- function(fun.name, fun.args){
     
   }
   
+  # Call from template_raster_information() -----------------------------------
+  
+  if (fun.name == 'template_raster_information'){
+    
+    # path
+    
+    if (!is.null(fun.args$path)) {
+      
+      validate_path(fun.args$path)
+      
+    }
+    
+    # raster.file
+    
+    if (!is.null(fun.args$raster.file)){
+      
+      # Validate table names
+      
+      data_files <- suppressWarnings(
+        validate_file_names(
+          path = fun.args$data.path, 
+          data.files = fun.args$raster.file))
+      
+    }
+    
+  }
+  
+  # Call from template_vector_information() -----------------------------------
+  
+  if (fun.name == 'template_vector_information'){
+    
+    # path
+    
+    if (!is.null(fun.args$path)) {
+      
+      validate_path(fun.args$path)
+      
+    }
+    
+    # vector.file
+    
+    if (!is.null(fun.args$vector.file)){
+      
+      # Validate table names
+      
+      data_files <- suppressWarnings(
+        validate_file_names(
+          path = fun.args$data.path, 
+          data.files = fun.args$vector.file))
+      
+    }
+    
+  }
+  
   # Call from template_table_attributes() -------------------------------------
   
   if (fun.name == 'template_table_attributes'){
@@ -756,6 +961,132 @@ validate_arguments <- function(fun.name, fun.args){
         warning(paste(unlist(r), collapse = "\n"), call. = FALSE)
       }
 
+    }
+    
+  }
+  
+  # Call from template_netcdf_attributes() ------------------------------------
+  
+  if (fun.name == 'template_netcdf_attributes'){
+    
+    # netcdf
+    
+    if (!is.null(fun.args$netcdf)){
+      
+      # Validate table names
+
+      data_files <- suppressWarnings(
+        validate_file_names(
+          path = fun.args$data.path, 
+          data.files = fun.args$netcdf))
+      
+      # attributeName - Names follow best practices
+      
+      r <- lapply(
+        fun.args$netcdf,
+        function(k) {
+          nc <- ncdf4::nc_open(paste0(fun.args$data.path, '/', k))
+          fields_names <- c(attributes(nc$var)$names, attributes(nc$dim)$names)
+          use_i <- stringr::str_detect(
+            fields_names, "(%|[:blank:]|([:punct:]^_))")
+          if (any(use_i)) {
+            paste0(
+              k, " has variable or dimension names that are not composed of ",
+              "strictly alphanumeric characters and underscores (recommended). ",
+              "This best practice ensures the data may be read by most software ",
+              "applications. Consider revising these fields: ", 
+              paste(
+                fields_names[use_i], collapse = ", "))
+          }
+        })
+      if (!is.null(unlist(r))) {
+        warning(paste(unlist(r), collapse = "\n"), call. = FALSE)
+      }
+      
+    }
+    
+  }
+  
+  # Call from template_raster_attributes() ------------------------------------
+
+  if (fun.name == 'template_raster_attributes'){
+    
+    # raster.file
+
+    if (!is.null(fun.args$raster.file)){
+      
+      # Validate table names
+      
+      data_files <- suppressWarnings(
+        validate_file_names(
+          path = fun.args$data.path, 
+          data.files = fun.args$raster.file))
+      
+      # attributeName - Names follow best practices
+      
+      r <- lapply(
+        fun.args$raster.file,
+        function(k) {
+          if (mime::guess_type(k) != "image/tiff") {
+            fields_names <- colnames(data.frame(terra::rast(paste0(fun.args$data.path, '/', k))))
+            use_i <- stringr::str_detect(
+              fields_names, "(%|[:blank:]|([:punct:]^_))")
+            if (any(use_i)) {
+              paste0(
+                k, " has variable or dimension names that are not composed of ",
+                "strictly alphanumeric characters and underscores (recommended). ",
+                "This best practice ensures the data may be read by most software ",
+                "applications. Consider revising these fields: ", 
+                paste(
+                  fields_names[use_i], collapse = ", "))
+            }
+          }
+        })
+      if (!is.null(unlist(r))) {
+        warning(paste(unlist(r), collapse = "\n"), call. = FALSE)
+      }
+      
+    }
+    
+  }
+
+  # Call from template_vector_attributes() ------------------------------------
+  
+  if (fun.name == 'template_vector_attributes'){
+    
+    # vector.file
+    
+    if (!is.null(fun.args$vector.file)){
+      
+      # Validate table names
+      
+      data_files <- suppressWarnings(
+        validate_file_names(
+          path = fun.args$data.path, 
+          data.files = fun.args$vector.file))
+      
+      # attributeName - Names follow best practices
+      
+      r <- lapply(
+        fun.args$vector.file,
+        function(k) {
+          fields_names <- colnames(data.frame(terra::vect(paste0(fun.args$data.path, '/', k))))
+          use_i <- stringr::str_detect(
+            fields_names, "(%|[:blank:]|([:punct:]^_))")
+          if (any(use_i)) {
+            paste0(
+              k, " has variable or dimension names that are not composed of ",
+              "strictly alphanumeric characters and underscores (recommended). ",
+              "This best practice ensures the data may be read by most software ",
+              "applications. Consider revising these fields: ", 
+              paste(
+                fields_names[use_i], collapse = ", "))
+          }
+        })
+      if (!is.null(unlist(r))) {
+        warning(paste(unlist(r), collapse = "\n"), call. = FALSE)
+      }
+      
     }
     
   }
@@ -1217,6 +1548,406 @@ validate_table_url <- function(fun.args) {
     optional_issues <- paste0(
       "\n",
       "Table URL (Optional):\n",
+      paste(
+        paste0(seq_along(optional_issues), ". "),
+        optional_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  
+  issues <- c(required_issues, optional_issues)
+  
+  return(list(issues = issues, fun.args = fun.args))
+}
+
+
+
+
+
+
+
+
+#' Validate spatial raster description
+#'
+#' @param fun.args
+#'     (named list) Function arguments and their values.
+#'
+#' @return
+#'     \item{issues}{Description of issues}
+#'     \item{fun.args}{Updated list of function arguments}
+#' 
+#' @keywords internal
+#' 
+validate_raster_description <- function(fun.args) {
+  
+  # Each issue is logged as "required" or "optional"
+  required_issues <- c()
+  optional_issues <- c()
+  
+  # Each raster has a description, otherwise the description defaults to the 
+  # file name
+  for (i in seq_along(fun.args$spatial.raster)) {
+    tbl <- fun.args$spatial.raster[i]
+    des <- fun.args$spatial.raster.description[i]
+    if (is.na(des) || is.null(des)) {
+      optional_issues <- c(
+        optional_issues,
+        paste0("Missing description for ", tbl, ". Short descriptions of the ",
+               "file contents help future users understand the data. ",
+               "Defaulting to file name."))
+      fun.args$spatial.raster.description[i] <- tbl
+    }
+  }
+  
+  # Compile report
+  if (!is.null(required_issues)) {
+    required_issues <- paste0(
+      "\n",
+      "Raster descriptions (Required):\n",
+      paste(
+        paste0(seq_along(required_issues), ". "),
+        required_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  if (!is.null(optional_issues)) {
+    optional_issues <- paste0(
+      "\n",
+      "Raster descriptions (Optional):\n",
+      paste(
+        paste0(seq_along(optional_issues), ". "),
+        optional_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  issues <- c(required_issues, optional_issues)
+  
+  return(list(issues = issues, fun.args = fun.args))
+}
+
+
+
+
+
+
+
+
+#' Validate spatial raster names
+#'
+#' @param fun.args
+#'     (named list) Function arguments and their values.
+#'
+#' @return
+#'     \item{issues}{Description of issues}
+#'     \item{fun.args}{Updated list of function arguments}
+#' 
+#' @keywords internal
+#' 
+validate_raster_name <- function(fun.args) {
+  
+  # Each issue is logged as "required" or "optional"
+  required_issues <- c()
+  optional_issues <- c()
+  
+  # Each raster has a name, otherwise the name defaults to the file name
+  for (i in seq_along(fun.args$spatial.raster)) {
+    tbl <- fun.args$spatial.raster[i]
+    name <- fun.args$spatial.raster.name[i]
+    if (is.na(name) || is.null(name)) {
+      optional_issues <- c(
+        optional_issues,
+        paste0("Missing name for ", tbl, ". Short descriptive names of the ",
+               "files help users understand the data. Defaulting to file ",
+               "name."))
+      fun.args$spatial.raster.name[i] <- tbl
+    } else if (tbl == name) {
+      optional_issues <- c(
+        optional_issues,
+        paste0("Missing name for ", tbl, ". Short descriptive names of the ",
+               "files help users understand the data. Defaulting to file ",
+               "name."))
+    }
+  }
+  
+  # Compile report
+  if (!is.null(required_issues)) {
+    required_issues <- paste0(
+      "\n",
+      "Raster names (Required):\n",
+      paste(
+        paste0(seq_along(required_issues), ". "),
+        required_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  if (!is.null(optional_issues)) {
+    optional_issues <- paste0(
+      "\n",
+      "Raster names (Optional):\n",
+      paste(
+        paste0(seq_along(optional_issues), ". "),
+        optional_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  issues <- c(required_issues, optional_issues)
+  return(list(issues = issues, fun.args = fun.args))
+}
+
+
+
+
+
+
+
+
+#' Validate spatial raster url
+#'
+#' @param fun.args
+#'     (named list) Function arguments and their values.
+#'
+#' @return
+#'     \item{issues}{Description of issues}
+#'     \item{fun.args}{Updated list of function arguments}
+#' 
+#' @keywords internal
+#' 
+validate_raster_url <- function(fun.args) {
+  
+  # Each issue is logged as "required" or "optional"
+  required_issues <- c()
+  optional_issues <- c()
+  
+  # If urls are used, then each table has one otherwise a default "" is added
+  for (i in seq_along(fun.args$spatial.raster)) {
+    tbl <- fun.args$spatial.raster[i]
+    url <- fun.args$spatial.raster.url[i]
+    if (!is.null(url)) {
+      if (is.na(url)) {
+        required_issues <- c(
+          required_issues,
+          paste0("Missing URL for ", tbl, ". A URL should be specified for ",
+                 'each table. Use "" if no URL is used. Defaulting to "".'))
+        fun.args$spatial.raster.url[i] <- ""
+      }
+    }
+  }
+  
+  # Compile report
+  if (!is.null(required_issues)) {
+    required_issues <- paste0(
+      "\n",
+      "Raster URL (Required):\n",
+      paste(
+        paste0(seq_along(required_issues), ". "),
+        required_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  if (!is.null(optional_issues)) {
+    optional_issues <- paste0(
+      "\n",
+      "Raster URL (Optional):\n",
+      paste(
+        paste0(seq_along(optional_issues), ". "),
+        optional_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  
+  issues <- c(required_issues, optional_issues)
+  
+  return(list(issues = issues, fun.args = fun.args))
+}
+
+
+
+
+
+
+
+
+#' Validate spatial vector description
+#'
+#' @param fun.args
+#'     (named list) Function arguments and their values.
+#'
+#' @return
+#'     \item{issues}{Description of issues}
+#'     \item{fun.args}{Updated list of function arguments}
+#' 
+#' @keywords internal
+#' 
+validate_vector_description <- function(fun.args) {
+  
+  # Each issue is logged as "required" or "optional"
+  required_issues <- c()
+  optional_issues <- c()
+  
+  # Each vector has a description, otherwise the description defaults to the 
+  # file name
+  for (i in seq_along(fun.args$spatial.vector)) {
+    tbl <- fun.args$spatial.vector[i]
+    des <- fun.args$spatial.vector.description[i]
+    if (is.na(des) || is.null(des)) {
+      optional_issues <- c(
+        optional_issues,
+        paste0("Missing description for ", tbl, ". Short descriptions of the ",
+               "file contents help future users understand the data. ",
+               "Defaulting to file name."))
+      fun.args$spatial.vector.description[i] <- tbl
+    }
+  }
+  
+  # Compile report
+  if (!is.null(required_issues)) {
+    required_issues <- paste0(
+      "\n",
+      "Vector descriptions (Required):\n",
+      paste(
+        paste0(seq_along(required_issues), ". "),
+        required_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  if (!is.null(optional_issues)) {
+    optional_issues <- paste0(
+      "\n",
+      "Vector descriptions (Optional):\n",
+      paste(
+        paste0(seq_along(optional_issues), ". "),
+        optional_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  issues <- c(required_issues, optional_issues)
+  
+  return(list(issues = issues, fun.args = fun.args))
+}
+
+
+
+
+
+
+
+
+#' Validate spatial vector names
+#'
+#' @param fun.args
+#'     (named list) Function arguments and their values.
+#'
+#' @return
+#'     \item{issues}{Description of issues}
+#'     \item{fun.args}{Updated list of function arguments}
+#' 
+#' @keywords internal
+#' 
+validate_vector_name <- function(fun.args) {
+  
+  # Each issue is logged as "required" or "optional"
+  required_issues <- c()
+  optional_issues <- c()
+  
+  # Each vector has a name, otherwise the name defaults to the file name
+  for (i in seq_along(fun.args$spatial.vector)) {
+    tbl <- fun.args$spatial.vector[i]
+    name <- fun.args$spatial.vector.name[i]
+    if (is.na(name) || is.null(name)) {
+      optional_issues <- c(
+        optional_issues,
+        paste0("Missing name for ", tbl, ". Short descriptive names of the ",
+               "files help users understand the data. Defaulting to file ",
+               "name."))
+      fun.args$spatial.vector.name[i] <- tbl
+    } else if (tbl == name) {
+      optional_issues <- c(
+        optional_issues,
+        paste0("Missing name for ", tbl, ". Short descriptive names of the ",
+               "files help users understand the data. Defaulting to file ",
+               "name."))
+    }
+  }
+  
+  # Compile report
+  if (!is.null(required_issues)) {
+    required_issues <- paste0(
+      "\n",
+      "Vector names (Required):\n",
+      paste(
+        paste0(seq_along(required_issues), ". "),
+        required_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  if (!is.null(optional_issues)) {
+    optional_issues <- paste0(
+      "\n",
+      "Vector names (Optional):\n",
+      paste(
+        paste0(seq_along(optional_issues), ". "),
+        optional_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  issues <- c(required_issues, optional_issues)
+  return(list(issues = issues, fun.args = fun.args))
+}
+
+
+
+
+
+
+
+
+#' Validate spatial vector url
+#'
+#' @param fun.args
+#'     (named list) Function arguments and their values.
+#'
+#' @return
+#'     \item{issues}{Description of issues}
+#'     \item{fun.args}{Updated list of function arguments}
+#' 
+#' @keywords internal
+#' 
+validate_vector_url <- function(fun.args) {
+  
+  # Each issue is logged as "required" or "optional"
+  required_issues <- c()
+  optional_issues <- c()
+  
+  # If urls are used, then each table has one otherwise a default "" is added
+  for (i in seq_along(fun.args$spatial.vector)) {
+    tbl <- fun.args$spatial.vector[i]
+    url <- fun.args$spatial.vector.url[i]
+    if (!is.null(url)) {
+      if (is.na(url)) {
+        required_issues <- c(
+          required_issues,
+          paste0("Missing URL for ", tbl, ". A URL should be specified for ",
+                 'each table. Use "" if no URL is used. Defaulting to "".'))
+        fun.args$spatial.vector.url[i] <- ""
+      }
+    }
+  }
+  
+  # Compile report
+  if (!is.null(required_issues)) {
+    required_issues <- paste0(
+      "\n",
+      "Vector URL (Required):\n",
+      paste(
+        paste0(seq_along(required_issues), ". "),
+        required_issues,
+        collapse = "\n"),
+      "\n")
+  }
+  if (!is.null(optional_issues)) {
+    optional_issues <- paste0(
+      "\n",
+      "Vector URL (Optional):\n",
       paste(
         paste0(seq_along(optional_issues), ". "),
         optional_issues,
