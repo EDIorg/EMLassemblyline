@@ -630,6 +630,194 @@ testthat::test_that("other.entity.url", {
   
 })
 
+# spatial.raster.name -------------------------------------------------------------
+
+testthat::test_that("spatial.raster.name", {
+  
+  # Missing
+  x <- list(
+    spatial.raster = c("raster1.tif", "raster2.tif"),
+    spatial.raster.name = NULL)
+  r <- validate_raster_name(x)
+  expect_true(
+    stringr::str_detect(
+      r$issues,
+      "Missing name for"))
+  expect_true(
+    all(
+      r$fun.args$spatial.raster.name %in% x$spatial.raster))
+  
+  # Present
+  x <- list(
+    spatial.raster = c("raster1.tif", "raster2.tif"),
+    spatial.raster.name = c("Name 1", "Name 2"))
+  r <- validate_raster_name(x)
+  expect_null(r$issues)
+  expect_false(
+    all(
+      r$fun.args$spatial.raster.name %in% x$spatial.raster))
+  
+})
+
+# spatial.raster.description ------------------------------------------------------
+
+testthat::test_that("spatial.raster.description", {
+  
+  # Missing
+  x <- list(
+    spatial.raster = c("raster1.tif", "raster2.tif"),
+    spatial.raster.description = NULL)
+  r <- validate_raster_description(x)
+  expect_true(
+    stringr::str_detect(
+      r$issues,
+      "Missing description for"))
+  expect_true(
+    all(
+      r$fun.args$spatial.raster.description %in% x$spatial.raster))
+  
+  # Present
+  x <- list(
+    spatial.raster = c("raster1.tif", "raster2.tif"),
+    spatial.raster.description = c("Description 1", "Description 2"))
+  r <- validate_raster_description(x)
+  expect_null(r$issues)
+  expect_false(
+    all(
+      r$fun.args$spatial.raster.description %in% x$spatial.raster))
+  
+})
+
+# spatial.raster.url --------------------------------------------------------------
+
+testthat::test_that("spatial.raster.url", {
+  
+  # Unused argument (this argument is not required)
+  x <- list(
+    spatial.raster = c("raster1.tif", "raster2.tif"),
+    spatial.raster.url = NULL)
+  r <- validate_raster_url(x)
+  expect_null(r$issues)
+  
+  # Missing one
+  x <- list(
+    spatial.raster = c("raster1.tif", "raster2.tif"),
+    spatial.raster.url = "/some/url/raster1.tif")
+  r <- validate_raster_url(x)
+  expect_true(
+    stringr::str_detect(
+      r$issues,
+      "Missing URL for"))
+  expect_equal(
+    length(r$fun.args$spatial.raster.url),
+    length(r$fun.args$spatial.raster))
+  
+  # Present
+  x <- list(
+    spatial.raster = c("raster1.tif", "raster2.tif"),
+    spatial.raster.url = c("/some/url/raster1.tif", "/some/url/raster2.tif"))
+  r <- validate_raster_url(x)
+  expect_null(r$issues)
+  expect_equal(
+    length(r$fun.args$spatial.raster.url),
+    length(r$fun.args$spatial.raster))
+  
+})
+
+# spatial.vector.name -------------------------------------------------------------
+
+testthat::test_that("spatial.vector.name", {
+  
+  # Missing
+  x <- list(
+    spatial.vector = c("vector1.GeoJSON", "vector2"),
+    spatial.vector.name = NULL)
+  r <- validate_vector_name(x)
+  expect_true(
+    stringr::str_detect(
+      r$issues,
+      "Missing name for"))
+  expect_true(
+    all(
+      r$fun.args$spatial.vector.name %in% x$spatial.vector))
+  
+  # Present
+  x <- list(
+    spatial.vector = c("vector1.GeoJSON", "vector2"),
+    spatial.vector.name = c("Name 1", "Name 2"))
+  r <- validate_vector_name(x)
+  expect_null(r$issues)
+  expect_false(
+    all(
+      r$fun.args$spatial.vector.name %in% x$spatial.vector))
+  
+})
+
+# spatial.vector.description ------------------------------------------------------
+
+testthat::test_that("spatial.vector.description", {
+  
+  # Missing
+  x <- list(
+    spatial.vector = c("vector1.GeoJSON", "vector2"),
+    spatial.vector.description = NULL)
+  r <- validate_vector_description(x)
+  expect_true(
+    stringr::str_detect(
+      r$issues,
+      "Missing description for"))
+  expect_true(
+    all(
+      r$fun.args$spatial.vector.description %in% x$spatial.vector))
+  
+  # Present
+  x <- list(
+    spatial.vector = c("vector1.GeoJSON", "vector2"),
+    spatial.vector.description = c("Description 1", "Description 2"))
+  r <- validate_vector_description(x)
+  expect_null(r$issues)
+  expect_false(
+    all(
+      r$fun.args$spatial.vector.description %in% x$spatial.vector))
+  
+})
+
+# spatial.vector.url --------------------------------------------------------------
+
+testthat::test_that("spatial.vector.url", {
+  
+  # Unused argument (this argument is not required)
+  x <- list(
+    spatial.vector = c("vector1.GeoJSON", "vector2"),
+    spatial.vector.url = NULL)
+  r <- validate_vector_url(x)
+  expect_null(r$issues)
+  
+  # Missing one
+  x <- list(
+    spatial.vector = c("vector1.GeoJSON", "vector2"),
+    spatial.vector.url = "/some/url/vector1.tif")
+  r <- validate_vector_url(x)
+  expect_true(
+    stringr::str_detect(
+      r$issues,
+      "Missing URL for"))
+  expect_equal(
+    length(r$fun.args$spatial.vector.url),
+    length(r$fun.args$spatial.vector))
+  
+  # Present
+  x <- list(
+    spatial.vector = c("vector1.GeoJSON", "vector2"),
+    spatial.vector.url = c("/some/url/vector1.tif", "/some/url/vector2.tif"))
+  r <- validate_vector_url(x)
+  expect_null(r$issues)
+  expect_equal(
+    length(r$fun.args$spatial.vector.url),
+    length(r$fun.args$spatial.vector))
+  
+})
+
 # temporal.coverage -----------------------------------------------------------
 
 testthat::test_that("temporal.coverage", {

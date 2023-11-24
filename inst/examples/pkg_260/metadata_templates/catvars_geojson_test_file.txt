@@ -1,0 +1,13 @@
+attributeName	code	definition
+OPERATEUR_	Bio-Littoral	def
+OPERATEUR_	Ecosub	def
+OPERATEUR_	Ifremer Anglet	def
+OPERATEUR_	MNHN CC	def
+OPERATEUR_	Station de Wimer	def
+PROGRAMME	DCE	def
+PROGRAMME	DCE/ELV	def
+PROGRAMME	ELV	def
+PROGRAMME	REBENT	def
+PROGRAMME	REBENT/DCE	def
+STATUT_DU_	actif	def
+STATUT_DU_	inactif	def

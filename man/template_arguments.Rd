@@ -8,6 +8,8 @@ template_arguments(
   path = NULL,
   data.path = NULL,
   data.table = NULL,
+  spatial.raster = NULL,
+  spatial.vector = NULL,
   other.entity = NULL,
   sep = NULL,
   empty = FALSE
@@ -22,6 +24,12 @@ metadata templates.}
 
 \item{data.table}{(character) File names of data tables. If more than one, then supply as 
 a vector (e.g. \code{data.table = c('decomp.csv', 'nitrogen.csv')}).}
+
+\item{spatial.raster}{(character) File names of raster files. If more than one, then supply as 
+a vector.}
+
+\item{spatial.vector}{(character) File names of vector files. If more than one, then supply as 
+a vector.}
 
 \item{other.entity}{(character) File names of other entity data objects. If more than one, 
 then supply as a vector (e.g. 
@@ -72,6 +80,8 @@ r <- template_arguments(
   path = "./metadata_templates",
   data.path = "./data_objects",
   data.table = c("decomp.csv", "nitrogen.csv"),
+  spatial.raster = "geotiff_test_file.tif",
+  spatial.vector = c("shapefile_test", "geojson_test_file.GeoJSON"),
   other.entity = c("ancillary_data.zip", "processing_and_analysis.R"))
     
 }

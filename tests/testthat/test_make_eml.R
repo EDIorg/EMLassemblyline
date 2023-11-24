@@ -14,6 +14,8 @@ x <- template_arguments(
     '/examples/pkg_260/data_objects',
     package = 'EMLassemblyline'),
   data.table = c("decomp.csv", "nitrogen.csv"),
+  spatial.raster = "geotiff_test_file.tif",
+  spatial.vector = c("geojson_test_file.GeoJSON", "shapefile_test"),
   other.entity = c("ancillary_data.zip", "processing_and_analysis.R"))
 x$x$template$taxonomic_coverage.txt <- NULL
 
@@ -25,6 +27,14 @@ x$data.table.quote.character  <- c("\\'", "\\'")
 x$data.table.url <- c("https://url/to/decomp.csv", "https://url/to/nitrogen.csv")
 x$dataset.title <- 'Sphagnum and Vascular Plant Decomposition under Increasing Nitrogen Additions: 2014-2015'
 x$eml.path <- system.file('/examples/pkg_260/eml', package = 'EMLassemblyline')
+x$spatial.raster <- "geotiff_test_file.tif"
+x$spatial.raster.name <- "Geotiff file name"
+x$spatial.raster.description <- "Geotiff file description"
+x$spatial.raster.url <- "https://url/to/geotiff_test_file.tif"
+x$spatial.vector <- c("geojson_test_file.GeoJSON", "shapefile_test")
+x$spatial.vector.name <- c("GeoJSON file name", "Shapefile name")
+x$spatial.vector.description <- c("GeoJSON file description", "Shpaefile description")
+x$spatial.vector.url <- c("https://url/to/geojson_test_file.GeoJSON", "https://url/to/shapefile_test")
 x$geographic.coordinates <- c('55.895', '112.094','55.895', '112.094')
 x$geographic.description <- 'Alberta, Canada, 100 km south of Fort McMurray, Canada'
 x$maintenance.description <- 'Completed'
@@ -179,6 +189,128 @@ testthat::test_that('Expect argument values in EML', {
     do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   expect_null(r$dataset$dataTable[[2]]$physical$distribution$online$url)
   
+  # spatial.raster.name
+  
+  x1 <- x
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  for (i in 1:length(r$dataset$spatialRaster)) {
+    expect_true(
+      r$dataset$spatialRaster[[i]]$entityName == x1$spatial.raster.name[i])
+  }
+  
+  # spatial.raster.name - defaults to spatial.raster
+  
+  x1 <- x
+  x1$spatial.raster.name <- NULL
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  for (i in 1:length(r$dataset$spatialRaster)) {
+    expect_true(
+      r$dataset$spatialRaster[[i]]$entityName == r$dataset$spatialRaster[[i]]$physical$objectName)
+  }
+  
+  x1 <- x
+  x1$spatial.raster.name <- x1$spatial.raster.name[1]
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  for (i in 1:length(r$dataset$spatialRaster)) {
+    expect_true(
+      (r$dataset$spatialRaster[[i]]$entityName == x1$spatial.raster.name[i]) | 
+        (r$dataset$spatialRaster[[i]]$entityName == x1$spatial.raster[i]))
+  }
+  
+  # spatial.raster.url
+  
+  x1 <- x
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  for (i in 1:length(r$dataset$spatialRaster)) {
+    expect_equal(
+      r$dataset$spatialRaster[[i]]$physical$distribution$online$url,
+      x1$spatial.raster.url[i])
+  }
+  
+  # spatial.raster.url - A URL is not required for each spatialRaster
+  
+  x1 <- x
+  x1$spatial.raster.url[1] <- ""
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_true(
+    is.null(r$dataset$spatialRaster[[1]]$physical$distribution$online$url))
+
+  x1 <- x
+  x1$spatial.raster.url[1] <- NA_character_
+  r <- suppressWarnings(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_true(
+    is.null(r$dataset$spatialRaster[[1]]$physical$distribution$online$url))
+
+  # spatial.vector.name
+  
+  x1 <- x
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  for (i in 1:length(r$dataset$spatialVector)) {
+    expect_true(
+      r$dataset$spatialVector[[i]]$entityName == x1$spatial.vector.name[i])
+  }
+  
+  # spatial.vector.name - defaults to spatial.vector
+  
+  x1 <- x
+  x1$spatial.vector.name <- NULL
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  for (i in 1:length(r$dataset$spatialVector)) {
+    expect_true(
+      r$dataset$spatialVector[[i]]$entityName == r$dataset$spatialVector[[i]]$physical$objectName)
+  }
+  
+  x1 <- x
+  x1$spatial.vector.name <- x1$spatial.vector.name[1]
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  for (i in 1:length(r$dataset$spatialVector)) {
+    expect_true(
+      (r$dataset$spatialVector[[i]]$entityName == x1$spatial.vector.name[i]) | 
+        (r$dataset$spatialVector[[i]]$entityName == x1$spatial.vector[i]))
+  }
+  
+  # spatial.vector.url
+  
+  x1 <- x
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  for (i in 1:length(r$dataset$spatialVector)) {
+    expect_equal(
+      r$dataset$spatialVector[[i]]$physical$distribution$online$url,
+      x1$spatial.vector.url[i])
+  }
+  
+  # spatial.vector.url - A URL is not required for each spatialVector
+  
+  x1 <- x
+  x1$spatial.vector.url[1] <- ""
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_true(
+    is.null(r$dataset$spatialVector[[1]]$physical$distribution$online$url))
+  expect_equal(
+    r$dataset$spatialVector[[2]]$physical$distribution$online$url,
+    x1$spatial.vector.url[2])
+  
+  x1 <- x
+  x1$spatial.vector.url[1] <- NA_character_
+  r <- suppressWarnings(do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_true(
+    is.null(r$dataset$spatialVector[[1]]$physical$distribution$online$url))
+  expect_equal(
+    r$dataset$spatialVector[[2]]$physical$distribution$online$url,
+    x1$spatial.vector.url[2])
+  
+  # spatial.vector.url - NULL values assigned if length doesn't match spatial.vector
+  
+  x1 <- x
+  x1$spatial.vector.url <- x1$spatial.vector.url[1]
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_null(r$dataset$spatialVector[[2]]$physical$distribution$online$url)
+  
   # geographic.corrdinates - The geographicCoverage node is dropped when NULL 
   # and geographic.description is present.
   
@@ -321,8 +453,10 @@ testthat::test_that('Expect template values in EML', {
     do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
   expect_null(r$dataset$abstract)
   
-  # attributes.txt - attributes.txt should be present for each data table, if 
-  # missing then EML dataTable attributes will not be created
+  # attributes.txt - attributes.txt should be present for each data file, if 
+  # missing then EML corresponding attributes will not be created
+  
+  # data.table - dataTable
   
   x1 <- x
   x1$x$template$attributes_decomp.txt <- NULL
@@ -331,6 +465,24 @@ testthat::test_that('Expect template values in EML', {
   expect_true(
     length(r$dataset$dataTable) == length(x1$x$data.table))
 
+  # spatial.raster - spatialRaster
+  
+  x1 <- x
+  x1$x$template$attributes_geotiff_test_file.txt <- NULL
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_true(
+    length(r$dataset$spatialRaster) == length(x1$x$spatial.raster))
+
+  # spatial.vector - spatialVector
+  
+  x1 <- x
+  x1$x$template$attributes_shape_test.txt <- NULL
+  r <- suppressWarnings(
+    do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))
+  expect_true(
+    length(r$dataset$spatialVector) == length(x1$x$spatial.vector))
+  
   # custom_units.txt
   
   x1 <- x

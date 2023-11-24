@@ -37,7 +37,7 @@ testthat::test_that("Inputs = NULL", {
   expect_true(class(output) == "list")
   expect_true(all(names(output) %in% attr_args$argument_name))
   expect_true(
-    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+    all(names(output$x) %in% c('template', 'data.table', 'spatial.raster', 'spatial.vector', 'other.entity')))
   expect_true(is.null(output$x$template))
   expect_true(is.null(output$x$data.table))
   expect_true(is.null(output$x$other.entity))
@@ -117,7 +117,7 @@ testthat::test_that("Inputs = empty templates", {
   expect_true(class(output) == "list")
   expect_true(all(names(output) %in% attr_args$argument_name))
   expect_true(
-    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+    all(names(output$x) %in% c('template', 'data.table', 'spatial.raster', 'spatial.vector', 'other.entity')))
   
   tnames <- names(output$x$template)
   for (i in 1:length(tnames)) {
@@ -169,7 +169,7 @@ testthat::test_that("Inputs = the 'empty' argument", {
   expect_true(class(output) == "list")
   expect_true(all(names(output) %in% attr_args$argument_name))
   expect_true(
-    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+    all(names(output$x) %in% c('template', 'data.table', 'spatial.raster', 'spatial.vector', 'other.entity')))
   
   expected_templates <- c(
     "abstract.txt", "additional_info.txt", "custom_units.txt", 
@@ -217,7 +217,7 @@ testthat::test_that("Inputs = empty templates", {
   expect_true(class(output) == "list")
   expect_true(all(names(output) %in% attr_args$argument_name))
   expect_true(
-    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+    all(names(output$x) %in% c('template', 'data.table', 'spatial.raster', 'spatial.vector', 'other.entity')))
   
   tnames <- names(output$x$template)
   for (i in 1:length(tnames)) {
@@ -268,7 +268,7 @@ testthat::test_that("Inputs = empty templates", {
   expect_true(class(output) == "list")
   expect_true(all(names(output) %in% attr_args$argument_name))
   expect_true(
-    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+    all(names(output$x) %in% c('template', 'data.table', 'spatial.raster', 'spatial.vector', 'other.entity')))
   
   tnames <- names(output$x$template)
   for (i in 1:length(tnames)) {
@@ -319,7 +319,7 @@ testthat::test_that("Inputs = empty templates", {
   expect_true(class(output) == "list")
   expect_true(all(names(output) %in% attr_args$argument_name))
   expect_true(
-    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+    all(names(output$x) %in% c('template', 'data.table', 'spatial.raster', 'spatial.vector', 'other.entity')))
   
   tnames <- names(output$x$template)
   for (i in 1:length(tnames)) {
@@ -374,11 +374,61 @@ testthat::test_that("Inputs = data tables", {
   expect_true(class(output) == "list")
   expect_true(all(names(output) %in% attr_args$argument_name))
   expect_true(
-    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+    all(names(output$x) %in% c('template', 'data.table', 'spatial.raster', 'spatial.vector', 'other.entity')))
   for (i in 1:length(names(output$x$data.table))) {
     expect_true(is.data.frame(output$x$data.table[[i]]$content))
     expect_true(ncol(output$x$data.table[[i]]$content) > 1)
     expect_true(nrow(output$x$data.table[[i]]$content) > 1)
+  }
+  unlink(paste0(tempdir(), "/pkg_260/data_objects"), force = T, recursive = T)
+  
+})
+
+# Inputs = raster -------------------------------------------------------------
+
+testthat::test_that("Inputs = raster", {
+  
+  file.copy(
+    from  = system.file('/examples/pkg_260', package = 'EMLassemblyline'),
+    to = tempdir(),
+    recursive = T)
+  output <- template_arguments(
+    data.path = paste0(tempdir(), "/pkg_260/data_objects"), 
+    spatial.raster = "geotiff_test_file.tif")
+  expect_true(class(output) == "list")
+  expect_true(all(names(output) %in% attr_args$argument_name))
+  expect_true(
+    all(names(output$x) %in% c('template', 'data.table', 'spatial.raster', 'spatial.vector', 'other.entity')))
+  for (i in 1:length(names(output$x$spatial.raster))) {
+    expect_true(is.data.frame(output$x$spatial.raster[[i]]$content))
+    if (mime::guess_type(names(output$x$spatial.raster)) != "image/tiff"){
+      expect_true(ncol(output$x$spatial.raster[[i]]$content) > 0)
+      expect_true(nrow(output$x$spatial.raster[[i]]$content) > 1)
+    }
+  }
+  unlink(paste0(tempdir(), "/pkg_260/data_objects"), force = T, recursive = T)
+  
+})
+
+# Inputs = vector -------------------------------------------------------------
+
+testthat::test_that("Inputs = vector", {
+  
+  file.copy(
+    from  = system.file('/examples/pkg_260', package = 'EMLassemblyline'),
+    to = tempdir(),
+    recursive = T)
+  output <- template_arguments(
+    data.path = paste0(tempdir(), "/pkg_260/data_objects"), 
+    spatial.vector = c("shapefile_test", "geojson_test_file.GeoJSON"))
+  expect_true(class(output) == "list")
+  expect_true(all(names(output) %in% attr_args$argument_name))
+  expect_true(
+    all(names(output$x) %in% c('template', 'data.table', 'spatial.raster', 'spatial.vector', 'other.entity')))
+  for (i in 1:length(names(output$x$spatial.vector))) {
+    expect_true(is.data.frame(output$x$spatial.vector[[i]]$content))
+    expect_true(ncol(output$x$spatial.vector[[i]]$content) > 0)
+    expect_true(nrow(output$x$spatial.vector[[i]]$content) > 1)
   }
   unlink(paste0(tempdir(), "/pkg_260/data_objects"), force = T, recursive = T)
   
@@ -398,7 +448,7 @@ testthat::test_that("Inputs = other entities", {
   expect_true(class(output) == "list")
   expect_true(all(names(output) %in% attr_args$argument_name))
   expect_true(
-    all(names(output$x) %in% c('template', 'data.table', 'other.entity')))
+    all(names(output$x) %in% c('template', 'data.table', 'spatial.raster', 'spatial.vector', 'other.entity')))
   for (i in 1:length(names(output$x$other.entity))) {
     expect_true(is.null(output$x$other.entity[[i]]$content))
   }

@@ -18,6 +18,14 @@ make_eml(
   data.table.description = NULL,
   data.table.quote.character = NULL,
   data.table.url = NULL,
+  spatial.raster = NULL,
+  spatial.raster.name = spatial.raster,
+  spatial.raster.description = NULL,
+  spatial.raster.url = NULL,
+  spatial.vector = NULL,
+  spatial.vector.name = spatial.vector,
+  spatial.vector.description = NULL,
+  spatial.vector.url = NULL,
   other.entity = NULL,
   other.entity.name = other.entity,
   other.entity.description = NULL,
@@ -84,6 +92,50 @@ a vector of character strings in the same order as listed in
 \code{data.table}. If wanting to include URLs for some but not all
 \code{data.table}, then use a "" for those that don't have a URL
 (e.g. \code{data.table.url = c("", "/url/to/decomp.csv")}).}
+
+\item{spatial.raster}{(character; optional) Name of \code{spatial.raster}(s) in this 
+dataset. Use \code{spatial.raster} for all raster files. 
+\code{spatial.raster}(s) should be stored at \code{data.path}. If more 
+than one, then supply as a vector of character strings (e.g. 
+\code{spatial.raster = c('raster_1.tif', 'raster_2.tif')}).}
+
+\item{spatial.raster.name}{(character; optional) A short descriptive name for the spatial.raster. 
+Defaults to \code{spatial.raster}. If more than one, then supply as a 
+vector of character strings in the same order as listed in 
+\code{spatial.raster}.}
+
+\item{spatial.raster.description}{(character; optional) Description(s) of \code{spatial.raster}(s). If more 
+than one, then supply as a vector of descriptions in the same order as 
+listed in \code{spatial.raster}.}
+
+\item{spatial.raster.url}{(character; optional) The publicly accessible URL from which 
+\code{spatial.raster} can be downloaded. If more than one, then supply as 
+a vector of character strings in the same order as listed in 
+\code{spatial.raster}. If wanting to include URLs for some but not all
+\code{spatial.raster}, then use a "" for those that don't have a URL
+(e.g. \code{spatial.raster.url = c("", "/url/to/raster_2.tif")}).}
+
+\item{spatial.vector}{(character; optional) Name of \code{spatial.vector}(s) in this 
+dataset. Use \code{spatial.vector} for all vector files. 
+\code{spatial.vector}(s) should be stored at \code{data.path}. If more 
+than one, then supply as a vector of character strings (e.g. 
+\code{spatial.vector = c('vector_1.GeoJSON', 'vector_2.shp')}).}
+
+\item{spatial.vector.name}{(character; optional) A short descriptive name for the spatial.vector. 
+Defaults to \code{spatial.vector}. If more than one, then supply as a 
+vector of character strings in the same order as listed in 
+\code{spatial.vector}.}
+
+\item{spatial.vector.description}{(character; optional) Description(s) of \code{spatial.vector}(s). If more 
+than one, then supply as a vector of descriptions in the same order as 
+listed in \code{spatial.vector}.}
+
+\item{spatial.vector.url}{(character; optional) The publicly accessible URL from which 
+\code{spatial.vector} can be downloaded. If more than one, then supply as 
+a vector of character strings in the same order as listed in 
+\code{spatial.vector}. If wanting to include URLs for some but not all
+\code{spatial.vector}, then use a "" for those that don't have a URL
+(e.g. \code{spatial.vector.url = c("", "/url/to/vector_2.shp")}).}
 
 \item{other.entity}{(character; optional) Name of \code{other.entity}(s) in this 
 dataset. Use \code{other.entity} for all non-\code{data.table} files. 

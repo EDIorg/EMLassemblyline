@@ -1,0 +1,7 @@
+attributeName	attributeDefinition	class	unit	dateTimeFormatString	missingValueCode	missingValueCodeExplanation
+LIB_SITE	def	character	""	""	""	""
+X	def	numeric	dimensionless			
+Y	def	numeric	dimensionless	""	""	""
+PROGRAMME	def	categorical	""	""	""	""
+OPERATEUR_	def	categorical	""	""	""	""
+STATUT_DU_	def	categorical	""	""	""	""

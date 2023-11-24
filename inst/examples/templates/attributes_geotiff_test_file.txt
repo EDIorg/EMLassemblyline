@@ -1,0 +1,2 @@
+attributeName	attributeDefinition	class	unit	dateTimeFormatString	missingValueCode	missingValueCodeExplanation
+geotiff_test_file	Defintion for raster	numeric	dimensionless	""	""	""

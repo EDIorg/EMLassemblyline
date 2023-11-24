@@ -6,6 +6,9 @@
 #'     (character) Path to the metadata template directory.
 #' @param data.path
 #'     (character) Path to the data directory.
+#' @param data.table
+#'     (character) File names of data tables. If more than one, then supply as 
+#'     a vector (e.g. \code{data.table = c('decomp.csv', 'nitrogen.csv')}).
 #' @param write.file
 #'     (logical; optional) Whether to write the template file.
 #'
@@ -34,14 +37,19 @@
 #' # For tables containing categorical variables as classified in the table attributes template
 #' template_categorical_variables(
 #'   path = "./metadata_templates",
-#'   data.path = "./data_objects")
+#'   data.path = "./data_objects",
+#'   data.table = setNames(
+#'     c("decomp.csv", "nitrogen.csv"), 
+#'     c("attributes_decomp.txt", "attributes_nitrogen.txt")
+#'   ))
 #' }
 #' 
 #' @export
 #'
 template_categorical_variables <- function(
   path, 
-  data.path = path, 
+  data.path = path,
+  data.table = NULL,
   write.file = TRUE) {
   
   message('Templating categorical variables ...')
@@ -60,14 +68,22 @@ template_categorical_variables <- function(
   
   x <- template_arguments(path = path)$x
   
-  attribute_template_names <- stringr::str_subset(
-    names(x$template),
-    "(?<=attributes_).*(?=\\.txt)")
-  
-  data_tables <- sapply(
-    attribute_template_names,
-    attribute_template_to_table,
-    data.path = data.path)
+  if (is.null(data.table)){
+    
+    attribute_template_names <- stringr::str_subset(
+      names(x$template),
+      "(?<=attributes_).*(?=\\.txt)")
+    
+    data_tables <- sapply(
+      attribute_template_names,
+      attribute_template_to_table,
+      data.path = data.path)
+    
+  } else{
+    
+    data_tables <- data.table
+    
+  }
   
   x <- template_arguments(
     path = path,

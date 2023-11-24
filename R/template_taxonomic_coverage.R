@@ -111,22 +111,47 @@ template_taxonomic_coverage <- function(path,
     
   }
   
-  # Read data -----------------------------------------------------------------
+  if (mime::guess_type(taxa.table) 
+      %in% c("text/plain", "text/csv", "text/tab-separated-values")) {
+    
+    # Read data -----------------------------------------------------------------
+    
+    x <- template_arguments(
+      data.path = data.path,
+      data.table = taxa.table)$x
+    
+    # Identify unique taxa of each taxa.table -----------------------------------
+    
+    taxa_raw <- trimws(
+      unique(
+        unlist(
+          lapply(
+            seq_along(x$data.table),
+            function(i){
+              unique(x$data.table[[taxa.table[i]]]$content[ , taxa.col[i]])
+            }))))
+    
+  } else if (mime::guess_type(.file) == "application/x-netcdf") {
+    
+    nc <- ncdf4::nc_open(paste(data.path, taxa.table, sep = "/"))
+    
+    if (taxa.col %in% attributes(nc$var)$names){
+      
+      # Read data
+      
+      taxa_raw <- unique(as.vector(ncdf4::ncvar_get(nc, taxa.col)))
+      
+    } else {
+      # unique () really mandatory ? If taxonomic data are in dimension,
+      # they are already unique. Can just do :
+      # taxa_raw <- nc$dim[[taxa.col]]$vals
+      
+      taxa_raw <- unique(nc$dim[[taxa.col]]$vals)
+      
+    }
+    
+  }
   
-  x <- template_arguments(
-    data.path = data.path,
-    data.table = taxa.table)$x
-  
-  # Identify unique taxa of each taxa.table -----------------------------------
-  
-  taxa_raw <- trimws(
-    unique(
-      unlist(
-        lapply(
-          seq_along(x$data.table),
-          function(i){
-            unique(x$data.table[[taxa.table[i]]]$content[ , taxa.col[i]])
-          }))))
   
   # Resolve scientific names --------------------------------------------------
   
