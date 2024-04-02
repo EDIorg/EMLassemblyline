@@ -370,10 +370,12 @@ is_shp_dir <- function(dir_path) {
   if (dir.exists(dir_path)){
     dir <- dir(dir_path)
   } else if (grepl("zip$", dir_path)) {
-    dir <- unzip(dir_path, list = TRUE)[, 1]
-    # message("Shape file in zip archive is not supported for the moment.
-    #         Unzip your file and try again.")
-    # return(FALSE)
+    # dir <- unzip(dir_path, list = TRUE)[, 1]
+    message(paste0(
+      "Shapefile in zip archive is not supported for the moment.\n",
+      "Will be templated as otherEntity.\n",
+      "For templating as spatialVector, unzip your file and try again."))
+    return(FALSE)
   } else {
     return(FALSE)
   }

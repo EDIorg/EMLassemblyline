@@ -1,0 +1,1 @@
+attributeName	code	definitionvariable	count	Number of individuals countedvariable	BL	Mean body length of individuals counted

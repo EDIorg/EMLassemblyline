@@ -1,0 +1,20 @@
+objectName	variable	value
+ancillary_data.zip	entityType	!Add value here!
+geojson_test_file.GeoJSON	geometry	Point
+geojson_test_file.GeoJSON	geometricObjectCount	65
+geojson_test_file.GeoJSON	spatialReference	GCS_WGS_1984
+geotiff_test_file.tif	spatialReference	GCS_WGS_1984
+geotiff_test_file.tif	horizontalAccuracy	!Add value here!
+geotiff_test_file.tif	verticalAccuracy	!Add value here!
+geotiff_test_file.tif	cellSizeXDirection	7000
+geotiff_test_file.tif	cellSizeYDirection	7000
+geotiff_test_file.tif	numberOfBands	1
+geotiff_test_file.tif	rasterOrigin	Lower Left
+geotiff_test_file.tif	rows	2108
+geotiff_test_file.tif	columns	4972
+geotiff_test_file.tif	verticals	1
+geotiff_test_file.tif	cellGeometry	pixel
+processing_and_analysis.R	entityType	!Add value here!
+shapefile_test	geometry	Polygon
+shapefile_test	geometricObjectCount	4
+shapefile_test	spatialReference	RGF_1993_Lambert_93

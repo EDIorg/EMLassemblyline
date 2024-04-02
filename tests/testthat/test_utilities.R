@@ -2,20 +2,6 @@
 context('utilities.R')
 library(EMLassemblyline)
 
-# set_methods_md() ------------------------------------------------------------
-
-testthat::test_that('set_methods_md()', {
-  # Parameterize
-  myfile <- paste0(tempdir(), "/test.md")
-  writeLines(text = "File content", con = myfile)
-  node <- set_methods_md(myfile)
-  # TEST: Text is wrapped in <markdown> and node has expected nesting
-  expect_equal(names(node), "methodStep")
-  expect_equal(names(node[[1]]), "description")
-  expect_equal(names(node[[1]][[1]]), "markdown")
-  # Clean up
-  unlink(myfile)
-})
 
 test_that("get_eol works", {
   
@@ -52,4 +38,162 @@ test_that("get_eol works", {
     expected = "\\r\\n"
   )
   
+})
+
+
+testthat::test_that("is_template()", {
+  testdir <- paste0(tempdir(), "/pkg")
+  dir_files <- copy_test_package(testdir)
+  i <- is_template(dir_files)
+  not_tmplts <- basename(dir_files[!i])
+  expected <- c(
+    "ancillary_data.zip",
+    "decomp.csv",
+    "geojson_test_file.GeoJSON",
+    "geotiff_test_file.tif",
+    "netcdf_test_file.nc",
+    "nitrogen.csv", 
+    "processing_and_analysis.R"
+  )
+  expect_true(setequal(x = not_tmplts, y = expected))
+  unlink(testdir, recursive = TRUE, force = TRUE)
+})
+
+
+testthat::test_that('init_attributes() default settings', {
+  # Default returns a data frame with expected columns and no rows.
+  res <- init_attributes()
+  expected_cols <- c(
+    'attributeName',
+    'attributeDefinition',
+    'class',
+    'unit',
+    'dateTimeFormatString',
+    'missingValueCode',
+    'missingValueCodeExplanation'
+  )
+  actual_cols <- colnames(res)
+  expect_true(setequal(expected_cols, actual_cols))
+  expect_equal(nrow(res), 0)
+  
+  # Control the number of rows with the nrows parameter
+  res <- init_attributes(nrows = 3)
+  expect_equal(nrow(res), 3)
+})
+
+
+testthat::test_that("init_catvars() default settings", {
+  # Default returns a data frame with expected columns and no rows.
+  res <- init_catvars()
+  expected_cols <- c(
+    "attributeName",
+    "code",
+    "definition"
+  )
+  actual_cols <- colnames(res)
+  expect_true(setequal(expected_cols, actual_cols))
+  expect_equal(nrow(res), 0)
+  
+  # Control the number of rows with the nrows parameter
+  res <- init_catvars(nrows = 3)
+  expect_equal(nrow(res), 3)
+})
+
+
+testthat::test_that("list_attribute_templates()", {
+  testdir <- paste0(tempdir(), "/pkg")
+  pkg_files <- copy_test_package(testdir)
+  attr_files <- list_attribute_templates(testdir)
+  expected <- c(
+    "attributes_ancillary_data.txt",
+    "attributes_nitrogen.txt",
+    "attributes_decomp.txt",
+    "attributes_geojson_test_file.txt",
+    "attributes_geotiff_test_file.txt",
+    "attributes_netcdf_test_file.txt",
+    "attributes_shapefile_test.txt"
+  )
+  expect_true(setequal(attr_files, expected))
+  unlink(testdir, recursive = TRUE, force = TRUE)
+})
+
+
+testthat::test_that('name_attributes_templates()', {
+  f <- c("decomp.csv", "nitrogen.csv")
+  tmplts <- name_attributes_templates(f)
+  expected <- c("attributes_decomp.txt", "attributes_nitrogen.txt")
+  expect_true(setequal(tmplts, expected))
+})
+
+
+testthat::test_that('name_catvars_templates()', {
+  f <- c("decomp.csv", "nitrogen.csv")
+  tmplts <- name_catvars_templates(f)
+  expected <- c("catvars_decomp.txt", "catvars_nitrogen.txt")
+  expect_true(setequal(tmplts, expected))
+})
+
+
+testthat::test_that('name_data_objects()', {
+  testdir <- paste0(tempdir(), "/pkg")
+  dir_files <- copy_test_package(testdir)
+  attr_files <- c("attributes_decomp.txt", "attributes_nitrogen.txt")
+  data_objects <- name_data_objects(attr_files, testdir)
+  expected <- c("decomp.csv", "nitrogen.csv")
+  expect_true(setequal(expected, data_objects))
+  unlink(testdir, recursive = TRUE, force = TRUE)
+})
+
+
+testthat::test_that("read_data_objects()", {
+  # Parameterize the test
+  test_dir <- paste0(tempdir(), "/pkg")
+  pkg_files <- copy_test_package(test_dir)
+  expected_object_names <- c(
+    "ancillary_data.zip",
+    "decomp.csv",
+    "nitrogen.csv",
+    "processing_and_analysis.R"
+  )
+  expected_object_properties <- c(
+    "content", 
+    "mime_type", 
+    "file_path",
+    "eml_type"
+  )
+  other_entities <- c("ancillary_data.zip", "processing_and_analysis.R")
+  
+  # Assert properties of the returned object
+  d <- read_data_objects(
+    data.path = test_dir, 
+    data.objects = expected_object_names
+  )
+  expect_type(d, "list")
+  for (i in seq_along(d)) {
+    expect_true(is.element(names(d[i]), expected_object_names))
+    expect_true(setequal(names(d[[i]]), expected_object_properties))
+    if (is.element(names(d[i]), other_entities)) {
+      expect_true(nrow(d[[i]]$content) == 0)
+    }
+    expect_true(!is.na(d[[i]]$mime_type))
+    expect_true(!is.na(d[[i]]$file_path))
+    expect_true(!is.na(d[[i]]$eml_type))
+  }
+  
+  # Clean up
+  unlink(test_dir, recursive = TRUE, force = TRUE)
+})
+
+
+testthat::test_that('set_methods_md()', {
+  # Parameterize
+  myfile <- paste0(tempdir(), "/test.md")
+  writeLines(text = "File content", con = myfile)
+  node <- set_methods_md(myfile)
+  # TEST: Text is wrapped in <markdown> and node has expected nesting
+  expect_equal(names(node), "methodStep")
+  expect_equal(names(node[[1]]), "description")
+  expect_equal(names(node[[1]][[1]]), "markdown")
+  # Clean up
+  unlink(myfile)
 })

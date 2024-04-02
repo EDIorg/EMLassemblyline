@@ -25,6 +25,11 @@
 #'     (character) File names of other entity data objects. If more than one, 
 #'     then supply as a vector (e.g. 
 #'     \code{other.entity = c('ancillary_data.zip', 'processing_and_analysis.R')}).
+#' @param data.objects (character) File names of data objects. This generalizes 
+#' data read operations and is no less accurate than using \code{data.table} or
+#' \code{other.entity}. However, specific data types (e.g. \code{data.table} 
+#' and \code{other.entity}) should be used to declare which entity type the 
+#' data object will be listed under in the finalized EML metadata.
 #' @param sep
 #'     (character) Data table field delimiter. Use this if this function fails
 #'     to read your \code{data.table}.
@@ -79,6 +84,7 @@ template_arguments <- function(
   spatial.raster = NULL,
   spatial.vector = NULL,
   other.entity = NULL, 
+  data.objects = NULL,
   sep = NULL,
   empty = FALSE) {
   
@@ -106,7 +112,7 @@ template_arguments <- function(
     fill = TRUE,
     blank.lines.skip = TRUE)
   
-  attr_tmp <- read_template_attributes()
+  attr_tmp <- read_template_characteristics()
   
   # Initialize arguments ------------------------------------------------------
   
@@ -145,6 +151,18 @@ template_arguments <- function(
     templates <- vector('list', length(path_files[is_template]))
     names(templates) <- enc2utf8(path_files[is_template])
     templates[stringr::str_detect(names(templates), ".docx|.md")] <- NULL
+  }
+  
+  # Initialize data objects ----------------------------------------------------
+  
+  if (!is.null(data.objects)){
+    data_object <- validate_file_names(
+      path = data.path,
+      data.files = data.objects)
+    data_objects <- vector('list', length(data_object))
+    names(data_objects) <- enc2utf8(as.character(data_object))
+  } else {
+    data_objects <- NULL
   }
   
   # Initialize data tables ----------------------------------------------------
@@ -386,15 +404,15 @@ template_arguments <- function(
           paste0(path, "/", tfound[i]))
       }
       
-      # Read raster and vector information ------------------------------------
-
+      # Read entities ---------------------------------------------------------
+      
       if (stringr::str_detect(
-        tfound[i],
-        attr_tmp$regexpr[attr_tmp$template_name == "information"])) {
+        tfound[i], 
+        attr_tmp$regexpr[attr_tmp$template_name == "entities"])) {
         templates[[i]]$content <- read_tbl(
           paste0(path, "/", tfound[i]))
       }
-            
+      
       # Read geographic bounding boxes ----------------------------------------
       
       if (stringr::str_detect(
@@ -486,70 +504,43 @@ template_arguments <- function(
     
   }
   
+  # Read data objects ---------------------------------------------------------
+  
+  if (!is.null(c(data.path, data.objects))) {
+    data_objects <- read_data_objects(data.path, data.objects)
+  }
+  
   # Read data tables ----------------------------------------------------------
   
-  # FIXME: Warn user of possible empty columns (i.e. "V([:digit:])*")
   if (!is.null(data.table)) {
-    
-    for (i in 1:length(data.table)) {
-      f <- paste0(data.path, "/", data.table[i])
-
-      if (is.null(sep)){
-
-        data_tables[[i]]$content <- as.data.frame(data.table::fread(file = f))
-        
-      } else {
-        
-        data_tables[[i]]$content <- utils::read.table(
-          file = f,
-          header = T,
-          sep = sep,
-          quote = "\"",
-          as.is = TRUE,
-          comment.char = "")
-        
-      }
-      
-    }
-    
+    data_object <- read_data_objects(data.path, data.table)
+    i <- which(names(data_object) %in% data.table)
+    data_tables <- data_object[i]    
   }
 
   # Read spatial raster -------------------------------------------------------
 
   if (!is.null(spatial.raster)) {
-    
-    for (i in 1:length(spatial.raster)) {
-      f <- paste0(data.path, "/", spatial.raster[i])
-      
-      if (mime::guess_type(f) != "image/tiff") {
-        spatial_rasters[[i]]$content <- as.data.frame(terra::rast(f))
-      } else {
-        spatial_rasters[[i]]$content <- data.frame()
-      }
-
-    }
-    
+    data_object <- read_data_objects(data.path, spatial.raster)
+    i <- which(names(data_object) %in% spatial.raster)
+    spatial_rasters <- data_object[i]
   }
   
   # Read spatial vector -------------------------------------------------------
   
   if (!is.null(spatial.vector)) {
-    
-    for (i in 1:length(spatial.vector)) {
-      f <- paste0(data.path, "/", spatial.vector[i])
-      
-      spatial_vectors[[i]]$content <- as.data.frame(terra::vect(f))
-      
-    }
+    data_object <- read_data_objects(data.path, spatial.vector)
+    i <- which(names(data_object) %in% spatial.vector)
+    spatial_vectors <- data_object[i]
   }
   
   # Read other entities -------------------------------------------------------
   
-  # if (!is.null(other.entity)) {
-  #   # for (i in 1:length(other.entity)) {
-  #   #   other_entities[[i]]$content <- NA
-  #   # }
-  # }
+  if (!is.null(other.entity)) {
+    data_object <- read_data_objects(data.path, other.entity)
+    i <- which(names(data_object) %in% other.entity)
+    other_entities <- data_object[i]
+  }
   
   # Combine components & return -----------------------------------------------
   
@@ -558,7 +549,8 @@ template_arguments <- function(
     data.table = data_tables,
     spatial.raster = spatial_rasters,
     spatial.vector = spatial_vectors,
-    other.entity = other_entities)
+    other.entity = other_entities,
+    data.objects = data_objects)
   
   # Convert NA to "", but don't convert "NA" since these may be explicitly 
   # defined missing value codes

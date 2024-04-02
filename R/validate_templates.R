@@ -28,7 +28,7 @@
 #'
 validate_templates <- function(fun.name, x) {
   message("Checking inputs")
-  attr_tmp <- read_template_attributes()
+  attr_tmp <- read_template_characteristics()
   
   # Called from annotate_eml() ------------------------------------------------
   
@@ -183,7 +183,7 @@ validate_templates <- function(fun.name, x) {
 #'
 validate_abstract <- function(x) {
   msg <- NULL
-  attr_tmp <- read_template_attributes()
+  attr_tmp <- read_template_characteristics()
   missing_abstract <- !any(
     stringr::str_detect(
       names(x$template), 
@@ -453,7 +453,7 @@ validate_annotation_uri <- function(x) {
 #' @keywords internal
 #' 
 validate_categorical_variables <- function(x) {
-  attr_tmp <- read_template_attributes()
+  attr_tmp <- read_template_characteristics()
   
   # Categorical variable metadata only matters for specified tables
   output <- lapply(
@@ -638,7 +638,7 @@ validate_categorical_variable_column_names <- function(file.name, x) {
 #' @keywords internal
 #' 
 validate_categorical_variable_definitions <- function(file.name, x) {
-  attr_tmp <- read_template_attributes()
+  attr_tmp <- read_template_characteristics()
   missing_definitions <- x$template[[file.name]]$content$definition == ""
   if (any(missing_definitions)) {
     "Missing code definitions. Codes are meaningless without definition."
@@ -1010,7 +1010,7 @@ validate_geographic_coverage_coordinate_range <- function(x) {
 #' 
 validate_intellectual_rights <- function(x) {
   msg <- NULL
-  attr_tmp <- read_template_attributes()
+  attr_tmp <- read_template_characteristics()
   missing_intellectual_rights <- !any(
     stringr::str_detect(
       names(x$template), 
@@ -1064,7 +1064,7 @@ validate_intellectual_rights <- function(x) {
 #' 
 validate_keywords <- function(x) {
   msg <- NULL
-  attr_tmp <- read_template_attributes()
+  attr_tmp <- read_template_characteristics()
   missing_keywords <- !any(
     stringr::str_detect(
       names(x$template), 
@@ -1112,7 +1112,7 @@ validate_keywords <- function(x) {
 #' 
 validate_methods <- function(x) {
   msg <- NULL
-  attr_tmp <- read_template_attributes()
+  attr_tmp <- read_template_characteristics()
   missing_methods <- !any(
     stringr::str_detect(
       names(x$template), 
@@ -1273,7 +1273,7 @@ validate_personnel <- function(x) {
 #' @keywords internal
 #' 
 validate_personnel_presence <- function(x) {
-  attr_tmp <- read_template_attributes()
+  attr_tmp <- read_template_characteristics()
   missing_personnel <- !any(
     stringr::str_detect(
       names(x$template), 
@@ -2070,7 +2070,7 @@ validate_provenance_email <- function(x) {
 #' @keywords internal
 #' 
 validate_table_attributes <- function(x) {
-  attr_tmp <- read_template_attributes()
+  attr_tmp <- read_template_characteristics()
   
   # Attribute metadata only matters for specified tables
   output <- lapply(
@@ -2990,12 +2990,12 @@ validate_taxonomic_coverage_completeness <- function(x) {
 
 check_duplicate_templates <- function(path) {
   # path = Path to the directory containing metadata templates
-  attr_tmp <- read_template_attributes()
+  attr_tmp <- read_template_characteristics()
   # FIXME: Remove the next line of code once table attributes and categorical 
   # variables have been consolidated into their respective single templates
   # (i.e. "table_attributes.txt" and "table_categorical_variables.txt").
   attr_tmp <- attr_tmp[
-    !stringr::str_detect(attr_tmp$template_name, "attributes|catvars|information"), ]
+    !stringr::str_detect(attr_tmp$template_name, "attributes|catvars"), ]
   for (i in 1:length(attr_tmp$template_name)) {
     use_i <- stringr::str_detect(
       list.files(path), 
@@ -3255,35 +3255,11 @@ issues <- function() {
 
 
 
-
-
-
-
-
-
-
-read_template_attributes <- function() {
-  data.table::fread(
-    system.file(
-      '/templates/template_characteristics.txt',
-      package = 'EMLassemblyline'), 
-    fill = TRUE,
-    blank.lines.skip = TRUE)
-}
-
-
-
-
-
-
-
-
-
 remove_empty_templates <- function(x) {
   # Removes empty templates (NULL, data frames with 0 rows, or TextType of 0 
   # characters) from the list object created by template_arguments().
   # x = template_arguments()$x
-  attr_tmp <- read_template_attributes()
+  attr_tmp <- read_template_characteristics()
   use_i <- rep(F, length(x$template))
   for (i in 1:length(x$template)) {
     if (is.null(x$template[[i]]$content)) {

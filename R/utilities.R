@@ -1,3 +1,51 @@
+#' Copy test package files to directory path
+#'
+#' @param path (character) Directory path where test files will be copied.
+#'
+#' @return (character) Full paths of files copied to \code{path}.
+#' 
+#' @export
+#' 
+#' @examples 
+#' \dontrun{
+#' testdir <- paste0(tempdir(), "/pkg")
+#' pkg_files <- copy_test_package(testdir)
+#' pkg_files
+#' unlink(testdir, recursive = TRUE, force = TRUE)
+#' }
+#' 
+copy_test_package <- function(path) {
+  unlink(path, recursive = TRUE, force = TRUE)
+  dir.create(path)
+  invisible(
+    file.copy(
+      from = list.files(
+        path = system.file(
+          '/examples/pkg_260/data_objects',
+          package = 'EMLassemblyline'
+        ),
+        full.names = TRUE
+      ), 
+      to = path
+    )
+  )
+  invisible(
+    file.copy(
+      from = list.files(
+        path = system.file(
+          '/examples/pkg_260/metadata_templates',
+          package = 'EMLassemblyline'
+        ),
+        full.names = TRUE
+      ), 
+      to = path
+    )
+  )
+  dir_files <- dir(path, full.names = TRUE)
+  return(dir_files)
+}
+
+
 #' Get field delimiters of input files
 #'
 #' @description  
@@ -33,7 +81,7 @@ detect_delimeter <- function(path, data.files, os){
   
   data_files <- validate_file_names(path, data.files)
   
-  # Detect field delimiters ---------------------------------------------------
+  # Detect field delimiters
   # Loop through each table using reader::get.delim() to return the field
   # delimiter. Note: reader::get.delim() performance seems to be operating 
   # system specific.
@@ -94,7 +142,7 @@ detect_delimeter <- function(path, data.files, os){
       
     }
     
-    # Infer field delimiter (if necessary) ------------------------------------
+    # Infer field delimiter (if necessary)
     
     # If the field delimiter can't be determined, then infer it from the file 
     # name.
@@ -103,7 +151,7 @@ detect_delimeter <- function(path, data.files, os){
       delim_guess[i] <- delimiter_infer(data_path[i])
     }
     
-    # Check delimiters and provide manual override ----------------------------
+    # Check delimiters and provide manual override
     
     delim_guess[i] <- detect_delimeter_2(
       data.file = data_files[i],
@@ -112,7 +160,7 @@ detect_delimeter <- function(path, data.files, os){
     
   }
   
-  # Return --------------------------------------------------------------------
+  # Return
   
   delim_guess
   
@@ -320,6 +368,135 @@ get_eol <- function(path, file.name){
 
 
 
+#' Initialize an empty attributes template
+#'
+#' @param nrows (numeric) Number of rows to initialize the data frame with.
+#'
+#' @return (data.frame) The attributes template.
+#' 
+#' @keywords internal
+#'
+#' @examples
+#' \dontrun{
+#' # Default settings return an empty data frame with column names of the 
+#' # attributes template.
+#' df = init_attributes()
+#' nrow(df)
+#' colnames(df)
+#' 
+#' # Control the number of rows with the nrows parameter
+#' df = init_attributes(nrows = 3)
+#' nrow(df)
+#' }
+#' 
+init_attributes <- function(nrows = 0) {
+  df <- data.frame(
+    attributeName = character(nrows),
+    attributeDefinition = character(nrows),
+    class = character(nrows),
+    unit = character(nrows),
+    dateTimeFormatString = character(nrows),
+    missingValueCode = character(nrows),
+    missingValueCodeExplanation = character(nrows),
+    stringsAsFactors = FALSE
+  )
+  return(df)
+}
+
+
+#' Initialize an empty categorical variables template
+#'
+#' @param nrows (numeric) Number of rows to initialize the data frame with.
+#'
+#' @return (data.frame) The categorical variables template.
+#' 
+#' @keywords internal
+#'
+#' @examples
+#' \dontrun{
+#' # Default settings return an empty data frame with column names of the 
+#' # categorical variables template.
+#' df = init_catvars()
+#' nrow(df)
+#' colnames(df)
+#' 
+#' # Control the number of rows with the nrows parameter
+#' df = init_catvars(nrows = 3)
+#' nrow(df)
+#' }
+#' 
+init_catvars <- function(nrows = 0) {
+  df <- data.frame(
+    attributeName = character(nrows),
+    code = character(nrows),
+    definition = character(nrows),
+    stringsAsFactors = FALSE
+  )
+  return(df)
+}
+
+
+#' Initialize an empty entities template
+#'
+#' @param nrows (numeric) Number of rows to initialize the data frame with.
+#'
+#' @return (data.frame) The entities template.
+#' 
+#' @keywords internal
+#'
+#' @examples
+#' \dontrun{
+#' # Default settings return an empty data frame with column names of the 
+#' # entities template.
+#' df = init_entities()
+#' nrow(df)
+#' colnames(df)
+#' 
+#' # Control the number of rows with the nrows parameter
+#' df = init_entities(nrows = 3)
+#' nrow(df)
+#' }
+#' 
+init_entities <- function(nrows = 0) {
+  df <- data.frame(
+    objectName = character(nrows),
+    variable = character(nrows),
+    value = character(nrows),
+    stringsAsFactors = FALSE
+  )
+  return(df)
+}
+
+
+#' Is a metadata template file
+#' 
+#' Check which files are metadata templates and which are not.
+#'
+#' @param files (character) Vector of file names. Can be full file paths or
+#' or base names.
+#'
+#' @return (logical) TRUE where \code{files} is recognized as a metadata 
+#' template.
+#' 
+#' @keywords internal
+#' 
+#' @examples 
+#' \dontrun{
+#' testdir <- paste0(tempdir(), "/pkg")
+#' dir_files <- copy_test_package(testdir)
+#' i <- is_template(dir_files)
+#' i
+#' unlink(testdir, recursive = TRUE, force = TRUE)
+#' }
+#' 
+is_template <- function(files) {
+  tmplt_char <- read_template_characteristics()
+  file_basenames <- basename(files)
+  pat <- paste(tmplt_char$regexpr, collapse = "|")
+  i <- grepl(pat, file_basenames)
+  return(i)
+}
+
 
 #' Get provenance metadata
 #'
@@ -365,13 +542,38 @@ api_get_provenance_metadata <- function(package.id, environment = 'production'){
 }
 
 
+#' List attribute templates in a directory
+#'
+#' @param path (character) Path to the metadata template directory.
+#'
+#' @return (character) File names of attribute templates.
+#' 
+#' @keywords internal
+#' 
+#' @examples 
+#' \dontrun{
+#' 
+#' }
+#' 
+list_attribute_templates <- function(path) {
+  dir_files <- list.files(path)
+  i <- grepl(
+    pattern = "(?<=attributes_).*(?=\\.txt)", 
+    x = dir_files, 
+    perl = TRUE
+  )
+  attr_files <- dir_files[i]
+  return(attr_files)
+}
 
 
 
 
 
 
-# Parse delimiter from string -------------------------------------------------
+
+
+# Parse delimiter from string
 
 parse_delim <- function(x){
   
@@ -397,6 +599,204 @@ parse_delim <- function(x){
   eol
   
 }
+
+
+#' Create attributes template file names from data object file names
+#'
+#' @param files (character vector) Names of data object files, including file 
+#' extensions.
+#' 
+#' @return (character vector) Names of attribute templates.
+#' 
+#' @keywords internal
+#' 
+#' @examples 
+#' \dontrun{
+#' f <- c("decomp.csv", "nitrogen.csv")
+#' name_attributes_templates(f)
+#' }
+#' 
+name_attributes_templates <- function(files) {
+  res <- paste0("attributes_", tools::file_path_sans_ext(files), ".txt")
+  return(res)
+}
+
+
+#' Create categorical variables template file names from data object file names
+#'
+#' @param files (character vector) Names of data object files, including file 
+#' extensions.
+#' 
+#' @return (character vector) Names of categorical variables templates.
+#' 
+#' @keywords internal
+#' 
+#' @examples 
+#' \dontrun{
+#' f <- c("decomp.csv", "nitrogen.csv")
+#' name_catvars_templates(f)
+#' }
+#' 
+name_catvars_templates <- function(files) {
+  res <- paste0("catvars_", tools::file_path_sans_ext(files), ".txt")
+  return(res)
+}
+
+
+#' Create data object file names from attributes template file names
+#'
+#' @param files (character) File names of attributes templates, including the 
+#' file extension.
+#' @param data.path (character) Path to the data directory.
+#'
+#' @return (character) File names of the data objects corresponding with 
+#' \code{files}.
+#' 
+#' @keywords internal
+#' 
+#' @examples 
+#' \dontrun{
+#' testdir <- paste0(tempdir(), "/pkg")
+#' dir_files <- copy_test_package(testdir)
+#' attr_files <- c("attributes_decomp.txt", "attributes_nitrogen.txt")
+#' name_data_objects(attr_files, testdir)
+#' unlink(testdir, recursive = TRUE, force = TRUE)
+#' }
+#' 
+name_data_objects <- function(files, data.path) {
+  match_obj <- regexpr(
+  pattern = "(?<=attributes_).*(?=\\.txt)",
+  text = files,
+  perl = TRUE
+)
+data_object_basenames <- regmatches(x = files, m = match_obj)
+is_not_template <- !is_template(dir(data.path))
+data_object_file_names <- grep(
+  pattern = paste(data_object_basenames, collapse = "|"), 
+  x = dir(data.path)[is_not_template], 
+  value = TRUE
+)
+return(data_object_file_names)
+}
+
+
+#' Read data objects
+#' 
+#' Attempts to read data objects through a series of parsers informed by the
+#' data object mime type.
+#'
+#' @param data.path (character) Path to the data directory.
+#' @param data.objects (character) File names of data objects.
+#'
+#' @return (list) Named list of parsed data objects with the files:
+#' \itemize{
+#' \item{content: The data object, in it's R representation. This value will be
+#' \code{NA} if the object could not be read.}
+#' \item{mime_type: The data object's MIME type.}
+#' \item{file_path: The data object's file path.}
+#' }
+#' 
+#' @keywords internal
+#' 
+#' @examples 
+#' \dontrun{
+#' test_dir <- paste0(tempdir(), "/pkg")
+#' pkg_files <- copy_test_package(test_dir)
+#' d <- read_data_objects(
+#'   data.path = test_dir,
+#'   data_objects = c(
+#'     "ancillary_data.zip",
+#'     "decomp.csv",
+#'     "nitrogen.csv",
+#'     "processing_and_analysis.R"
+#'   )
+#' )
+#' View(d)
+#' unlink(test_dir, recursive = TRUE, force = TRUE)
+#' }
+#' 
+read_data_objects <- function(data.path, data.objects) {
+  data_files <- paste0(data.path, "/", data.objects)
+  mime_types <- sapply(data_files, function(file){
+    if (is_shp_dir(file)) return("application/vnd.shp+zip")
+    else return(mime::guess_type(file))
+  })
+  data_objects <- vector(mode = "list", length = length(mime_types))
+  for (i in seq_along(mime_types)) {
+    type <- unname(mime_types[i])
+    file_path <- names(mime_types[i])
+    # Data tables
+    if (type %in% c("text/csv", "text/tab-separated-values")) {
+      data_objects[[i]]$content <- as.data.frame(
+        data.table::fread(file = file_path)
+      )
+      data_objects[[i]]$eml_type <- "dataTable"
+    # NetCDF
+    } else if (type == "application/x-netcdf") {
+      data_objects[[i]]$content <- data.frame()
+      data_objects[[i]]$eml_type <- "dataTable"
+    # Raster
+    } else if (type %in% c("image/tiff")) {
+      if (type == "image/tiff") {
+        data_objects[[i]]$content <- data.frame()
+      } else {
+        data_objects[[i]]$content <- as.data.frame(
+          terra::rast(file_path)
+        )
+      }
+      data_objects[[i]]$eml_type <- "spatialRaster"
+    # Vector
+    } else if (type %in% c("application/vnd.geo+json", "application/vnd.shp+zip")){
+      data_objects[[i]]$content <- terra::vect(file_path, what = "attributes")
+      data_objects[[i]]$eml_type <- "spatialVector"
+    # Other entities
+    } else {
+      data_objects[[i]]$content <- data.frame()
+      data_objects[[i]]$eml_type <- "otherEntity"
+    }
+    # Metadata to facilitate downstream processes
+    names(data_objects)[i] <- basename(file_path)
+    data_objects[[i]]$mime_type <- type
+    data_objects[[i]]$file_path <- file_path
+  }
+  return(data_objects)
+}
+
+
+#' Read template characteristics table
+#' 
+#' The template characteristics table contains information to aid in template 
+#' reading and parsing operations.
+#'
+#' @return (data.frame) The template characteristics table.
+#'
+#' @keywords internal
+#' 
+#' @examples 
+#' \dontrun{
+#' tmplt_chars <- read_template_characteristics
+#' tmplt_chars
+#' }
+#'
+read_template_characteristics <- function() {
+  char_file <- system.file(
+    "/templates/template_characteristics.txt", 
+    package = "EMLassemblyline"
+  )
+  tmplt_chars <- as.data.frame(
+    data.table::fread(
+      file = char_file,
+      fill = TRUE,
+      blank.lines.skip = TRUE,
+      sep = "\t",
+      colClasses = list(
+        character = 1:utils::count.fields(char_file, sep = "\t")[1]
+      )
+    )
+  )
+  return(tmplt_chars)
+}
+
 
 
 
@@ -510,7 +910,7 @@ url_env <- function(environment){
 #'
 validate_file_names <- function(path, data.files){
   
-  # Validate file presence ----------------------------------------------------
+  # Validate file presence
   
   # Index data.files in path
   files <- list.files(path)
@@ -527,7 +927,7 @@ validate_file_names <- function(path, data.files){
     )
   }
   
-  # Check file naming convention ----------------------------------------------
+  # Check file naming convention
   
   # Index file names that are not composed of alphanumerics and underscores
   use_i <- stringr::str_detect(
@@ -548,14 +948,14 @@ validate_file_names <- function(path, data.files){
     )
   }
   
-  # Get file names ------------------------------------------------------------
+  # Get file names
   
   files <- list.files(path)
   use_i <- stringr::str_detect(string = files,
                                pattern = stringr::str_c("^", data.files, collapse = "|"))
   data_files <- files[use_i]
   
-  # Reorder file names to match input ordering --------------------------------
+  # Reorder file names to match input ordering
   
   data_files_out <- c()
   for (i in 1:length(data.files)){
@@ -592,7 +992,7 @@ validate_file_names <- function(path, data.files){
 #'
 validate_path <- function(path){
   
-  # Validate path -------------------------------------------------------------
+  # Validate path
   
   if (!dir.exists(path)){
     stop('The directory specified by the argument "path" does not exist! Please enter the correct path for your dataset working directory.')
@@ -627,7 +1027,7 @@ validate_path <- function(path){
 #'
 vocab_lter_id <- function(x){
   
-  # Check arguments -----------------------------------------------------------
+  # Check arguments
   
   if (is.character(x) != T){
     stop('Input argument "x" is not of class "character"!')
@@ -636,7 +1036,7 @@ vocab_lter_id <- function(x){
     stop('Input argument "x" has a length > 1! Only single terms are allowed.')
   }
   
-  # Get the term ID and report ------------------------------------------------
+  # Get the term ID and report
   
   if (isTRUE(vocab_lter_term(x = x))){
     
@@ -700,7 +1100,7 @@ vocab_lter_id <- function(x){
 #'
 vocab_lter_scope <- function(id){
   
-  # Check arguments -----------------------------------------------------------
+  # Check arguments
   
   if (is.numeric(id) != T){
     stop('Input argument "id" is not of class "numeric"!')
@@ -709,7 +1109,7 @@ vocab_lter_scope <- function(id){
     stop('Input argument "id" has a length > 1! Only single identification numbers are allowed.')
   }
   
-  # Get the scope description -------------------------------------------------
+  # Get the scope description
   
   # Query for input ID
   
@@ -737,7 +1137,7 @@ vocab_lter_scope <- function(id){
     
   }
   
-  # Return result -------------------------------------------------------------
+  # Return result
   
   node_terms
   
@@ -785,7 +1185,7 @@ vocab_lter_term <- function(x, messages = FALSE, interactive = FALSE){
   # combined, then direct matches sought and if not found then all results
   # are presented as near misses.
   
-  # Check arguments -----------------------------------------------------------
+  # Check arguments
   
   if (is.character(x) != T){
     stop('Input argument "x" is not of class "character"!')
@@ -797,7 +1197,7 @@ vocab_lter_term <- function(x, messages = FALSE, interactive = FALSE){
     stop('Both arguments "messages" & "interactive" can not be used at the same time. Please select one or the other.')
   }
   
-  # Construct the query and search --------------------------------------------
+  # Construct the query and search
   
   term <- stringr::str_replace_all(
     string = x, 
@@ -823,7 +1223,7 @@ vocab_lter_term <- function(x, messages = FALSE, interactive = FALSE){
     )
   )
   
-  # Parse the responses and combine -------------------------------------------
+  # Parse the responses and combine
   
   
   
@@ -849,7 +1249,7 @@ vocab_lter_term <- function(x, messages = FALSE, interactive = FALSE){
   
   term_list <- unique(term_list)
   
-  # Is the search term listed? ------------------------------------------------
+  # Is the search term listed?
   
   if (sum(term_list == x) == 1){
     term_found <- T
@@ -857,7 +1257,7 @@ vocab_lter_term <- function(x, messages = FALSE, interactive = FALSE){
     term_found <- F
   }
   
-  # Report near misses --------------------------------------------------------
+  # Report near misses
   
   if (!missing(messages) & isTRUE(messages) & (!isTRUE(term_found)) & (length(term_list) != 0)){
     
@@ -877,7 +1277,7 @@ vocab_lter_term <- function(x, messages = FALSE, interactive = FALSE){
     
   }
   
-  # Interactive mode ----------------------------------------------------------
+  # Interactive mode
   
   if (!missing(interactive) & isTRUE(interactive) & (!isTRUE(term_found)) & (length(term_list) != 0)){
     
@@ -899,7 +1299,7 @@ vocab_lter_term <- function(x, messages = FALSE, interactive = FALSE){
     
   }
   
-  # Output results ------------------------------------------------------------
+  # Output results
   
   if (!missing(interactive) & isTRUE(interactive) & (!isTRUE(term_found)) & (length(term_list) != 0)){
     
@@ -950,7 +1350,7 @@ vocab_lter_term <- function(x, messages = FALSE, interactive = FALSE){
 #'
 vocab_resolve_terms <- function(x, cv, messages = FALSE, interactive = FALSE){
   
-  # Check arguments -----------------------------------------------------------
+  # Check arguments
   
   if (is.character(x) != T){
     stop('Input argument "x" is not of class "character"!')
@@ -962,14 +1362,14 @@ vocab_resolve_terms <- function(x, cv, messages = FALSE, interactive = FALSE){
     stop('Both arguments "messages" & "interactive" can not be used at the same time. Please select one or the other.')
   }
   
-  # Initialize output ---------------------------------------------------------
+  # Initialize output
   
   output <- data.frame(
     term = x,
     controlled_vocabulary = character(length(x)),
     stringsAsFactors = F)
   
-  # Call specified vocabularies -----------------------------------------------
+  # Call specified vocabularies
   
   if (cv == 'lter'){
     
@@ -995,7 +1395,7 @@ vocab_resolve_terms <- function(x, cv, messages = FALSE, interactive = FALSE){
     
   }
   
-  # Return output -------------------------------------------------------------
+  # Return output
   
   output
   
@@ -1026,11 +1426,46 @@ vocab_resolve_terms <- function(x, cv, messages = FALSE, interactive = FALSE){
 #' 
 write_template <- function(tmplt, name, path, force = FALSE) {
   f <- paste0(path, "/", enc2utf8(name))
+  message(name)
   if (file.exists(f) & !isTRUE(force)) {
     warning(f, " exists and will not be overwritten", call. = FALSE)
     return(FALSE)
   } else {
-    data.table::fwrite(x = tmplt, file = f, sep = "\t", quote = FALSE)
+    utils::write.table(
+      x = tmplt,
+      file = f, 
+      sep = "\t", 
+      row.names = F, 
+      quote = F, 
+      fileEncoding = "UTF-8"
+    )
     return(TRUE)
+  }
+}
+
+
+#' Write a list of templates to file
+#'
+#' @param tmplts (data.frame) List of templates to write.
+#' @param nms (character) Template file names (including extensions) in the 
+#' same order as \code{tmplts}.
+#' @param path (character) Path to write to.
+#' @param force (logical) Overwrite existing template?
+#'
+#' @return (file, logical) Template and TRUE if written.
+#' 
+#' @details This is a wrapper around \code{write_template()}.
+#' 
+#' @keywords internal
+#' 
+write_templates <- function(tmplts, nms, path, force = FALSE) {
+  for (i in seq_along(tmplts)) {
+    invisible(
+      write_template(
+        tmplt = tmplts[[i]], 
+        name = nms[i], 
+        path = path
+      )
+    )
   }
 }

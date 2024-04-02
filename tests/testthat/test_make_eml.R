@@ -5,7 +5,7 @@ library(EMLassemblyline)
 
 # Parameterize
 
-attr_tmp <- read_template_attributes()
+attr_tmp <- read_template_characteristics()
 x <- template_arguments(
   path = system.file(
     '/examples/pkg_260/metadata_templates',
@@ -489,6 +489,65 @@ testthat::test_that('Expect template values in EML', {
   r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
   expect_true(
     length(r$additionalMetadata[[1]]$metadata$unitList$unit) == nrow(x$x$template$custom_units.txt$content))
+  
+  # entities.txt
+
+  # entities.txt - spatialRaster
+  
+  x1 <- x
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  for (i in 1:length(r$dataset$spatialRaster)) {
+    entities_content <- x1$x$template$entities.txt$content
+    entities_content <- entities_content[entities_content$objectName == x1$spatial.raster[i],]
+    
+    expect_true(
+      r$dataset$spatialRaster[[i]]$cellSizeXDirection == entities_content[entities_content$variable == "cellSizeXDirection",]$value)
+    expect_true(
+      r$dataset$spatialRaster[[i]]$cellSizeYDirection == entities_content[entities_content$variable == "cellSizeYDirection",]$value)
+    expect_true(
+      r$dataset$spatialRaster[[i]]$numberOfBands == entities_content[entities_content$variable == "numberOfBands",]$value)
+    expect_true(
+      r$dataset$spatialRaster[[i]]$rasterOrigin == entities_content[entities_content$variable == "rasterOrigin",]$value)
+    expect_true(
+      r$dataset$spatialRaster[[i]]$rows == entities_content[entities_content$variable == "rows",]$value)
+    expect_true(
+      r$dataset$spatialRaster[[i]]$columns == entities_content[entities_content$variable == "columns",]$value)
+    expect_true(
+      r$dataset$spatialRaster[[i]]$verticals == entities_content[entities_content$variable == "verticals",]$value)
+    expect_true(
+      r$dataset$spatialRaster[[i]]$cellGeometry == entities_content[entities_content$variable == "cellGeometry",]$value)
+  }
+  
+  # entities.txt - spatialVector
+  
+  x1 <- x
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  for (i in 1:length(r$dataset$spatialVector)) {
+    entities_content <- x1$x$template$entities.txt$content
+    entities_content <- entities_content[entities_content$objectName == x1$spatial.vector[i],]
+    
+    expect_true(
+      r$dataset$spatialVector[[i]]$geometry == entities_content[entities_content$variable == "geometry",]$value)
+    expect_true(
+      r$dataset$spatialVector[[i]]$geometricObjectCount == entities_content[entities_content$variable == "geometricObjectCount",]$value)
+  }
+  
+  # entities.txt - otherEntity
+  
+  x1 <- x
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  for (i in 1:length(r$dataset$otherEntity)) {
+    expect_true(
+      r$dataset$otherEntity[[i]]$entityType != "unknown")
+  }
+  
+  x1 <- x
+  entities_content <- x1$x$template$entities.txt$content
+  entities_content <- entities_content[!entities_content$objectName %in% x1$other.entity,]
+  x1$x$template$entities.txt$content <- entities_content
+  r <- do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))])
+  expect_true(
+    r$dataset$otherEntity[[i]]$entityType == "unknown")
   
   # geographic_coverage.txt - If make_eml() arguments geographic.coordinates 
   # and geographic.description are present, then they are added to 

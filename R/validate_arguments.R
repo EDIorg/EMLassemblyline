@@ -574,7 +574,7 @@ validate_arguments <- function(fun.name, fun.args){
     
     if (!is.null(fun.args$path)) {
       validate_path(fun.args$path)
-      attr_tmp <- read_template_attributes()
+      attr_tmp <- read_template_characteristics()
       path_files <- list.files(fun.args$path)
       if (!length(path_files) == 0) {
         is_template <- rep(FALSE, length(path_files))
@@ -656,109 +656,6 @@ validate_arguments <- function(fun.name, fun.args){
 
   }
   
-  # Call from template_netcdf_catvars() -------------------------------------
-  
-  if (fun.name == 'template_netcdf_catvars'){
-    
-    if (is.null(fun.args$path)) {
-      stop("Input argument 'path' is missing", call. = FALSE)
-    }
-    
-    # Get attribute file names and data file names
-    
-    files <- list.files(fun.args$path)
-    use_i <- stringr::str_detect(string = files,
-                                 pattern = "^attributes")
-    if (sum(use_i) == 0){
-      stop('There are no attributes.txt files in your dataset working directory. Please fix this.', call. = F)
-    }
-    
-    attribute_files <- files[use_i]
-    table_names_base <- stringr::str_sub(string = attribute_files,
-                                         start = 12,
-                                         end = nchar(attribute_files)-4)
-    netcdf <- list.files(fun.args$data.path)
-    use_i <- stringr::str_detect(string = netcdf,
-                                 pattern = stringr::str_c("^", table_names_base, collapse = "|"))
-    table_names <- netcdf[use_i]
-    netcdf <- table_names
-    
-    # Send warning if data table name is repeated more than once
-    
-    if (length(unique(tools::file_path_sans_ext(netcdf))) != length(netcdf)){
-      stop('Duplicate data file names exist in this directory. Please remove duplicates, even if they are a different file type.', call. = F)
-    }
-    
-  }
-  
-  # Call from template_raster_catvars() ---------------------------------------
-  if (fun.name == 'template_raster_catvars'){
-    
-    if (is.null(fun.args$path)) {
-      stop("Input argument 'path' is missing", call. = FALSE)
-    }
-    
-    # Get attribute file names and data file names
-    
-    files <- list.files(fun.args$path)
-    use_i <- stringr::str_detect(string = files,
-                                 pattern = "^attributes")
-    if (sum(use_i) == 0){
-      stop('There are no attributes.txt files in your dataset working directory. Please fix this.', call. = F)
-    }
-    
-    attribute_files <- files[use_i]
-    raster_names_base <- stringr::str_sub(string = attribute_files,
-                                          start = 12,
-                                          end = nchar(attribute_files)-4)
-    raster_files <- list.files(fun.args$data.path)
-    use_i <- stringr::str_detect(string = raster_files,
-                                 pattern = stringr::str_c("^", raster_names_base, collapse = "|"))
-    raster_names <- raster_files[use_i]
-    raster_files <- raster_names
-    
-    # Send warning if data table name is repeated more than once
-    
-    if (length(unique(tools::file_path_sans_ext(raster_files))) != length(raster_files)){
-      stop('Duplicate data file names exist in this directory. Please remove duplicates, even if they are a different file type.', call. = F)
-    }
-    
-  }
-  
-  # Call from template_vector_catvars() ---------------------------------------
-  if (fun.name == 'template_vector_catvars'){
-    
-    if (is.null(fun.args$path)) {
-      stop("Input argument 'path' is missing", call. = FALSE)
-    }
-    
-    # Get attribute file names and data file names
-    
-    files <- list.files(fun.args$path)
-    use_i <- stringr::str_detect(string = files,
-                                 pattern = "^attributes")
-    if (sum(use_i) == 0){
-      stop('There are no attributes.txt files in your dataset working directory. Please fix this.', call. = F)
-    }
-    
-    attribute_files <- files[use_i]
-    vector_names_base <- stringr::str_sub(string = attribute_files,
-                                         start = 12,
-                                         end = nchar(attribute_files)-4)
-    vector_files <- list.files(fun.args$data.path)
-    use_i <- stringr::str_detect(string = vector_files,
-                                 pattern = stringr::str_c("^", vector_names_base, collapse = "|"))
-    vector_names <- vector_files[use_i]
-    vector_files <- vector_names
-    
-    # Send warning if data table name is repeated more than once
-    
-    if (length(unique(tools::file_path_sans_ext(vector_files))) != length(vector_files)){
-      stop('Duplicate data file names exist in this directory. Please remove duplicates, even if they are a different file type.', call. = F)
-    }
-    
-  }
-  
   # Call from template_core_metadata() ----------------------------------------
   
   if (fun.name == 'template_core_metadata'){
@@ -780,6 +677,31 @@ validate_arguments <- function(fun.name, fun.args){
     if ((fun.args$file.type != '.txt') & (fun.args$file.type != '.docx') & 
         (fun.args$file.type != '.md')){
       stop(paste0('"', fun.args$file.type, '" is not a valid entry to the "file.type" argument.'), call. = F)
+    }
+    
+  }
+  
+  # Call from template_entities() -------------------------------------------
+  
+  if (fun.name == 'template_entities'){
+    
+    # path
+    
+    if (!is.null(fun.args$path)) {
+      validate_path(fun.args$path)
+    }
+    
+    # data.path
+    if (!is.null(fun.args$data.path)) {
+      validate_path(fun.args$data.path)
+    }
+    
+    # data.object
+    if (!is.null(fun.args$data.objects)) {
+      validate_file_names(
+        fun.args$data.path,
+        fun.args$data.objects
+      )
     }
     
   }
@@ -864,60 +786,6 @@ validate_arguments <- function(fun.name, fun.args){
     # path
     if (!is.null(fun.args$path)) {
       validate_path(fun.args$path)
-    }
-    
-  }
-  
-  # Call from template_raster_information() -----------------------------------
-  
-  if (fun.name == 'template_raster_information'){
-    
-    # path
-    
-    if (!is.null(fun.args$path)) {
-      
-      validate_path(fun.args$path)
-      
-    }
-    
-    # raster.file
-    
-    if (!is.null(fun.args$raster.file)){
-      
-      # Validate table names
-      
-      data_files <- suppressWarnings(
-        validate_file_names(
-          path = fun.args$data.path, 
-          data.files = fun.args$raster.file))
-      
-    }
-    
-  }
-  
-  # Call from template_vector_information() -----------------------------------
-  
-  if (fun.name == 'template_vector_information'){
-    
-    # path
-    
-    if (!is.null(fun.args$path)) {
-      
-      validate_path(fun.args$path)
-      
-    }
-    
-    # vector.file
-    
-    if (!is.null(fun.args$vector.file)){
-      
-      # Validate table names
-      
-      data_files <- suppressWarnings(
-        validate_file_names(
-          path = fun.args$data.path, 
-          data.files = fun.args$vector.file))
-      
     }
     
   }

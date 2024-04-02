@@ -246,7 +246,7 @@ make_eml <- function(
   
   # Get attributes of template files
   
-  attr_tmp <- read_template_attributes()
+  attr_tmp <- read_template_characteristics()
   
   # Validate arguments --------------------------------------------------------
   
@@ -1175,130 +1175,15 @@ make_eml <- function(
       names(x$data.table),
       function(k) {
         
-        # Get corresponding table_attributes.txt
-        tbl_attr <- x$template[[
-          paste0("attributes_", tools::file_path_sans_ext(k), ".txt")]]$content
-        
-        # Break if no table_attributes.txt
-        if (is.null(tbl_attr)) {
+        # Set attributeListe
+        attributeList <- create_attributeList(x, k, file_type = "dataTable")
+
+        if (is.null(attributeList)) {
           return()
         }
         
-        message(paste0("    <dataTable> (", k, ")"))
-        
-        # Add attributes.txt contents to the data frame input expected by 
-        # EML::set_attributes().
-        # FIXME: Order of attributes listed in the template may not be match 
-        # the order listed in the table so ... reorder attributes according
-        # to the data table listing.
-        
-        attributes <- data.frame(
-          attributeName = tbl_attr$attributeName,
-          formatString = tbl_attr$dateTimeFormatString,
-          unit = tbl_attr$unit,
-          numberType = "",
-          definition = "",
-          attributeDefinition = tbl_attr$attributeDefinition,
-          columnClasses = tbl_attr$class,
-          minimum = NA,
-          maximum = NA,
-          missingValueCode = tbl_attr$missingValueCode,
-          missingValueCodeExplanation = tbl_attr$missingValueCodeExplanation,
-          stringsAsFactors = F)
-        
-        # Update missingValueCode - NA must be "NA" otherwise it will not be 
-        # listed in the EML
-        
-        attributes$missingValueCode[is.na(attributes$missingValueCode)] <- "NA"
-        
-        # Update non-numeric attributes - categorical and character classes must 
-        # have a numberType of "character" and their attributeDefinition must be 
-        # listed under "defintion. date and categorical classes must be listed as 
-        # "Date" and "factor" respectively
-        
-        use_i <- (attributes$columnClasses == "categorical") | 
-          (attributes$columnClasses == "character")
-        attributes$numberType[use_i] <- "character"
-        attributes$definition[use_i] <- attributes$attributeDefinition[use_i]
-        attributes$columnClasses[
-          attributes$columnClasses == "date"] <- "Date"
-        attributes$columnClasses[
-          attributes$columnClasses == "categorical"] <- "factor"
-        
-        # Update numeric attributes - Remove NA and missingValueCode for 
-        # calculations. Get minimum and maximum values. Infer numberType
-        
-        for (i in which(tbl_attr$class == "numeric")) {
-          a <- x$data.table[[k]]$content[[tbl_attr$attributeName[i]]][
-            !is.na(x$data.table[[k]]$content[[tbl_attr$attributeName[i]]])]
-          a <- a[a != tbl_attr$missingValueCode[i]]
-          a <- as.numeric(a)
-          if (all(is.na(a))) {
-            attributes$minimum[i] <- NA
-            attributes$maximum[i] <- NA
-          } else {
-            attributes$minimum[i] <- min(a, na.rm = T)
-            attributes$maximum[i] <- max(a, na.rm = T)
-          }
-          is_integer <-function(x, tol = .Machine$double.eps^0.5) {
-            abs(x - round(x)) < tol
-          }
-          if (any(!is_integer(a))) {
-            attributes$numberType[i] <- "real"
-          } else if (!any(a < 1)) {
-            attributes$numberType[i] <- "natural"
-          } else if (any(a < 0)) {
-            attributes$numberType[i] <- "integer"
-          } else {
-            attributes$numberType[i] <- "whole"
-          }
-          # FIXME: Calculate precision for numeric attributes. Alternatively
-          # this should be added to the attributes template so precision can
-          # be manually defined by the metadata creator.
-        }
-        
-        # Create attributeList
-        
-        if (paste0("catvars_", tools::file_path_sans_ext(k), ".txt") %in% 
-            names(x$template)) {
-          attributeList <- suppressWarnings(
-            EML::set_attributes(
-              attributes[ , c(
-                "attributeName", 
-                "formatString",
-                "unit",
-                "numberType",
-                "definition",
-                "attributeDefinition",
-                "minimum",
-                "maximum",
-                "missingValueCode",
-                "missingValueCodeExplanation")],
-              factors = x$template[[
-                paste0(
-                  "catvars_", 
-                  tools::file_path_sans_ext(k), 
-                  ".txt")]]$content,
-              col_classes = attributes$columnClasses))
-        } else {
-          attributeList <- suppressWarnings(
-            EML::set_attributes(
-              attributes[ , c(
-                'attributeName', 
-                'formatString',
-                'unit',
-                'numberType',
-                'definition',
-                'attributeDefinition',
-                'minimum',
-                'maximum',
-                'missingValueCode',
-                'missingValueCodeExplanation')],
-              col_classes = attributes$columnClasses))
-        }
-        
         # Set physical
-        if (mime::guess_type(k) %in% c("text/plain", "text/csv", "text/tab-separated-values")){
+        if (x$data.table[[k]]$mime_type %in% c("text/plain", "text/csv", "text/tab-separated-values")){
           # FIXME: Auto-detect numHeaderLines
           physical <- suppressMessages(
             EML::set_physical(
@@ -1309,7 +1194,7 @@ make_eml <- function(
                 file.name = k),
               attributeOrientation = "column",
               url = "placeholder"))
-        } else if (mime::guess_type(k) == "application/x-netcdf"){
+        } else if (x$data.table[[k]]$mime_type == "application/x-netcdf"){
           physical <- suppressMessages(
             EML::set_physical(
               paste0(data.path, "/", k),
@@ -1348,7 +1233,7 @@ make_eml <- function(
           physical$distribution <- list()
         }
         
-        if (mime::guess_type(k) %in% c("text/plain", "text/csv", "text/tab-separated-values")){
+        if (x$data.table[[k]]$mime_type %in% c("text/plain", "text/csv", "text/tab-separated-values")){
           fdlim <- detect_delimeter(
             path = data.path,
             data.files = k,
@@ -1359,9 +1244,15 @@ make_eml <- function(
           
           physical$dataFormat$textFormat$simpleDelimited$fieldDelimiter <- fdlim
           
-        } else if (mime::guess_type(k) == "application/x-netcdf"){
+        } else if (x$data.table[[k]]$mime_type == "application/x-netcdf"){
           physical$dataFormat$textFormat <- character(0)
           physical$dataFormat$externallyDefinedFormat$formatName <- "NetCDF"
+        }
+        
+        numberOfRecords <- if ((x$data.table[[k]]$mime_type) %in% c("text/plain", "text/csv", "text/tab-separated-values")) {
+          as.character(nrow(x$data.table[[k]]$content))
+        } else {
+          character(0)
         }
         
         # Create dataTable
@@ -1371,7 +1262,7 @@ make_eml <- function(
           entityDescription = data.table.description[which(k == names(x$data.table))],
           physical = physical,
           attributeList = attributeList,
-          numberOfRecords = as.character(nrow(x$data.table[[k]]$content)))
+          numberOfRecords = numberOfRecords)
         
         # FIXME: EML v2.0.0 handles absense of missingValue codes differently
         # than EML v 1.0.3. This fixes the issue here, though it may be better
@@ -1397,126 +1288,11 @@ make_eml <- function(
       names(x$spatial.raster),
       function(k) {
         
-        # Get corresponding attributes_raster.txt
-        tbl_attr <- x$template[[
-          paste0("attributes_", tools::file_path_sans_ext(k), ".txt")]]$content
-        
-        # Break if no attributes_raster.txt
-        if (is.null(tbl_attr)) {
+        # Set attributeListe
+        attributeList <- create_attributeList(x, k, file_type = "spatialRaster")
+
+        if (is.null(attributeList)) {
           return()
-        }
-        
-        message(paste0("    <spatialRaster> (", k, ")"))
-        
-        # Add attributes.txt contents to the data frame input expected by 
-        # EML::set_attributes().
-        # FIXME: Order of attributes listed in the template may not be match 
-        # the order listed in the table so ... reorder attributes according
-        # to the data table listing.
-        
-        attributes <- data.frame(
-          attributeName = tbl_attr$attributeName,
-          formatString = tbl_attr$dateTimeFormatString,
-          unit = tbl_attr$unit,
-          numberType = "",
-          definition = "",
-          attributeDefinition = tbl_attr$attributeDefinition,
-          columnClasses = tbl_attr$class,
-          minimum = NA,
-          maximum = NA,
-          missingValueCode = tbl_attr$missingValueCode,
-          missingValueCodeExplanation = tbl_attr$missingValueCodeExplanation,
-          stringsAsFactors = F)
-        
-        # Update missingValueCode - NA must be "NA" otherwise it will not be 
-        # listed in the EML
-        
-        attributes$missingValueCode[is.na(attributes$missingValueCode)] <- "NA"
-        
-        # Update non-numeric attributes - categorical and character classes must 
-        # have a numberType of "character" and their attributeDefinition must be 
-        # listed under "defintion. date and categorical classes must be listed as 
-        # "Date" and "factor" respectively
-        
-        use_i <- (attributes$columnClasses == "categorical") | 
-          (attributes$columnClasses == "character")
-        attributes$numberType[use_i] <- "character"
-        attributes$definition[use_i] <- attributes$attributeDefinition[use_i]
-        attributes$columnClasses[
-          attributes$columnClasses == "date"] <- "Date"
-        attributes$columnClasses[
-          attributes$columnClasses == "categorical"] <- "factor"
-        
-        # Update numeric attributes - Remove NA and missingValueCode for 
-        # calculations. Get minimum and maximum values. Infer numberType
-        
-        for (i in which(tbl_attr$class == "numeric")) {
-          a <- x$spatial.raster[[k]]$content[[tbl_attr$attributeName[i]]][
-            !is.na(x$spatial.raster[[k]]$content[[tbl_attr$attributeName[i]]])]
-          a <- a[a != tbl_attr$missingValueCode[i]]
-          a <- as.numeric(a)
-          if (all(is.na(a))) {
-            attributes$minimum[i] <- NA
-            attributes$maximum[i] <- NA
-          } else {
-            attributes$minimum[i] <- min(a, na.rm = T)
-            attributes$maximum[i] <- max(a, na.rm = T)
-          }
-          is_integer <-function(x, tol = .Machine$double.eps^0.5) {
-            abs(x - round(x)) < tol
-          }
-          if (any(!is_integer(a))) {
-            attributes$numberType[i] <- "real"
-          } else if (!any(a < 1)) {
-            attributes$numberType[i] <- "natural"
-          } else if (any(a < 0)) {
-            attributes$numberType[i] <- "integer"
-          } else {
-            attributes$numberType[i] <- "whole"
-          }
-          # FIXME: Calculate precision for numeric attributes. Alternatively
-          # this should be added to the attributes template so precision can
-          # be manually defined by the metadata creator.
-        }
-        
-        # Create attributeList
-        
-        if (paste0("catvars_", tools::file_path_sans_ext(k), ".txt") %in% 
-            names(x$template)) {
-          attributeList <- suppressWarnings(
-            EML::set_attributes(
-              attributes[ , c(
-                "attributeName", 
-                "formatString",
-                "unit",
-                "numberType",
-                "definition",
-                "attributeDefinition",
-                "minimum",
-                "maximum",
-                "missingValueCode",
-                "missingValueCodeExplanation")],
-              factors = x$template[[
-                paste0(
-                  "catvars_", 
-                  tools::file_path_sans_ext(k), 
-                  ".txt")]]$content,
-              col_classes = attributes$columnClasses))
-        } else {
-          attributeList <- suppressWarnings(
-            EML::set_attributes(
-              attributes[ , c(
-                'attributeName', 
-                'formatString',
-                'unit',
-                'numberType',
-                'definition',
-                'attributeDefinition',
-                'minimum',
-                'maximum',
-                'missingValueCode',
-                'missingValueCodeExplanation')],
-              col_classes = attributes$columnClasses))
         }
         
         # Set physical
@@ -1554,12 +1330,17 @@ make_eml <- function(
           physical$distribution <- list()
         }
         
-        # Get corresponding information_raster.txt
-        tbl_info <- x$template[[
-          paste0("information_", tools::file_path_sans_ext(k), ".txt")]]$content
+        # Get entities.txt
+        tbl_info <- x$template$entities.txt$content
         
-        # Break if no attributes_raster.txt
         if (is.null(tbl_info)) {
+          return()
+        }
+        
+        # Get lines corresponding to file
+        tbl_info <- tbl_info[tbl_info$objectName == k,]
+        
+        if (nrow(tbl_info) == 0) {
           return()
         }
         
@@ -1570,17 +1351,17 @@ make_eml <- function(
           entityDescription = spatial.raster.description[which(k == names(x$spatial.raster))],
           physical = physical,
           attributeList = attributeList,
-          spatialReference = EML::eml$spatialReference(horizCoordSysName = tbl_info$spatialReference),
-          horizontalAccuracy = EML::eml$horizontalAccuracy(accuracyReport = tbl_info$horizontalAccuracy),
-          verticalAccuracy = EML::eml$verticalAccuracy(accuracyReport = tbl_info$verticalAccuracy),
-          cellSizeXDirection = tbl_info$cellSizeXDirection,
-          cellSizeYDirection = tbl_info$cellSizeYDirection,
-          numberOfBands = tbl_info$numberOfBands,
-          rasterOrigin = tbl_info$rasterOrigin,
-          rows = tbl_info$rows,
-          columns = tbl_info$columns,
-          verticals = tbl_info$verticals,
-          cellGeometry = tbl_info$cellGeometry
+          spatialReference = EML::eml$spatialReference(horizCoordSysName = tbl_info[tbl_info$variable == "spatialReference",]$value),
+          horizontalAccuracy = EML::eml$horizontalAccuracy(accuracyReport = tbl_info[tbl_info$variable == "horizontalAccuracy",]$value),
+          verticalAccuracy = EML::eml$verticalAccuracy(accuracyReport = tbl_info[tbl_info$variable == "verticalAccuracy",]$value),
+          cellSizeXDirection = tbl_info[tbl_info$variable == "cellSizeXDirection",]$value,
+          cellSizeYDirection = tbl_info[tbl_info$variable == "cellSizeYDirection",]$value,
+          numberOfBands = tbl_info[tbl_info$variable == "numberOfBands",]$value,
+          rasterOrigin = tbl_info[tbl_info$variable == "rasterOrigin",]$value,
+          rows = tbl_info[tbl_info$variable == "rows",]$value,
+          columns = tbl_info[tbl_info$variable == "columns",]$value,
+          verticals = tbl_info[tbl_info$variable == "verticals",]$value,
+          cellGeometry = tbl_info[tbl_info$variable == "cellGeometry",]$value
         )
         
         # FIXME: EML v2.0.0 handles absense of missingValue codes differently
@@ -1607,126 +1388,11 @@ make_eml <- function(
       names(x$spatial.vector),
       function(k) {
         
-        # Get corresponding attributes_vector.txt
-        tbl_attr <- x$template[[
-          paste0("attributes_", tools::file_path_sans_ext(k), ".txt")]]$content
-        
-        # Break if no attributes_vector.txt
-        if (is.null(tbl_attr)) {
+        # Set attributeList
+        attributeList <- create_attributeList(x, k, file_type = "spatialVector")
+
+        if (is.null(attributeList)) {
           return()
-        }
-        
-        message(paste0("    <spatialVector> (", k, ")"))
-        
-        # Add attributes.txt contents to the data frame input expected by 
-        # EML::set_attributes().
-        # FIXME: Order of attributes listed in the template may not be match 
-        # the order listed in the table so ... reorder attributes according
-        # to the data table listing.
-        
-        attributes <- data.frame(
-          attributeName = tbl_attr$attributeName,
-          formatString = tbl_attr$dateTimeFormatString,
-          unit = tbl_attr$unit,
-          numberType = "",
-          definition = "",
-          attributeDefinition = tbl_attr$attributeDefinition,
-          columnClasses = tbl_attr$class,
-          minimum = NA,
-          maximum = NA,
-          missingValueCode = tbl_attr$missingValueCode,
-          missingValueCodeExplanation = tbl_attr$missingValueCodeExplanation,
-          stringsAsFactors = F)
-        
-        # Update missingValueCode - NA must be "NA" otherwise it will not be 
-        # listed in the EML
-        
-        attributes$missingValueCode[is.na(attributes$missingValueCode)] <- "NA"
-        
-        # Update non-numeric attributes - categorical and character classes must 
-        # have a numberType of "character" and their attributeDefinition must be 
-        # listed under "defintion. date and categorical classes must be listed as 
-        # "Date" and "factor" respectively
-        
-        use_i <- (attributes$columnClasses == "categorical") | 
-          (attributes$columnClasses == "character")
-        attributes$numberType[use_i] <- "character"
-        attributes$definition[use_i] <- attributes$attributeDefinition[use_i]
-        attributes$columnClasses[
-          attributes$columnClasses == "date"] <- "Date"
-        attributes$columnClasses[
-          attributes$columnClasses == "categorical"] <- "factor"
-        
-        # Update numeric attributes - Remove NA and missingValueCode for 
-        # calculations. Get minimum and maximum values. Infer numberType
-        
-        for (i in which(tbl_attr$class == "numeric")) {
-          a <- x$spatial.vector[[k]]$content[[tbl_attr$attributeName[i]]][
-            !is.na(x$spatial.vector[[k]]$content[[tbl_attr$attributeName[i]]])]
-          a <- a[a != tbl_attr$missingValueCode[i]]
-          a <- as.numeric(a)
-          if (all(is.na(a))) {
-            attributes$minimum[i] <- NA
-            attributes$maximum[i] <- NA
-          } else {
-            attributes$minimum[i] <- min(a, na.rm = T)
-            attributes$maximum[i] <- max(a, na.rm = T)
-          }
-          is_integer <-function(x, tol = .Machine$double.eps^0.5) {
-            abs(x - round(x)) < tol
-          }
-          if (any(!is_integer(a))) {
-            attributes$numberType[i] <- "real"
-          } else if (!any(a < 1)) {
-            attributes$numberType[i] <- "natural"
-          } else if (any(a < 0)) {
-            attributes$numberType[i] <- "integer"
-          } else {
-            attributes$numberType[i] <- "whole"
-          }
-          # FIXME: Calculate precision for numeric attributes. Alternatively
-          # this should be added to the attributes template so precision can
-          # be manually defined by the metadata creator.
-        }
-        
-        # Create attributeList
-        
-        if (paste0("catvars_", tools::file_path_sans_ext(k), ".txt") %in% 
-            names(x$template)) {
-          attributeList <- suppressWarnings(
-            EML::set_attributes(
-              attributes[ , c(
-                "attributeName", 
-                "formatString",
-                "unit",
-                "numberType",
-                "definition",
-                "attributeDefinition",
-                "minimum",
-                "maximum",
-                "missingValueCode",
-                "missingValueCodeExplanation")],
-              factors = x$template[[
-                paste0(
-                  "catvars_", 
-                  tools::file_path_sans_ext(k), 
-                  ".txt")]]$content,
-              col_classes = attributes$columnClasses))
-        } else {
-          attributeList <- suppressWarnings(
-            EML::set_attributes(
-              attributes[ , c(
-                'attributeName', 
-                'formatString',
-                'unit',
-                'numberType',
-                'definition',
-                'attributeDefinition',
-                'minimum',
-                'maximum',
-                'missingValueCode',
-                'missingValueCodeExplanation')],
-              col_classes = attributes$columnClasses))
         }
         
         # Set physical
@@ -1772,12 +1438,17 @@ make_eml <- function(
           physical$distribution <- list()
         }
         
-        # Get corresponding information_vector.txt
-        tbl_info <- x$template[[
-          paste0("information_", tools::file_path_sans_ext(k), ".txt")]]$content
+        # Get entities.txt
+        tbl_info <- x$template$entities.txt$content
         
-        # Break if no attributes_vector.txt
-        if (is.null(tbl_info)) {
+        if (is.null(tbl_info)){
+          return()
+        }
+        
+        # Get lines corresponding to file
+        tbl_info <- tbl_info[tbl_info$objectName == k,]
+        
+        if (nrow(tbl_info) == 0) {
           return()
         }
         
@@ -1788,9 +1459,9 @@ make_eml <- function(
           entityDescription = spatial.vector.description[which(k == names(x$spatial.vector))],
           physical = physical,
           attributeList = attributeList,
-          geometry = tbl_info$geometry,
-          geometricObjectCount = tbl_info$geometricObjectCount,
-          spatialReference = EML::eml$spatialReference(horizCoordSysName = tbl_info$spatialReference)
+          geometry = tbl_info[tbl_info$variable == "geometry",]$value,
+          geometricObjectCount = tbl_info[tbl_info$variable == "geometricObjectCount",]$value,
+          spatialReference = EML::eml$spatialReference(horizCoordSysName = tbl_info[tbl_info$variable == "spatialReference",]$value)
         )
         
         # FIXME: EML v2.0.0 handles absense of missingValue codes differently
@@ -1817,6 +1488,10 @@ make_eml <- function(
       names(x$other.entity),
       function(k) {
         message(paste0("    <otherEntity> (", k, ")"))
+        
+        # Set attributeList
+        attributeList <- create_attributeList(x, k, file_type = "otherEntity")
+
         # Set physical
         # FIXME: Some sub-routine in EML::set_physical() doesn't like the .zip 
         # file extension, so we suppress the warning here so users aren't 
@@ -1842,15 +1517,37 @@ make_eml <- function(
         } else {
           physical$distribution <- list()
         }
+        
+        # get entities.txt template
+        entities_tmplt <- x$template[["entities.txt"]]$content
+        
+        entityType <- entities_tmplt[
+          which(entities_tmplt$objectName == k & entities_tmplt$variable == "entityType"),]$value
+
         # Create otherEntity
-        list(
+        other_entity <- list(
           entityName = other.entity.name[
             which(k == names(x$other.entity))],
           entityDescription = other.entity.description[
             which(k == names(x$other.entity))],
           physical = physical,
-          entityType = "unknown")
-      })
+          entityType = if (length(entityType) != 0) entityType else "unknown",
+          attributeList = attributeList)
+        
+        # FIXME: EML v2.0.0 handles absense of missingValue codes differently
+        # than EML v 1.0.3. This fixes the issue here, though it may be better
+        # to implement the fix in EML v2.0.0.
+        for (j in seq_along(other_entity$attributeList$attribute)){
+          if (other_entity$attributeList$attribute[[j]]$missingValueCode$code == ''){
+            other_entity$attributeList$attribute[[j]]$missingValueCode$code <- NA_character_
+            other_entity$attributeList$attribute[[j]]$missingValueCode$codeExplanation <- NA_character_
+          }
+        }
+        
+        other_entity
+        
+      }
+    )
   }
   
   # Create <additionalMetadata> -----------------------------------------------
@@ -1923,3 +1620,153 @@ make_eml <- function(
   }
   
 }
+
+
+#' Create attributeList EML element 
+#' 
+#' @param x (named list) List of templates created with \code{template_arguments()}.
+#' @param file (character) Name of file containing the attributes.
+#' @param file_type (character) Type of file according to EML file field. Can be
+#' 'dataTable', 'spatialRaster', 'spatialVector' or 'otherEntity'.
+#' 
+#' @return an eml attributeList object
+#' 
+#' @keywords internal
+#' 
+create_attributeList <- function(x, file, file_type) {
+  # Get corresponding attributes_*.txt
+  tbl_attr <- x$template[[
+    paste0("attributes_", tools::file_path_sans_ext(file), ".txt")]]$content
+  
+  # Break if no attributes_*.txt
+  if (is.null(tbl_attr)) {
+    return()
+  }
+  
+  message(paste0("    <", file_type, "> (", file, ")"))
+  
+  # Add attributes.txt contents to the data frame input expected by 
+  # EML::set_attributes().
+  # FIXME: Order of attributes listed in the template may not be match 
+  # the order listed in the table so ... reorder attributes according
+  # to the data table listing.
+  
+  attributes <- data.frame(
+    attributeName = tbl_attr$attributeName,
+    formatString = tbl_attr$dateTimeFormatString,
+    unit = tbl_attr$unit,
+    numberType = "",
+    definition = "",
+    attributeDefinition = tbl_attr$attributeDefinition,
+    columnClasses = tbl_attr$class,
+    minimum = NA,
+    maximum = NA,
+    missingValueCode = tbl_attr$missingValueCode,
+    missingValueCodeExplanation = tbl_attr$missingValueCodeExplanation,
+    stringsAsFactors = F)
+  
+  # Update missingValueCode - NA must be "NA" otherwise it will not be 
+  # listed in the EML
+  
+  attributes$missingValueCode[is.na(attributes$missingValueCode)] <- "NA"
+  
+  # Update non-numeric attributes - categorical and character classes must 
+  # have a numberType of "character" and their attributeDefinition must be 
+  # listed under "defintion. date and categorical classes must be listed as 
+  # "Date" and "factor" respectively
+  
+  use_i <- (attributes$columnClasses == "categorical") | 
+    (attributes$columnClasses == "character")
+  attributes$numberType[use_i] <- "character"
+  attributes$definition[use_i] <- attributes$attributeDefinition[use_i]
+  attributes$columnClasses[
+    attributes$columnClasses == "date"] <- "Date"
+  attributes$columnClasses[
+    attributes$columnClasses == "categorical"] <- "factor"
+  
+  # Update numeric attributes - Remove NA and missingValueCode for 
+  # calculations. Get minimum and maximum values. Infer numberType
+  
+  for (i in which(tbl_attr$class == "numeric")) {
+    if (file_type == "dataTable") {
+      a <- x$data.table[[file]]$content[[tbl_attr$attributeName[i]]][
+        !is.na(x$data.table[[file]]$content[[tbl_attr$attributeName[i]]])]
+    } else if (file_type == "spatialRaster") {
+      a <- x$spatial.raster[[file]]$content[[tbl_attr$attributeName[i]]][
+        !is.na(x$spatial.raster[[file]]$content[[tbl_attr$attributeName[i]]])]
+    } else if (file_type == "spatialVector") {
+      a <- x$spatial.vector[[file]]$content[[tbl_attr$attributeName[i]]][
+        !is.na(x$spatial.vector[[file]]$content[[tbl_attr$attributeName[i]]])]
+    } else if (file_type == "otherEntity") {
+      a <- x$other.entity[[file]]$content[[tbl_attr$attributeName[i]]][
+        !is.na(x$other.entity[[file]]$content[[tbl_attr$attributeName[i]]])]
+    }
+    a <- a[a != tbl_attr$missingValueCode[i]]
+    a <- as.numeric(a)
+    if (all(is.na(a))) {
+      attributes$minimum[i] <- NA
+      attributes$maximum[i] <- NA
+    } else {
+      attributes$minimum[i] <- min(a, na.rm = T)
+      attributes$maximum[i] <- max(a, na.rm = T)
+    }
+    is_integer <-function(x, tol = .Machine$double.eps^0.5) {
+      abs(x - round(x)) < tol
+    }
+    if (any(!is_integer(a))) {
+      attributes$numberType[i] <- "real"
+    } else if (!any(a < 1)) {
+      attributes$numberType[i] <- "natural"
+    } else if (any(a < 0)) {
+      attributes$numberType[i] <- "integer"
+    } else {
+      attributes$numberType[i] <- "whole"
+    }
+    # FIXME: Calculate precision for numeric attributes. Alternatively
+    # this should be added to the attributes template so precision can
+    # be manually defined by the metadata creator.
+  }
+  
+  # Create attributeList
+  
+  if (paste0("catvars_", tools::file_path_sans_ext(file), ".txt") %in% 
+      names(x$template)) {
+    attributeList <- suppressWarnings(
+      EML::set_attributes(
+        attributes[ , c(
+          "attributeName", 
+          "formatString",
+          "unit",
+          "numberType",
+          "definition",
+          "attributeDefinition",
+          "minimum",
+          "maximum",
+          "missingValueCode",
+          "missingValueCodeExplanation")],
+        factors = x$template[[
+          paste0(
+            "catvars_", 
+            tools::file_path_sans_ext(file), 
+            ".txt")]]$content,
+        col_classes = attributes$columnClasses))
+  } else {
+    attributeList <- suppressWarnings(
+      EML::set_attributes(
+        attributes[ , c(
+          'attributeName', 
+          'formatString',
+          'unit',
+          'numberType',
+          'definition',
+          'attributeDefinition',
+          'minimum',
+          'maximum',
+          'missingValueCode',
+          'missingValueCodeExplanation')],
+        col_classes = attributes$columnClasses))
+  }
+  
+  return(attributeList)
+}
+
