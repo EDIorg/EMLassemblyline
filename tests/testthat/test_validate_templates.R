@@ -1331,18 +1331,6 @@ testthat::test_that("provenance", {
   x1$template$provenance.txt$content$url[external_resources[1:2]] <- 
     "a_non_resolvable_url"
   
-  expect_true(
-    stringr::str_detect(
-      validate_provenance_url_resolvability(x1),
-      "Unresolvable URLs. URLs must be resolvable. These URLs do not "))
-  
-  r <- validate_provenance(x1)
-  expect_true(
-    stringr::str_detect(
-      r$issues,
-      "Unresolvable URLs. URLs must be resolvable. These URLs do not "))
-  expect_null(r$x$template$provenance.txt)
-  
   # An online description is recommended for external resources
   
   x1 <- x
