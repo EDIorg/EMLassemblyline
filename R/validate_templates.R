@@ -1577,10 +1577,6 @@ validate_provenance <- function(x) {
     r <- validate_provenance_url_presence(x)
     required_issues <- c(required_issues, r)
     
-    # A URL resolves for external resources
-    r <- validate_provenance_url_resolvability(x)
-    required_issues <- c(required_issues, r)
-    
     # An online description is recommended for external resources
     r <- validate_provenance_online_description(x)
     optional_issues <- c(optional_issues, r)
@@ -1785,45 +1781,6 @@ validate_provenance_url_presence <- function(x) {
       "Missing URLs. A URL is required for each resource. These resources ",
       "have missing URLs:\n", 
       paste(titles[missing_urls], collapse = "\n"))
-  }
-}
-
-
-
-
-
-
-
-
-#' Check a URL can be resolved for external resources in the provenance template
-#'
-#' @param x 
-#'     (list) The data and metadata object returned by 
-#'     \code{template_arguments()}.
-#'
-#' @return
-#'     \item{character}{Description of validation issues}
-#'     \item{NULL}{If no issues were found}
-#' 
-#' @keywords internal
-#' 
-validate_provenance_url_resolvability <- function(x) {
-  external_resources <- x$template$provenance.txt$content[
-    !(x$template$provenance.txt$content$dataPackageID != "" &
-        x$template$provenance.txt$content$systemID != ""), ]
-  urls <- unique(external_resources$url)
-  unresolvable_urls <- unlist(
-    lapply(
-      urls,
-      function(url) {
-        if (!isTRUE(check_uri(url))) {
-          url
-        }
-      }))
-  if (length(unresolvable_urls) != 0) {
-    paste0(
-      "Unresolvable URLs. URLs must be resolvable. These URLs do not resolve:\n",
-      paste(unresolvable_urls, collapse = "\n"))
   }
 }
 
