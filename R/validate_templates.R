@@ -2299,7 +2299,7 @@ validate_table_attribute_name_presence <- function(template.name, data.name, x) 
   found_colnames <- x$template[[template.name]]$content$attributeName
   if (!all(expected_colnames %in% found_colnames)) {
     paste0(
-      "Mising attribute names. These attributes are listed in the data but ",
+      "Missing attribute names. These attributes are listed in the data but ",
       "not the metadata: ",
       paste(
         expected_colnames[!(expected_colnames %in% found_colnames)], 
