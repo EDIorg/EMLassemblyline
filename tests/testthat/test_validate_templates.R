@@ -52,7 +52,7 @@ testthat::test_that("validate_templates()", {
     any(
       stringr::str_detect(
         template_issues,
-        "Mising attribute names. These attributes are listed in the data but ")))
+        "Missing attribute names. These attributes are listed in the data but ")))
   expect_true(
     any(
       stringr::str_detect(
@@ -257,13 +257,13 @@ testthat::test_that("attributes.txt", {
     stringr::str_detect(
       validate_table_attribute_name_presence(
         "attributes_decomp.txt", "decomp.csv", x1),
-      "Mising attribute names. These attributes are listed in the data but "))
+      "Missing attribute names. These attributes are listed in the data but "))
   
   r <- validate_table_attributes(x1)
   expect_true(
     stringr::str_detect(
       r$issues,
-      "Mising attribute names. These attributes are listed in the data but "))
+      "Missing attribute names. These attributes are listed in the data but "))
   expect_null(r$x$template$attributes_decomp.txt)
   
   # attributeName - All columns of a table should be listed in the correct 
@@ -546,7 +546,7 @@ testthat::test_that("attributes.txt", {
     any(
       stringr::str_detect(
         r$issues,
-        "Mising attribute names. These attributes are listed in the data but ")))
+        "Missing attribute names. These attributes are listed in the data but ")))
   expect_true(
     any(
       stringr::str_detect(
