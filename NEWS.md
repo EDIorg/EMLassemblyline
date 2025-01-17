@@ -1,5 +1,12 @@
-EMLassemblyline 3.X.X (202X-XX-XX)
+EMLassemblyline 3.5.6 (2025-01-16)
 ==================================
+
+### BUG FIXES
+
+  * Fix typo in validate_templates error message about mising [sic] attributes. 
+  Update associated unit tests.
+  * Remove URL validation for provenance metadata to prevent the removal of 
+  valid sources that may not be accessible via HTTP GET requests.
 
 ### DOCUMENTATION
 
