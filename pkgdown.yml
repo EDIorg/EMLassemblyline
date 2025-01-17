@@ -1,5 +1,5 @@
-pandoc: 2.19.2
-pkgdown: 2.0.6
+pandoc: 3.1.11
+pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   auto_pub: auto_pub.html
@@ -10,8 +10,7 @@ articles:
   organize_data_package: organize_data_package.html
   overview: overview.html
   publish_data_package: publish_data_package.html
-last_built: 2022-11-11T21:51Z
+last_built: 2025-01-17T19:26Z
 urls:
   reference: https://ediorg.github.io/EMLassemblyline/reference
   article: https://ediorg.github.io/EMLassemblyline/articles
-
