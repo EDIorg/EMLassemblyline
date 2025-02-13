@@ -1,3 +1,11 @@
+EMLassemblyline 3.5.7 (2025-02-13)
+==================================
+
+### BUG FIXES
+
+  * Update to latest version of `taxonomyCleanr` to address backward 
+  compatibility issues introduced in `taxize` version `0.10.0`.
+
 EMLassemblyline 3.5.6 (2025-01-16)
 ==================================
 
