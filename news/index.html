@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5.8</span>
       </span>
     </div>
 
@@ -78,6 +78,13 @@
       <small>Source: <a href="https://github.com/EDIorg/EMLassemblyline/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="3.5.8" id="emlassemblyline-358-2025-03-06">EMLassemblyline 3.5.8 (2025-03-06)<a class="anchor" aria-label="anchor" href="#emlassemblyline-358-2025-03-06"></a></h2>
+<div class="section level4">
+<h4 id="bug-fixes-3-5-8">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-3-5-8"></a></h4>
+<ul><li>Fix issue with GBIF incorrectly flagged as unsupported taxonomic authority (<a href="https://github.com/EDIorg/EMLassemblyline/issues/144" class="external-link">#144</a>).</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="3.5.7" id="emlassemblyline-357-2025-02-13">EMLassemblyline 3.5.7 (2025-02-13)<a class="anchor" aria-label="anchor" href="#emlassemblyline-357-2025-02-13"></a></h2>
 <div class="section level4">
@@ -221,7 +228,7 @@
 <strong>eml2eal():</strong> For when you want to work with EML in EAL but don’t have the templates and make_eml() function call. This addresses <a href="https://github.com/EDIorg/EMLassemblyline/issues/76" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/76" class="external-link">#76</a>
 </li>
 <li>
-<strong>Remove last column name constraint:</strong> Column names can now be composed of any character strings handled by <code><a href="https://rdrr.io/pkg/data.table/man/fread.html" class="external-link">data.table::fread()</a></code>.</li>
+<strong>Remove last column name constraint:</strong> Column names can now be composed of any character strings handled by <code><a href="https://rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">data.table::fread()</a></code>.</li>
 <li>
 <strong>Remove bookend quote characters mistakenly added to values:</strong> Some file writers will place quotes around a value when it contains commas. This safeguard identifies and removes these.</li>
 </ul></div>
@@ -519,7 +526,7 @@
 <div class="section level4">
 <h4 id="bug-fix-2-7-1">Bug fix<a class="anchor" aria-label="anchor" href="#bug-fix-2-7-1"></a></h4>
 <ul><li>
-<strong>Delimiter guessing:</strong> Occasionally the content of tabular templates leads <code><a href="https://rdrr.io/pkg/data.table/man/fread.html" class="external-link">data.table::fread()</a></code> to guessing a delimiter other than “\t”. This issue has been fixed by explicitly stating the expected field delimiter.</li>
+<strong>Delimiter guessing:</strong> Occasionally the content of tabular templates leads <code><a href="https://rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">data.table::fread()</a></code> to guessing a delimiter other than “\t”. This issue has been fixed by explicitly stating the expected field delimiter.</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -544,7 +551,7 @@
 <li>
 <strong>NULL output from <code><a href="../reference/template_geographic_coverage.html">template_geographic_coverage()</a></code>:</strong> NULL was output from this function when <code>empty = TRUE</code>, which is mostly a cosmetic issue. This was fixed by implementing some simple logic. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/32" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/32" class="external-link">#32</a>.</li>
 <li>
-<strong>Updated table readers:</strong> Some user supplied data tables could not be read by <code><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">utils::read.table()</a></code>. To fix this <code><a href="https://rdrr.io/pkg/data.table/man/fread.html" class="external-link">data.table::fread()</a></code>, a more autonomous and robust reader, replaced <code><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table()</a></code> for reading both data and metadata templates. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/41" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/41" class="external-link">#41</a>.</li>
+<strong>Updated table readers:</strong> Some user supplied data tables could not be read by <code><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">utils::read.table()</a></code>. To fix this <code><a href="https://rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">data.table::fread()</a></code>, a more autonomous and robust reader, replaced <code><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table()</a></code> for reading both data and metadata templates. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/41" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/41" class="external-link">#41</a>.</li>
 <li>
 <strong>geographic_coverage.txt fields mixed up when translated to EML:</strong> Further testing revealed the bug doesn’t exist. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/43" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/43" class="external-link">#43</a>.</li>
 <li>
