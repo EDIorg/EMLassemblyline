@@ -1,3 +1,11 @@
+EMLassemblyline 3.5.8 (2025-03-06)
+==================================
+
+### BUG FIXES
+
+  * Fix issue with GBIF incorrectly flagged as unsupported taxonomic 
+  authority (#144).
+
 EMLassemblyline 3.5.7 (2025-02-13)
 ==================================
 
