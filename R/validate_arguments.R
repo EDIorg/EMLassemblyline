@@ -642,25 +642,25 @@ validate_arguments <- function(fun.name, fun.args){
       # data.table
       
       if (is.null(fun.args$data.table)){
-        stop('Input argument "data.table" is missing! Specify the data file containing the geographic coordinates.', call. = F)
+        stop('Input argument "data.table" is missing! Specify the data file(s) containing the geographic coordinates.', call. = F)
       }
       
       # lat.col
       
       if (is.null(fun.args$lat.col)){
-        stop('Input argument "lat.col" is missing! Specify latitude column name.', call. = F)
+        stop('Input argument "lat.col" is missing! Specify latitude column name(s).', call. = F)
       }
       
       # lon.col
       
       if (is.null(fun.args$lon.col)){
-        stop('Input argument "lon.col" is missing! Specify longitude column name.', call. = F)
+        stop('Input argument "lon.col" is missing! Specify longitude column name(s).', call. = F)
       }
       
       # site.col
       
       if (is.null(fun.args$site.col)){
-        stop('Input argument "site.col" is missing! Specify site column name.', call. = F)
+        stop('Input argument "site.col" is missing! Specify site column name(s).', call. = F)
       }
       
       if (is.null(fun.args$x)){
