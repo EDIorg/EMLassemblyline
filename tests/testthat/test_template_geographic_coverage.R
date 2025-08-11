@@ -191,6 +191,63 @@ testthat::test_that('Test usage with file inputs', {
     )
   )
   
+  # Mismatched data.table and site.col length results in error
+  
+  expect_error(
+    suppressMessages(
+      template_geographic_coverage(
+        path = tempdir(), 
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ), 
+        data.table = 'nitrogen.csv', 
+        site.col = c('site_name', 'site_name'), 
+        lat.col = 'site_lat',
+        lon.col = 'site_lon',
+        write.file = FALSE
+      )
+    )
+  )
+  
+  # Mismatched data.table and lat.col length results in error
+  
+  expect_error(
+    suppressMessages(
+      template_geographic_coverage(
+        path = tempdir(), 
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ), 
+        data.table = 'nitrogen.csv', 
+        site.col = 'site_name', 
+        lat.col = c('site_lat', 'site_lat'),
+        lon.col = 'site_lon',
+        write.file = FALSE
+      ) 
+    )
+  )
+  
+  # Mismatched data.table and lon.col length results in error
+  
+  expect_error(
+    suppressMessages(
+      template_geographic_coverage(
+        path = tempdir(), 
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ), 
+        data.table = 'nitrogen.csv', 
+        site.col = 'site_name', 
+        lat.col = 'site_lat',
+        lon.col = c('site_lon', 'site_lon'),
+        write.file = FALSE
+      )
+    )
+  )
+  
   # Valid arguments result in messages
   
   expect_message(
