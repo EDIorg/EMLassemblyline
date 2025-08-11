@@ -686,14 +686,14 @@ validate_arguments <- function(fun.name, fun.args){
           )
         )
         
-        # Read data table
+        # Read data table(s) into fun.args$x
+        # This way, column names are validated in the same way,
+        # regardless of how arguments are passed to the function.
         
-        x <- template_arguments(
+        fun.args$x <- template_arguments(
           data.path = fun.args$data.path,
           data.table = data_file
-        )
-        
-        x <- x$x
+        )$x
         
         data_read_2_x <- NA_character_
         
