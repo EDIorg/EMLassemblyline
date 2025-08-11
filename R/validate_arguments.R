@@ -699,23 +699,35 @@ validate_arguments <- function(fun.name, fun.args){
         
       }
       
-      df_table <- fun.args$x$data.table[[fun.args$data.table]]$content
+      # Validate column names for each input to data.table
       
-      # Validate column names
-      
-      columns <- colnames(df_table)
-      columns_in <- c(fun.args$lat.col, fun.args$lon.col, fun.args$site.col)
-      use_i <- stringr::str_detect(string = columns,
-                                   pattern = stringr::str_c("^", columns_in, "$", collapse = "|"))
-      if (sum(use_i) > 0){
-        use_i2 <- columns[use_i]
-        use_i3 <- columns_in %in% use_i2
-        if (sum(use_i) != 3){
-          stop(paste("Invalid column names entered: ", paste(columns_in[!use_i3], collapse = ", "), sep = ""), call. = F)
+      for (i in seq_along(fun.args$data.table)) {
+        
+        df_table <- fun.args$x$data.table[[fun.args$data.table[i]]]$content
+        
+        # Validate column names
+        
+        columns <- colnames(df_table)
+        columns_in <- c(fun.args$lat.col[i], fun.args$lon.col[i], fun.args$site.col[i])
+        use_i <- stringr::str_detect(string = columns,
+                                     pattern = stringr::str_c("^", columns_in, "$", collapse = "|"))
+        if (sum(use_i) > 0){
+          use_i2 <- columns[use_i]
+          use_i3 <- columns_in %in% use_i2
+          if (sum(use_i) != 3){
+            stop(paste('Invalid column names entered for table "', 
+                       fun.args$data.table[i], '": ', 
+                       paste(columns_in[!use_i3], collapse = ", "), sep = ""),
+                 call. = F)
+            
+          }
+          
         }
+        
       }
+      
     }
-
+    
   }
   
   # Call from template_provenance() -------------------------------------------
