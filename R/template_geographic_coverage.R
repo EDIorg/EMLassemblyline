@@ -178,58 +178,68 @@ template_geographic_coverage <- function(
       longitude_full = c() 
       site_full = c()
       
-      df_table <- x$data.table[[data_file]]$content
+      # Loop through each validated file name input
       
-      # Validate column names
-      
-      columns <- colnames(df_table)
-      columns_in <- c(lat.col, lon.col, site.col)
-      use_i <- stringr::str_detect(string = columns,
-                                   pattern = stringr::str_c("^", columns_in, "$", collapse = "|"))
-      if (sum(use_i) > 0){
-        use_i2 <- columns[use_i]
-        use_i3 <- columns_in %in% use_i2
-        if (sum(use_i) != 3){
-          stop(paste("Invalid column names entered: ", paste(columns_in[!use_i3], collapse = ", "), sep = ""))
+      for (j in seq_along(data_file)) {
+        
+        df_table <- x$data.table[[data_file[j]]]$content
+        
+        # Validate column names
+        
+        columns <- colnames(df_table)
+        columns_in <- c(lat.col[j], lon.col[j], site.col[j])
+        use_i <- stringr::str_detect(string = columns,
+                                     pattern = stringr::str_c("^", columns_in, "$", collapse = "|"))
+        
+        if (sum(use_i) > 0){
+          use_i2 <- columns[use_i]
+          use_i3 <- columns_in %in% use_i2
+          if (sum(use_i) != 3){
+            stop(paste("Invalid column names entered: ", paste(columns_in[!use_i3], collapse = ", "), sep = ""))
+          }
         }
-      }
-      
-      # Subset table names
-      
-      df_table <- df_table[ ,c(lat.col, lon.col, site.col)]
-      
-      # Remove incomplete lines
-      
-      use_i <- df_table[site.col] == ""
-      df_table[use_i, site.col] <- NA
-      df_table <- df_table[stats::complete.cases(df_table), ]
-      
-      # Get vectors of latitude, longitude, and site
-      
-      latitude <- df_table[lat.col]
-      
-      longitude <- df_table[lon.col]
-      
-      site_name <- unique(unlist(df_table[site.col]))
-      
-      # Output lat and long corresponding to sites
-      
-      latitude_out = c()
-      longitude_out = c() 
-      site_out = c()
-      
-      for (i in 1:length(site_name)){
         
-        useI <- site_name[i] == df_table[site.col]
+        # Subset table names
+          
+        df_table <- df_table[ ,c(lat.col[j], lon.col[j], site.col[j])]
+          
+        # Remove incomplete lines
+          
+        use_i <- df_table[site.col[j]] == ""
+        df_table[use_i, site.col[j]] <- NA
+        df_table <- df_table[stats::complete.cases(df_table), ]
+          
+        # Get vectors of latitude, longitude, and site
+        latitude <- df_table[lat.col[j]]
+          
+        longitude <- df_table[lon.col[j]]
+          
+        site_name <- unique(unlist(df_table[site.col[j]]))
+          
+        # Output lat and long corresponding to sites
+          
+        latitude_out = c()
+        longitude_out = c() 
+        site_out = c()
+          
+        for (i in 1:length(site_name)){
+            
+          useI <- site_name[i] == df_table[site.col[j]]
+            
+          latitude_out[i] <- suppressWarnings(
+            as.numeric(latitude[useI][1]))
+            
+          longitude_out[i] <- suppressWarnings(
+            as.numeric(longitude[useI][1]))
+            
+          site_out[i] <- site_name[i]
+            
+        }
         
-        latitude_out[i] <- suppressWarnings(
-          as.numeric(latitude[useI][1]))
-        
-        longitude_out[i] <- suppressWarnings(
-          as.numeric(longitude[useI][1]))
-        
-        site_out[i] <- site_name[i]
-        
+        latitude_full <- append(latitude_full, latitude_out)
+        longitude_full <- append(longitude_full, longitude_out)
+        site_full <- append(site_full, site_out)
+          
       }
       
       geocoverage_out <- data.frame(
