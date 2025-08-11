@@ -172,6 +172,12 @@ template_geographic_coverage <- function(
     
     if (!isTRUE(empty)){
       
+      # Initiate empty lists to append all geography
+      
+      latitude_full = c()
+      longitude_full = c() 
+      site_full = c()
+      
       df_table <- x$data.table[[data_file]]$content
       
       # Validate column names
