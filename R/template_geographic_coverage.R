@@ -250,9 +250,20 @@ template_geographic_coverage <- function(
         westBoundingCoordinate = longitude_full,
         stringsAsFactors = F)
       
+      # get number of geography rows with potential duplicates
+      nrow_geog <- nrow(geocoverage_out)
+      
       # Get unique rows
       geocoverage_out <- unique(geocoverage_out)
-
+      
+      # get number of unique geography rows
+      nrow_unique <- nrow(geocoverage_out)
+      
+      # warn if duplicate rows were dropped
+      if (nrow_geog != nrow_unique) {
+        warning("Duplicate rows were dropped from geographic coverage.")
+      }
+      
       geocoverage_out <- geocoverage_out[complete.cases(geocoverage_out), ]
       
     } else {
