@@ -332,6 +332,28 @@ testthat::test_that('Test usage with file inputs', {
     )
   )
   
+  # Written txt file length matches number of unique rows in example data
+  
+  expect_equal(
+    nrow(read.delim(paste0(tempdir(), "/geographic_coverage.txt"), sep = "\t")),
+    # read in site tables used to create current geographic_coverage.txt
+    # rename columns to bind rows
+    # select distinct rows
+    nrow(dplyr::distinct(rbind(read.csv(testthat::test_path("fixtures/sites.csv"), 
+                                        col.names = c("site", "lat", "lon")), 
+                               read.csv(testthat::test_path("fixtures/subsites.csv"), 
+                                        col.names = c("site", "lat", "lon")))))
+  )
+  
+  unlink(
+    paste0(
+      tempdir(),
+      '/geographic_coverage.txt'
+    ),
+    force = TRUE
+  )
+  
+  
 })
 
 # Test usage with x inputs ----------------------------------------------------
