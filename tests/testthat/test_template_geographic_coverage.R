@@ -304,6 +304,20 @@ testthat::test_that('Test usage with file inputs', {
     )
   )
   
+  # Multiple geography files with no duplicate sites results in no warnings
+  
+  expect_no_warning(
+    template_geographic_coverage(
+      path = tempdir(), 
+      data.path =  testthat::test_path("fixtures"), 
+      data.table = c('sites.csv', 'subsites_no_duplicates.csv'), 
+      site.col = c('siteID', 'subsiteID'), 
+      lat.col = c('decimalLatitude', 'decimalLatitude'),
+      lon.col = c('decimalLongitude', 'decimalLongitude'),
+      write.file = FALSE
+    )
+  )
+  
 })
 
 # Test usage with x inputs ----------------------------------------------------
