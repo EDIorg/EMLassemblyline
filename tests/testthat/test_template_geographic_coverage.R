@@ -191,6 +191,63 @@ testthat::test_that('Test usage with file inputs', {
     )
   )
   
+  # Mismatched data.table and site.col length results in error
+  
+  expect_error(
+    suppressMessages(
+      template_geographic_coverage(
+        path = tempdir(), 
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ), 
+        data.table = 'nitrogen.csv', 
+        site.col = c('site_name', 'site_name'), 
+        lat.col = 'site_lat',
+        lon.col = 'site_lon',
+        write.file = FALSE
+      )
+    )
+  )
+  
+  # Mismatched data.table and lat.col length results in error
+  
+  expect_error(
+    suppressMessages(
+      template_geographic_coverage(
+        path = tempdir(), 
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ), 
+        data.table = 'nitrogen.csv', 
+        site.col = 'site_name', 
+        lat.col = c('site_lat', 'site_lat'),
+        lon.col = 'site_lon',
+        write.file = FALSE
+      ) 
+    )
+  )
+  
+  # Mismatched data.table and lon.col length results in error
+  
+  expect_error(
+    suppressMessages(
+      template_geographic_coverage(
+        path = tempdir(), 
+        data.path = system.file(
+          '/examples/data',
+          package = 'EMLassemblyline'
+        ), 
+        data.table = 'nitrogen.csv', 
+        site.col = 'site_name', 
+        lat.col = 'site_lat',
+        lon.col = c('site_lon', 'site_lon'),
+        write.file = FALSE
+      )
+    )
+  )
+  
   # Valid arguments result in messages
   
   expect_message(
@@ -232,6 +289,73 @@ testthat::test_that('Test usage with file inputs', {
     ),
     force = TRUE
   )
+  
+  # Multiple geography files with duplicate sites results in warnings
+  
+  expect_warning(
+    template_geographic_coverage(
+      path = tempdir(), 
+      data.path =  testthat::test_path("fixtures"), 
+      data.table = c('sites.csv', 'subsites.csv'), 
+      site.col = c('siteID', 'subsiteID'), 
+      lat.col = c('decimalLatitude', 'decimalLatitude'),
+      lon.col = c('decimalLongitude', 'decimalLongitude'),
+      write.file = FALSE
+    )
+  )
+  
+  # Multiple geography files with no duplicate sites results in no warnings
+  
+  expect_no_warning(
+    template_geographic_coverage(
+      path = tempdir(), 
+      data.path =  testthat::test_path("fixtures"), 
+      data.table = c('sites.csv', 'subsites_no_duplicates.csv'), 
+      site.col = c('siteID', 'subsiteID'), 
+      lat.col = c('decimalLatitude', 'decimalLatitude'),
+      lon.col = c('decimalLongitude', 'decimalLongitude'),
+      write.file = FALSE
+    )
+  )
+  
+  # Writing to file, using geographic coverage from multiple csvs, results in messages
+  
+  expect_message(
+    template_geographic_coverage(
+      path = tempdir(), 
+      data.path =  testthat::test_path("fixtures"), 
+      data.table = c('sites.csv', 'subsites.csv'), 
+      site.col = c('siteID', 'subsiteID'), 
+      lat.col = c('decimalLatitude', 'decimalLatitude'),
+      lon.col = c('decimalLongitude', 'decimalLongitude'),
+      write.file = TRUE
+    )
+  )
+  
+  # Written txt file length matches number of unique rows in example data
+  
+  # read in site tables used to create current geographic_coverage.txt
+  # rename columns to bind rows
+  all_sites <- rbind(read.csv(testthat::test_path("fixtures/sites.csv"), 
+                              col.names = c("site", "lat", "lon")), 
+                     read.csv(testthat::test_path("fixtures/subsites.csv"), 
+                              col.names = c("site", "lat", "lon")))
+  # keep only unique rows
+  all_sites <- all_sites[!duplicated(all_sites), ]
+  
+  expect_equal(
+    nrow(read.delim(paste0(tempdir(), "/geographic_coverage.txt"), sep = "\t")),
+    nrow(all_sites)
+  )
+  
+  unlink(
+    paste0(
+      tempdir(),
+      '/geographic_coverage.txt'
+    ),
+    force = TRUE
+  )
+  
   
 })
 

@@ -642,25 +642,37 @@ validate_arguments <- function(fun.name, fun.args){
       # data.table
       
       if (is.null(fun.args$data.table)){
-        stop('Input argument "data.table" is missing! Specify the data file containing the geographic coordinates.', call. = F)
+        stop('Input argument "data.table" is missing! Specify the data file(s) containing the geographic coordinates.', call. = F)
       }
       
       # lat.col
       
       if (is.null(fun.args$lat.col)){
-        stop('Input argument "lat.col" is missing! Specify latitude column name.', call. = F)
+        stop('Input argument "lat.col" is missing! Specify latitude column name(s).', call. = F)
+      }
+      
+      if (length(fun.args$lat.col) != length(fun.args$data.table)){
+        stop('Each "data.table" requires a corresponding "lat.col".', call. = F)
       }
       
       # lon.col
       
       if (is.null(fun.args$lon.col)){
-        stop('Input argument "lon.col" is missing! Specify longitude column name.', call. = F)
+        stop('Input argument "lon.col" is missing! Specify longitude column name(s).', call. = F)
+      }
+      
+      if (length(fun.args$lon.col) != length(fun.args$data.table)){
+        stop('Each "data.table" requires a corresponding "lon.col".', call. = F)
       }
       
       # site.col
       
       if (is.null(fun.args$site.col)){
-        stop('Input argument "site.col" is missing! Specify site column name.', call. = F)
+        stop('Input argument "site.col" is missing! Specify site column name(s).', call. = F)
+      }
+      
+      if (length(fun.args$site.col) != length(fun.args$data.table)){
+        stop('Each "data.table" requires a corresponding "site.col".', call. = F)
       }
       
       if (is.null(fun.args$x)){
@@ -674,36 +686,48 @@ validate_arguments <- function(fun.name, fun.args){
           )
         )
         
-        # Read data table
+        # Read data table(s) into fun.args$x
+        # This way, column names are validated in the same way,
+        # regardless of how arguments are passed to the function.
         
-        x <- template_arguments(
+        fun.args$x <- template_arguments(
           data.path = fun.args$data.path,
           data.table = data_file
-        )
-        
-        x <- x$x
+        )$x
         
         data_read_2_x <- NA_character_
         
       }
       
-      df_table <- fun.args$x$data.table[[fun.args$data.table]]$content
+      # Validate column names for each input to data.table
       
-      # Validate column names
-      
-      columns <- colnames(df_table)
-      columns_in <- c(fun.args$lat.col, fun.args$lon.col, fun.args$site.col)
-      use_i <- stringr::str_detect(string = columns,
-                                   pattern = stringr::str_c("^", columns_in, "$", collapse = "|"))
-      if (sum(use_i) > 0){
-        use_i2 <- columns[use_i]
-        use_i3 <- columns_in %in% use_i2
-        if (sum(use_i) != 3){
-          stop(paste("Invalid column names entered: ", paste(columns_in[!use_i3], collapse = ", "), sep = ""), call. = F)
+      for (i in seq_along(fun.args$data.table)) {
+        
+        df_table <- fun.args$x$data.table[[fun.args$data.table[i]]]$content
+        
+        # Validate column names
+        
+        columns <- colnames(df_table)
+        columns_in <- c(fun.args$lat.col[i], fun.args$lon.col[i], fun.args$site.col[i])
+        use_i <- stringr::str_detect(string = columns,
+                                     pattern = stringr::str_c("^", columns_in, "$", collapse = "|"))
+        if (sum(use_i) > 0){
+          use_i2 <- columns[use_i]
+          use_i3 <- columns_in %in% use_i2
+          if (sum(use_i) != 3){
+            stop(paste('Invalid column names entered for table "', 
+                       fun.args$data.table[i], '": ', 
+                       paste(columns_in[!use_i3], collapse = ", "), sep = ""),
+                 call. = F)
+            
+          }
+          
         }
+        
       }
+      
     }
-
+    
   }
   
   # Call from template_provenance() -------------------------------------------
