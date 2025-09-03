@@ -1,3 +1,11 @@
+EMLassemblyline 3.6.0 (2025-09-03)
+==================================
+
+### NEW FEATURES
+
+* Allow `template_geographic_coverage()` to take a vector of tables rather than just one (#122)
+
+
 EMLassemblyline 3.5.8 (2025-03-06)
 ==================================
 
