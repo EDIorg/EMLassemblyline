@@ -1278,7 +1278,7 @@ testthat::test_that("provenance", {
       "Unsupported systemID. The only supported system, currently, is 'EDI'."))
   expect_null(r$x$template$provenance.txt)
   
-  # dataPackageID + systemID - Valid pairs resolve to provenance metadata
+  # dataPackageID + systemID - Check format of dataPackageID for EDI
   
   x1 <- x
   x1$template$provenance.txt$content$dataPackageID[
@@ -1289,13 +1289,13 @@ testthat::test_that("provenance", {
   expect_true(
     stringr::str_detect(
       validate_provenance_data_package_id(x1),
-      "Invalid dataPackageID. These dataPackageID cannot be resolved:"))
+      "Invalid dataPackageID. These dataPackageID do not match the expected format"))
   
   r <- validate_provenance(x1)
   expect_true(
     stringr::str_detect(
       r$issues,
-      "Invalid dataPackageID. These dataPackageID cannot be resolved:"))
+      "Invalid dataPackageID. These dataPackageID do not match the expected format"))
   expect_null(r$x$template$provenance.txt)
   
   # A URL is present for external resources

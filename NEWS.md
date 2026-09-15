@@ -5,6 +5,11 @@ EMLassemblyline 3.6.1
 
   * Fix failure to retrieve and render EDI provenance metadata due to repository API authentication requirements (#149). Migrated EDI repository API calls to the `EDIutils` package and added support for authenticated requests via the `EDI_API_KEY` environment variable.
 
+### IMPROVEMENTS
+
+  * Replace remote API verification of provenance data package identifiers during template validation with local format validation, eliminating redundant network calls and significantly speeding up validation (#150).
+
+
 
 EMLassemblyline 3.6.0 (2025-09-03)
 ==================================

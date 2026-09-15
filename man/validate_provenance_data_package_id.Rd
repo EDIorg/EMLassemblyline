@@ -2,12 +2,12 @@
 % Please edit documentation in R/validate_templates.R
 \name{validate_provenance_data_package_id}
 \alias{validate_provenance_data_package_id}
-\title{Check the dataPackageID + systemID pair resolves in the provenance template}
+\title{Check that EDI dataPackageID matches expected format (<scope>.<identifier>.<revision>)}
 \usage{
 validate_provenance_data_package_id(x)
 }
 \arguments{
-\item{x}{(list) The data and metadata object returned by 
+\item{x}{(list) The object argument list created by 
 \code{template_arguments()}.}
 }
 \value{
@@ -15,6 +15,6 @@ validate_provenance_data_package_id(x)
     \item{NULL}{If no issues were found}
 }
 \description{
-Check the dataPackageID + systemID pair resolves in the provenance template
+Check that EDI dataPackageID matches expected format (<scope>.<identifier>.<revision>)
 }
 \keyword{internal}

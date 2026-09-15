@@ -1703,10 +1703,10 @@ validate_provenance_system_id <- function(x) {
 
 
 
-#' Check the dataPackageID + systemID pair resolves in the provenance template
+#' Check that EDI dataPackageID matches expected format (<scope>.<identifier>.<revision>)
 #'
-#' @param x 
-#'     (list) The data and metadata object returned by 
+#' @param x
+#'     (list) The object argument list created by 
 #'     \code{template_arguments()}.
 #'
 #' @return
@@ -1725,51 +1725,14 @@ validate_provenance_data_package_id <- function(x) {
     if (length(data_package_ids) == 0) {
       return(NULL)
     }
-    unauthorized_ids <- character(0)
-    invalid_package_ids <- unlist(
-      lapply(
-        data_package_ids,
-        function(k) {
-          provenance <- tryCatch(
-            suppressMessages(
-              EDIutils::get_provenance_metadata(
-                packageId = k,
-                env = "production")), 
-            error = function(e) {
-              if (inherits(e, "http_404")) {
-                return("invalid")
-              }
-              if (inherits(e, "http_403") || inherits(e, "http_401")) {
-                return("unauthorized")
-              }
-              return("error")
-            })
-          if (identical(provenance, "invalid")) {
-            return(k)
-          } else if (identical(provenance, "unauthorized")) {
-            unauthorized_ids <<- c(unauthorized_ids, k)
-            return(NULL)
-          }
-          return(NULL)
-        }))
-    if (length(unauthorized_ids) != 0) {
-      if (Sys.getenv("EDI_API_KEY") == "") {
-        message(
-          "Note: Resolution of EDI dataPackageID (",
-          paste(unauthorized_ids, collapse = ", "),
-          ") could not be verified because the environment variable EDI_API_KEY is not set. ",
-          "Access to EDI repository endpoints requires authentication.")
-      } else {
-        message(
-          "Note: Resolution of EDI dataPackageID (",
-          paste(unauthorized_ids, collapse = ", "),
-          ") could not be verified due to an authentication error. ",
-          "Please check that EDI_API_KEY is valid.")
-      }
-    }
+    # Validate syntactic format: <scope>.<identifier>.<revision>
+    # e.g. edi.101.1, knb-lter-cap.46.3, knb-lter-nin.1.1
+    pattern <- "^[a-zA-Z0-9_-]+[.][0-9]+[.][0-9]+$"
+    is_valid_format <- grepl(pattern, data_package_ids)
+    invalid_package_ids <- data_package_ids[!is_valid_format]
     if (length(invalid_package_ids) != 0) {
       paste0(
-        "Invalid dataPackageID. These dataPackageID cannot be resolved: ", 
+        "Invalid dataPackageID. These dataPackageID do not match the expected format (<scope>.<identifier>.<revision>): ", 
         paste(invalid_package_ids, collapse = ", "))
     }
   }
