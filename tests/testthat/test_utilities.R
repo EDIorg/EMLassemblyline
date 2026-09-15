@@ -53,3 +53,28 @@ test_that("get_eol works", {
   )
   
 })
+
+test_that("add_api_key works", {
+  withr::with_envvar(c(EDI_API_KEY = ""), {
+    expect_equal(
+      add_api_key("https://pasta.lternet.edu/package/eml/edi/100/1"),
+      "https://pasta.lternet.edu/package/eml/edi/100/1"
+    )
+  })
+  
+  withr::with_envvar(c(EDI_API_KEY = "test_key_123"), {
+    expect_equal(
+      add_api_key("https://pasta.lternet.edu/package/eml/edi/100/1"),
+      "https://pasta.lternet.edu/package/eml/edi/100/1?key=test_key_123"
+    )
+    expect_equal(
+      add_api_key("https://pasta.lternet.edu/package/eml/edi/100/1?format=xml"),
+      "https://pasta.lternet.edu/package/eml/edi/100/1?format=xml&key=test_key_123"
+    )
+    expect_equal(
+      add_api_key("https://pasta.lternet.edu/package/eml/edi/100/1?key=existing_key"),
+      "https://pasta.lternet.edu/package/eml/edi/100/1?key=existing_key"
+    )
+  })
+})
+

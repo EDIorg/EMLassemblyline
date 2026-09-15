@@ -138,6 +138,12 @@
 #'     corresponding value in the data object). For this reason it's important 
 #'     to work with UTF-8 encoded data and metadata.
 #'
+#' @note Access to EDI repository endpoints requires authentication. If adding
+#'     provenance metadata for datasets in the EDI data repository, set the
+#'     environment variable \code{EDI_API_KEY} (e.g., via
+#'     \code{Sys.setenv(EDI_API_KEY = "your_key")} or in your \code{.Renviron}
+#'     file).
+#'
 #' @examples 
 #' \dontrun{
 #' 
@@ -962,13 +968,14 @@ make_eml <- function(
         data_package_identifiers,
         function(k) {
           message("      <methodStep> (provenance metadata)")
-          r <- httr::GET(
-            paste0(
-              url_env("production"),
-              ".lternet.edu/package/provenance/eml/",
-              stringr::str_replace_all(k, '\\.', '/')))
-          if (r$status_code == 200) {
-            prov <- httr::content(r, encoding = 'UTF-8')
+          prov <- tryCatch(
+            EDIutils::get_provenance_metadata(
+              packageId = k,
+              env = "production"),
+            error = function(e) {
+              e
+            })
+          if (!inherits(prov, "error")) {
             # Remove IDs from creator and contact to preempt ID + reference
             # errors
             xml2::xml_set_attr(
@@ -987,7 +994,18 @@ make_eml <- function(
               length(eml$dataset$methods$methodStep)+1]] <<- prov
             suppressMessages(file.remove(paste0(tempdir(), "/provenance_metadata.xml")))
           } else {
-            message("Unable to get provenance metadata.")
+            msg <- paste0("Unable to get provenance metadata for ", k, ".")
+            if (Sys.getenv("EDI_API_KEY") == "") {
+              msg <- paste0(
+                msg,
+                " Access to EDI repository endpoints requires authentication. ",
+                "Set the environment variable EDI_API_KEY (e.g. via Sys.setenv(EDI_API_KEY = '...') or in your .Renviron file).")
+            } else if (inherits(prov, "http_403") || inherits(prov, "http_401")) {
+              msg <- paste0(
+                msg,
+                " Authentication failed. Please check that EDI_API_KEY is valid.")
+            }
+            message(msg)
           }
         })
     }

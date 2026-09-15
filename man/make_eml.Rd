@@ -169,6 +169,13 @@ Render the contents of metadata templates into EML, validate, and write
     corresponding value in the data object). For this reason it's important 
     to work with UTF-8 encoded data and metadata.
 }
+\note{
+Access to EDI repository endpoints requires authentication. If adding
+    provenance metadata for datasets in the EDI data repository, set the
+    environment variable \code{EDI_API_KEY} (e.g., via
+    \code{Sys.setenv(EDI_API_KEY = "your_key")} or in your \code{.Renviron}
+    file).
+}
 \examples{
 \dontrun{
 

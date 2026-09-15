@@ -291,6 +291,9 @@ testthat::test_that('Expect argument values in EML', {
   # provenance - Get provenance metadata for EDI data packages and place under
   # /eml/dataset/methods/methodStep/dataSource
   
+  testthat::skip_if_offline()
+  testthat::skip_if(Sys.getenv("EDI_API_KEY") == "", "EDI_API_KEY is not set")
+  
   x1 <- x
   x1$provenance <- "edi.100.1"
   r <- suppressWarnings(

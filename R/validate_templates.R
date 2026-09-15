@@ -1721,18 +1721,52 @@ validate_provenance_data_package_id <- function(x) {
   if (any(valid_system_ids)) {
     data_package_ids <- x$template$provenance.txt$content$dataPackageID[
       valid_system_ids]
+    data_package_ids <- data_package_ids[data_package_ids != ""]
+    if (length(data_package_ids) == 0) {
+      return(NULL)
+    }
+    unauthorized_ids <- character(0)
     invalid_package_ids <- unlist(
       lapply(
         data_package_ids,
-        function(x) {
-          provenance <- try(
+        function(k) {
+          provenance <- tryCatch(
             suppressMessages(
-              api_get_provenance_metadata(x)), 
-            silent = TRUE)
-          if (is.null(provenance)) {
-            x
+              EDIutils::get_provenance_metadata(
+                packageId = k,
+                env = "production")), 
+            error = function(e) {
+              if (inherits(e, "http_404")) {
+                return("invalid")
+              }
+              if (inherits(e, "http_403") || inherits(e, "http_401")) {
+                return("unauthorized")
+              }
+              return("error")
+            })
+          if (identical(provenance, "invalid")) {
+            return(k)
+          } else if (identical(provenance, "unauthorized")) {
+            unauthorized_ids <<- c(unauthorized_ids, k)
+            return(NULL)
           }
+          return(NULL)
         }))
+    if (length(unauthorized_ids) != 0) {
+      if (Sys.getenv("EDI_API_KEY") == "") {
+        message(
+          "Note: Resolution of EDI dataPackageID (",
+          paste(unauthorized_ids, collapse = ", "),
+          ") could not be verified because the environment variable EDI_API_KEY is not set. ",
+          "Access to EDI repository endpoints requires authentication.")
+      } else {
+        message(
+          "Note: Resolution of EDI dataPackageID (",
+          paste(unauthorized_ids, collapse = ", "),
+          ") could not be verified due to an authentication error. ",
+          "Please check that EDI_API_KEY is valid.")
+      }
+    }
     if (length(invalid_package_ids) != 0) {
       paste0(
         "Invalid dataPackageID. These dataPackageID cannot be resolved: ", 

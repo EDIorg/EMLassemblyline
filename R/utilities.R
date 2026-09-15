@@ -321,12 +321,35 @@ get_eol <- function(path, file.name){
 
 
 
+# Append EDI API key to URL if present
+#
+# @param url (character) A URL to which EDI_API_KEY should be appended if set
+#
+# @return (character) URL with key parameter appended if EDI_API_KEY is present
+#
+add_api_key <- function(url) {
+  key <- Sys.getenv("EDI_API_KEY")
+  if (key == "") {
+    return(url)
+  }
+  if (grepl("\\?", url)) {
+    if (!grepl("([?&])key=", url)) {
+      url <- paste0(url, "&key=", key)
+    }
+  } else {
+    url <- paste0(url, "?key=", key)
+  }
+  return(url)
+}
+
+
+
+
+
 #' Get provenance metadata
 #'
 #' @description
-#'     Add Provenance Metadata from Level-1 metadata in PASTA to an XML 
-#'     document containing a single methods element in the request message 
-#'     body.
+#'     Get provenance metadata from the EDI data repository.
 #'
 #' @usage api_get_provenance_metadata(package.id, environment = 'production')
 #'
@@ -337,6 +360,10 @@ get_eol <- function(path, file.name){
 #'     (character) Data repository environment to create the package in.
 #'     Can be: 'development', 'staging', 'production'.
 #'
+#' @note Access to EDI repository endpoints requires authentication. Set the
+#'     environment variable \code{EDI_API_KEY} (e.g., via \code{Sys.setenv(EDI_API_KEY = "your_key")}
+#'     or in your \code{.Renviron} file).
+#'
 #' @return
 #'     ("xml_document" "xml_node") EML metadata.
 #' 
@@ -346,21 +373,10 @@ api_get_provenance_metadata <- function(package.id, environment = 'production'){
   
   message(paste('Retrieving provenance metadata for ', package.id))
   
-  r <- httr::GET(
-    url = paste0(
-      url_env(environment),
-      '.lternet.edu/package/provenance/eml/',
-      stringr::str_replace_all(package.id, '\\.', '/')
-    )
+  EDIutils::get_provenance_metadata(
+    packageId = package.id, 
+    env = environment
   )
-  
-  output <- httr::content(
-    r,
-    as = 'parsed',
-    encoding = 'UTF-8'
-  )
-  
-  output
   
 }
 

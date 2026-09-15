@@ -1574,6 +1574,9 @@ testthat::test_that("compile_provenance()", {
   
   # Called from do.call()
 
+  testthat::skip_if_offline()
+  testthat::skip_if(Sys.getenv("EDI_API_KEY") == "", "EDI_API_KEY is not set")
+
   x1 <- x
   r <- suppressWarnings(
     do.call(make_eml, x1[names(x1) %in% names(formals(make_eml))]))

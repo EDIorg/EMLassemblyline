@@ -41,6 +41,13 @@ This table has a "long" (i.e. name-value) format accomodating multiple contacts 
 \description{
 Describes any source datasets used in the creation of the derived dataset being described. Explicitly listing the DOIs and/or URLs of input data help future users understand in greater detail how the derived data were created and may some day be able to assign attribution to the creators of referenced datasets.
 }
+\note{
+Access to EDI repository endpoints requires authentication. If adding
+    provenance metadata for datasets in the EDI data repository, set the
+    environment variable \code{EDI_API_KEY} (e.g., via
+    \code{Sys.setenv(EDI_API_KEY = "your_key")} or in your \code{.Renviron}
+    file).
+}
 \examples{
 \dontrun{
 # Set working directory

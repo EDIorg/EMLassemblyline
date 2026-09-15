@@ -17,8 +17,11 @@ Can be: 'development', 'staging', 'production'.}
 ("xml_document" "xml_node") EML metadata.
 }
 \description{
-Add Provenance Metadata from Level-1 metadata in PASTA to an XML 
-    document containing a single methods element in the request message 
-    body.
+Get provenance metadata from the EDI data repository.
+}
+\note{
+Access to EDI repository endpoints requires authentication. Set the
+    environment variable \code{EDI_API_KEY} (e.g., via \code{Sys.setenv(EDI_API_KEY = "your_key")}
+    or in your \code{.Renviron} file).
 }
 \keyword{internal}

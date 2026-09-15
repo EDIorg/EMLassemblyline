@@ -29,6 +29,12 @@
 #' This table has a "long" (i.e. name-value) format accomodating multiple contacts and creators within a single provenance record.
 #' }
 #'
+#' @note Access to EDI repository endpoints requires authentication. If adding
+#'     provenance metadata for datasets in the EDI data repository, set the
+#'     environment variable \code{EDI_API_KEY} (e.g., via
+#'     \code{Sys.setenv(EDI_API_KEY = "your_key")} or in your \code{.Renviron}
+#'     file).
+#'
 #' @examples 
 #' \dontrun{
 #' # Set working directory
