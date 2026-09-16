@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.6.1</span>
       </span>
     </div>
 
@@ -75,7 +75,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Describe source datasets</h1>
-    <small class="dont-index">Source: <a href="https://github.com/EDIorg/EMLassemblyline/blob/v3.6.0/R/template_provenance.R" class="external-link"><code>R/template_provenance.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/EDIorg/EMLassemblyline/blob/main/R/template_provenance.R" class="external-link"><code>R/template_provenance.R</code></a></small>
     <div class="hidden name"><code>template_provenance.Rd</code></div>
     </div>
 
@@ -131,6 +131,14 @@
 </ul><p>This table has a "long" (i.e. name-value) format accomodating multiple contacts and creators within a single provenance record.</p></dd>
 
 </dl></div>
+    <div id="note">
+    <h2>Note</h2>
+    <p>Access to EDI repository endpoints requires authentication. If adding
+    provenance metadata for datasets in the EDI data repository, set the
+    environment variable <code>EDI_API_KEY</code> (e.g., via
+    <code>Sys.setenv(EDI_API_KEY = "your_key")</code> or in your <code>.Renviron</code>
+    file).</p>
+    </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
@@ -156,7 +164,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
       </footer></div>

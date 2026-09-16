@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">EMLassemblyline</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.6.1</span>
       </span>
     </div>
 
@@ -75,9 +75,20 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href="https://github.com/EDIorg/EMLassemblyline/blob/v3.6.0/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/EDIorg/EMLassemblyline/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="3.6.1" id="emlassemblyline-361">EMLassemblyline 3.6.1<a class="anchor" aria-label="anchor" href="#emlassemblyline-361"></a></h2>
+<div class="section level4">
+<h4 id="bug-fixes-3-6-1">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-3-6-1"></a></h4>
+<ul><li>Fix failure to retrieve and render EDI provenance metadata due to repository API authentication requirements (<a href="https://github.com/EDIorg/EMLassemblyline/issues/149" class="external-link">#149</a>). Migrated EDI repository API calls to the <code>EDIutils</code> package and added support for authenticated requests via the <code>EDI_API_KEY</code> environment variable.</li>
+</ul></div>
+<div class="section level4">
+<h4 id="improvements-3-6-1">IMPROVEMENTS<a class="anchor" aria-label="anchor" href="#improvements-3-6-1"></a></h4>
+<ul><li>Replace remote API verification of provenance data package identifiers during template validation with local format validation, eliminating redundant network calls and significantly speeding up validation (<a href="https://github.com/EDIorg/EMLassemblyline/issues/150" class="external-link">#150</a>).</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="3.6.0" id="emlassemblyline-360-2025-09-03">EMLassemblyline 3.6.0 (2025-09-03)<a class="anchor" aria-label="anchor" href="#emlassemblyline-360-2025-09-03"></a></h2>
 <div class="section level4">
@@ -235,7 +246,7 @@
 <strong>eml2eal():</strong> For when you want to work with EML in EAL but don’t have the templates and make_eml() function call. This addresses <a href="https://github.com/EDIorg/EMLassemblyline/issues/76" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/76" class="external-link">#76</a>
 </li>
 <li>
-<strong>Remove last column name constraint:</strong> Column names can now be composed of any character strings handled by <code><a href="https://rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">data.table::fread()</a></code>.</li>
+<strong>Remove last column name constraint:</strong> Column names can now be composed of any character strings handled by <code><a href="https://rdrr.io/pkg/data.table/man/fread.html" class="external-link">data.table::fread()</a></code>.</li>
 <li>
 <strong>Remove bookend quote characters mistakenly added to values:</strong> Some file writers will place quotes around a value when it contains commas. This safeguard identifies and removes these.</li>
 </ul></div>
@@ -533,7 +544,7 @@
 <div class="section level4">
 <h4 id="bug-fix-2-7-1">Bug fix<a class="anchor" aria-label="anchor" href="#bug-fix-2-7-1"></a></h4>
 <ul><li>
-<strong>Delimiter guessing:</strong> Occasionally the content of tabular templates leads <code><a href="https://rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">data.table::fread()</a></code> to guessing a delimiter other than “\t”. This issue has been fixed by explicitly stating the expected field delimiter.</li>
+<strong>Delimiter guessing:</strong> Occasionally the content of tabular templates leads <code><a href="https://rdrr.io/pkg/data.table/man/fread.html" class="external-link">data.table::fread()</a></code> to guessing a delimiter other than “\t”. This issue has been fixed by explicitly stating the expected field delimiter.</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -558,7 +569,7 @@
 <li>
 <strong>NULL output from <code><a href="../reference/template_geographic_coverage.html">template_geographic_coverage()</a></code>:</strong> NULL was output from this function when <code>empty = TRUE</code>, which is mostly a cosmetic issue. This was fixed by implementing some simple logic. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/32" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/32" class="external-link">#32</a>.</li>
 <li>
-<strong>Updated table readers:</strong> Some user supplied data tables could not be read by <code><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">utils::read.table()</a></code>. To fix this <code><a href="https://rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">data.table::fread()</a></code>, a more autonomous and robust reader, replaced <code><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table()</a></code> for reading both data and metadata templates. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/41" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/41" class="external-link">#41</a>.</li>
+<strong>Updated table readers:</strong> Some user supplied data tables could not be read by <code><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">utils::read.table()</a></code>. To fix this <code><a href="https://rdrr.io/pkg/data.table/man/fread.html" class="external-link">data.table::fread()</a></code>, a more autonomous and robust reader, replaced <code><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table()</a></code> for reading both data and metadata templates. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/41" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/41" class="external-link">#41</a>.</li>
 <li>
 <strong>geographic_coverage.txt fields mixed up when translated to EML:</strong> Further testing revealed the bug doesn’t exist. Fixes <a href="https://github.com/EDIorg/EMLassemblyline/issues/43" class="external-link">issue </a><a href="https://github.com/EDIorg/EMLassemblyline/issues/43" class="external-link">#43</a>.</li>
 <li>
@@ -705,7 +716,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
       </footer></div>
